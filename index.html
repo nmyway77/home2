@@ -3,285 +3,319 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>목동서로영어학원 - 단어연습앱</title>
+  <title>목동서로영어학원 - 앱모음</title>
+  <link href="https://fonts.googleapis.com/css2?family=Gmarket+Sans:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Arial', sans-serif;
+    html, body {
       margin: 0;
       padding: 0;
-      background: #f4f6fa;
+      background: #fff;
+      font-family: 'Roboto', 'Gmarket Sans', Arial, sans-serif;
+      min-height: 100vh;
+      box-sizing: border-box;
     }
     .header {
-      background: #2c3e50;
+      background: #2b3856;
       color: #fff;
-      padding: 32px 0 24px 0;
+      padding: 36px 0 24px 0;
       text-align: center;
-      font-size: 1.5rem;
-      letter-spacing: 2px;
-      font-weight: bold;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      font-size: 2.2rem;
+      font-family: 'Gmarket Sans', 'Roboto', sans-serif;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+      box-shadow: 0 6px 32px rgba(36,40,73,0.10);
+      margin-bottom: 0px;
     }
-    .grid-container {
+    .tabs {
+      max-width: 1080px;
+      margin: 30px auto 0 auto;
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+    .tab {
+      font-family: 'Gmarket Sans', 'Roboto', sans-serif;
+      padding: 13px 32px;
+      background: #f1f3fa;
+      border: none;
+      border-radius: 16px 16px 0 0;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #485192;
+      box-shadow: 0 2px 6px rgba(60,72,120,0.06);
+      cursor: pointer;
+      outline: none;
+      transition: background 0.14s, color 0.14s;
+    }
+    .tab.active {
+      background: #fff;
+      color: #2b3856;
+      border-bottom: 2px solid #ffad5c;
+    }
+    .tab:not(.active):hover {
+      background: #e3e9f6;
+      color: #2b3856;
+    }
+    .content-section {
+      display: none;
+      animation: fadeIn .3s;
+    }
+    .content-section.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      0% {opacity: 0;}
+      100% {opacity: 1;}
+    }
+    .book-grid {
+      max-width: 1080px;
+      margin: 0 auto 36px auto;
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      grid-template-rows: repeat(4, 140px);
-      gap: 18px;
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 20px;
+      gap: 36px 32px;
+      padding: 24px;
       background: #fff;
+      border-radius: 0 0 28px 28px;
+      box-shadow: 0 8px 40px 0 rgba(36,40,73,0.09), 0 2px 8px rgba(59, 130, 246, 0.09);
+    }
+    .book-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #f7fafd;
       border-radius: 20px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-    }
-    .grid-item {
-      background: #e9eef5;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.03);
-      transition: box-shadow 0.2s;
-      flex-direction: column;
-      padding: 0;
-    }
-    .grid-item:hover {
-      box-shadow: 0 4px 12px rgba(0,0,0,0.10);
-    }
-    .grid-item-inner {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-    }
-    .grid-item img {
-      width: 90%;
-      height: auto;
-      max-height: 110px;
-      object-fit: contain;
-      display: block;
-      margin-top: 6px;
-    }
-    .caption {
-      display: block;
-      margin: 6px 0 0 0;
-      color: #49586c;
-      font-size: 0.98rem;
-      text-align: center;
-      letter-spacing: 0.5px;
-      word-break: keep-all;
-      line-height: 1.13;
-      min-height: 1.2em;
-    }
-    .grid-item a {
-      display: flex;
-      width: 100%;
-      height: 100%;
-      align-items: center;
-      justify-content: center;
+      box-shadow: 0 2px 12px rgba(36,40,73,0.06);
+      transition: transform 0.16s, box-shadow 0.16s;
+      cursor: pointer;
+      min-height: 204px;
+      padding: 22px 8px 12px 8px;
       text-decoration: none;
-      flex-direction: column;
+      color: #21243d;
+      border: 1.5px solid #e2e8f0;
+      position: relative;
+    }
+    .book-card:hover {
+      transform: translateY(-6px) scale(1.035);
+      box-shadow: 0 6px 20px rgba(36,40,73,0.12);
+      border-color: #b0c5f5;
+      z-index: 2;
+    }
+    .book-image {
+      width: 105px;
+      height: 135px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(85,120,180,0.08);
+      object-fit: cover;
+      margin-bottom: 12px;
+      background: #f1f5f9;
+    }
+    .book-title {
+      font-size: 1.11rem;
+      font-family: 'Gmarket Sans', 'Roboto', sans-serif;
+      font-weight: 700;
+      color: #22306d;
+      text-align: center;
+      margin-bottom: 2px;
+      letter-spacing: 0.2px;
+      word-break: keep-all;
     }
 
-    /* --- 하단 링크 스타일 --- */
+    /* 하단 버튼 영역 (Sticky) */
     .footer-links {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      width: 100vw;
+      background: rgba(250,250,252,0.97);
+      box-shadow: 0 -2px 12px rgba(50,60,100,0.05);
       display: flex;
       justify-content: center;
-      gap: 32px;
-      padding: 32px 10px 26px 10px;
-      margin-top: 28px;
-      background: transparent;
-      font-size: 1.12rem;
+      gap: 34px;
+      padding: 22px 0 16px 0;
+      z-index: 100;
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+      backdrop-filter: blur(1.5px);
     }
     .footer-links a {
-      color: #317ae4;
-      text-decoration: none;
-      background: #eaf3ff;
-      padding: 10px 28px;
-      border-radius: 22px;
-      font-weight: bold;
-      box-shadow: 0 2px 7px rgba(80,110,170,0.09);
-      transition: background 0.15s, color 0.15s, transform 0.15s;
-      letter-spacing: 1px;
-      border: 1.2px solid #d7e6f7;
       display: inline-block;
+      min-width: 130px;
+      padding: 18px 36px;
+      border-radius: 40px;
+      font-family: 'Gmarket Sans', 'Roboto', sans-serif;
+      font-weight: bold;
+      font-size: 1.27rem;
+      color: #2983f5;
+      background: #f5f9ff;
+      border: 1.5px solid #d6e6fa;
+      box-shadow: 0 1.5px 8px rgba(40,130,245,0.04);
+      text-align: center;
+      margin: 0 10px;
+      text-decoration: none;
+      transition: background 0.12s, color 0.12s, transform 0.09s;
+      letter-spacing: 0.03em;
     }
     .footer-links a:hover {
-      background: #317ae4;
-      color: #fff;
-      transform: translateY(-3px) scale(1.05);
-      border-color: #b7d2f7;
+      background: #e9f2ff;
+      color: #1357b5;
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 4px 14px rgba(40,130,245,0.12);
     }
-    @media (max-width: 700px) {
-      .grid-container {
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(10, 140px);
-        max-width: 98vw;
-      }
-      .footer-links {
-        flex-direction: column;
-        gap: 18px;
-        padding: 28px 4vw 22px 4vw;
-        font-size: 1.01rem;
-      }
-      .footer-links a {
-        width: 100%;
-        text-align: center;
-        padding: 12px 0;
-      }
+
+    /* 모바일 최적화 */
+    @media (max-width: 900px) {
+      .book-grid { grid-template-columns: repeat(3, 1fr);}
+      .footer-links a { min-width: 90px; font-size: 1rem; padding: 11px 14px; }
+      .footer-links { gap: 13px; padding: 12px 0 9px 0;}
+    }
+    @media (max-width: 600px) {
+      .header { font-size: 1.2rem; padding: 20px 0 16px 0;}
+      .tabs { gap: 6px;}
+      .tab { font-size: 0.9rem; padding: 7px 14px;}
+      .book-grid { grid-template-columns: repeat(2, 1fr); padding: 10px; gap: 18px 8px;}
+      .book-card { min-height: 120px; }
+      .book-image { width: 66px; height: 85px; }
+      .footer-links a { min-width: 72px; font-size: 0.95rem; padding: 9px 8px; }
     }
   </style>
 </head>
 <body>
-  <div class="header">
-    목동서로영어학원 - 단어연습앱
+  <div class="header">목동서로영어학원 - 앱모음</div>
+  <div class="tabs">
+    <button class="tab active" data-section="section1">단어 </button>
+    <button class="tab" data-section="section2">문장 배열</button>
+    <button class="tab" data-section="section3">한줄해석</button>
+    <button class="tab" data-section="section4">기타</button>
   </div>
-  <div class="grid-container">
-    <div class="grid-item">
-      <a href="https://nmyway77.github.io/highorigin/" target="_self">
-        <div class="grid-item-inner">
-          <img src="https://shopping-phinf.pstatic.net/main_3246303/32463036645.20230927071426.jpg?type=w300" alt="Book 1">
-          <span class="caption">영어-&gt;한글</span>
-        </div>
-      </a>
-    </div>
-    <div class="grid-item">
-      <a href="https://nmyway77.github.io/testh-e/" target="_self">
-        <div class="grid-item-inner">
-          <img src="https://shopping-phinf.pstatic.net/main_3246303/32463036645.20230927071426.jpg?type=w300" alt="Book 2">
-          <span class="caption">한글-&gt;영어</span>
-        </div>
-      </a>
-    </div>
-    <div class="grid-item">
-      <a href="#" target="_self">
-        <div class="grid-item-inner">
-          <img src="https://shopping-phinf.pstatic.net/main_3654620/36546208618.20230110163553.jpg?type=w300" alt="Book 3">
-          <span class="caption"></span>
-        </div>
-      </a>
-    </div>
-    <div class="grid-item">
-      <a href="#" target="_self">
-        <div class="grid-item-inner">
-          <img src="https://shopping-phinf.pstatic.net/main_3249265/32492655421.20220527063137.jpg?type=w300" alt="Book 4">
-          <span class="caption"></span>
-        </div>
-      </a>
-    </div>
-    <div class="grid-item">
-      <a href="#" target="_self">
-        <div class="grid-item-inner">
-          <img src="https://shopping-phinf.pstatic.net/main_3249272/32492729618.20220524185044.jpg?type=w300" alt="Book 5">
-          <span class="caption"></span>
-        </div>
-      </a>
-    </div>
-    <div class="grid-item">
-      <a href="#" target="_self">
-        <div class="grid-item-inner">
-          <img src="https://shopping-phinf.pstatic.net/main_3494539/34945395618.20230928091945.jpg?type=w300" alt="Book 6">
-          <span class="caption"></span>
-        </div>
-      </a>
-    </div>
-    <div class="grid-item">
-      <a href="#" target="_self">
-        <div class="grid-item-inner">
-          <img src="https://shopping-phinf.pstatic.net/main_3246654/32466543978.20230620100804.jpg?type=w300" alt="Book 7">
-          <span class="caption"></span>
-        </div>
-      </a>
-    </div>
-    <div class="grid-item">
-      <a href="https://nmyway77.github.io/arnew/" target="_self">
-        <div class="grid-item-inner">
-          <img src="https://shopping-phinf.pstatic.net/main_5427732/54277325425.jpg?type=w300" alt="Book 8">
-          <span class="caption"></span>
-        </div>
-      </a>
-    </div>
-    <div class="grid-item">
-      <a href="https://nmyway77.github.io/mw2textbook/" target="_self">
-        <div class="grid-item-inner">
-          <img src="https://shopping-phinf.pstatic.net/main_3249613/32496138173.20250509071356.jpg?type=w300" alt="Book 9">
-          <span class="caption"></span>
-        </div>
-      </a>
-    </div>
-    <div class="grid-item">
-      <a href="https://nmyway77.github.io/md3textbook/"><div class="grid-item-inner">
-        <img src="https://gdimg.gmarket.co.kr/3405727962/still/600?ver=1741332832" alt="Book 10">
-        <span class="caption"></span>
-      </div></a>
-    </div>
-    <div class="grid-item">
-      <a href="https://nmyway77.github.io/mil3textbook/"><div class="grid-item-inner">
-        <img src="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbTk963%2FbtqXD36f429%2FCzFIobrZGakkkYnVDGFxK0%2Fimg.jpg" alt="Book 11">
-        <span class="caption"></span>
-      </div></a>
-    </div>
-    <div class="grid-item">
-      <a href="https://nmyway77.github.io/thome/"><div class="grid-item-inner">
-        <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDEwMTZfMTY0%2FMDAxNzI5MDc1NDE1OTMw.EBrr255u4vN8eR6tccOJ6ns3L0UKIZBEh7u3DNLelJcg.5Q2f7_Z8kGQdY0mrHX5RPJZVefZ-kIYbN5UNQeERkI8g.JPEG%2F%25BC%25F6%25B4%25C9%25C6%25AF%25B0%25AD_Light_%25BF%25B5%25BE%25EE450-.jpg&type=sc960_832" alt="Book 12">
-        <span class="caption"></span>
-      </div></a>
-    </div>
-    <div class="grid-item">
-      <a href="#"><div class="grid-item-inner">
-        <img src="https://dummyimage.com/110x110/ccc/fff&text=Book+13" alt="Book 13">
-        <span class="caption">단어장13</span>
-      </div></a>
-    </div>
-    <div class="grid-item">
-      <a href="#"><div class="grid-item-inner">
-        <img src="https://dummyimage.com/110x110/ccc/fff&text=Book+14" alt="Book 14">
-        <span class="caption">단어장14</span>
-      </div></a>
-    </div>
-    <div class="grid-item">
-      <a href="#"><div class="grid-item-inner">
-        <img src="https://dummyimage.com/110x110/ccc/fff&text=Book+15" alt="Book 15">
-        <span class="caption">단어장15</span>
-      </div></a>
-    </div>
-    <div class="grid-item">
-      <a href="#"><div class="grid-item-inner">
-        <img src="https://dummyimage.com/110x110/ccc/fff&text=Book+16" alt="Book 16">
-        <span class="caption">단어장16</span>
-      </div></a>
-    </div>
-    <div class="grid-item">
-      <a href="#"><div class="grid-item-inner">
-        <img src="https://dummyimage.com/110x110/ccc/fff&text=Book+17" alt="Book 17">
-        <span class="caption">단어장17</span>
-      </div></a>
-    </div>
-    <div class="grid-item">
-      <a href="#"><div class="grid-item-inner">
-        <img src="https://dummyimage.com/110x110/ccc/fff&text=Book+18" alt="Book 18">
-        <span class="caption">단어장18</span>
-      </div></a>
-    </div>
-    <div class="grid-item">
-      <a href="#"><div class="grid-item-inner">
-        <img src="https://dummyimage.com/110x110/ccc/fff&text=Book+19" alt="Book 19">
-        <span class="caption">단어장19</span>
-      </div></a>
-    </div>
-    <div class="grid-item">
-      <a href="#"><div class="grid-item-inner">
-        <img src="https://dummyimage.com/110x110/ccc/fff&text=Book+20" alt="Book 20">
-        <span class="caption">단어장20</span>
-      </div></a>
+
+  <!-- [1] 단어  -->
+  <div class="content-section active" id="section1">
+    <div class="book-grid">
+      <!-- 20개 예시, 이미지/제목/링크만 바꾸세요 -->
+      <a href="https://nmyway77.github.io/highorigin/" class="book-card"><img class="book-image" src="https://shopping-phinf.pstatic.net/main_3246303/32463036645.20230927071426.jpg?type=w300"><span class="book-title">영어→한글</span></a>
+      <a href="https://nmyway77.github.io/testh-e/" class="book-card"><img class="book-image" src="https://shopping-phinf.pstatic.net/main_3246303/32463036645.20230927071426.jpg?type=w300"><span class="book-title">한글→영어</span></a>
+      <a href="word3.html" class="book-card"><img class="book-image" src="https://shopping-phinf.pstatic.net/main_3654620/36546208618.20230110163553.jpg?type=w300"><span class="book-title">영어→한글</span></a>
+      <a href="word4.html" class="book-card"><img class="book-image" src="https://shopping-phinf.pstatic.net/main_3654620/36546208618.20230110163553.jpg?type=w300"><span class="book-title">한글→영어</span></a>
+      <a href="word5.html" class="book-card"><img class="book-image" src="https://shopping-phinf.pstatic.net/main_3249265/32492655421.20220527063137.jpg?type=w300"><span class="book-title"></span>영어→한글</a>
+      <a href="https://nmyway77.github.io/word200/" class="book-card"><img class="book-image" src="https://cdn.011st.com/11dims/resize/600x600/quality/75/11src/pd/v2/2/9/8/4/9/6/jjEQM/8310298496_B.jpg"><span class="book-title">영어→한글</span></a>
+      <a href="word7.html" class="book-card"><img class="book-image" src="https://cdn.011st.com/11dims/resize/600x600/quality/75/11src/pd/v2/2/9/8/4/9/6/jjEQM/8310298496_B.jpg"><span class="book-title">한글→영어</span></a>
+      <a href="word8.html" class="book-card"><img class="book-image" src="https://shopping-phinf.pstatic.net/main_3246654/32466543978.20230620100804.jpg?type=w300"><span class="book-title">영어→한글</span></a>
+      <a href="word9.html" class="book-card"><img class="book-image" src="https://shopping-phinf.pstatic.net/main_3246654/32466543978.20230620100804.jpg?type=w300"><span class="book-title">한글→영어</span></a>
+      <a href="word10.html" class="book-card"><img class="book-image" src="https://shopping-phinf.pstatic.net/main_3249265/32492655421.20220527063137.jpg?type=w300"><span class="book-title">한글→영어</span></a>
+      <a href="word11.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">Book 11</span></a>
+      <a href="word12.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">Book 12</span></a>
+      <a href="word13.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">Book 13</span></a>
+      <a href="word14.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">Book 14</span></a>
+      <a href="word15.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">Book 15</span></a>
+      <a href="word16.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">Book 16</span></a>
+      <a href="word17.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">Book 17</span></a>
+      <a href="word18.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">Book 18</span></a>
+      <a href="word19.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">Book 19</span></a>
+      <a href="word20.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">Book 20</span></a>
     </div>
   </div>
 
-  <div class="footer-links">
-    <a href="https://cafe.naver.com/tuntuntest/2707" target="_blank">MC앱 다운로드</a>
-    <a href="https://cafe.naver.com/tuntuntest" target="_blank"> 카페</a>
-    <a href="#" target="_blank">블로그</a>
+  <!-- [2] 문장 배열  -->
+  <div class="content-section" id="section2">
+    <div class="book-grid">
+      <!-- 20개 예시 -->
+      <!-- 아래 예시 카드들 이미지만 바꿔서 사용하세요 -->
+      <a href="https://nmyway77.github.io/arnew/" class="book-card"><img class="book-image" src="https://shopping-phinf.pstatic.net/main_5427732/54277325425.jpg?type=w300"><span class="book-title">목동중2</span></a>
+      <a href="https://nmyway77.github.io/mw2textbook/" class="book-card"><img class="book-image" src="https://shopping-phinf.pstatic.net/main_3249613/32496138173.20250509071356.jpg?type=w300"><span class="book-title">목운중2</span></a>
+      <a href="https://nmyway77.github.io/md3textbook/" class="book-card"><img class="book-image" src="https://gdimg.gmarket.co.kr/3405727962/still/600?ver=1741332832"><span class="book-title">목동중3</span></a>
+      <a href="https://nmyway77.github.io/mil3textbook/" class="book-card"><img class="book-image" src="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbTk963%2FbtqXD36f429%2FCzFIobrZGakkkYnVDGFxK0%2Fimg.jpg"><span class="book-title">목일중3</span></a>
+      <a href="sentence5.html" class="book-card"><img class="book-image" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDEwMTZfMTY0%2FMDAxNzI5MDc1NDE1OTMw.EBrr255u4vN8eR6tccOJ6ns3L0UKIZBEh7u3DNLelJcg.5Q2f7_Z8kGQdY0mrHX5RPJZVefZ-kIYbN5UNQeERkI8g.JPEG%2F%25BC%25F6%25B4%25C9%25C6%25AF%25B0%25AD_Light_%25BF%25B5%25BE%25EE450-.jpg&type=sc960_832"><span class="book-title">수특라이트 영어</span></a>
+      <a href="sentence6.html" class="book-card"><img class="book-image" src="https://i.ibb.co/jwXvMz6/voca6.png"><span class="book-title">문장 배열 연습6</span></a>
+      <a href="sentence7.html" class="book-card"><img class="book-image" src="https://i.ibb.co/pz6Xz6Y/voca7.png"><span class="book-title">문장 배열 연습7</span></a>
+      <a href="sentence8.html" class="book-card"><img class="book-image" src="https://i.ibb.co/Trk9cDn/voca8.png"><span class="book-title">문장 배열 연습8</span></a>
+      <a href="sentence9.html" class="book-card"><img class="book-image" src="https://i.ibb.co/yR8fLhp/voca9.png"><span class="book-title">문장 배열 연습9</span></a>
+      <a href="sentence10.html" class="book-card"><img class="book-image" src="https://i.ibb.co/pzDQpY3/voca10.png"><span class="book-title">문장 배열 연습10</span></a>
+      <a href="sentence11.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 11</span></a>
+      <a href="sentence12.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 12</span></a>
+      <a href="sentence13.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 13</span></a>
+      <a href="sentence14.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 14</span></a>
+      <a href="sentence15.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 15</span></a>
+      <a href="sentence16.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 16</span></a>
+      <a href="sentence17.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 17</span></a>
+      <a href="sentence18.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 18</span></a>
+      <a href="sentence19.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 19</span></a>
+      <a href="sentence20.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 20</span></a>
+    </div>
   </div>
+
+  <!-- [3] 한줄해석  -->
+  <div class="content-section" id="section3">
+    <div class="book-grid">
+      <!-- 20개 예시 -->
+      <a href="https://nmyway77.github.io/thome/" class="book-card"><img class="book-image" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDEwMTZfMTY0%2FMDAxNzI5MDc1NDE1OTMw.EBrr255u4vN8eR6tccOJ6ns3L0UKIZBEh7u3DNLelJcg.5Q2f7_Z8kGQdY0mrHX5RPJZVefZ-kIYbN5UNQeERkI8g.JPEG%2F%25BC%25F6%25B4%25C9%25C6%25AF%25B0%25AD_Light_%25BF%25B5%25BE%25EE450-.jpg&type=sc960_832"><span class="book-title">한줄해석 연습1</span></a>
+      <a href="line2.html" class="book-card"><img class="book-image" src="https://i.ibb.co/9nFSTvf/voca2.png"><span class="book-title">한줄해석 연습2</span></a>
+      <a href="line3.html" class="book-card"><img class="book-image" src="https://i.ibb.co/TB0kQgv/voca3.png"><span class="book-title">한줄해석 연습3</span></a>
+      <a href="line4.html" class="book-card"><img class="book-image" src="https://i.ibb.co/jb3bNTW/voca4.png"><span class="book-title">한줄해석 연습4</span></a>
+      <a href="line5.html" class="book-card"><img class="book-image" src="https://i.ibb.co/yS8DM0V/voca5.png"><span class="book-title">한줄해석 연습5</span></a>
+      <a href="line6.html" class="book-card"><img class="book-image" src="https://i.ibb.co/jwXvMz6/voca6.png"><span class="book-title">한줄해석 연습6</span></a>
+      <a href="line7.html" class="book-card"><img class="book-image" src="https://i.ibb.co/pz6Xz6Y/voca7.png"><span class="book-title">한줄해석 연습7</span></a>
+      <a href="line8.html" class="book-card"><img class="book-image" src="https://i.ibb.co/Trk9cDn/voca8.png"><span class="book-title">한줄해석 연습8</span></a>
+      <a href="line9.html" class="book-card"><img class="book-image" src="https://i.ibb.co/yR8fLhp/voca9.png"><span class="book-title">한줄해석 연습9</span></a>
+      <a href="line10.html" class="book-card"><img class="book-image" src="https://i.ibb.co/pzDQpY3/voca10.png"><span class="book-title">한줄해석 연습10</span></a>
+      <a href="line11.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 11</span></a>
+      <a href="line12.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 12</span></a>
+      <a href="line13.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 13</span></a>
+      <a href="line14.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 14</span></a>
+      <a href="line15.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 15</span></a>
+      <a href="line16.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 16</span></a>
+      <a href="line17.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 17</span></a>
+      <a href="line18.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 18</span></a>
+      <a href="line19.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 19</span></a>
+      <a href="line20.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 20</span></a>
+    </div>
+  </div>
+
+  <!-- [4] 기타 -->
+  <div class="content-section" id="section4">
+    <div class="book-grid">
+      <!-- 20개 예시 -->
+      <a href="etc1.html" class="book-card"><img class="book-image" src="https://i.ibb.co/N2kqp9G/voca1.png"><span class="book-title">기타 1</span></a>
+      <a href="etc2.html" class="book-card"><img class="book-image" src="https://i.ibb.co/9nFSTvf/voca2.png"><span class="book-title">기타 2</span></a>
+      <a href="etc3.html" class="book-card"><img class="book-image" src="https://i.ibb.co/TB0kQgv/voca3.png"><span class="book-title">기타 3</span></a>
+      <a href="etc4.html" class="book-card"><img class="book-image" src="https://i.ibb.co/jb3bNTW/voca4.png"><span class="book-title">기타 4</span></a>
+      <a href="etc5.html" class="book-card"><img class="book-image" src="https://i.ibb.co/yS8DM0V/voca5.png"><span class="book-title">기타 5</span></a>
+      <a href="etc6.html" class="book-card"><img class="book-image" src="https://i.ibb.co/jwXvMz6/voca6.png"><span class="book-title">기타 6</span></a>
+      <a href="etc7.html" class="book-card"><img class="book-image" src="https://i.ibb.co/pz6Xz6Y/voca7.png"><span class="book-title">기타 7</span></a>
+      <a href="etc8.html" class="book-card"><img class="book-image" src="https://i.ibb.co/Trk9cDn/voca8.png"><span class="book-title">기타 8</span></a>
+      <a href="etc9.html" class="book-card"><img class="book-image" src="https://i.ibb.co/yR8fLhp/voca9.png"><span class="book-title">기타 9</span></a>
+      <a href="etc10.html" class="book-card"><img class="book-image" src="https://i.ibb.co/pzDQpY3/voca10.png"><span class="book-title">기타 10</span></a>
+      <a href="etc11.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">기타 11</span></a>
+      <a href="etc12.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">기타 12</span></a>
+      <a href="etc13.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">기타 13</span></a>
+      <a href="etc14.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">기타 14</span></a>
+      <a href="etc15.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">기타 15</span></a>
+      <a href="etc16.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">기타 16</span></a>
+      <a href="etc17.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">기타 17</span></a>
+      <a href="etc18.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">기타 18</span></a>
+      <a href="etc19.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">기타 19</span></a>
+      <a href="etc20.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">기타 20</span></a>
+    </div>
+  </div>
+
+  <!-- 하단 고정 버튼 -->
+  <div class="footer-links">
+    <a href="https://play.google.com/store/apps/details?id=com.example.mcapp" target="_blank">MC앱 다운로드</a>
+    <a href="https://cafe.naver.com/mcenglishacademy" target="_blank">카페</a>
+    <a href="https://blog.naver.com/nmyway" target="_blank">블로그</a>
+  </div>
+
+  <script>
+    // 탭 기능
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+        document.getElementById(this.dataset.section).classList.add('active');
+        window.scrollTo({top: 0, behavior: 'smooth'}); // 탭 클릭시 위로 스크롤
+      });
+    });
+  </script>
 </body>
 </html>
-
