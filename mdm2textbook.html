@@ -1,0 +1,263 @@
+ <!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>목동중2 배열영작</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+  <style>
+    body { font-family: 'Arial Rounded MT Bold', Arial, sans-serif; background:#fff; margin:0; }
+    .header { background: #3b82f6; color: #fff; font-size: 1.5rem; font-weight: bold; box-shadow: 0 4px 16px rgba(0,0,0,0.07); margin-bottom: 18px; border-radius: 0 0 38px 38px; min-height: 68px; display: flex; align-items: center; justify-content: center; position: relative; padding: 0 14px;}
+    .home-btn { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); background: #fff; color: #2563eb; font-size: 1.09rem; border: none; border-radius: 17px; padding: 8px 21px; font-weight: bold; cursor: pointer; text-decoration: none; box-shadow: 0 2px 9px #0001; z-index: 2; transition: background 0.15s, color 0.15s; white-space: nowrap; min-width: 82px; }
+    .home-btn:active, .home-btn:focus, .home-btn:hover { background: #eaf1ff; color: #1552b8; text-decoration: underline;}
+    .header-title { margin: 0 auto; text-align: center; font-size: 1.22em; font-weight: bold; letter-spacing: -1px; line-height: 1.1; width: 100%; max-width: 100vw; padding: 14px 0; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+    .mainbar { max-width: 550px; margin: 15px auto 0 auto; display:flex; flex-direction:column; align-items:center; gap:12px; }
+    .lesson-select { padding: 9px 10px; border: 1.3px solid #2563eb; border-radius: 10px; font-size: 1.04rem; background: #fff; color: #222; width: 100%; max-width:98vw; min-width:140px; margin-bottom: 5px;}
+    .main-title { text-align: center; font-size: 1.28rem; font-weight: bold; margin: 18px 0 9px 0; color: #23243a;}
+    .section-tabs { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; margin: 8px 0 0 0; width: 100%;}
+    .section-tab { background: #eee; color: #212a35; border:none; border-radius: 7px; padding: 6px 18px; font-size: 1.02rem; cursor:pointer; transition: background 0.14s, color 0.14s; font-weight: 500; margin-bottom: 3px;}
+    .section-tab.selected { background: #2563eb; color:#fff; }
+    .content-box { max-width: 96vw; min-height: 70px; margin: 22px auto 0 auto; border-radius:18px; background:#fff; box-shadow:0 6px 20px #e5eaf5; padding: 18px 8px 18px 8px; }
+    .sentence-row { display: flex; align-items: flex-start; margin-bottom: 18px; }
+    .sentence-content { flex: 1; }
+    .en { font-size: 1.07rem; background: #fff; border: 1px solid #e3e3e3; border-radius: 9px; padding: 12px 10px; min-width: 60vw; word-break: break-all; margin-bottom: 2px; color:#2563eb;}
+    .sortable { display: flex; flex-wrap: wrap; min-height: 54px; gap: 11px; margin-bottom: 11px;}
+    .eng-build .word, .eng-ans .word { background: #2563eb; color: #fff; border: none; border-radius: 8px; padding: 7px 18px; font-size: 1em; font-weight: bold; cursor: grab; margin-bottom: 6px; user-select: none; transition: background 0.16s;}
+    .eng-ans .word { background: #e0e7ef; color: #1e293b; cursor: grab;}
+    .eng-build .word:active, .eng-ans .word:active { background: #1d4ed8; }
+    .eng-result { font-size:1em; color:#d97706; min-height:28px; font-weight: bold; margin-bottom:4px;}
+    .eng-btns button {padding:5px 14px; font-size:1em; border-radius:7px; border:none; background:#3b82f6; color:#fff; cursor:pointer; margin-right:5px; font-weight:bold;}
+    .eng-btns button:active {background:#194ca0;}
+    .answer-sentence {margin:6px 0 0 0; color:#374151; font-size:1.05em; }
+    @media (max-width: 500px) {
+      .mainbar { max-width: 99vw; }
+      .content-box { padding: 7vw 2vw;}
+      .en { min-width: 10vw; font-size: 0.95rem; }
+      .section-tab { font-size: 0.95rem; padding: 6px 13px;}
+      .sentence-row { flex-direction: column;}
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <a class="home-btn" href="https://nmyway77.github.io/home2/">홈으로</a>
+    <span class="header-title">목동중2 배열영작</span>
+  </div>
+  <div class="mainbar">
+    <select id="lessonSelect" class="lesson-select" onchange="changeLesson()"></select>
+    <div class="main-title" id="mainTitle"></div>
+    <div class="section-tabs" id="sectionTabs"></div>
+  </div>
+  <div class="content-box" id="sectionContent"></div>
+<script>
+  // 문제 데이터 구조
+  const lessonSections = {};
+  for (let i=1; i<=25; i++) lessonSections[i] = [`${i}-1`, `${i}-2`, `${i}-3`, `${i}-4`, `${i}-5`];
+  const sectionSentences = {
+    '1-1': [
+      {en: "RAP it OUT", ko: "랩으로 표현해 봐"},
+      {en: "Open Your MIND, Open Your HEART", ko: "너의 생각을 열어 봐, 너의 마음을 열어 봐"},
+      {en: "Look AROUND and Let’s Rap It OUT", ko: "주변을 둘러보고 랩으로 표현해 봐"},
+    ],
+    '1-2': [],
+    '1-3': [],
+    '1-4': [],
+    '1-5': [],
+    '2-2': [],
+    '2-3': [],
+    '2-4': [],
+    '2-5': [],
+  };
+  for (let i=1; i<=25; i++) for (let j=1; j<=5; j++) if (!sectionSentences[`${i}-${j}`]) sectionSentences[`${i}-${j}`] = [];
+
+  let currentUnit = 1;
+  let currentSectionIdx = 0;
+  let buildStates = {};
+
+  function setLessonOptions() {
+    const sel = document.getElementById('lessonSelect');
+    sel.innerHTML = '';
+    for (let i=1; i<=25; i++) {
+      sel.innerHTML += `<option value="${i}">Lesson ${i}</option>`;
+    }
+  }
+  setLessonOptions();
+
+  function changeLesson() {
+    let sel = document.getElementById('lessonSelect');
+    currentUnit = parseInt(sel.value, 10);
+    currentSectionIdx = 0;
+    buildStates = {};
+    updateUI();
+  }
+  function selectSection(idx) {
+    currentSectionIdx = idx;
+    buildStates = {};
+    updateUI();
+  }
+
+  function speak(text) {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utter = new window.SpeechSynthesisUtterance(text);
+      utter.lang = 'en-US';
+      utter.rate = 1;
+      window.speechSynthesis.speak(utter);
+    }
+  }
+
+  // PC/모바일 판별 함수
+  function isMobile() {
+    return /Mobi|Android|iPhone|iPad|iPod|Samsung|LG|IEMobile|BlackBerry|Opera Mini/i.test(navigator.userAgent);
+  }
+
+  function updateUI() {
+    document.getElementById('mainTitle').textContent = `Lesson ${currentUnit}`;
+    document.getElementById('lessonSelect').value = currentUnit;
+    let tabs = '', sections = lessonSections[currentUnit] || [];
+    sections.forEach((name, idx) => {
+      tabs += `<button class="section-tab${idx===currentSectionIdx?' selected':''}" onclick="selectSection(${idx})">${name}</button>`;
+    });
+    document.getElementById('sectionTabs').innerHTML = tabs;
+    let contentHTML = '';
+    const sectionKey = sections[currentSectionIdx];
+    const sentArr = sectionSentences[sectionKey] || [];
+    sentArr.forEach(({en, ko}, i) => {
+      let st = buildStates[i] || { chosen: [], pool: shuffle(en.split(' ')), result: "", showAnswer: false };
+      buildStates[i] = st;
+      contentHTML += `
+        <div class="sentence-row" style="align-items: flex-start;">
+          <div class="sentence-content" style="width:100%">
+            <div class="en" style="margin-bottom:6px;color:#222;">${ko}</div>
+            <div class="eng-ans sortable" id="ans-${i}">
+              ${st.chosen.map((w, idx) =>
+                `<button type="button" class="word" data-from="ans" data-i="${i}" data-idx="${idx}">${w}</button>`
+              ).join('')}
+            </div>
+            <div class="eng-build sortable" id="pool-${i}">
+              ${st.pool.map((w, idx) =>
+                `<button type="button" class="word" data-from="pool" data-i="${i}" data-idx="${idx}">${w}</button>`
+              ).join('')}
+            </div>
+            <div class="eng-btns">
+              <button onclick="undoLastWord(${i})">되돌리기</button>
+              <button onclick="resetBuild(${i})">초기화</button>
+              <button onclick="checkBuild(${i})">정답 확인</button>
+            </div>
+            <div class="eng-result" id="engres-${i}">${st.result||""}</div>
+            <div class="answer-sentence" id="answersen-${i}" style="margin-top:4px; color:#374151; font-size:1.05em; ${st.showAnswer ? '' : 'display:none;'}">
+              정답문장: <span style="color:#2563eb;">${en}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+    document.getElementById('sectionContent').innerHTML = contentHTML || `<i>아직 내용이 없습니다.</i>`;
+
+    setTimeout(() => {
+      sentArr.forEach((item, idx) => {
+        let ansEl = document.getElementById('ans-' + idx);
+        let poolEl = document.getElementById('pool-' + idx);
+        if (!ansEl || !poolEl) return;
+        const groupName = 'group-'+currentUnit+'-'+currentSectionIdx+'-'+idx;
+        if (!ansEl.dataset.sortable) {
+          Sortable.create(ansEl, {
+            group: { name: groupName, pull: true, put: true },
+            animation: 130,
+            direction: 'horizontal',
+            onAdd: function(evt) { syncWords(idx); },
+            onUpdate: function(evt) { syncWords(idx); }
+          });
+          ansEl.dataset.sortable = "1";
+        }
+        if (!poolEl.dataset.sortable) {
+          Sortable.create(poolEl, {
+            group: { name: groupName, pull: true, put: true },
+            animation: 130,
+            direction: 'horizontal',
+            onAdd: function(evt) { syncWords(idx); },
+            onUpdate: function(evt) { syncWords(idx); }
+          });
+          poolEl.dataset.sortable = "1";
+        }
+      });
+
+      // 단어 클릭 이벤트 등록 (PC만)
+      if (!isMobile()) {
+        // PC에서만 클릭으로 단어 이동 허용
+        document.querySelectorAll('.eng-build .word').forEach(btn => {
+          btn.onclick = function(e) {
+            let i = parseInt(btn.dataset.i), idx = parseInt(btn.dataset.idx);
+            let st = buildStates[i];
+            st.chosen.push(st.pool[idx]);
+            st.pool.splice(idx,1);
+            st.result = "";
+            st.showAnswer = false;
+            updateUI();
+          };
+        });
+        document.querySelectorAll('.eng-ans .word').forEach(btn => {
+          btn.onclick = function(e) {
+            let i = parseInt(btn.dataset.i), idx = parseInt(btn.dataset.idx);
+            let st = buildStates[i];
+            st.pool.push(st.chosen[idx]);
+            st.chosen.splice(idx,1);
+            st.result = "";
+            st.showAnswer = false;
+            updateUI();
+          };
+        });
+      }
+    }, 0);
+  }
+
+  function syncWords(idx) {
+    let ansEl = document.getElementById('ans-'+idx);
+    let poolEl = document.getElementById('pool-'+idx);
+    let st = buildStates[idx];
+    st.chosen = Array.from(ansEl.children).map(b=>b.textContent);
+    st.pool = Array.from(poolEl.children).map(b=>b.textContent);
+    st.result = "";
+    st.showAnswer = false;
+    updateUI();
+  }
+  function shuffle(arr) { return arr.slice().sort(() => Math.random() - 0.5);}
+  function undoLastWord(i) {
+    let st = buildStates[i];
+    if(st.chosen.length>0) st.pool.push(st.chosen.pop());
+    st.result="";
+    st.showAnswer = false;
+    updateUI();
+  }
+  function resetBuild(i) {
+    let sentArr = sectionSentences[lessonSections[currentUnit][currentSectionIdx]] || [];
+    buildStates[i] = {chosen:[], pool:shuffle(sentArr[i].en.split(' ')), result:"", showAnswer: false };
+    updateUI();
+  }
+  function checkBuild(i) {
+    let sentArr = sectionSentences[lessonSections[currentUnit][currentSectionIdx]] || [];
+    let st = buildStates[i];
+    let correct = sentArr[i].en.trim();
+    let user = st.chosen.join(' ').trim();
+    st.showAnswer = !st.showAnswer; // 토글
+    if(st.showAnswer) {
+      if(user === correct) {
+        st.result = "정답입니다! 🎉";
+        speak(correct);   // 정답 영어문장 읽기
+      } else {
+        st.result = "?!";
+      }
+    } else {
+      st.result = "";
+    }
+    updateUI();
+  }
+
+  updateUI();
+  window.selectSection = selectSection;
+  window.undoLastWord = undoLastWord;
+  window.resetBuild = resetBuild;
+  window.checkBuild = checkBuild;
+</script>
+</body>
+</html>
