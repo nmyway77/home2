@@ -1,0 +1,55 @@
+ <!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>영한 번갈이 변환기</title>
+  <style>
+    body { font-family: 'Segoe UI', '맑은 고딕', Arial, sans-serif; background: #f6f7fc; margin: 0; padding: 36px;}
+    .wrap { max-width: 560px; margin: auto; background: #fff; padding: 32px 20px 28px 20px; border-radius: 16px; box-shadow: 0 4px 18px 0 rgba(30,32,80,0.07);}
+    h2 { margin-bottom: 22px; color: #3C3C8C;}
+    label { display: block; font-weight: bold; margin-top: 18px;}
+    textarea { width: 100%; min-height: 220px; font-size: 1rem; margin-top: 8px; padding: 9px; border: 1.5px solid #d1d5db; border-radius: 7px; resize: vertical;}
+    button { margin-top: 24px; background: #3C3C8C; color: #fff; border: none; border-radius: 8px; font-size: 1.1rem; padding: 10px 0; width: 100%; cursor: pointer;}
+    .result { background: #f0f3fa; margin-top: 26px; padding: 20px; border-radius: 10px; font-size: 1.04rem; word-break: break-all; font-family: Consolas, '맑은 고딕', monospace;}
+    .err { color: #c00; margin-top: 6px; font-size: 0.97em;}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h2>영한 번갈이 변환기 (한 번에 입력)</h2>
+    <label for="bothText">영어/한글 번갈이 입력 (2줄씩 한 쌍, 여러 쌍 붙여넣기)</label>
+    <textarea id="bothText" placeholder="Look AROUND and Let’s Rap It OUT
+주변을 둘러보고 랩으로 표현해 봐
+
+Hey, I'm MC Joy. Do you want to write your own rap?
+안녕, 난 MC Joy야. 너만의 랩을 쓰고 싶니?
+
+..."></textarea>
+    <button onclick="convert()">변환하기</button>
+    <div id="err" class="err"></div>
+    <div id="output" class="result" style="display:none;"></div>
+  </div>
+  <script>
+    function convert() {
+      const linesRaw = document.getElementById('bothText').value.trim().split('\n');
+      // 빈 줄(공백 줄) 제거
+      const lines = linesRaw.filter(l => l.trim() !== '');
+      const errDiv = document.getElementById('err');
+      if (lines.length % 2 !== 0) {
+        errDiv.textContent = `❗ 총 줄 수가 짝수여야 합니다. (현재 ${lines.length}줄)`;
+        document.getElementById('output').style.display = 'none';
+        return;
+      }
+      errDiv.textContent = '';
+      let result = '';
+      for(let i=0; i<lines.length; i+=2) {
+        let en = lines[i].replace(/"/g,'\\"');
+        let ko = lines[i+1].replace(/"/g,'\\"');
+        result += `{en: "${en}", ko: "${ko}"},\n`;
+      }
+      document.getElementById('output').textContent = result.trim();
+      document.getElementById('output').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
