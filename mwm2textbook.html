@@ -1,0 +1,274 @@
+ <!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>목운중2 배열영작</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+  <style>
+    body { font-family: 'Arial Rounded MT Bold', Arial, sans-serif; background:#fff; margin:0; }
+    .header { background: #3b82f6; color: #fff; font-size: 1.5rem; font-weight: bold; box-shadow: 0 4px 16px rgba(0,0,0,0.07); margin-bottom: 18px; border-radius: 0 0 38px 38px; min-height: 68px; display: flex; align-items: center; justify-content: center; position: relative; padding: 0 14px;}
+    .home-btn { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); background: #fff; color: #2563eb; font-size: 1.09rem; border: none; border-radius: 17px; padding: 8px 21px; font-weight: bold; cursor: pointer; text-decoration: none; box-shadow: 0 2px 9px #0001; z-index: 2; transition: background 0.15s, color 0.15s; white-space: nowrap; min-width: 82px; }
+    .home-btn:active, .home-btn:focus, .home-btn:hover { background: #eaf1ff; color: #1552b8; text-decoration: underline;}
+    .header-title { margin: 0 auto; text-align: center; font-size: 1.22em; font-weight: bold; letter-spacing: -1px; line-height: 1.1; width: 100%; max-width: 100vw; padding: 14px 0; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+    .mainbar { max-width: 550px; margin: 15px auto 0 auto; display:flex; flex-direction:column; align-items:center; gap:12px; }
+    .phone-guide {
+      font-size: 0.96rem;
+      color: #2563eb;
+      margin-bottom: 7px;
+      margin-top: 2px;
+      text-align: center;
+      letter-spacing: -1px;
+      opacity: 0.86;
+      font-weight: 500;
+      word-break: keep-all;
+    }
+    .lesson-select { padding: 9px 10px; border: 1.3px solid #2563eb; border-radius: 10px; font-size: 1.04rem; background: #fff; color: #222; width: 100%; max-width:98vw; min-width:140px; margin-bottom: 5px;}
+    .main-title { text-align: center; font-size: 1.28rem; font-weight: bold; margin: 18px 0 9px 0; color: #23243a;}
+    .section-tabs { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; margin: 8px 0 0 0; width: 100%;}
+    .section-tab { background: #eee; color: #212a35; border:none; border-radius: 7px; padding: 6px 18px; font-size: 1.02rem; cursor:pointer; transition: background 0.14s, color 0.14s; font-weight: 500; margin-bottom: 3px;}
+    .section-tab.selected { background: #2563eb; color:#fff; }
+    .content-box { max-width: 96vw; min-height: 70px; margin: 22px auto 0 auto; border-radius:18px; background:#fff; box-shadow:0 6px 20px #e5eaf5; padding: 18px 8px 18px 8px; }
+    .sentence-row { display: flex; align-items: flex-start; margin-bottom: 18px; }
+    .sentence-content { flex: 1; }
+    .en { font-size: 1.07rem; background: #fff; border: 1px solid #e3e3e3; border-radius: 9px; padding: 12px 10px; min-width: 60vw; word-break: break-all; margin-bottom: 2px; color:#2563eb;}
+    .sortable { display: flex; flex-wrap: wrap; min-height: 54px; gap: 11px; margin-bottom: 11px;}
+    .eng-build .word, .eng-ans .word { background: #2563eb; color: #fff; border: none; border-radius: 8px; padding: 7px 18px; font-size: 1em; font-weight: bold; cursor: grab; margin-bottom: 6px; user-select: none; transition: background 0.16s;}
+    .eng-ans .word { background: #e0e7ef; color: #1e293b; cursor: grab;}
+    .eng-build .word:active, .eng-ans .word:active { background: #1d4ed8; }
+    .eng-result { font-size:1em; color:#d97706; min-height:28px; font-weight: bold; margin-bottom:4px;}
+    .eng-btns button {padding:5px 14px; font-size:1em; border-radius:7px; border:none; background:#3b82f6; color:#fff; cursor:pointer; margin-right:5px; font-weight:bold;}
+    .eng-btns button:active {background:#194ca0;}
+    .answer-sentence {margin:6px 0 0 0; color:#374151; font-size:1.05em; }
+    @media (max-width: 500px) {
+      .mainbar { max-width: 99vw; }
+      .content-box { padding: 7vw 2vw;}
+      .en { min-width: 10vw; font-size: 0.95rem; }
+      .section-tab { font-size: 0.95rem; padding: 6px 13px;}
+      .sentence-row { flex-direction: column;}
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <a class="home-btn" href="https://nmyway77.github.io/home2/">홈으로</a>
+    <span class="header-title">목운중2 배열영작</span>
+  </div>
+  <div class="mainbar">
+    <select id="lessonSelect" class="lesson-select" onchange="changeLesson()"></select>
+    <!-- 안내 문구 추가 위치 -->
+    <div class="phone-guide">삼성폰에서는 드래그하세요(단어를 위로 올리세요)</div>
+    <div class="main-title" id="mainTitle"></div>
+    <div class="section-tabs" id="sectionTabs"></div>
+  </div>
+  <div class="content-box" id="sectionContent"></div>
+<script>
+  // 문제 데이터 구조
+  const lessonSections = {};
+  for (let i=1; i<=25; i++) lessonSections[i] = [`${i}-1`, `${i}-2`, `${i}-3`, `${i}-4`, `${i}-5`];
+  const sectionSentences = {
+    '1-1': [
+{en: "#Selfie Facts", ko: "#셀피와 관련된 사실들"}, {en: "Are you interested in selfies?", ko: "당신은 셀피에 관심이 있는가?"}, {en: "You probably like to post selfies on social media, but how much do you know about selfies?", ko: "당신은 아마 소셜 미디어에 셀피를 게시하는 것을 좋아할지도 모르지만, 셀피에 대해 얼마나 알고 있는가?"}, {en: "Here are some interesting facts.", ko: "여기 몇 가지 재미있는 사실들이 있다."}, {en: "1. Robert Cornelius took the world’s first selfie in 1839.", ko: "1. 로버트 코닐리어스가 1839년에 세계 최초의 셀피를 찍었다."}, {en: "2. Selfie became a new word in the dictionary in 2013.", ko: "2. selfie는 2013년에 신조어로 사전에 실렸다."}, {en: "3. Buzz Aldrin took the first space selfie in 1966.", ko: "3. 버즈 올드린이 1966년에 최초의 우주 셀피를 찍었다."}, {en: "#Selfie Survey", ko: "#셀피 설문 조사"}, {en: "Taking selfies is part of daily life for many teens, but do teens really enjoy it?", ko: "셀피 찍기는 많은 십 대들에게 일상생활의 한 부분인데, 십 대들은 정말로 그것을 즐기고 있는가?"}, {en: "To find out, we did a survey.", ko: "알아보기 위해 우리는 설문 조사를 했다."}, {en: "We asked three questions of 300 students from ages 14 to 16.", ko: "우리는 14세에서 16세 사이의 학생 300명에게 세 가지를 질문했다."}, {en: "Let’s look at the results.", ko: "그 결과를 보자."}, {en: "Surprisingly, 90 percent of the girls take selfies, but only 15 percent of the boys take selfies.", ko: "놀랍게도, 여학생들의 90퍼센트가 셀피를 찍지만, 남학생들의 15퍼센트만이 셀피를 찍는다."}, {en: "Also, 93 percent of these students said that they use filters.", ko: "또한 이 학생들의 93퍼센트는 필터를 사용한다고 대답했다."}, {en: "The survey also showed that the students take selfies at school the most.", ko: "이 조사는 또한 학생들이 셀피를 학교에서 가장 많이 찍는다는 것을 보여 주었다."}, {en: "Check out some of the students’ comments.", ko: "학생들의 의견 몇 가지를 확인해 보라."}, {en: "Lewis, 14, England: Selfies are awesome. Making silly faces is really fun!", ko: "Lewis, 14세, 영국: 셀피는 굉장하다. 우스꽝스러운 표정을 짓는 것은 정말 재미있다!"}, {en: "Minwoo, 16, Korea: I enjoy taking selfies, but some students spend too much time doing it.", ko: "민우, 16세, 한국: 나는 셀피 찍는 것을 즐기지만 몇몇 학생들은 그것을 하는 데 너무 많은 시간을 쓴다."}, {en: "Kate, 15, Denmark: My pictures look good when I use filters. But sometimes my selfies don’t look like me.", ko: "Kate, 15세, 덴마크: 내 사진은 필터를 사용할 때 멋져 보인다. 하지만 가끔 나의 셀피가 나처럼 보이지 않는다."}, {en: "#Selfie Etiquette ", ko: " #셀피 예절"}, {en: "You should follow etiquette for selfies.", ko: "당신은 셀피 예절을 따라야 한다."}, {en: "Ask yourself these questions before you take, post, or look at selfies.", ko: "셀피를 찍거나 게시하거나 보기 전에 스스로에게 이 질문들을 해 보라."}, {en: "1. Where am I?", ko: "1. 내가 어디에 있는가?"}, {en: "Choose appropriate places to take selfies.", ko: "셀피를 찍기에 적절한 장소를 선택하라."}, {en: "Don’t take selfies in hospitals or public restrooms.", ko: "병원이나 공중화장실에서 셀피를 찍지 마라."}, {en: "It may bother other people.", ko: "그것은 아마 다른 사람들을 신경 쓰이게 할 것이다."}, {en: "2. Who can see this?", ko: "2. 누가 이것을 볼 수 있는가?"}, {en: "Keep in mind that anyone can see your selfies.", ko: "누구나 당신의 셀피를 볼 수 있다는 것을 명심하라."}, {en: "Choose carefully when you post them.", ko: "그것들을 게시할 때 신중하게 골라라."}, {en: "3. What kinds of comments should I leave?", ko: "3. 어떤 의견을 남겨야 하는가?"}, {en: "Leave nice comments on other people’s selfies. Don’t be rude.", ko: "다른 사람들의 셀피에 기분 좋은 의견을 남겨라. 무례하게 굴지 마라."}, {en: "That sounds easy, doesn’t it?", ko: "쉬운 것처럼 들린다, 그렇지 않은가?"}, {en: "Follow these tips and have fun with your selfies!", ko: "이러한 조언들을 따라서 당신의 셀피로 즐거운 시간을 보내라!"},
+    ],
+    '1-2': [],
+    '1-3': [],
+    '1-4': [],
+    '1-5': [],
+    '2-2': [],
+    '2-3': [],
+    '2-4': [],
+    '2-5': [],
+  };
+  for (let i=1; i<=25; i++) for (let j=1; j<=5; j++) if (!sectionSentences[`${i}-${j}`]) sectionSentences[`${i}-${j}`] = [];
+
+  let currentUnit = 1;
+  let currentSectionIdx = 0;
+  let buildStates = {};
+
+  function setLessonOptions() {
+    const sel = document.getElementById('lessonSelect');
+    sel.innerHTML = '';
+    for (let i=1; i<=25; i++) {
+      sel.innerHTML += `<option value="${i}">Lesson ${i}</option>`;
+    }
+  }
+  setLessonOptions();
+
+  function changeLesson() {
+    let sel = document.getElementById('lessonSelect');
+    currentUnit = parseInt(sel.value, 10);
+    currentSectionIdx = 0;
+    buildStates = {};
+    updateUI();
+  }
+  function selectSection(idx) {
+    currentSectionIdx = idx;
+    buildStates = {};
+    updateUI();
+  }
+
+  function speak(text) {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utter = new window.SpeechSynthesisUtterance(text);
+      utter.lang = 'en-US';
+      utter.rate = 1;
+      window.speechSynthesis.speak(utter);
+    }
+  }
+
+  // PC/모바일 판별 함수
+  function isMobile() {
+    return /Mobi|Android|iPhone|iPad|iPod|Samsung|LG|IEMobile|BlackBerry|Opera Mini/i.test(navigator.userAgent);
+  }
+
+  function updateUI() {
+    document.getElementById('mainTitle').textContent = `Lesson ${currentUnit}`;
+    document.getElementById('lessonSelect').value = currentUnit;
+    let tabs = '', sections = lessonSections[currentUnit] || [];
+    sections.forEach((name, idx) => {
+      tabs += `<button class="section-tab${idx===currentSectionIdx?' selected':''}" onclick="selectSection(${idx})">${name}</button>`;
+    });
+    document.getElementById('sectionTabs').innerHTML = tabs;
+    let contentHTML = '';
+    const sectionKey = sections[currentSectionIdx];
+    const sentArr = sectionSentences[sectionKey] || [];
+    sentArr.forEach(({en, ko}, i) => {
+      let st = buildStates[i] || { chosen: [], pool: shuffle(en.split(' ')), result: "", showAnswer: false };
+      buildStates[i] = st;
+      contentHTML += `
+        <div class="sentence-row" style="align-items: flex-start;">
+          <div class="sentence-content" style="width:100%">
+            <div class="en" style="margin-bottom:6px;color:#222;">${ko}</div>
+            <div class="eng-ans sortable" id="ans-${i}">
+              ${st.chosen.map((w, idx) =>
+                `<button type="button" class="word" data-from="ans" data-i="${i}" data-idx="${idx}">${w}</button>`
+              ).join('')}
+            </div>
+            <div class="eng-build sortable" id="pool-${i}">
+              ${st.pool.map((w, idx) =>
+                `<button type="button" class="word" data-from="pool" data-i="${i}" data-idx="${idx}">${w}</button>`
+              ).join('')}
+            </div>
+            <div class="eng-btns">
+              <button onclick="undoLastWord(${i})">되돌리기</button>
+              <button onclick="resetBuild(${i})">초기화</button>
+              <button onclick="checkBuild(${i})">정답 확인</button>
+            </div>
+            <div class="eng-result" id="engres-${i}">${st.result||""}</div>
+            <div class="answer-sentence" id="answersen-${i}" style="margin-top:4px; color:#374151; font-size:1.05em; ${st.showAnswer ? '' : 'display:none;'}">
+              정답문장: <span style="color:#2563eb;">${en}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+    document.getElementById('sectionContent').innerHTML = contentHTML || `<i>아직 내용이 없습니다.</i>`;
+
+    setTimeout(() => {
+      sentArr.forEach((item, idx) => {
+        let ansEl = document.getElementById('ans-' + idx);
+        let poolEl = document.getElementById('pool-' + idx);
+        if (!ansEl || !poolEl) return;
+        const groupName = 'group-'+currentUnit+'-'+currentSectionIdx+'-'+idx;
+        if (!ansEl.dataset.sortable) {
+          Sortable.create(ansEl, {
+            group: { name: groupName, pull: true, put: true },
+            animation: 130,
+            direction: 'horizontal',
+            onAdd: function(evt) { syncWords(idx); },
+            onUpdate: function(evt) { syncWords(idx); }
+          });
+          ansEl.dataset.sortable = "1";
+        }
+        if (!poolEl.dataset.sortable) {
+          Sortable.create(poolEl, {
+            group: { name: groupName, pull: true, put: true },
+            animation: 130,
+            direction: 'horizontal',
+            onAdd: function(evt) { syncWords(idx); },
+            onUpdate: function(evt) { syncWords(idx); }
+          });
+          poolEl.dataset.sortable = "1";
+        }
+      });
+
+      // 단어 클릭 이벤트 등록 (PC만)
+      if (!isMobile()) {
+        // PC에서만 클릭으로 단어 이동 허용
+        document.querySelectorAll('.eng-build .word').forEach(btn => {
+          btn.onclick = function(e) {
+            let i = parseInt(btn.dataset.i), idx = parseInt(btn.dataset.idx);
+            let st = buildStates[i];
+            st.chosen.push(st.pool[idx]);
+            st.pool.splice(idx,1);
+            st.result = "";
+            st.showAnswer = false;
+            updateUI();
+          };
+        });
+        document.querySelectorAll('.eng-ans .word').forEach(btn => {
+          btn.onclick = function(e) {
+            let i = parseInt(btn.dataset.i), idx = parseInt(btn.dataset.idx);
+            let st = buildStates[i];
+            st.pool.push(st.chosen[idx]);
+            st.chosen.splice(idx,1);
+            st.result = "";
+            st.showAnswer = false;
+            updateUI();
+          };
+        });
+      }
+    }, 0);
+  }
+
+  function syncWords(idx) {
+    let ansEl = document.getElementById('ans-'+idx);
+    let poolEl = document.getElementById('pool-'+idx);
+    let st = buildStates[idx];
+    st.chosen = Array.from(ansEl.children).map(b=>b.textContent);
+    st.pool = Array.from(poolEl.children).map(b=>b.textContent);
+    st.result = "";
+    st.showAnswer = false;
+    updateUI();
+  }
+  function shuffle(arr) { return arr.slice().sort(() => Math.random() - 0.5);}
+  function undoLastWord(i) {
+    let st = buildStates[i];
+    if(st.chosen.length>0) st.pool.push(st.chosen.pop());
+    st.result="";
+    st.showAnswer = false;
+    updateUI();
+  }
+  function resetBuild(i) {
+    let sentArr = sectionSentences[lessonSections[currentUnit][currentSectionIdx]] || [];
+    buildStates[i] = {chosen:[], pool:shuffle(sentArr[i].en.split(' ')), result:"", showAnswer: false };
+    updateUI();
+  }
+  function checkBuild(i) {
+    let sentArr = sectionSentences[lessonSections[currentUnit][currentSectionIdx]] || [];
+    let st = buildStates[i];
+    let correct = sentArr[i].en.trim();
+    let user = st.chosen.join(' ').trim();
+    st.showAnswer = !st.showAnswer; // 토글
+    if(st.showAnswer) {
+      if(user === correct) {
+        st.result = "정답입니다! 🎉";
+        speak(correct);   // 정답 영어문장 읽기
+      } else {
+        st.result = "?!";
+      }
+    } else {
+      st.result = "";
+    }
+    updateUI();
+  }
+
+  updateUI();
+  window.selectSection = selectSection;
+  window.undoLastWord = undoLastWord;
+  window.resetBuild = resetBuild;
+  window.checkBuild = checkBuild;
+</script>
+</body>
+</html>
