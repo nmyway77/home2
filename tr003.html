@@ -147,6 +147,34 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 .word-chip:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(46,117,182,0.25);}
 .word-chip.dragging{opacity:0.35;transform:scale(0.93);cursor:grabbing;}
 .word-chip.ok-chip{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20;}
+.word-chip.selected-chip{
+  background:var(--orange);color:white;
+  border-color:var(--orange);
+  transform:translateY(-3px) scale(1.05);
+  box-shadow:0 6px 16px rgba(230,81,0,0.35);
+}
+.answer-zone.click-ready{
+  border-color:var(--orange) !important;
+  background:#fff3e0 !important;
+  animation:pulse-zone 0.8s ease infinite alternate;
+}
+.word-pool.click-ready{
+  border-color:var(--orange) !important;
+  background:#fff3e0 !important;
+}
+@keyframes pulse-zone{
+  from{box-shadow:0 0 0 0 rgba(230,81,0,0.2);}
+  to{box-shadow:0 0 0 6px rgba(230,81,0,0);}
+}
+/* 터치 힌트 */
+.touch-hint{
+  text-align:center;font-size:11px;
+  font-family:'JetBrains Mono',monospace;
+  color:rgba(0,0,0,0.3);letter-spacing:1px;
+  margin-bottom:14px;
+  padding:7px;background:rgba(0,0,0,0.03);
+  border-radius:6px;
+}
 .arr-result{display:none;padding:9px 13px;border-radius:7px;font-size:13px;font-weight:600;margin-bottom:10px;align-items:center;gap:8px;}
 .arr-result.show{display:flex;}
 .arr-result.ok{background:#E8F5E9;color:#1B5E20;border:1px solid #A5D6A7;}
@@ -160,6 +188,133 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 .arr-show-ans:hover{background:#fff3e0;}
 .ans-reveal{display:none;margin-top:8px;padding:10px 12px;background:var(--cream);border-radius:6px;border-left:3px solid var(--gold);font-family:Georgia,serif;font-size:13px;color:#3d2200;line-height:1.7;}
 .ans-reveal.show{display:block;}
+
+/* ══ 어법 문제 ══ */
+.tab-grammar{background:white;color:#1D5C2B;border-color:rgba(29,92,43,0.25);}
+.tab-grammar.active{background:#1D5C2B;color:white;border-color:#1D5C2B;}
+
+.grammar-view{display:none;}
+.grammar-view.active{display:block;}
+
+/* 유형 섹션 헤더 */
+.gtype-header{
+  background:var(--navy);color:white;
+  border-radius:8px 8px 0 0;
+  padding:11px 18px;
+  display:flex;align-items:center;gap:10px;
+  font-family:'Playfair Display',serif;font-size:15px;font-weight:700;
+}
+.gtype-body{
+  background:white;border:1px solid rgba(31,56,100,0.12);
+  border-top:none;border-radius:0 0 8px 8px;
+  padding:18px;margin-bottom:22px;
+  box-shadow:0 3px 14px var(--shadow);
+}
+.gtype-desc{
+  font-size:11.5px;color:rgba(255,255,255,0.7);
+  font-family:'JetBrains Mono',monospace;font-weight:400;
+  letter-spacing:0.5px;
+}
+
+/* 문제 카드 */
+.gq-card{
+  border-radius:8px;border:1px solid rgba(0,0,0,0.08);
+  background:#fafafa;margin-bottom:14px;overflow:hidden;
+}
+.gq-top{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:12px 14px;
+}
+.gq-num{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  background:var(--navy);color:white;
+  padding:3px 8px;border-radius:4px;flex-shrink:0;margin-top:2px;
+  font-weight:700;
+}
+.gq-sent{
+  font-family:Georgia,serif;font-size:14px;line-height:1.85;
+  color:#1a1a2e;flex:1;
+}
+/* A/B 선택형 괄호 */
+.ab-choice{
+  display:inline-flex;gap:0;
+  border:1.5px solid var(--blue-border);
+  border-radius:5px;overflow:hidden;
+  vertical-align:middle;margin:0 2px;
+  font-family:'JetBrains Mono',monospace;font-size:12px;
+}
+.ab-opt{
+  padding:2px 8px;cursor:pointer;
+  background:white;color:var(--navy);
+  transition:background 0.15s,color 0.15s;
+  border:none;font-family:Georgia,serif;font-size:13px;
+  font-weight:600;
+}
+.ab-opt:first-child{border-right:1px solid rgba(46,117,182,0.3);}
+.ab-opt:hover{background:var(--blue-card);}
+.ab-opt.selected{background:var(--navy);color:white;}
+.ab-opt.correct-sel{background:#2E7D32;color:white;}
+.ab-opt.wrong-sel{background:#C62828;color:white;}
+
+/* 오류수정 — 밑줄 단어들 */
+.err-word{
+  display:inline-block;
+  border-bottom:2px solid var(--blue-border);
+  cursor:pointer;padding:0 3px;margin:0 2px;
+  border-radius:2px 2px 0 0;
+  transition:background 0.15s;
+  font-weight:600;
+}
+.err-word:hover{background:rgba(46,117,182,0.1);}
+.err-word.selected-err{background:rgba(230,81,0,0.15);border-bottom-color:var(--orange);}
+.err-word.correct-err{background:#E8F5E9;border-bottom-color:#2E7D32;color:#1B5E20;}
+.err-word.wrong-err{background:#FFEBEE;border-bottom-color:#C62828;color:#B71C1C;}
+
+/* 서답형 입력 */
+.fill-wrap{
+  display:inline-flex;align-items:center;gap:4px;
+  vertical-align:middle;margin:0 3px;
+}
+.fill-base{
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:rgba(0,0,0,0.4);letter-spacing:0.3px;
+}
+.fill-input{
+  font-family:Georgia,serif;font-size:13px;
+  border:none;border-bottom:2px solid var(--blue-border);
+  background:transparent;color:var(--navy);
+  width:100px;text-align:center;outline:none;
+  padding:1px 4px;transition:border-color 0.2s;
+  font-weight:600;
+}
+.fill-input:focus{border-bottom-color:var(--orange);}
+.fill-input.correct-fill{border-bottom-color:#2E7D32;color:#1B5E20;background:#E8F5E9;}
+.fill-input.wrong-fill{border-bottom-color:#C62828;color:#B71C1C;background:#FFEBEE;}
+
+/* 피드백 줄 */
+.gq-feedback{
+  display:none;padding:8px 14px 9px;
+  font-size:12px;line-height:1.7;
+  border-top:1px dashed rgba(0,0,0,0.08);
+}
+.gq-feedback.show{display:block;}
+.gq-feedback.ok{background:#E8F5E9;color:#1B5E20;}
+.gq-feedback.ng{background:#FFEBEE;color:#B71C1C;}
+.feedback-ans{font-weight:700;font-family:'JetBrains Mono',monospace;font-size:11px;}
+
+/* 채점 버튼 */
+.gq-btns{padding:8px 14px 12px;display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid rgba(0,0,0,0.06);}
+.gq-check{font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 15px;border-radius:6px;border:none;background:var(--navy);color:white;cursor:pointer;transition:background 0.2s;}
+.gq-check:hover{background:#2a4a8a;}
+.gq-reset{font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 12px;border-radius:6px;border:1px solid rgba(0,0,0,0.15);background:white;color:#666;cursor:pointer;}
+.gq-reset:hover{background:#f5f5f5;}
+
+/* 전체 점수 */
+.g-score-bar{background:linear-gradient(135deg,#1D5C2B,#2E7D32);border-radius:10px;padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.g-score-num{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:#c8f7c5;line-height:1;}
+.g-score-total{font-size:13px;color:rgba(255,255,255,0.4);}
+.g-score-reset{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;padding:7px 14px;border-radius:6px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.8);cursor:pointer;}
+.g-score-reset:hover{background:rgba(255,255,255,0.2);color:white;}
 
 footer{text-align:center;padding:40px 16px 48px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(31,56,100,0.28);letter-spacing:1px;}
 </style>
@@ -190,6 +345,7 @@ footer{text-align:center;padding:40px 16px 48px;font-family:'JetBrains Mono',mon
   <div class="view-tabs">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
     <button class="view-tab tab-arrange" id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
+    <button class="view-tab tab-grammar" id="tabG" onclick="switchView('grammar')">📝 어법 문제</button>
   </div>
 
   <!-- ── 한줄해석 뷰 ── -->
@@ -419,6 +575,40 @@ footer{text-align:center;padding:40px 16px 48px;font-family:'JetBrains Mono',mon
     <div id="arrCards"></div>
   </div>
 
+
+  <!-- ── 어법 문제 뷰 ── -->
+  <div class="grammar-view" id="grammarView">
+    <div class="g-score-bar">
+      <div>
+        <div class="score-label" style="color:rgba(255,255,255,0.5)">SCORE</div>
+        <span class="g-score-num" id="gScoreNum">0</span>
+        <span class="g-score-total" id="gScoreTotal"> / 0</span>
+      </div>
+      <button class="g-score-reset" onclick="gResetAll()">↺ 전체 초기화</button>
+    </div>
+
+    <!-- A/B 선택형 -->
+    <div class="gtype-header">
+      <span>①</span> 괄호 안에서 알맞은 것 고르기
+      <span class="gtype-desc">클릭해서 선택 → ✓ 확인</span>
+    </div>
+    <div class="gtype-body" id="abSection"></div>
+
+    <!-- 오류수정 -->
+    <div class="gtype-header" style="background:#5B2D8E;">
+      <span>②</span> 어법상 틀린 부분 찾아 고치기
+      <span class="gtype-desc">밑줄 단어 클릭 → ✓ 확인</span>
+    </div>
+    <div class="gtype-body" id="errSection"></div>
+
+    <!-- 서답형 -->
+    <div class="gtype-header" style="background:#C55A11;">
+      <span>③</span> 빈칸에 알맞은 어형으로 쓰기
+      <span class="gtype-desc">괄호 안 단어를 알맞은 형태로 변환</span>
+    </div>
+    <div class="gtype-body" id="fillSection"></div>
+  </div>
+
 </section>
 
 <section class="passage" id="p-27"><div class="soon-screen"><div class="soon-num">27</div><div class="soon-label">준비 중</div><div class="soon-text">곧 업로드됩니다</div></div></section>
@@ -513,24 +703,324 @@ function readNext(){
   speechSynthesis.speak(u);
 }
 
-/* ══ 뷰 전환 ══ */
+
+/* ══ 어법 문제 데이터 ══ */
+
+// A/B 선택형
+const AB_DATA = [
+  {
+    id:'ab0',
+    sent: ['From around 3000 BC, the Sumerian officials would mark their lists of goods on clay tablets. If they wanted to record five fish, they would mark five pictures of a fish. Their first great intellectual leap came from ', {a:'separate',b:'separating'}, ' the number from the object they were counting.'],
+    answer: 'b',
+    exp: '<strong>separating</strong> — came from + <strong>동명사(V-ing)</strong>: "~하는 것에서 비롯되다". came from은 전치사구이므로 뒤에 동명사가 와야 합니다.'
+  },
+  {
+    id:'ab1',
+    sent: ['In other words, they would represent five fish with a numeral for the number five ', {a:'alongside',b:'along'}, ' a symbol for the fish.'],
+    answer: 'a',
+    exp: '<strong>alongside</strong> — "~와 나란히, ~와 함께"라는 뜻의 전치사. along은 "~을 따라"로 문맥에 맞지 않습니다.'
+  },
+  {
+    id:'ab2',
+    sent: ['The Sumerians had developed the idea of an emancipated number, ', {a:'existing',b:'existed'}, ' in its own right and independent of whatever it is being used to count.'],
+    answer: 'a',
+    exp: '<strong>existing</strong> — 앞의 명사 <em>an emancipated number</em>를 수식하는 <strong>현재분사(분사구문)</strong>. "그 자체로 존재하는 해방된 숫자"의 의미로 능동 관계이므로 -ing형이 맞습니다.'
+  },
+  {
+    id:'ab3',
+    sent: ['It is easy to take the emancipated number for granted as it is ', {a:'so',b:'such'}, ' deeply set into modern thought.'],
+    answer: 'a',
+    exp: '<strong>so</strong> — <strong>so + 형용사/부사</strong> vs such + (a/an) + 형용사 + 명사. 여기서 deeply는 부사이므로 so가 맞습니다.'
+  },
+  {
+    id:'ab4',
+    sent: ['It is easy to take the emancipated number for granted as it is so deeply set into modern thought, but to the earliest civilizations it was intellectually new and ', {a:'extreme',b:'extremely'}, ' powerful.'],
+    answer: 'b',
+    exp: '<strong>extremely</strong> — powerful(형용사)을 수식하므로 <strong>부사(extremely)</strong>가 와야 합니다. extreme은 형용사입니다.'
+  },
+];
+
+// 오류수정형
+const ERR_DATA = [
+  {
+    id:'er0',
+    words: ['Their','first','great','intellectual','leap','came','from','separate','the','number','from','the','object','they','were','counting.'],
+    errorIdx: 7,
+    correct: 'separating',
+    exp: '<strong>separate → separating</strong>: came from 뒤에는 <strong>동명사</strong>가 와야 합니다. (came from + V-ing)'
+  },
+  {
+    id:'er1',
+    words: ['The','Sumerians','had','developed','the','idea','of','an','emancipated','number,','existed','in','its','own','right','and','independent','of','whatever','it','is','being','used','to','count.'],
+    errorIdx: 10,
+    correct: 'existing',
+    exp: '<strong>existed → existing</strong>: 앞의 명사 <em>emancipated number</em>를 수식하는 <strong>현재분사</strong>가 와야 합니다. 능동·진행 관계이므로 -ing형.'
+  },
+  {
+    id:'er2',
+    words: ['It','is','easy','taking','the','emancipated','number','for','granted','as','it','is','so','deeply','set','into','modern','thought.'],
+    errorIdx: 3,
+    correct: 'to take',
+    exp: '<strong>taking → to take</strong>: <strong>It is + 형용사 + to-v</strong> 구문 (가주어-진주어). "~하기 쉽다"는 It is easy <strong>to</strong> take.'
+  },
+];
+
+// 서답형
+const FILL_DATA = [
+  {
+    id:'fi0',
+    before: 'If they wanted to record five fish, they would mark five pictures of a fish. Their first great intellectual leap came from',
+    base: 'separate',
+    after: 'the number from the object they were counting.',
+    answer: 'separating',
+    hint: '전치사 from 뒤 → 동명사',
+    exp: '<strong>separating</strong>: 전치사(from) 뒤에는 <strong>동명사(-ing)</strong>가 와야 합니다.'
+  },
+  {
+    id:'fi1',
+    before: 'The Sumerians had developed the idea of an emancipated number,',
+    base: 'exist',
+    after: 'in its own right and independent of whatever it is being used to count.',
+    answer: 'existing',
+    hint: '앞 명사 수식 → 현재분사',
+    exp: '<strong>existing</strong>: 명사 <em>emancipated number</em>를 뒤에서 수식하는 <strong>현재분사</strong>입니다.'
+  },
+  {
+    id:'fi2',
+    before: 'It is easy to take the emancipated number for granted as it is so deeply set into modern thought, but to the earliest civilizations it was intellectually new and',
+    base: 'extreme',
+    after: 'powerful.',
+    answer: 'extremely',
+    hint: '형용사(powerful) 수식 → 부사',
+    exp: '<strong>extremely</strong>: 형용사 powerful을 수식하려면 <strong>부사(-ly)</strong> 형태가 필요합니다.'
+  },
+  {
+    id:'fi3',
+    before: 'From around 3000 BC, the Sumerian officials would mark their lists of goods on clay tablets. If they',
+    base: 'want',
+    after: 'to record five fish, they would mark five pictures of a fish.',
+    answer: 'wanted',
+    hint: '과거 조건절 → 과거형',
+    exp: '<strong>wanted</strong>: If절에서 과거 습관·조건을 나타내는 <strong>과거형 동사</strong>가 와야 합니다.'
+  },
+];
+
+let gScores = {};
+let gBuilt = false;
+
+function buildGrammarSection() {
+  buildAB(); buildErr(); buildFill();
+  updateGScore();
+}
+
+/* A/B 선택형 빌드 */
+function buildAB() {
+  const box = document.getElementById('abSection');
+  AB_DATA.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'gq-card';
+    card.id = 'ab-card-' + qi;
+
+    let sentHtml = '';
+    q.sent.forEach(part => {
+      if (typeof part === 'string') {
+        sentHtml += part;
+      } else {
+        sentHtml += `<span class="ab-choice" id="abc-${qi}">` +
+          `<button class="ab-opt" data-qi="${qi}" data-val="a" onclick="abSelect(${qi},'a')">${part.a}</button>` +
+          `<button class="ab-opt" data-qi="${qi}" data-val="b" onclick="abSelect(${qi},'b')">${part.b}</button>` +
+          `</span>`;
+      }
+    });
+
+    card.innerHTML = `
+      <div class="gq-top">
+        <span class="gq-num">${String(qi+1).padStart(2,'0')}</span>
+        <div class="gq-sent">${sentHtml}</div>
+      </div>
+      <div class="gq-feedback" id="ab-fb-${qi}"></div>
+      <div class="gq-btns">
+        <button class="gq-check" onclick="checkAB(${qi})">✓ 확인</button>
+        <button class="gq-reset" onclick="resetAB(${qi})">↺</button>
+      </div>`;
+    box.appendChild(card);
+  });
+}
+
+let abSelected = {};
+function abSelect(qi, val) {
+  abSelected[qi] = val;
+  const choice = document.getElementById('abc-' + qi);
+  choice.querySelectorAll('.ab-opt').forEach(btn => {
+    btn.classList.toggle('selected', btn.dataset.val === val);
+  });
+}
+function checkAB(qi) {
+  const sel = abSelected[qi];
+  if (!sel) return;
+  const correct = AB_DATA[qi].answer;
+  const ok = sel === correct;
+  const choice = document.getElementById('abc-' + qi);
+  choice.querySelectorAll('.ab-opt').forEach(btn => {
+    btn.classList.remove('selected','correct-sel','wrong-sel');
+    if (btn.dataset.val === correct) btn.classList.add('correct-sel');
+    else if (btn.dataset.val === sel && !ok) btn.classList.add('wrong-sel');
+  });
+  const fb = document.getElementById('ab-fb-' + qi);
+  fb.className = 'gq-feedback show ' + (ok ? 'ok' : 'ng');
+  fb.innerHTML = (ok ? '🎉 정답! ' : '❌ 오답. ') + AB_DATA[qi].exp;
+  gScores['ab'+qi] = ok ? 1 : 0;
+  updateGScore();
+}
+function resetAB(qi) {
+  delete abSelected[qi];
+  const choice = document.getElementById('abc-' + qi);
+  choice.querySelectorAll('.ab-opt').forEach(btn => btn.className = 'ab-opt');
+  document.getElementById('ab-fb-' + qi).className = 'gq-feedback';
+  delete gScores['ab'+qi]; updateGScore();
+}
+
+/* 오류수정형 빌드 */
+function buildErr() {
+  const box = document.getElementById('errSection');
+  ERR_DATA.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'gq-card';
+    const wordsHtml = q.words.map((w, wi) =>
+      `<span class="err-word" id="ew-${qi}-${wi}" onclick="errSelect(${qi},${wi})">${w}</span> `
+    ).join('');
+    card.innerHTML = `
+      <div class="gq-top">
+        <span class="gq-num">${String(qi+1).padStart(2,'0')}</span>
+        <div class="gq-sent">${wordsHtml}</div>
+      </div>
+      <div class="gq-feedback" id="er-fb-${qi}"></div>
+      <div class="gq-btns">
+        <button class="gq-check" onclick="checkErr(${qi})">✓ 확인</button>
+        <button class="gq-reset" onclick="resetErr(${qi})">↺</button>
+      </div>`;
+    box.appendChild(card);
+  });
+}
+
+let errSelected = {};
+function errSelect(qi, wi) {
+  if (errSelected[qi] !== undefined) {
+    document.getElementById(`ew-${qi}-${errSelected[qi]}`).classList.remove('selected-err');
+  }
+  errSelected[qi] = wi;
+  document.getElementById(`ew-${qi}-${wi}`).classList.add('selected-err');
+}
+function checkErr(qi) {
+  const sel = errSelected[qi];
+  if (sel === undefined) return;
+  const correct = ERR_DATA[qi].errorIdx;
+  const ok = sel === correct;
+  // 스타일
+  document.getElementById(`ew-${qi}-${sel}`).classList.remove('selected-err');
+  document.getElementById(`ew-${qi}-${correct}`).classList.add('correct-err');
+  if (!ok) document.getElementById(`ew-${qi}-${sel}`).classList.add('wrong-err');
+  const fb = document.getElementById('er-fb-' + qi);
+  fb.className = 'gq-feedback show ' + (ok ? 'ok' : 'ng');
+  fb.innerHTML = (ok ? '🎉 정답! ' : '❌ 오답. ') +
+    `<span class="feedback-ans">정답: "${ERR_DATA[qi].correct}"</span> — ` + ERR_DATA[qi].exp;
+  gScores['er'+qi] = ok ? 1 : 0; updateGScore();
+}
+function resetErr(qi) {
+  ERR_DATA[qi].words.forEach((_,wi) => {
+    const el = document.getElementById(`ew-${qi}-${wi}`);
+    if(el) el.className = 'err-word';
+  });
+  delete errSelected[qi];
+  document.getElementById('er-fb-'+qi).className = 'gq-feedback';
+  delete gScores['er'+qi]; updateGScore();
+}
+
+/* 서답형 빌드 */
+function buildFill() {
+  const box = document.getElementById('fillSection');
+  FILL_DATA.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'gq-card';
+    card.innerHTML = `
+      <div class="gq-top">
+        <span class="gq-num">${String(qi+1).padStart(2,'0')}</span>
+        <div class="gq-sent">
+          ${q.before}
+          <span class="fill-wrap">
+            <span class="fill-base">(${q.base})</span>
+            <input class="fill-input" id="fi-${qi}" placeholder="___" autocomplete="off" spellcheck="false">
+          </span>
+          ${q.after}
+          <span style="font-size:11px;color:var(--gold);margin-left:6px;">힌트: ${q.hint}</span>
+        </div>
+      </div>
+      <div class="gq-feedback" id="fi-fb-${qi}"></div>
+      <div class="gq-btns">
+        <button class="gq-check" onclick="checkFill(${qi})">✓ 확인</button>
+        <button class="gq-reset" onclick="resetFill(${qi})">↺</button>
+      </div>`;
+    box.appendChild(card);
+  });
+}
+
+function checkFill(qi) {
+  const input = document.getElementById('fi-' + qi);
+  const userAns = input.value.trim().toLowerCase();
+  const correct = FILL_DATA[qi].answer.toLowerCase();
+  const ok = userAns === correct;
+  input.classList.remove('correct-fill','wrong-fill');
+  input.classList.add(ok ? 'correct-fill' : 'wrong-fill');
+  const fb = document.getElementById('fi-fb-' + qi);
+  fb.className = 'gq-feedback show ' + (ok ? 'ok' : 'ng');
+  fb.innerHTML = (ok ? '🎉 정답! ' : `❌ 오답. <span class="feedback-ans">정답: ${FILL_DATA[qi].answer}</span> — `) + FILL_DATA[qi].exp;
+  gScores['fi'+qi] = ok ? 1 : 0; updateGScore();
+}
+function resetFill(qi) {
+  const input = document.getElementById('fi-'+qi);
+  input.value=''; input.className='fill-input';
+  document.getElementById('fi-fb-'+qi).className='gq-feedback';
+  delete gScores['fi'+qi]; updateGScore();
+}
+
+function gResetAll() {
+  AB_DATA.forEach((_,i) => resetAB(i));
+  ERR_DATA.forEach((_,i) => resetErr(i));
+  FILL_DATA.forEach((_,i) => resetFill(i));
+  gScores = {}; updateGScore();
+}
+function updateGScore() {
+  const total = Object.keys(gScores).length;
+  const correct = Object.values(gScores).filter(v=>v===1).length;
+  document.getElementById('gScoreNum').textContent = correct;
+  document.getElementById('gScoreTotal').textContent = ' / ' + total + '문항';
+}
+
+/* ══ 뷰 전환 (grammar 추가) ══ */
+
 let arrangeBuilt=false;
 function switchView(view){
   const rv=document.getElementById('readingView');
   const av=document.getElementById('arrangeView');
+  const gv=document.getElementById('grammarView');
   const tabR=document.getElementById('tabR');
   const tabA=document.getElementById('tabA');
+  const tabG=document.getElementById('tabG');
+
+  // 모두 숨기기
+  rv.style.display='none';
+  av.classList.remove('active');
+  gv.classList.remove('active');
+  [tabR,tabA,tabG].forEach(t=>t.classList.remove('active'));
+
   if(view==='reading'){
-    rv.style.display='block';
-    av.classList.remove('active');
-    tabR.classList.add('active');
-    tabA.classList.remove('active');
-  } else {
-    rv.style.display='none';
-    av.classList.add('active');
-    tabR.classList.remove('active');
-    tabA.classList.add('active');
+    rv.style.display='block'; tabR.classList.add('active');
+  } else if(view==='arrange'){
+    av.classList.add('active'); tabA.classList.add('active');
     if(!arrangeBuilt){buildArrangeCards();arrangeBuilt=true;}
+  } else {
+    gv.classList.add('active'); tabG.classList.add('active');
+    if(!gBuilt){buildGrammarSection();gBuilt=true;}
   }
 }
 
@@ -546,9 +1036,17 @@ const ARRANGE=[
 
 let scores={}, dragSrc=null;
 
+let clickSelected = null;
+
 function buildArrangeCards(){
   const box=document.getElementById('arrCards');
   box.innerHTML='';
+
+  const hint=document.createElement('div');
+  hint.className='touch-hint';
+  hint.innerHTML='💡 단어 클릭 → 주황 선택 → 이동할 칸 클릭 &nbsp;|&nbsp; 드래그도 가능';
+  box.appendChild(hint);
+
   ARRANGE.forEach((item,idx)=>{
     const words=item.ans.split(' ');
     const shuffled=[...words].sort(()=>Math.random()-0.5);
@@ -563,7 +1061,7 @@ function buildArrangeCards(){
       <div class="arr-body">
         <div class="answer-zone" id="zone-${idx}"></div>
         <div class="word-pool" id="pool-${idx}">
-          ${shuffled.map(w=>`<div class="word-chip" draggable="true" data-word="${w}">${w}</div>`).join('')}
+          ${shuffled.map(w=>`<div class="word-chip" draggable="true" data-word="${w}" data-idx="${idx}">${w}</div>`).join('')}
         </div>
         <div class="arr-result" id="res-${idx}"></div>
         <div class="ans-reveal" id="ans-${idx}"><strong>정답:</strong> ${item.ans}.</div>
@@ -575,7 +1073,7 @@ function buildArrangeCards(){
       </div>`;
     box.appendChild(card);
 
-    // 드롭존 이벤트
+    // 드래그 이벤트
     ['zone-'+idx,'pool-'+idx].forEach(zid=>{
       const z=document.getElementById(zid);
       z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});
@@ -587,22 +1085,80 @@ function buildArrangeCards(){
         dragSrc.classList.remove('dragging','ok-chip');
         document.getElementById('res-'+idx).className='arr-result';
         dragSrc=null;
+        deselectChip();
       });
     });
   });
 
-  // 칩 드래그 (이벤트 위임)
+  // ── 통합 클릭 핸들러 (이벤트 위임) ──
+  box.addEventListener('click', e => {
+    const chip = e.target.closest('.word-chip');
+    const zone = e.target.closest('.answer-zone, .word-pool');
+
+    if (chip) {
+      // 칩 클릭
+      if (!clickSelected) {
+        // 선택 안 된 상태 → 이 칩 선택
+        selectChip(chip);
+      } else if (clickSelected === chip) {
+        // 같은 칩 → 선택 해제
+        deselectChip();
+      } else {
+        // 다른 칩 클릭 → 선택된 칩을 이 칩의 부모 존으로 이동
+        const targetZone = chip.parentElement;
+        const fromIdx = clickSelected.dataset.idx;
+        const sel = clickSelected;
+        deselectChip();
+        sel.classList.remove('ok-chip');
+        // 클릭한 칩 앞에 삽입
+        targetZone.insertBefore(sel, chip);
+        document.getElementById('res-'+fromIdx).className='arr-result';
+      }
+    } else if (zone && clickSelected) {
+      // 빈 존 클릭 → 선택된 칩 이동
+      const fromIdx = clickSelected.dataset.idx;
+      const sel = clickSelected;
+      deselectChip();
+      sel.classList.remove('ok-chip');
+      zone.appendChild(sel);
+      document.getElementById('res-'+fromIdx).className='arr-result';
+    } else if (!chip && !zone) {
+      // 아무것도 아닌 곳 클릭 → 해제
+      deselectChip();
+    }
+  });
+
+  // 드래그 이벤트 위임
   box.addEventListener('dragstart',e=>{
     if(!e.target.classList.contains('word-chip'))return;
     dragSrc=e.target;
     e.target.classList.add('dragging');
     e.dataTransfer.effectAllowed='move';
+    deselectChip();
   });
   box.addEventListener('dragend',e=>{
     if(e.target.classList.contains('word-chip'))e.target.classList.remove('dragging');
     dragSrc=null;
   });
+
   updateScore();
+}
+
+function selectChip(chip) {
+  if (clickSelected) deselectChip();
+  clickSelected = chip;
+  chip.classList.add('selected-chip');
+  const idx = chip.dataset.idx;
+  const inZone = chip.parentElement.classList.contains('answer-zone');
+  // 반대 존 강조 (이동 가능한 곳)
+  document.getElementById(inZone ? 'pool-'+idx : 'zone-'+idx).classList.add('click-ready');
+}
+
+function deselectChip() {
+  if (!clickSelected) return;
+  clickSelected.classList.remove('selected-chip');
+  document.querySelectorAll('.click-ready').forEach(z=>z.classList.remove('click-ready'));
+  clickSelected = null;
 }
 
 function checkAns(idx){
