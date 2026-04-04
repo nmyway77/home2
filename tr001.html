@@ -155,9 +155,20 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 }
 .vcard:hover{transform:translateY(-3px);box-shadow:0 6px 20px var(--shadow);}
 .vcard-front{padding:18px;}
+.vcard-en-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
 .vcard-en{
   font-family:Georgia,serif;font-size:18px;font-weight:700;
-  color:var(--navy);margin-bottom:6px;
+  color:var(--navy);flex:1;
+}
+.vcard-speak{
+  background:none;border:1.5px solid rgba(46,117,182,0.3);
+  border-radius:6px;padding:4px 8px;cursor:pointer;
+  font-size:14px;color:rgba(46,117,182,0.5);
+  transition:all 0.2s;flex-shrink:0;
+}
+.vcard-speak:hover{
+  background:var(--blue-card);border-color:var(--blue-border);
+  color:var(--blue-border);transform:scale(1.1);
 }
 .vcard-pos{
   font-family:'JetBrains Mono',monospace;font-size:9px;
@@ -1352,6 +1363,15 @@ function buildVocab(tab) {
 }
 
 /* ── 단어카드 ── */
+function speakWord(word, e) {
+  e.stopPropagation(); // 카드 토글과 분리
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(word);
+  u.lang = 'en-US'; u.rate = 0.82; u.pitch = 1.0;
+  const v = getVoice(); if(v) u.voice = v;
+  speechSynthesis.speak(u);
+}
+
 function buildVocabCards(box) {
   const grid = document.createElement('div');
   grid.className = 'vcard-grid';
@@ -1365,7 +1385,10 @@ function buildVocabCards(box) {
     div.setAttribute('onclick', `this.classList.toggle('open')`);
     div.innerHTML = `
       <div class="vcard-front">
-        <div class="vcard-en">${v.en}</div>
+        <div class="vcard-en-row">
+          <div class="vcard-en">${v.en}</div>
+          <button class="vcard-speak" onclick="speakWord('${v.en}', event)" title="발음 듣기">🔊</button>
+        </div>
         <div class="vcard-pos">${v.pos} &nbsp;·&nbsp; 클릭하면 뜻 보기 ▼</div>
       </div>
       <div class="vcard-back">
