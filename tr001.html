@@ -90,6 +90,13 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 .s-kr-wrap{max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1),opacity 0.3s;opacity:0;background:rgba(255,255,255,0.6);border-top:1px dashed transparent;}
 .s-card:hover .s-kr-wrap,.s-card.pinned .s-kr-wrap{max-height:800px;opacity:1;border-top-color:rgba(46,117,182,0.2);}
 .s-card.grammar:hover .s-kr-wrap,.s-card.grammar.pinned .s-kr-wrap{border-top-color:rgba(91,45,142,0.2);}
+/* vocab-only: s-kr-wrap 열리되 kr/grammar/meaning 숨기고 vocab만 표시 */
+.s-card.vocab-only .s-kr-wrap{max-height:800px;opacity:1;border-top-color:rgba(46,117,182,0.2);}
+.s-card.grammar.vocab-only .s-kr-wrap{border-top-color:rgba(91,45,142,0.2);}
+.s-card.vocab-only .s-kr{display:none;}
+.s-card.vocab-only .ref-note{display:none;}
+.s-card.vocab-only .s-grammar{display:none;}
+.s-card.vocab-only .s-meaning{display:none;}
 .s-kr{padding:9px 14px 9px 42px;font-size:13px;line-height:1.8;color:#2d2d4e;}
 .s-kr::before{content:"▶ ";color:var(--blue-border);font-size:10px;font-weight:700;}
 .s-card.grammar .s-kr::before{color:var(--purple-border);}
@@ -147,6 +154,15 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 .word-chip:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(46,117,182,0.25);}
 .word-chip.dragging{opacity:0.35;transform:scale(0.93);cursor:grabbing;}
 .word-chip.ok-chip{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20;}
+/* 터치 힌트 */
+.touch-hint{
+  text-align:center;font-size:11px;
+  font-family:'JetBrains Mono',monospace;
+  color:rgba(0,0,0,0.3);letter-spacing:1px;
+  margin-bottom:14px;
+  padding:7px;background:rgba(0,0,0,0.03);
+  border-radius:6px;
+}
 .arr-result{display:none;padding:9px 13px;border-radius:7px;font-size:13px;font-weight:600;margin-bottom:10px;align-items:center;gap:8px;}
 .arr-result.show{display:flex;}
 .arr-result.ok{background:#E8F5E9;color:#1B5E20;border:1px solid #A5D6A7;}
@@ -335,9 +351,9 @@ footer{text-align:center;padding:40px 16px 48px;font-family:'JetBrains Mono',mon
     </div>
     <div class="controls">
       <button class="ctrl-btn active" id="btnNormal" onclick="setMode('normal')">🖱 호버 모드</button>
-      <button class="ctrl-btn" id="btnOpen" onclick="setMode('open')">📄 전체 펼치기</button>
-      <button class="ctrl-btn" id="btnHide" onclick="setMode('hide')">🙈 해석 닫기</button>
-      <button class="ctrl-btn" id="btnAll" onclick="speakAll()">🔊 전체 읽기</button>
+      <button class="ctrl-btn" id="btnOpen"  onclick="toggleOpen()">📄 전체 펼치기</button>
+      <button class="ctrl-btn" id="btnVocab" onclick="toggleVocab()">📌 단어만 노출</button>
+      <button class="ctrl-btn" id="btnAll"   onclick="speakAll()">🔊 전체 읽기</button>
     </div>
     <div class="cards" id="cards">
 
@@ -646,13 +662,52 @@ document.querySelectorAll('.s-card').forEach((card,i)=>{
 });
 
 /* ══ 모드 / 전체읽기 ══ */
+// 전체펼치기 토글 상태
+let openAll = false;
+let vocabOnly = false;
+
 function setMode(mode){
-  ['btnNormal','btnOpen','btnHide'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.remove('active');});
-  const t=mode==='normal'?'btnNormal':mode==='open'?'btnOpen':'btnHide';
-  const el=document.getElementById(t);if(el)el.classList.add('active');
+  // 호버 모드 버튼만 active 처리
+  document.getElementById('btnNormal').classList.add('active');
+  document.getElementById('btnOpen').classList.remove('active');
+  document.getElementById('btnVocab').classList.remove('active');
+  openAll = false;
+  vocabOnly = false;
+  // 모든 카드 핀 해제, vocab-only 해제
+  document.querySelectorAll('#readingView .s-card').forEach(card=>{
+    card.classList.remove('pinned','vocab-only');
+  });
+}
+
+function toggleOpen(){
+  openAll = !openAll;
+  // vocab-only 모드 해제
+  if(openAll) {
+    vocabOnly = false;
+    document.getElementById('btnVocab').classList.remove('active');
+  }
+  document.getElementById('btnOpen').classList.toggle('active', openAll);
+  document.getElementById('btnNormal').classList.toggle('active', !openAll);
+  document.querySelectorAll('#readingView .s-card').forEach(card=>{
+    card.classList.remove('vocab-only');
+    card.classList.toggle('pinned', openAll);
+  });
+}
+
+function toggleVocab(){
+  vocabOnly = !vocabOnly;
+  // openAll 모드 해제
+  if(vocabOnly) {
+    openAll = false;
+    document.getElementById('btnOpen').classList.remove('active');
+    document.getElementById('btnNormal').classList.remove('active');
+  } else {
+    document.getElementById('btnNormal').classList.add('active');
+  }
+  document.getElementById('btnVocab').classList.toggle('active', vocabOnly);
   document.querySelectorAll('#readingView .s-card').forEach(card=>{
     card.classList.remove('pinned');
-    if(mode==='open')card.classList.add('pinned');
+    card.classList.toggle('vocab-only', vocabOnly);
   });
 }
 let allQueue=[],allIdx=0,allPlaying=false;
@@ -1011,6 +1066,12 @@ let scores={}, dragSrc=null;
 function buildArrangeCards(){
   const box=document.getElementById('arrCards');
   box.innerHTML='';
+
+  const hint=document.createElement('div');
+  hint.className='touch-hint';
+  hint.innerHTML='💡 단어 클릭 → 즉시 이동 &nbsp;|&nbsp; 드래그도 가능';
+  box.appendChild(hint);
+
   ARRANGE.forEach((item,idx)=>{
     const words=item.ans.split(' ');
     const shuffled=[...words].sort(()=>Math.random()-0.5);
@@ -1025,7 +1086,7 @@ function buildArrangeCards(){
       <div class="arr-body">
         <div class="answer-zone" id="zone-${idx}"></div>
         <div class="word-pool" id="pool-${idx}">
-          ${shuffled.map(w=>`<div class="word-chip" draggable="true" data-word="${w}">${w}</div>`).join('')}
+          ${shuffled.map(w=>`<div class="word-chip" draggable="true" data-word="${w}" data-idx="${idx}">${w}</div>`).join('')}
         </div>
         <div class="arr-result" id="res-${idx}"></div>
         <div class="ans-reveal" id="ans-${idx}"><strong>정답:</strong> ${item.ans}.</div>
@@ -1037,7 +1098,7 @@ function buildArrangeCards(){
       </div>`;
     box.appendChild(card);
 
-    // 드롭존 이벤트
+    // 드래그
     ['zone-'+idx,'pool-'+idx].forEach(zid=>{
       const z=document.getElementById(zid);
       z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});
@@ -1051,9 +1112,19 @@ function buildArrangeCards(){
         dragSrc=null;
       });
     });
+
+    // 클릭: pool 칩 → zone으로, zone 칩 → pool로 즉시 이동
+    setTimeout(()=>{
+      document.getElementById('pool-'+idx).querySelectorAll('.word-chip').forEach(chip=>{
+        chip.addEventListener('click', ()=>chipClick(chip, idx));
+      });
+      document.getElementById('zone-'+idx).querySelectorAll('.word-chip').forEach(chip=>{
+        chip.addEventListener('click', ()=>chipClick(chip, idx));
+      });
+    },0);
   });
 
-  // 칩 드래그 (이벤트 위임)
+  // 드래그 위임
   box.addEventListener('dragstart',e=>{
     if(!e.target.classList.contains('word-chip'))return;
     dragSrc=e.target;
@@ -1064,7 +1135,20 @@ function buildArrangeCards(){
     if(e.target.classList.contains('word-chip'))e.target.classList.remove('dragging');
     dragSrc=null;
   });
+
   updateScore();
+}
+
+function chipClick(chip, idx) {
+  const inZone = chip.parentElement.id === 'zone-'+idx;
+  // pool → zone / zone → pool 즉시 이동
+  const target = document.getElementById(inZone ? 'pool-'+idx : 'zone-'+idx);
+  chip.classList.remove('ok-chip');
+  target.appendChild(chip);
+  // 클릭 이벤트 재등록 (부모가 바뀌었으므로)
+  chip.onclick = null;
+  chip.addEventListener('click', ()=>chipClick(chip, idx), {once:true});
+  document.getElementById('res-'+idx).className='arr-result';
 }
 
 function checkAns(idx){
