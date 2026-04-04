@@ -131,6 +131,130 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 .cmp-table td{padding:7px 10px;border-bottom:1px solid rgba(0,0,0,0.07);}
 .cmp-table tr:nth-child(even) td{background:rgba(235,243,251,0.5);}
 
+/* ══ 단어장 ══ */
+.vocab-view{display:none;}
+.vocab-view.active{display:block;}
+
+/* 단어장 서브탭 */
+.vocab-tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap;}
+.vocab-tab{
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;
+  padding:8px 16px;border-radius:6px;cursor:pointer;
+  border:1.5px solid rgba(106,27,154,0.25);
+  background:white;color:#6A1B9A;transition:all 0.2s;
+}
+.vocab-tab.active{background:#6A1B9A;color:white;border-color:#6A1B9A;}
+
+/* 단어카드 뷰 */
+.vcard-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.vcard{
+  background:white;border-radius:10px;border:1px solid rgba(0,0,0,0.08);
+  box-shadow:0 2px 10px var(--shadow);overflow:hidden;cursor:pointer;
+  transition:transform 0.2s,box-shadow 0.2s;
+  animation:slideIn 0.3s ease both;
+}
+.vcard:hover{transform:translateY(-3px);box-shadow:0 6px 20px var(--shadow);}
+.vcard-front{padding:18px;}
+.vcard-en{
+  font-family:Georgia,serif;font-size:18px;font-weight:700;
+  color:var(--navy);margin-bottom:6px;
+}
+.vcard-pos{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:2px;color:rgba(0,0,0,0.3);text-transform:uppercase;
+}
+.vcard-back{
+  max-height:0;overflow:hidden;
+  transition:max-height 0.35s cubic-bezier(0.4,0,0.2,1);
+  background:linear-gradient(135deg,#EDE7F6,#F3E5F5);
+  border-top:1px solid rgba(106,27,154,0.12);
+}
+.vcard.open .vcard-back{max-height:400px;}
+.vcard-back-inner{padding:14px 18px;}
+.vcard-kr{font-size:14px;color:#2d2d4e;font-weight:600;margin-bottom:8px;}
+.vcard-section{margin-top:8px;}
+.vcard-section-label{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:1.5px;text-transform:uppercase;
+  color:#6A1B9A;font-weight:700;margin-bottom:3px;
+}
+.vcard-items{font-size:12px;color:#3d2d4e;line-height:1.8;}
+.vcard-syn{color:#1565C0;font-weight:600;}
+.vcard-ant{color:#B71C1C;font-weight:600;}
+.vcard-phrase{color:#1B5E20;font-style:italic;}
+
+/* 철자퀴즈 / 뜻퀴즈 공통 */
+.quiz-card{
+  background:white;border-radius:10px;border:1px solid rgba(0,0,0,0.08);
+  box-shadow:0 2px 10px var(--shadow);margin-bottom:12px;overflow:hidden;
+  animation:slideIn 0.35s ease both;
+}
+.quiz-top{padding:16px 18px;display:flex;align-items:center;gap:14px;}
+.quiz-num{
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
+  background:#6A1B9A;color:white;padding:3px 8px;border-radius:4px;flex-shrink:0;
+}
+.quiz-prompt{font-size:13.5px;color:var(--text);flex:1;line-height:1.6;}
+.quiz-prompt .prompt-en{font-family:Georgia,serif;font-size:15px;font-weight:700;color:var(--navy);}
+.quiz-prompt .prompt-kr{font-size:13px;color:var(--text-sub);}
+.quiz-input{
+  font-family:Georgia,serif;font-size:15px;font-weight:600;
+  border:none;border-bottom:2px solid #6A1B9A;background:transparent;
+  color:var(--navy);outline:none;padding:2px 6px;width:140px;text-align:center;
+  transition:border-color 0.2s;
+}
+.quiz-input:focus{border-bottom-color:var(--orange);}
+.quiz-input.ok{border-bottom-color:#2E7D32;color:#1B5E20;background:#E8F5E9;border-radius:4px;}
+.quiz-input.ng{border-bottom-color:#C62828;color:#B71C1C;background:#FFEBEE;border-radius:4px;}
+/* 뜻퀴즈 선택지 */
+.choices{display:flex;flex-direction:column;gap:6px;padding:0 18px 14px;}
+.choice-btn{
+  text-align:left;padding:9px 14px;border-radius:7px;border:1.5px solid rgba(0,0,0,0.1);
+  background:white;font-size:13px;color:var(--text);cursor:pointer;
+  transition:all 0.15s;font-family:'Noto Sans KR',sans-serif;
+}
+.choice-btn:hover{background:#EDE7F6;border-color:#6A1B9A;color:#6A1B9A;}
+.choice-btn.ok{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20;font-weight:700;}
+.choice-btn.ng{background:#FFEBEE;border-color:#C62828;color:#B71C1C;}
+.choice-btn.reveal{background:#EDE7F6;border-color:#6A1B9A;color:#6A1B9A;font-weight:700;}
+/* 피드백 */
+.quiz-fb{display:none;padding:8px 18px 10px;font-size:12px;border-top:1px dashed rgba(0,0,0,0.08);}
+.quiz-fb.show{display:block;}
+.quiz-fb.ok{background:#E8F5E9;color:#1B5E20;}
+.quiz-fb.ng{background:#FFEBEE;color:#B71C1C;}
+
+/* 유형별 최종확인 버튼 */
+.section-check{
+  margin-top:16px;margin-bottom:28px;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.section-check-btn{
+  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+  padding:10px 24px;border-radius:8px;border:none;
+  background:#6A1B9A;color:white;cursor:pointer;
+  transition:background 0.2s;box-shadow:0 3px 10px rgba(106,27,154,0.3);
+}
+.section-check-btn:hover{background:#4A148C;}
+.section-score{font-size:13px;color:var(--text-sub);}
+
+/* 어법문제 개선 - 유형별 최종확인 */
+.gtype-final{
+  margin-top:14px;
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+}
+.gtype-final-btn{
+  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+  padding:10px 24px;border-radius:8px;border:none;cursor:pointer;
+  transition:background 0.2s;
+}
+.gtype-final-btn.ab-btn{background:var(--navy);color:white;box-shadow:0 3px 10px rgba(31,56,100,0.3);}
+.gtype-final-btn.ab-btn:hover{background:#1a3060;}
+.gtype-final-btn.er-btn{background:#5B2D8E;color:white;box-shadow:0 3px 10px rgba(91,45,142,0.3);}
+.gtype-final-btn.er-btn:hover{background:#3d1a6a;}
+.gtype-final-btn.fi-btn{background:#C55A11;color:white;box-shadow:0 3px 10px rgba(197,90,17,0.3);}
+.gtype-final-btn.fi-btn:hover{background:#a04a0e;}
+.gtype-final-score{font-size:13px;color:var(--text-sub);}
+
 /* ══ 배열영작 ══ */
 .arrange-view{display:none;}
 .arrange-view.active{display:block;}
@@ -179,6 +303,8 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 
 /* ══ 어법 문제 ══ */
 .tab-grammar{background:white;color:#1D5C2B;border-color:rgba(29,92,43,0.25);}
+.tab-vocab{background:white;color:#6A1B9A;border-color:rgba(106,27,154,0.25);}
+.tab-vocab.active{background:#6A1B9A;color:white;border-color:#6A1B9A;}
 .tab-grammar.active{background:#1D5C2B;color:white;border-color:#1D5C2B;}
 
 .grammar-view{display:none;}
@@ -334,6 +460,7 @@ footer{text-align:center;padding:40px 16px 48px;font-family:'JetBrains Mono',mon
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
     <button class="view-tab tab-arrange" id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
     <button class="view-tab tab-grammar" id="tabG" onclick="switchView('grammar')">📝 어법 문제</button>
+    <button class="view-tab tab-vocab" id="tabV" onclick="switchView('vocab')">📚 단어장</button>
   </div>
 
   <!-- ── 한줄해석 뷰 ── -->
@@ -578,23 +705,45 @@ footer{text-align:center;padding:40px 16px 48px;font-family:'JetBrains Mono',mon
     <!-- A/B 선택형 -->
     <div class="gtype-header">
       <span>①</span> 괄호 안에서 알맞은 것 고르기
-      <span class="gtype-desc">클릭해서 선택 → ✓ 확인</span>
+      <span class="gtype-desc">선택 후 → 하단 최종확인 버튼 클릭</span>
     </div>
     <div class="gtype-body" id="abSection"></div>
+    <div class="gtype-final">
+      <button class="gtype-final-btn ab-btn" onclick="checkAllAB()">✓ A/B 선택 최종 확인</button>
+      <span class="gtype-final-score" id="ab-final-score"></span>
+    </div>
 
     <!-- 오류수정 -->
     <div class="gtype-header" style="background:#5B2D8E;">
       <span>②</span> 어법상 틀린 부분 찾아 고치기
-      <span class="gtype-desc">밑줄 단어 클릭 → ✓ 확인</span>
+      <span class="gtype-desc">틀린 단어 클릭 → 하단 최종확인 버튼 클릭</span>
     </div>
     <div class="gtype-body" id="errSection"></div>
+    <div class="gtype-final">
+      <button class="gtype-final-btn er-btn" onclick="checkAllErr()">✓ 오류수정 최종 확인</button>
+      <span class="gtype-final-score" id="er-final-score"></span>
+    </div>
 
     <!-- 서답형 -->
     <div class="gtype-header" style="background:#C55A11;">
       <span>③</span> 빈칸에 알맞은 어형으로 쓰기
-      <span class="gtype-desc">괄호 안 단어를 알맞은 형태로 변환</span>
+      <span class="gtype-desc">괄호 단어를 알맞은 어형으로 입력 → 하단 최종확인</span>
     </div>
     <div class="gtype-body" id="fillSection"></div>
+    <div class="gtype-final">
+      <button class="gtype-final-btn fi-btn" onclick="checkAllFill()">✓ 서답형 최종 확인</button>
+      <span class="gtype-final-score" id="fi-final-score"></span>
+    </div>
+  </div>
+
+  <!-- ── 단어장 뷰 ── -->
+  <div class="vocab-view" id="vocabView">
+    <div class="vocab-tabs">
+      <button class="vocab-tab active" id="vtab0" onclick="switchVocab(0)">📖 단어카드</button>
+      <button class="vocab-tab" id="vtab1" onclick="switchVocab(1)">✏️ 철자 퀴즈</button>
+      <button class="vocab-tab" id="vtab2" onclick="switchVocab(2)">🔤 뜻 퀴즈</button>
+    </div>
+    <div id="vocabContent"></div>
   </div>
 
 </section>
@@ -733,37 +882,77 @@ function readNext(){
 
 /* ══ 어법 문제 데이터 ══ */
 
-// A/B 선택형
+// A/B 선택형 — 한 문장에 2~3개 선택지
+// sent 배열: 문자열 또는 {a,b,key} 객체 (key로 정답·피드백 구분)
 const AB_DATA = [
   {
     id:'ab0',
-    sent: ['From around 3000 BC, the Sumerian officials would mark their lists of goods on clay tablets. If they wanted to record five fish, they would mark five pictures of a fish. Their first great intellectual leap came from ', {a:'separate',b:'separating'}, ' the number from the object they were counting.'],
-    answer: 'b',
-    exp: '<strong>separating</strong> — came from + <strong>동명사(V-ing)</strong>: "~하는 것에서 비롯되다". came from은 전치사구이므로 뒤에 동명사가 와야 합니다.'
+    sent: [
+      'Their first great intellectual leap ',
+      {a:'came from', b:'result from', key:'q1'},
+      ' ',
+      {a:'separate', b:'separating', key:'q2'},
+      ' the number from the object they were counting.'
+    ],
+    answers: {q1:'a', q2:'b'},
+    exps: {
+      q1: '<strong>came from</strong> — "~에서 비롯되다"는 <em>come from</em>. result from도 "~에서 비롯되다"지만 과거형 came과 호응해야 하고 문법적으로 came from이 자연스럽습니다.',
+      q2: '<strong>separating</strong> — 전치사 <em>from</em> 뒤에는 <strong>동명사(-ing)</strong>가 와야 합니다. (came from + V-ing)'
+    }
   },
   {
     id:'ab1',
-    sent: ['In other words, they would represent five fish with a numeral for the number five ', {a:'alongside',b:'along'}, ' a symbol for the fish.'],
-    answer: 'a',
-    exp: '<strong>alongside</strong> — "~와 나란히, ~와 함께"라는 뜻의 전치사. along은 "~을 따라"로 문맥에 맞지 않습니다.'
+    sent: [
+      'In other words, they would ',
+      {a:'represent', b:'represented', key:'q1'},
+      ' five fish with a numeral for the number five ',
+      {a:'alongside', b:'along', key:'q2'},
+      ' a symbol ',
+      {a:'for', b:'of', key:'q3'},
+      ' the fish.'
+    ],
+    answers: {q1:'a', q2:'a', q3:'a'},
+    exps: {
+      q1: '<strong>represent</strong> — would 뒤에는 <strong>동사원형</strong>이 와야 합니다.',
+      q2: '<strong>alongside</strong> — "~와 나란히"라는 뜻의 전치사. along은 "~을 따라"라는 뜻으로 문맥에 맞지 않습니다.',
+      q3: '<strong>for</strong> — "a numeral for the number" = 숫자를 나타내는 수자. <em>for</em>는 "~을 위한/나타내는"의 의미입니다.'
+    }
   },
   {
     id:'ab2',
-    sent: ['The Sumerians had developed the idea of an emancipated number, ', {a:'existing',b:'existed'}, ' in its own right and independent of whatever it is being used to count.'],
-    answer: 'a',
-    exp: '<strong>existing</strong> — 앞의 명사 <em>an emancipated number</em>를 수식하는 <strong>현재분사(분사구문)</strong>. "그 자체로 존재하는 해방된 숫자"의 의미로 능동 관계이므로 -ing형이 맞습니다.'
+    sent: [
+      'The Sumerians ',
+      {a:'had developed', b:'have developed', key:'q1'},
+      ' the idea of an emancipated number, ',
+      {a:'existing', b:'existed', key:'q2'},
+      ' in its own right and ',
+      {a:'independent', b:'independently', key:'q3'},
+      ' of whatever it is being used to count.'
+    ],
+    answers: {q1:'a', q2:'a', q3:'a'},
+    exps: {
+      q1: '<strong>had developed</strong> — <strong>과거완료</strong>: 과거 특정 시점 이전에 이미 완성된 개념임을 나타냅니다.',
+      q2: '<strong>existing</strong> — 앞 명사 <em>emancipated number</em>를 수식하는 <strong>현재분사</strong>. 능동 관계이므로 -ing형.',
+      q3: '<strong>independent</strong> — 형용사로 and로 연결된 <em>existing</em>(분사)과 병렬. independently(부사)는 쓸 수 없습니다.'
+    }
   },
   {
     id:'ab3',
-    sent: ['It is easy to take the emancipated number for granted as it is ', {a:'so',b:'such'}, ' deeply set into modern thought.'],
-    answer: 'a',
-    exp: '<strong>so</strong> — <strong>so + 형용사/부사</strong> vs such + (a/an) + 형용사 + 명사. 여기서 deeply는 부사이므로 so가 맞습니다.'
-  },
-  {
-    id:'ab4',
-    sent: ['It is easy to take the emancipated number for granted as it is so deeply set into modern thought, but to the earliest civilizations it was intellectually new and ', {a:'extreme',b:'extremely'}, ' powerful.'],
-    answer: 'b',
-    exp: '<strong>extremely</strong> — powerful(형용사)을 수식하므로 <strong>부사(extremely)</strong>가 와야 합니다. extreme은 형용사입니다.'
+    sent: [
+      'It is easy ',
+      {a:'to take', b:'taking', key:'q1'},
+      ' the emancipated number for granted as it is ',
+      {a:'so', b:'such', key:'q2'},
+      ' deeply set into modern thought, but to the earliest civilizations it was intellectually new and ',
+      {a:'extreme', b:'extremely', key:'q3'},
+      ' powerful.'
+    ],
+    answers: {q1:'a', q2:'a', q3:'b'},
+    exps: {
+      q1: '<strong>to take</strong> — <em>It is + 형용사 + to-v</em> 구문 (가주어-진주어). "~하기 쉽다"는 It is easy <strong>to</strong> take.',
+      q2: '<strong>so</strong> — <strong>so + 부사(deeply)</strong>. such는 "such + a/an + 형용사 + 명사" 구조에 씁니다.',
+      q3: '<strong>extremely</strong> — 형용사 powerful을 수식하므로 <strong>부사(-ly)</strong>가 와야 합니다.'
+    }
   },
 ];
 
@@ -840,7 +1029,7 @@ function buildGrammarSection() {
   updateGScore();
 }
 
-/* A/B 선택형 빌드 */
+/* A/B 선택형 빌드 — 한 문장 복수 선택지 지원 */
 function buildAB() {
   const box = document.getElementById('abSection');
   AB_DATA.forEach((q, qi) => {
@@ -849,61 +1038,77 @@ function buildAB() {
     card.id = 'ab-card-' + qi;
 
     let sentHtml = '';
+    let choiceIdx = 0;
     q.sent.forEach(part => {
       if (typeof part === 'string') {
         sentHtml += part;
       } else {
-        sentHtml += `<span class="ab-choice" id="abc-${qi}">` +
-          `<button class="ab-opt" data-qi="${qi}" data-val="a" onclick="abSelect(${qi},'a')">${part.a}</button>` +
-          `<button class="ab-opt" data-qi="${qi}" data-val="b" onclick="abSelect(${qi},'b')">${part.b}</button>` +
+        const key = part.key || ('q'+(choiceIdx));
+        sentHtml += `<span class="ab-choice" id="abc-${qi}-${key}">` +
+          `<button class="ab-opt" data-qi="${qi}" data-key="${key}" data-val="a" onclick="abSelect(${qi},'${key}','a')">${part.a}</button>` +
+          `<button class="ab-opt" data-qi="${qi}" data-key="${key}" data-val="b" onclick="abSelect(${qi},'${key}','b')">${part.b}</button>` +
+          (part.c ? `<button class="ab-opt" data-qi="${qi}" data-key="${key}" data-val="c" onclick="abSelect(${qi},'${key}','c')">${part.c}</button>` : '') +
           `</span>`;
+        choiceIdx++;
       }
     });
+
+    // 피드백 영역 (키별로)
+    const keys = Object.keys(q.answers);
+    const fbHtml = keys.map(k => `<div class="gq-feedback" id="ab-fb-${qi}-${k}"></div>`).join('');
 
     card.innerHTML = `
       <div class="gq-top">
         <span class="gq-num">${String(qi+1).padStart(2,'0')}</span>
         <div class="gq-sent">${sentHtml}</div>
       </div>
-      <div class="gq-feedback" id="ab-fb-${qi}"></div>
-      <div class="gq-btns">
-        <button class="gq-check" onclick="checkAB(${qi})">✓ 확인</button>
-        <button class="gq-reset" onclick="resetAB(${qi})">↺</button>
-      </div>`;
+      ${fbHtml}`;
     box.appendChild(card);
   });
 }
 
-let abSelected = {};
-function abSelect(qi, val) {
-  abSelected[qi] = val;
-  const choice = document.getElementById('abc-' + qi);
+let abSelected = {}; // {qi: {key: val}}
+function abSelect(qi, key, val) {
+  if (!abSelected[qi]) abSelected[qi] = {};
+  abSelected[qi][key] = val;
+  const choice = document.getElementById(`abc-${qi}-${key}`);
   choice.querySelectorAll('.ab-opt').forEach(btn => {
     btn.classList.toggle('selected', btn.dataset.val === val);
   });
 }
 function checkAB(qi) {
-  const sel = abSelected[qi];
-  if (!sel) return;
-  const correct = AB_DATA[qi].answer;
-  const ok = sel === correct;
-  const choice = document.getElementById('abc-' + qi);
-  choice.querySelectorAll('.ab-opt').forEach(btn => {
-    btn.classList.remove('selected','correct-sel','wrong-sel');
-    if (btn.dataset.val === correct) btn.classList.add('correct-sel');
-    else if (btn.dataset.val === sel && !ok) btn.classList.add('wrong-sel');
+  const q = AB_DATA[qi];
+  const sel = abSelected[qi] || {};
+  let allOk = true;
+  Object.keys(q.answers).forEach(key => {
+    const correct = q.answers[key];
+    const userVal = sel[key];
+    const ok = userVal === correct;
+    if (!ok) allOk = false;
+    const choice = document.getElementById(`abc-${qi}-${key}`);
+    if (choice) {
+      choice.querySelectorAll('.ab-opt').forEach(btn => {
+        btn.classList.remove('selected','correct-sel','wrong-sel');
+        if (btn.dataset.val === correct) btn.classList.add('correct-sel');
+        else if (btn.dataset.val === userVal && !ok) btn.classList.add('wrong-sel');
+      });
+    }
+    const fb = document.getElementById(`ab-fb-${qi}-${key}`);
+    if (fb && userVal !== undefined) {
+      fb.className = 'gq-feedback show ' + (ok ? 'ok' : 'ng');
+      fb.innerHTML = (ok ? '✅ ' : '❌ ') + (q.exps ? q.exps[key] : '');
+    }
   });
-  const fb = document.getElementById('ab-fb-' + qi);
-  fb.className = 'gq-feedback show ' + (ok ? 'ok' : 'ng');
-  fb.innerHTML = (ok ? '🎉 정답! ' : '❌ 오답. ') + AB_DATA[qi].exp;
-  gScores['ab'+qi] = ok ? 1 : 0;
+  gScores['ab'+qi] = allOk ? 1 : 0;
   updateGScore();
 }
 function resetAB(qi) {
   delete abSelected[qi];
-  const choice = document.getElementById('abc-' + qi);
-  choice.querySelectorAll('.ab-opt').forEach(btn => btn.className = 'ab-opt');
-  document.getElementById('ab-fb-' + qi).className = 'gq-feedback';
+  const card = document.getElementById('ab-card-'+qi);
+  if(card){
+    card.querySelectorAll('.ab-opt').forEach(btn=>btn.className='ab-opt');
+    card.querySelectorAll('.gq-feedback').forEach(fb=>fb.className='gq-feedback');
+  }
   delete gScores['ab'+qi]; updateGScore();
 }
 
@@ -921,11 +1126,7 @@ function buildErr() {
         <span class="gq-num">${String(qi+1).padStart(2,'0')}</span>
         <div class="gq-sent">${wordsHtml}</div>
       </div>
-      <div class="gq-feedback" id="er-fb-${qi}"></div>
-      <div class="gq-btns">
-        <button class="gq-check" onclick="checkErr(${qi})">✓ 확인</button>
-        <button class="gq-reset" onclick="resetErr(${qi})">↺</button>
-      </div>`;
+      <div class="gq-feedback" id="er-fb-${qi}"></div>`;
     box.appendChild(card);
   });
 }
@@ -982,11 +1183,7 @@ function buildFill() {
           <span style="font-size:11px;color:var(--gold);margin-left:6px;">힌트: ${q.hint}</span>
         </div>
       </div>
-      <div class="gq-feedback" id="fi-fb-${qi}"></div>
-      <div class="gq-btns">
-        <button class="gq-check" onclick="checkFill(${qi})">✓ 확인</button>
-        <button class="gq-reset" onclick="resetFill(${qi})">↺</button>
-      </div>`;
+      <div class="gq-feedback" id="fi-fb-${qi}"></div>`;
     box.appendChild(card);
   });
 }
@@ -1026,30 +1223,305 @@ function updateGScore() {
 /* ══ 뷰 전환 (grammar 추가) ══ */
 
 let arrangeBuilt=false;
+let vocabBuilt=false;
+let currentVocabTab=0;
+
 function switchView(view){
   const rv=document.getElementById('readingView');
   const av=document.getElementById('arrangeView');
   const gv=document.getElementById('grammarView');
+  const vv=document.getElementById('vocabView');
   const tabR=document.getElementById('tabR');
   const tabA=document.getElementById('tabA');
   const tabG=document.getElementById('tabG');
+  const tabV=document.getElementById('tabV');
 
-  // 모두 숨기기
   rv.style.display='none';
   av.classList.remove('active');
   gv.classList.remove('active');
-  [tabR,tabA,tabG].forEach(t=>t.classList.remove('active'));
+  vv.classList.remove('active');
+  [tabR,tabA,tabG,tabV].forEach(t=>{if(t)t.classList.remove('active');});
 
   if(view==='reading'){
     rv.style.display='block'; tabR.classList.add('active');
   } else if(view==='arrange'){
     av.classList.add('active'); tabA.classList.add('active');
     if(!arrangeBuilt){buildArrangeCards();arrangeBuilt=true;}
-  } else {
+  } else if(view==='grammar'){
     gv.classList.add('active'); tabG.classList.add('active');
     if(!gBuilt){buildGrammarSection();gBuilt=true;}
+  } else {
+    vv.classList.add('active'); tabV.classList.add('active');
+    if(!vocabBuilt){buildVocab(0);vocabBuilt=true;}
   }
 }
+
+/* ══ 단어장 데이터 ══ */
+const VOCAB = [
+  {
+    en:'official', pos:'n.', kr:'관리, 공무원',
+    syn:['administrator','officer','authority'],
+    ant:['civilian','layperson'],
+    phrases:['Sumerian officials = 수메르 관리들','government official = 정부 관리']
+  },
+  {
+    en:'mark', pos:'v.', kr:'표시하다, 기록하다',
+    syn:['indicate','label','record','note'],
+    ant:['erase','delete','remove'],
+    phrases:['mark on clay tablets = 점토판에 표시하다','mark five pictures = 그림 다섯 개를 표시하다']
+  },
+  {
+    en:'intellectual', pos:'adj.', kr:'지적인, 지성의',
+    syn:['cognitive','mental','rational','academic'],
+    ant:['instinctive','physical','emotional'],
+    phrases:['intellectual leap = 지적 도약','intellectual capacity = 지적 능력']
+  },
+  {
+    en:'leap', pos:'n./v.', kr:'도약, 급격한 발전 / 뛰어오르다',
+    syn:['jump','bound','advance','breakthrough'],
+    ant:['decline','regression','fall'],
+    phrases:['intellectual leap = 지적 도약','leap forward = 앞으로 도약하다','quantum leap = 획기적 발전']
+  },
+  {
+    en:'separate', pos:'v.', kr:'분리하다, 구분하다',
+    syn:['divide','detach','distinguish','isolate'],
+    ant:['combine','unite','merge','connect'],
+    phrases:['separate A from B = A를 B에서 분리하다','separate the number from the object = 숫자를 물체에서 분리하다']
+  },
+  {
+    en:'numeral', pos:'n.', kr:'수자, 숫자 기호',
+    syn:['number','digit','figure','symbol'],
+    ant:[],
+    phrases:['a numeral for the number five = 숫자 5를 나타내는 수자','Roman numeral = 로마 숫자']
+  },
+  {
+    en:'alongside', pos:'prep.', kr:'~와 나란히, ~와 함께',
+    syn:['beside','next to','together with','adjacent to'],
+    ant:['apart from','away from'],
+    phrases:['alongside a symbol = 기호와 나란히','work alongside = ~와 나란히 일하다']
+  },
+  {
+    en:'emancipated', pos:'adj.', kr:'해방된, 독립된',
+    syn:['liberated','freed','independent','autonomous'],
+    ant:['enslaved','dependent','bound','restricted'],
+    phrases:['emancipated number = 해방된 숫자','emancipated from = ~로부터 해방된']
+  },
+  {
+    en:'in its own right', pos:'idiom', kr:'그 자체로, 독립적으로',
+    syn:['independently','by itself','on its own','intrinsically'],
+    ant:[],
+    phrases:['existing in its own right = 그 자체로 존재하는','famous in its own right = 그 자체로 유명한']
+  },
+  {
+    en:'independent of', pos:'phrase', kr:'~로부터 독립적인, ~와 무관한',
+    syn:['free from','unrelated to','separate from','regardless of'],
+    ant:['dependent on','relying on','connected to'],
+    phrases:['independent of whatever = 무엇이든 무관하게','independent of the object = 물체로부터 독립적인']
+  },
+  {
+    en:'take ~ for granted', pos:'idiom', kr:'~을 당연하게 여기다',
+    syn:['assume','presuppose','overlook','not appreciate'],
+    ant:['appreciate','value','recognize'],
+    phrases:['take the emancipated number for granted = 해방된 숫자를 당연하게 여기다','take it for granted that = ~을 당연시하다']
+  },
+  {
+    en:'civilization', pos:'n.', kr:'문명, 문명 사회',
+    syn:['culture','society','advancement','development'],
+    ant:['barbarism','primitivism','savagery'],
+    phrases:['earliest civilizations = 가장 초기 문명들','ancient civilization = 고대 문명']
+  },
+];
+
+let vocabScores = {spell:{}, meaning:{}};
+let currentQuizData = [];
+
+function switchVocab(tab) {
+  currentVocabTab = tab;
+  [0,1,2].forEach(i => {
+    document.getElementById('vtab'+i).classList.toggle('active', i===tab);
+  });
+  buildVocab(tab);
+}
+
+function buildVocab(tab) {
+  const box = document.getElementById('vocabContent');
+  box.innerHTML = '';
+  if (tab === 0) buildVocabCards(box);
+  else if (tab === 1) buildSpellQuiz(box);
+  else buildMeaningQuiz(box);
+}
+
+/* ── 단어카드 ── */
+function buildVocabCards(box) {
+  const grid = document.createElement('div');
+  grid.className = 'vcard-grid';
+  VOCAB.forEach((v, i) => {
+    const synHtml = v.syn.length ? `<div class="vcard-section"><div class="vcard-section-label">동의어</div><div class="vcard-items"><span class="vcard-syn">${v.syn.join(', ')}</span></div></div>` : '';
+    const antHtml = v.ant.length ? `<div class="vcard-section"><div class="vcard-section-label">반의어</div><div class="vcard-items"><span class="vcard-ant">${v.ant.join(', ')}</span></div></div>` : '';
+    const phraseHtml = v.phrases.length ? `<div class="vcard-section"><div class="vcard-section-label">어구 / 숙어</div><div class="vcard-items">${v.phrases.map(p=>`<div class="vcard-phrase">• ${p}</div>`).join('')}</div></div>` : '';
+    const div = document.createElement('div');
+    div.className = 'vcard';
+    div.style.animationDelay = (i*40)+'ms';
+    div.setAttribute('onclick', `this.classList.toggle('open')`);
+    div.innerHTML = `
+      <div class="vcard-front">
+        <div class="vcard-en">${v.en}</div>
+        <div class="vcard-pos">${v.pos} &nbsp;·&nbsp; 클릭하면 뜻 보기 ▼</div>
+      </div>
+      <div class="vcard-back">
+        <div class="vcard-back-inner">
+          <div class="vcard-kr">${v.kr}</div>
+          ${synHtml}${antHtml}${phraseHtml}
+        </div>
+      </div>`;
+    grid.appendChild(div);
+  });
+  box.appendChild(grid);
+}
+
+/* ── 철자 퀴즈 ── */
+function buildSpellQuiz(box) {
+  const hint = document.createElement('div');
+  hint.className = 'touch-hint';
+  hint.innerHTML = '💡 한국어 뜻을 보고 영어 철자를 직접 입력하세요';
+  box.appendChild(hint);
+
+  VOCAB.forEach((v, i) => {
+    const card = document.createElement('div');
+    card.className = 'quiz-card';
+    card.style.animationDelay = (i*40)+'ms';
+    card.innerHTML = `
+      <div class="quiz-top">
+        <span class="quiz-num">${String(i+1).padStart(2,'0')}</span>
+        <div class="quiz-prompt">
+          <div class="prompt-kr">${v.kr} <span style="color:rgba(0,0,0,0.3);font-size:11px;">(${v.pos})</span></div>
+          <div style="margin-top:6px;">
+            <input class="quiz-input" id="sp-${i}" placeholder="영어 철자 입력" autocomplete="off" spellcheck="false">
+          </div>
+        </div>
+      </div>
+      <div class="quiz-fb" id="sp-fb-${i}"></div>`;
+    // Enter 키 지원
+    setTimeout(() => {
+      const inp = document.getElementById('sp-'+i);
+      if(inp) inp.addEventListener('keydown', e => { if(e.key==='Enter') checkSpell(i); });
+    }, 0);
+    box.appendChild(card);
+  });
+
+  const btnWrap = document.createElement('div');
+  btnWrap.className = 'section-check';
+  btnWrap.innerHTML = `
+    <button class="section-check-btn" onclick="checkAllSpell()">✓ 전체 철자 확인</button>
+    <span class="section-score" id="spell-score"></span>
+    <button class="gq-reset" onclick="resetSpell()" style="margin-left:8px;">↺ 초기화</button>`;
+  box.appendChild(btnWrap);
+}
+
+function checkSpell(i) {
+  const inp = document.getElementById('sp-'+i);
+  if (!inp) return;
+  const userAns = inp.value.trim().toLowerCase();
+  const correct = VOCAB[i].en.toLowerCase();
+  const ok = userAns === correct;
+  inp.classList.remove('ok','ng');
+  inp.classList.add(ok ? 'ok' : 'ng');
+  const fb = document.getElementById('sp-fb-'+i);
+  fb.className = 'quiz-fb show ' + (ok ? 'ok' : 'ng');
+  fb.innerHTML = ok ? '🎉 정답!' : `❌ 정답: <strong>${VOCAB[i].en}</strong>`;
+  vocabScores.spell[i] = ok ? 1 : 0;
+}
+
+function checkAllSpell() {
+  VOCAB.forEach((_,i) => checkSpell(i));
+  const total = VOCAB.length;
+  const correct = Object.values(vocabScores.spell).filter(v=>v===1).length;
+  document.getElementById('spell-score').textContent = `${correct} / ${total} 정답`;
+}
+
+function resetSpell() {
+  VOCAB.forEach((_,i) => {
+    const inp = document.getElementById('sp-'+i);
+    if(inp){inp.value='';inp.className='quiz-input';}
+    const fb = document.getElementById('sp-fb-'+i);
+    if(fb) fb.className='quiz-fb';
+  });
+  vocabScores.spell = {};
+  const sc = document.getElementById('spell-score');
+  if(sc) sc.textContent='';
+}
+
+/* ── 뜻 퀴즈 ── */
+function buildMeaningQuiz(box) {
+  const hint = document.createElement('div');
+  hint.className = 'touch-hint';
+  hint.innerHTML = '💡 영어 단어를 보고 알맞은 뜻을 선택하세요';
+  box.appendChild(hint);
+
+  // 셔플된 퀴즈 순서
+  const shuffledVocab = [...VOCAB].sort(() => Math.random() - 0.5);
+
+  shuffledVocab.forEach((v, i) => {
+    // 오답 3개 생성
+    const wrongs = VOCAB.filter(w => w.en !== v.en)
+      .sort(() => Math.random()-0.5).slice(0,3).map(w => w.kr);
+    const choices = [...wrongs, v.kr].sort(() => Math.random()-0.5);
+
+    const card = document.createElement('div');
+    card.className = 'quiz-card';
+    card.style.animationDelay = (i*40)+'ms';
+    card.dataset.en = v.en;
+    card.dataset.answer = v.kr;
+    card.innerHTML = `
+      <div class="quiz-top">
+        <span class="quiz-num">${String(i+1).padStart(2,'0')}</span>
+        <div class="quiz-prompt">
+          <div class="prompt-en">${v.en}</div>
+          <div class="prompt-kr" style="margin-top:2px;font-size:11px;color:rgba(0,0,0,0.3);">${v.pos}</div>
+        </div>
+      </div>
+      <div class="choices" id="mc-${i}">
+        ${choices.map(ch => `<button class="choice-btn" data-val="${ch}" onclick="checkMeaning(${i}, this)">${ch}</button>`).join('')}
+      </div>
+      <div class="quiz-fb" id="mc-fb-${i}"></div>`;
+    box.appendChild(card);
+  });
+
+  const btnWrap = document.createElement('div');
+  btnWrap.className = 'section-check';
+  btnWrap.innerHTML = `
+    <span class="section-score" id="meaning-score"></span>
+    <button class="gq-reset" onclick="resetMeaning()" style="margin-left:8px;">↺ 초기화</button>`;
+  box.appendChild(btnWrap);
+}
+
+function checkMeaning(i, btn) {
+  const card = btn.closest('.quiz-card');
+  const correct = card.dataset.answer;
+  const isOk = btn.dataset.val === correct;
+  // 모든 버튼 비활성화
+  card.querySelectorAll('.choice-btn').forEach(b => {
+    b.onclick = null;
+    if(b.dataset.val === correct) b.classList.add('ok');
+    else if(b === btn && !isOk) b.classList.add('ng');
+  });
+  const fb = document.getElementById('mc-fb-'+i);
+  fb.className = 'quiz-fb show ' + (isOk ? 'ok' : 'ng');
+  fb.innerHTML = isOk ? '🎉 정답!' : `❌ 정답: <strong>${correct}</strong>`;
+  vocabScores.meaning[i] = isOk ? 1 : 0;
+  // 실시간 점수 업데이트
+  const done = Object.keys(vocabScores.meaning).length;
+  const ok = Object.values(vocabScores.meaning).filter(v=>v===1).length;
+  const sc = document.getElementById('meaning-score');
+  if(sc) sc.textContent = `${ok} / ${done} 정답`;
+}
+
+function resetMeaning() {
+  vocabScores.meaning = {};
+  buildVocab(2);
+}
+
+/* 구버전 switchView 제거됨 */
 
 /* ══ 배열영작 데이터 ══ */
 const ARRANGE=[
@@ -1180,6 +1652,28 @@ function updateScore(){
   document.getElementById('scoreNum').textContent=ok;
   document.getElementById('scoreTotal').textContent=' / '+done+'문항';
 }
+
+function checkAllAB(){
+  AB_DATA.forEach((_,i) => { if(abSelected[i]!==undefined) checkAB(i); });
+  const total=AB_DATA.length;
+  const ok=AB_DATA.filter((_,i)=>gScores['ab'+i]===1).length;
+  const answered=AB_DATA.filter((_,i)=>abSelected[i]!==undefined).length;
+  document.getElementById('ab-final-score').textContent =
+    answered<total ? `(미응답 ${total-answered}문항 있음) ${ok}/${answered} 정답` : `${ok} / ${total} 정답`;
+}
+function checkAllErr(){
+  ERR_DATA.forEach((_,i) => { if(errSelected[i]!==undefined) checkErr(i); });
+  const total=ERR_DATA.length;
+  const ok=ERR_DATA.filter((_,i)=>gScores['er'+i]===1).length;
+  document.getElementById('er-final-score').textContent = `${ok} / ${total} 정답`;
+}
+function checkAllFill(){
+  FILL_DATA.forEach((_,i) => checkFill(i));
+  const total=FILL_DATA.length;
+  const ok=FILL_DATA.filter((_,i)=>gScores['fi'+i]===1).length;
+  document.getElementById('fi-final-score').textContent = `${ok} / ${total} 정답`;
+}
+
 </script>
 </body>
 </html>
