@@ -77,9 +77,28 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 .s-en .hl{font-weight:700;color:var(--navy);}
 .s-en .gm{font-weight:700;color:var(--purple-border);}
 .s-en .ref{font-weight:700;color:var(--teal);}
-.speak-icon{font-size:15px;flex-shrink:0;margin-top:3px;color:rgba(46,117,182,0.35);transition:color 0.2s,transform 0.2s;}
-.s-card:hover .speak-icon{color:var(--blue-border);transform:scale(1.15);}
-.s-card.grammar:hover .speak-icon{color:var(--purple-border);}
+.speak-icon{
+  font-size:15px;flex-shrink:0;margin-top:3px;
+  color:rgba(46,117,182,0.35);
+  transition:color 0.2s,transform 0.2s;
+  padding:5px;border-radius:6px;cursor:pointer;
+}
+@media(hover:hover) and (pointer:fine){
+  .s-card:hover .speak-icon{color:var(--blue-border);transform:scale(1.15);}
+  .s-card.grammar:hover .speak-icon{color:var(--purple-border);}
+}
+@media(hover:none){
+  .speak-icon{
+    font-size:18px;
+    color:rgba(46,117,182,0.55);
+    background:rgba(46,117,182,0.08);
+    border-radius:8px;padding:5px 8px;
+  }
+  .s-card.grammar .speak-icon{
+    color:rgba(91,45,142,0.55);
+    background:rgba(91,45,142,0.08);
+  }
+}
 .wave{display:none;align-items:center;gap:2px;height:16px;margin-top:3px;flex-shrink:0;}
 .s-card.playing .wave{display:flex;}
 .s-card.playing .speak-icon{display:none;}
@@ -483,7 +502,7 @@ footer{text-align:center;padding:40px 16px 48px;font-family:'JetBrains Mono',mon
   <!-- ── 한줄해석 뷰 ── -->
   <div id="readingView">
     <div class="hints">
-      <div class="hint">🖱 PC: 마우스 올리기 → 해석</div><div class="hint">📱 모바일: 1탭 → 해석 · 2탭 → 발음</div>
+      <div class="hint">🖱 PC: 마우스 올리기 → 해석 · 클릭 → 발음</div><div class="hint">📱 모바일: 탭 → 해석 · 🔊 → 발음</div>
       <div class="hint">🔊 클릭 → 발음 / 재클릭 → 정지</div>
       <div class="hint">💡 노란박스 → 쉬운 풀이</div>
       <div class="hint">📌 더블클릭 → 핀 고정</div>
@@ -820,31 +839,41 @@ function speakCard(card){
   u.onerror=()=>{card.classList.remove('playing');if(currentCard===card)currentCard=null;};
   speechSynthesis.speak(u);
 }
-// 터치 기기 판별
 const isTouchDevice = () => window.matchMedia('(hover:none)').matches;
 
 document.querySelectorAll('.s-card').forEach((card,i)=>{
   card.style.animationDelay=(i*70)+'ms';
 
+  // 🔊 아이콘 클릭 → 발음만 (PC/모바일 공통)
+  const speakBtn = card.querySelector('.speak-icon');
+  if(speakBtn){
+    speakBtn.addEventListener('click', e => {
+      e.stopPropagation(); // 카드 클릭 이벤트 차단
+      speakCard(card);
+    });
+  }
+
+  // 카드 본문 클릭
   card.addEventListener('click', e => {
+    // 🔊 아이콘 클릭은 위에서 처리
+    if(e.target.closest('.speak-icon')) return;
+    if(e.target.closest('.wave')) return;
+
     if(isTouchDevice()){
-      // 모바일: 첫 탭 → 해석 열기, 두 번째 탭 → 발음 재생
-      if(!card.classList.contains('tapped')){
-        // 다른 tapped 카드 모두 닫기
-        document.querySelectorAll('.s-card.tapped').forEach(c=>{
-          if(c!==card) c.classList.remove('tapped');
-        });
-        card.classList.add('tapped');
-      } else {
-        speakCard(card);
-      }
+      // 모바일: 탭 → 해당 문장 해석 토글
+      const isOpen = card.classList.contains('tapped');
+      // 다른 tapped 카드 닫기
+      document.querySelectorAll('.s-card.tapped').forEach(c=>{
+        if(c !== card) c.classList.remove('tapped');
+      });
+      card.classList.toggle('tapped', !isOpen);
     } else {
-      // PC: 클릭 = 발음
+      // PC: 클릭 → 발음
       speakCard(card);
     }
   });
 
-  card.addEventListener('dblclick',e=>{
+  card.addEventListener('dblclick', e => {
     e.preventDefault();
     card.classList.toggle('pinned');
   });
