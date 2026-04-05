@@ -826,56 +826,79 @@ showPassage(26);
 /* ══ TTS ══ */
 function getVoice(){const v=speechSynthesis.getVoices();return v.find(x=>x.lang==='en-US'&&x.name.includes('Google'))||v.find(x=>x.lang.startsWith('en-US'))||v.find(x=>x.lang.startsWith('en'))||null;}
 speechSynthesis.addEventListener('voiceschanged',()=>{});
-let currentCard=null;
-function speakCard(card){
-  // 같은 카드 재클릭 → 즉시 정지
-  if(currentCard===card){
-    speechSynthesis.cancel();
-    card.classList.remove('playing');
-    currentCard=null;
-    return;
-  }
-  // 다른 카드 재생 중이면 정지
+let currentCard = null;
+
+/* ── 핵심: 재생/정지 토글 ── */
+function stopSpeech() {
   speechSynthesis.cancel();
-  if(currentCard){currentCard.classList.remove('playing');currentCard=null;}
-  const text=card.dataset.text;if(!text)return;
-  currentCard=card;card.classList.add('playing');
-  const u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=0.84;u.pitch=1.0;
-  const v=getVoice();if(v)u.voice=v;
-  u.onend=()=>{card.classList.remove('playing');if(currentCard===card)currentCard=null;};
-  u.onerror=()=>{card.classList.remove('playing');if(currentCard===card)currentCard=null;};
+  if(currentCard) {
+    currentCard.classList.remove('playing');
+    currentCard = null;
+  }
+}
+
+function startSpeech(card) {
+  const text = card.dataset.text;
+  if(!text) return;
+  currentCard = card;
+  card.classList.add('playing');
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang='en-US'; u.rate=0.84; u.pitch=1.0;
+  const v=getVoice(); if(v) u.voice=v;
+  u.onend  = () => { card.classList.remove('playing'); if(currentCard===card) currentCard=null; };
+  u.onerror= () => { card.classList.remove('playing'); if(currentCard===card) currentCard=null; };
   speechSynthesis.speak(u);
 }
+
+function speakCard(card) {
+  if(currentCard === card) {
+    stopSpeech(); // 같은 카드 → 정지
+  } else {
+    stopSpeech(); // 다른 카드 재생 중이면 먼저 정지
+    startSpeech(card);
+  }
+}
+
 const isTouchDevice = () => window.matchMedia('(hover:none)').matches;
 
 document.querySelectorAll('.s-card').forEach((card,i)=>{
   card.style.animationDelay=(i*70)+'ms';
 
-  // 🔊 아이콘 클릭 → 발음만 (PC/모바일 공통)
   const speakBtn = card.querySelector('.speak-icon');
+  const waveEl   = card.querySelector('.wave');
+
+  /* 🔊 버튼: PC/모바일 모두 → 재생/정지 토글 */
   if(speakBtn){
     speakBtn.addEventListener('click', e => {
-      e.stopPropagation(); // 카드 클릭 이벤트 차단
+      e.preventDefault();
+      e.stopPropagation();
+      speakCard(card);
+    });
+  }
+  if(waveEl){
+    waveEl.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
       speakCard(card);
     });
   }
 
-  // 카드 본문 클릭
+  /* 카드 본문 클릭 (🔊 제외) */
   card.addEventListener('click', e => {
-    // 🔊 아이콘 클릭은 위에서 처리
     if(e.target.closest('.speak-icon')) return;
     if(e.target.closest('.wave')) return;
 
     if(isTouchDevice()){
-      // 모바일: 탭 → 해당 문장 해석 토글
+      /* 모바일: 탭 → 해석 열기/닫기 */
       const isOpen = card.classList.contains('tapped');
-      // 다른 tapped 카드 닫기
-      document.querySelectorAll('.s-card.tapped').forEach(c=>{
-        if(c !== card) c.classList.remove('tapped');
+      document.querySelectorAll('.s-card.tapped').forEach(tc=>{
+        if(tc !== card) tc.classList.remove('tapped');
       });
       card.classList.toggle('tapped', !isOpen);
+      /* 재생 중이면 정지 */
+      if(currentCard === card) stopSpeech();
     } else {
-      // PC: 클릭 → 발음
+      /* PC: 카드 본문 클릭 → 재생/정지 */
       speakCard(card);
     }
   });
@@ -928,15 +951,15 @@ function toggleVocab(){
 }
 let allQueue=[],allIdx=0,allPlaying=false;
 function speakAll(){
-  if(allPlaying){speechSynthesis.cancel();allPlaying=false;if(currentCard){currentCard.classList.remove('playing');currentCard=null;}const b=document.getElementById('btnAll');if(b)b.textContent='🔊 전체 읽기';return;}
-  speechSynthesis.cancel();allIdx=0;allPlaying=true;
+  if(allPlaying){stopSpeech();allPlaying=false;const b=document.getElementById('btnAll');if(b)b.textContent='🔊 전체 읽기';return;}
+  stopSpeech();allIdx=0;allPlaying=true;
   const b=document.getElementById('btnAll');if(b)b.textContent='⏹ 정지';
   allQueue=Array.from(document.querySelectorAll('#readingView .s-card'));readNext();
 }
 function readNext(){
   if(!allPlaying||allIdx>=allQueue.length){if(currentCard)currentCard.classList.remove('playing');currentCard=null;allPlaying=false;const b=document.getElementById('btnAll');if(b)b.textContent='🔊 전체 읽기';return;}
   const card=allQueue[allIdx++];
-  if(currentCard)currentCard.classList.remove('playing');
+  if(currentCard){currentCard.classList.remove('playing');}
   currentCard=card;card.classList.add('playing');
   card.scrollIntoView({behavior:'smooth',block:'center'});
   const u=new SpeechSynthesisUtterance(card.dataset.text);u.lang='en-US';u.rate=0.84;
