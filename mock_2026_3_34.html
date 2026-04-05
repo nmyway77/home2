@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ingroup Copying — 2026년 3월 고1 34번</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f1ec;--navy:#1F3864;--blue-card:#EBF3FB;--blue-border:#2E75B6;--purple-card:#F3E8FF;--purple-border:#5B2D8E;--teal:#00695C;--gold:#B8860B;--gold2:#f0d070;--cream:#FFF8E7;--orange:#E65100;--shadow:rgba(31,56,100,0.10);--text:#1a1a2e;--text-sub:#4a4a6a;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgba(31,56,100,0.06) 0%,transparent 50%),radial-gradient(ellipse at 90% 100%,rgba(91,45,142,0.04) 0%,transparent 50%);font-family:'Noto Sans KR',sans-serif;min-height:100vh;color:var(--text);}
+
+/* NAV */
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--navy);box-shadow:0 3px 16px rgba(31,56,100,0.35);display:flex;align-items:center;padding:0 16px;height:48px;gap:12px;}
+.home-btn{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.7);text-decoration:none;padding:4px 10px;border-radius:4px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);transition:all 0.2s;white-space:nowrap;}
+.home-btn:hover{background:rgba(255,255,255,0.14);color:white;}
+.nav-title-bar{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:1px;}
+.nav-badge{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--gold2);border:1px solid rgba(201,168,76,0.3);padding:3px 10px;border-radius:3px;white-space:nowrap;}
+
+/* PASSAGE */
+.passage{max-width:860px;margin:0 auto;padding:68px 16px 64px;}
+
+/* PAGE HEADER */
+.page-header{margin:0 0 20px;border-left:5px solid var(--navy);padding-left:20px;}
+.page-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--blue-border);margin-bottom:8px;}
+.page-title{font-family:'Playfair Display',serif;font-size:clamp(17px,3.5vw,28px);font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:6px;}
+.page-sub{font-size:12px;color:var(--text-sub);font-weight:300;}
+
+/* VIEW TABS */
+.view-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+.view-tab{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;padding:9px 18px;border-radius:7px;cursor:pointer;transition:all 0.2s;border:2px solid transparent;}
+.tab-reading{background:white;color:var(--navy);border-color:rgba(31,56,100,0.2);}
+.tab-reading.active{background:var(--navy);color:white;border-color:var(--navy);}
+.tab-arrange{background:white;color:var(--orange);border-color:rgba(230,81,0,0.25);}
+.tab-arrange.active{background:var(--orange);color:white;border-color:var(--orange);}
+.tab-grammar{background:white;color:#1D5C2B;border-color:rgba(29,92,43,0.25);}
+.tab-grammar.active{background:#1D5C2B;color:white;border-color:#1D5C2B;}
+.tab-vocab{background:white;color:#6A1B9A;border-color:rgba(106,27,154,0.25);}
+.tab-vocab.active{background:#6A1B9A;color:white;border-color:#6A1B9A;}
+
+/* HINTS */
+.hints{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
+.hint{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text-sub);background:white;border-radius:20px;padding:5px 13px;border:1px solid rgba(0,0,0,0.09);box-shadow:0 1px 4px var(--shadow);}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px;}
+.leg{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-sub);}
+.leg-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:18px;}
+.ctrl-btn{font-family:'JetBrains Mono',monospace;font-size:11px;padding:7px 14px;border-radius:6px;border:1px solid rgba(31,56,100,0.22);background:white;color:var(--navy);cursor:pointer;transition:all 0.2s;box-shadow:0 1px 4px var(--shadow);}
+.ctrl-btn:hover,.ctrl-btn.active{background:var(--navy);color:white;}
+
+/* CARDS */
+.cards{display:flex;flex-direction:column;gap:13px;}
+.s-card{border-radius:10px;border-left:4px solid var(--blue-border);background:var(--blue-card);box-shadow:0 3px 14px var(--shadow);overflow:hidden;cursor:pointer;transition:box-shadow 0.25s,transform 0.2s;animation:slideIn 0.4s ease both;position:relative;}
+.s-card.grammar{border-left-color:var(--purple-border);background:var(--purple-card);}
+@media(hover:hover) and (pointer:fine){.s-card:hover{box-shadow:0 6px 28px rgba(31,56,100,0.18);transform:translateX(3px);}}
+.s-card.playing{box-shadow:0 0 0 3px rgba(46,117,182,0.4),0 6px 28px var(--shadow);}
+.s-card.grammar.playing{box-shadow:0 0 0 3px rgba(91,45,142,0.4),0 6px 28px var(--shadow);}
+@keyframes slideIn{from{opacity:0;transform:translateX(-14px);}to{opacity:1;transform:translateX(0);}}
+.card-top{display:flex;align-items:flex-start;padding:12px 14px 11px;gap:10px;}
+.s-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;background:var(--navy);color:white;padding:3px 7px;border-radius:4px;flex-shrink:0;margin-top:2px;}
+.s-card.grammar .s-num{background:var(--purple-border);}
+.s-en{font-family:Georgia,serif;font-size:14.5px;line-height:1.8;color:#1a1a2e;flex:1;}
+.s-en .hl{font-weight:700;color:var(--navy);}
+.s-en .gm{font-weight:700;color:var(--purple-border);}
+.s-en .ref{font-weight:700;color:var(--teal);}
+.speak-icon{font-size:15px;flex-shrink:0;margin-top:3px;color:rgba(46,117,182,0.35);transition:color 0.2s,transform 0.2s;padding:5px;border-radius:6px;cursor:pointer;}
+@media(hover:hover) and (pointer:fine){.s-card:hover .speak-icon{color:var(--blue-border);transform:scale(1.15);}.s-card.grammar:hover .speak-icon{color:var(--purple-border);}}
+@media(hover:none){.speak-icon{font-size:18px;color:rgba(46,117,182,0.55);background:rgba(46,117,182,0.08);border-radius:8px;padding:5px 8px;}.s-card.grammar .speak-icon{color:rgba(91,45,142,0.55);background:rgba(91,45,142,0.08);}}
+.wave{display:none;align-items:center;gap:2px;height:16px;margin-top:3px;flex-shrink:0;}
+.s-card.playing .wave{display:flex;}
+.s-card.playing .speak-icon{display:none;}
+.wave span{display:block;width:3px;border-radius:2px;background:var(--blue-border);animation:wb 0.6s ease infinite alternate;}
+.s-card.grammar .wave span{background:var(--purple-border);}
+.wave span:nth-child(1){height:4px;animation-delay:0s;}.wave span:nth-child(2){height:10px;animation-delay:0.1s;}.wave span:nth-child(3){height:14px;animation-delay:0.2s;}.wave span:nth-child(4){height:8px;animation-delay:0.15s;}.wave span:nth-child(5){height:5px;animation-delay:0.05s;}
+@keyframes wb{from{transform:scaleY(0.5);opacity:0.7;}to{transform:scaleY(1.3);opacity:1;}}
+
+/* KR WRAP */
+.s-kr-wrap{max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1),opacity 0.3s;opacity:0;background:rgba(255,255,255,0.6);border-top:1px dashed transparent;}
+@media(hover:hover) and (pointer:fine){.s-card:hover .s-kr-wrap{max-height:800px;opacity:1;border-top-color:rgba(46,117,182,0.2);}.s-card.grammar:hover .s-kr-wrap{border-top-color:rgba(91,45,142,0.2);}}
+.s-card.pinned .s-kr-wrap,.s-card.tapped .s-kr-wrap{max-height:800px;opacity:1;border-top-color:rgba(46,117,182,0.2);}
+.s-card.grammar.pinned .s-kr-wrap,.s-card.grammar.tapped .s-kr-wrap{border-top-color:rgba(91,45,142,0.2);}
+.s-card.vocab-only .s-kr-wrap{max-height:800px;opacity:1;border-top-color:rgba(46,117,182,0.2);}
+.s-card.vocab-only .s-kr,.s-card.vocab-only .ref-note,.s-card.vocab-only .s-grammar,.s-card.vocab-only .s-meaning{display:none;}
+.s-kr{padding:9px 14px 9px 42px;font-size:13px;line-height:1.8;color:#2d2d4e;}
+.s-kr::before{content:"▶ ";color:var(--blue-border);font-size:10px;font-weight:700;}
+.s-card.grammar .s-kr::before{color:var(--purple-border);}
+.pr{color:var(--teal);font-weight:700;font-size:11.5px;}
+.s-vocab{padding:6px 14px 8px 42px;font-size:11px;line-height:1.7;color:var(--text-sub);border-top:1px dashed rgba(46,117,182,0.15);background:rgba(255,255,255,0.4);}
+.s-card.grammar .s-vocab{border-top-color:rgba(91,45,142,0.15);}
+.vocab-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;margin-right:5px;color:var(--blue-border);}
+.vocab-en{font-weight:600;color:var(--navy);margin-right:2px;}
+.vocab-kr{color:var(--text-sub);margin-right:8px;}
+.s-grammar{padding:6px 14px 8px 42px;font-size:11px;line-height:1.7;color:#3d1f5e;background:rgba(91,45,142,0.05);border-top:1px dashed rgba(91,45,142,0.15);}
+.grammar-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;margin-right:5px;color:var(--purple-border);}
+.s-meaning{padding:8px 14px 10px 42px;font-size:12px;line-height:1.9;color:#3d2200;border-top:1.5px solid rgba(230,81,0,0.2);background:linear-gradient(135deg,#FFFDE7,#FFF9E3);}
+.meaning-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700;display:block;margin-bottom:5px;border-left:3px solid var(--gold);padding-left:6px;}
+.meaning-body{border-left:2px solid rgba(230,81,0,0.25);padding-left:10px;font-style:italic;}
+.meaning-body strong{color:#7a3a00;font-weight:700;font-style:normal;}
+.star-line{display:block;margin:2px 0;padding-left:2px;color:#5a3000;font-size:11.5px;}
+.bracket{display:inline-block;background:rgba(184,134,11,0.13);border-radius:3px;padding:0 4px;font-weight:700;color:#7a3a00;font-style:normal;}
+
+/* SUMMARY */
+.summary-wrap{margin-top:36px;}
+.summary-header{background:var(--navy);color:white;font-family:'Playfair Display',serif;font-size:15px;font-weight:700;padding:12px 20px;border-radius:8px 8px 0 0;}
+.summary-body{background:var(--cream);border:1px solid rgba(31,56,100,0.15);border-top:none;border-radius:0 0 8px 8px;padding:20px;font-size:13px;line-height:2.0;color:#2a2a3e;box-shadow:0 4px 16px var(--shadow);}
+.summary-body p{margin-bottom:10px;}
+.story-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:16px;}
+.story-card{border-radius:8px;overflow:hidden;border:1px solid rgba(0,0,0,0.08);}
+.story-card-hdr{padding:9px 14px;color:white;font-size:12px;font-weight:700;}
+.story-card-body{padding:10px 14px;font-size:11.5px;line-height:1.8;color:#2d2d2d;}
+.story-card-body li{list-style:none;padding-left:12px;position:relative;}
+.story-card-body li::before{content:"•";position:absolute;left:0;color:#888;}
+.cmp-table{width:100%;border-collapse:collapse;margin-top:14px;font-size:12px;}
+.cmp-table th{background:var(--navy);color:white;padding:8px 10px;text-align:left;}
+.cmp-table td{padding:7px 10px;border-bottom:1px solid rgba(0,0,0,0.07);}
+.cmp-table tr:nth-child(even) td{background:rgba(235,243,251,0.5);}
+
+/* ARRANGE */
+.arrange-view{display:none;}
+.arrange-view.active{display:block;}
+.score-bar{background:var(--navy);border-radius:10px;padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.score-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.45);}
+.score-num{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--gold2);line-height:1;}
+.score-total{font-size:13px;color:rgba(255,255,255,0.35);}
+.score-reset-all{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;padding:7px 14px;border-radius:6px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7);cursor:pointer;}
+.arr-card{background:white;border-radius:12px;border:1px solid rgba(0,0,0,0.08);box-shadow:0 3px 14px var(--shadow);margin-bottom:16px;overflow:hidden;animation:slideIn 0.35s ease both;}
+.arr-header{background:var(--navy);padding:10px 16px;display:flex;align-items:flex-start;gap:10px;}
+.arr-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;background:rgba(255,255,255,0.15);color:white;padding:3px 8px;border-radius:4px;flex-shrink:0;margin-top:1px;}
+.arr-kr{font-size:12.5px;color:rgba(255,255,255,0.85);line-height:1.6;flex:1;}
+.arr-body{padding:14px 16px;}
+.answer-zone{display:flex;flex-wrap:wrap;gap:7px;min-height:48px;padding:10px 12px;background:#f0f4ff;border-radius:8px;border:2px dashed rgba(46,117,182,0.3);margin-bottom:10px;transition:border-color 0.2s,background 0.2s;align-content:flex-start;}
+.answer-zone.drag-over{border-color:var(--blue-border);background:#ddeeff;}
+.answer-zone:empty::before{content:'여기에 단어를 놓으세요';color:rgba(46,117,182,0.35);font-size:12px;font-style:italic;display:flex;align-items:center;height:28px;}
+.word-pool{display:flex;flex-wrap:wrap;gap:7px;min-height:44px;padding:10px;background:#f8f8f8;border-radius:8px;border:2px dashed #ddd;margin-bottom:12px;transition:border-color 0.2s,background 0.2s;}
+.word-pool.drag-over{border-color:var(--gold);background:#fff9e6;}
+.word-chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:6px;font-family:Georgia,serif;font-size:13.5px;cursor:grab;user-select:none;transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;background:var(--blue-card);border:1.5px solid var(--blue-border);color:var(--navy);font-weight:600;white-space:nowrap;}
+.word-chip:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(46,117,182,0.25);}
+.word-chip.dragging{opacity:0.35;transform:scale(0.93);cursor:grabbing;}
+.word-chip.ok-chip{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20;}
+.arr-result{display:none;padding:9px 13px;border-radius:7px;font-size:13px;font-weight:600;margin-bottom:10px;align-items:center;gap:8px;}
+.arr-result.show{display:flex;}
+.arr-result.ok{background:#E8F5E9;color:#1B5E20;border:1px solid #A5D6A7;}
+.arr-result.ng{background:#FFEBEE;color:#B71C1C;border:1px solid #FFCDD2;}
+.arr-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.arr-check{font-family:'JetBrains Mono',monospace;font-size:11px;padding:7px 16px;border-radius:6px;border:none;background:var(--navy);color:white;cursor:pointer;transition:background 0.2s;}
+.arr-reset{font-family:'JetBrains Mono',monospace;font-size:11px;padding:7px 14px;border-radius:6px;border:1px solid rgba(0,0,0,0.15);background:white;color:#666;cursor:pointer;}
+.arr-show-ans{font-family:'JetBrains Mono',monospace;font-size:11px;padding:7px 14px;border-radius:6px;border:1px solid rgba(230,81,0,0.3);background:white;color:var(--orange);cursor:pointer;}
+.ans-reveal{display:none;margin-top:8px;padding:10px 12px;background:var(--cream);border-radius:6px;border-left:3px solid var(--gold);font-family:Georgia,serif;font-size:13px;color:#3d2200;line-height:1.7;}
+.ans-reveal.show{display:block;}
+.touch-hint{text-align:center;font-size:11px;font-family:'JetBrains Mono',monospace;color:rgba(0,0,0,0.3);letter-spacing:1px;margin-bottom:14px;padding:7px;background:rgba(0,0,0,0.03);border-radius:6px;}
+
+/* GRAMMAR */
+.grammar-view{display:none;}
+.grammar-view.active{display:block;}
+.gtype-header{background:var(--navy);color:white;border-radius:8px 8px 0 0;padding:11px 18px;display:flex;align-items:center;gap:10px;font-family:'Playfair Display',serif;font-size:15px;font-weight:700;}
+.gtype-desc{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:400;letter-spacing:0.5px;color:rgba(255,255,255,0.6);}
+.gtype-body{background:white;border:1px solid rgba(31,56,100,0.12);border-top:none;border-radius:0 0 8px 8px;padding:18px;margin-bottom:6px;box-shadow:0 3px 14px var(--shadow);}
+.gtype-final{margin-top:10px;margin-bottom:24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.gtype-final-btn{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;padding:10px 24px;border-radius:8px;border:none;cursor:pointer;transition:background 0.2s;}
+.gtype-final-btn.ab-btn{background:var(--navy);color:white;box-shadow:0 3px 10px rgba(31,56,100,0.3);}
+.gtype-final-btn.er-btn{background:#5B2D8E;color:white;box-shadow:0 3px 10px rgba(91,45,142,0.3);}
+.gtype-final-btn.fi-btn{background:#C55A11;color:white;box-shadow:0 3px 10px rgba(197,90,17,0.3);}
+.gtype-final-score{font-size:13px;color:var(--text-sub);}
+.g-score-bar{background:linear-gradient(135deg,#1D5C2B,#2E7D32);border-radius:10px;padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.g-score-num{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:#c8f7c5;line-height:1;}
+.g-score-total{font-size:13px;color:rgba(255,255,255,0.4);}
+.g-score-reset{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;padding:7px 14px;border-radius:6px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.8);cursor:pointer;}
+.gq-card{background:#fafafa;border-radius:8px;border:1px solid rgba(0,0,0,0.08);margin-bottom:14px;overflow:hidden;}
+.gq-top{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;}
+.gq-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;background:var(--navy);color:white;padding:3px 8px;border-radius:4px;flex-shrink:0;margin-top:2px;}
+.gq-sent{font-family:Georgia,serif;font-size:14px;line-height:1.85;color:#1a1a2e;flex:1;}
+.ab-choice{display:inline-flex;gap:0;border:1.5px solid var(--blue-border);border-radius:5px;overflow:hidden;vertical-align:middle;margin:0 2px;font-family:'JetBrains Mono',monospace;font-size:12px;}
+.ab-opt{padding:2px 8px;cursor:pointer;background:white;color:var(--navy);transition:background 0.15s,color 0.15s;border:none;font-family:Georgia,serif;font-size:13px;font-weight:600;}
+.ab-opt:first-child{border-right:1px solid rgba(46,117,182,0.3);}
+.ab-opt:hover{background:var(--blue-card);}
+.ab-opt.selected{background:var(--navy);color:white;}
+.ab-opt.correct-sel{background:#2E7D32;color:white;}
+.ab-opt.wrong-sel{background:#C62828;color:white;}
+.err-word{display:inline-block;border-bottom:2px solid var(--blue-border);cursor:pointer;padding:0 3px;margin:0 2px;border-radius:2px 2px 0 0;transition:background 0.15s;font-weight:600;}
+.err-word:hover{background:rgba(46,117,182,0.1);}
+.err-word.selected-err{background:rgba(230,81,0,0.15);border-bottom-color:var(--orange);}
+.err-word.correct-err{background:#E8F5E9;border-bottom-color:#2E7D32;color:#1B5E20;}
+.err-word.wrong-err{background:#FFEBEE;border-bottom-color:#C62828;color:#B71C1C;}
+.fill-wrap{display:inline-flex;align-items:center;gap:4px;vertical-align:middle;margin:0 3px;}
+.fill-base{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(0,0,0,0.4);letter-spacing:0.3px;}
+.fill-input{font-family:Georgia,serif;font-size:13px;border:none;border-bottom:2px solid var(--blue-border);background:transparent;color:var(--navy);width:110px;text-align:center;outline:none;padding:1px 4px;transition:border-color 0.2s;font-weight:600;}
+.fill-input:focus{border-bottom-color:var(--orange);}
+.fill-input.correct-fill{border-bottom-color:#2E7D32;color:#1B5E20;background:#E8F5E9;border-radius:4px;}
+.fill-input.wrong-fill{border-bottom-color:#C62828;color:#B71C1C;background:#FFEBEE;border-radius:4px;}
+.gq-feedback{display:none;padding:8px 14px 9px;font-size:12px;line-height:1.7;border-top:1px dashed rgba(0,0,0,0.08);}
+.gq-feedback.show{display:block;}
+.gq-feedback.ok{background:#E8F5E9;color:#1B5E20;}
+.gq-feedback.ng{background:#FFEBEE;color:#B71C1C;}
+.feedback-ans{font-weight:700;font-family:'JetBrains Mono',monospace;font-size:11px;}
+
+/* VOCAB */
+.vocab-view{display:none;}
+.vocab-view.active{display:block;}
+.vocab-tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap;}
+.vocab-tab{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;padding:8px 16px;border-radius:6px;cursor:pointer;border:1.5px solid rgba(106,27,154,0.25);background:white;color:#6A1B9A;transition:all 0.2s;}
+.vocab-tab.active{background:#6A1B9A;color:white;border-color:#6A1B9A;}
+.vcard-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;}
+.vcard{background:white;border-radius:10px;border:1px solid rgba(0,0,0,0.08);box-shadow:0 2px 10px var(--shadow);overflow:hidden;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;animation:slideIn 0.3s ease both;}
+.vcard:hover{transform:translateY(-3px);box-shadow:0 6px 20px var(--shadow);}
+.vcard-front{padding:16px;}
+.vcard-en-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
+.vcard-en{font-family:Georgia,serif;font-size:17px;font-weight:700;color:var(--navy);flex:1;}
+.vcard-speak{background:none;border:1.5px solid rgba(46,117,182,0.3);border-radius:6px;padding:3px 7px;cursor:pointer;font-size:13px;color:rgba(46,117,182,0.5);transition:all 0.2s;flex-shrink:0;}
+.vcard-speak:hover{background:var(--blue-card);border-color:var(--blue-border);color:var(--blue-border);}
+.vcard-pos{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(0,0,0,0.3);text-transform:uppercase;}
+.vcard-back{max-height:0;overflow:hidden;transition:max-height 0.35s cubic-bezier(0.4,0,0.2,1);background:linear-gradient(135deg,#EDE7F6,#F3E5F5);border-top:1px solid rgba(106,27,154,0.12);}
+.vcard.open .vcard-back{max-height:400px;}
+.vcard-back-inner{padding:13px 16px;}
+.vcard-kr{font-size:13.5px;color:#2d2d4e;font-weight:600;margin-bottom:8px;}
+.vcard-section{margin-top:7px;}
+.vcard-section-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#6A1B9A;font-weight:700;margin-bottom:3px;}
+.vcard-items{font-size:12px;color:#3d2d4e;line-height:1.8;}
+.vcard-syn{color:#1565C0;font-weight:600;}
+.vcard-ant{color:#B71C1C;font-weight:600;}
+.vcard-phrase{color:#1B5E20;font-style:italic;}
+.quiz-card{background:white;border-radius:10px;border:1px solid rgba(0,0,0,0.08);box-shadow:0 2px 10px var(--shadow);margin-bottom:12px;overflow:hidden;animation:slideIn 0.35s ease both;}
+.quiz-top{padding:14px 16px;display:flex;align-items:center;gap:12px;}
+.quiz-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;background:#6A1B9A;color:white;padding:3px 8px;border-radius:4px;flex-shrink:0;}
+.quiz-prompt{font-size:13px;color:var(--text);flex:1;line-height:1.6;}
+.quiz-input{font-family:Georgia,serif;font-size:14px;font-weight:600;border:none;border-bottom:2px solid #6A1B9A;background:transparent;color:var(--navy);outline:none;padding:2px 6px;width:130px;text-align:center;transition:border-color 0.2s;}
+.quiz-input:focus{border-bottom-color:var(--orange);}
+.quiz-input.ok{border-bottom-color:#2E7D32;color:#1B5E20;background:#E8F5E9;border-radius:4px;}
+.quiz-input.ng{border-bottom-color:#C62828;color:#B71C1C;background:#FFEBEE;border-radius:4px;}
+.choices{display:flex;flex-direction:column;gap:6px;padding:0 16px 12px;}
+.choice-btn{text-align:left;padding:8px 12px;border-radius:7px;border:1.5px solid rgba(0,0,0,0.1);background:white;font-size:13px;color:var(--text);cursor:pointer;transition:all 0.15s;font-family:'Noto Sans KR',sans-serif;}
+.choice-btn:hover{background:#EDE7F6;border-color:#6A1B9A;color:#6A1B9A;}
+.choice-btn.ok{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20;font-weight:700;}
+.choice-btn.ng{background:#FFEBEE;border-color:#C62828;color:#B71C1C;}
+.quiz-fb{display:none;padding:7px 16px 9px;font-size:12px;border-top:1px dashed rgba(0,0,0,0.08);}
+.quiz-fb.show{display:block;}
+.quiz-fb.ok{background:#E8F5E9;color:#1B5E20;}
+.quiz-fb.ng{background:#FFEBEE;color:#B71C1C;}
+.section-check{margin-top:14px;margin-bottom:24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.section-check-btn{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;padding:10px 22px;border-radius:8px;border:none;background:#6A1B9A;color:white;cursor:pointer;transition:background 0.2s;box-shadow:0 3px 10px rgba(106,27,154,0.3);}
+.section-check-btn:hover{background:#4A148C;}
+.section-score{font-size:13px;color:var(--text-sub);}
+.gq-reset{font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 12px;border-radius:6px;border:1px solid rgba(0,0,0,0.15);background:white;color:#666;cursor:pointer;}
+
+
+/* ── 워터마크 ── */
+.watermark{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:7px 16px;
+  background:var(--navy);
+  border-radius:7px;
+  margin-bottom:16px;
+  flex-wrap:wrap;gap:6px;
+}
+.wm-logo{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;font-weight:700;
+  color:var(--gold2);letter-spacing:1px;
+}
+.wm-text{
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:11px;color:rgba(255,255,255,0.55);
+  letter-spacing:0.5px;
+}
+.wm-url{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:rgba(201,168,76,0.6);
+  letter-spacing:1px;
+}
+
+footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(31,56,100,0.25);letter-spacing:1px;}
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--navy);box-shadow:0 3px 16px rgba(31,56,100,0.35);display:flex;align-items:center;padding:0 16px;height:48px;gap:12px;}
+.home-btn{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.7);text-decoration:none;padding:4px 10px;border-radius:4px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);transition:all 0.2s;white-space:nowrap;}
+.home-btn:hover{background:rgba(255,255,255,0.14);color:white;}
+.nav-title-bar{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:1px;}
+.nav-badge{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--gold2);border:1px solid rgba(201,168,76,0.3);padding:3px 10px;border-radius:3px;white-space:nowrap;}
+.passage{max-width:860px;margin:0 auto;padding:68px 16px 64px;}
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--navy);box-shadow:0 3px 16px rgba(31,56,100,0.35);display:flex;align-items:center;padding:0 16px;height:48px;gap:12px;}
+.home-btn{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.7);text-decoration:none;padding:4px 10px;border-radius:4px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);transition:all 0.2s;white-space:nowrap;}
+.home-btn:hover{background:rgba(255,255,255,0.14);color:white;}
+.nav-title-bar{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:1px;}
+.nav-badge{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--gold2);border:1px solid rgba(201,168,76,0.3);padding:3px 10px;border-radius:3px;white-space:nowrap;}
+.passage{max-width:860px;margin:0 auto;padding:68px 16px 64px;}
+</style>
+</head>
+<body>
+<nav class="top-nav">
+  <a class="home-btn" href="mock_march_2026.html">← 목록</a>
+  <span class="nav-title-bar">2026 · 3월 · 고1 · 34번</span>
+  <span class="nav-badge">✦ Ingroup Copying & Overimitation</span>
+</nav>
+<div class="passage">
+  <div class="watermark">
+    <span class="wm-logo">✦ 목동서로영어학원</span>
+    <span class="wm-text">본 자료는 목동서로영어학원에서 제작하였습니다</span>
+    <span class="wm-url">0505.co.kr</span>
+  </div>
+  <div class="page-header">
+    <div class="page-label">✦ 34번 · 한줄해석 · Line-by-Line</div>
+    <div class="page-title">Ingroup Copying & Overimitation — 우리는 왜 싫어하는 사람도 따라 하는가?</div>
+    <div class="page-sub">2026년 3월 고1 모의고사 · 내집단 모방과 과잉모방의 심리학</div>
+  </div>
+  <div class="view-tabs">
+    <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
+    <button class="view-tab tab-arrange" id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
+    <button class="view-tab tab-grammar" id="tabG" onclick="switchView('grammar')">📝 어법 문제</button>
+    <button class="view-tab tab-vocab" id="tabV" onclick="switchView('vocab')">📚 단어장</button>
+  </div>
+  <div id="readingView">
+    <div class="hints">
+      <div class="hint">🖱 PC: 마우스 올리기 → 해석 · 클릭 → 발음</div>
+      <div class="hint">📱 모바일: 탭 → 해석 · 🔊 → 발음</div>
+      <div class="hint">💡 노란박스 → 쉬운 풀이</div>
+    </div>
+    <div class="legend">
+      <div class="leg"><div class="leg-dot" style="background:var(--blue-border)"></div>일반 문장</div>
+      <div class="leg"><div class="leg-dot" style="background:var(--purple-border)"></div>문법 핵심</div>
+    </div>
+    <div class="controls">
+      <button class="ctrl-btn" id="btnVocab" onclick="toggleVocab()">📌 단어만 노출</button>
+      <button class="ctrl-btn" id="btnOpen"  onclick="toggleOpen()">📄 전체 펼치기</button>
+      <button class="ctrl-btn" id="btnAll"   onclick="speakAll()">🔊 전체 읽기</button>
+    </div>
+    <div class="cards" id="cards">
+
+<!-- S1 -->
+<div class="s-card" data-text="The emphasis on learning from the ingroup takes little account of individuals.">
+  <div class="card-top">
+    <span class="s-num">01</span>
+    <div class="s-en">The <span class="hl">emphasis</span> on learning from the <span class="hl">ingroup</span> <span class="gm">takes little account of</span> individuals.</div>
+    <span class="speak-icon">🔊</span>
+    <div class="wave"><span></span><span></span><span></span><span></span><span></span></div>
+  </div>
+  <div class="s-kr-wrap">
+    <div class="s-kr">내집단에서 배우는 것에 대한 강조는 개인들을 거의 고려하지 않습니다.</div>
+    <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">emphasis on</span><span class="vocab-kr">~에 대한 강조</span><span class="vocab-en">ingroup</span><span class="vocab-kr">내집단</span><span class="vocab-en">take account of</span><span class="vocab-kr">~을 고려하다</span></div>
+    <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>take little account of</strong> = ~을 거의 고려하지 않다 / The emphasis on ~ = ~에 대한 강조 (명사구 주어)</div>
+    <div class="s-meaning"><span class="meaning-label">💡 쉬운 풀이</span>
+      <div class="meaning-body">그 사람이 어떤 사람인지와 상관없이 내집단이라는 이유만으로 따라 한다는 뜻이에요.<br>
+      <span class="star-line">★ 개인의 특성·감정 무시 → 집단 소속이 모방을 결정한다!</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- S2 -->
+<div class="s-card" data-text="Amazingly, while we may dislike some of the people in our ingroup, we still copy them.">
+  <div class="card-top">
+    <span class="s-num">02</span>
+    <div class="s-en">Amazingly, <span class="gm">while</span> we may <span class="hl">dislike</span> some of the people in our ingroup, we still <span class="hl">copy</span> <span class="ref">them</span>.</div>
+    <span class="speak-icon">🔊</span>
+    <div class="wave"><span></span><span></span><span></span><span></span><span></span></div>
+  </div>
+  <div class="s-kr-wrap">
+    <div class="s-kr">놀랍게도, 우리가 내집단의 일부 사람들을 좋아하지 않더라도, 우리는 여전히 그들을<span class="pr">(= 내집단 사람들을)</span> 따라 합니다.</div>
+    <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">amazingly</span><span class="vocab-kr">놀랍게도</span><span class="vocab-en">dislike</span><span class="vocab-kr">좋아하지 않다</span><span class="vocab-en">copy</span><span class="vocab-kr">따라 하다, 모방하다</span></div>
+    <div class="s-grammar"><span class="grammar-label">✏️ 문법</span>Amazingly = 놀랍게도 (부사) / <strong>while</strong> = ~에도 불구하고 (양보 접속사) / may dislike = 좋아하지 않을 수도 있다 / still = 그럼에도 여전히</div>
+    <div class="s-meaning"><span class="meaning-label">💡 쉬운 풀이</span>
+      <div class="meaning-body">이 글 전체의 핵심 역설이에요.<br>
+      <span class="star-line">★ 싫어하는 사람도 같은 집단이면 따라 한다 — 왜 그럴까?</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- S3 -->
+<div class="s-card" data-text="Wilks, Kirby, and Nielsen studied copying behavior in the context of observing how to open a puzzle box.">
+  <div class="card-top">
+    <span class="s-num">03</span>
+    <div class="s-en">Wilks, Kirby, and Nielsen studied <span class="hl">copying behavior</span> in the context of <span class="gm">observing how to open</span> a puzzle box.</div>
+    <span class="speak-icon">🔊</span>
+    <div class="wave"><span></span><span></span><span></span><span></span><span></span></div>
+  </div>
+  <div class="s-kr-wrap">
+    <div class="s-kr">Wilks, Kirby, Nielsen은 퍼즐 상자를 여는 방법을 관찰하는 맥락에서 모방 행동을 연구했습니다.</div>
+    <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">copying behavior</span><span class="vocab-kr">모방 행동</span><span class="vocab-en">in the context of</span><span class="vocab-kr">~하는 맥락에서</span><span class="vocab-en">observe</span><span class="vocab-kr">관찰하다</span></div>
+    <div class="s-grammar"><span class="grammar-label">✏️ 문법</span>in the context of = ~하는 맥락에서 / <strong>observing how to open</strong> = 어떻게 여는지 관찰하는 것 (동명사구)</div>
+  </div>
+</div>
+
+<!-- S4 -->
+<div class="s-card grammar" data-text="Ingroups and outgroups were distinguished in a minimal way, using simple color coding of wristbands.">
+  <div class="card-top">
+    <span class="s-num">04</span>
+    <div class="s-en">Ingroups and outgroups <span class="gm">were distinguished</span> in a <span class="hl">minimal</span> way, <span class="gm">using</span> simple color coding of <span class="hl">wristbands</span>.</div>
+    <span class="speak-icon">🔊</span>
+    <div class="wave"><span></span><span></span><span></span><span></span><span></span></div>
+  </div>
+  <div class="s-kr-wrap">
+    <div class="s-kr">내집단과 외집단은 손목밴드의 단순한 색상 코딩을 사용하여 최소한의 방식으로 구분되었습니다.</div>
+    <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">distinguished</span><span class="vocab-kr">구분된</span><span class="vocab-en">minimal</span><span class="vocab-kr">최소한의</span><span class="vocab-en">wristband</span><span class="vocab-kr">손목밴드</span></div>
+    <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>were distinguished</strong> = 구분되었다 (수동태) / in a minimal way = 최소한의 방식으로 / <strong>using</strong> = 분사구문 (수단·방법)</div>
+    <div class="s-meaning"><span class="meaning-label">💡 쉬운 풀이</span>
+      <div class="meaning-body">'minimal way — 손목밴드 색깔만으로 내집단/외집단을 나눈 거예요.<br>
+      <span class="star-line">★ 실제 관계도 공통점도 없이 같은 색 손목밴드만으로 내집단 효과가 나타났다!</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- S5 -->
+<div class="s-card" data-text="The children did not simply like all members of their ingroup; they disliked those who behaved in an antisocial fashion.">
+  <div class="card-top">
+    <span class="s-num">05</span>
+    <div class="s-en">The children did not simply like all members of their ingroup; <span class="ref">they</span> disliked <span class="gm">those who</span> behaved in an <span class="hl">antisocial</span> fashion.</div>
+    <span class="speak-icon">🔊</span>
+    <div class="wave"><span></span><span></span><span></span><span></span><span></span></div>
+  </div>
+  <div class="s-kr-wrap">
+    <div class="s-kr">아이들은 단순히 내집단의 모든 구성원을 좋아한 것이 아니었습니다; 그들은<span class="pr">(= 아이들)</span> 반사회적인 방식으로 행동하는 사람들을 좋아하지 않았습니다.</div>
+    <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">antisocial</span><span class="vocab-kr">반사회적인</span><span class="vocab-en">those who</span><span class="vocab-kr">~하는 사람들</span><span class="vocab-en">fashion</span><span class="vocab-kr">방식, 방법</span></div>
+    <div class="s-grammar"><span class="grammar-label">✏️ 문법</span>did not simply like = 단순히 좋아한 것은 아니었다 / <strong>those who</strong> ~ = ~하는 사람들 / behaved in ~ fashion = ~한 방식으로 행동하다</div>
+  </div>
+</div>
+
+<!-- S6 -->
+<div class="s-card" data-text="Indeed, they liked these antisocial ingroup members less than the prosocial members of an outgroup.">
+  <div class="card-top">
+    <span class="s-num">06</span>
+    <div class="s-en">Indeed, <span class="ref">they</span> liked these <span class="hl">antisocial</span> ingroup members <span class="gm">less than</span> the <span class="hl">prosocial</span> members of an outgroup.</div>
+    <span class="speak-icon">🔊</span>
+    <div class="wave"><span></span><span></span><span></span><span></span><span></span></div>
+  </div>
+  <div class="s-kr-wrap">
+    <div class="s-kr">실제로, 그들은<span class="pr">(= 아이들)</span> 이러한 반사회적 내집단 구성원들을 외집단의 친사회적 구성원들보다 덜 좋아했습니다.</div>
+    <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">indeed</span><span class="vocab-kr">실제로, 사실상</span><span class="vocab-en">antisocial</span><span class="vocab-kr">반사회적인</span><span class="vocab-en">prosocial</span><span class="vocab-kr">친사회적인</span></div>
+    <div class="s-grammar"><span class="grammar-label">✏️ 문법</span>Indeed = 실제로 / <strong>liked A less than B</strong> = A를 B보다 덜 좋아했다 (비교급)</div>
+    <div class="s-meaning"><span class="meaning-label">💡 쉬운 풀이</span>
+      <div class="meaning-body">'antisocial ingroup < prosocial outgroup' — 내집단 나쁜 사람을 외집단 좋은 사람보다 더 싫어했어요.<br>
+      <span class="star-line">★ 그런데도 다음 문장에서 따라 한다 — 이게 바로 핵심 역설!</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- S7 -->
+<div class="s-card grammar" data-text="Still, their dislike did not affect their tendency to copy ingroup behavior more closely than outgroup behavior.">
+  <div class="card-top">
+    <span class="s-num">07</span>
+    <div class="s-en">Still, their <span class="hl">dislike</span> did not <span class="hl">affect</span> their <span class="gm">tendency to copy</span> ingroup behavior more <span class="hl">closely</span> than outgroup behavior.</div>
+    <span class="speak-icon">🔊</span>
+    <div class="wave"><span></span><span></span><span></span><span></span><span></span></div>
+  </div>
+  <div class="s-kr-wrap">
+    <div class="s-kr">그럼에도, 그들의<span class="pr">(= 아이들의)</span> 싫어함은 그들이 외집단 행동보다 내집단 행동을 더 면밀히 따라 하는 경향에 영향을 미치지 않았습니다.</div>
+    <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">affect</span><span class="vocab-kr">영향을 미치다</span><span class="vocab-en">tendency</span><span class="vocab-kr">경향</span><span class="vocab-en">closely</span><span class="vocab-kr">면밀히, 밀접하게</span></div>
+    <div class="s-grammar"><span class="grammar-label">✏️ 문법</span>Still = 그럼에도 (역접) / did not affect = 영향을 미치지 않았다 / <strong>tendency to copy</strong> = ~을 따라 하는 경향 (to부정사 형용사적 용법) / <strong>more closely than</strong> = ~보다 더 면밀히</div>
+    <div class="s-meaning"><span class="meaning-label">💡 쉬운 풀이</span>
+      <div class="meaning-body">이 글의 핵심 실험 발견이에요.<br>
+      <span class="star-line">★ 싫어해도 따라 한다 — 감정이 모방 본능을 이기지 못했다!</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- S8 -->
+<div class="s-card" data-text="This overimitation reveals that we are not copying in order to learn how to open a box most efficiently.">
+  <div class="card-top">
+    <span class="s-num">08</span>
+    <div class="s-en"><span class="ref">This</span> <span class="hl">overimitation</span> <span class="gm">reveals that</span> we are not copying <span class="gm">in order to learn</span> how to open a box most <span class="hl">efficiently</span>.</div>
+    <span class="speak-icon">🔊</span>
+    <div class="wave"><span></span><span></span><span></span><span></span><span></span></div>
+  </div>
+  <div class="s-kr-wrap">
+    <div class="s-kr">이 과잉모방은<span class="pr">(= 싫어하면서도 따라 하는 것)</span> 우리가 상자를 가장 효율적으로 여는 방법을 배우기 위해 따라 하는 것이 아님을 드러냅니다.</div>
+    <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">overimitation</span><span class="vocab-kr">과잉모방</span><span class="vocab-en">reveal</span><span class="vocab-kr">드러내다</span><span class="vocab-en">efficiently</span><span class="vocab-kr">효율적으로</span></div>
+    <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>reveals that</strong> = ~임을 드러내다 (that절: 명사절) / <strong>in order to</strong> = ~하기 위해 (목적)</div>
+    <div class="s-meaning"><span class="meaning-label">💡 쉬운 풀이</span>
+      <div class="meaning-body">'overimitation' — 필요 이상으로 따라 하는 것이에요.<br>
+      <span class="star-line">★ 더 좋은 방법이 있어도 내집단 방식을 그대로 따라 한다 — 효율이 목적이 아니라는 증거!</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- S9 -->
+<div class="s-card grammar" data-text="We want to learn how to do it in the proper way, in other words, conforming to the rules and conventions of the ingroup. This will be appropriately demonstrated even by antisocial ingroup members.">
+  <div class="card-top">
+    <span class="s-num">09</span>
+    <div class="s-en">We want to learn how to do <span class="ref">it</span> in the <span class="hl">proper</span> way — in other words, <span class="gm">conforming to</span> the <span class="hl">rules and conventions</span> of the ingroup. This will <span class="gm">be demonstrated</span> even by <span class="hl">antisocial</span> ingroup members.</div>
+    <span class="speak-icon">🔊</span>
+    <div class="wave"><span></span><span></span><span></span><span></span><span></span></div>
+  </div>
+  <div class="s-kr-wrap">
+    <div class="s-kr">우리는 그것을<span class="pr">(= 퍼즐 상자 열기)</span> 올바른 방식으로 하는 방법을 배우고 싶은 것입니다 — 다시 말해, 내집단의 규칙과 관례에 따르면서. 이것은 반사회적 내집단 구성원들에 의해서도 적절하게 시연될 것입니다.</div>
+    <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">proper</span><span class="vocab-kr">올바른</span><span class="vocab-en">conform to</span><span class="vocab-kr">~에 따르다</span><span class="vocab-en">convention</span><span class="vocab-kr">관례, 관습</span><span class="vocab-en">demonstrated</span><span class="vocab-kr">시연된</span></div>
+    <div class="s-grammar"><span class="grammar-label">✏️ 문법</span>how to do it = 의문사 + to부정사 / <strong>conforming to</strong> = 분사구문 (부연 설명) / <strong>will be demonstrated</strong> = 수동태 미래 / even by = 심지어 ~에 의해서도</div>
+    <div class="s-meaning"><span class="meaning-label">💡 쉬운 풀이</span>
+      <div class="meaning-body">'proper way = conforming to rules and conventions' — '올바른'이란 효율적인 방식이 아니라 내집단 규칙에 맞는 방식이에요.<br>
+      <span class="bracket">【모방의 진짜 이유】</span> 효율 X → 내집단에 동화되기 위해 ✓<br>
+      <span class="star-line">★ 나쁜 사람도 내집단 방식만큼은 제대로 보여준다 — 규범이 개인 성향보다 강하다!</span></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /cards -->
+    <div class="summary-wrap">
+    <div class="summary-header">📖 줄거리 & 핵심 정리</div>
+    <div class="summary-body">
+      <p style="text-align:center;font-size:13.5px;font-weight:700;color:var(--navy);margin-bottom:4px;">💡 주제 한 줄 요약</p>
+      <p style="text-align:center;color:var(--blue-border);font-weight:700;">우리는 싫어하는 내집단 구성원도 따라 한다 — 효율이 아니라 내집단 규범에 동화되기 위해서!</p>
+      <p style="text-align:center;font-size:11.5px;color:#666;font-style:italic;margin-top:4px;">Children copy ingroup members even when they dislike them — overimitation reveals we copy to conform to ingroup rules, not to be efficient.</p>
+      <div class="story-cards">
+        <div class="story-card">
+          <div class="story-card-hdr" style="background:#1F3864;">🧪 실험 설계</div>
+          <div class="story-card-body"><ul>
+            <li>연구: Wilks, Kirby, Nielsen — 퍼즐 상자</li>
+            <li>구분: 손목밴드 색상만으로 (minimal!)</li>
+            <li>아이들은 반사회적 내집단 구성원을 싫어함</li>
+            <li>색 손목밴드만으로 내집단 효과 완벽 작동!</li>
+          </ul></div>
+        </div>
+        <div class="story-card">
+          <div class="story-card-hdr" style="background:#C55A11;">😲 핵심 발견</div>
+          <div class="story-card-body"><ul>
+            <li>싫어함(dislike) → 모방 경향에 영향 없음!</li>
+            <li>외집단보다 내집단을 더 closely 따라 함</li>
+            <li>이것이 overimitation — 과잉모방</li>
+            <li>감정이 모방 본능을 이기지 못했다!</li>
+          </ul></div>
+        </div>
+        <div class="story-card">
+          <div class="story-card-hdr" style="background:#1D5C2B;">🎯 진짜 이유</div>
+          <div class="story-card-body"><ul>
+            <li>효율적으로 배우기 위해 X</li>
+            <li>proper way = 내집단 rules & conventions</li>
+            <li>반사회적 내집단도 방식은 시연(demonstrated)</li>
+            <li>무의식적으로 내집단에 동화하려고!</li>
+          </ul></div>
+        </div>
+      </div>
+      <table class="cmp-table">
+        <tr><th>항목</th><th>❌ 틀린 설명</th><th>✅ 실제 이유</th></tr>
+        <tr><td>모방의 이유</td><td>효율적으로 배우기 위해</td><td>내집단 규범·관례에 동화하기</td></tr>
+        <tr><td>감정의 역할</td><td>싫으면 덜 따라 한다</td><td>감정은 모방 경향에 영향 없음</td></tr>
+        <tr><td>내집단 구분</td><td>복잡한 관계·공통점 필요</td><td>손목밴드 색상만으로도 충분</td></tr>
+        <tr><td>역설</td><td>좋아하는 사람만 따라 함</td><td>싫어도 따라 함 (overimitation)</td></tr>
+      </table>
+      <p style="margin-top:14px;text-align:center;font-size:12px;color:var(--navy);font-weight:700;">🎯 핵심 메시지</p>
+      <p style="text-align:center;font-size:12px;color:#444;">효율이 아닌 내집단 규범 동화를 위해 따라 한다 — 싫어도, 심지어 반사회적 구성원도!</p>
+      <p style="text-align:center;font-size:11px;color:#888;margin-top:6px;">dislike → still copy → overimitation → proper way = conforming to ingroup rules ✦</p>
+    </div>
+  </div>
+  </div>
+  <div class="arrange-view" id="arrangeView">
+    <div class="score-bar"><div><div class="score-label">SCORE</div><span class="score-num" id="scoreNum">0</span><span class="score-total" id="scoreTotal"> / 0</span></div><button class="score-reset-all" onclick="resetAll()">↺ 전체 초기화</button></div>
+    <div id="arrCards"></div>
+  </div>
+  <div class="grammar-view" id="grammarView">
+    <div class="g-score-bar"><div><div class="score-label" style="color:rgba(255,255,255,0.5)">SCORE</div><span class="g-score-num" id="gScoreNum">0</span><span class="g-score-total" id="gScoreTotal"> / 0</span></div><button class="g-score-reset" onclick="gResetAll()">↺ 전체 초기화</button></div>
+    <div class="gtype-header"><span>①</span> 괄호 안에서 알맞은 것 고르기 <span class="gtype-desc">선택 후 → 하단 최종확인</span></div>
+    <div class="gtype-body" id="abSection"></div>
+    <div class="gtype-final"><button class="gtype-final-btn ab-btn" onclick="checkAllAB()">✓ A/B 선택 최종 확인</button><span class="gtype-final-score" id="ab-final-score"></span></div>
+    <div class="gtype-header" style="background:#5B2D8E;"><span>②</span> 어법상 틀린 부분 찾아 고치기 <span class="gtype-desc">틀린 단어 클릭 → 하단 최종확인</span></div>
+    <div class="gtype-body" id="errSection"></div>
+    <div class="gtype-final"><button class="gtype-final-btn er-btn" onclick="checkAllErr()">✓ 오류수정 최종 확인</button><span class="gtype-final-score" id="er-final-score"></span></div>
+    <div class="gtype-header" style="background:#C55A11;"><span>③</span> 빈칸에 알맞은 어형으로 쓰기 <span class="gtype-desc">입력 후 → 하단 최종확인</span></div>
+    <div class="gtype-body" id="fillSection"></div>
+    <div class="gtype-final"><button class="gtype-final-btn fi-btn" onclick="checkAllFill()">✓ 서답형 최종 확인</button><span class="gtype-final-score" id="fi-final-score"></span></div>
+  </div>
+  <div class="vocab-view" id="vocabView">
+    <div class="vocab-tabs">
+      <button class="vocab-tab active" id="vtab0" onclick="switchVocab(0)">📖 단어카드</button>
+      <button class="vocab-tab" id="vtab1" onclick="switchVocab(1)">✏️ 철자 퀴즈</button>
+      <button class="vocab-tab" id="vtab2" onclick="switchVocab(2)">🔤 뜻 퀴즈</button>
+    </div>
+    <div id="vocabContent"></div>
+  </div>
+</div>
+<footer style="text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(31,56,100,0.25);letter-spacing:1px;">✦ Ingroup Copying & Overimitation · 2026년 3월 고1 34번 · 0505.co.kr ✦</footer>
+<script>
+const ARRANGE = [
+  {num:'01', kr:'놀랍게도, 우리가 내집단의 일부 사람들을 좋아하지 않더라도, 우리는 여전히 그들을 따라 합니다.',
+   ans:'Amazingly while we may dislike some of the people in our ingroup we still copy them'},
+  {num:'02', kr:'내집단과 외집단은 손목밴드의 단순한 색상 코딩을 사용하여 최소한의 방식으로 구분되었습니다.',
+   ans:'Ingroups and outgroups were distinguished in a minimal way using simple color coding of wristbands'},
+  {num:'03', kr:'그럼에도, 그들의 싫어함은 그들이 외집단 행동보다 내집단 행동을 더 면밀히 따라 하는 경향에 영향을 미치지 않았습니다.',
+   ans:'Still their dislike did not affect their tendency to copy ingroup behavior more closely than outgroup behavior'},
+  {num:'04', kr:'이 과잉모방은 우리가 상자를 가장 효율적으로 여는 방법을 배우기 위해 따라 하는 것이 아님을 드러냅니다.',
+   ans:'This overimitation reveals that we are not copying in order to learn how to open a box most efficiently'},
+  {num:'05', kr:'우리는 그것을 올바른 방식으로 하는 방법을 배우고 싶은 것입니다 — 다시 말해, 내집단의 규칙과 관례에 따르면서.',
+   ans:'We want to learn how to do it in the proper way in other words conforming to the rules and conventions of the ingroup'},
+  {num:'06', kr:'이것은 반사회적 내집단 구성원들에 의해서도 적절하게 시연될 것입니다.',
+   ans:'This will be appropriately demonstrated even by antisocial ingroup members'},
+];
+
+const AB_DATA = [
+  {
+    id:'ab0',
+    sent:['The emphasis on learning from the ingroup takes ',
+      {a:'little account of','b':'a little account of',key:'q1'},
+      ' individuals. Amazingly, ',
+      {a:'while','b':'although',key:'q2'},
+      ' we may dislike some of the people in our ingroup, we still copy them.'],
+    answers:{q1:'a',q2:'a'},
+    exps:{
+      q1:'<strong>little account of</strong>: "take little account of" = "~을 거의 고려하지 않다" 고정 표현. a little은 "약간"으로 의미가 반대.',
+      q2:'<strong>while</strong>: 양보 접속사로 "~에도 불구하고". although도 가능하나 while이 더 자연스러운 대조 표현.'
+    }
+  },
+  {
+    id:'ab1',
+    sent:['Ingroups and outgroups ',{a:'were distinguished','b':'distinguished',key:'q1'},
+      ' in a minimal way, ',{a:'using','b':'used',key:'q2'},
+      ' simple color coding of wristbands.'],
+    answers:{q1:'a',q2:'a'},
+    exps:{
+      q1:'<strong>were distinguished</strong>: "구분되었다" — <strong>수동태 be + p.p.</strong>. 내집단·외집단이 "구분된" 것이므로 수동.',
+      q2:'<strong>using</strong>: 수단·방법을 나타내는 <strong>분사구문</strong>. "손목밴드를 사용하여". used는 수동이므로 불가.'
+    }
+  },
+  {
+    id:'ab2',
+    sent:['Still, their dislike did not affect their tendency ',
+      {a:'to copy','b':'of copying',key:'q1'},
+      ' ingroup behavior more ',
+      {a:'closely','b':'close',key:'q2'},
+      ' than outgroup behavior.'],
+    answers:{q1:'a',q2:'a'},
+    exps:{
+      q1:'<strong>to copy</strong>: tendency + <strong>to-v</strong>. "~하려는 경향" (to부정사 형용사적 용법). tendency of V-ing도 가능하나 to-v가 더 자연스러움.',
+      q2:'<strong>closely</strong>: 동사 copy를 수식하는 <strong>부사(-ly)</strong>. close는 형용사.'
+    }
+  },
+  {
+    id:'ab3',
+    sent:['This overimitation ',{a:'reveals that','b':'reveals what',key:'q1'},
+      ' we are not copying in order to learn how to open a box most efficiently. We want to learn how to do it in the proper way — in other words, ',
+      {a:'conforming','b':'to conform',key:'q2'},
+      ' to the rules and conventions of the ingroup.'],
+    answers:{q1:'a',q2:'a'},
+    exps:{
+      q1:'<strong>reveals that</strong>: reveals + <strong>that절</strong> (명사절). "~임을 드러내다". reveal what은 "무엇을 드러내다"로 의미가 다름.',
+      q2:'<strong>conforming</strong>: 앞 절을 부연 설명하는 <strong>분사구문</strong>. "다시 말해, ~에 따르면서". to conform(to부정사)은 여기서 불자연스러움.'
+    }
+  },
+];
+
+const ERR_DATA = [
+  {
+    id:'er0',
+    words:['Ingroups','and','outgroups','distinguished','in','a','minimal','way,','using','simple','color','coding','of','wristbands.'],
+    underlined:[3],
+    errors:[
+      {idx:3, correct:'were distinguished', exp:'<strong>distinguished → were distinguished</strong>: 내집단·외집단이 "구분된" 것이므로 <strong>수동태 be + p.p.</strong>가 필요합니다.'}
+    ]
+  },
+  {
+    id:'er1',
+    words:['Still,','their','dislike','did','not','affect','their','tendency','of','copying','ingroup','behavior','more','close','than','outgroup','behavior.'],
+    underlined:[8,9,13],
+    errors:[
+      {idx:13, correct:'closely', exp:'<strong>close → closely</strong>: 동사 copy를 수식하므로 <strong>부사(-ly)</strong>가 필요합니다. close는 형용사.'}
+    ]
+  },
+  {
+    id:'er2',
+    words:['This','overimitation','reveals','what','we','are','not','copying','in','order','to','learn','how','to','open','a','box','most','efficiently.'],
+    underlined:[3],
+    errors:[
+      {idx:3, correct:'that', exp:'<strong>what → that</strong>: reveals + <strong>that절</strong>. "~임을 드러내다". reveal that ~ = ~라는 사실을 드러내다.'}
+    ]
+  },
+];
+
+const FILL_DATA = [
+  {
+    id:'fi0',
+    parts:[
+      {type:'text', text:'Amazingly, '},
+      {type:'blank', base:'while / although', answer:'while', hint:'양보 접속사 → while', exp:'<strong>while</strong>: 양보 접속사 "~에도 불구하고". although도 허용되나 while이 더 자연스러운 대조.'},
+      {type:'text', text:' we may dislike some of the people in our ingroup, we still copy them. Ingroups and outgroups '},
+      {type:'blank', base:'distinguish', answer:'were distinguished', hint:'수동태 → were + p.p.', exp:'<strong>were distinguished</strong>: "구분되었다" — 수동태 be + p.p. 내집단·외집단이 "구분된" 것.'},
+      {type:'text', text:' in a minimal way, using simple color coding of wristbands.'}
+    ]
+  },
+  {
+    id:'fi1',
+    parts:[
+      {type:'text', text:'Still, their dislike did not affect their tendency '},
+      {type:'blank', base:'copy', answer:'to copy', hint:'tendency + ? → to부정사', exp:'<strong>to copy</strong>: tendency + <strong>to-v</strong>. "~하려는 경향" (to부정사 형용사적 용법).'},
+      {type:'text', text:' ingroup behavior more '},
+      {type:'blank', base:'close', answer:'closely', hint:'동사 수식 → 부사', exp:'<strong>closely</strong>: 동사 copy를 수식하는 <strong>부사(-ly)</strong>. "더 면밀히 따라 하다".'},
+      {type:'text', text:' than outgroup behavior.'}
+    ]
+  },
+  {
+    id:'fi2',
+    parts:[
+      {type:'text', text:'This overimitation reveals '},
+      {type:'blank', base:'that / what', answer:'that', hint:'명사절 접속사 → that', exp:'<strong>that</strong>: reveals + <strong>that절</strong>. "~임을 드러내다". that은 명사절 접속사.'},
+      {type:'text', text:' we are not copying in order to learn how to open a box most efficiently. This will '},
+      {type:'blank', base:'demonstrate', answer:'be demonstrated', hint:'수동태 미래', exp:'<strong>be demonstrated</strong>: "시연될 것이다" — <strong>수동태 미래 will + be + p.p.</strong>'},
+      {type:'text', text:' even by antisocial ingroup members.'}
+    ]
+  },
+  {
+    id:'fi3',
+    parts:[
+      {type:'text', text:'We want to learn how to do it in the proper way — in other words, '},
+      {type:'blank', base:'conform', answer:'conforming', hint:'분사구문 → -ing', exp:'<strong>conforming</strong>: 앞 절을 부연 설명하는 <strong>분사구문</strong>. "~에 따르면서 (다시 말해)".'},
+      {type:'text', text:' to the rules and '},
+      {type:'blank', base:'convention', answer:'conventions', hint:'복수 명사', exp:'<strong>conventions</strong>: rules와 병렬 → <strong>복수 명사</strong>. "규칙과 관례들"'},
+      {type:'text', text:' of the ingroup.'}
+    ]
+  },
+];
+
+const VOCAB = [
+  {en:'emphasis', pos:'n.', kr:'강조, 중점',
+   syn:['stress','focus','importance','weight'],
+   ant:['neglect','understatement'],
+   phrases:['emphasis on learning = 배움에 대한 강조','place emphasis on = ~을 강조하다']},
+  {en:'ingroup', pos:'n.', kr:'내집단, 우리 집단',
+   syn:['in-group','own group','us','community'],
+   ant:['outgroup','out-group','them'],
+   phrases:['learning from the ingroup = 내집단에서 배우기','ingroup behavior = 내집단 행동']},
+  {en:'outgroup', pos:'n.', kr:'외집단, 다른 집단',
+   syn:['out-group','other group','them','outsiders'],
+   ant:['ingroup','in-group'],
+   phrases:['outgroup behavior = 외집단 행동','prosocial outgroup members = 친사회적 외집단 구성원']},
+  {en:'distinguished', pos:'adj./v.', kr:'구분된 / 구분하다',
+   syn:['differentiated','separated','identified','told apart'],
+   ant:['confused','mixed up','indistinguishable'],
+   phrases:['were distinguished = 구분되었다 (수동태)','distinguish A from B = A를 B로부터 구분하다']},
+  {en:'minimal', pos:'adj.', kr:'최소한의, 아주 적은',
+   syn:['minimum','least','smallest','basic'],
+   ant:['maximum','extensive','significant'],
+   phrases:['in a minimal way = 최소한의 방식으로','minimal effort = 최소한의 노력']},
+  {en:'antisocial', pos:'adj.', kr:'반사회적인',
+   syn:['asocial','hostile','harmful','disruptive'],
+   ant:['prosocial','sociable','friendly','cooperative'],
+   phrases:['antisocial behavior = 반사회적 행동','antisocial ingroup members = 반사회적 내집단 구성원들']},
+  {en:'prosocial', pos:'adj.', kr:'친사회적인, 사회적으로 바람직한',
+   syn:['cooperative','helpful','sociable','beneficial'],
+   ant:['antisocial','harmful','disruptive'],
+   phrases:['prosocial members = 친사회적 구성원들','prosocial behavior = 친사회적 행동']},
+  {en:'tendency', pos:'n.', kr:'경향, 성향',
+   syn:['inclination','disposition','habit','trend'],
+   ant:['aversion','reluctance','resistance'],
+   phrases:['tendency to copy = 따라 하는 경향','have a tendency to = ~하는 경향이 있다']},
+  {en:'overimitation', pos:'n.', kr:'과잉모방',
+   syn:['excessive copying','over-copying'],
+   ant:['selective imitation','independent action'],
+   phrases:['overimitation reveals = 과잉모방은 드러낸다','this overimitation = 이 과잉모방']},
+  {en:'efficiently', pos:'adv.', kr:'효율적으로',
+   syn:['effectively','productively','optimally'],
+   ant:['inefficiently','wastefully'],
+   phrases:['most efficiently = 가장 효율적으로','work efficiently = 효율적으로 일하다']},
+  {en:'proper', pos:'adj.', kr:'올바른, 적절한',
+   syn:['correct','appropriate','right','suitable'],
+   ant:['improper','wrong','inappropriate'],
+   phrases:['proper way = 올바른 방식','in the proper way = 올바른 방식으로']},
+  {en:'conform', pos:'v.', kr:'따르다, 순응하다',
+   syn:['comply','adhere','follow','abide by'],
+   ant:['deviate','rebel','resist','violate'],
+   phrases:['conforming to the rules = 규칙에 따르면서','conform to conventions = 관례에 따르다']},
+  {en:'convention', pos:'n.', kr:'관례, 관습',
+   syn:['custom','tradition','norm','practice'],
+   ant:['deviation','nonconformity','innovation'],
+   phrases:['rules and conventions = 규칙과 관례','social conventions = 사회적 관례']},
+  {en:'demonstrated', pos:'v.', kr:'시연된, 보여진',
+   syn:['shown','displayed','exhibited','proven'],
+   ant:['hidden','concealed'],
+   phrases:['be demonstrated by = ~에 의해 시연되다','demonstrated by antisocial members = 반사회적 구성원들에 의해 시연된']},
+];
+/* ══ 공통 JS ══ */
+let currentCard=null, openAll=false, vocabOnly=false;
+let arrangeBuilt=false, gBuilt=false, vocabBuilt=false;
+let abShown=false, erShown=false, fiShown=false;
+
+function switchView(view){
+  document.getElementById('readingView').style.display='none';
+  ['arrangeView','grammarView','vocabView'].forEach(id=>document.getElementById(id).classList.remove('active'));
+  ['tabR','tabA','tabG','tabV'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.remove('active');});
+  if(view==='reading'){document.getElementById('readingView').style.display='block';document.getElementById('tabR').classList.add('active');}
+  else if(view==='arrange'){document.getElementById('arrangeView').classList.add('active');document.getElementById('tabA').classList.add('active');if(!arrangeBuilt){buildArrangeCards();arrangeBuilt=true;}}
+  else if(view==='grammar'){document.getElementById('grammarView').classList.add('active');document.getElementById('tabG').classList.add('active');if(!gBuilt){buildGrammarSection();gBuilt=true;}}
+  else{document.getElementById('vocabView').classList.add('active');document.getElementById('tabV').classList.add('active');if(!vocabBuilt){buildVocab(0);vocabBuilt=true;}}
+}
+
+/* TTS */
+function getVoice(){const v=speechSynthesis.getVoices();return v.find(x=>x.lang==='en-US'&&x.name.includes('Google'))||v.find(x=>x.lang.startsWith('en-US'))||v.find(x=>x.lang.startsWith('en'))||null;}
+speechSynthesis.addEventListener('voiceschanged',()=>{});
+function stopSpeech(){speechSynthesis.cancel();if(currentCard){currentCard.classList.remove('playing');currentCard=null;}}
+function startSpeech(card){const text=card.dataset.text;if(!text)return;currentCard=card;card.classList.add('playing');const u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=0.84;u.pitch=1.0;const v=getVoice();if(v)u.voice=v;u.onend=()=>{card.classList.remove('playing');if(currentCard===card)currentCard=null;};u.onerror=()=>{card.classList.remove('playing');if(currentCard===card)currentCard=null;};speechSynthesis.speak(u);}
+function speakCard(card){if(currentCard===card){stopSpeech();}else{stopSpeech();startSpeech(card);}}
+function speakWord(word,e){e.stopPropagation();speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(word);u.lang='en-US';u.rate=0.82;const v=getVoice();if(v)u.voice=v;speechSynthesis.speak(u);}
+const isTouchDevice=()=>window.matchMedia('(hover:none)').matches;
+
+document.querySelectorAll('.s-card').forEach((card,i)=>{
+  card.style.animationDelay=(i*80)+'ms';
+  const speakBtn=card.querySelector('.speak-icon');
+  const waveEl=card.querySelector('.wave');
+  if(speakBtn){speakBtn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();speakCard(card);});}
+  if(waveEl){waveEl.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();speakCard(card);});}
+  card.addEventListener('click',e=>{
+    if(e.target.closest('.speak-icon')||e.target.closest('.wave'))return;
+    if(isTouchDevice()){const isOpen=card.classList.contains('tapped');document.querySelectorAll('.s-card.tapped').forEach(tc=>{if(tc!==card)tc.classList.remove('tapped');});card.classList.toggle('tapped',!isOpen);if(currentCard===card)stopSpeech();}
+    else{speakCard(card);}
+  });
+  card.addEventListener('dblclick',e=>{e.preventDefault();card.classList.toggle('pinned');});
+});
+
+/* 컨트롤 버튼 */
+function toggleOpen(){if(vocabOnly){vocabOnly=false;document.getElementById('btnVocab').classList.remove('active');document.querySelectorAll('.s-card').forEach(c=>c.classList.remove('vocab-only'));}openAll=!openAll;document.getElementById('btnOpen').classList.toggle('active',openAll);document.querySelectorAll('.s-card').forEach(card=>{card.classList.remove('vocab-only');card.classList.toggle('pinned',openAll);});}
+function toggleVocab(){if(openAll){openAll=false;document.getElementById('btnOpen').classList.remove('active');document.querySelectorAll('.s-card').forEach(c=>c.classList.remove('pinned'));}vocabOnly=!vocabOnly;document.getElementById('btnVocab').classList.toggle('active',vocabOnly);document.querySelectorAll('.s-card').forEach(card=>{card.classList.remove('pinned');card.classList.toggle('vocab-only',vocabOnly);});}
+
+let allQueue=[],allIdx=0,allPlaying=false;
+function speakAll(){if(allPlaying){stopSpeech();allPlaying=false;const b=document.getElementById('btnAll');if(b)b.textContent='🔊 전체 읽기';return;}stopSpeech();allIdx=0;allPlaying=true;const b=document.getElementById('btnAll');if(b)b.textContent='⏹ 정지';allQueue=Array.from(document.querySelectorAll('.s-card'));readNext();}
+function readNext(){if(!allPlaying||allIdx>=allQueue.length){if(currentCard)currentCard.classList.remove('playing');currentCard=null;allPlaying=false;const b=document.getElementById('btnAll');if(b)b.textContent='🔊 전체 읽기';return;}const card=allQueue[allIdx++];if(currentCard)currentCard.classList.remove('playing');currentCard=card;card.classList.add('playing');card.scrollIntoView({behavior:'smooth',block:'center'});const u=new SpeechSynthesisUtterance(card.dataset.text);u.lang='en-US';u.rate=0.84;const v=getVoice();if(v)u.voice=v;u.onend=()=>{card.classList.remove('playing');setTimeout(readNext,600);};u.onerror=()=>{card.classList.remove('playing');setTimeout(readNext,600);};speechSynthesis.speak(u);}
+
+/* ══ 배열영작 ══ */
+let scores={},dragSrc=null,clickSelectedChip=null;
+function buildArrangeCards(){
+  const box=document.getElementById('arrCards');box.innerHTML='';
+  const hint=document.createElement('div');hint.className='touch-hint';hint.innerHTML='💡 단어 클릭 → 즉시 이동 &nbsp;|&nbsp; 드래그도 가능';box.appendChild(hint);
+  ARRANGE.forEach((item,idx)=>{
+    const words=item.ans.split(' ');const shuffled=[...words].sort(()=>Math.random()-0.5);
+    const card=document.createElement('div');card.className='arr-card';card.style.animationDelay=(idx*60)+'ms';
+    card.innerHTML=`<div class="arr-header"><span class="arr-num">${item.num}</span><div class="arr-kr">${item.kr}</div></div><div class="arr-body"><div class="answer-zone" id="zone-${idx}"></div><div class="word-pool" id="pool-${idx}">${shuffled.map(w=>`<div class="word-chip" draggable="true" data-word="${w}" data-idx="${idx}">${w}</div>`).join('')}</div><div class="arr-result" id="res-${idx}"></div><div class="ans-reveal" id="ans-${idx}"><strong>정답:</strong> ${item.ans}.</div><div class="arr-btns"><button class="arr-check" onclick="checkAns(${idx})">✓ 확인</button><button class="arr-reset" onclick="resetCard(${idx})">↺ 초기화</button><button class="arr-show-ans" onclick="toggleAns(${idx})">👁 정답 보기</button></div></div>`;
+    box.appendChild(card);
+    ['zone-'+idx,'pool-'+idx].forEach(zid=>{const z=document.getElementById(zid);z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(!dragSrc)return;z.appendChild(dragSrc);dragSrc.classList.remove('dragging','ok-chip');document.getElementById('res-'+idx).className='arr-result';dragSrc=null;});});
+    setTimeout(()=>{document.getElementById('pool-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});document.getElementById('zone-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});},0);
+  });
+  box.addEventListener('dragstart',e=>{if(!e.target.classList.contains('word-chip'))return;dragSrc=e.target;e.target.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
+  box.addEventListener('dragend',e=>{if(e.target.classList.contains('word-chip'))e.target.classList.remove('dragging');dragSrc=null;});
+  updateScore();
+}
+function chipClick(chip,idx){const inZone=chip.parentElement.id==='zone-'+idx;const target=document.getElementById(inZone?'pool-'+idx:'zone-'+idx);chip.classList.remove('ok-chip');target.appendChild(chip);chip.addEventListener('click',()=>chipClick(chip,idx),{once:true});document.getElementById('res-'+idx).className='arr-result';}
+function checkAns(idx){const zone=document.getElementById('zone-'+idx);const chips=Array.from(zone.querySelectorAll('.word-chip'));const userAns=chips.map(c=>c.dataset.word).join(' ');const correct=ARRANGE[idx].ans;const ok=userAns.trim().toLowerCase()===correct.trim().toLowerCase();const res=document.getElementById('res-'+idx);res.className='arr-result show '+(ok?'ok':'ng');res.innerHTML=ok?'🎉 정답입니다!':'❌ 다시 확인해 보세요. ('+chips.length+'/'+correct.split(' ').length+'개 배치됨)';if(ok)chips.forEach(c=>c.classList.add('ok-chip'));scores[idx]=ok?1:0;updateScore();}
+function resetCard(idx){const zone=document.getElementById('zone-'+idx);const pool=document.getElementById('pool-'+idx);Array.from(zone.querySelectorAll('.word-chip')).forEach(c=>{c.classList.remove('ok-chip');pool.appendChild(c);});document.getElementById('res-'+idx).className='arr-result';document.getElementById('ans-'+idx).className='ans-reveal';delete scores[idx];updateScore();}
+function toggleAns(idx){document.getElementById('ans-'+idx).classList.toggle('show');}
+function resetAll(){ARRANGE.forEach((_,i)=>resetCard(i));scores={};updateScore();}
+function updateScore(){const done=Object.keys(scores).length;const ok=Object.values(scores).filter(v=>v===1).length;document.getElementById('scoreNum').textContent=ok;document.getElementById('scoreTotal').textContent=' / '+done+'문항';}
+
+/* ══ 어법 문제 ══ */
+let gScores={};
+function buildGrammarSection(){buildAB();buildErr();buildFill();updateGScore();}
+function buildAB(){
+  const box=document.getElementById('abSection');
+  AB_DATA.forEach((q,qi)=>{
+    const card=document.createElement('div');card.className='gq-card';card.id='ab-card-'+qi;
+    let sentHtml='';let ci=0;
+    q.sent.forEach(part=>{if(typeof part==='string'){sentHtml+=part;}else{const key=part.key||('q'+ci);sentHtml+=`<span class="ab-choice" id="abc-${qi}-${key}"><button class="ab-opt" data-qi="${qi}" data-key="${key}" data-val="a" onclick="abSelect(${qi},'${key}','a')">${part.a}</button><button class="ab-opt" data-qi="${qi}" data-key="${key}" data-val="b" onclick="abSelect(${qi},'${key}','b')">${part.b}</button></span>`;ci++;}});
+    const fbHtml=Object.keys(q.answers).map(k=>`<div class="gq-feedback" id="ab-fb-${qi}-${k}"></div>`).join('');
+    card.innerHTML=`<div class="gq-top"><span class="gq-num">${String(qi+1).padStart(2,'0')}</span><div class="gq-sent">${sentHtml}</div></div>${fbHtml}`;
+    box.appendChild(card);
+  });
+}
+let abSelected={};
+function abSelect(qi,key,val){if(!abSelected[qi])abSelected[qi]={};abSelected[qi][key]=val;const choice=document.getElementById(`abc-${qi}-${key}`);choice.querySelectorAll('.ab-opt').forEach(btn=>{btn.classList.toggle('selected',btn.dataset.val===val);});}
+function checkAB(qi){const q=AB_DATA[qi];const sel=abSelected[qi]||{};let allOk=true;Object.keys(q.answers).forEach(key=>{const correct=q.answers[key];const userVal=sel[key];const ok=userVal===correct;if(!ok)allOk=false;const choice=document.getElementById(`abc-${qi}-${key}`);if(choice){choice.querySelectorAll('.ab-opt').forEach(btn=>{btn.classList.remove('selected','correct-sel','wrong-sel');if(btn.dataset.val===correct)btn.classList.add('correct-sel');else if(btn.dataset.val===userVal&&!ok)btn.classList.add('wrong-sel');});}const fb=document.getElementById(`ab-fb-${qi}-${key}`);if(fb&&userVal!==undefined){fb.className='gq-feedback show '+(ok?'ok':'ng');fb.innerHTML=(ok?'✅ ':'❌ ')+(q.exps?q.exps[key]:'');}});gScores['ab'+qi]=allOk?1:0;updateGScore();}
+function resetAB(qi){delete abSelected[qi];const card=document.getElementById('ab-card-'+qi);if(card){card.querySelectorAll('.ab-opt').forEach(btn=>btn.className='ab-opt');card.querySelectorAll('.gq-feedback').forEach(fb=>fb.className='gq-feedback');}delete gScores['ab'+qi];updateGScore();}
+function buildErr(){
+  const box=document.getElementById('errSection');
+  ERR_DATA.forEach((q,qi)=>{
+    const card=document.createElement('div');card.className='gq-card';
+    const wordsHtml=q.words.map((w,wi)=>q.underlined.includes(wi)?`<span class="err-word" id="ew-${qi}-${wi}" onclick="errToggle(${qi},${wi})">${w}</span> `:w+' ').join('');
+    const fbHtml=q.errors.map((_,ei)=>`<div class="gq-feedback" id="er-fb-${qi}-${ei}"></div>`).join('');
+    card.innerHTML=`<div class="gq-top"><span class="gq-num">${String(qi+1).padStart(2,'0')}</span><div class="gq-sent">${wordsHtml}</div></div><div style="padding:0 14px 4px;font-size:11px;color:rgba(0,0,0,0.35);font-family:'JetBrains Mono',monospace;">밑줄 단어 중 틀린 것 ${q.errors.length}개를 클릭하세요</div>${fbHtml}`;
+    box.appendChild(card);
+  });
+}
+let errSelected={};
+function errToggle(qi,wi){if(!errSelected[qi])errSelected[qi]=new Set();const sel=errSelected[qi];const el=document.getElementById(`ew-${qi}-${wi}`);if(sel.has(wi)){sel.delete(wi);el.classList.remove('selected-err');}else{sel.add(wi);el.classList.add('selected-err');}}
+function checkErr(qi){const q=ERR_DATA[qi];const sel=errSelected[qi]||new Set();const errorIdxs=q.errors.map(e=>e.idx);let allOk=true;q.errors.forEach((err,ei)=>{const ok=sel.has(err.idx);if(!ok)allOk=false;const correctEl=document.getElementById(`ew-${qi}-${err.idx}`);if(correctEl){correctEl.classList.remove('selected-err');correctEl.classList.add('correct-err');}const fb=document.getElementById(`er-fb-${qi}-${ei}`);if(fb){fb.className='gq-feedback show '+(ok?'ok':'ng');fb.innerHTML=(ok?'✅ ':'❌ ')+err.exp;}});sel.forEach(wi=>{if(!errorIdxs.includes(wi)){const el=document.getElementById(`ew-${qi}-${wi}`);if(el){el.classList.remove('selected-err');el.classList.add('wrong-err');}}});gScores['er'+qi]=allOk?1:0;updateGScore();}
+function resetErr(qi){const q=ERR_DATA[qi];q.words.forEach((_,wi)=>{const el=document.getElementById(`ew-${qi}-${wi}`);if(el)el.className='err-word';});errSelected[qi]=new Set();q.errors.forEach((_,ei)=>{const fb=document.getElementById(`er-fb-${qi}-${ei}`);if(fb)fb.className='gq-feedback';});delete gScores['er'+qi];updateGScore();}
+function buildFill(){
+  const box=document.getElementById('fillSection');
+  FILL_DATA.forEach((q,qi)=>{
+    const card=document.createElement('div');card.className='gq-card';
+    let sentHtml='';let bi=0;
+    q.parts.forEach(part=>{if(part.type==='text'){sentHtml+=part.text;}else{sentHtml+=`<span class="fill-wrap"><span class="fill-base">(${part.base})</span><input class="fill-input" id="fi-${qi}-${bi}" placeholder="___" autocomplete="off" spellcheck="false" style="width:${Math.max(80,part.answer.length*11)}px;"></span>`;bi++;}});
+    const blanks=q.parts.filter(p=>p.type==='blank');
+    const fbHtml=blanks.map((_,bi2)=>`<div class="gq-feedback" id="fi-fb-${qi}-${bi2}"></div>`).join('');
+    card.innerHTML=`<div class="gq-top"><span class="gq-num">${String(qi+1).padStart(2,'0')}</span><div class="gq-sent">${sentHtml}</div></div>${fbHtml}`;
+    box.appendChild(card);
+  });
+}
+function checkFill(qi){const blanks=FILL_DATA[qi].parts.filter(p=>p.type==='blank');let allOk=true;blanks.forEach((blank,bi)=>{const input=document.getElementById(`fi-${qi}-${bi}`);if(!input)return;const userAns=input.value.trim().toLowerCase();const correct=blank.answer.toLowerCase();const ok=userAns===correct;if(!ok)allOk=false;input.classList.remove('correct-fill','wrong-fill');input.classList.add(ok?'correct-fill':'wrong-fill');const fb=document.getElementById(`fi-fb-${qi}-${bi}`);if(fb){fb.className='gq-feedback show '+(ok?'ok':'ng');fb.innerHTML=(ok?'✅ 정답! ':`❌ 정답: <span class="feedback-ans">${blank.answer}</span> — `)+blank.exp;}});gScores['fi'+qi]=allOk?1:0;updateGScore();}
+function resetFill(qi){const blanks=FILL_DATA[qi].parts.filter(p=>p.type==='blank');blanks.forEach((_,bi)=>{const input=document.getElementById(`fi-${qi}-${bi}`);if(input){input.value='';input.className='fill-input';}const fb=document.getElementById(`fi-fb-${qi}-${bi}`);if(fb)fb.className='gq-feedback';});delete gScores['fi'+qi];updateGScore();}
+function gResetAll(){AB_DATA.forEach((_,i)=>resetAB(i));ERR_DATA.forEach((_,i)=>resetErr(i));FILL_DATA.forEach((_,i)=>resetFill(i));gScores={};updateGScore();abShown=false;erShown=false;fiShown=false;document.querySelector('.gtype-final-btn.ab-btn').textContent='✓ A/B 선택 최종 확인';document.querySelector('.gtype-final-btn.er-btn').textContent='✓ 오류수정 최종 확인';document.querySelector('.gtype-final-btn.fi-btn').textContent='✓ 서답형 최종 확인';['ab-final-score','er-final-score','fi-final-score'].forEach(id=>document.getElementById(id).textContent='');}
+function updateGScore(){const total=Object.keys(gScores).length;const correct=Object.values(gScores).filter(v=>v===1).length;document.getElementById('gScoreNum').textContent=correct;document.getElementById('gScoreTotal').textContent=' / '+total+'문항';}
+function checkAllAB(){abShown=!abShown;const btn=document.querySelector('.gtype-final-btn.ab-btn');if(abShown){AB_DATA.forEach((_,i)=>checkAB(i));const ok=AB_DATA.filter((_,i)=>gScores['ab'+i]===1).length;document.getElementById('ab-final-score').textContent=`${ok} / ${AB_DATA.length} 정답`;btn.textContent='✕ 정답 닫기';}else{AB_DATA.forEach((_,i)=>resetAB(i));document.getElementById('ab-final-score').textContent='';btn.textContent='✓ A/B 선택 최종 확인';}}
+function checkAllErr(){erShown=!erShown;const btn=document.querySelector('.gtype-final-btn.er-btn');if(erShown){ERR_DATA.forEach((_,i)=>checkErr(i));const ok=ERR_DATA.filter((_,i)=>gScores['er'+i]===1).length;document.getElementById('er-final-score').textContent=`${ok} / ${ERR_DATA.length} 정답`;btn.textContent='✕ 정답 닫기';}else{ERR_DATA.forEach((_,i)=>resetErr(i));document.getElementById('er-final-score').textContent='';btn.textContent='✓ 오류수정 최종 확인';}}
+function checkAllFill(){fiShown=!fiShown;const btn=document.querySelector('.gtype-final-btn.fi-btn');if(fiShown){FILL_DATA.forEach((_,i)=>checkFill(i));const ok=FILL_DATA.filter((_,i)=>gScores['fi'+i]===1).length;document.getElementById('fi-final-score').textContent=`${ok} / ${FILL_DATA.length} 정답`;btn.textContent='✕ 정답 닫기';}else{FILL_DATA.forEach((_,i)=>resetFill(i));document.getElementById('fi-final-score').textContent='';btn.textContent='✓ 서답형 최종 확인';}}
+
+/* ══ 단어장 ══ */
+let vocabScores={spell:{},meaning:{}};
+function switchVocab(tab){[0,1,2].forEach(i=>{document.getElementById('vtab'+i).classList.toggle('active',i===tab);});buildVocab(tab);}
+function buildVocab(tab){const box=document.getElementById('vocabContent');box.innerHTML='';if(tab===0)buildVocabCards(box);else if(tab===1)buildSpellQuiz(box);else buildMeaningQuiz(box);}
+function buildVocabCards(box){
+  const grid=document.createElement('div');grid.className='vcard-grid';
+  VOCAB.forEach((v,i)=>{
+    const synHtml=v.syn.length?`<div class="vcard-section"><div class="vcard-section-label">동의어</div><div class="vcard-items"><span class="vcard-syn">${v.syn.join(', ')}</span></div></div>`:'';
+    const antHtml=v.ant.length?`<div class="vcard-section"><div class="vcard-section-label">반의어</div><div class="vcard-items"><span class="vcard-ant">${v.ant.join(', ')}</span></div></div>`:'';
+    const phraseHtml=v.phrases.length?`<div class="vcard-section"><div class="vcard-section-label">어구 / 숙어</div><div class="vcard-items">${v.phrases.map(p=>`<div class="vcard-phrase">• ${p}</div>`).join('')}</div></div>`:'';
+    const div=document.createElement('div');div.className='vcard';div.style.animationDelay=(i*40)+'ms';
+    div.setAttribute('onclick',`this.classList.toggle('open')`);
+    div.innerHTML=`<div class="vcard-front"><div class="vcard-en-row"><div class="vcard-en">${v.en}</div><button class="vcard-speak" onclick="speakWord('${v.en}',event)">🔊</button></div><div class="vcard-pos">${v.pos} &nbsp;·&nbsp; 클릭하면 뜻 보기 ▼</div></div><div class="vcard-back"><div class="vcard-back-inner"><div class="vcard-kr">${v.kr}</div>${synHtml}${antHtml}${phraseHtml}</div></div>`;
+    grid.appendChild(div);
+  });
+  box.appendChild(grid);
+}
+function buildSpellQuiz(box){
+  const hint=document.createElement('div');hint.className='touch-hint';hint.innerHTML='💡 한국어 뜻을 보고 영어 철자를 입력하세요';box.appendChild(hint);
+  VOCAB.forEach((v,i)=>{const card=document.createElement('div');card.className='quiz-card';card.style.animationDelay=(i*40)+'ms';card.innerHTML=`<div class="quiz-top"><span class="quiz-num">${String(i+1).padStart(2,'0')}</span><div class="quiz-prompt"><div style="font-size:13px;color:var(--text-sub);">${v.kr} <span style="color:rgba(0,0,0,0.3);font-size:11px;">(${v.pos})</span></div><div style="margin-top:6px;"><input class="quiz-input" id="sp-${i}" placeholder="영어 철자 입력" autocomplete="off" spellcheck="false"></div></div></div><div class="quiz-fb" id="sp-fb-${i}"></div>`;setTimeout(()=>{const inp=document.getElementById('sp-'+i);if(inp)inp.addEventListener('keydown',e=>{if(e.key==='Enter')checkSpell(i);});},0);box.appendChild(card);});
+  const btnWrap=document.createElement('div');btnWrap.className='section-check';btnWrap.innerHTML=`<button class="section-check-btn" onclick="checkAllSpell()">✓ 전체 철자 확인</button><span class="section-score" id="spell-score"></span><button class="gq-reset" onclick="resetSpell()" style="margin-left:8px;">↺ 초기화</button>`;box.appendChild(btnWrap);
+}
+function checkSpell(i){const inp=document.getElementById('sp-'+i);if(!inp)return;const userAns=inp.value.trim().toLowerCase();const correct=VOCAB[i].en.toLowerCase();const ok=userAns===correct;inp.classList.remove('ok','ng');inp.classList.add(ok?'ok':'ng');const fb=document.getElementById('sp-fb-'+i);fb.className='quiz-fb show '+(ok?'ok':'ng');fb.innerHTML=ok?'🎉 정답!':'❌ 정답: <strong>'+VOCAB[i].en+'</strong>';vocabScores.spell[i]=ok?1:0;}
+function checkAllSpell(){VOCAB.forEach((_,i)=>checkSpell(i));const ok=Object.values(vocabScores.spell).filter(v=>v===1).length;document.getElementById('spell-score').textContent=`${ok} / ${VOCAB.length} 정답`;}
+function resetSpell(){VOCAB.forEach((_,i)=>{const inp=document.getElementById('sp-'+i);if(inp){inp.value='';inp.className='quiz-input';}const fb=document.getElementById('sp-fb-'+i);if(fb)fb.className='quiz-fb';});vocabScores.spell={};const sc=document.getElementById('spell-score');if(sc)sc.textContent='';}
+function buildMeaningQuiz(box){
+  const hint=document.createElement('div');hint.className='touch-hint';hint.innerHTML='💡 영어 단어를 보고 알맞은 뜻을 선택하세요';box.appendChild(hint);
+  const shuffled=[...VOCAB].sort(()=>Math.random()-0.5);
+  shuffled.forEach((v,i)=>{const wrongs=VOCAB.filter(w=>w.en!==v.en).sort(()=>Math.random()-0.5).slice(0,3).map(w=>w.kr);const choices=[...wrongs,v.kr].sort(()=>Math.random()-0.5);const card=document.createElement('div');card.className='quiz-card';card.style.animationDelay=(i*40)+'ms';card.dataset.answer=v.kr;card.innerHTML=`<div class="quiz-top"><span class="quiz-num">${String(i+1).padStart(2,'0')}</span><div class="quiz-prompt"><div style="font-family:Georgia,serif;font-size:16px;font-weight:700;color:var(--navy);">${v.en}</div><div style="font-size:11px;color:rgba(0,0,0,0.3);font-family:'JetBrains Mono',monospace;margin-top:2px;">${v.pos}</div></div></div><div class="choices" id="mc-${i}">${choices.map(ch=>`<button class="choice-btn" data-val="${ch}" onclick="checkMeaning(${i},this)">${ch}</button>`).join('')}</div><div class="quiz-fb" id="mc-fb-${i}"></div>`;box.appendChild(card);});
+  const btnWrap=document.createElement('div');btnWrap.className='section-check';btnWrap.innerHTML=`<span class="section-score" id="meaning-score"></span><button class="gq-reset" onclick="resetMeaning()">↺ 초기화</button>`;box.appendChild(btnWrap);
+}
+function checkMeaning(i,btn){const card=btn.closest('.quiz-card');const correct=card.dataset.answer;const isOk=btn.dataset.val===correct;card.querySelectorAll('.choice-btn').forEach(b=>{b.onclick=null;if(b.dataset.val===correct)b.classList.add('ok');else if(b===btn&&!isOk)b.classList.add('ng');});const fb=document.getElementById('mc-fb-'+i);fb.className='quiz-fb show '+(isOk?'ok':'ng');fb.innerHTML=isOk?'🎉 정답!':'❌ 정답: <strong>'+correct+'</strong>';vocabScores.meaning[i]=isOk?1:0;const done=Object.keys(vocabScores.meaning).length;const ok=Object.values(vocabScores.meaning).filter(v=>v===1).length;const sc=document.getElementById('meaning-score');if(sc)sc.textContent=`${ok} / ${done} 정답`;}
+function resetMeaning(){vocabScores.meaning={};buildVocab(2);}
+</script>
+</body>
+</html>
