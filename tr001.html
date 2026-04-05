@@ -66,7 +66,7 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 .cards{display:flex;flex-direction:column;gap:13px;}
 .s-card{border-radius:10px;border-left:4px solid var(--blue-border);background:var(--blue-card);box-shadow:0 3px 14px var(--shadow);overflow:hidden;cursor:pointer;transition:box-shadow 0.25s,transform 0.2s;animation:slideIn 0.4s ease both;position:relative;}
 .s-card.grammar{border-left-color:var(--purple-border);background:var(--purple-card);}
-.s-card:hover{box-shadow:0 6px 28px rgba(31,56,100,0.18);transform:translateX(3px);}
+@media(hover:hover) and (pointer:fine){.s-card:hover{box-shadow:0 6px 28px rgba(31,56,100,0.18);transform:translateX(3px);}}
 .s-card.playing{box-shadow:0 0 0 3px rgba(46,117,182,0.4),0 6px 28px var(--shadow);}
 .s-card.grammar.playing{box-shadow:0 0 0 3px rgba(91,45,142,0.4),0 6px 28px var(--shadow);}
 @keyframes slideIn{from{opacity:0;transform:translateX(-14px);}to{opacity:1;transform:translateX(0);}}
@@ -88,9 +88,15 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 .wave span:nth-child(1){height:4px;animation-delay:0s;}.wave span:nth-child(2){height:10px;animation-delay:0.1s;}.wave span:nth-child(3){height:14px;animation-delay:0.2s;}.wave span:nth-child(4){height:8px;animation-delay:0.15s;}.wave span:nth-child(5){height:5px;animation-delay:0.05s;}
 @keyframes wb{from{transform:scaleY(0.5);opacity:0.7;}to{transform:scaleY(1.3);opacity:1;}}
 .s-kr-wrap{max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1),opacity 0.3s;opacity:0;background:rgba(255,255,255,0.6);border-top:1px dashed transparent;}
-.s-card:hover .s-kr-wrap,.s-card.pinned .s-kr-wrap{max-height:800px;opacity:1;border-top-color:rgba(46,117,182,0.2);}
-.s-card.grammar:hover .s-kr-wrap,.s-card.grammar.pinned .s-kr-wrap{border-top-color:rgba(91,45,142,0.2);}
-/* vocab-only: s-kr-wrap 열리되 kr/grammar/meaning 숨기고 vocab만 표시 */
+/* PC(마우스): hover로 열기 */
+@media(hover:hover) and (pointer:fine){
+  .s-card:hover .s-kr-wrap{max-height:800px;opacity:1;border-top-color:rgba(46,117,182,0.2);}
+  .s-card.grammar:hover .s-kr-wrap{border-top-color:rgba(91,45,142,0.2);}
+}
+/* 공통: pinned(클릭 고정) 또는 tapped(모바일 탭) */
+.s-card.pinned .s-kr-wrap,.s-card.tapped .s-kr-wrap{max-height:800px;opacity:1;border-top-color:rgba(46,117,182,0.2);}
+.s-card.grammar.pinned .s-kr-wrap,.s-card.grammar.tapped .s-kr-wrap{border-top-color:rgba(91,45,142,0.2);}
+/* vocab-only */
 .s-card.vocab-only .s-kr-wrap{max-height:800px;opacity:1;border-top-color:rgba(46,117,182,0.2);}
 .s-card.grammar.vocab-only .s-kr-wrap{border-top-color:rgba(91,45,142,0.2);}
 .s-card.vocab-only .s-kr{display:none;}
@@ -477,7 +483,7 @@ footer{text-align:center;padding:40px 16px 48px;font-family:'JetBrains Mono',mon
   <!-- ── 한줄해석 뷰 ── -->
   <div id="readingView">
     <div class="hints">
-      <div class="hint">🖱 마우스 올리기 → 해석 공개</div>
+      <div class="hint">🖱 PC: 마우스 올리기 → 해석</div><div class="hint">📱 모바일: 1탭 → 해석 · 2탭 → 발음</div>
       <div class="hint">🔊 클릭 → 발음 / 재클릭 → 정지</div>
       <div class="hint">💡 노란박스 → 쉬운 풀이</div>
       <div class="hint">📌 더블클릭 → 핀 고정</div>
@@ -814,10 +820,34 @@ function speakCard(card){
   u.onerror=()=>{card.classList.remove('playing');if(currentCard===card)currentCard=null;};
   speechSynthesis.speak(u);
 }
+// 터치 기기 판별
+const isTouchDevice = () => window.matchMedia('(hover:none)').matches;
+
 document.querySelectorAll('.s-card').forEach((card,i)=>{
   card.style.animationDelay=(i*70)+'ms';
-  card.addEventListener('click',()=>speakCard(card));
-  card.addEventListener('dblclick',e=>{e.preventDefault();card.classList.toggle('pinned');});
+
+  card.addEventListener('click', e => {
+    if(isTouchDevice()){
+      // 모바일: 첫 탭 → 해석 열기, 두 번째 탭 → 발음 재생
+      if(!card.classList.contains('tapped')){
+        // 다른 tapped 카드 모두 닫기
+        document.querySelectorAll('.s-card.tapped').forEach(c=>{
+          if(c!==card) c.classList.remove('tapped');
+        });
+        card.classList.add('tapped');
+      } else {
+        speakCard(card);
+      }
+    } else {
+      // PC: 클릭 = 발음
+      speakCard(card);
+    }
+  });
+
+  card.addEventListener('dblclick',e=>{
+    e.preventDefault();
+    card.classList.toggle('pinned');
+  });
 });
 
 /* ══ 모드 / 전체읽기 ══ */
