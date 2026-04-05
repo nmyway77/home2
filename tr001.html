@@ -488,9 +488,8 @@ footer{text-align:center;padding:40px 16px 48px;font-family:'JetBrains Mono',mon
       <div class="leg"><div class="leg-dot" style="background:var(--gold)"></div>쉬운 풀이</div>
     </div>
     <div class="controls">
-      <button class="ctrl-btn active" id="btnNormal" onclick="setMode('normal')">🖱 호버 모드</button>
-      <button class="ctrl-btn" id="btnOpen"  onclick="toggleOpen()">📄 전체 펼치기</button>
       <button class="ctrl-btn" id="btnVocab" onclick="toggleVocab()">📌 단어만 노출</button>
+      <button class="ctrl-btn" id="btnOpen"  onclick="toggleOpen()">📄 전체 펼치기</button>
       <button class="ctrl-btn" id="btnAll"   onclick="speakAll()">🔊 전체 읽기</button>
     </div>
     <div class="cards" id="cards">
@@ -826,28 +825,22 @@ document.querySelectorAll('.s-card').forEach((card,i)=>{
 let openAll = false;
 let vocabOnly = false;
 
-function setMode(mode){
-  // 호버 모드 버튼만 active 처리
-  document.getElementById('btnNormal').classList.add('active');
-  document.getElementById('btnOpen').classList.remove('active');
-  document.getElementById('btnVocab').classList.remove('active');
+function resetAllModes(){
   openAll = false;
   vocabOnly = false;
-  // 모든 카드 핀 해제, vocab-only 해제
+  const bO = document.getElementById('btnOpen');
+  const bV = document.getElementById('btnVocab');
+  if(bO) bO.classList.remove('active');
+  if(bV) bV.classList.remove('active');
   document.querySelectorAll('#readingView .s-card').forEach(card=>{
     card.classList.remove('pinned','vocab-only');
   });
 }
 
 function toggleOpen(){
+  if(vocabOnly){ vocabOnly=false; document.getElementById('btnVocab').classList.remove('active'); }
   openAll = !openAll;
-  // vocab-only 모드 해제
-  if(openAll) {
-    vocabOnly = false;
-    document.getElementById('btnVocab').classList.remove('active');
-  }
   document.getElementById('btnOpen').classList.toggle('active', openAll);
-  document.getElementById('btnNormal').classList.toggle('active', !openAll);
   document.querySelectorAll('#readingView .s-card').forEach(card=>{
     card.classList.remove('vocab-only');
     card.classList.toggle('pinned', openAll);
@@ -855,15 +848,12 @@ function toggleOpen(){
 }
 
 function toggleVocab(){
-  vocabOnly = !vocabOnly;
-  // openAll 모드 해제
-  if(vocabOnly) {
-    openAll = false;
+  if(openAll){
+    openAll=false;
     document.getElementById('btnOpen').classList.remove('active');
-    document.getElementById('btnNormal').classList.remove('active');
-  } else {
-    document.getElementById('btnNormal').classList.add('active');
+    document.querySelectorAll('#readingView .s-card').forEach(card=>card.classList.remove('pinned'));
   }
+  vocabOnly = !vocabOnly;
   document.getElementById('btnVocab').classList.toggle('active', vocabOnly);
   document.querySelectorAll('#readingView .s-card').forEach(card=>{
     card.classList.remove('pinned');
