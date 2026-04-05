@@ -923,7 +923,8 @@ async function checkFiles() {
   for (const n of NUMS) {
     const btn = document.getElementById('nb-' + n);
     if (INLINE.includes(n)) {
-      btn.className = 'num-btn ready';
+      const isActive = btn.classList.contains('active');
+      btn.className = 'num-btn ready' + (isActive ? ' active' : '');
       btn.onclick = () => showInline(n);
     } else {
       const file = `mock_${YEAR}_${MONTH}_${n}.html`;
@@ -944,13 +945,27 @@ async function checkFiles() {
 checkFiles();
 
 function showInline(n) {
+  // 이미 보이는 번호를 다시 클릭한 경우 → readingView만 복원
+  if (current === n) {
+    const sec = document.getElementById('p-'+n);
+    if(sec) sec.classList.add('visible');
+    const rv = document.getElementById('readingView');
+    if(rv) rv.style.display='block';
+    const btn = document.getElementById('nb-'+n);
+    if(btn) btn.classList.add('active');
+    return;
+  }
+  // 다른 번호로 전환
   if (current) {
     document.getElementById('p-'+current)?.classList.remove('visible');
     document.getElementById('nb-'+current)?.classList.remove('active');
     stopSpeech();
     switchView('reading');
   }
-  document.getElementById('p-'+n)?.classList.add('visible');
+  const sec = document.getElementById('p-'+n);
+  if(sec) sec.classList.add('visible');
+  const rv = document.getElementById('readingView');
+  if(rv) rv.style.display='block';
   const btn = document.getElementById('nb-'+n);
   if(btn) { btn.classList.add('active'); btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}); }
   window.scrollTo({top:0,behavior:'smooth'});
