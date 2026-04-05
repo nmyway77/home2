@@ -1,321 +1,583 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>목동서로영어학원 - 앱모음</title>
-  <link href="https://fonts.googleapis.com/css2?family=Gmarket+Sans:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: #fff;
-      font-family: 'Roboto', 'Gmarket Sans', Arial, sans-serif;
-      min-height: 100vh;
-      box-sizing: border-box;
-    }
-    .header {
-      background: #2b3856;
-      color: #fff;
-      padding: 36px 0 24px 0;
-      text-align: center;
-      font-size: 2.2rem;
-      font-family: 'Gmarket Sans', 'Roboto', sans-serif;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      border-bottom-left-radius: 30px;
-      border-bottom-right-radius: 30px;
-      box-shadow: 0 6px 32px rgba(36,40,73,0.10);
-      margin-bottom: 0px;
-    }
-    .tabs {
-      max-width: 1080px;
-      margin: 30px auto 0 auto;
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-    }
-    .tab {
-      font-family: 'Gmarket Sans', 'Roboto', sans-serif;
-      padding: 13px 32px;
-      background: #f1f3fa;
-      border: none;
-      border-radius: 16px 16px 0 0;
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: #485192;
-      box-shadow: 0 2px 6px rgba(60,72,120,0.06);
-      cursor: pointer;
-      outline: none;
-      transition: background 0.14s, color 0.14s;
-    }
-    .tab.active {
-      background: #fff;
-      color: #2b3856;
-      border-bottom: 2px solid #ffad5c;
-    }
-    .tab:not(.active):hover {
-      background: #e3e9f6;
-      color: #2b3856;
-    }
-    .content-section {
-      display: none;
-      animation: fadeIn .3s;
-    }
-    .content-section.active {
-      display: block;
-    }
-    @keyframes fadeIn {
-      0% {opacity: 0;}
-      100% {opacity: 1;}
-    }
-    .book-grid {
-      max-width: 1080px;
-      margin: 0 auto 36px auto;
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 36px 32px;
-      padding: 24px;
-      background: #fff;
-      border-radius: 0 0 28px 28px;
-      box-shadow: 0 8px 40px 0 rgba(36,40,73,0.09), 0 2px 8px rgba(59, 130, 246, 0.09);
-    }
-    .book-card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: #f7fafd;
-      border-radius: 20px;
-      box-shadow: 0 2px 12px rgba(36,40,73,0.06);
-      transition: transform 0.16s, box-shadow 0.16s;
-      cursor: pointer;
-      min-height: 204px;
-      padding: 22px 8px 12px 8px;
-      text-decoration: none;
-      color: #21243d;
-      border: 1.5px solid #e2e8f0;
-      position: relative;
-    }
-    .book-card:hover {
-      transform: translateY(-6px) scale(1.035);
-      box-shadow: 0 6px 20px rgba(36,40,73,0.12);
-      border-color: #b0c5f5;
-      z-index: 2;
-    }
-    .book-image {
-      width: 105px;
-      height: 135px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(85,120,180,0.08);
-      object-fit: cover;
-      margin-bottom: 12px;
-      background: #f1f5f9;
-    }
-    .book-title {
-      font-size: 1.11rem;
-      font-family: 'Gmarket Sans', 'Roboto', sans-serif;
-      font-weight: 700;
-      color: #22306d;
-      text-align: center;
-      margin-bottom: 2px;
-      letter-spacing: 0.2px;
-      word-break: keep-all;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>목동서로영어학원 — 0505.co.kr</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,400&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0d1520;--navy:#1B2E4A;--gold:#C9A84C;--gold2:#f0d070;
+  --cream:#F5F0E8;--rule:rgba(255,255,255,0.08);
+  --g1:#1a3a6e;--g1b:#2E75B6;  /* 고1 블루 */
+  --g2:#3d1a5e;--g2b:#7B2D8E;  /* 고2 퍼플 */
+  --g3:#1a4a2a;--g3b:#2E8B4A;  /* 고3 그린 */
+  --m3:#5e2a1a;--m3b:#C55A11;  /* 중3 오렌지 */
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--ink);
+  color:var(--cream);
+  font-family:'Noto Sans KR',sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
 
-    /* 하단 버튼 영역 (Sticky) */
-    .footer-links {
-      position: fixed;
-      left: 0; right: 0; bottom: 0;
-      width: 100vw;
-      background: rgba(250,250,252,0.97);
-      box-shadow: 0 -2px 12px rgba(50,60,100,0.05);
-      display: flex;
-      justify-content: center;
-      gap: 34px;
-      padding: 22px 0 16px 0;
-      z-index: 100;
-      border-top-left-radius: 30px;
-      border-top-right-radius: 30px;
-      backdrop-filter: blur(1.5px);
-    }
-    .footer-links a {
-      display: inline-block;
-      min-width: 130px;
-      padding: 18px 36px;
-      border-radius: 40px;
-      font-family: 'Gmarket Sans', 'Roboto', sans-serif;
-      font-weight: bold;
-      font-size: 1.27rem;
-      color: #2983f5;
-      background: #f5f9ff;
-      border: 1.5px solid #d6e6fa;
-      box-shadow: 0 1.5px 8px rgba(40,130,245,0.04);
-      text-align: center;
-      margin: 0 10px;
-      text-decoration: none;
-      transition: background 0.12s, color 0.12s, transform 0.09s;
-      letter-spacing: 0.03em;
-    }
-    .footer-links a:hover {
-      background: #e9f2ff;
-      color: #1357b5;
-      transform: translateY(-2px) scale(1.03);
-      box-shadow: 0 4px 14px rgba(40,130,245,0.12);
-    }
+/* 배경 */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse at 15% 20%, rgba(46,117,182,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 80%, rgba(123,45,142,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.04) 0%, transparent 70%);
+}
 
-    /* 모바일 최적화 */
-    @media (max-width: 900px) {
-      .book-grid { grid-template-columns: repeat(3, 1fr);}
-      .footer-links a { min-width: 90px; font-size: 1rem; padding: 11px 14px; }
-      .footer-links { gap: 13px; padding: 12px 0 9px 0;}
-    }
-    @media (max-width: 600px) {
-      .header { font-size: 1.2rem; padding: 20px 0 16px 0;}
-      .tabs { gap: 6px;}
-      .tab { font-size: 0.9rem; padding: 7px 14px;}
-      .book-grid { grid-template-columns: repeat(2, 1fr); padding: 10px; gap: 18px 8px;}
-      .book-card { min-height: 120px; }
-      .book-image { width: 66px; height: 85px; }
-      .footer-links a { min-width: 72px; font-size: 0.95rem; padding: 9px 8px; }
-    }
-  </style>
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(13,21,32,0.88);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--rule);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;height:54px;
+}
+.nav-logo{
+  font-family:'JetBrains Mono',monospace;
+  font-size:13px;font-weight:700;letter-spacing:2px;
+  color:var(--gold);
+}
+.nav-logo span{color:rgba(201,168,76,0.4);}
+.nav-school-select{
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
+  color:rgba(255,255,255,0.6);border-radius:5px;
+  padding:5px 12px;cursor:pointer;outline:none;
+  transition:background 0.2s;
+}
+.nav-school-select:hover{background:rgba(255,255,255,0.1);color:white;}
+.nav-school-select option{background:#1B2E4A;color:white;}
+.nav-right-area{display:flex;align-items:center;gap:12px;}
+.nav-site{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:2px;color:rgba(255,255,255,0.2);
+}
+
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:1;
+  padding:90px 20px 32px;
+  text-align:center;
+}
+.hero-top{
+  display:flex;align-items:center;justify-content:center;
+  gap:10px;margin-bottom:12px;
+}
+.hero-badge{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--gold);border:1px solid rgba(201,168,76,0.3);
+  padding:4px 14px;border-radius:2px;background:rgba(201,168,76,0.05);
+}
+.hero-sub{
+  font-size:13px;font-weight:300;color:rgba(245,240,232,0.45);
+  letter-spacing:1px;margin-top:6px;
+}
+
+/* ── SECTION LABEL ── */
+.section-label{
+  position:relative;z-index:1;
+  max-width:1060px;margin:0 auto;
+  padding:0 20px 14px;
+  display:flex;align-items:center;gap:14px;
+}
+.sl-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);}
+.sl-text{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:3px;text-transform:uppercase;
+  color:rgba(255,255,255,0.25);white-space:nowrap;
+}
+
+/* ── GRADE GRID ── */
+.grade-grid{
+  position:relative;z-index:1;
+  max-width:1060px;margin:0 auto;
+  padding:0 20px 60px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+@media(min-width:700px){.grade-grid{grid-template-columns:repeat(4,1fr);}}
+
+/* ── GRADE CARD ── */
+.gc{
+  border-radius:16px;
+  overflow:hidden;
+  cursor:pointer;
+  transition:transform 0.3s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.3s;
+  animation:fadeUp 0.5s ease both;
+  position:relative;
+}
+.gc:hover{transform:translateY(-6px) scale(1.02);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+.gc-inner{
+  padding:28px 20px 24px;
+  display:flex;flex-direction:column;align-items:center;
+  position:relative;z-index:1;
+}
+/* 등급별 색상 */
+.gc-g1{background:linear-gradient(145deg,#0e2a52,#1a3a6e);border:1px solid rgba(46,117,182,0.35);box-shadow:0 8px 32px rgba(46,117,182,0.2);}
+.gc-g1:hover{box-shadow:0 16px 48px rgba(46,117,182,0.35);}
+.gc-g2{background:linear-gradient(145deg,#26103a,#3d1a5e);border:1px solid rgba(123,45,142,0.35);box-shadow:0 8px 32px rgba(123,45,142,0.2);}
+.gc-g2:hover{box-shadow:0 16px 48px rgba(123,45,142,0.35);}
+.gc-g3{background:linear-gradient(145deg,#0e2e1a,#1a4a2a);border:1px solid rgba(46,139,74,0.35);box-shadow:0 8px 32px rgba(46,139,74,0.2);}
+.gc-g3:hover{box-shadow:0 16px 48px rgba(46,139,74,0.35);}
+.gc-m3{background:linear-gradient(145deg,#2e1508,#5e2a1a);border:1px solid rgba(197,90,17,0.35);box-shadow:0 8px 32px rgba(197,90,17,0.2);}
+.gc-m3:hover{box-shadow:0 16px 48px rgba(197,90,17,0.35);}
+
+/* 아이콘 로고 */
+.gc-logo{
+  width:72px;height:72px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:16px;position:relative;
+  font-size:28px;
+}
+.gc-g1 .gc-logo{background:radial-gradient(circle,rgba(46,117,182,0.4),rgba(46,117,182,0.1));border:1.5px solid rgba(46,117,182,0.5);}
+.gc-g2 .gc-logo{background:radial-gradient(circle,rgba(123,45,142,0.4),rgba(123,45,142,0.1));border:1.5px solid rgba(123,45,142,0.5);}
+.gc-g3 .gc-logo{background:radial-gradient(circle,rgba(46,139,74,0.4),rgba(46,139,74,0.1));border:1.5px solid rgba(46,139,74,0.5);}
+.gc-m3 .gc-logo{background:radial-gradient(circle,rgba(197,90,17,0.4),rgba(197,90,17,0.1));border:1.5px solid rgba(197,90,17,0.5);}
+
+/* 학년 뱃지 */
+.gc-grade{
+  font-family:'Cormorant Garamond',serif;
+  font-size:38px;font-weight:700;
+  line-height:1;color:white;
+  text-shadow:0 2px 12px rgba(0,0,0,0.3);
+}
+.gc-grade-sub{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;letter-spacing:2px;
+  margin-top:6px;margin-bottom:14px;
+  opacity:0.6;
+}
+.gc-g1 .gc-grade-sub{color:#7ab8e8;}
+.gc-g2 .gc-grade-sub{color:#c090e8;}
+.gc-g3 .gc-grade-sub{color:#80d8a0;}
+.gc-m3 .gc-grade-sub{color:#f0a060;}
+
+.gc-name{
+  font-size:14px;font-weight:700;
+  color:white;margin-bottom:4px;
+  text-align:center;
+}
+.gc-school{
+  font-size:11px;color:rgba(255,255,255,0.4);
+  font-family:'JetBrains Mono',monospace;
+  letter-spacing:0.5px;margin-bottom:18px;
+  text-align:center;
+}
+
+/* 자료 목록 */
+.gc-items{
+  width:100%;display:flex;flex-direction:column;gap:6px;
+}
+.gc-item{
+  display:flex;align-items:center;gap:8px;
+  padding:7px 10px;border-radius:7px;
+  font-size:11.5px;font-weight:500;
+  transition:background 0.2s;
+  text-decoration:none;
+}
+.gc-item.ready{
+  background:rgba(255,255,255,0.08);color:white;cursor:pointer;
+}
+.gc-item.ready:hover{background:rgba(255,255,255,0.16);}
+.gc-item.soon{
+  background:rgba(255,255,255,0.03);
+  color:rgba(255,255,255,0.25);cursor:default;
+}
+.gc-item-icon{font-size:14px;flex-shrink:0;}
+.gc-item-text{flex:1;}
+.gc-item-arrow{font-size:10px;opacity:0.5;}
+.gc-item.ready .gc-item-arrow{opacity:1;}
+
+/* 준비중 오버레이 */
+.gc-soon-badge{
+  position:absolute;top:12px;right:12px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:8px;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(255,255,255,0.3);
+  border:1px solid rgba(255,255,255,0.1);
+  padding:2px 8px;border-radius:10px;
+  background:rgba(255,255,255,0.04);
+}
+
+/* ── SCHOOL SECTION ── */
+.school-section{
+  position:relative;z-index:1;
+  padding:32px 20px 48px;
+  text-align:center;
+  border-top:1px solid rgba(255,255,255,0.06);
+}
+.school-chips{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:10px;
+  max-width:600px;margin:16px auto 0;
+}
+.school-chip{
+  padding:7px 18px;border-radius:20px;
+  font-size:12px;font-weight:500;
+  border:1px solid rgba(255,255,255,0.1);
+  color:rgba(255,255,255,0.5);
+  background:rgba(255,255,255,0.03);
+  transition:all 0.2s;
+}
+.school-chip.hi{
+  border-color:rgba(201,168,76,0.3);
+  color:var(--gold2);
+  background:rgba(201,168,76,0.06);
+  font-family:'Noto Sans KR',sans-serif;font-size:13px;
+}
+.school-chip:hover{background:rgba(255,255,255,0.06);}
+
+/* 모의고사 년도/월 선택 */
+.mock-select-wrap{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:8px;padding:9px 10px;
+  margin-bottom:2px;
+}
+.mock-select-label{
+  font-size:11px;font-weight:600;color:rgba(255,255,255,0.7);
+  margin-bottom:7px;letter-spacing:0.3px;
+}
+.mock-select-row{display:flex;gap:5px;align-items:center;}
+.mock-sel{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.15);
+  color:rgba(255,255,255,0.8);
+  border-radius:4px;padding:4px 6px;
+  cursor:pointer;outline:none;flex:1;
+}
+.mock-sel option{background:#1B2E4A;color:white;}
+.mock-go-btn{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  background:rgba(201,168,76,0.25);
+  border:1px solid rgba(201,168,76,0.4);
+  color:rgba(201,168,76,0.9);
+  border-radius:4px;padding:4px 9px;
+  cursor:pointer;outline:none;white-space:nowrap;
+  transition:all 0.2s;letter-spacing:0.3px;
+  flex-shrink:0;
+}
+.mock-go-btn:hover{background:rgba(201,168,76,0.4);color:#f0d070;}
+
+/* ── SCHOOL MODAL ── */
+.s-modal-bg{
+  display:none;position:fixed;inset:0;z-index:500;
+  background:rgba(13,21,32,0.8);backdrop-filter:blur(10px);
+  align-items:center;justify-content:center;padding:20px;
+}
+.s-modal-bg.open{display:flex;}
+.s-modal{
+  background:linear-gradient(145deg,#141f33,#0d1520);
+  border:1px solid rgba(255,255,255,0.1);
+  border-top:3px solid var(--gold);
+  border-radius:14px;max-width:420px;width:100%;
+  padding:32px;position:relative;
+  box-shadow:0 30px 80px rgba(0,0,0,0.6);
+  animation:modalIn 0.3s cubic-bezier(0.2,0.8,0.2,1) both;
+}
+@keyframes modalIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.s-modal-close{
+  position:absolute;top:14px;right:16px;
+  background:none;border:none;font-size:18px;
+  color:rgba(255,255,255,0.3);cursor:pointer;
+}
+.s-modal-close:hover{color:white;}
+.s-modal-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:8px;
+}
+.s-modal-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:26px;font-weight:700;color:white;margin-bottom:20px;
+}
+.s-modal-items{display:flex;flex-direction:column;gap:8px;}
+.s-modal-item{
+  display:flex;align-items:center;gap:12px;
+  padding:13px 16px;border-radius:9px;
+  cursor:pointer;transition:background 0.2s;
+  text-decoration:none;
+}
+.s-modal-item.ready{
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);
+}
+.s-modal-item.ready:hover{background:rgba(255,255,255,0.12);}
+.s-modal-item.soon{
+  background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);
+  opacity:0.4;cursor:default;
+}
+.s-modal-icon{font-size:22px;flex-shrink:0;}
+.s-modal-text{flex:1;}
+.s-modal-text-main{font-size:13.5px;font-weight:600;color:white;}
+.s-modal-text-sub{font-size:11px;color:rgba(255,255,255,0.35);font-family:'JetBrains Mono',monospace;margin-top:2px;}
+.s-modal-arrow{color:var(--gold);font-size:12px;}
+
+footer{
+  text-align:center;padding:28px 20px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:rgba(255,255,255,0.15);
+  letter-spacing:1px;border-top:1px solid rgba(255,255,255,0.05);
+  position:relative;z-index:1;
+}
+</style>
 </head>
 <body>
-  <div class="header">목동서로영어학원 - 앱모음</div>
-  <div class="tabs">
-    <button class="tab active" data-section="section1">단어 </button>
-    <button class="tab" data-section="section2">문장 배열</button>
-    <button class="tab" data-section="section3">한줄해석</button>
-    <button class="tab" data-section="section4">기타</button>
-  </div>
 
-  <!-- [1] 단어  -->
-  <div class="content-section active" id="section1">
-    <div class="book-grid">
-      <!-- 20개 예시, 이미지/제목/링크만 바꾸세요 -->
-      <a href="https://0505.co.kr/highorigin.html" class="book-card"><img class="book-image" src="https://shopping-phinf.pstatic.net/main_3246303/32463036645.20230927071426.jpg?type=w300"><span class="book-title">영어→한글</span></a>
-      <a href="https://nmyway77.github.io/testh-e/" class="book-card"><img class="book-image" src="https://shopping-phinf.pstatic.net/main_3246303/32463036645.20230927071426.jpg?type=w300"><span class="book-title">한글→영어</span></a>
-      <a href="https://nmyway77.github.io/hlevele/" class="book-card"><img class="book-image" src="https://shopping-phinf.pstatic.net/main_3654620/36546208618.20230110163553.jpg?type=w300"><span class="book-title">영어→한글</span></a>
-      <a href="https://nmyway77.github.io/hlevelh-e/" class="book-card"><img class="book-image" src="https://shopping-phinf.pstatic.net/main_3654620/36546208618.20230110163553.jpg?type=w300"><span class="book-title">한글→영어</span></a>
-      <a href="https://nmyway77.github.io/elewords-e/" class="book-card"><img class="book-image" src="https://image.yes24.com/goods/113796556/XL"><span class="book-title"></span>영어→한글</a>
-      <a href="https://nmyway77.github.io/word200/" class="book-card"><img class="book-image" src="https://0505.co.kr/1.jpg"><span class="book-title">영어→한글</span></a>
-      <a href="https://nmyway77.github.io/word200he/" class="book-card"><img class="book-image" src="https://0505.co.kr/1.jpg"><span class="book-title">한글→영어</span></a>
-      <a href="https://nmyway77.github.io/hackersword-e/" class="book-card"><img class="book-image" src="https://shopping-phinf.pstatic.net/main_3246654/32466543978.20230620100804.jpg?type=w300"><span class="book-title">영어→한글</span></a>
-      <a href="https://nmyway77.github.io/hackersword-h-e/" class="book-card"><img class="book-image" src="https://shopping-phinf.pstatic.net/main_3246654/32466543978.20230620100804.jpg?type=w300"><span class="book-title">한글→영어</span></a>
-      <a href="https://nmyway77.github.io/elewords-h-e/" class="book-card"><img class="book-image" src="https://image.yes24.com/goods/113796556/XL"><span class="book-title">한글→영어</span></a>
-      <a href="https://nmyway77.github.io/wordbasic-e/" class="book-card"><img class="book-image" src="https://contents.kyobobook.co.kr/sih/fit-in/400x0/pdt/9791125340515.jpg"><span class="book-title">Book 11</span>영어→한글</a>
-      <a href="https://nmyway77.github.io/wordbasic-h-e/" class="book-card"><img class="book-image" src="https://contents.kyobobook.co.kr/sih/fit-in/400x0/pdt/9791125340515.jpg"><span class="book-title">Book 12</span>한글→영어</a>
-      <a href="https://audioclip.naver.com/channels/9751" class="book-card"><img class="book-image" src="https://bookthumb-phinf.pstatic.net/cover/213/839/21383965.jpg?type=m1&udate=20220402"><span class="book-title">Book 13</span></a>
-      <a href="word14.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">Book 14</span></a>
-      <a href="word15.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">Book 15</span></a>
-      <a href="word16.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">Book 16</span></a>
-      <a href="word17.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">Book 17</span></a>
-      <a href="word18.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">Book 18</span></a>
-      <a href="word19.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">Book 19</span></a>
-      <a href="word20.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">Book 20</span></a>
+<nav>
+  <div class="nav-logo">0<span>5</span>0<span>5</span></div>
+  <div class="nav-right-area">
+    <select class="nav-school-select" onchange="openSchoolModal(this.value);this.value=''">
+      <option value="">🏫 학교별 자료</option>
+      <option value="sinmok">신목고등학교</option>
+      <option value="mokun">목운중학교</option>
+      <option value="mokdong">목동중학교</option>
+    </select>
+    <span class="nav-site">0505.co.kr</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-top">
+    <div class="hero-badge">✦ 목동서로영어학원 ✦</div>
+  </div>
+  <div class="hero-sub">학년을 선택하면 학습 자료로 바로 이동합니다</div>
+</div>
+
+<!-- 고등학교 라벨 -->
+<div class="section-label">
+  <div class="sl-line"></div>
+  <div class="sl-text">고등학교</div>
+  <div class="sl-line"></div>
+</div>
+
+<!-- GRADE GRID -->
+<div class="grade-grid">
+
+  <!-- 고1 -->
+  <div class="gc gc-g1" style="animation-delay:0s" onclick="openGrade('g1')">
+    <div class="gc-inner">
+      <div class="gc-logo"><span style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:white;">1</span></div>
+      <div class="gc-grade" style="display:none">고1</div>
+      <div class="gc-grade-sub">HIGH SCHOOL · GRADE 1</div>
+      <div class="gc-name">고등학교 1학년</div>
+      <div class="gc-school">신목고등학교</div>
+      <div class="gc-items">
+        <!-- 모의고사: 년도/월 선택 -->
+        <div class="mock-select-wrap" onclick="event.stopPropagation()">
+          <div class="mock-select-label">📝 모의고사</div>
+          <div class="mock-select-row">
+            <select class="mock-sel" id="g1year">
+              <option value="2026">26년</option>
+              <option value="2025">25년</option>
+              <option value="2024">24년</option>
+              <option value="2023">23년</option>
+            </select>
+            <select class="mock-sel" id="g1month">
+              <option value="3">3월</option>
+              <option value="6">6월</option>
+              <option value="9">9월</option>
+              <option value="11">11월</option>
+            </select>
+            <button class="mock-go-btn" onclick="goMock('g1')">이동 →</button>
+          </div>
+        </div>
+        <div class="gc-item ready" onclick="event.stopPropagation();window.location.href='vocab_flashcards.html'">
+          <span class="gc-item-icon">📚</span>
+          <span class="gc-item-text">단어장</span>
+          <span class="gc-item-arrow">→</span>
+        </div>
+        <div class="gc-item soon">
+          <span class="gc-item-icon">📖</span>
+          <span class="gc-item-text">교과서</span>
+          <span class="gc-item-arrow">준비중</span>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- [2] 문장 배열  -->
-  <div class="content-section" id="section2">
-    <div class="book-grid">
-      <!-- 20개 예시 -->
-      <!-- 아래 예시 카드들 이미지만 바꿔서 사용하세요 -->
-      <a href="https://0505.co.kr/mdm2textbook.html" class="book-card"><img class="book-image" src="https://www.ktbookmall.com/images/TextBookImage/thumbnail/11323_1.gif"><span class="book-title">목동중2</span></a>
-      <a href="https://0505.co.kr/mwm2textbook.html" class="book-card"><img class="book-image" src="https://www.ktbookmall.com/images/TextBookImage/thumbnail/11317_1.gif"><span class="book-title">목운중2</span></a>
-      <a href="https://0505.co.kr/mdm3textbook.html" class="book-card"><img class="book-image" src="https://www.ktbookmall.com/images/TextBookImage/thumbnail/11339_1.gif"><span class="book-title">목동중3</span></a>
-      <a href="https://0505.co.kr/milm3textbook.html" class="book-card"><img class="book-image" src="https://www.ktbookmall.com/images/TextBookImage/thumbnail/11341_1.gif"><span class="book-title">목일중3</span></a>
-      <a href="http://0505.co.kr/sutlarr.html" class="book-card"><img class="book-image" src="https://contents.kyobobook.co.kr/sih/fit-in/400x0/pdt/9788954766449.jpg"><span class="book-title">수특라이트 영어</span></a>
-      <a href="http://0505.co.kr/nehigh1.html" class="book-card"><img class="book-image" src="https://www.ktbookmall.com/images/TextBookImage/thumbnail/46218_1.gif"><span class="book-title">고1 능률 오선영</span></a>
-      <a href="https://0505.co.kr/m1dongatextbook.html" class="book-card"><img class="book-image" src="https://www.ktbookmall.com/images/TextBookImage/thumbnail/26305_1.gif"><span class="book-title">중1 동아 윤정미</span></a>
-      <a href="https://0505.co.kr/m1chjtextbook.html" class="book-card"><img class="book-image" src="https://www.ktbookmall.com/images/TextBookImage/thumbnail/26303_1.gif"><span class="book-title">중1 천재 이상기</span></a>
-      <a href="sentence9.html" class="book-card"><img class="book-image" src="https://i.ibb.co/yR8fLhp/voca9.png"><span class="book-title">문장 배열 연습9</span></a>
-      <a href="sentence10.html" class="book-card"><img class="book-image" src="https://i.ibb.co/pzDQpY3/voca10.png"><span class="book-title">문장 배열 연습10</span></a>
-      <a href="sentence11.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 11</span></a>
-      <a href="sentence12.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 12</span></a>
-      <a href="sentence13.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 13</span></a>
-      <a href="sentence14.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 14</span></a>
-      <a href="sentence15.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 15</span></a>
-      <a href="sentence16.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 16</span></a>
-      <a href="sentence17.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 17</span></a>
-      <a href="sentence18.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 18</span></a>
-      <a href="sentence19.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 19</span></a>
-      <a href="sentence20.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 20</span></a>
+  <!-- 고2 -->
+  <div class="gc gc-g2" style="animation-delay:0.08s">
+    <div class="gc-soon-badge">준비 중</div>
+    <div class="gc-inner">
+      <div class="gc-logo"><span style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:white;">2</span></div>
+      <div class="gc-grade-sub">HIGH SCHOOL · GRADE 2</div>
+      <div class="gc-name">고등학교 2학년</div>
+      <div class="gc-school">준비 중</div>
+      <div class="gc-items">
+        <div class="gc-item soon"><span class="gc-item-icon">📝</span><span class="gc-item-text">모의고사</span><span class="gc-item-arrow">준비중</span></div>
+        <div class="gc-item soon"><span class="gc-item-icon">📚</span><span class="gc-item-text">단어장</span><span class="gc-item-arrow">준비중</span></div>
+      </div>
     </div>
   </div>
 
-  <!-- [3] 한줄해석  -->
-  <div class="content-section" id="section3">
-    <div class="book-grid">
-      <!-- 20개 예시 -->
-      <a href="https://nmyway77.github.io/thome/" class="book-card"><img class="book-image" src="https://contents.kyobobook.co.kr/sih/fit-in/400x0/pdt/9788954766449.jpg"><span class="book-title">수특L영어</span></a>
-      <a href="https://nmyway77.github.io/ditext-tr/" class="book-card"><img class="book-image" src="https://www.ktbookmall.com/images/TextBookImage/thumbnail/46218_1.gif"><span class="book-title">고1 능률오</span></a>
-      <a href="line3.html" class="book-card"><img class="book-image" src="https://i.ibb.co/TB0kQgv/voca3.png"><span class="book-title">한줄해석 연습3</span></a>
-      <a href="line4.html" class="book-card"><img class="book-image" src="https://i.ibb.co/jb3bNTW/voca4.png"><span class="book-title">한줄해석 연습4</span></a>
-      <a href="line5.html" class="book-card"><img class="book-image" src="https://i.ibb.co/yS8DM0V/voca5.png"><span class="book-title">한줄해석 연습5</span></a>
-      <a href="line6.html" class="book-card"><img class="book-image" src="https://i.ibb.co/jwXvMz6/voca6.png"><span class="book-title">한줄해석 연습6</span></a>
-      <a href="line7.html" class="book-card"><img class="book-image" src="https://i.ibb.co/pz6Xz6Y/voca7.png"><span class="book-title">한줄해석 연습7</span></a>
-      <a href="line8.html" class="book-card"><img class="book-image" src="https://i.ibb.co/Trk9cDn/voca8.png"><span class="book-title">한줄해석 연습8</span></a>
-      <a href="line9.html" class="book-card"><img class="book-image" src="https://i.ibb.co/yR8fLhp/voca9.png"><span class="book-title">한줄해석 연습9</span></a>
-      <a href="line10.html" class="book-card"><img class="book-image" src="https://i.ibb.co/pzDQpY3/voca10.png"><span class="book-title">한줄해석 연습10</span></a>
-      <a href="line11.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 11</span></a>
-      <a href="line12.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 12</span></a>
-      <a href="line13.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 13</span></a>
-      <a href="line14.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 14</span></a>
-      <a href="line15.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 15</span></a>
-      <a href="line16.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 16</span></a>
-      <a href="line17.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 17</span></a>
-      <a href="line18.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 18</span></a>
-      <a href="line19.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 19</span></a>
-      <a href="line20.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">연습 20</span></a>
+  <!-- 고3 -->
+  <div class="gc gc-g3" style="animation-delay:0.14s">
+    <div class="gc-soon-badge">준비 중</div>
+    <div class="gc-inner">
+      <div class="gc-logo"><span style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:white;">3</span></div>
+      <div class="gc-grade-sub">HIGH SCHOOL · GRADE 3</div>
+      <div class="gc-name">고등학교 3학년</div>
+      <div class="gc-school">준비 중</div>
+      <div class="gc-items">
+        <div class="gc-item soon"><span class="gc-item-icon">📝</span><span class="gc-item-text">모의고사</span><span class="gc-item-arrow">준비중</span></div>
+        <div class="gc-item soon"><span class="gc-item-icon">📚</span><span class="gc-item-text">단어장</span><span class="gc-item-arrow">준비중</span></div>
+      </div>
     </div>
   </div>
 
-  <!-- [4] 기타 -->
-  <div class="content-section" id="section4">
-    <div class="book-grid">
-      <!-- 20개 예시 -->
-      <a href="https://www.ebse.co.kr/apps/funReading/funMain.do" class="book-card"><img class="book-image" src="https://www.ebse.co.kr/ebs/ebse/apy/alz/ale/eclipbk/clip/thumb/11-44-01_c.png"><span class="book-title">영어동화</span></a>
-      <a href="etc2.html" class="book-card"><img class="book-image" src="https://i.ibb.co/9nFSTvf/voca2.png"><span class="book-title">기타 2</span></a>
-      <a href="etc3.html" class="book-card"><img class="book-image" src="https://i.ibb.co/TB0kQgv/voca3.png"><span class="book-title">기타 3</span></a>
-      <a href="etc4.html" class="book-card"><img class="book-image" src="https://i.ibb.co/jb3bNTW/voca4.png"><span class="book-title">기타 4</span></a>
-      <a href="etc5.html" class="book-card"><img class="book-image" src="https://i.ibb.co/yS8DM0V/voca5.png"><span class="book-title">기타 5</span></a>
-      <a href="etc6.html" class="book-card"><img class="book-image" src="https://i.ibb.co/jwXvMz6/voca6.png"><span class="book-title">기타 6</span></a>
-      <a href="etc7.html" class="book-card"><img class="book-image" src="https://i.ibb.co/pz6Xz6Y/voca7.png"><span class="book-title">기타 7</span></a>
-      <a href="etc8.html" class="book-card"><img class="book-image" src="https://i.ibb.co/Trk9cDn/voca8.png"><span class="book-title">기타 8</span></a>
-      <a href="etc9.html" class="book-card"><img class="book-image" src="https://i.ibb.co/yR8fLhp/voca9.png"><span class="book-title">기타 9</span></a>
-      <a href="etc10.html" class="book-card"><img class="book-image" src="https://i.ibb.co/pzDQpY3/voca10.png"><span class="book-title">기타 10</span></a>
-      <a href="etc11.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">기타 11</span></a>
-      <a href="etc12.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">기타 12</span></a>
-      <a href="etc13.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">기타 13</span></a>
-      <a href="etc14.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">기타 14</span></a>
-      <a href="etc15.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">기타 15</span></a>
-      <a href="etc16.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">기타 16</span></a>
-      <a href="etc17.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">기타 17</span></a>
-      <a href="etc18.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">기타 18</span></a>
-      <a href="etc19.html" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">기타 19</span></a>
-      <a href="https://cafe.naver.com/tuntuntest/2707" class="book-card"><img class="book-image" src="https://i.ibb.co/VWYfNvf/blank.png"><span class="book-title">앱다운하기</span></a>
+  <!-- 중3 -->
+  <div class="gc gc-m3" style="animation-delay:0.2s">
+    <div class="gc-soon-badge">준비 중</div>
+    <div class="gc-inner">
+      <div class="gc-logo"><span style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:white;">중3</span></div>
+      <div class="gc-grade-sub">MIDDLE SCHOOL · GRADE 3</div>
+      <div class="gc-name">중학교 3학년</div>
+      <div class="gc-school">목운중 · 목동중</div>
+      <div class="gc-items">
+        <div class="gc-item soon"><span class="gc-item-icon">📖</span><span class="gc-item-text">교과서</span><span class="gc-item-arrow">준비중</span></div>
+        <div class="gc-item soon"><span class="gc-item-icon">📚</span><span class="gc-item-text">단어장</span><span class="gc-item-arrow">준비중</span></div>
+      </div>
     </div>
   </div>
 
-  <!-- 하단 고정 버튼 -->
-  <div class="footer-links">
-    <a href="https://0505.co.kr/mail2.html" target="_blank">문의하기</a>
-    <a href="https://cafe.naver.com/tuntuntest" target="_blank">카페</a>
-    <a href="https://blog.naver.com/nmyway/223451417692" target="_blank">입학안내</a>
-  </div>
+</div>
 
-  <script>
-    // 탭 기능
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', function() {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        this.classList.add('active');
-        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-        document.getElementById(this.dataset.section).classList.add('active');
-        window.scrollTo({top: 0, behavior: 'smooth'}); // 탭 클릭시 위로 스크롤
-      });
-    });
-  </script>
+<!-- 학교 안내 -->
+<div class="school-section">
+  <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.25);margin-bottom:8px;">SPECIALIZED SCHOOLS</div>
+  <div class="school-chips">
+    <span class="school-chip hi">🏫 신목고등학교</span>
+    <span class="school-chip hi">🏫 목운중학교</span>
+    <span class="school-chip hi">🏫 목동중학교</span>
+    <span class="school-chip">NE능률 교과서</span>
+    <span class="school-chip">내신 출제 패턴 특화</span>
+    <span class="school-chip">목동 지역 전담</span>
+  </div>
+</div>
+
+<!-- 학교별 모달 -->
+<div class="s-modal-bg" id="schoolModal" onclick="if(event.target===this)closeSchoolModal()">
+  <div class="s-modal">
+    <button class="s-modal-close" onclick="closeSchoolModal()">✕</button>
+    <div class="s-modal-label" id="sm-label"></div>
+    <div class="s-modal-title" id="sm-title"></div>
+    <div class="s-modal-items" id="sm-items"></div>
+  </div>
+</div>
+
+<footer>목동서로영어학원 · 영어영어 · 0505.co.kr · 신목고 · 목운중 · 목동중 전담</footer>
+
+<script>
+const SCHOOLS = {
+  sinmok:{
+    label:'신목고등학교 · 고1',name:'신목고등학교',
+    items:[
+      {icon:'📝',text:'모의고사 한줄해석',sub:'2026년 3월 고1',link:'mock_march_2026.html',ready:true},
+      {icon:'📝',text:'모의고사 한줄해석',sub:'2025년 3월 고1',link:'mock_march_2025.html',ready:true},
+      {icon:'📚',text:'단어장',sub:'Lesson별 단어장',link:'vocab_flashcards.html',ready:true},
+      {icon:'📖',text:'교과서 한줄해석',sub:'Lesson 1·2 — 준비 중',link:'#',ready:false},
+    ]
+  },
+  mokun:{
+    label:'목운중학교 · 중3',name:'목운중학교',
+    items:[
+      {icon:'📖',text:'교과서 한줄해석',sub:'준비 중',link:'#',ready:false},
+      {icon:'📚',text:'단어장',sub:'준비 중',link:'#',ready:false},
+    ]
+  },
+  mokdong:{
+    label:'목동중학교 · 중3',name:'목동중학교',
+    items:[
+      {icon:'📖',text:'교과서 한줄해석',sub:'준비 중',link:'#',ready:false},
+      {icon:'📚',text:'단어장',sub:'준비 중',link:'#',ready:false},
+    ]
+  }
+};
+
+function openSchoolModal(val){
+  if(!val) return;
+  const s=SCHOOLS[val];if(!s)return;
+  document.getElementById('sm-label').textContent=s.label;
+  document.getElementById('sm-title').textContent=s.name;
+  document.getElementById('sm-items').innerHTML=s.items.map(it=>`
+    <div class="s-modal-item ${it.ready?'ready':'soon'}"
+      onclick="${it.ready?`window.location.href='${it.link}'`:''}" >
+      <span class="s-modal-icon">${it.icon}</span>
+      <div class="s-modal-text">
+        <div class="s-modal-text-main">${it.text}</div>
+        <div class="s-modal-text-sub">${it.sub}</div>
+      </div>
+      ${it.ready?'<span class="s-modal-arrow">→</span>':''}
+    </div>`).join('');
+  document.getElementById('schoolModal').classList.add('open');
+}
+function closeSchoolModal(){document.getElementById('schoolModal').classList.remove('open');}
+function openGrade(g){/* 추후 학년별 서브메뉴 */}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSchoolModal();});
+
+// 모의고사 파일 맵
+const MOCK_MAP = {
+  'g1':{
+    '2026_3':'mock_march_2026.html',
+    '2026_6':'mock_june_2026.html',
+    '2026_9':'mock_sept_2026.html',
+    '2026_11':'mock_nov_2026.html',
+    '2025_3':'mock_march_2025.html',
+    '2025_6':'mock_june_2025.html',
+    '2025_9':'mock_sept_2025.html',
+    '2025_11':'mock_nov_2025.html',
+    '2024_3':'mock_march_2024.html',
+    '2024_6':'mock_june_2024.html',
+    '2024_9':'mock_sept_2024.html',
+    '2024_11':'mock_nov_2024.html',
+    '2023_3':'mock_march_2023.html',
+    '2023_6':'mock_june_2023.html',
+    '2023_9':'mock_sept_2023.html',
+    '2023_11':'mock_nov_2023.html',
+  }
+  // 고2, 고3, 중3 추가 예정
+};
+
+// 완성된 파일 목록 (실제 존재하는 것만)
+const READY_FILES = ['mock_march_2025.html','mock_march_2026.html'];
+
+function goMock(grade){
+  const year  = document.getElementById(grade+'year').value;
+  const month = document.getElementById(grade+'month').value;
+  const key   = year + '_' + month;
+  const map   = MOCK_MAP[grade];
+  if(!map) return;
+  const file  = map[key];
+  if(!file){ alert('아직 준비 중입니다 😊'); return; }
+  if(!READY_FILES.includes(file)){ alert(`${year}년 ${month}월 모의고사는 곧 업로드됩니다!`); return; }
+  window.location.href = file;
+}
+
+// 자동 스크롤
+let done=false,paused=false,raf=null;
+function step(){if(done||paused)return;if(window.scrollY>=document.body.scrollHeight-window.innerHeight){done=true;return;}window.scrollBy(0,0.6);raf=requestAnimationFrame(step);}
+function pause(){paused=true;if(raf){cancelAnimationFrame(raf);raf=null;}}
+function resume(){if(done)return;paused=false;raf=requestAnimationFrame(step);}
+document.addEventListener('mouseover',pause);
+document.addEventListener('mouseleave',resume);
+['wheel','touchmove'].forEach(ev=>window.addEventListener(ev,()=>{done=true;pause();},{passive:true}));
+setTimeout(resume,1000);
+</script>
 </body>
 </html>
