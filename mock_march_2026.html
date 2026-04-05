@@ -878,7 +878,52 @@ const VOCAB = [
    phrases:['steal the shade = 그늘을 빼앗다','shade from the tree = 나무의 그늘']},
 ];
 
-/* ══ 공통 기능 ══ */
+/* ══ 공통 JS ══ */
+let currentCard=null, openAll=false, vocabOnly=false;
+let arrangeBuilt=false, gBuilt=false, vocabBuilt=false;
+let abShown=false, erShown=false, fiShown=false;
+
+function switchView(view){
+  document.getElementById('readingView').style.display='none';
+  ['arrangeView','grammarView','vocabView'].forEach(id=>document.getElementById(id).classList.remove('active'));
+  ['tabR','tabA','tabG','tabV'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.remove('active');});
+  if(view==='reading'){document.getElementById('readingView').style.display='block';document.getElementById('tabR').classList.add('active');}
+  else if(view==='arrange'){document.getElementById('arrangeView').classList.add('active');document.getElementById('tabA').classList.add('active');if(!arrangeBuilt){buildArrangeCards();arrangeBuilt=true;}}
+  else if(view==='grammar'){document.getElementById('grammarView').classList.add('active');document.getElementById('tabG').classList.add('active');if(!gBuilt){buildGrammarSection();gBuilt=true;}}
+  else{document.getElementById('vocabView').classList.add('active');document.getElementById('tabV').classList.add('active');if(!vocabBuilt){buildVocab(0);vocabBuilt=true;}}
+}
+
+/* TTS */
+function getVoice(){const v=speechSynthesis.getVoices();return v.find(x=>x.lang==='en-US'&&x.name.includes('Google'))||v.find(x=>x.lang.startsWith('en-US'))||v.find(x=>x.lang.startsWith('en'))||null;}
+speechSynthesis.addEventListener('voiceschanged',()=>{});
+function stopSpeech(){speechSynthesis.cancel();if(currentCard){currentCard.classList.remove('playing');currentCard=null;}}
+function startSpeech(card){const text=card.dataset.text;if(!text)return;currentCard=card;card.classList.add('playing');const u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=0.84;u.pitch=1.0;const v=getVoice();if(v)u.voice=v;u.onend=()=>{card.classList.remove('playing');if(currentCard===card)currentCard=null;};u.onerror=()=>{card.classList.remove('playing');if(currentCard===card)currentCard=null;};speechSynthesis.speak(u);}
+function speakCard(card){if(currentCard===card){stopSpeech();}else{stopSpeech();startSpeech(card);}}
+function speakWord(word,e){e.stopPropagation();speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(word);u.lang='en-US';u.rate=0.82;const v=getVoice();if(v)u.voice=v;speechSynthesis.speak(u);}
+const isTouchDevice=()=>window.matchMedia('(hover:none)').matches;
+
+document.querySelectorAll('.s-card').forEach((card,i)=>{
+  card.style.animationDelay=(i*80)+'ms';
+  const speakBtn=card.querySelector('.speak-icon');
+  const waveEl=card.querySelector('.wave');
+  if(speakBtn){speakBtn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();speakCard(card);});}
+  if(waveEl){waveEl.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();speakCard(card);});}
+  card.addEventListener('click',e=>{
+    if(e.target.closest('.speak-icon')||e.target.closest('.wave'))return;
+    if(isTouchDevice()){const isOpen=card.classList.contains('tapped');document.querySelectorAll('.s-card.tapped').forEach(tc=>{if(tc!==card)tc.classList.remove('tapped');});card.classList.toggle('tapped',!isOpen);if(currentCard===card)stopSpeech();}
+    else{speakCard(card);}
+  });
+  card.addEventListener('dblclick',e=>{e.preventDefault();card.classList.toggle('pinned');});
+});
+
+/* 컨트롤 버튼 */
+function toggleOpen(){if(vocabOnly){vocabOnly=false;document.getElementById('btnVocab').classList.remove('active');document.querySelectorAll('.s-card').forEach(c=>c.classList.remove('vocab-only'));}openAll=!openAll;document.getElementById('btnOpen').classList.toggle('active',openAll);document.querySelectorAll('.s-card').forEach(card=>{card.classList.remove('vocab-only');card.classList.toggle('pinned',openAll);});}
+function toggleVocab(){if(openAll){openAll=false;document.getElementById('btnOpen').classList.remove('active');document.querySelectorAll('.s-card').forEach(c=>c.classList.remove('pinned'));}vocabOnly=!vocabOnly;document.getElementById('btnVocab').classList.toggle('active',vocabOnly);document.querySelectorAll('.s-card').forEach(card=>{card.classList.remove('pinned');card.classList.toggle('vocab-only',vocabOnly);});}
+
+let allQueue=[],allIdx=0,allPlaying=false;
+function speakAll(){if(allPlaying){stopSpeech();allPlaying=false;const b=document.getElementById('btnAll');if(b)b.textContent='🔊 전체 읽기';return;}stopSpeech();allIdx=0;allPlaying=true;const b=document.getElementById('btnAll');if(b)b.textContent='⏹ 정지';allQueue=Array.from(document.querySelectorAll('.s-card'));readNext();}
+function readNext(){if(!allPlaying||allIdx>=allQueue.length){if(currentCard)currentCard.classList.remove('playing');currentCard=null;allPlaying=false;const b=document.getElementById('btnAll');if(b)b.textContent='🔊 전체 읽기';return;}const card=allQueue[allIdx++];if(currentCard)currentCard.classList.remove('playing');currentCard=card;card.classList.add('playing');card.scrollIntoView({behavior:'smooth',block:'center'});const u=new SpeechSynthesisUtterance(card.dataset.text);u.lang='en-US';u.rate=0.84;const v=getVoice();if(v)u.voice=v;u.onend=()=>{card.classList.remove('playing');setTimeout(readNext,600);};u.onerror=()=>{card.classList.remove('playing');setTimeout(readNext,600);};speechSynthesis.speak(u);}
+
 /* ══ 배열영작 ══ */
 let scores={},dragSrc=null,clickSelectedChip=null;
 function buildArrangeCards(){
