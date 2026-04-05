@@ -828,7 +828,14 @@ function getVoice(){const v=speechSynthesis.getVoices();return v.find(x=>x.lang=
 speechSynthesis.addEventListener('voiceschanged',()=>{});
 let currentCard=null;
 function speakCard(card){
-  if(currentCard===card&&speechSynthesis.speaking){speechSynthesis.cancel();card.classList.remove('playing');currentCard=null;return;}
+  // 같은 카드 재클릭 → 즉시 정지
+  if(currentCard===card){
+    speechSynthesis.cancel();
+    card.classList.remove('playing');
+    currentCard=null;
+    return;
+  }
+  // 다른 카드 재생 중이면 정지
   speechSynthesis.cancel();
   if(currentCard){currentCard.classList.remove('playing');currentCard=null;}
   const text=card.dataset.text;if(!text)return;
