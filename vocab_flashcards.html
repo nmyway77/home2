@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vocabulary Cards — 40 Words</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --navy2: #1a2e44;
+    --gold: #c9a84c;
+    --gold-light: #f0d080;
+    --cream: #f5f0e8;
+    --cream2: #ede5d4;
+    --text-dark: #1a1208;
+    --text-mid: #3d2f10;
+    --shadow: rgba(13,27,42,0.18);
+    --card-h: 260px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--navy);
+    background-image:
+      radial-gradient(ellipse at 20% 20%, rgba(201,168,76,0.07) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 80%, rgba(201,168,76,0.05) 0%, transparent 55%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    font-family: 'Noto Sans KR', sans-serif;
+    min-height: 100vh;
+    padding: 48px 24px 64px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .header-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.35);
+    padding: 6px 18px;
+    border-radius: 2px;
+    margin-bottom: 18px;
+    background: rgba(201,168,76,0.05);
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 900;
+    color: var(--cream);
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  h1 span { color: var(--gold); }
+  .subtitle {
+    font-size: 13px;
+    color: rgba(245,240,232,0.45);
+    letter-spacing: 1px;
+  }
+  .gold-line {
+    width: 60px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 18px auto 0;
+  }
+
+  /* ── INSTRUCTIONS ── */
+  .instructions {
+    text-align: center;
+    margin-bottom: 36px;
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .hint {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; color: rgba(245,240,232,0.4);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .hint-icon { font-size: 15px; }
+
+  /* ── GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 18px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* ── CARD ── */
+  .card-wrap {
+    perspective: 900px;
+    height: var(--card-h);
+    cursor: pointer;
+  }
+  .card {
+    width: 100%; height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
+  }
+  .card-wrap:hover .card,
+  .card-wrap.flipped .card {
+    transform: rotateY(180deg);
+  }
+
+  .face {
+    position: absolute; inset: 0;
+    border-radius: 10px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    overflow: hidden;
+  }
+
+  /* FRONT */
+  .front {
+    background: linear-gradient(145deg, var(--navy2) 0%, #142236 100%);
+    border: 1px solid rgba(201,168,76,0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(201,168,76,0.08);
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .card-wrap:hover .front {
+    border-color: rgba(201,168,76,0.5);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.45), 0 0 0 1px rgba(201,168,76,0.15), inset 0 1px 0 rgba(201,168,76,0.12);
+  }
+  .word-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: rgba(201,168,76,0.4);
+    letter-spacing: 1.5px;
+    position: absolute;
+    top: 10px; left: 12px;
+  }
+  .speaker-icon {
+    position: absolute;
+    top: 9px; right: 11px;
+    font-size: 14px;
+    color: rgba(201,168,76,0.35);
+    transition: color 0.2s, transform 0.2s;
+  }
+  .card-wrap:hover .speaker-icon {
+    color: var(--gold-light);
+    transform: scale(1.2);
+  }
+  .word-eng {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(17px, 2.5vw, 22px);
+    font-weight: 700;
+    color: var(--cream);
+    text-align: center;
+    line-height: 1.2;
+  }
+  .pos-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    border: 1px solid;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+  }
+  .pos-n   { color: #7ec8e3; border-color: rgba(126,200,227,0.4); background: rgba(126,200,227,0.08); }
+  .pos-v   { color: #98e0a0; border-color: rgba(152,224,160,0.4); background: rgba(152,224,160,0.08); }
+  .pos-adj { color: #f0b87a; border-color: rgba(240,184,122,0.4); background: rgba(240,184,122,0.08); }
+  .pos-adv { color: #d9a0e0; border-color: rgba(217,160,224,0.4); background: rgba(217,160,224,0.08); }
+
+  /* BACK */
+  .back {
+    background: linear-gradient(145deg, var(--cream) 0%, var(--cream2) 100%);
+    border: 1px solid rgba(201,168,76,0.4);
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 18px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  }
+  .back-word {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: 0.3px;
+  }
+  .divider {
+    width: 30px; height: 1.5px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .back-kr {
+    font-size: 12px;
+    color: var(--text-mid);
+    text-align: center;
+    line-height: 1.7;
+    font-weight: 400;
+    word-break: keep-all;
+  }
+  .back-kr strong {
+    display: block;
+    font-size: 13px;
+    color: var(--text-dark);
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+
+  /* ── SYN / ANT ── */
+  .syn-ant-wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 2px;
+  }
+  .syn-ant-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+  .syn-label, .ant-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .syn-label { background: rgba(46,117,182,0.15); color: #2a6fa8; border: 1px solid rgba(46,117,182,0.3); }
+  .ant-label { background: rgba(192,0,0,0.1);    color: #b03030; border: 1px solid rgba(192,0,0,0.25); }
+  .syn-chips, .ant-chips {
+    display: flex; flex-wrap: wrap; gap: 3px;
+  }
+  .syn-chip {
+    font-size: 9.5px; padding: 1px 7px; border-radius: 20px;
+    background: rgba(46,117,182,0.1); color: #2a5f9a;
+    border: 1px solid rgba(46,117,182,0.2);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .ant-chip {
+    font-size: 9.5px; padding: 1px 7px; border-radius: 20px;
+    background: rgba(192,0,0,0.08); color: #a03030;
+    border: 1px solid rgba(192,0,0,0.2);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .sound-btn {
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--navy2);
+    background: rgba(13,27,42,0.08);
+    border: 1px solid rgba(13,27,42,0.15);
+    border-radius: 20px;
+    padding: 4px 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .sound-btn:hover { background: rgba(13,27,42,0.15); }
+
+  /* ── PLAYING INDICATOR ── */
+  .playing .front { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.2), 0 12px 40px rgba(0,0,0,0.45); }
+
+  /* ── SEARCH / FILTER ── */
+  .controls {
+    max-width: 1200px;
+    margin: 0 auto 28px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .search-wrap {
+    flex: 1; min-width: 200px;
+    position: relative;
+  }
+  .search-wrap input {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 6px;
+    padding: 10px 14px 10px 38px;
+    color: var(--cream);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-wrap input::placeholder { color: rgba(245,240,232,0.3); }
+  .search-wrap input:focus { border-color: rgba(201,168,76,0.5); }
+  .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 14px; color: rgba(201,168,76,0.4); pointer-events: none; }
+  .filter-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+  .filter-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; padding: 8px 14px;
+    border-radius: 6px; border: 1px solid rgba(201,168,76,0.2);
+    background: rgba(255,255,255,0.03); color: rgba(245,240,232,0.5);
+    cursor: pointer; transition: all 0.2s; letter-spacing: 0.5px;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: rgba(201,168,76,0.12);
+    border-color: var(--gold); color: var(--gold-light);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    margin-top: 56px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: rgba(245,240,232,0.2);
+    letter-spacing: 1px;
+  }
+
+  /* ── RIPPLE / AUDIO PULSE ── */
+  @keyframes pulse-ring {
+    0% { transform: scale(0.8); opacity: 0.8; }
+    100% { transform: scale(2.2); opacity: 0; }
+  }
+  .pulse {
+    position: absolute; inset: 0; border-radius: 10px;
+    border: 2px solid var(--gold);
+    animation: pulse-ring 0.6s ease-out forwards;
+    pointer-events: none;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .card-wrap {
+    animation: fadeUp 0.4s ease both;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-badge">✦ Vocabulary Mastery ✦</div>
+  <h1>40 <span>Essential</span> Words</h1>
+  <p class="subtitle">마우스를 올리면 뜻이 보이고 · 클릭하면 발음이 들립니다</p>
+  <div class="gold-line"></div>
+</header>
+
+<div class="instructions">
+  <div class="hint"><span class="hint-icon">🖱</span> 마우스 올리기 → 뜻 확인</div>
+  <div class="hint"><span class="hint-icon">🔊</span> 클릭 → 원어민 발음</div>
+  <div class="hint"><span class="hint-icon">🔍</span> 검색으로 단어 찾기</div>
+</div>
+
+<div class="controls">
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="단어 검색..." oninput="filterCards()">
+  </div>
+  <div class="filter-btns">
+    <button class="filter-btn active" onclick="filterPos('all', this)">ALL</button>
+    <button class="filter-btn" onclick="filterPos('n', this)">명사 n.</button>
+    <button class="filter-btn" onclick="filterPos('v', this)">동사 v.</button>
+    <button class="filter-btn" onclick="filterPos('adj', this)">형용사 adj.</button>
+  </div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<footer>© Vocabulary Flashcard · Web Speech API · 40 words</footer>
+
+<script>
+const WORDS = [
+  { no:1,  en:"additional",  pos:"adj", kr:"추가적인, 부가의",
+    syn:["extra","further","supplementary"], ant:["basic","original"] },
+  { no:2,  en:"adhere",      pos:"v",   kr:"들러붙다, 부착되다\n고수하다, 충실히 지키다",
+    syn:["stick","cling","comply"], ant:["detach","separate","abandon"] },
+  { no:3,  en:"ambitious",   pos:"adj", kr:"야심 찬, 야망을 품은\n열심히인",
+    syn:["driven","aspiring","motivated"], ant:["lazy","unambitious"] },
+  { no:4,  en:"identify",    pos:"v",   kr:"확인하다, 알아보다\n동일시하다",
+    syn:["recognize","detect","distinguish"], ant:["overlook","miss"] },
+  { no:5,  en:"aesthetic",   pos:"adj", kr:"심미적인, 미학적인\n미적인 / (n.) 미학",
+    syn:["artistic","stylish","beautiful"], ant:["ugly","unattractive"] },
+  { no:6,  en:"animate",     pos:"v",   kr:"생기를 불어넣다\n만화영화로 만들다 / (adj.) 생물인",
+    syn:["enliven","inspire","activate"], ant:["depress","deaden"] },
+  { no:7,  en:"accomplish",  pos:"v",   kr:"성취하다, 해내다",
+    syn:["achieve","complete","fulfill"], ant:["fail","abandon"] },
+  { no:8,  en:"exhausted",   pos:"adj", kr:"기진맥진한, 지친\n다 써 버린, 고갈된",
+    syn:["tired","drained","worn out"], ant:["energetic","refreshed"] },
+  { no:9,  en:"marginalize", pos:"v",   kr:"하찮은 존재로 만들다\n소외시키다",
+    syn:["exclude","sideline","isolate"], ant:["include","integrate"] },
+  { no:10, en:"fossil",      pos:"n",   kr:"화석",
+    syn:["relic","remnant","specimen"], ant:[] },
+  { no:11, en:"process",     pos:"n",   kr:"과정, 절차\n(v.) 처리하다",
+    syn:["procedure","method","system"], ant:[] },
+  { no:12, en:"distance",    pos:"n",   kr:"거리, 간격, 먼 곳\n거리감 / (v.) 거리를 두다",
+    syn:["gap","space","interval"], ant:["closeness","proximity"] },
+  { no:13, en:"notable",     pos:"adj", kr:"주목할 만한\n중요한, 유명한",
+    syn:["remarkable","prominent","significant"], ant:["insignificant","ordinary"] },
+  { no:14, en:"performance", pos:"n",   kr:"수행, 이행, 성과\n실적, 공연, 연주",
+    syn:["execution","achievement","show"], ant:["failure","inaction"] },
+  { no:15, en:"biological",  pos:"adj", kr:"생물학의\n생물학적인",
+    syn:["organic","living","natural"], ant:["artificial","synthetic"] },
+  { no:16, en:"unionism",    pos:"n",   kr:"노동조합주의",
+    syn:["collectivism","solidarity","federalism"], ant:["individualism"] },
+  { no:17, en:"cognitive",   pos:"adj", kr:"인식의, 인지적인\n인지에 관한",
+    syn:["mental","intellectual","rational"], ant:["emotional","instinctive"] },
+  { no:18, en:"limit",       pos:"v",   kr:"제한하다, 한정하다\n(n.) 한도, 한계, 극한",
+    syn:["restrict","confine","cap"], ant:["expand","extend","broaden"] },
+  { no:19, en:"incline",     pos:"v",   kr:"기울게 하다, 기울다\n경사지다 / (n.) 경사, 비탈",
+    syn:["lean","slope","tend"], ant:["straighten","level","discourage"] },
+  { no:20, en:"appliance",   pos:"n",   kr:"가정용 기기\n가전제품",
+    syn:["device","gadget","machine"], ant:[] },
+  { no:21, en:"organism",    pos:"n",   kr:"생물, 미생물\n유기체, 유기적 조직체",
+    syn:["creature","being","entity"], ant:[] },
+  { no:22, en:"certify",     pos:"v",   kr:"증명하다, 보증하다",
+    syn:["verify","confirm","validate"], ant:["deny","disprove","refute"] },
+  { no:23, en:"ambiguous",   pos:"adj", kr:"애매한, 모호한",
+    syn:["vague","unclear","doubtful"], ant:["clear","definite","explicit"] },
+  { no:24, en:"commerce",    pos:"n",   kr:"상업, 무역, 상거래",
+    syn:["trade","business","industry"], ant:[] },
+  { no:25, en:"individual",  pos:"n",   kr:"개인 / (adj.) 개개의\n개인의, 개성적인, 독특한",
+    syn:["person","being","unit"], ant:["group","collective","community"] },
+  { no:26, en:"innovate",    pos:"v",   kr:"혁신하다, 도입하다",
+    syn:["create","invent","pioneer"], ant:["copy","imitate","stagnate"] },
+  { no:27, en:"infinite",    pos:"adj", kr:"무한한, 한계가 없는\n막대한, 매우 큰",
+    syn:["endless","boundless","unlimited"], ant:["finite","limited","bounded"] },
+  { no:28, en:"distinguish", pos:"v",   kr:"구별하다, 식별하다\n분간하다",
+    syn:["differentiate","discern","tell apart"], ant:["confuse","mix up"] },
+  { no:29, en:"concern",     pos:"v",   kr:"걱정하게 만들다\n~에 관한 것이다\n(n.) 걱정, 관심",
+    syn:["worry","trouble","affect"], ant:["ignore","disregard","reassure"] },
+  { no:30, en:"ceremony",    pos:"n",   kr:"의식, 식\n격식, 형식",
+    syn:["ritual","event","celebration"], ant:["informality","casualness"] },
+  { no:31, en:"fertilizer",  pos:"n",   kr:"비료",
+    syn:["compost","manure","nutrient"], ant:[] },
+  { no:32, en:"term",        pos:"n",   kr:"용어, 기간\n학기, 조건",
+    syn:["word","period","condition"], ant:[] },
+  { no:33, en:"occasion",    pos:"n",   kr:"때, 경우, 행사\n원인, 이유",
+    syn:["event","instance","opportunity"], ant:[] },
+  { no:34, en:"subconscious",pos:"adj", kr:"잠재의식의\n(n.) 잠재의식",
+    syn:["unconscious","instinctive","automatic"], ant:["conscious","deliberate"] },
+  { no:35, en:"material",    pos:"n",   kr:"재료, 물질, 자료, 소재\n(adj.) 물질적인",
+    syn:["substance","matter","resource"], ant:["immaterial","spiritual"] },
+  { no:36, en:"retrieval",   pos:"n",   kr:"회수, 복구, 검색",
+    syn:["recovery","restoration","recollection"], ant:["loss","deletion"] },
+  { no:37, en:"quantity",    pos:"n",   kr:"양, 수량, 다량",
+    syn:["amount","number","volume"], ant:["quality"] },
+  { no:38, en:"quality",     pos:"n",   kr:"질, 양질, 자질\n특성 / (adj.) 고급의",
+    syn:["standard","grade","characteristic"], ant:["quantity","inferiority"] },
+  { no:39, en:"fluctuate",   pos:"v",   kr:"변동하다\n오르내리다",
+    syn:["vary","oscillate","waver"], ant:["stabilize","remain steady"] },
+  { no:40, en:"stabilize",   pos:"v",   kr:"안정되다\n안정시키다",
+    syn:["steady","secure","fix"], ant:["fluctuate","destabilize"] },
+];
+
+const POS_LABEL = { n:"n.", v:"v.", adj:"adj.", adv:"adv." };
+const POS_KR    = { n:"명사", v:"동사", adj:"형용사", adv:"부사" };
+
+let currentFilter = "all";
+
+function speak(word, el) {
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(word);
+  utter.lang = "en-US";
+  utter.rate = 0.88;
+  utter.pitch = 1.0;
+
+  // pick English voice if available
+  const voices = window.speechSynthesis.getVoices();
+  const enVoice = voices.find(v => v.lang.startsWith("en") && !v.lang.includes("AU"));
+  if (enVoice) utter.voice = enVoice;
+
+  // pulse animation
+  const pulse = document.createElement("div");
+  pulse.className = "pulse";
+  el.querySelector(".front").appendChild(pulse);
+  el.classList.add("playing");
+  setTimeout(() => { pulse.remove(); el.classList.remove("playing"); }, 650);
+
+  window.speechSynthesis.speak(utter);
+}
+
+function buildCard(w, delay) {
+  const div = document.createElement("div");
+  div.className = "card-wrap";
+  div.dataset.pos = w.pos;
+  div.dataset.en  = w.en.toLowerCase();
+  div.style.animationDelay = delay + "ms";
+
+  const krLines = w.kr.split("\n").map(l => `<span>${l}</span>`).join("<br>");
+
+  const synHtml = w.syn && w.syn.length
+    ? `<div class="syn-ant-row">
+        <span class="syn-label">SYN</span>
+        <div class="syn-chips">${w.syn.map(s=>`<span class="syn-chip">${s}</span>`).join("")}</div>
+       </div>` : "";
+
+  const antHtml = w.ant && w.ant.length
+    ? `<div class="syn-ant-row">
+        <span class="ant-label">ANT</span>
+        <div class="ant-chips">${w.ant.map(a=>`<span class="ant-chip">${a}</span>`).join("")}</div>
+       </div>` : "";
+
+  div.innerHTML = `
+    <div class="card">
+      <div class="face front">
+        <span class="word-num">${String(w.no).padStart(2,"0")}</span>
+        <span class="speaker-icon">🔊</span>
+        <div class="word-eng">${w.en}</div>
+        <div class="pos-badge pos-${w.pos}">${POS_KR[w.pos]} ${POS_LABEL[w.pos]}</div>
+      </div>
+      <div class="face back">
+        <div class="back-word">${w.en}</div>
+        <div class="divider"></div>
+        <div class="back-kr">
+          <strong>${POS_KR[w.pos]} (${POS_LABEL[w.pos]})</strong>
+          ${krLines}
+        </div>
+        ${(synHtml || antHtml) ? `<div class="syn-ant-wrap">${synHtml}${antHtml}</div>` : ""}
+        <button class="sound-btn" onclick="event.stopPropagation(); speak('${w.en}', this.closest('.card-wrap'))">🔊 발음 듣기</button>
+      </div>
+    </div>`;
+
+  div.addEventListener("click", () => speak(w.en, div));
+  return div;
+}
+
+function renderAll() {
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+  const q = document.getElementById("searchInput").value.trim().toLowerCase();
+
+  WORDS.forEach((w, i) => {
+    const matchPos = currentFilter === "all" || w.pos === currentFilter;
+    const matchQ   = !q || w.en.toLowerCase().includes(q) || w.kr.includes(q);
+    if (!matchPos || !matchQ) return;
+    grid.appendChild(buildCard(w, i * 30));
+  });
+
+  // ensure voices loaded
+  if (speechSynthesis.getVoices().length === 0) {
+    speechSynthesis.addEventListener("voiceschanged", () => {}, { once: true });
+  }
+}
+
+function filterCards() { renderAll(); }
+function filterPos(pos, btn) {
+  currentFilter = pos;
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderAll();
+}
+
+renderAll();
+</script>
+</body>
+</html>
