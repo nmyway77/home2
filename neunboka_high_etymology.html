@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>능률보카 고등어원편 — 목동서로영어학원</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f1ec;--navy:#1F3864;--blue-card:#EBF3FB;--blue-border:#2E75B6;
+  --purple-card:#F3E8FF;--purple-border:#5B2D8E;--teal:#00695C;
+  --gold:#B8860B;--gold2:#f0d070;--cream:#FFF8E7;--orange:#E65100;
+  --shadow:rgba(31,56,100,0.10);--text:#1a1a2e;--text-sub:#4a4a6a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;min-height:100vh;color:var(--text);}
+
+/* ── NAV ── */
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--navy);
+  box-shadow:0 3px 16px rgba(31,56,100,0.35);display:flex;align-items:center;
+  padding:0 16px;height:48px;gap:12px;}
+.home-btn{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;
+  color:rgba(255,255,255,0.7);text-decoration:none;padding:4px 10px;border-radius:4px;
+  border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);
+  transition:all 0.2s;white-space:nowrap;}
+.home-btn:hover{background:rgba(255,255,255,0.14);color:white;}
+.nav-title-bar{font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:rgba(255,255,255,0.5);letter-spacing:1px;}
+.nav-badge{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:2px;color:var(--gold2);border:1px solid rgba(201,168,76,0.3);
+  padding:3px 10px;border-radius:3px;white-space:nowrap;}
+
+.passage{max-width:860px;margin:0 auto;padding:68px 16px 64px;}
+
+/* ── HEADER ── */
+.page-header{margin:0 0 20px;border-left:5px solid var(--navy);padding-left:20px;}
+.page-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;
+  text-transform:uppercase;color:var(--blue-border);margin-bottom:8px;}
+.page-title{font-family:'Playfair Display',serif;font-size:clamp(17px,3.5vw,26px);
+  font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:6px;}
+.page-sub{font-size:12px;color:var(--text-sub);font-weight:300;}
+
+/* ── WATERMARK ── */
+.watermark{display:flex;align-items:center;justify-content:space-between;
+  padding:7px 16px;background:var(--navy);border-radius:7px;margin-bottom:16px;flex-wrap:wrap;gap:6px;}
+.wm-logo{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--gold2);letter-spacing:1px;}
+.wm-text{font-family:'Noto Sans KR',sans-serif;font-size:11px;color:rgba(255,255,255,0.55);}
+.wm-url{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(201,168,76,0.6);letter-spacing:1px;}
+
+/* ── UNIT SELECTOR ── */
+.unit-selector-wrap{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
+.unit-selector-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--navy);font-weight:700;white-space:nowrap;}
+.unit-select{font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;
+  color:var(--navy);background:white;border:2px solid var(--navy);border-radius:8px;
+  padding:7px 36px 7px 14px;cursor:pointer;outline:none;
+  appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231F3864' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;
+  box-shadow:0 2px 8px var(--shadow);transition:all 0.2s;}
+.unit-select:focus{border-color:var(--blue-border);box-shadow:0 0 0 3px rgba(46,117,182,0.2);}
+.unit-info-badge{font-family:'JetBrains Mono',monospace;font-size:10px;
+  background:var(--blue-card);color:var(--blue-border);border:1px solid rgba(46,117,182,0.3);
+  border-radius:20px;padding:4px 12px;}
+.unit-nav-btns{display:flex;gap:6px;}
+.unit-nav-btn{font-size:13px;padding:6px 12px;border-radius:6px;border:1.5px solid rgba(31,56,100,0.2);
+  background:white;color:var(--navy);cursor:pointer;transition:all 0.2s;font-family:'JetBrains Mono',monospace;}
+.unit-nav-btn:hover{background:var(--navy);color:white;}
+
+/* ── VIEW TABS ── */
+.view-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+.view-tab{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+  padding:9px 18px;border-radius:7px;cursor:pointer;transition:all 0.2s;border:2px solid transparent;}
+.tab-vocab{background:white;color:#6A1B9A;border-color:rgba(106,27,154,0.25);}
+.tab-vocab.active{background:#6A1B9A;color:white;border-color:#6A1B9A;}
+.tab-spell{background:white;color:var(--orange);border-color:rgba(230,81,0,0.25);}
+.tab-spell.active{background:var(--orange);color:white;border-color:var(--orange);}
+.tab-meaning{background:white;color:#1D5C2B;border-color:rgba(29,92,43,0.25);}
+.tab-meaning.active{background:#1D5C2B;color:white;border-color:#1D5C2B;}
+
+/* 인쇄 탭 버튼 */
+.tab-ps{background:white;color:#1F3864;border-color:rgba(31,56,100,0.25);}
+.tab-ps.active{background:#1F3864;color:white;border-color:#1F3864;}
+.tab-pm{background:white;color:#1F3864;border-color:rgba(31,56,100,0.25);}
+.tab-pm.active{background:#1F3864;color:white;border-color:#1F3864;}
+
+/* 인쇄 뷰 표 */
+.print-view-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:16px;flex-wrap:wrap;gap:10px;
+}
+.print-view-title{
+  font-family:'JetBrains Mono',monospace;font-size:13px;
+  font-weight:700;color:var(--navy);
+}
+.print-exec-btn{
+  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+  padding:9px 22px;border-radius:8px;border:none;
+  background:var(--navy);color:white;cursor:pointer;
+  box-shadow:0 3px 10px rgba(31,56,100,0.3);transition:background 0.2s;
+  display:flex;align-items:center;gap:7px;
+}
+.print-exec-btn:hover{background:#2E75B6;}
+.print-table-wrap{
+  background:white;border-radius:12px;
+  box-shadow:0 2px 14px var(--shadow);
+  padding:20px;
+}
+.print-unit-title{
+  text-align:center;font-size:14px;font-weight:700;
+  color:var(--navy);margin-bottom:6px;
+  padding-bottom:10px;border-bottom:2px solid var(--navy);
+}
+.print-unit-sub{
+  text-align:center;font-size:11px;color:#888;margin-bottom:14px;
+}
+.print-name-row{
+  display:flex;justify-content:flex-end;gap:24px;
+  font-size:11px;color:#555;margin-bottom:10px;
+}
+.print-name-box{
+  display:inline-block;width:80px;height:16px;
+  border-bottom:1px solid #888;margin-left:4px;
+}
+.print-two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.pt{width:100%;border-collapse:collapse;}
+.pt th{
+  background:#f4ece8;color:#333;
+  font-size:12px;font-weight:700;
+  padding:7px 8px;text-align:center;
+  border:1px solid #d0b8b0;
+}
+.pt td{
+  border:1px solid #d0b8b0;
+  padding:5px 8px;font-size:12px;
+  height:30px;vertical-align:middle;
+  text-align:center;color:#333;
+}
+.pt tr:nth-child(even) td{background:#fdf7f5;}
+.pt .td-no{width:36px;color:#888;font-size:11px;}
+.pt .td-hint{text-align:left;}
+.pt .td-write{min-width:80px;}
+.print-wm{
+  margin-top:14px;text-align:center;
+  font-size:10px;color:#ccc;letter-spacing:1px;
+}
+
+@media print{
+  @page{size:A4;margin:14mm 12mm;}
+  .top-nav,.watermark,.page-header,.unit-selector-wrap,
+  .view-tabs,.print-view-header,.print-exec-btn,footer{display:none!important;}
+  .passage{padding:0!important;max-width:100%!important;}
+  .view-panel{display:none!important;}
+  #panelPrintSpell.active,#panelPrintMeaning.active{display:block!important;}
+  .print-table-wrap{box-shadow:none!important;padding:0!important;}
+  .print-two-col{display:grid!important;grid-template-columns:1fr 1fr;gap:18px;}
+  .pt th{background:#f4ece8!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .pt tr:nth-child(even) td{background:#fdf7f5!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
+
+.view-panel{display:none;}
+.view-panel.active{display:block;}
+
+/* ── VOCAB CARDS ── */
+.vcard-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;}
+.vcard{background:white;border-radius:10px;border:1px solid rgba(0,0,0,0.08);
+  box-shadow:0 2px 10px var(--shadow);overflow:hidden;cursor:pointer;
+  transition:transform 0.2s,box-shadow 0.2s;animation:slideIn 0.3s ease both;}
+.vcard:hover{transform:translateY(-3px);box-shadow:0 6px 20px var(--shadow);}
+.vcard-front{padding:14px 16px;}
+.vcard-en-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
+.vcard-en{font-family:Georgia,serif;font-size:17px;font-weight:700;color:var(--navy);flex:1;}
+.vcard-speak{background:none;border:1.5px solid rgba(46,117,182,0.3);border-radius:6px;
+  padding:3px 7px;cursor:pointer;font-size:13px;color:rgba(46,117,182,0.5);
+  transition:all 0.2s;flex-shrink:0;}
+.vcard-speak:hover{background:var(--blue-card);border-color:var(--blue-border);color:var(--blue-border);}
+.vcard-pos-kr{font-size:11px;color:var(--text-sub);font-family:'JetBrains Mono',monospace;}
+.vcard-pos-en{font-size:9px;letter-spacing:2px;color:rgba(0,0,0,0.3);text-transform:uppercase;margin-left:4px;}
+.vcard-back{max-height:0;overflow:hidden;transition:max-height 0.35s cubic-bezier(0.4,0,0.2,1);
+  background:linear-gradient(135deg,#EDE7F6,#F3E5F5);border-top:1px solid rgba(106,27,154,0.12);}
+.vcard.open .vcard-back{max-height:500px;}
+.vcard-back-inner{padding:13px 16px;}
+.vcard-kr{font-size:13.5px;color:#2d2d4e;font-weight:600;margin-bottom:8px;line-height:1.7;}
+.vcard-section{margin-top:7px;}
+.vcard-section-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;
+  text-transform:uppercase;color:#6A1B9A;font-weight:700;margin-bottom:3px;}
+.vcard-items{font-size:12px;color:#3d2d4e;line-height:1.8;}
+.vcard-syn{color:#1565C0;font-weight:600;}
+.vcard-ant{color:#B71C1C;font-weight:600;}
+.vcard-phrase{color:#1B5E20;font-style:italic;}
+.vcard-num{font-family:'JetBrains Mono',monospace;font-size:9px;background:var(--navy);
+  color:white;padding:2px 6px;border-radius:3px;margin-right:4px;}
+.open-hint{font-size:10px;color:rgba(0,0,0,0.25);font-family:'JetBrains Mono',monospace;margin-top:3px;}
+
+/* ── QUIZ CARDS ── */
+.touch-hint{background:var(--cream);border:1px solid rgba(184,134,11,0.3);border-radius:8px;
+  padding:9px 16px;font-size:12px;color:var(--gold);font-family:'JetBrains Mono',monospace;
+  margin-bottom:14px;text-align:center;}
+.quiz-card{background:white;border-radius:10px;border:1px solid rgba(0,0,0,0.08);
+  box-shadow:0 2px 10px var(--shadow);margin-bottom:12px;overflow:hidden;animation:slideIn 0.35s ease both;}
+.quiz-top{padding:14px 16px;display:flex;align-items:center;gap:12px;}
+.quiz-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
+  background:#6A1B9A;color:white;padding:3px 8px;border-radius:4px;flex-shrink:0;}
+.quiz-prompt{font-size:13px;color:var(--text);flex:1;line-height:1.6;}
+.quiz-input{font-family:Georgia,serif;font-size:14px;font-weight:600;border:none;
+  border-bottom:2px solid #6A1B9A;background:transparent;color:var(--navy);
+  outline:none;padding:2px 6px;width:150px;text-align:center;transition:border-color 0.2s;}
+.quiz-input:focus{border-bottom-color:var(--orange);}
+.quiz-input.ok{border-bottom-color:#2E7D32;color:#1B5E20;background:#E8F5E9;border-radius:4px;}
+.quiz-input.ng{border-bottom-color:#C62828;color:#B71C1C;background:#FFEBEE;border-radius:4px;}
+.choices{display:flex;flex-direction:column;gap:6px;padding:0 16px 12px;}
+.choice-btn{text-align:left;padding:8px 12px;border-radius:7px;border:1.5px solid rgba(0,0,0,0.1);
+  background:white;font-size:13px;color:var(--text);cursor:pointer;transition:all 0.15s;
+  font-family:'Noto Sans KR',sans-serif;}
+.choice-btn:hover{background:#EDE7F6;border-color:#6A1B9A;color:#6A1B9A;}
+.choice-btn.ok{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20;font-weight:700;}
+.choice-btn.ng{background:#FFEBEE;border-color:#C62828;color:#B71C1C;}
+.quiz-fb{display:none;padding:7px 16px 9px;font-size:12px;border-top:1px dashed rgba(0,0,0,0.08);}
+.quiz-fb.show{display:block;}
+.quiz-fb.ok{background:#E8F5E9;color:#1B5E20;}
+.quiz-fb.ng{background:#FFEBEE;color:#B71C1C;}
+.section-check{margin-top:14px;margin-bottom:24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.section-check-btn{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+  padding:10px 22px;border-radius:8px;border:none;background:#6A1B9A;color:white;
+  cursor:pointer;transition:background 0.2s;box-shadow:0 3px 10px rgba(106,27,154,0.3);}
+.section-check-btn:hover{background:#4A148C;}
+.section-check-btn.spell{background:var(--orange);}
+.section-check-btn.spell:hover{background:#BF360C;}
+.section-score{font-size:13px;color:var(--text-sub);}
+.gq-reset{font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 12px;
+  border-radius:6px;border:1px solid rgba(0,0,0,0.15);background:white;color:#666;cursor:pointer;}
+
+/* ── EMPTY UNIT ── */
+.empty-unit{text-align:center;padding:60px 20px;color:var(--text-sub);}
+.empty-unit-icon{font-size:48px;margin-bottom:16px;}
+.empty-unit-title{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:8px;}
+.empty-unit-desc{font-size:13px;color:var(--text-sub);line-height:1.8;}
+.empty-code{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--cream);
+  border:1px solid rgba(184,134,11,0.3);border-radius:6px;padding:8px 16px;
+  display:inline-block;margin-top:12px;color:var(--gold);text-align:left;}
+
+@keyframes slideIn{from{opacity:0;transform:translateX(-14px);}to{opacity:1;transform:translateX(0);}}
+
+footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:rgba(31,56,100,0.25);letter-spacing:1px;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="top-nav">
+  <a class="home-btn" href="https://0505.co.kr">🏠 0505.co.kr</a>
+  <span class="nav-title-bar">능률보카 고등어원편</span>
+  <span class="nav-badge">✦ 목동서로영어학원</span>
+</nav>
+
+<div class="passage">
+
+  <!-- WATERMARK -->
+  <div class="watermark">
+    <span class="wm-logo">✦ 목동서로영어학원</span>
+    <span class="wm-text">본 자료는 목동서로영어학원에서 제작하였습니다</span>
+    <span class="wm-url">0505.co.kr</span>
+  </div>
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <div class="page-label">능률보카 고등어원편</div>
+    <div class="page-title">능률보카 고등어원편</div>
+    <div class="page-sub">각 과당 40단어 · 단어카드 + 철자퀴즈 + 뜻퀴즈</div>
+  </div>
+
+  <!-- UNIT SELECTOR -->
+  <div class="unit-selector-wrap">
+    <span class="unit-selector-label">📚 과 선택</span>
+    <select class="unit-select" id="unitSelect" onchange="changeUnit(this.value)">
+    </select>
+    <span class="unit-info-badge" id="unitInfoBadge">40 단어</span>
+    <div class="unit-nav-btns">
+      <button class="unit-nav-btn" onclick="prevUnit()" title="이전 과">◀</button>
+      <button class="unit-nav-btn" onclick="nextUnit()" title="다음 과">▶</button>
+    </div>
+  </div>
+
+  <!-- VIEW TABS -->
+  <div class="view-tabs">
+    <button class="view-tab tab-vocab active" id="tabV" onclick="switchTab('vocab')">📖 단어카드</button>
+    <button class="view-tab tab-spell" id="tabS" onclick="switchTab('spell')">✏️ 철자 퀴즈</button>
+    <button class="view-tab tab-meaning" id="tabM" onclick="switchTab('meaning')">🔤 뜻 퀴즈</button>
+    <button class="view-tab tab-ps" id="tabPS" onclick="switchTab('printSpell')">🖨️ 철자쓰기</button>
+    <button class="view-tab tab-pm" id="tabPM" onclick="switchTab('printMeaning')">🖨️ 뜻쓰기</button>
+  </div>
+
+  <!-- PANELS -->
+  <div class="view-panel active" id="panelVocab">
+    <div id="vocabContent"></div>
+  </div>
+  <div class="view-panel" id="panelSpell">
+    <div id="spellContent"></div>
+  </div>
+  <div class="view-panel" id="panelMeaning">
+    <div id="meaningContent"></div>
+  </div>
+  <div class="view-panel" id="panelPrintSpell">
+    <div id="printSpellContent"></div>
+  </div>
+  <div class="view-panel" id="panelPrintMeaning">
+    <div id="printMeaningContent"></div>
+  </div>
+
+</div>
+
+<footer>✦ 능률보카 고등어원편 · 목동서로영어학원 · 0505.co.kr ✦</footer>
+
+<script>
+const UNITS = [];
+
+/* ── 1과 (40단어) ── */
+UNITS[0] = [
+  {en:"inherently",    pos:"adv.",  kr:"본질적으로",
+   syn:["naturally","essentially","intrinsically"], ant:["externally","artificially"],
+   phrases:["inherently dangerous = 본질적으로 위험한","inherently different = 본질적으로 다른"]},
+
+  {en:"profile",       pos:"n.",    kr:"윤곽, 옆얼굴; 인물 소개, 프로필; 개요",
+   syn:["outline","summary","description"], ant:[],
+   phrases:["high profile = 높은 인지도","user profile = 사용자 프로필"]},
+
+  {en:"utterance",     pos:"n.",    kr:"말, 언급된 것; 말하는 행동, 발화, 발성",
+   syn:["speech","expression","statement"], ant:["silence"],
+   phrases:["give utterance to = ~을 말로 표현하다","verbal utterance = 구어 발화"]},
+
+  {en:"producer",      pos:"n.",    kr:"생산자, 제작자",
+   syn:["manufacturer","creator","maker"], ant:["consumer"],
+   phrases:["film producer = 영화 제작자","food producer = 식품 생산자"]},
+
+  {en:"utter",         pos:"adj.",  kr:"완전한, 전적인; (v.) 말하다; 내다",
+   syn:["complete","total","absolute"], ant:["partial","incomplete"],
+   phrases:["utter failure = 완전한 실패","utter a sound = 소리를 내다"]},
+
+  {en:"protective",    pos:"adj.",  kr:"보호하는",
+   syn:["defensive","shielding","guarding"], ant:["harmful","endangering"],
+   phrases:["protective gear = 보호 장비","protective instinct = 보호 본능"]},
+
+  {en:"propose",       pos:"v.",    kr:"제안하다; 제시하다; 청혼하다",
+   syn:["suggest","recommend","offer"], ant:["reject","oppose"],
+   phrases:["propose a solution = 해결책을 제안하다","propose to someone = ~에게 청혼하다"]},
+
+  {en:"proposal",      pos:"n.",    kr:"제안, 신청, 청혼",
+   syn:["suggestion","offer","plan"], ant:["rejection","refusal"],
+   phrases:["business proposal = 사업 제안","marriage proposal = 청혼"]},
+
+  {en:"intake",        pos:"n.",    kr:"섭취",
+   syn:["consumption","ingestion","absorption"], ant:["output","expulsion"],
+   phrases:["calorie intake = 칼로리 섭취","daily intake = 일일 섭취량"]},
+
+  {en:"protect",       pos:"v.",    kr:"보호하다; 막다, 지키다",
+   syn:["defend","guard","shield"], ant:["attack","harm","expose"],
+   phrases:["protect the environment = 환경을 보호하다","protect from danger = 위험으로부터 지키다"]},
+
+  {en:"illustration",  pos:"n.",    kr:"삽화; 예시",
+   syn:["picture","diagram","example"], ant:[],
+   phrases:["book illustration = 책 삽화","by way of illustration = 예시로"]},
+
+  {en:"progress",      pos:"n.",    kr:"진보, 발전, 진전, 진행; (v.) 진보하다, 발전하다; 진행하다",
+   syn:["advancement","development","improvement"], ant:["regression","decline"],
+   phrases:["make progress = 진전을 이루다","in progress = 진행 중인"]},
+
+  {en:"utterly",       pos:"adv.",  kr:"완전히, 철저히",
+   syn:["completely","totally","absolutely"], ant:["partially","slightly"],
+   phrases:["utterly wrong = 완전히 틀린","utterly exhausted = 완전히 지친"]},
+
+  {en:"purchase",      pos:"v.",    kr:"구매하다, 구입하다; (n.) 구매, 구입",
+   syn:["buy","acquire","obtain"], ant:["sell","return"],
+   phrases:["purchase online = 온라인으로 구매하다","purchase price = 구매 가격"]},
+
+  {en:"predictable",   pos:"adj.",  kr:"예측 가능한; 뻔한",
+   syn:["foreseeable","expected","anticipated"], ant:["unpredictable","surprising"],
+   phrases:["predictable outcome = 예측 가능한 결과","predictable ending = 뻔한 결말"]},
+
+  {en:"produce",       pos:"v.",    kr:"생산하다; (n.) 농산물",
+   syn:["manufacture","create","generate"], ant:["consume","destroy"],
+   phrases:["produce crops = 농작물을 생산하다","fresh produce = 신선 농산물"]},
+
+  {en:"outbreak",      pos:"n.",    kr:"발생, 발발",
+   syn:["eruption","onset","surge"], ant:["end","conclusion"],
+   phrases:["outbreak of war = 전쟁의 발발","disease outbreak = 질병 발생"]},
+
+  {en:"precaution",    pos:"n.",    kr:"조심, 경계; 예방책",
+   syn:["safeguard","measure","prevention"], ant:["carelessness","negligence"],
+   phrases:["take precautions = 예방 조치를 취하다","safety precaution = 안전 예방책"]},
+
+  {en:"investigator",  pos:"n.",    kr:"수사관",
+   syn:["detective","examiner","researcher"], ant:[],
+   phrases:["lead investigator = 수석 수사관","private investigator = 사립 탐정"]},
+
+  {en:"outline",       pos:"n.",    kr:"개요, 윤곽, 개략; (v.) 개략을 서술하다; 윤곽을 보여주다",
+   syn:["summary","sketch","framework"], ant:["detail","elaboration"],
+   phrases:["brief outline = 간략한 개요","outline a plan = 계획의 개요를 말하다"]},
+
+  {en:"invest",        pos:"v.",    kr:"투자하다",
+   syn:["fund","finance","put money into"], ant:["withdraw","save"],
+   phrases:["invest in stocks = 주식에 투자하다","invest time = 시간을 투자하다"]},
+
+  {en:"preview",       pos:"n.",    kr:"미리 보기, 사전 검토; 시사, 시연; 예고편; (v.) 보다",
+   syn:["trailer","sneak peek","advance showing"], ant:["review","retrospective"],
+   phrases:["movie preview = 영화 예고편","preview a document = 문서를 미리 보다"]},
+
+  {en:"illustrate",    pos:"v.",    kr:"설명하다; 삽화를 넣다",
+   syn:["demonstrate","show","depict"], ant:["confuse","obscure"],
+   phrases:["illustrate a point = 요점을 설명하다","illustrate a book = 책에 삽화를 넣다"]},
+
+  {en:"infection",     pos:"n.",    kr:"감염, 오염",
+   syn:["contamination","disease","contagion"], ant:["immunity","sterilization"],
+   phrases:["bacterial infection = 세균 감염","prevent infection = 감염을 예방하다"]},
+
+  {en:"investigation", pos:"n.",    kr:"수사; 조사",
+   syn:["inquiry","examination","research"], ant:["ignorance","neglect"],
+   phrases:["criminal investigation = 범죄 수사","under investigation = 조사 중"]},
+
+  {en:"outstanding",   pos:"adj.",  kr:"뛰어난, 아주 훌륭한; 두드러진",
+   syn:["excellent","remarkable","exceptional"], ant:["ordinary","mediocre","poor"],
+   phrases:["outstanding performance = 뛰어난 성과","outstanding achievement = 탁월한 업적"]},
+
+  {en:"investigate",   pos:"v.",    kr:"수사하다; 조사하다",
+   syn:["examine","probe","research"], ant:["ignore","overlook"],
+   phrases:["investigate a crime = 범죄를 수사하다","investigate the cause = 원인을 조사하다"]},
+
+  {en:"inherent",      pos:"adj.",  kr:"내재된, 고유의",
+   syn:["innate","built-in","intrinsic"], ant:["external","acquired","learned"],
+   phrases:["inherent risk = 내재된 위험","inherent quality = 고유한 특성"]},
+
+  {en:"insight",       pos:"n.",    kr:"통찰력",
+   syn:["understanding","perception","wisdom"], ant:["ignorance","blindness"],
+   phrases:["gain insight = 통찰력을 얻다","deep insight = 깊은 통찰력"]},
+
+  {en:"progressive",   pos:"adj.",  kr:"진보적인; 점진적인",
+   syn:["forward-thinking","liberal","gradual"], ant:["conservative","regressive","sudden"],
+   phrases:["progressive idea = 진보적인 생각","progressive change = 점진적인 변화"]},
+
+  {en:"outcome",       pos:"n.",    kr:"결과, 성과",
+   syn:["result","consequence","effect"], ant:["cause","input","beginning"],
+   phrases:["positive outcome = 긍정적인 결과","outcome of the meeting = 회의 결과"]},
+
+  {en:"income",        pos:"n.",    kr:"소득, 수입",
+   syn:["earnings","revenue","salary"], ant:["expense","expenditure","loss"],
+   phrases:["annual income = 연간 소득","income tax = 소득세"]},
+
+  {en:"investment",    pos:"n.",    kr:"투자, 투자 자금",
+   syn:["funding","capital","expenditure"], ant:["withdrawal","divestment"],
+   phrases:["return on investment = 투자 수익","long-term investment = 장기 투자"]},
+
+  {en:"protection",    pos:"n.",    kr:"보호, 방어물",
+   syn:["defense","shield","safeguard"], ant:["attack","exposure","harm"],
+   phrases:["sun protection = 자외선 차단","under the protection of = ~의 보호 아래"]},
+
+  {en:"utmost",        pos:"adj.",  kr:"최대의, 극도의",
+   syn:["maximum","greatest","extreme"], ant:["minimum","least","slight"],
+   phrases:["utmost importance = 최대의 중요성","do one utmost = 최선을 다하다"]},
+
+  {en:"prediction",    pos:"n.",    kr:"예언, 예측",
+   syn:["forecast","projection","expectation"], ant:["surprise","uncertainty"],
+   phrases:["make a prediction = 예측하다","weather prediction = 날씨 예측"]},
+
+  {en:"predict",       pos:"v.",    kr:"예언하다; 예측하다",
+   syn:["forecast","foresee","anticipate"], ant:["ignore","overlook"],
+   phrases:["predict the future = 미래를 예측하다","predict the outcome = 결과를 예측하다"]},
+
+  {en:"infectious",    pos:"adj.",  kr:"전염성의; 남에게 옮기 쉬운",
+   syn:["contagious","spreading","transmissible"], ant:["non-contagious","contained"],
+   phrases:["infectious disease = 전염병","infectious laugh = 전염되는 웃음"]},
+
+  {en:"outlet",        pos:"n.",    kr:"배출구, 표출 방법; 상점, 아웃렛; 콘센트",
+   syn:["store","release","vent"], ant:["inlet","input"],
+   phrases:["outlet store = 아웃렛 매장","emotional outlet = 감정 표출 방법"]},
+
+  {en:"infect",        pos:"v.",    kr:"감염시키다; 오염시키다",
+   syn:["contaminate","spread","transmit"], ant:["cure","heal","sterilize"],
+   phrases:["infect with a virus = 바이러스로 감염시키다","infect others = 다른 사람들을 감염시키다"]},
+];
+
+/* ── 2과 이후: 빈 배열 ── */
+for (let i = 1; i < 60; i++) {
+  if (!UNITS[i]) UNITS[i] = [];
+}
+
+let currentUnit = 0;
+let currentTab  = "vocab";
+let spellScores   = {};
+let meaningScores = {};
+
+function getVoice(){
+  const v = speechSynthesis.getVoices();
+  return v.find(x=>x.lang==="en-US"&&x.name.includes("Google"))
+      || v.find(x=>x.lang.startsWith("en-US"))
+      || v.find(x=>x.lang.startsWith("en"))
+      || null;
+}
+speechSynthesis.addEventListener("voiceschanged", ()=>{});
+function speakWord(word, e){
+  if(e) e.stopPropagation();
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(word);
+  u.lang = "en-US"; u.rate = 0.82;
+  const v = getVoice(); if(v) u.voice = v;
+  speechSynthesis.speak(u);
+}
+
+function initSelect(){
+  const sel = document.getElementById("unitSelect");
+  sel.innerHTML = "";
+  for(let i = 0; i < 60; i++){
+    const opt = document.createElement("option");
+    opt.value = i;
+    const cnt = UNITS[i].length;
+    opt.textContent = (i+1) + "과" + (cnt > 0 ? " (" + cnt + "단어)" : " (준비중)");
+    sel.appendChild(opt);
+  }
+}
+
+function changeUnit(idx){
+  currentUnit = parseInt(idx);
+  document.getElementById("unitSelect").value = currentUnit;
+  const cnt = UNITS[currentUnit].length;
+  document.getElementById("unitInfoBadge").textContent = cnt > 0 ? cnt + " 단어" : "준비중";
+  spellScores = {}; meaningScores = {};
+  renderTab();
+}
+function prevUnit(){if(currentUnit>0) changeUnit(currentUnit-1);}
+function nextUnit(){if(currentUnit<59) changeUnit(currentUnit+1);}
+
+function switchTab(tab){
+  currentTab = tab;
+  const allPanels = ["Vocab","Spell","Meaning","PrintSpell","PrintMeaning"];
+  const allTabs   = ["V","S","M","PS","PM"];
+  allPanels.forEach(p => document.getElementById("panel"+p).classList.remove("active"));
+  allTabs.forEach(t => { const el=document.getElementById("tab"+t); if(el) el.classList.remove("active"); });
+  if(tab==="vocab")             { document.getElementById("panelVocab").classList.add("active");        document.getElementById("tabV").classList.add("active"); }
+  else if(tab==="spell")        { document.getElementById("panelSpell").classList.add("active");        document.getElementById("tabS").classList.add("active"); }
+  else if(tab==="meaning")      { document.getElementById("panelMeaning").classList.add("active");      document.getElementById("tabM").classList.add("active"); }
+  else if(tab==="printSpell")   { document.getElementById("panelPrintSpell").classList.add("active");   document.getElementById("tabPS").classList.add("active"); }
+  else if(tab==="printMeaning") { document.getElementById("panelPrintMeaning").classList.add("active"); document.getElementById("tabPM").classList.add("active"); }
+  renderTab();
+}
+
+function renderTab(){
+  if(currentTab === "vocab")             buildVocabCards();
+  else if(currentTab === "spell")        buildSpellQuiz();
+  else if(currentTab === "meaning")      buildMeaningQuiz();
+  else if(currentTab === "printSpell")   buildPrintView("spell");
+  else if(currentTab === "printMeaning") buildPrintView("meaning");
+}
+
+function buildVocabCards(){
+  const box = document.getElementById("vocabContent");
+  box.innerHTML = "";
+  const words = UNITS[currentUnit];
+  if(words.length === 0){ showEmpty(box); return; }
+  const grid = document.createElement("div");
+  grid.className = "vcard-grid";
+  words.forEach((v, i)=>{
+    const synHtml  = v.syn && v.syn.length ? `<div class="vcard-section"><div class="vcard-section-label">동의어</div><div class="vcard-items"><span class="vcard-syn">${v.syn.join(", ")}</span></div></div>` : "";
+    const antHtml  = v.ant && v.ant.length ? `<div class="vcard-section"><div class="vcard-section-label">반의어</div><div class="vcard-items"><span class="vcard-ant">${v.ant.join(", ")}</span></div></div>` : "";
+    const phraseHtml = v.phrases && v.phrases.length ? `<div class="vcard-section"><div class="vcard-section-label">어구 / 숙어</div><div class="vcard-items">${v.phrases.map(p=>`<div class="vcard-phrase">• ${p}</div>`).join("")}</div></div>` : "";
+    const div = document.createElement("div");
+    div.className = "vcard";
+    div.style.animationDelay = (i * 30) + "ms";
+    div.onclick = function(){
+      const isOpen = this.classList.contains("open");
+      document.querySelectorAll(".vcard.open").forEach(c => c.classList.remove("open"));
+      if(!isOpen) this.classList.add("open");
+    };
+    div.innerHTML = `
+      <div class="vcard-front">
+        <div class="vcard-en-row">
+          <span class="vcard-num">${String(currentUnit*40+i+1).padStart(2,"0")}</span>
+          <div class="vcard-en">${v.en}</div>
+          <button class="vcard-speak" onclick="speakWord('${v.en}',event)">🔊</button>
+        </div>
+        <div class="vcard-pos-kr">${v.pos} <span class="open-hint">클릭하면 뜻 보기 ▼</span></div>
+      </div>
+      <div class="vcard-back">
+        <div class="vcard-back-inner">
+          <div class="vcard-kr">${v.kr}</div>
+          ${synHtml}${antHtml}${phraseHtml}
+        </div>
+      </div>`;
+    grid.appendChild(div);
+  });
+  box.appendChild(grid);
+}
+
+function buildSpellQuiz(){
+  const box = document.getElementById("spellContent");
+  box.innerHTML = "";
+  const words = UNITS[currentUnit];
+  if(words.length === 0){ showEmpty(box); return; }
+  const hint = document.createElement("div");
+  hint.className = "touch-hint";
+  hint.innerHTML = "💡 한국어 뜻을 보고 영어 철자를 입력하세요 — Enter 또는 버튼으로 확인";
+  box.appendChild(hint);
+  words.forEach((v, i)=>{
+    const card = document.createElement("div");
+    card.className = "quiz-card";
+    card.style.animationDelay = (i * 30) + "ms";
+    card.innerHTML = `
+      <div class="quiz-top">
+        <span class="quiz-num">${String(i+1).padStart(2,"0")}</span>
+        <div class="quiz-prompt">
+          <div style="font-size:13.5px;color:var(--text);font-weight:700;">${v.kr.split(";")[0].trim()}</div>
+          <div style="margin-top:6px;font-size:11px;color:var(--text-sub);">${v.pos}</div>
+          <div style="margin-top:6px;">
+            <input class="quiz-input" id="sp-${i}" placeholder="영어 단어 입력" autocomplete="off" spellcheck="false">
+          </div>
+        </div>
+        <button class="vcard-speak" onclick="speakWord('${v.en}',event)" style="align-self:center;">🔊</button>
+      </div>
+      <div class="quiz-fb" id="sp-fb-${i}"></div>`;
+    setTimeout(()=>{
+      const inp = document.getElementById("sp-"+i);
+      if(inp) inp.addEventListener("keydown", e=>{ if(e.key==="Enter") checkSpell(i); });
+    }, 0);
+    box.appendChild(card);
+  });
+  const wrap = document.createElement("div");
+  wrap.className = "section-check";
+  wrap.innerHTML = `<button class="section-check-btn spell" onclick="checkAllSpell()">✓ 전체 철자 확인</button><span class="section-score" id="spell-score"></span><button class="gq-reset" onclick="resetSpell()">↺ 초기화</button>`;
+  box.appendChild(wrap);
+}
+
+function checkSpell(i){
+  const words = UNITS[currentUnit];
+  const inp = document.getElementById("sp-"+i);
+  if(!inp) return;
+  const ok = inp.value.trim().toLowerCase() === words[i].en.toLowerCase();
+  inp.classList.remove("ok","ng"); inp.classList.add(ok?"ok":"ng");
+  const fb = document.getElementById("sp-fb-"+i);
+  fb.className = "quiz-fb show " + (ok?"ok":"ng");
+  fb.innerHTML = ok ? "🎉 정답!" : "❌ 정답: <strong>" + words[i].en + "</strong>";
+  spellScores[i] = ok ? 1 : 0;
+  const done = Object.keys(spellScores).length;
+  const correct = Object.values(spellScores).filter(v=>v===1).length;
+  const sc = document.getElementById("spell-score");
+  if(sc) sc.textContent = correct + " / " + done + " 정답";
+}
+function checkAllSpell(){ UNITS[currentUnit].forEach((_,i)=>checkSpell(i)); }
+function resetSpell(){
+  spellScores = {};
+  UNITS[currentUnit].forEach((_,i)=>{
+    const inp = document.getElementById("sp-"+i);
+    if(inp){ inp.value=""; inp.className="quiz-input"; }
+    const fb = document.getElementById("sp-fb-"+i);
+    if(fb) fb.className = "quiz-fb";
+  });
+  const sc = document.getElementById("spell-score");
+  if(sc) sc.textContent = "";
+}
+
+function buildMeaningQuiz(){
+  const box = document.getElementById("meaningContent");
+  box.innerHTML = "";
+  const words = UNITS[currentUnit];
+  if(words.length === 0){ showEmpty(box); return; }
+  const hint = document.createElement("div");
+  hint.className = "touch-hint";
+  hint.innerHTML = "💡 영어 단어를 보고 알맞은 뜻을 선택하세요";
+  box.appendChild(hint);
+  const shuffled = [...words].sort(()=>Math.random()-0.5);
+  shuffled.forEach((v, i)=>{
+    const wrongs = words.filter(w=>w.en!==v.en).sort(()=>Math.random()-0.5).slice(0,3).map(w=>w.kr.split(";")[0].trim());
+    const correct = v.kr.split(";")[0].trim();
+    const choices = [...wrongs, correct].sort(()=>Math.random()-0.5);
+    const card = document.createElement("div");
+    card.className = "quiz-card";
+    card.style.animationDelay = (i * 30) + "ms";
+    card.dataset.answer = correct;
+    card.innerHTML = `
+      <div class="quiz-top">
+        <span class="quiz-num" style="background:#1D5C2B;">${String(i+1).padStart(2,"0")}</span>
+        <div class="quiz-prompt">
+          <div style="font-family:Georgia,serif;font-size:17px;font-weight:700;color:var(--navy);">${v.en}</div>
+          <div style="font-size:11px;color:rgba(0,0,0,0.3);font-family:'JetBrains Mono',monospace;margin-top:2px;">${v.pos}</div>
+        </div>
+        <button class="vcard-speak" onclick="speakWord('${v.en}',event)">🔊</button>
+      </div>
+      <div class="choices" id="mc-${i}">
+        ${choices.map(ch=>`<button class="choice-btn" data-val="${ch.replace(/"/g,"&quot;")}" onclick="checkMeaning(${i},this)">${ch}</button>`).join("")}
+      </div>
+      <div class="quiz-fb" id="mc-fb-${i}"></div>`;
+    box.appendChild(card);
+  });
+  const wrap = document.createElement("div");
+  wrap.className = "section-check";
+  wrap.innerHTML = `<span class="section-score" id="meaning-score"></span><button class="gq-reset" onclick="buildMeaningQuiz()">↺ 초기화</button>`;
+  box.appendChild(wrap);
+}
+
+function checkMeaning(i, btn){
+  const card = btn.closest(".quiz-card");
+  const correct = card.dataset.answer;
+  const isOk = btn.dataset.val === correct;
+  card.querySelectorAll(".choice-btn").forEach(b=>{
+    b.onclick = null;
+    if(b.dataset.val === correct) b.classList.add("ok");
+    else if(b===btn && !isOk) b.classList.add("ng");
+  });
+  const fb = document.getElementById("mc-fb-"+i);
+  fb.className = "quiz-fb show " + (isOk?"ok":"ng");
+  fb.innerHTML = isOk ? "🎉 정답!" : "❌ 정답: <strong>" + correct + "</strong>";
+  meaningScores[i] = isOk ? 1 : 0;
+  const done = Object.keys(meaningScores).length;
+  const ok = Object.values(meaningScores).filter(v=>v===1).length;
+  const sc = document.getElementById("meaning-score");
+  if(sc) sc.textContent = ok + " / " + done + " 정답";
+}
+
+function buildPrintView(type){
+  const words  = UNITS[currentUnit];
+  const boxId  = type === "spell" ? "printSpellContent" : "printMeaningContent";
+  const box    = document.getElementById(boxId);
+  box.innerHTML = "";
+  if(!words || words.length === 0){ showEmpty(box); return; }
+  const unitNum = currentUnit + 1;
+  const isSpell = type === "spell";
+  const title   = isSpell ? "철자 쓰기" : "뜻 쓰기";
+  const col1    = isSpell ? "한글뜻" : "영단어";
+  function makeRows(arr, startNo){
+    return arr.map((v, i)=>{
+      const hint = isSpell ? v.kr.split(";")[0].trim() : v.en;
+      return `<tr><td class="td-no">${startNo+i}</td><td class="td-write"></td><td class="td-hint">${hint}</td></tr>`;
+    }).join("");
+  }
+  const left  = words.slice(0, 20);
+  const right = words.slice(20, 40);
+  box.innerHTML = `
+    <div class="print-view-header">
+      <span class="print-view-title">🖨️ ${unitNum}과 — ${title} 프린트</span>
+      <button class="print-exec-btn" onclick="execPrint('${type}')">🖨️ 인쇄하기</button>
+    </div>
+    <div class="print-table-wrap" id="printContent-${type}">
+      <div class="print-unit-title">✦ 능률보카 고등어원편 ${unitNum}과 — ${title}</div>
+      <div class="print-unit-sub">목동서로영어학원 · 0505.co.kr</div>
+      <div class="print-name-row">
+        <span>이름: <span class="print-name-box"></span></span>
+        <span>점수: <span class="print-name-box"></span></span>
+      </div>
+      <div class="print-two-col">
+        <table class="pt"><thead><tr><th class="td-no">No.</th><th>제시어</th><th>${col1}</th></tr></thead><tbody>${makeRows(left,1)}</tbody></table>
+        <table class="pt"><thead><tr><th class="td-no">No.</th><th>제시어</th><th>${col1}</th></tr></thead><tbody>${makeRows(right,21)}</tbody></table>
+      </div>
+      <div class="print-wm">✦ 목동서로영어학원 · 본 자료는 목동서로영어학원에서 제작하였습니다 · 0505.co.kr ✦</div>
+    </div>`;
+}
+
+function execPrint(type){ window.print(); }
+
+function showEmpty(box){
+  const u = currentUnit + 1;
+  box.innerHTML = `<div class="empty-unit"><div class="empty-unit-icon">📝</div><div class="empty-unit-title">${u}과 단어 데이터 준비중</div><div class="empty-unit-desc">아직 단어 데이터가 입력되지 않았습니다.</div></div>`;
+}
+
+initSelect();
+changeUnit(0);
+
+</script>
+</body>
+</html>
