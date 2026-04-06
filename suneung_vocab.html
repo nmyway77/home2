@@ -78,6 +78,86 @@ body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;min-height:100vh
 .tab-meaning{background:white;color:#1D5C2B;border-color:rgba(29,92,43,0.25);}
 .tab-meaning.active{background:#1D5C2B;color:white;border-color:#1D5C2B;}
 
+/* 인쇄 탭 버튼 */
+.tab-ps{background:white;color:#1F3864;border-color:rgba(31,56,100,0.25);}
+.tab-ps.active{background:#1F3864;color:white;border-color:#1F3864;}
+.tab-pm{background:white;color:#1F3864;border-color:rgba(31,56,100,0.25);}
+.tab-pm.active{background:#1F3864;color:white;border-color:#1F3864;}
+
+/* 인쇄 뷰 표 */
+.print-view-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:16px;flex-wrap:wrap;gap:10px;
+}
+.print-view-title{
+  font-family:'JetBrains Mono',monospace;font-size:13px;
+  font-weight:700;color:var(--navy);
+}
+.print-exec-btn{
+  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+  padding:9px 22px;border-radius:8px;border:none;
+  background:var(--navy);color:white;cursor:pointer;
+  box-shadow:0 3px 10px rgba(31,56,100,0.3);transition:background 0.2s;
+  display:flex;align-items:center;gap:7px;
+}
+.print-exec-btn:hover{background:#2E75B6;}
+.print-table-wrap{
+  background:white;border-radius:12px;
+  box-shadow:0 2px 14px var(--shadow);
+  padding:20px;
+}
+.print-unit-title{
+  text-align:center;font-size:14px;font-weight:700;
+  color:var(--navy);margin-bottom:6px;
+  padding-bottom:10px;border-bottom:2px solid var(--navy);
+}
+.print-unit-sub{
+  text-align:center;font-size:11px;color:#888;margin-bottom:14px;
+}
+.print-name-row{
+  display:flex;justify-content:flex-end;gap:24px;
+  font-size:11px;color:#555;margin-bottom:10px;
+}
+.print-name-box{
+  display:inline-block;width:80px;height:16px;
+  border-bottom:1px solid #888;margin-left:4px;
+}
+.print-two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.pt{width:100%;border-collapse:collapse;}
+.pt th{
+  background:#f4ece8;color:#333;
+  font-size:12px;font-weight:700;
+  padding:7px 8px;text-align:center;
+  border:1px solid #d0b8b0;
+}
+.pt td{
+  border:1px solid #d0b8b0;
+  padding:5px 8px;font-size:12px;
+  height:30px;vertical-align:middle;
+  text-align:center;color:#333;
+}
+.pt tr:nth-child(even) td{background:#fdf7f5;}
+.pt .td-no{width:36px;color:#888;font-size:11px;}
+.pt .td-hint{text-align:left;}
+.pt .td-write{min-width:80px;}
+.print-wm{
+  margin-top:14px;text-align:center;
+  font-size:10px;color:#ccc;letter-spacing:1px;
+}
+
+@media print{
+  @page{size:A4;margin:14mm 12mm;}
+  .top-nav,.watermark,.page-header,.unit-selector-wrap,
+  .view-tabs,.print-view-header,.print-exec-btn,footer{display:none!important;}
+  .passage{padding:0!important;max-width:100%!important;}
+  .view-panel{display:none!important;}
+  #panelPrintSpell.active,#panelPrintMeaning.active{display:block!important;}
+  .print-table-wrap{box-shadow:none!important;padding:0!important;}
+  .print-two-col{display:grid!important;grid-template-columns:1fr 1fr;gap:18px;}
+  .pt th{background:#f4ece8!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .pt tr:nth-child(even) td{background:#fdf7f5!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
+
 .view-panel{display:none;}
 .view-panel.active{display:block;}
 
@@ -207,6 +287,8 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <button class="view-tab tab-vocab active" id="tabV" onclick="switchTab('vocab')">📖 단어카드</button>
     <button class="view-tab tab-spell" id="tabS" onclick="switchTab('spell')">✏️ 철자 퀴즈</button>
     <button class="view-tab tab-meaning" id="tabM" onclick="switchTab('meaning')">🔤 뜻 퀴즈</button>
+    <button class="view-tab tab-ps" id="tabPS" onclick="switchTab('printSpell')">🖨️ 철자쓰기</button>
+    <button class="view-tab tab-pm" id="tabPM" onclick="switchTab('printMeaning')">🖨️ 뜻쓰기</button>
   </div>
 
   <!-- PANELS -->
@@ -218,6 +300,12 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
   <div class="view-panel" id="panelMeaning">
     <div id="meaningContent"></div>
+  </div>
+  <div class="view-panel" id="panelPrintSpell">
+    <div id="printSpellContent"></div>
+  </div>
+  <div class="view-panel" id="panelPrintMeaning">
+    <div id="printMeaningContent"></div>
   </div>
 
 </div>
@@ -464,17 +552,26 @@ function nextUnit(){if(currentUnit<49) changeUnit(currentUnit+1);}
 /* ══ 탭 전환 ══ */
 function switchTab(tab){
   currentTab = tab;
-  ["vocab","spell","meaning"].forEach(t=>{
-    document.getElementById("panel"+t.charAt(0).toUpperCase()+t.slice(1)).classList.toggle("active", t===tab);
-    document.getElementById("tab"+t.charAt(0).toUpperCase()).classList.toggle("active", t===tab);
-  });
+  const allPanels = ["Vocab","Spell","Meaning","PrintSpell","PrintMeaning"];
+  const allTabs   = ["V","S","M","PS","PM"];
+  allPanels.forEach(p => document.getElementById("panel"+p).classList.remove("active"));
+  allTabs.forEach(t => { const el=document.getElementById("tab"+t); if(el) el.classList.remove("active"); });
+
+  if(tab==="vocab")        { document.getElementById("panelVocab").classList.add("active");        document.getElementById("tabV").classList.add("active"); }
+  else if(tab==="spell")   { document.getElementById("panelSpell").classList.add("active");        document.getElementById("tabS").classList.add("active"); }
+  else if(tab==="meaning") { document.getElementById("panelMeaning").classList.add("active");      document.getElementById("tabM").classList.add("active"); }
+  else if(tab==="printSpell")   { document.getElementById("panelPrintSpell").classList.add("active");   document.getElementById("tabPS").classList.add("active"); }
+  else if(tab==="printMeaning") { document.getElementById("panelPrintMeaning").classList.add("active"); document.getElementById("tabPM").classList.add("active"); }
+
   renderTab();
 }
 
 function renderTab(){
-  if(currentTab === "vocab")    buildVocabCards();
-  else if(currentTab === "spell")   buildSpellQuiz();
-  else                              buildMeaningQuiz();
+  if(currentTab === "vocab")             buildVocabCards();
+  else if(currentTab === "spell")        buildSpellQuiz();
+  else if(currentTab === "meaning")      buildMeaningQuiz();
+  else if(currentTab === "printSpell")   buildPrintView("spell");
+  else if(currentTab === "printMeaning") buildPrintView("meaning");
 }
 
 /* ══ 단어카드 ══ */
@@ -665,6 +762,73 @@ function showEmpty(box){
       <div class="empty-unit-desc">아직 단어 데이터가 입력되지 않았습니다.<br>아래 형식으로 suneung_vocab.html의 UNITS 배열에 추가하세요.</div>
       <div class="empty-code">UNITS[${currentUnit}] = [<br>&nbsp;&nbsp;{en:"word", pos:"n.", kr:"뜻",<br>&nbsp;&nbsp; syn:["syn1"], ant:["ant1"],<br>&nbsp;&nbsp; phrases:["phrase = 뜻"]},<br>&nbsp;&nbsp;...<br>];</div>
     </div>`;
+}
+
+/* ══ 인쇄 뷰 ══ */
+function buildPrintView(type){
+  const words  = UNITS[currentUnit];
+  const boxId  = type === "spell" ? "printSpellContent" : "printMeaningContent";
+  const box    = document.getElementById(boxId);
+  box.innerHTML = "";
+
+  if(!words || words.length === 0){ showEmpty(box); return; }
+
+  const unitNum = currentUnit + 1;
+  const isSpell = type === "spell";
+  const title   = isSpell ? "철자 쓰기" : "뜻 쓰기";
+  const col1    = isSpell ? "한글뜻" : "영단어";
+  const col2    = isSpell ? "영단어 쓰기" : "한글뜻 쓰기";
+
+  function makeRows(arr, startNo){
+    return arr.map((v, i)=>{
+      const hint = isSpell ? v.kr.split("/")[0].trim() : v.en;
+      return `<tr>
+        <td class="td-no">${startNo + i}</td>
+        <td class="td-write"></td>
+        <td class="td-hint">${hint}</td>
+      </tr>`;
+    }).join("");
+  }
+
+  const left  = words.slice(0, 20);
+  const right = words.slice(20, 40);
+
+  box.innerHTML = `
+    <div class="print-view-header">
+      <span class="print-view-title">🖨️ ${unitNum}과 — ${title} 프린트</span>
+      <button class="print-exec-btn" onclick="execPrint('${type}')">🖨️ 인쇄하기</button>
+    </div>
+    <div class="print-table-wrap" id="printContent-${type}">
+      <div class="print-unit-title">✦ 수능완성 단어장 ${unitNum}과 — ${title}</div>
+      <div class="print-unit-sub">목동서로영어학원 · 0505.co.kr</div>
+      <div class="print-name-row">
+        <span>이름: <span class="print-name-box"></span></span>
+        <span>점수: <span class="print-name-box"></span></span>
+      </div>
+      <div class="print-two-col">
+        <table class="pt">
+          <thead><tr>
+            <th class="td-no">No.</th>
+            <th>제시어</th>
+            <th>${col1}</th>
+          </tr></thead>
+          <tbody>${makeRows(left, 1)}</tbody>
+        </table>
+        <table class="pt">
+          <thead><tr>
+            <th class="td-no">No.</th>
+            <th>제시어</th>
+            <th>${col1}</th>
+          </tr></thead>
+          <tbody>${makeRows(right, 21)}</tbody>
+        </table>
+      </div>
+      <div class="print-wm">✦ 목동서로영어학원 · 본 자료는 목동서로영어학원에서 제작하였습니다 · 0505.co.kr ✦</div>
+    </div>`;
+}
+
+function execPrint(type){
+  window.print();
 }
 
 /* ══ 초기 실행 ══ */
