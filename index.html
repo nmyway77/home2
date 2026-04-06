@@ -502,21 +502,34 @@ footer{
     </div>
   </div>
 
-  <!-- 중3 -->
+  <!-- 중·고등 교과분석 -->
   <div class="gc gc-m3" style="animation-delay:0.2s">
     <div class="gc-inner">
-      <div class="gc-logo"><span style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:white;">중3</span></div>
-      <div class="gc-grade-sub">MIDDLE SCHOOL · GRADE 3</div>
-      <div class="gc-name">교과 분석자료</div>
+      <div class="gc-logo"><span style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:white;">교과</span></div>
+      <div class="gc-grade-sub">MIDDLE &amp; HIGH SCHOOL</div>
+      <div class="gc-name">중·고등 교과분석</div>
       <div class="gc-items">
         <div class="mock-select-wrap" onclick="event.stopPropagation()">
-          <div class="mock-select-label">🏫 학교 선택</div>
+          <div class="mock-select-label">🏫 학교·학년 선택</div>
           <div class="mock-select-row">
             <select class="mock-sel" id="m3school" style="max-width:100%;">
-              <option value="mokdong">목동중학교</option>
-              <option value="mokun">목운중학교</option>
+              <optgroup label="목동중학교">
+                <option value="mokdong_m1">목동중 1학년</option>
+                <option value="mokdong_m2">목동중 2학년</option>
+                <option value="mokdong_m3">목동중 3학년</option>
+              </optgroup>
+              <optgroup label="목운중학교">
+                <option value="mokun_m1">목운중 1학년</option>
+                <option value="mokun_m2">목운중 2학년</option>
+                <option value="mokun_m3">목운중 3학년</option>
+              </optgroup>
+              <optgroup label="신목고등학교">
+                <option value="sinmok_h1">신목고 1학년</option>
+                <option value="sinmok_h2">신목고 2학년</option>
+                <option value="sinmok_h3">신목고 3학년</option>
+              </optgroup>
             </select>
-            <button class="mock-go-btn" onclick="goMiddle()">▶</button>
+            <button class="mock-go-btn" onclick="goSchool()">▶</button>
           </div>
         </div>
       </div>
@@ -703,14 +716,15 @@ const MOCK_MAP = {
 // 완성된 파일 목록 (실제 존재하는 것만)
 const READY_FILES = ['mock_march_2025.html','mock_march_2026.html','suneung_vocab.html','voca_mid_etymology.html','neunboka_high_etymology.html'];
 
-function goMiddle(){
-  const school = document.getElementById('m3school').value;
+function goSchool(){
+  const val = document.getElementById('m3school').value;
   const map = {
-    'mokdong':'mokdong_m3.html',
-    'mokun':  'mokun_m3.html',
+    'mokdong_m1':'mokdong_m1.html', 'mokdong_m2':'mokdong_m2.html', 'mokdong_m3':'mokdong_m3.html',
+    'mokun_m1':  'mokun_m1.html',   'mokun_m2':  'mokun_m2.html',   'mokun_m3':  'mokun_m3.html',
+    'sinmok_h1': 'sinmok_h1.html',  'sinmok_h2': 'sinmok_h2.html',  'sinmok_h3': 'sinmok_h3.html',
   };
-  const file = map[school];
-  if(!READY_FILES.includes(file)){ alert("곧 업로드됩니다! 😊"); return; }
+  const file = map[val];
+  if(!file || !READY_FILES.includes(file)){ alert("곧 업로드됩니다! 😊"); return; }
   window.location.href = file;
 }
 function goVocab(selId){
