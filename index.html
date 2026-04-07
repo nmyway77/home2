@@ -38,18 +38,36 @@ body::before{
 /* ── NAV ── */
 nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
-  background:rgba(13,21,32,0.88);
+  background:rgba(13,21,32,0.95);
   backdrop-filter:blur(16px);
   border-bottom:1px solid var(--rule);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 24px;height:54px;
+  display:flex;align-items:center;
+  padding:0 24px;height:54px;gap:16px;
 }
 .nav-logo{
   font-family:'JetBrains Mono',monospace;
   font-size:13px;font-weight:700;letter-spacing:2px;
-  color:var(--gold);
+  color:var(--gold);flex-shrink:0;
 }
 .nav-logo span{color:rgba(201,168,76,0.4);}
+.nav-brand-group{
+  display:flex;align-items:center;gap:6px;
+  font-family:'Noto Sans KR',sans-serif;
+  position:absolute;left:50%;transform:translateX(-50%);
+}
+.nav-slogan{
+  font-size:10px;font-weight:300;
+  color:rgba(255,255,255,0.85);
+  letter-spacing:0.5px;white-space:nowrap;
+}
+.nav-divider{
+  color:rgba(255,255,255,0.25);font-size:11px;
+}
+.nav-academy{
+  font-size:13px;font-weight:700;
+  color:white;letter-spacing:1px;white-space:nowrap;
+}
+.nav-right-area{display:flex;align-items:center;gap:12px;margin-left:auto;}
 .nav-school-select{
   font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;
   background:rgba(255,255,255,0.06);
@@ -60,7 +78,6 @@ nav{
 }
 .nav-school-select:hover{background:rgba(255,255,255,0.1);color:white;}
 .nav-school-select option{background:#1B2E4A;color:white;}
-.nav-right-area{display:flex;align-items:center;gap:12px;}
 .nav-site{
   font-family:'JetBrains Mono',monospace;font-size:9px;
   letter-spacing:2px;color:rgba(255,255,255,0.2);
@@ -144,6 +161,21 @@ nav{
 .gc-ev2:hover{box-shadow:0 16px 48px rgba(201,168,76,0.3);}
 .gc-rd{background:linear-gradient(145deg,#0d1f3a,#162d52);border:1px solid rgba(70,130,200,0.35);box-shadow:0 8px 32px rgba(70,130,200,0.2);}
 .gc-rd:hover{box-shadow:0 16px 48px rgba(70,130,200,0.35);}
+.gc-ns{background:linear-gradient(145deg,#1a0a2e,#2e1a4e);border:1px solid rgba(160,100,220,0.35);box-shadow:0 8px 32px rgba(160,100,220,0.2);}
+.gc-ns:hover{box-shadow:0 16px 48px rgba(160,100,220,0.35);}
+.gc-ns .gc-logo{background:radial-gradient(circle,rgba(160,100,220,0.4),rgba(160,100,220,0.1));border:1.5px solid rgba(160,100,220,0.5);}
+.gc-ns .gc-grade-sub{color:#c090f0;}
+.gc-ns-badge{
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:13px;font-weight:700;
+  color:white;
+  border:2px solid rgba(160,100,220,0.7);
+  padding:5px 16px;border-radius:20px;
+  background:rgba(160,100,220,0.25);
+  margin-bottom:12px;
+  letter-spacing:1px;
+  text-shadow:0 0 12px rgba(160,100,220,0.8);
+}
 
 /* 아이콘 로고 */
 .gc-logo{
@@ -388,6 +420,13 @@ footer{
 
 <nav>
   <div class="nav-logo">0<span>5</span>0<span>5</span></div>
+  <div class="nav-brand-group">
+    <span class="nav-slogan">최고를 향한 끊임없는 열정</span>
+    <span class="nav-divider">·</span>
+    <span class="nav-academy">목동서로영어학원</span>
+    <span class="nav-divider">·</span>
+    <span class="nav-slogan">학생 개개인을 위한 1:1 과외식 훈련 시스템</span>
+  </div>
   <div class="nav-right-area">
     <select class="nav-school-select" onchange="openSchoolModal(this.value);this.value=''">
       <option value="">🏫 학교별 자료</option>
@@ -401,10 +440,11 @@ footer{
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-top">
-    <div class="hero-badge">✦ 목동서로영어학원 ✦</div>
+  <div style="font-family:'Noto Sans KR',sans-serif;font-size:26px;font-weight:700;
+              color:#4ADE80;letter-spacing:4px;text-align:center;
+              text-shadow:0 0 24px rgba(74,222,128,0.35);">
+    기본 학습자료
   </div>
-  <div class="hero-sub">학년을 선택하면 학습 자료로 바로 이동합니다</div>
 </div>
 
 <!-- 고등학교 라벨 -->
@@ -545,12 +585,12 @@ footer{
 <!-- 어휘 라벨 -->
 <div class="section-label" style="padding-top:8px;">
   <div class="sl-line"></div>
-  <div class="sl-text">어휘</div>
+  <div class="sl-text">어휘 · 내신</div>
   <div class="sl-line"></div>
 </div>
 
-<!-- 어휘 GRID (3열) -->
-<div class="grade-grid" style="grid-template-columns:repeat(3,1fr);max-width:840px;">
+<!-- 어휘 + 내신 GRID (4열) -->
+<div class="grade-grid" style="grid-template-columns:repeat(4,1fr);max-width:1060px;">
 
   <!-- 초·중등 어휘 -->
   <div class="gc gc-ev1" style="animation-delay:0.24s">
@@ -623,6 +663,41 @@ footer{
     </div>
   </div>
 
+  <!-- 중·고등 내신자료 -->
+  <div class="gc gc-ns" style="animation-delay:0.42s">
+    <div class="gc-inner">
+      <div class="gc-logo">📚</div>
+      <div class="gc-grade-sub">INTERNAL EXAM MATERIAL</div>
+      <div class="gc-name">중·고등 내신자료</div>
+      <div class="gc-ns-badge">✦ 재원생 전용 ✦</div>
+      <div class="gc-items">
+        <div class="mock-select-wrap" onclick="event.stopPropagation()">
+          <div class="mock-select-label">🏫 학교·학년 선택</div>
+          <div class="mock-select-row">
+            <select class="mock-sel" id="nsschool" style="max-width:100%;">
+              <optgroup label="목동중학교">
+                <option value="ns_mokdong_m1">목동중 1학년</option>
+                <option value="ns_mokdong_m2">목동중 2학년</option>
+                <option value="ns_mokdong_m3">목동중 3학년</option>
+              </optgroup>
+              <optgroup label="목운중학교">
+                <option value="ns_mokun_m1">목운중 1학년</option>
+                <option value="ns_mokun_m2">목운중 2학년</option>
+                <option value="ns_mokun_m3">목운중 3학년</option>
+              </optgroup>
+              <optgroup label="신목고등학교">
+                <option value="ns_sinmok_h1">신목고 1학년</option>
+                <option value="ns_sinmok_h2">신목고 2학년</option>
+                <option value="ns_sinmok_h3">신목고 3학년</option>
+              </optgroup>
+            </select>
+            <button class="mock-go-btn" onclick="goNaeshin()">▶</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <!-- 학교 안내 -->
@@ -632,9 +707,35 @@ footer{
     <span class="school-chip hi">🏫 신목고등학교</span>
     <span class="school-chip hi">🏫 목운중학교</span>
     <span class="school-chip hi">🏫 목동중학교</span>
-    <span class="school-chip">NE능률 교과서</span>
-    <span class="school-chip">내신 출제 패턴 특화</span>
-    <span class="school-chip">목동 지역 전담</span>
+    <span class="school-chip hi">🏫 목동초등학교</span>
+    <span class="school-chip hi">🏫 서정초등학교</span>
+    <span class="school-chip hi">🏫 목운초등학교</span>
+  </div>
+  <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:18px;">
+    <a href="https://blog.naver.com/nmyway" target="_blank"
+       style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(201,168,76,0.8);
+              border:1px solid rgba(201,168,76,0.3);border-radius:20px;padding:7px 18px;
+              text-decoration:none;background:rgba(201,168,76,0.06);transition:all 0.2s;"
+       onmouseover="this.style.background='rgba(201,168,76,0.15)'"
+       onmouseout="this.style.background='rgba(201,168,76,0.06)'">
+      📝 학원 블로그
+    </a>
+    <a href="tel:02-2648-1020"
+       style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,0.55);
+              border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:7px 18px;
+              text-decoration:none;background:rgba(255,255,255,0.03);transition:all 0.2s;"
+       onmouseover="this.style.background='rgba(255,255,255,0.08)'"
+       onmouseout="this.style.background='rgba(255,255,255,0.03)'">
+      📞 02-2648-1020
+    </a>
+    <a href="https://0505.co.kr/mail2.html" target="_blank"
+       style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(201,168,76,0.8);
+              border:1px solid rgba(201,168,76,0.3);border-radius:20px;padding:7px 18px;
+              text-decoration:none;background:rgba(201,168,76,0.06);transition:all 0.2s;"
+       onmouseover="this.style.background='rgba(201,168,76,0.15)'"
+       onmouseout="this.style.background='rgba(201,168,76,0.06)'">
+      ✉️ 상담 문의
+    </a>
   </div>
 </div>
 
@@ -744,6 +845,17 @@ const MOCK_MAP = {
 // 완성된 파일 목록 (실제 존재하는 것만)
 const READY_FILES = ['mock_march_2025.html','mock_march_2026.html','suneung_vocab.html','voca_mid_etymology.html','neunboka_high_etymology.html'];
 
+function goNaeshin(){
+  const val = document.getElementById('nsschool').value;
+  const map = {
+    'ns_mokdong_m1':'ns_mokdong_m1.html','ns_mokdong_m2':'ns_mokdong_m2.html','ns_mokdong_m3':'ns_mokdong_m3.html',
+    'ns_mokun_m1':  'ns_mokun_m1.html',  'ns_mokun_m2':  'ns_mokun_m2.html',  'ns_mokun_m3':  'ns_mokun_m3.html',
+    'ns_sinmok_h1': 'ns_sinmok_h1.html', 'ns_sinmok_h2': 'ns_sinmok_h2.html', 'ns_sinmok_h3': 'ns_sinmok_h3.html',
+  };
+  const file = map[val];
+  if(!file || !READY_FILES.includes(file)){ alert("재원생 전용입니다 🔒"); return; }
+  window.location.href = file;
+}
 function goSchool(){
   const val = document.getElementById('m3school').value;
   const map = {
