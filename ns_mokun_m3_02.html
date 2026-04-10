@@ -1721,6 +1721,26 @@ function printQ(n){
     orig(v);
   };
 })();
+// 내신자료 전용: 카드 클릭 = 해석 토글 / 스피커 클릭 = 소리
+(function(){
+  document.querySelectorAll(".s-card").forEach(function(card){
+    var clone=card.cloneNode(false);
+    while(card.firstChild)clone.appendChild(card.firstChild);
+    card.parentNode.replaceChild(clone,card);
+    var speakBtn=clone.querySelector(".speak-icon");
+    var waveEl=clone.querySelector(".wave");
+    if(speakBtn){speakBtn.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();speakCard(clone);});}
+    if(waveEl){waveEl.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();speakCard(clone);});}
+    clone.addEventListener("click",function(e){
+      if(e.target.closest(".speak-icon")||e.target.closest(".wave"))return;
+      var isOpen=clone.classList.contains("tapped")||clone.classList.contains("pinned");
+      document.querySelectorAll(".s-card.tapped").forEach(function(tc){if(tc!==clone)tc.classList.remove("tapped");});
+      if(clone.classList.contains("pinned")){clone.classList.remove("pinned");}
+      else{clone.classList.toggle("tapped",!isOpen);}
+    });
+    clone.addEventListener("dblclick",function(e){e.preventDefault();clone.classList.toggle("pinned");});
+  });
+})();
 </script>
 </body>
 </html>
