@@ -128,6 +128,9 @@ nav{
   gap:16px;
 }
 @media(min-width:560px){.grade-grid{grid-template-columns:repeat(2,1fr);}} @media(min-width:900px){.grade-grid{grid-template-columns:repeat(4,1fr);}}
+/* 어휘·내신 하단 4카드 반응형 */
+.vocab-grid{grid-template-columns:repeat(2,1fr);}
+@media(min-width:900px){.vocab-grid{grid-template-columns:repeat(4,1fr);}}
 
 /* ── GRADE CARD ── */
 .gc{
@@ -419,7 +422,6 @@ footer{
 <body>
 
 <nav>
-  <div class="nav-logo">0<span>5</span>0<span>5</span></div>
   <div class="nav-brand-group">
     <span class="nav-slogan">최고를 향한 끊임없는 열정</span>
     <span class="nav-divider">·</span>
@@ -427,23 +429,20 @@ footer{
     <span class="nav-divider">·</span>
     <span class="nav-slogan">학생 개개인을 위한 1:1 과외식 훈련 시스템</span>
   </div>
-  <div class="nav-right-area">
-    <select class="nav-school-select" onchange="openSchoolModal(this.value);this.value=''">
-      <option value="">🏫 학교별 자료</option>
-      <option value="sinmok">신목고등학교</option>
-      <option value="mokun">목운중학교</option>
-      <option value="mokdong">목동중학교</option>
-    </select>
-    <span class="nav-site">0505.co.kr</span>
-  </div>
+  <div class="nav-right-area"></div>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
-  <div style="font-family:'Noto Sans KR',sans-serif;font-size:26px;font-weight:700;
+  <div style="font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;
               color:#4ADE80;letter-spacing:4px;text-align:center;
               text-shadow:0 0 24px rgba(74,222,128,0.35);">
     기본 학습자료
+  </div>
+  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:400;
+              color:rgba(74,222,128,0.55);letter-spacing:2px;text-align:center;
+              margin-top:6px;">
+    www.0505.co.kr
   </div>
 </div>
 
@@ -590,7 +589,7 @@ footer{
 </div>
 
 <!-- 어휘 + 내신 GRID (4열) -->
-<div class="grade-grid" style="grid-template-columns:repeat(4,1fr);max-width:1060px;">
+<div class="grade-grid vocab-grid">
 
   <!-- 초·중등 어휘 -->
   <div class="gc gc-ev1" style="animation-delay:0.24s">
@@ -736,6 +735,11 @@ footer{
        onmouseout="this.style.background='rgba(201,168,76,0.06)'">
       ✉️ 상담 문의
     </a>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(201,168,76,0.8);
+                 border:1px solid rgba(201,168,76,0.3);border-radius:20px;padding:7px 18px;
+                 background:rgba(201,168,76,0.06);">
+      제4375호
+    </span>
   </div>
 </div>
 
@@ -754,10 +758,12 @@ footer{
 <script>
 const SCHOOLS = {
   sinmok:{
-    label:'고1 · 모의고사 분석자료',name:'신목고등학교',
+    label:'고1·고2·고3 · 모의고사 분석자료',name:'신목고등학교',
     items:[
       {icon:'📝',text:'모의고사 한줄해석',sub:'2026년 3월 고1',link:'mock_march_2026.html',ready:true},
       {icon:'📝',text:'모의고사 한줄해석',sub:'2025년 3월 고1',link:'mock_march_2025.html',ready:true},
+      {icon:'📝',text:'모의고사 한줄해석',sub:'2026년 3월 고2',link:'mock_march_2026_g2.html',ready:true},
+      {icon:'📝',text:'모의고사 한줄해석',sub:'2026년 3월 고3',link:'mock_march_2026_g3.html',ready:true},
       {icon:'📚',text:'단어장',sub:'Lesson별 단어장',link:'vocab_flashcards.html',ready:true},
       {icon:'📖',text:'교과서 한줄해석',sub:'Lesson 1·2 — 준비 중',link:'#',ready:false},
     ]
@@ -770,9 +776,11 @@ const SCHOOLS = {
     ]
   },
   mokdong:{
-    label:'목동중학교 · 중3',name:'목동중학교',
+    label:'목동중학교',name:'목동중학교',
     items:[
-      {icon:'📖',text:'교과서 한줄해석',sub:'준비 중',link:'#',ready:false},
+      {icon:'📖',text:'교과서 한줄해석',sub:'1학년 · 동아 윤정미',link:'mokdong_m1.html',ready:true},
+      {icon:'📖',text:'교과서 한줄해석',sub:'2학년 · 준비 중',link:'#',ready:false},
+      {icon:'📖',text:'교과서 한줄해석',sub:'3학년 · 준비 중',link:'#',ready:false},
       {icon:'📚',text:'단어장',sub:'준비 중',link:'#',ready:false},
     ]
   }
@@ -820,30 +828,30 @@ const MOCK_MAP = {
     '2023_11':'mock_nov_2023.html',
   },
   'g2':{
-    '2026_3':'mock2_march_2026.html','2026_6':'mock2_june_2026.html',
-    '2026_9':'mock2_sept_2026.html','2026_11':'mock2_nov_2026.html',
-    '2025_3':'mock2_march_2025.html','2025_6':'mock2_june_2025.html',
-    '2025_9':'mock2_sept_2025.html','2025_11':'mock2_nov_2025.html',
-    '2024_3':'mock2_march_2024.html','2024_6':'mock2_june_2024.html',
-    '2024_9':'mock2_sept_2024.html','2024_11':'mock2_nov_2024.html',
-    '2023_3':'mock2_march_2023.html','2023_6':'mock2_june_2023.html',
-    '2023_9':'mock2_sept_2023.html','2023_11':'mock2_nov_2023.html',
+    '2026_3':'mock_march_2026_g2.html','2026_6':'mock_june_2026_g2.html',
+    '2026_9':'mock_sept_2026_g2.html','2026_11':'mock_nov_2026_g2.html',
+    '2025_3':'mock_march_2025_g2.html','2025_6':'mock_june_2025_g2.html',
+    '2025_9':'mock_sept_2025_g2.html','2025_11':'mock_nov_2025_g2.html',
+    '2024_3':'mock_march_2024_g2.html','2024_6':'mock_june_2024_g2.html',
+    '2024_9':'mock_sept_2024_g2.html','2024_11':'mock_nov_2024_g2.html',
+    '2023_3':'mock_march_2023_g2.html','2023_6':'mock_june_2023_g2.html',
+    '2023_9':'mock_sept_2023_g2.html','2023_11':'mock_nov_2023_g2.html',
   },
   'g3':{
-    '2026_3':'mock3_march_2026.html','2026_6':'mock3_june_2026.html',
-    '2026_9':'mock3_sept_2026.html','2026_11':'mock3_nov_2026.html',
-    '2025_3':'mock3_march_2025.html','2025_6':'mock3_june_2025.html',
-    '2025_9':'mock3_sept_2025.html','2025_11':'mock3_nov_2025.html',
-    '2024_3':'mock3_march_2024.html','2024_6':'mock3_june_2024.html',
-    '2024_9':'mock3_sept_2024.html','2024_11':'mock3_nov_2024.html',
-    '2023_3':'mock3_march_2023.html','2023_6':'mock3_june_2023.html',
-    '2023_9':'mock3_sept_2023.html','2023_11':'mock3_nov_2023.html',
+    '2026_3':'mock_march_2026_g3.html','2026_6':'mock_june_2026_g3.html',
+    '2026_9':'mock_sept_2026_g3.html','2026_11':'mock_nov_2026_g3.html',
+    '2025_3':'mock_march_2025_g3.html','2025_6':'mock_june_2025_g3.html',
+    '2025_9':'mock_sept_2025_g3.html','2025_11':'mock_nov_2025_g3.html',
+    '2024_3':'mock_march_2024_g3.html','2024_6':'mock_june_2024_g3.html',
+    '2024_9':'mock_sept_2024_g3.html','2024_11':'mock_nov_2024_g3.html',
+    '2023_3':'mock_march_2023_g3.html','2023_6':'mock_june_2023_g3.html',
+    '2023_9':'mock_sept_2023_g3.html','2023_11':'mock_nov_2023_g3.html',
   }
   // 고2, 고3, 중3 추가 예정
 };
 
 // 완성된 파일 목록 (실제 존재하는 것만)
-const READY_FILES = ['mock_march_2025.html','mock_march_2026.html','suneung_vocab.html','voca_mid_etymology.html','neunboka_high_etymology.html'];
+const READY_FILES = ['mock_march_2025.html','mock_march_2026.html','mock_march_2026_g2.html','mock_march_2026_g3.html','mokdong_m1.html','suneung_vocab.html','voca_mid_etymology.html','neunboka_high_etymology.html','ns_mokun_m3.html','ns_mokun_m3_01.html','ns_mokun_m3_02.html'];
 
 function goNaeshin(){
   const val = document.getElementById('nsschool').value;
