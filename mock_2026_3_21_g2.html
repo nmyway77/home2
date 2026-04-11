@@ -295,9 +295,53 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   letter-spacing:2px;color:var(--gold2);border:1px solid rgba(201,168,76,0.3);
   padding:3px 10px;border-radius:3px;white-space:nowrap;}
 .passage{max-width:860px;margin:0 auto;padding:68px 16px 64px;}
+
+/* ── 행동 패치 + SD CSS ── */
+@media(hover:hover) and (pointer:fine){
+  .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card.grammar:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+}
+.s-card.vocab-only .s-kr-wrap,.s-card.pinned .s-kr-wrap,.s-card.tapped .s-kr-wrap{
+  display:flex!important;flex-wrap:wrap!important;gap:6px!important;padding:8px 14px 10px!important;align-items:flex-start;}
+.s-card.pinned .s-kr,.s-card.tapped .s-kr,.s-card.pinned .s-grammar,.s-card.tapped .s-grammar,
+.s-card.pinned .s-meaning,.s-card.tapped .s-meaning{width:100%;flex-basis:100%;order:1;}
+.s-card.vocab-only .s-vocab,.s-card.pinned .s-vocab,.s-card.tapped .s-vocab{
+  order:0;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25)!important;border-radius:20px;
+  padding:3px 12px 3px 8px!important;white-space:nowrap;flex-shrink:0;border-top:none!important;
+  display:inline-flex!important;align-items:center;gap:4px;}
+.tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
+.tab-sd.active{background:#993C1D;color:white;border-color:#993C1D;}
+.sd-panel{display:none;padding:4px 0;max-width:860px;margin:0 auto;}
+.sd-card{background:white;border-radius:12px;box-shadow:0 2px 12px rgba(31,56,100,0.09);margin-bottom:16px;overflow:hidden;}
+.sd-hdr{padding:9px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;color:white;}
+.sd-card svg{width:100%;display:block;padding:10px 28px 14px;}
+.sd-vocab-row{display:flex;flex-wrap:wrap;gap:6px;padding:8px 14px 12px;border-top:1px dashed rgba(0,0,0,0.08);background:rgba(255,255,255,0.5);}
+.sd-vocab-chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:4px 11px 4px 8px;border-radius:16px;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25);white-space:nowrap;}
+.sd-chip-en{font-size:12px;font-weight:500;color:#1F3864;font-family:Georgia,serif;}
+.sd-chip-kr{font-size:11px;color:#5F5E5A;}
+.sd-print-btn{display:block;width:fit-content;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;padding:8px 22px;border-radius:7px;border:none;background:#3d3d3d;color:white;cursor:pointer;margin:0 0 14px auto;transition:background 0.2s;}
+.sd-print-btn:hover{background:#1F3864;}
+.print-brand{display:none;}
+@media print{
+  .print-brand{display:block;position:fixed;left:0;right:0;font-family:'JetBrains Mono',monospace;font-size:9px;color:#888;text-align:center;letter-spacing:0.5px;background:white;z-index:9999;}
+  .print-brand-top{top:0;border-bottom:0.5px solid #ddd;padding:4px 0 3px;}
+  .print-brand-bot{bottom:0;border-top:0.5px solid #ddd;padding:3px 0 4px;}
+  body:not(.psd) .sd-panel{display:none!important;}
+  body.psd .sd-panel{display:block!important;}
+  body.psd .top-nav,body.psd .page-header,body.psd .watermark,body.psd .view-tabs,body.psd .controls,body.psd .sd-print-btn,body.psd footer{display:none!important;}
+  body.psd .passage{padding:0!important;max-width:100%!important;}
+  body.psd .sd-card{break-inside:avoid;page-break-inside:avoid;margin-bottom:5mm;border:0.5px solid #ccc;box-shadow:none!important;border-radius:5px;overflow:hidden;}
+  body.psd .sd-hdr{font-size:9px!important;padding:5px 10px!important;}
+  body.psd .sd-card svg{width:100%!important;max-width:100%!important;height:auto!important;padding:6px 8px 8px!important;}
+  body.psd .sd-vocab-row{padding:4px 10px 6px!important;}
+  body.psd .sd-vocab-chip{font-size:10px!important;padding:2px 7px!important;}
+}
+
 </style>
 </head>
 <body>
+<div class="print-brand print-brand-top">✦ 목동서로영어학원 제작 &nbsp;|&nbsp; www.0505.co.kr</div>
+<div class="print-brand print-brand-bot">✦ 목동서로영어학원 제작 &nbsp;|&nbsp; www.0505.co.kr</div>
 <nav class="top-nav">
   <a class="home-btn" href="mock_march_2026_g2.html">← 목록</a>
   <span class="nav-title-bar">2026 · 3월 · 고2 · 21번</span>
@@ -316,13 +360,14 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
   <div class="view-tabs">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
+    <button class="view-tab tab-sd" id="tabSD" onclick="switchSD()">📐 문장구조도</button>
     <button class="view-tab tab-arrange"        id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
     <button class="view-tab tab-grammar"        id="tabG" onclick="switchView('grammar')">📝 어법 문제</button>
     <button class="view-tab tab-vocab"          id="tabV" onclick="switchView('vocab')">📚 단어장</button>
   </div>
   <div id="readingView">
     <div class="hints">
-      <div class="hint">🖱 PC: 마우스 올리기 → 해석 · 클릭 → 발음</div>
+      <div class="hint">🖱 PC: 클릭 → 해석 · 🔊 → 발음</div>
       <div class="hint">📱 모바일: 탭 → 해석 · 🔊 → 발음</div>
       <div class="hint">💡 노란박스 → 쉬운 풀이</div>
     </div>
@@ -533,6 +578,274 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <p style="text-align:center;font-size:12px;color:#444;">틀린 답은 오개념의 신호 — 드러내고, 수용하고, 함께 성장하라!</p>
     <p style="text-align:center;font-size:11px;color:#888;margin-top:6px;">acceptance → misconceptions 노출 → safe environment → willing to risk → defend thinking → mathematical growth ✦</p>
   </div>
+</div>
+  </div>
+  <div class="sd-panel" id="panelSD">
+<button class="sd-print-btn" onclick="printSD()">🖨️ 구조도 인쇄 (A4)</button>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">01 &nbsp;·&nbsp; A first step toward establishing a respectful classroom learning community is acceptance of all ideas and answers regardless of any obvious errors.</div>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="583" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="301" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">A first step toward establishing a respectful classroom learning community</text>
+  <text x="301" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">존중하는 교실 학습 공동체를 형성하는 첫 번째 단계는 (S)</text>
+  <rect x="601" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="633" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="633" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다 (V)</text>
+  <rect x="10" y="94" width="290" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="155" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">acceptance of all ideas and answers</text>
+  <text x="155" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">모든 아이디어와 답을 수용하는 것 (C)</text>
+  <rect x="308" y="94" width="268" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="442" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">regardless of any obvious errors</text>
+  <text x="442" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">명백한 오류와 상관없이</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">존중하는 교실 학습 공동체를 형성하는 첫 번째 단계는 명백한 오류와 상관없이 모든 아이디어와</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">답을 수용하는 것입니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">establishing</span><span class="sd-chip-kr">형성하다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">respectful</span><span class="sd-chip-kr">존중하는</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">acceptance</span><span class="sd-chip-kr">수용</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">regardless of</span><span class="sd-chip-kr">~와 상관없이</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">02 &nbsp;·&nbsp; Rich mathematical discussions cannot occur if this expectation is not in place.</div>
+<svg viewBox="0 0 960 224" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="245" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="132" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Rich mathematical discussions</text>
+  <text x="132" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">풍부한 수학적 토론은 (S)</text>
+  <rect x="263" y="10" width="124" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="325" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">cannot occur</text>
+  <text x="325" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">일어날 수 없다 (V)</text>
+  <rect x="10" y="89" width="372" height="36" rx="5" fill="none" stroke="#085041" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="196" y="88" font-size="10" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">if절 — 조건 부사절</text>
+  <text x="31" y="113" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">if</text>
+  <text x="31" y="146" font-size="12" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">~하지 않으면</text>
+  <rect x="54" y="96" width="156" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="132" y="115" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">this expectation</text>
+  <text x="132" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이러한 기대가</text>
+  <rect x="218" y="96" width="148" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="292" y="115" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is not in place</text>
+  <text x="292" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">자리 잡지 않는다면</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">이러한 기대가 자리 잡지 않으면 풍부한 수학적 토론은 일어날 수 없습니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">occur</span><span class="sd-chip-kr">일어나다, 발생하다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">in place</span><span class="sd-chip-kr">제자리에, 자리 잡아</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">03 &nbsp;·&nbsp; We must remember that wrong answers are often rooted in misconceptions, and unless these ideas are allowed to be brought to the forefront, we cannot help students confront their thinking.</div>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">We</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리는 (S)</text>
+  <rect x="82" y="10" width="132" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="148" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">must remember</text>
+  <text x="148" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">기억해야 한다 (V)</text>
+  <rect x="222" y="5" width="490" height="36" rx="5" fill="none" stroke="#6A1B9A" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="467" y="4" font-size="10" font-weight="400" fill="#6A1B9A" text-anchor="middle" font-family="sans-serif">that절 — remember의 목적어</text>
+  <rect x="228" y="12" width="132" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="294" y="31" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">wrong answers</text>
+  <text x="294" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">틀린 답이</text>
+  <rect x="368" y="12" width="180" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="458" y="31" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are often rooted in</text>
+  <text x="458" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">종종 뿌리를 두고 있다</text>
+  <rect x="556" y="12" width="140" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="626" y="31" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">misconceptions</text>
+  <text x="626" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">오개념에</text>
+  <text x="37" y="113" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">, and</text>
+  <text x="37" y="146" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="72" y="89" width="560" height="36" rx="5" fill="none" stroke="#085041" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="352" y="88" font-size="10" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">unless절 — 조건 부사절</text>
+  <text x="109" y="113" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">unless</text>
+  <text x="109" y="146" font-size="12" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">~하지 않으면</text>
+  <rect x="149" y="96" width="116" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="207" y="115" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">these ideas</text>
+  <text x="207" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이러한 생각들이</text>
+  <rect x="273" y="96" width="343" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="444" y="115" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are allowed to be brought to the forefront</text>
+  <text x="444" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">전면에 드러나도록 허용되지 않으면 (이중 수동)</text>
+  <rect x="640" y="94" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="672" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">we</text>
+  <text x="672" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리는 (S)</text>
+  <rect x="712" y="94" width="116" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="770" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">cannot help</text>
+  <text x="770" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">도울 수 없다 (V)</text>
+  <rect x="10" y="178" width="268" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="144" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">students confront their thinking</text>
+  <text x="144" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">학생들이 사고를 직면하도록 (O, help+O+V원형)</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">우리는 틀린 답이 종종 오개념에 뿌리를 두고 있음을 기억해야 하며, 이러한 생각들이 전면에</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">드러나도록 허용되지 않으면 학생들이 자신의 사고를 직면하도록 도울 수 없습니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">misconception</span><span class="sd-chip-kr">오개념</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">forefront</span><span class="sd-chip-kr">전면, 최전선</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">confront</span><span class="sd-chip-kr">직면하다</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">04 &nbsp;·&nbsp; Students who are in safe learning environments are willing to risk sharing an incorrect answer with their peers in order to grow mathematically.</div>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="96" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="58" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Students</text>
+  <text x="58" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">학생들은 (S)</text>
+  <rect x="114" y="5" width="366" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="297" y="4" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">주격 관계절 — Students 수식</text>
+  <rect x="120" y="12" width="113" height="28" rx="3" fill="#EEEDFE" stroke="#CECBF6" stroke-width="1.5"/>
+  <text x="176" y="31" font-size="13" font-weight="500" fill="#3C3489" text-anchor="middle" font-family="Georgia,serif">who are in</text>
+  <text x="176" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">~에 있는 (주격 관계대명사)</text>
+  <rect x="241" y="12" width="223" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="352" y="31" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">safe learning environments</text>
+  <text x="352" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">안전한 학습 환경에</text>
+  <rect x="488" y="10" width="230" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="603" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are willing to risk sharing</text>
+  <text x="603" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">기꺼이 ~위험을 감수하려 한다 (V)</text>
+  <rect x="10" y="94" width="298" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="159" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">an incorrect answer with their peers</text>
+  <text x="159" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">동료들과 틀린 답을 (O)</text>
+  <rect x="10" y="178" width="260" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="140" y="197" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">in order to grow mathematically</text>
+  <text x="140" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수학적으로 성장하기 위해 (목적)</text>
+  <path d="M 297,41 C 297,80 58,80 58,38" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="55,18 58,10 61,18" fill="#534AB7"/>
+  <rect x="102" y="82" width="150" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="177" y="93" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">who절 → Students 수식</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">안전한 학습 환경에 있는 학생들은 수학적으로 성장하기 위해 기꺼이 동료들과 틀린 답을 공유하는</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">위험을 감수하려 합니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">peer</span><span class="sd-chip-kr">동료, 또래</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">willing to</span><span class="sd-chip-kr">기꺼이 ~하려 하다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">risk + -ing</span><span class="sd-chip-kr">~하는 위험을 감수하다</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">05 &nbsp;·&nbsp; It is important to model and expect the acceptance of all ideas without derogatory comments.</div>
+<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">It</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가주어</text>
+  <rect x="82" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="114" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="114" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다 (V)</text>
+  <rect x="154" y="10" width="104" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="206" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">important</text>
+  <text x="206" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">중요한 (C)</text>
+  <rect x="266" y="10" width="590" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="561" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to model and expect the acceptance of all ideas without derogatory comments</text>
+  <text x="561" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">비하 발언 없이 모든 아이디어 수용을 보이고 기대하는 것 (진주어 to부정사)</text>
+  <line x1="561" y1="38" x2="561" y2="82" stroke="#0C447C" stroke-width="1.3"/>
+  <line x1="561" y1="82" x2="206" y2="82" stroke="#0C447C" stroke-width="1.3"/>
+  <line x1="206" y1="82" x2="206" y2="10" stroke="#0C447C" stroke-width="1.3"/>
+  <polygon points="203,15 206,10 209,15" fill="#0C447C"/>
+  <rect x="298" y="84" width="171" height="16" rx="3" fill="#E6F1FB"/>
+  <text x="383" y="95" font-size="11" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="sans-serif">진주어 to부정사 → important</text>
+  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">비하하는 발언 없이 모든 아이디어의 수용을 모범으로 보이고 기대하는 것이 중요합니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">model</span><span class="sd-chip-kr">모범을 보이다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">derogatory</span><span class="sd-chip-kr">비하하는, 경멸적인</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">06 &nbsp;·&nbsp; As educators we can model this by recording all answers to be considered without giving any verbal or physical expressions that indicate agreement or disagreement with any answer.</div>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="132" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="76" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">As educators,</text>
+  <text x="76" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">교육자로서</text>
+  <rect x="150" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="182" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">we</text>
+  <text x="182" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리는 (S)</text>
+  <rect x="222" y="10" width="104" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="274" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">can model</text>
+  <text x="274" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">모범을 보일 수 있다 (V)</text>
+  <rect x="334" y="10" width="64" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="366" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">this</text>
+  <text x="366" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이것을 (O)</text>
+  <rect x="10" y="94" width="335" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="177" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">by recording all answers to be considered</text>
+  <text x="177" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">고려할 모든 답을 기록함으로써 (by+동명사, 수단)</text>
+  <rect x="10" y="178" width="395" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="207" y="197" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">without giving any verbal or physical expressions</text>
+  <text x="207" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">언어적·신체적 표현을 하지 않고 (without+동명사)</text>
+  <rect x="413" y="173" width="497" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="661" y="172" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">주격 관계절 — expressions 수식</text>
+  <rect x="419" y="180" width="132" height="28" rx="3" fill="#EEEDFE" stroke="#CECBF6" stroke-width="1.5"/>
+  <text x="485" y="199" font-size="13" font-weight="500" fill="#3C3489" text-anchor="middle" font-family="Georgia,serif">that indicate</text>
+  <text x="485" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">나타내는 (주격 관계대명사)</text>
+  <rect x="559" y="180" width="335" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="726" y="199" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">agreement or disagreement with any answer</text>
+  <text x="726" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">어떤 답에 대한 동의나 불동의를</text>
+  <path d="M 661,209 C 661,248 207,248 207,206" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="204,186 207,178 210,186" fill="#534AB7"/>
+  <rect x="345" y="250" width="178" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="434" y="261" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">that절 → expressions 수식</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">교육자로서 우리는 어떤 답에도 동의·불동의를 나타내는 언어적·신체적 표현을 하지 않고, 고려할</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">모든 답을 기록함으로써 이것을 모범으로 보일 수 있습니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">verbal</span><span class="sd-chip-kr">언어적인</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">indicate</span><span class="sd-chip-kr">나타내다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">agreement</span><span class="sd-chip-kr">동의</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">07 &nbsp;·&nbsp; The teacher may need to practice having a blank face.</div>
+<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="116" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="68" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">The teacher</text>
+  <text x="68" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">교사는 (S)</text>
+  <rect x="134" y="10" width="188" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="228" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">may need to practice</text>
+  <text x="228" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">연습해야 할 수도 있다 (V)</text>
+  <rect x="330" y="10" width="180" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.5"/>
+  <text x="420" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">having a blank face</text>
+  <text x="420" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">무표정을 유지하는 것 (동명사 목적어)</text>
+  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">교사는 무표정을 연습해야 할 수도 있습니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">blank face</span><span class="sd-chip-kr">무표정, 아무 감정도 드러내지 않는 얼굴</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">08 &nbsp;·&nbsp; Students look to teachers as the source of correct answers.</div>
+<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="96" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="58" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Students</text>
+  <text x="58" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">학생들은 (S)</text>
+  <rect x="114" y="10" width="87" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="157" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">look to</text>
+  <text x="157" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">바라보다 (V)</text>
+  <rect x="209" y="10" width="96" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="257" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">teachers</text>
+  <text x="257" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">교사를 (O)</text>
+  <rect x="313" y="10" width="268" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="447" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">as the source of correct answers</text>
+  <text x="447" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">정답의 출처로서</text>
+  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">학생들은 교사를 정답의 출처로 바라봅니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">source</span><span class="sd-chip-kr">출처, 근원</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">09 &nbsp;·&nbsp; Part of building a safe learning community is to shift this source of knowledge to the students, by equipping them to defend the thinking behind their solutions.</div>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="5" width="365" height="36" rx="5" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.5"/>
+  <text x="192" y="4" font-size="10" font-weight="400" fill="#0C447C" text-anchor="middle" font-family="sans-serif">명사구 주어</text>
+  <rect x="16" y="12" width="343" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.5"/>
+  <text x="187" y="31" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Part of building a safe learning community</text>
+  <text x="187" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">안전한 학습 공동체를 구축하는 것의 일부</text>
+  <rect x="383" y="10" width="116" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="441" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is to shift</text>
+  <text x="441" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이동시키는 것이다 (V, to부정사 보어)</text>
+  <rect x="507" y="10" width="328" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="671" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">this source of knowledge to the students</text>
+  <text x="671" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">지식의 이 출처를 학생들에게로 (O)</text>
+  <rect x="10" y="94" width="500" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="260" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">by equipping them to defend the thinking behind their solutions</text>
+  <text x="260" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">학생들이 풀이 뒤의 사고를 방어하도록 갖춰줌으로써 (by+동명사)</text>
+  <line x1="192" y1="41" x2="192" y2="82" stroke="#0C447C" stroke-width="1.3"/>
+  <line x1="192" y1="82" x2="441" y2="82" stroke="#0C447C" stroke-width="1.3"/>
+  <line x1="441" y1="82" x2="441" y2="10" stroke="#0C447C" stroke-width="1.3"/>
+  <polygon points="438,15 441,10 444,15" fill="#0C447C"/>
+  <rect x="234" y="84" width="164" height="16" rx="3" fill="#E6F1FB"/>
+  <text x="316" y="95" font-size="11" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="sans-serif">명사구 주어 → is to shift</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">안전한 학습 공동체를 구축하는 것의 일부는 학생들이 자신의 풀이 뒤에 있는 사고를 방어하도록</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">갖춰줌으로써 지식의 이 출처를 학생들에게로 이동시키는 것입니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">shift</span><span class="sd-chip-kr">이동시키다, 전환하다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">equip</span><span class="sd-chip-kr">갖춰주다, 준비시키다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">defend</span><span class="sd-chip-kr">방어하다, 옹호하다</span></span></div>
 </div>
   </div>
   <div class="arrange-view" id="arrangeView">
@@ -856,5 +1169,49 @@ function buildMeaningQuiz(box){
 function checkMeaning(i,btn){const card=btn.closest('.quiz-card');const correct=card.dataset.answer;const isOk=btn.dataset.val===correct;card.querySelectorAll('.choice-btn').forEach(b=>{b.onclick=null;if(b.dataset.val===correct)b.classList.add('ok');else if(b===btn&&!isOk)b.classList.add('ng');});const fb=document.getElementById('mc-fb-'+i);fb.className='quiz-fb show '+(isOk?'ok':'ng');fb.innerHTML=isOk?'🎉 정답!':'❌ 정답: <strong>'+correct+'</strong>';vocabScores.meaning[i]=isOk?1:0;const done=Object.keys(vocabScores.meaning).length;const ok=Object.values(vocabScores.meaning).filter(v=>v===1).length;const sc=document.getElementById('meaning-score');if(sc)sc.textContent=`${ok} / ${done} 정답`;}
 function resetMeaning(){vocabScores.meaning={};buildVocab(2);}
 </script>
+
+<script>
+function switchSD(){
+  var rv=document.getElementById("readingView");if(rv)rv.style.display="none";
+  ["arrangeView","grammarView","vocabView"].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.remove("active");});
+  document.querySelectorAll(".view-tab").forEach(function(t){t.classList.remove("active");});
+  var p=document.getElementById("panelSD");if(p)p.style.display="block";
+  var tb=document.getElementById("tabSD");if(tb)tb.classList.add("active");
+}
+function printSD(){
+  document.body.classList.add("psd");
+  window.onafterprint=function(){document.body.classList.remove("psd");window.onafterprint=null;};
+  window.print();
+}
+(function(){
+  document.querySelectorAll(".s-card").forEach(function(card){
+    var sb=card.querySelector(".speak-icon"),we=card.querySelector(".wave");
+    function ds(e){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
+      if(card.classList.contains("playing")){stopSpeech();}else{speakCard(card);}}
+    if(sb){sb.onclick=null;sb.addEventListener("click",ds,true);}
+    if(we){we.onclick=null;we.addEventListener("click",ds,true);}
+    card.addEventListener("click",function(e){
+      if(e.target.closest(".speak-icon")||e.target.closest(".wave"))return;
+      e.stopImmediatePropagation();
+      if(typeof stopSpeech==="function"&&document.querySelector(".s-card.playing")&&!card.classList.contains("playing")){stopSpeech();}
+      var io=card.classList.contains("tapped")||card.classList.contains("pinned");
+      document.querySelectorAll(".s-card.tapped").forEach(function(tc){if(tc!==card)tc.classList.remove("tapped");});
+      if(card.classList.contains("pinned")){card.classList.remove("pinned");}
+      else{card.classList.toggle("tapped",!io);}
+    },true);
+    card.addEventListener("dblclick",function(e){e.preventDefault();card.classList.toggle("pinned");});
+  });
+})();
+(function(){
+  if(typeof switchView==="undefined")return;
+  var orig=switchView;
+  switchView=function(v){
+    var p=document.getElementById("panelSD");if(p)p.style.display="none";
+    var tb=document.getElementById("tabSD");if(tb)tb.classList.remove("active");
+    orig(v);
+  };
+})();
+</script>
+
 </body>
 </html>
