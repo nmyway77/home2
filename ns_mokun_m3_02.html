@@ -295,7 +295,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   letter-spacing:2px;color:var(--gold2);border:1px solid rgba(201,168,76,0.3);
   padding:3px 10px;border-radius:3px;white-space:nowrap;}
 .passage{max-width:860px;margin:0 auto;padding:68px 16px 64px;}
-/* ── 내신자료 전용 CSS ── */
+/* ── 공통 행동 CSS ── */
 /* 1. 호버 펼치기 완전 제거 */
 @media(hover:hover) and (pointer:fine){
   .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
@@ -321,7 +321,16 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   white-space:nowrap;flex-shrink:0;border-top:none!important;
   display:inline-flex!important;align-items:center;gap:4px;
 }
-/* 3. 문법분석 탭 */
+/* 3. 문장구조도 탭·패널 */
+.tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
+.tab-sd.active{background:#993C1D;color:white;border-color:#993C1D;}
+.sd-panel{display:none;padding:4px 0;}
+.sd-card{background:white;border-radius:12px;box-shadow:0 2px 12px rgba(31,56,100,0.09);margin-bottom:16px;overflow:hidden;}
+.sd-hdr{padding:9px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;}
+.sd-card svg{width:100%;display:block;padding:10px 14px 14px;}
+
+/* ── 내신자료 전용 CSS (공통 BEHAVIOR_CSS 이후 추가분) ── */
+/* 1. 문법분석 탭 */
 .tab-ga{background:white;color:#4A148C;border-color:rgba(74,20,140,0.25);}
 .tab-ga.active{background:#4A148C;color:white;border-color:#4A148C;}
 .tab-q2{background:white;color:#7B3F00;border-color:rgba(123,63,0,0.25);}
@@ -417,6 +426,37 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   body.pq3 #panelQ3{display:block!important;}
   .qs-item{break-inside:avoid;} .qs-q{break-inside:avoid;}
 }
+
+.sd-print-btn{display:block;width:fit-content;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;padding:8px 22px;border-radius:7px;border:none;background:#3d3d3d;color:white;cursor:pointer;margin:0 0 14px auto;transition:background 0.2s;}
+.sd-print-btn:hover{background:#1F3864;}
+.sd-vocab-row{display:flex;flex-wrap:wrap;gap:6px;padding:8px 14px 12px;border-top:1px dashed rgba(0,0,0,0.08);background:rgba(255,255,255,0.5);}
+.sd-vocab-chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:4px 11px 4px 8px;border-radius:16px;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25);white-space:nowrap;}
+.sd-chip-en{font-size:12px;font-weight:500;color:#1F3864;font-family:Georgia,serif;}
+.sd-chip-kr{font-size:11px;color:#5F5E5A;}
+@media print{
+  @page{size:A4 portrait;margin:12mm 14mm;}
+  body:not(.psd) .sd-panel{display:none!important;}
+  body.psd .sd-panel{display:block!important;}
+  body.psd .top-nav,body.psd .page-header,body.psd .watermark,body.psd .view-tabs,body.psd .controls,body.psd .sd-print-btn,body.psd footer{display:none!important;}
+  body.psd .passage{padding:0!important;max-width:100%!important;}
+  body.psd .sd-card{break-inside:avoid;page-break-inside:avoid;margin-bottom:5mm;border:0.5px solid #ccc;box-shadow:none!important;border-radius:5px;overflow:hidden;}
+  body.psd .sd-hdr{font-size:9px!important;padding:5px 10px!important;}
+  body.psd .sd-card svg{width:100%!important;max-width:100%!important;height:auto!important;padding:6px 8px 8px!important;}
+  body.psd .sd-vocab-row{padding:4px 10px 6px!important;}
+  body.psd .sd-vocab-chip{font-size:10px!important;padding:2px 7px!important;}
+}
+/* 인쇄 헤더/푸터 */
+.print-brand{display:none;}
+@media print{
+  .print-brand{
+    display:block;position:fixed;left:0;right:0;
+    font-family:'JetBrains Mono',monospace;font-size:9px;
+    color:#888;text-align:center;letter-spacing:0.5px;
+    background:white;z-index:9999;
+  }
+  .print-brand-top{top:0;border-bottom:0.5px solid #ddd;padding:4px 0 3px;}
+  .print-brand-bot{bottom:0;border-top:0.5px solid #ddd;padding:3px 0 4px;}
+}
 </style>
 </head>
 <body>
@@ -438,6 +478,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
   <div class="view-tabs">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
+    <button class="view-tab tab-sd"             id="tabSD" onclick="switchSD()">📐 문장구조도</button>
     <button class="view-tab tab-ga"             id="tabGA" onclick="switchGA()">📊 문법분석</button>
     <button class="view-tab tab-arrange"        id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
     <button class="view-tab tab-grammar"        id="tabG" onclick="switchView('grammar')">📝 어법문제</button>
@@ -1091,6 +1132,471 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
 </div>
   </div>
+  <div class="sd-panel" id="panelSD">
+<button class="sd-print-btn" onclick="printSD()">🖨️ 구조도 인쇄 (A4)</button>
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">01 &nbsp;·&nbsp; Language is not only a tool for communication but also a reflection of complex social structures.</div>
+<svg viewBox="0 0 960 175" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="20" width="106" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="63" y="39" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Language</text>
+  <text x="63" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">언어는</text>
+  <rect x="126" y="20" width="36" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="144" y="39" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="144" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">~이다</text>
+  <text x="170" y="39" font-size="14" font-weight="500" fill="#993556" font-family="Georgia,serif">not only</text>
+  <text x="170" y="60" font-size="12" fill="#993556" font-family="sans-serif">뿐만 아니라</text>
+  <rect x="260" y="14" width="236" height="40" rx="5" fill="none" stroke="#378ADD" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="378" y="13" font-size="10" fill="#378ADD" text-anchor="middle" font-family="sans-serif">A 보어1</text>
+  <text x="378" y="34" font-size="14" font-weight="500" fill="#1a1a2e" text-anchor="middle" font-family="Georgia,serif">a tool for communication</text>
+  <line x1="260" y1="38" x2="496" y2="38" stroke="#378ADD" stroke-width="2"/>
+  <text x="378" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">소통을 위한 도구</text>
+  <text x="510" y="39" font-size="14" font-weight="500" fill="#993556" font-family="Georgia,serif">but also</text>
+  <text x="510" y="60" font-size="12" fill="#993556" font-family="sans-serif">이기도 하다</text>
+  <rect x="584" y="14" width="370" height="40" rx="5" fill="none" stroke="#639922" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="769" y="13" font-size="10" fill="#639922" text-anchor="middle" font-family="sans-serif">B 보어2</text>
+  <text x="769" y="34" font-size="14" font-weight="500" fill="#1a1a2e" text-anchor="middle" font-family="Georgia,serif">a reflection of complex social structures</text>
+  <line x1="584" y1="38" x2="954" y2="38" stroke="#639922" stroke-width="2"/>
+  <text x="769" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">복잡한 사회 구조의 반영</text>
+  <line x1="378" y1="58" x2="378" y2="90" stroke="#993556" stroke-width="1.2"/>
+  <line x1="378" y1="90" x2="769" y2="90" stroke="#993556" stroke-width="1.2"/>
+  <line x1="769" y1="90" x2="769" y2="58" stroke="#993556" stroke-width="1.2"/>
+  <polygon points="375,61 378,53 381,61" fill="#993556"/>
+  <polygon points="766,61 769,53 772,61" fill="#993556"/>
+  <rect x="478" y="92" width="206" height="18" rx="3" fill="#FBEAF0"/>
+  <text x="581" y="105" font-size="12" font-weight="500" fill="#993556" text-anchor="middle" font-family="sans-serif">not only A but also B 병렬 (명사구↔명사구)</text>
+  <line x1="10" y1="122" x2="950" y2="122" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="142" font-size="13" fill="#333" font-family="sans-serif">언어는 소통을 위한 도구일 뿐만 아니라, 복잡한 사회 구조의 반영이기도 하다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">language</span><span class="sd-chip-kr">언어</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">communication</span><span class="sd-chip-kr">소통</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">reflection</span><span class="sd-chip-kr">반영</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">social structures</span><span class="sd-chip-kr">사회 구조</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">02 &nbsp;·&nbsp; In recent years, online platforms have accelerated the spread of expressions shaped by digital interaction.</div>
+<svg viewBox="0 0 960 190" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="20" width="134" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="77" y="39" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">In recent years</text>
+  <text x="77" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">최근 몇 년간 (부사구)</text>
+  <text x="151" y="36" font-size="18" fill="#bbb" font-family="sans-serif">/</text>
+  <rect x="166" y="20" width="154" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="243" y="39" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">online platforms</text>
+  <text x="243" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">온라인 플랫폼은</text>
+  <rect x="328" y="20" width="172" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="414" y="39" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">have accelerated</text>
+  <text x="414" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가속화했다 (현재완료)</text>
+  <text x="510" y="39" font-size="14" font-weight="500" fill="#633806" font-family="Georgia,serif">the spread of</text>
+  <text x="510" y="60" font-size="12" fill="#854F0B" font-family="sans-serif">~의 확산을</text>
+  <rect x="620" y="20" width="112" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.8"/>
+  <text x="676" y="39" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">expressions</text>
+  <text x="676" y="60" font-size="12" fill="#854F0B" text-anchor="middle" font-family="sans-serif">표현들 (O핵심)</text>
+  <rect x="740" y="20" width="214" height="28" rx="3" fill="#EEEDFE" stroke="#CECBF6" stroke-width="1.5"/>
+  <text x="847" y="39" font-size="14" font-weight="500" fill="#3C3489" text-anchor="middle" font-family="Georgia,serif">shaped by digital interaction</text>
+  <text x="847" y="60" font-size="12" fill="#534AB7" text-anchor="middle" font-family="sans-serif">디지털 상호작용에 의해 형성된</text>
+  <path d="M 847,50 C 847,96 676,96 676,50" fill="none" stroke="#534AB7" stroke-width="1.5"/>
+  <polygon points="673,53 676,45 679,53" fill="#534AB7"/>
+  <rect x="622" y="98" width="278" height="18" rx="3" fill="#EEEDFE"/>
+  <text x="761" y="111" font-size="12" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">① shaped by → expressions 수식 (과거분사: ~에 의해 형성된)</text>
+  <path d="M 676,118 C 676,140 560,140 560,68" fill="none" stroke="#854F0B" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <polygon points="557,71 560,63 563,71" fill="#854F0B"/>
+  <rect x="422" y="142" width="320" height="18" rx="3" fill="#FFF3E0"/>
+  <text x="582" y="155" font-size="12" font-weight="500" fill="#854F0B" text-anchor="middle" font-family="sans-serif">② expressions shaped by... = 목적어 전체 (the spread of ~)</text>
+  <line x1="10" y1="170" x2="950" y2="170" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="185" font-size="13" fill="#333" font-family="sans-serif">최근 몇 년간, 온라인 플랫폼은 디지털 상호작용에 의해 형성된 표현들의 확산을 가속화했다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">accelerated</span><span class="sd-chip-kr">가속화했다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">spread</span><span class="sd-chip-kr">확산</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">expressions</span><span class="sd-chip-kr">표현들</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">interaction</span><span class="sd-chip-kr">상호작용</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">03 &nbsp;·&nbsp; According to a report, over 4 billion people use social media worldwide, and a large proportion of them regularly use internet slang, which is a simplified and informal way of speaking used in everyday conversations, especially among people of the same age group or social group.</div>
+<svg viewBox="0 0 960 230" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="18" width="160" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="90" y="37" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">According to a report</text>
+  <text x="90" y="56" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">한 보고서에 따르면</text>
+  <text x="177" y="35" font-size="18" fill="#bbb" font-family="sans-serif">/</text>
+  <rect x="190" y="8" width="344" height="44" rx="5" fill="none" stroke="#378ADD" stroke-width="1.2" stroke-dasharray="5,3"/>
+  <text x="362" y="7" font-size="10" fill="#378ADD" text-anchor="middle" font-family="sans-serif">절1</text>
+  <rect x="194" y="12" width="134" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="261" y="30" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">over 4 billion people</text>
+  <text x="261" y="56" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">40억 명 이상이</text>
+  <rect x="336" y="12" width="56" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="364" y="30" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">use</text>
+  <text x="364" y="56" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사용한다</text>
+  <rect x="400" y="12" width="128" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="464" y="30" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">social media worldwide</text>
+  <text x="464" y="56" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">전 세계 소셜 미디어를</text>
+  <text x="544" y="32" font-size="14" font-weight="500" fill="#993556" font-family="Georgia,serif">and</text>
+  <text x="544" y="56" font-size="12" fill="#993556" font-family="sans-serif">그리고</text>
+  <rect x="568" y="8" width="386" height="44" rx="5" fill="none" stroke="#E65100" stroke-width="1.2" stroke-dasharray="5,3"/>
+  <text x="761" y="7" font-size="10" fill="#E65100" text-anchor="middle" font-family="sans-serif">절2</text>
+  <rect x="572" y="12" width="136" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="640" y="30" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">a large proportion of them</text>
+  <text x="640" y="56" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들 중 많은 비율이</text>
+  <rect x="716" y="12" width="100" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="766" y="30" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">regularly use</text>
+  <text x="766" y="56" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">정기적으로 사용한다</text>
+  <rect x="824" y="12" width="128" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.8"/>
+  <text x="888" y="30" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">internet slang</text>
+  <text x="888" y="56" font-size="12" fill="#854F0B" text-anchor="middle" font-family="sans-serif">인터넷 속어를</text>
+  <rect x="568" y="68" width="386" height="44" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="761" y="67" font-size="10" fill="#534AB7" text-anchor="middle" font-family="sans-serif">, which절 — internet slang 부연 설명 (계속적 관계대명사: 그리고 그것은)</text>
+  <text x="574" y="90" font-size="13" font-weight="500" fill="#3C3489" font-family="Georgia,serif">, which is</text>
+  <text x="574" y="112" font-size="12" fill="#3C3489" font-family="sans-serif">그리고 그것은 ~이다</text>
+  <rect x="648" y="72" width="300" height="28" rx="3" fill="#EEEDFE" stroke="#CECBF6" stroke-width="1.2"/>
+  <text x="798" y="90" font-size="13" font-weight="500" fill="#3C3489" text-anchor="middle" font-family="Georgia,serif">a simplified and informal way of speaking</text>
+  <text x="798" y="112" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">단순화되고 비격식적인 말하기 방식</text>
+  <rect x="568" y="122" width="386" height="28" rx="3" fill="#EEEDFE" stroke="#CECBF6" stroke-width="1"/>
+  <text x="761" y="140" font-size="13" font-weight="500" fill="#3C3489" text-anchor="middle" font-family="Georgia,serif">used in everyday conversations, especially among people of the same age group or social group</text>
+  <text x="761" y="160" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">일상 대화에서 사용되는, 특히 같은 연령대나 사회 집단 사람들 사이에서</text>
+  <line x1="10" y1="178" x2="950" y2="178" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="196" font-size="13" fill="#333" font-family="sans-serif">40억 명이 소셜 미디어를 사용하며, 그들 중 많은 비율이 인터넷 속어를 정기적으로 사용하는데,</text>
+  <text x="10" y="215" font-size="13" fill="#333" font-family="sans-serif">이것은 일상 대화에서 쓰이는 단순화되고 비격식적인 말하기 방식이다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">internet slang</span><span class="sd-chip-kr">인터넷 속어</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">proportion</span><span class="sd-chip-kr">비율</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">simplified</span><span class="sd-chip-kr">단순화된</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">informal</span><span class="sd-chip-kr">비격식적인</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">age group</span><span class="sd-chip-kr">연령대</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">04 &nbsp;·&nbsp; These expressions often cross cultural boundaries, which creates new forms of communication but also increases ambiguity.</div>
+<svg viewBox="0 0 960 185" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="20" width="180" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="100" y="39" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">These expressions</text>
+  <text x="100" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이러한 표현들은</text>
+  <rect x="198" y="20" width="58" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="227" y="39" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">often cross</text>
+  <text x="227" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">종종 넘나든다</text>
+  <rect x="264" y="20" width="180" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="354" y="39" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">cultural boundaries</text>
+  <text x="354" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">문화적 경계를</text>
+  <rect x="454" y="12" width="500" height="44" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="704" y="11" font-size="10" fill="#534AB7" text-anchor="middle" font-family="sans-serif">, which절 — 앞 절 전체 선행사 (그런데 이것은)</text>
+  <rect x="458" y="16" width="58" height="28" rx="3" fill="#EEEDFE" stroke="#CECBF6" stroke-width="1.5"/>
+  <text x="487" y="35" font-size="14" font-weight="500" fill="#3C3489" text-anchor="middle" font-family="Georgia,serif">, which</text>
+  <text x="487" y="60" font-size="12" fill="#3C3489" text-anchor="middle" font-family="sans-serif">그런데 이것은</text>
+  <rect x="524" y="16" width="82" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="565" y="35" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">creates</text>
+  <text x="565" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">만들어내다</text>
+  <rect x="614" y="16" width="236" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="732" y="35" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">new forms of communication</text>
+  <text x="732" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">새로운 소통 방식을</text>
+  <text x="858" y="35" font-size="13" font-weight="500" fill="#993556" font-family="Georgia,serif">but also</text>
+  <text x="858" y="60" font-size="12" fill="#993556" font-family="sans-serif">또한</text>
+  <rect x="454" y="68" width="500" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1"/>
+  <text x="458" y="86" font-size="14" font-weight="500" fill="#27500A" font-family="Georgia,serif">increases</text>
+  <text x="458" y="107" font-size="12" fill="#5F5E5A" font-family="sans-serif">높이기도 한다</text>
+  <rect x="548" y="72" width="106" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="601" y="91" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">ambiguity</text>
+  <text x="601" y="112" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">모호성을</text>
+  <path d="M 487,44 C 487,132 354,132 354,50" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <polygon points="351,53 354,45 357,53" fill="#534AB7"/>
+  <rect x="276" y="134" width="252" height="18" rx="3" fill="#EEEDFE"/>
+  <text x="402" y="147" font-size="12" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">, which = 앞 절 전체를 선행사로 받음</text>
+  <line x1="10" y1="162" x2="950" y2="162" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="180" font-size="13" fill="#333" font-family="sans-serif">이러한 표현들은 종종 문화적 경계를 넘나드는데, 그런데 이것은 새로운 소통 방식을 만들어내기도 하지만 모호성도 높인다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">cross</span><span class="sd-chip-kr">넘다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">boundaries</span><span class="sd-chip-kr">경계</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">ambiguity</span><span class="sd-chip-kr">모호성</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">creates</span><span class="sd-chip-kr">만들어내다</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">05 &nbsp;·&nbsp; As a result, people from different age groups can hardly interpret the same message in the same way.</div>
+<svg viewBox="0 0 960 165" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="20" width="104" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="62" y="39" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">As a result</text>
+  <text x="62" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">결과적으로</text>
+  <text x="121" y="36" font-size="18" fill="#bbb" font-family="sans-serif">/</text>
+  <rect x="136" y="20" width="250" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="261" y="39" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">people from different age groups</text>
+  <text x="261" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">서로 다른 연령대의 사람들은</text>
+  <rect x="394" y="20" width="152" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="470" y="39" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">can hardly interpret</text>
+  <text x="470" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">거의 해석할 수 없다</text>
+  <rect x="554" y="20" width="188" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="648" y="39" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the same message</text>
+  <text x="648" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">같은 메시지를</text>
+  <rect x="750" y="20" width="204" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="852" y="39" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">in the same way</text>
+  <text x="852" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">같은 방식으로</text>
+  <line x1="10" y1="80" x2="950" y2="80" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="100" font-size="13" fill="#333" font-family="sans-serif">결과적으로, 서로 다른 연령대의 사람들은 같은 메시지를 같은 방식으로 해석하기가 거의 불가능하다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">age groups</span><span class="sd-chip-kr">연령대</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">interpret</span><span class="sd-chip-kr">해석하다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">hardly</span><span class="sd-chip-kr">거의 ~않다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">message</span><span class="sd-chip-kr">메시지</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">06 &nbsp;·&nbsp; These changes can be seen as linguistic phenomena, reflecting broader social transformations.</div>
+<svg viewBox="0 0 960 175" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="20" width="150" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="85" y="39" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">These changes</text>
+  <text x="85" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이러한 변화들은</text>
+  <rect x="168" y="20" width="152" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="244" y="39" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">can be seen as</text>
+  <text x="244" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">~으로 볼 수 있다</text>
+  <rect x="328" y="20" width="220" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="438" y="39" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">linguistic phenomena</text>
+  <text x="438" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">언어적 현상으로</text>
+  <rect x="556" y="14" width="398" height="40" rx="5" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="755" y="13" font-size="10" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">분사구문 (부대상황: 그리고 ~한다)</text>
+  <text x="562" y="38" font-size="14" font-weight="500" fill="#444" font-family="Georgia,serif">, reflecting</text>
+  <text x="562" y="58" font-size="12" fill="#444" font-family="sans-serif">그리고 반영한다</text>
+  <rect x="654" y="18" width="294" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="801" y="37" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">broader social transformations</text>
+  <text x="801" y="58" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">더 넓은 사회적 변화를</text>
+  <line x1="10" y1="80" x2="950" y2="80" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="100" font-size="13" fill="#333" font-family="sans-serif">이러한 변화들은 언어적 현상으로 볼 수 있으며, 그리고 더 넓은 사회적 변화를 반영한다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">linguistic</span><span class="sd-chip-kr">언어적인</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">phenomena</span><span class="sd-chip-kr">현상들</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">transformations</span><span class="sd-chip-kr">변화들</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">reflecting</span><span class="sd-chip-kr">반영하며</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">07 &nbsp;·&nbsp; Many newly created expressions are widely used even though users barely understand their origins or implications.</div>
+<svg viewBox="0 0 960 170" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="20" width="248" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="134" y="39" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Many newly created expressions</text>
+  <text x="134" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">새롭게 만들어진 많은 표현들이</text>
+  <rect x="266" y="20" width="186" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="359" y="39" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are widely used</text>
+  <text x="359" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">널리 사용된다</text>
+  <rect x="460" y="12" width="494" height="44" rx="5" fill="none" stroke="#085041" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="707" y="11" font-size="10" fill="#085041" text-anchor="middle" font-family="sans-serif">even though 양보절 (실제 사실 기반)</text>
+  <rect x="464" y="16" width="124" height="28" rx="3" fill="#E1F5EE" stroke="#9FE1CB" stroke-width="1.2"/>
+  <text x="526" y="35" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">even though users</text>
+  <text x="526" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사용자들이 ~임에도</text>
+  <rect x="596" y="16" width="156" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="674" y="35" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">barely understand</text>
+  <text x="674" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">거의 이해하지 못한다</text>
+  <rect x="760" y="16" width="190" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="855" y="35" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">their origins or implications</text>
+  <text x="855" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그 기원이나 함의를</text>
+  <line x1="10" y1="80" x2="950" y2="80" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="100" font-size="13" fill="#333" font-family="sans-serif">많은 새롭게 만들어진 표현들이, 사용자들이 그 기원이나 함의를 거의 이해하지 못함에도 불구하고 널리 사용된다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">even though</span><span class="sd-chip-kr">~에도 불구하고</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">barely</span><span class="sd-chip-kr">거의 ~않다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">origins</span><span class="sd-chip-kr">기원</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">implications</span><span class="sd-chip-kr">함의</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">08 &nbsp;·&nbsp; In particular, informal phrases frequently appear in contexts demanding precision and formality.</div>
+<svg viewBox="0 0 960 165" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="20" width="114" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="67" y="39" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">In particular</text>
+  <text x="67" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">특히</text>
+  <text x="131" y="36" font-size="18" fill="#bbb" font-family="sans-serif">/</text>
+  <rect x="146" y="20" width="160" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="226" y="39" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">informal phrases</text>
+  <text x="226" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">비격식적인 표현들이</text>
+  <rect x="314" y="20" width="190" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="409" y="39" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">frequently appear in</text>
+  <text x="409" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">자주 나타난다 ~에</text>
+  <rect x="512" y="20" width="108" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.8"/>
+  <text x="566" y="39" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">contexts</text>
+  <text x="566" y="60" font-size="12" fill="#854F0B" text-anchor="middle" font-family="sans-serif">맥락에서 (O핵심)</text>
+  <rect x="628" y="20" width="326" height="28" rx="3" fill="#EEEDFE" stroke="#CECBF6" stroke-width="1.5"/>
+  <text x="791" y="39" font-size="14" font-weight="500" fill="#3C3489" text-anchor="middle" font-family="Georgia,serif">demanding precision and formality</text>
+  <text x="791" y="60" font-size="12" fill="#534AB7" text-anchor="middle" font-family="sans-serif">정확성과 격식을 요구하는 (현재분사 후치수식)</text>
+  <path d="M 791,50 C 791,96 566,96 566,50" fill="none" stroke="#534AB7" stroke-width="1.5"/>
+  <polygon points="563,53 566,45 569,53" fill="#534AB7"/>
+  <rect x="540" y="98" width="302" height="18" rx="3" fill="#EEEDFE"/>
+  <text x="691" y="111" font-size="12" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">demanding → contexts 수식 (~을 요구하는 맥락)</text>
+  <line x1="10" y1="128" x2="950" y2="128" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="148" font-size="13" fill="#333" font-family="sans-serif">특히, 비격식적인 표현들이 정확성과 격식을 요구하는 맥락에서 자주 나타난다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">contexts</span><span class="sd-chip-kr">맥락</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">demanding</span><span class="sd-chip-kr">요구하는</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">precision</span><span class="sd-chip-kr">정확성</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">formality</span><span class="sd-chip-kr">격식</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">09 &nbsp;·&nbsp; This misuse can distort meaning, which may eventually undermine effective communication.</div>
+<svg viewBox="0 0 960 175" xmlns="http://www.w3.org/2000/svg">
+  <rect x="7" y="5" width="330" height="30" rx="5" fill="none" stroke="#378ADD" stroke-width="1.2" stroke-dasharray="5,3"/>
+  <text x="168" y="4" font-size="10" fill="#378ADD" text-anchor="middle" font-family="sans-serif">주절</text>
+  <rect x="10" y="20" width="126" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="73" y="39" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">This misuse</text>
+  <text x="73" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이 오용은</text>
+  <rect x="144" y="20" width="124" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="206" y="39" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">can distort</text>
+  <text x="206" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">왜곡할 수 있다</text>
+  <rect x="276" y="20" width="94" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="323" y="39" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">meaning</text>
+  <text x="323" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">의미를</text>
+  <rect x="378" y="12" width="576" height="44" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="666" y="11" font-size="10" fill="#534AB7" text-anchor="middle" font-family="sans-serif">, which절 — 앞 절 전체 선행사 (그런데 이것은)</text>
+  <rect x="382" y="16" width="62" height="28" rx="3" fill="#EEEDFE" stroke="#CECBF6" stroke-width="1.5"/>
+  <text x="413" y="35" font-size="14" font-weight="500" fill="#3C3489" text-anchor="middle" font-family="Georgia,serif">, which</text>
+  <text x="413" y="60" font-size="12" fill="#3C3489" text-anchor="middle" font-family="sans-serif">그런데 이것은</text>
+  <rect x="452" y="16" width="240" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="572" y="35" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">may eventually undermine</text>
+  <text x="572" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">결국 약화시킬 수도 있다</text>
+  <rect x="700" y="16" width="250" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="825" y="35" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">effective communication</text>
+  <text x="825" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">효과적인 소통을</text>
+  <path d="M 413,44 C 413,110 323,110 323,50" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <polygon points="320,53 323,45 326,53" fill="#534AB7"/>
+  <rect x="228" y="112" width="256" height="18" rx="3" fill="#EEEDFE"/>
+  <text x="356" y="125" font-size="12" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">, which = 앞 절 전체를 선행사로 받음</text>
+  <line x1="10" y1="142" x2="950" y2="142" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="162" font-size="13" fill="#333" font-family="sans-serif">이 오용은 의미를 왜곡할 수 있는데, 이것은 결국 효과적인 소통을 약화시킬 수도 있다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">misuse</span><span class="sd-chip-kr">오용</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">distort</span><span class="sd-chip-kr">왜곡하다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">undermine</span><span class="sd-chip-kr">약화시키다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">effective</span><span class="sd-chip-kr">효과적인</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">10 &nbsp;·&nbsp; Furthermore, constant exposure to simplified language may reduce individuals' ability to construct complex ideas.</div>
+<svg viewBox="0 0 960 170" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="20" width="114" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="67" y="39" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">Furthermore</text>
+  <text x="67" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">게다가</text>
+  <text x="130" y="36" font-size="18" fill="#bbb" font-family="sans-serif">/</text>
+  <rect x="146" y="14" width="286" height="40" rx="5" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.5"/>
+  <text x="289" y="13" font-size="10" fill="#0C447C" text-anchor="middle" font-family="sans-serif">동명사구 주어</text>
+  <text x="289" y="35" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">constant exposure to simplified language</text>
+  <text x="289" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">단순화된 언어에 지속적으로 노출되는 것은</text>
+  <rect x="440" y="20" width="128" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="504" y="39" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">may reduce</text>
+  <text x="504" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">줄일 수 있다</text>
+  <rect x="576" y="20" width="112" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="632" y="39" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">individuals'</text>
+  <text x="632" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">개인들의</text>
+  <rect x="696" y="20" width="258" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="825" y="39" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">ability to construct complex ideas</text>
+  <text x="825" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">복잡한 생각을 구성하는 능력을</text>
+  <line x1="289" y1="56" x2="289" y2="90" stroke="#0C447C" stroke-width="1.3"/>
+  <line x1="289" y1="90" x2="504" y2="90" stroke="#0C447C" stroke-width="1.3"/>
+  <line x1="504" y1="90" x2="504" y2="50" stroke="#0C447C" stroke-width="1.3"/>
+  <polygon points="501,53 504,45 507,53" fill="#0C447C"/>
+  <rect x="296" y="92" width="222" height="18" rx="3" fill="#E6F1FB"/>
+  <text x="407" y="105" font-size="12" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="sans-serif">동명사구 주어(단수) → may reduce</text>
+  <line x1="10" y1="122" x2="950" y2="122" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="142" font-size="13" fill="#333" font-family="sans-serif">게다가, 단순화된 언어에 지속적으로 노출되는 것은 개인들이 복잡한 생각을 구성하는 능력을 줄일 수 있다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">exposure</span><span class="sd-chip-kr">노출</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">simplified language</span><span class="sd-chip-kr">단순화된 언어</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">reduce</span><span class="sd-chip-kr">줄이다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">construct</span><span class="sd-chip-kr">구성하다</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">11 &nbsp;·&nbsp; Balancing creativity with clarity requires clear criteria for appropriate language use.</div>
+<svg viewBox="0 0 960 165" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="14" width="290" height="40" rx="5" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.5"/>
+  <text x="155" y="13" font-size="10" fill="#0C447C" text-anchor="middle" font-family="sans-serif">동명사구 주어 (단수 취급)</text>
+  <text x="155" y="35" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Balancing creativity with clarity</text>
+  <text x="155" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">창의성과 명확성의 균형을 맞추는 것은</text>
+  <rect x="308" y="20" width="100" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="358" y="39" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">requires</text>
+  <text x="358" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">필요로 한다</text>
+  <rect x="416" y="20" width="538" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="685" y="39" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">clear criteria for appropriate language use</text>
+  <text x="685" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">적절한 언어 사용을 위한 명확한 기준을</text>
+  <line x1="155" y1="56" x2="155" y2="90" stroke="#0C447C" stroke-width="1.3"/>
+  <line x1="155" y1="90" x2="358" y2="90" stroke="#0C447C" stroke-width="1.3"/>
+  <line x1="358" y1="90" x2="358" y2="50" stroke="#0C447C" stroke-width="1.3"/>
+  <polygon points="355,53 358,45 361,53" fill="#0C447C"/>
+  <rect x="160" y="92" width="218" height="18" rx="3" fill="#E6F1FB"/>
+  <text x="269" y="105" font-size="12" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="sans-serif">동명사구 주어(단수) → requires</text>
+  <line x1="10" y1="122" x2="950" y2="122" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="142" font-size="13" fill="#333" font-family="sans-serif">창의성과 명확성의 균형을 맞추는 것은 적절한 언어 사용을 위한 명확한 기준을 필요로 한다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">creativity</span><span class="sd-chip-kr">창의성</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">clarity</span><span class="sd-chip-kr">명확성</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">requires</span><span class="sd-chip-kr">필요로 하다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">criteria</span><span class="sd-chip-kr">기준들</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">12 &nbsp;·&nbsp; Nevertheless, language change can also foster innovation and social cohesion.</div>
+<svg viewBox="0 0 960 145" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="20" width="144" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="82" y="39" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">Nevertheless</text>
+  <text x="82" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그럼에도 불구하고</text>
+  <text x="161" y="36" font-size="18" fill="#bbb" font-family="sans-serif">/</text>
+  <rect x="176" y="20" width="152" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="252" y="39" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">language change</text>
+  <text x="252" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">언어 변화는</text>
+  <rect x="336" y="20" width="182" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="427" y="39" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">can also foster</text>
+  <text x="427" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">촉진할 수도 있다</text>
+  <rect x="526" y="20" width="428" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="740" y="39" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">innovation and social cohesion</text>
+  <text x="740" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">혁신과 사회적 결속을 (병렬)</text>
+  <line x1="10" y1="80" x2="950" y2="80" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="100" font-size="13" fill="#333" font-family="sans-serif">그럼에도 불구하고, 언어 변화는 혁신과 사회적 결속을 촉진할 수도 있다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">language change</span><span class="sd-chip-kr">언어 변화</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">foster</span><span class="sd-chip-kr">촉진하다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">innovation</span><span class="sd-chip-kr">혁신</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">cohesion</span><span class="sd-chip-kr">결속</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">13 &nbsp;·&nbsp; Shared expressions help individuals build a collective identity within specific communities.</div>
+<svg viewBox="0 0 960 155" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="20" width="196" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="103" y="39" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Shared expressions</text>
+  <text x="103" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">공유된 표현들은</text>
+  <rect x="214" y="20" width="58" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="243" y="39" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">help</text>
+  <text x="243" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">돕다</text>
+  <rect x="280" y="20" width="100" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="330" y="39" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">individuals</text>
+  <text x="330" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">개인들이</text>
+  <rect x="388" y="20" width="58" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="417" y="39" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">build</text>
+  <text x="417" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">형성하다 (동사원형)</text>
+  <rect x="454" y="20" width="248" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="578" y="39" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">a collective identity</text>
+  <text x="578" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">집단 정체성을</text>
+  <rect x="710" y="20" width="244" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="832" y="39" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">within specific communities</text>
+  <text x="832" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">특정 공동체 안에서 (부사구)</text>
+  <line x1="10" y1="80" x2="950" y2="80" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="100" font-size="13" fill="#333" font-family="sans-serif">공유된 표현들은 개인들이 특정 공동체 안에서 집단 정체성을 형성하도록 돕는다.</text>
+  <text x="10" y="118" font-size="12" fill="#888" font-family="sans-serif">help + O + 동사원형 (build) — to 없이!</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">shared</span><span class="sd-chip-kr">공유된</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">collective identity</span><span class="sd-chip-kr">집단 정체성</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">communities</span><span class="sd-chip-kr">공동체</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">help</span><span class="sd-chip-kr">돕다</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">14 &nbsp;·&nbsp; However, excessive reliance on such expressions may lead to exclusion of those unfamiliar with them.</div>
+<svg viewBox="0 0 960 165" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="20" width="112" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="61" y="39" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">However</text>
+  <text x="61" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">하지만</text>
+  <text x="128" y="36" font-size="18" fill="#bbb" font-family="sans-serif">/</text>
+  <rect x="144" y="20" width="252" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="270" y="39" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">excessive reliance on such expressions</text>
+  <text x="270" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그러한 표현들에 대한 과도한 의존은</text>
+  <rect x="404" y="20" width="140" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="474" y="39" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">may lead to</text>
+  <text x="474" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이어질 수 있다</text>
+  <rect x="552" y="20" width="110" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.8"/>
+  <text x="607" y="39" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">exclusion</text>
+  <text x="607" y="60" font-size="12" fill="#854F0B" text-anchor="middle" font-family="sans-serif">배제에 (O핵심)</text>
+  <rect x="670" y="20" width="284" height="28" rx="3" fill="#EEEDFE" stroke="#CECBF6" stroke-width="1.5"/>
+  <text x="812" y="39" font-size="14" font-weight="500" fill="#3C3489" text-anchor="middle" font-family="Georgia,serif">of those unfamiliar with them</text>
+  <text x="812" y="60" font-size="12" fill="#534AB7" text-anchor="middle" font-family="sans-serif">그것들에 익숙하지 않은 사람들의</text>
+  <path d="M 812,50 C 812,96 607,96 607,50" fill="none" stroke="#534AB7" stroke-width="1.5"/>
+  <polygon points="604,53 607,45 610,53" fill="#534AB7"/>
+  <rect x="570" y="98" width="294" height="18" rx="3" fill="#EEEDFE"/>
+  <text x="717" y="111" font-size="12" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">of those... → exclusion 수식 (형용사구: 어떤 배제인지)</text>
+  <line x1="10" y1="128" x2="950" y2="128" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="148" font-size="13" fill="#333" font-family="sans-serif">하지만, 그러한 표현들에 대한 과도한 의존은 그것들에 익숙하지 않은 사람들의 배제로 이어질 수 있다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">reliance</span><span class="sd-chip-kr">의존</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">lead to</span><span class="sd-chip-kr">이어지다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">exclusion</span><span class="sd-chip-kr">배제</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">unfamiliar with</span><span class="sd-chip-kr">익숙하지 않은</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">15 &nbsp;·&nbsp; Therefore, maintaining effective discourse is essential.</div>
+<svg viewBox="0 0 960 145" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="20" width="116" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="63" y="39" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">Therefore</text>
+  <text x="63" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">따라서</text>
+  <text x="133" y="36" font-size="18" fill="#bbb" font-family="sans-serif">/</text>
+  <rect x="148" y="14" width="240" height="40" rx="5" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.5"/>
+  <text x="268" y="13" font-size="10" fill="#0C447C" text-anchor="middle" font-family="sans-serif">동명사구 주어 (단수 취급)</text>
+  <text x="268" y="35" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">maintaining effective discourse</text>
+  <text x="268" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">효과적인 담론을 유지하는 것은</text>
+  <rect x="396" y="20" width="36" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="414" y="39" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="414" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">~이다</text>
+  <rect x="440" y="20" width="114" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="497" y="39" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">essential</text>
+  <text x="497" y="60" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">필수적</text>
+  <line x1="268" y1="56" x2="268" y2="86" stroke="#0C447C" stroke-width="1.3"/>
+  <line x1="268" y1="86" x2="414" y2="86" stroke="#0C447C" stroke-width="1.3"/>
+  <line x1="414" y1="86" x2="414" y2="50" stroke="#0C447C" stroke-width="1.3"/>
+  <polygon points="411,53 414,45 417,53" fill="#0C447C"/>
+  <line x1="10" y1="106" x2="950" y2="106" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="126" font-size="13" fill="#333" font-family="sans-serif">따라서, 효과적인 담론을 유지하는 것이 필수적이다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">maintaining</span><span class="sd-chip-kr">유지하는</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">discourse</span><span class="sd-chip-kr">담론</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">essential</span><span class="sd-chip-kr">필수적인</span></span></div>
+</div>
+  </div>
   <div class="arrange-view" id="arrangeView">
     <div class="score-bar"><div><div class="score-label">SCORE</div><span class="score-num" id="scoreNum">0</span><span class="score-total" id="scoreTotal"> / 0</span></div><button class="score-reset-all" onclick="resetAll()">↺ 전체 초기화</button></div>
     <div id="arrCards"></div>
@@ -1676,13 +2182,68 @@ function checkMeaning(i,btn){const card=btn.closest('.quiz-card');const correct=
 function resetMeaning(){vocabScores.meaning={};buildVocab(2);}
 </script>
 <script>
-var EXTRA_PANELS = ["panelQ2","panelQ3","panelGA"];
+// 공통: 카드 클릭 = 해석 토글 / 스피커 = 소리 토글
+(function(){
+  document.querySelectorAll(".s-card").forEach(function(card){
+    var speakBtn=card.querySelector(".speak-icon");
+    var waveEl=card.querySelector(".wave");
+    function doSpeak(e){
+      e.preventDefault();e.stopPropagation();
+      if(card.classList.contains("playing")){stopSpeech();}
+      else{speakCard(card);}
+    }
+    if(speakBtn){speakBtn.onclick=null;speakBtn.addEventListener("click",doSpeak,true);}
+    if(waveEl){waveEl.onclick=null;waveEl.addEventListener("click",doSpeak,true);}
+    card.addEventListener("click",function(e){
+      if(e.target.closest(".speak-icon")||e.target.closest(".wave"))return;
+      var isOpen=card.classList.contains("tapped")||card.classList.contains("pinned");
+      document.querySelectorAll(".s-card.tapped").forEach(function(tc){if(tc!==card)tc.classList.remove("tapped");});
+      if(card.classList.contains("pinned")){card.classList.remove("pinned");}
+      else{card.classList.toggle("tapped",!isOpen);}
+    },true);
+    card.addEventListener("dblclick",function(e){e.preventDefault();card.classList.toggle("pinned");});
+  });
+})();
+// 문장구조도 탭 전환
+
+function printSD(){
+  document.body.classList.add("psd");
+  window.onafterprint=function(){document.body.classList.remove("psd");window.onafterprint=null;};
+  window.print();
+}
+function switchSD(){
+  var rv=document.getElementById("readingView");
+  if(rv)rv.style.display="none";
+  ["arrangeView","grammarView","vocabView"].forEach(function(id){
+    var el=document.getElementById(id);if(el)el.classList.remove("active");
+  });
+  if(typeof hideAllExtra==="function")hideAllExtra();
+  var panel=document.getElementById("panelSD");
+  if(panel)panel.style.display="block";
+  document.querySelectorAll(".view-tab").forEach(function(t){t.classList.remove("active");});
+  var tab=document.getElementById("tabSD");
+  if(tab)tab.classList.add("active");
+}
+// switchView 오버라이드: SD 패널 숨기기
+(function(){
+  var origSV=switchView;
+  switchView=function(v){
+    var panel=document.getElementById("panelSD");
+    if(panel)panel.style.display="none";
+    var tab=document.getElementById("tabSD");
+    if(tab)tab.classList.remove("active");
+    origSV(v);
+  };
+})();
+</script>
+<script>
+var EXTRA_PANELS = ["panelQ2","panelQ3","panelGA","panelSD"];
 function hideAllExtra(){
   EXTRA_PANELS.forEach(function(id){
     var el=document.getElementById(id);if(el)el.style.display="none";
   });
   document.querySelectorAll(".view-tab").forEach(function(t){
-    if(t.id==="tabQ2"||t.id==="tabQ3"||t.id==="tabGA")t.classList.remove("active");
+    if(t.id==="tabQ2"||t.id==="tabQ3"||t.id==="tabGA"||t.id==="tabSD")t.classList.remove("active");
   });
 }
 function switchQ(n){
@@ -1720,28 +2281,6 @@ function printQ(n){
     hideAllExtra();
     orig(v);
   };
-})();
-// 내신자료 전용: 카드 클릭 = 해석 토글 / 스피커 클릭 = 소리 (토글)
-(function(){
-  document.querySelectorAll(".s-card").forEach(function(card){
-    var speakBtn=card.querySelector(".speak-icon");
-    var waveEl=card.querySelector(".wave");
-    function doSpeak(e){
-      e.preventDefault();e.stopPropagation();
-      if(card.classList.contains("playing")){stopSpeech();}
-      else{speakCard(card);}
-    }
-    if(speakBtn){speakBtn.onclick=null;speakBtn.addEventListener("click",doSpeak,true);}
-    if(waveEl){waveEl.onclick=null;waveEl.addEventListener("click",doSpeak,true);}
-    card.addEventListener("click",function(e){
-      if(e.target.closest(".speak-icon")||e.target.closest(".wave"))return;
-      var isOpen=card.classList.contains("tapped")||card.classList.contains("pinned");
-      document.querySelectorAll(".s-card.tapped").forEach(function(tc){if(tc!==card)tc.classList.remove("tapped");});
-      if(card.classList.contains("pinned")){card.classList.remove("pinned");}
-      else{card.classList.toggle("tapped",!isOpen);}
-    },true);
-    card.addEventListener("dblclick",function(e){e.preventDefault();card.classList.toggle("pinned");});
-  });
 })();
 </script>
 </body>
