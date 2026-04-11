@@ -294,6 +294,48 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .soon-num{font-family:'Playfair Display',serif;font-size:80px;font-weight:700;color:rgba(31,56,100,0.08);line-height:1;margin-bottom:20px;}
 .soon-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(31,56,100,0.3);margin-bottom:12px;}
 .soon-text{font-size:14px;color:var(--text-sub);font-weight:300;}
+
+/* ── SD + BEHAVIOR CSS ── */
+@media(hover:hover) and (pointer:fine){
+  .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card.grammar:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+}
+.s-card.vocab-only .s-kr-wrap,.s-card.pinned .s-kr-wrap,.s-card.tapped .s-kr-wrap{
+  display:flex!important;flex-wrap:wrap!important;gap:6px!important;padding:8px 14px 10px!important;align-items:flex-start;}
+.s-card.pinned .s-kr,.s-card.tapped .s-kr,.s-card.pinned .s-grammar,.s-card.tapped .s-grammar,
+.s-card.pinned .s-meaning,.s-card.tapped .s-meaning{width:100%;flex-basis:100%;order:1;}
+.s-card.vocab-only .s-vocab,.s-card.pinned .s-vocab,.s-card.tapped .s-vocab{
+  order:0;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25)!important;border-radius:20px;
+  padding:3px 12px 3px 8px!important;white-space:nowrap;flex-shrink:0;border-top:none!important;
+  display:inline-flex!important;align-items:center;gap:4px;}
+.tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
+.tab-sd.active{background:#993C1D;color:white;border-color:#993C1D;}
+.sd-panel{display:none;padding:4px 0;max-width:860px;margin:0 auto;}
+.sd-card{background:white;border-radius:12px;box-shadow:0 2px 12px rgba(31,56,100,0.09);margin-bottom:16px;overflow:hidden;}
+.sd-hdr{padding:9px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;color:white;}
+.sd-card svg{width:100%;display:block;padding:10px 28px 14px;}
+.sd-vocab-row{display:flex;flex-wrap:wrap;gap:6px;padding:8px 14px 12px;border-top:1px dashed rgba(0,0,0,0.08);background:rgba(255,255,255,0.5);}
+.sd-vocab-chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:4px 11px 4px 8px;border-radius:16px;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25);white-space:nowrap;}
+.sd-chip-en{font-size:12px;font-weight:500;color:#1F3864;font-family:Georgia,serif;}
+.sd-chip-kr{font-size:11px;color:#5F5E5A;}
+.sd-print-btn{display:block;width:fit-content;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;padding:8px 22px;border-radius:7px;border:none;background:#3d3d3d;color:white;cursor:pointer;margin:0 0 14px auto;transition:background 0.2s;}
+.sd-print-btn:hover{background:#1F3864;}
+.print-brand{display:none;}
+@media print{
+  .print-brand{display:block;position:fixed;left:0;right:0;font-family:'JetBrains Mono',monospace;font-size:9px;color:#888;text-align:center;letter-spacing:0.5px;background:white;z-index:9999;}
+  .print-brand-top{top:0;border-bottom:0.5px solid #ddd;padding:4px 0 3px;}
+  .print-brand-bot{bottom:0;border-top:0.5px solid #ddd;padding:3px 0 4px;}
+  body:not(.psd) .sd-panel{display:none!important;}
+  body.psd .sd-panel{display:block!important;}
+  body.psd .top-nav,body.psd .page-header,body.psd .watermark,body.psd .view-tabs,body.psd .controls,body.psd .sd-print-btn,body.psd footer{display:none!important;}
+  body.psd .passage{padding:0!important;max-width:100%!important;}
+  body.psd .sd-card{break-inside:avoid;page-break-inside:avoid;margin-bottom:5mm;border:0.5px solid #ccc;box-shadow:none!important;border-radius:5px;overflow:hidden;}
+  body.psd .sd-hdr{font-size:9px!important;padding:5px 10px!important;}
+  body.psd .sd-card svg{width:100%!important;max-width:100%!important;height:auto!important;padding:6px 8px 8px!important;}
+  body.psd .sd-vocab-row{padding:4px 10px 6px!important;}
+  body.psd .sd-vocab-chip{font-size:10px!important;padding:2px 7px!important;}
+}
+
 </style>
 </head>
 <body>
@@ -321,13 +363,14 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
   <div class="view-tabs">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
+    <button class="view-tab tab-sd" id="tabSD" onclick="switchSD()">📐 문장구조도</button>
     <button class="view-tab tab-arrange" id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
     <button class="view-tab tab-grammar" id="tabG" onclick="switchView('grammar')">📝 어법 문제</button>
     <button class="view-tab tab-vocab" id="tabV" onclick="switchView('vocab')">📚 단어장</button>
   </div>
   <div id="readingView">
     <div class="hints">
-      <div class="hint">🖱 PC: 마우스 올리기 → 해석 · 클릭 → 발음</div>
+      <div class="hint">🖱 PC: 클릭 → 해석 · 🔊 → 발음</div>
       <div class="hint">📱 모바일: 탭 → 해석 · 🔊 → 발음</div>
       <div class="hint">💡 노란박스 → 쉬운 풀이</div>
     </div>
@@ -502,6 +545,212 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     </div>
   </div>
   </div><!-- /readingView -->
+  <div class="sd-panel" id="panelSD">
+<button class="sd-print-btn" onclick="printSD()">🖨️ 구조도 인쇄 (A4)</button>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">01 &nbsp;·&nbsp; We are now at a point of unprecedented genetic, cultural, and environmental power as a species, and we are linked to nearly every other person on Earth.</div>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">We</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리는 (S)</text>
+  <rect x="82" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="114" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are</text>
+  <text x="114" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">있다 (V)</text>
+  <rect x="154" y="10" width="64" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="186" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">now</text>
+  <text x="186" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이제</text>
+  <rect x="226" y="10" width="553" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="502" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">at a point of unprecedented genetic, cultural, and environmental power</text>
+  <text x="502" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">전례 없는 유전적·문화적·환경적 힘의 지점에 (C)</text>
+  <rect x="787" y="10" width="124" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="849" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">as a species</text>
+  <text x="849" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">하나의 종으로서</text>
+  <text x="37" y="113" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">, and</text>
+  <text x="37" y="146" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="10" y="178" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="197" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">we</text>
+  <text x="42" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리는 (S)</text>
+  <rect x="82" y="178" width="132" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="148" y="197" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are linked to</text>
+  <text x="148" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">~에 연결되어 있다 (V, 수동)</text>
+  <rect x="222" y="178" width="283" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="363" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">nearly every other person on Earth</text>
+  <text x="363" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">지구상의 거의 모든 다른 사람과 (O)</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">우리는 이제 하나의 종으로서 전례 없는 유전적·문화적·환경적 힘의 지점에 와 있으며, 지구상의</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">거의 모든 다른 사람과 연결되어 있습니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">unprecedented</span><span class="sd-chip-kr">전례 없는</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">species</span><span class="sd-chip-kr">종(種)</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">linked to</span><span class="sd-chip-kr">~에 연결된</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">02 &nbsp;·&nbsp; We are embodied individuals trapped within limited time, but we are also networked data streams, memories, and influencers, and part of a grander humanity.</div>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">We</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리는 (S)</text>
+  <rect x="82" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="114" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are</text>
+  <text x="114" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다 (V)</text>
+  <rect x="154" y="10" width="188" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="248" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">embodied individuals</text>
+  <text x="248" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">구현된 개인들 (C)</text>
+  <rect x="350" y="10" width="230" height="28" rx="3" fill="#FFF3E0" stroke="#FFCC80" stroke-width="1.3"/>
+  <text x="465" y="29" font-size="14" font-weight="500" fill="#BF360C" text-anchor="middle" font-family="Georgia,serif">trapped within limited time</text>
+  <text x="465" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">제한된 시간 안에 갇힌 (과거분사 후치수식)</text>
+  <text x="615" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">, but</text>
+  <text x="615" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">하지만</text>
+  <rect x="10" y="94" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">we</text>
+  <text x="42" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리는 (S)</text>
+  <rect x="82" y="94" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="130" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are also</text>
+  <text x="130" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이기도 하다 (V)</text>
+  <rect x="186" y="94" width="635" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="503" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">networked data streams, memories, and influencers, and part of a grander humanity</text>
+  <text x="503" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">연결된 데이터 스트림·기억·영향자, 그리고 더 위대한 인류의 일부 (C)</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">우리는 제한된 시간 안에 갇힌 구현된 개인들이지만, 동시에 연결된 데이터 스트림, 기억,</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">영향을 미치는 존재들이며 더 위대한 인류의 일부입니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">embodied</span><span class="sd-chip-kr">구현된, 몸을 가진</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">trapped within</span><span class="sd-chip-kr">~안에 갇힌</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">networked</span><span class="sd-chip-kr">연결된</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">grander</span><span class="sd-chip-kr">더 위대한</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">03 &nbsp;·&nbsp; Our decisions today have far-reaching impacts that place a responsibility on us to become good ancestors, to take the long view and time travel forward to imagine the well-being of billions of people whose lives will be lived in the world we are currently making.</div>
+<svg viewBox="0 0 960 536" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="180" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="100" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Our decisions today</text>
+  <text x="100" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">오늘날 우리의 결정들은 (S)</text>
+  <rect x="198" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="230" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">have</text>
+  <text x="230" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가진다 (V)</text>
+  <rect x="270" y="10" width="188" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="364" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">far-reaching impacts</text>
+  <text x="364" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">광범위한 영향을 (O)</text>
+  <rect x="10" y="89" width="297" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="158" y="88" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">주격 관계절 — impacts 수식</text>
+  <rect x="16" y="96" width="275" height="28" rx="3" fill="#EEEDFE" stroke="#CECBF6" stroke-width="1.5"/>
+  <text x="153" y="115" font-size="13" font-weight="500" fill="#3C3489" text-anchor="middle" font-family="Georgia,serif">that place a responsibility on us</text>
+  <text x="153" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리에게 책임을 지우는 (주격 관계대명사)</text>
+  <rect x="10" y="173" width="910" height="128" rx="5" fill="none" stroke="#993556" stroke-width="1.3" stroke-dasharray="4,3"/>
+  <text x="465" y="172" font-size="10" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">to부정사 3개 병렬 — 책임의 내용</text>
+  <rect x="16" y="181" width="208" height="30" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="120" y="202" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to become good ancestors</text>
+  <text x="120" y="223" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">좋은 조상이 되는 것</text>
+  <text x="247" y="202" font-size="14" font-weight="500" fill="#888" text-anchor="middle" font-family="Georgia,serif">,</text>
+  <text x="247" y="223" font-size="11" font-weight="400" fill="#888" text-anchor="middle" font-family="sans-serif"></text>
+  <rect x="270" y="181" width="365" height="30" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="452" y="202" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to take the long view and time travel forward</text>
+  <text x="452" y="223" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">장기적 시각을 취하고 앞으로 시간 여행하는 것</text>
+  <text x="670" y="202" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">, and</text>
+  <text x="670" y="223" font-size="11" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="16" y="239" width="305" height="30" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="168" y="260" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to imagine the well-being of billions</text>
+  <text x="168" y="281" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수십억의 안녕을 상상하는 것</text>
+  <rect x="10" y="361" width="543" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="281" y="360" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">소유격 관계절 — billions of people 수식</text>
+  <rect x="16" y="368" width="215" height="28" rx="3" fill="#EEEDFE" stroke="#CECBF6" stroke-width="1.5"/>
+  <text x="123" y="387" font-size="13" font-weight="500" fill="#3C3489" text-anchor="middle" font-family="Georgia,serif">whose lives will be lived</text>
+  <text x="123" y="418" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들의 삶이 살아지게 될 (소유격 관계대명사 + 수동)</text>
+  <rect x="239" y="368" width="298" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="388" y="387" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">in the world we are currently making</text>
+  <text x="388" y="418" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리가 현재 만들고 있는 세상에서</text>
+  <path d="M 158,125 C 158,164 364,164 364,38" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="361,18 364,10 367,18" fill="#534AB7"/>
+  <rect x="186" y="166" width="150" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="261" y="177" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">that절 → impacts 수식</text>
+  <line x1="465" y1="301" x2="465" y2="250" stroke="#0C447C" stroke-width="1.3"/>
+  <line x1="465" y1="250" x2="158" y2="250" stroke="#0C447C" stroke-width="1.3"/>
+  <line x1="158" y1="250" x2="158" y2="89" stroke="#0C447C" stroke-width="1.3"/>
+  <polygon points="155,94 158,89 161,94" fill="#0C447C"/>
+  <rect x="201" y="252" width="220" height="16" rx="3" fill="#E6F1FB"/>
+  <text x="311" y="263" font-size="11" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="sans-serif">to부정사 병렬 → responsibility 내용</text>
+  <line x1="10" y1="446" x2="950" y2="446" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="466" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">오늘날 우리의 결정들은 좋은 조상이 되고 장기적인 시각을 취하며 앞으로 상상 속에서 시간</text>
+  <text x="10" y="486" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">여행하여 우리가 현재 만들고 있는 세상에서 살게 될 수십억 명의 안녕을 상상할 책임을 지우는</text>
+  <text x="10" y="506" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">광범위한 영향을 가집니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">far-reaching</span><span class="sd-chip-kr">광범위한</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">responsibility</span><span class="sd-chip-kr">책임</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">ancestor</span><span class="sd-chip-kr">조상</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">long view</span><span class="sd-chip-kr">장기적 시각</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">well-being</span><span class="sd-chip-kr">안녕, 복지</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">04 &nbsp;·&nbsp; Centuries ago, leaders of the native North American Iroquois people created seven generation stewardship, instructing people to consider the impact of every decision on their children, seven generations into the future.</div>
+<svg viewBox="0 0 960 412" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="140" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="80" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">Centuries ago,</text>
+  <text x="80" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수 세기 전</text>
+  <rect x="158" y="10" width="418" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="367" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">leaders of the native North American Iroquois people</text>
+  <text x="367" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">북미 원주민 이로쿼이족의 지도자들은 (S)</text>
+  <rect x="584" y="10" width="87" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="627" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">created</text>
+  <text x="627" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">만들었다 (V)</text>
+  <rect x="10" y="94" width="253" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="136" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">"seven generation stewardship"</text>
+  <text x="136" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">'7세대 청지기 정신'을 (O)</text>
+  <rect x="10" y="178" width="620" height="28" rx="3" fill="#E8F5E9" stroke="#A5D6A7" stroke-width="1.3"/>
+  <text x="320" y="197" font-size="14" font-weight="500" fill="#1B5E20" text-anchor="middle" font-family="Georgia,serif">, instructing people to consider the impact of every decision on their children</text>
+  <text x="320" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사람들에게 모든 결정의 영향을 고려하도록 지시하면서 (분사구문)</text>
+  <rect x="10" y="262" width="290" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="155" y="281" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">, seven generations into the future</text>
+  <text x="155" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">미래의 7세대 앞을 내다보며</text>
+  <line x1="10" y1="342" x2="950" y2="342" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="362" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">수 세기 전, 북미 원주민 이로쿼이족의 지도자들은 '7세대 청지기 정신'을 만들어, 사람들에게</text>
+  <text x="10" y="382" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">모든 결정이 자녀들에게 미치는 영향을 미래의 7세대 앞을 내다보며 고려하도록 지시했습니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">stewardship</span><span class="sd-chip-kr">청지기 정신, 관리 책임</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">instruct</span><span class="sd-chip-kr">지시하다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">generation</span><span class="sd-chip-kr">세대</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">05 &nbsp;·&nbsp; In the precious few decades that Earth is ours, while we enjoy the gardens planted by our ancestors, we must not steal the shade from our descendants.</div>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="230" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="125" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">In the precious few decades</text>
+  <text x="125" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">소중한 몇십 년 동안</text>
+  <rect x="248" y="5" width="194" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="345" y="4" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">관계절 — decades 수식</text>
+  <rect x="254" y="12" width="172" height="28" rx="3" fill="#EEEDFE" stroke="#CECBF6" stroke-width="1.5"/>
+  <text x="340" y="31" font-size="13" font-weight="500" fill="#3C3489" text-anchor="middle" font-family="Georgia,serif">that Earth is ours</text>
+  <text x="340" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">지구가 우리의 것인 (관계대명사)</text>
+  <rect x="10" y="89" width="520" height="36" rx="5" fill="none" stroke="#085041" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="270" y="88" font-size="10" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">while절 — 시간 부사절</text>
+  <text x="43" y="113" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">while</text>
+  <text x="43" y="146" font-size="12" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">~하는 동안</text>
+  <rect x="78" y="96" width="96" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="126" y="115" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">we enjoy</text>
+  <text x="126" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리가 즐기는</text>
+  <rect x="182" y="96" width="116" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="240" y="115" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the gardens</text>
+  <text x="240" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">정원을</text>
+  <rect x="306" y="96" width="208" height="28" rx="3" fill="#FFF3E0" stroke="#FFCC80" stroke-width="1.3"/>
+  <text x="410" y="115" font-size="13" font-weight="500" fill="#BF360C" text-anchor="middle" font-family="Georgia,serif">planted by our ancestors</text>
+  <text x="410" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">조상들이 심은 (과거분사 후치수식)</text>
+  <rect x="10" y="178" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="197" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">we</text>
+  <text x="42" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리는 (S)</text>
+  <rect x="82" y="178" width="140" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="152" y="197" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">must not steal</text>
+  <text x="152" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">빼앗아서는 안 된다 (V)</text>
+  <rect x="230" y="178" width="104" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="282" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the shade</text>
+  <text x="282" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그늘을 (O)</text>
+  <rect x="342" y="178" width="188" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="436" y="197" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">from our descendants</text>
+  <text x="436" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리의 후손들로부터</text>
+  <path d="M 345,41 C 345,80 125,80 125,38" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="122,18 125,10 128,18" fill="#534AB7"/>
+  <rect x="160" y="82" width="150" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="235" y="93" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">that절 → decades 수식</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">지구가 우리의 것인 소중한 몇십 년 동안, 우리의 조상들이 심은 정원을 즐기는 동안, 우리는</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">우리의 후손들로부터 그늘을 빼앗아서는 안 됩니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">precious</span><span class="sd-chip-kr">소중한</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">ancestor</span><span class="sd-chip-kr">조상</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">steal</span><span class="sd-chip-kr">빼앗다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">shade</span><span class="sd-chip-kr">그늘</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">descendant</span><span class="sd-chip-kr">후손</span></span></div>
+</div>
+  </div>
+
   <div class="arrange-view" id="arrangeView">
     <div class="score-bar"><div><div class="score-label">SCORE</div><span class="score-num" id="scoreNum">0</span><span class="score-total" id="scoreTotal"> / 0</span></div><button class="score-reset-all" onclick="resetAll()">↺ 전체 초기화</button></div>
     <div id="arrCards"></div>
@@ -1084,5 +1333,49 @@ function buildMeaningQuiz(box){
 function checkMeaning(i,btn){const card=btn.closest('.quiz-card');const correct=card.dataset.answer;const isOk=btn.dataset.val===correct;card.querySelectorAll('.choice-btn').forEach(b=>{b.onclick=null;if(b.dataset.val===correct)b.classList.add('ok');else if(b===btn&&!isOk)b.classList.add('ng');});const fb=document.getElementById('mc-fb-'+i);fb.className='quiz-fb show '+(isOk?'ok':'ng');fb.innerHTML=isOk?'🎉 정답!':'❌ 정답: <strong>'+correct+'</strong>';vocabScores.meaning[i]=isOk?1:0;const done=Object.keys(vocabScores.meaning).length;const ok=Object.values(vocabScores.meaning).filter(v=>v===1).length;const sc=document.getElementById('meaning-score');if(sc)sc.textContent=`${ok} / ${done} 정답`;}
 function resetMeaning(){vocabScores.meaning={};buildVocab(2);}
 </script>
+
+<script>
+function switchSD(){
+  var rv=document.getElementById("readingView");if(rv)rv.style.display="none";
+  ["arrangeView","grammarView","vocabView"].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.remove("active");});
+  document.querySelectorAll(".view-tab").forEach(function(t){t.classList.remove("active");});
+  var p=document.getElementById("panelSD");if(p)p.style.display="block";
+  var tb=document.getElementById("tabSD");if(tb)tb.classList.add("active");
+}
+function printSD(){
+  document.body.classList.add("psd");
+  window.onafterprint=function(){document.body.classList.remove("psd");window.onafterprint=null;};
+  window.print();
+}
+(function(){
+  document.querySelectorAll(".s-card").forEach(function(card){
+    var sb=card.querySelector(".speak-icon"),we=card.querySelector(".wave");
+    function ds(e){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
+      if(card.classList.contains("playing")){stopSpeech();}else{speakCard(card);}}
+    if(sb){sb.onclick=null;sb.addEventListener("click",ds,true);}
+    if(we){we.onclick=null;we.addEventListener("click",ds,true);}
+    card.addEventListener("click",function(e){
+      if(e.target.closest(".speak-icon")||e.target.closest(".wave"))return;
+      e.stopImmediatePropagation();
+      if(typeof stopSpeech==="function"&&document.querySelector(".s-card.playing")&&!card.classList.contains("playing")){stopSpeech();}
+      var io=card.classList.contains("tapped")||card.classList.contains("pinned");
+      document.querySelectorAll(".s-card.tapped").forEach(function(tc){if(tc!==card)tc.classList.remove("tapped");});
+      if(card.classList.contains("pinned")){card.classList.remove("pinned");}
+      else{card.classList.toggle("tapped",!io);}
+    },true);
+    card.addEventListener("dblclick",function(e){e.preventDefault();card.classList.toggle("pinned");});
+  });
+})();
+(function(){
+  if(typeof switchView==="undefined")return;
+  var orig=switchView;
+  switchView=function(v){
+    var p=document.getElementById("panelSD");if(p)p.style.display="none";
+    var tb=document.getElementById("tabSD");if(tb)tb.classList.remove("active");
+    orig(v);
+  };
+})();
+</script>
+
 </body>
 </html>
