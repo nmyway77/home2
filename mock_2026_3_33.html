@@ -281,9 +281,55 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .nav-title-bar{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:1px;}
 .nav-badge{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--gold2);border:1px solid rgba(201,168,76,0.3);padding:3px 10px;border-radius:3px;white-space:nowrap;}
 .passage{max-width:860px;margin:0 auto;padding:68px 16px 64px;}
+
+/* ── 행동 패치 + SD CSS ── */
+@media(hover:hover) and (pointer:fine){
+  .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card.grammar:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+}
+.s-card.vocab-only .s-kr-wrap,.s-card.pinned .s-kr-wrap,.s-card.tapped .s-kr-wrap{
+  display:flex!important;flex-wrap:wrap!important;gap:6px!important;padding:8px 14px 10px!important;align-items:flex-start;
+}
+.s-card.pinned .s-kr,.s-card.tapped .s-kr,.s-card.pinned .s-grammar,.s-card.tapped .s-grammar,
+.s-card.pinned .s-meaning,.s-card.tapped .s-meaning{width:100%;flex-basis:100%;order:1;}
+.s-card.vocab-only .s-vocab,.s-card.pinned .s-vocab,.s-card.tapped .s-vocab{
+  order:0;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25)!important;
+  border-radius:20px;padding:3px 12px 3px 8px!important;white-space:nowrap;flex-shrink:0;
+  border-top:none!important;display:inline-flex!important;align-items:center;gap:4px;
+}
+.tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
+.tab-sd.active{background:#993C1D;color:white;border-color:#993C1D;}
+.sd-panel{display:none;padding:4px 0;max-width:860px;margin:0 auto;}
+.sd-card{background:white;border-radius:12px;box-shadow:0 2px 12px rgba(31,56,100,0.09);margin-bottom:16px;overflow:hidden;}
+.sd-hdr{padding:9px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;color:white;}
+.sd-card svg{width:100%;display:block;padding:10px 28px 14px;}
+.sd-vocab-row{display:flex;flex-wrap:wrap;gap:6px;padding:8px 14px 12px;border-top:1px dashed rgba(0,0,0,0.08);background:rgba(255,255,255,0.5);}
+.sd-vocab-chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:4px 11px 4px 8px;border-radius:16px;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25);white-space:nowrap;}
+.sd-chip-en{font-size:12px;font-weight:500;color:#1F3864;font-family:Georgia,serif;}
+.sd-chip-kr{font-size:11px;color:#5F5E5A;}
+.sd-print-btn{display:block;width:fit-content;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;padding:8px 22px;border-radius:7px;border:none;background:#3d3d3d;color:white;cursor:pointer;margin:0 0 14px auto;transition:background 0.2s;}
+.sd-print-btn:hover{background:#1F3864;}
+.print-brand{display:none;}
+@media print{
+  .print-brand{display:block;position:fixed;left:0;right:0;font-family:'JetBrains Mono',monospace;font-size:9px;color:#888;text-align:center;letter-spacing:0.5px;background:white;z-index:9999;}
+  .print-brand-top{top:0;border-bottom:0.5px solid #ddd;padding:4px 0 3px;}
+  .print-brand-bot{bottom:0;border-top:0.5px solid #ddd;padding:3px 0 4px;}
+  body:not(.psd) .sd-panel{display:none!important;}
+  body.psd .sd-panel{display:block!important;}
+  body.psd .top-nav,body.psd .page-header,body.psd .watermark,body.psd .view-tabs,body.psd .controls,body.psd .sd-print-btn,body.psd footer{display:none!important;}
+  body.psd .passage{padding:0!important;max-width:100%!important;}
+  body.psd .sd-card{break-inside:avoid;page-break-inside:avoid;margin-bottom:5mm;border:0.5px solid #ccc;box-shadow:none!important;border-radius:5px;overflow:hidden;}
+  body.psd .sd-hdr{font-size:9px!important;padding:5px 10px!important;}
+  body.psd .sd-card svg{width:100%!important;max-width:100%!important;height:auto!important;padding:6px 8px 8px!important;}
+  body.psd .sd-vocab-row{padding:4px 10px 6px!important;}
+  body.psd .sd-vocab-chip{font-size:10px!important;padding:2px 7px!important;}
+}
+
 </style>
 </head>
 <body>
+<div class="print-brand print-brand-top">✦ 목동서로영어학원 제작 &nbsp;|&nbsp; www.0505.co.kr</div>
+<div class="print-brand print-brand-bot">✦ 목동서로영어학원 제작 &nbsp;|&nbsp; www.0505.co.kr</div>
 <nav class="top-nav">
   <a class="home-btn" href="mock_march_2026.html">← 목록</a>
   <span class="nav-title-bar">2026 · 3월 · 고1 · 33번</span>
@@ -302,13 +348,14 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
   <div class="view-tabs">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
+    <button class="view-tab tab-sd" id="tabSD" onclick="switchSD()">📐 문장구조도</button>
     <button class="view-tab tab-arrange" id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
     <button class="view-tab tab-grammar" id="tabG" onclick="switchView('grammar')">📝 어법 문제</button>
     <button class="view-tab tab-vocab" id="tabV" onclick="switchView('vocab')">📚 단어장</button>
   </div>
   <div id="readingView">
     <div class="hints">
-      <div class="hint">🖱 PC: 마우스 올리기 → 해석 · 클릭 → 발음</div>
+      <div class="hint">🖱 PC: 클릭 → 해석 · 🔊 → 발음</div>
       <div class="hint">📱 모바일: 탭 → 해석 · 🔊 → 발음</div>
       <div class="hint">💡 노란박스 → 쉬운 풀이</div>
     </div>
@@ -513,6 +560,273 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <p style="text-align:center;font-size:12px;color:#444;">숫자를 물체에서 분리한 순간이 인류의 첫 지적 도약!<br>emancipated number = 수학·과학의 토대!</p>
     <p style="text-align:center;font-size:11px;color:#888;margin-top:6px;">pictures of fish(구체) → separate number from object(분리) → emancipated number(해방) → take for granted(당연) ✦ 지적 혁명!</p>
   </div>
+</div>
+  </div>
+  <div class="sd-panel" id="panelSD">
+<button class="sd-print-btn" onclick="printSD()">🖨️ 구조도 인쇄 (A4)</button>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">01 &nbsp;·&nbsp; From around 3000 BC, the Sumerian officials would mark their lists of goods on clay tablets.</div>
+<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="180" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="100" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">From around 3000 BC</text>
+  <text x="100" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">기원전 약 3000년경부터</text>
+  <rect x="198" y="10" width="193" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="294" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the Sumerian officials</text>
+  <text x="294" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수메르의 관리들은 (S)</text>
+  <rect x="399" y="10" width="113" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="455" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">would mark</text>
+  <text x="455" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">표시하곤 했다 (V, 과거 습관)</text>
+  <rect x="520" y="10" width="188" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="614" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">their lists of goods</text>
+  <text x="614" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">물품 목록을 (O)</text>
+  <rect x="716" y="10" width="148" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="790" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">on clay tablets</text>
+  <text x="790" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">점토판에</text>
+  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">기원전 약 3000년경부터, 수메르의 관리들은 점토판에 물품 목록을 표시하곤 했습니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">official</span><span class="sd-chip-kr">관리, 공무원</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">goods</span><span class="sd-chip-kr">물품, 상품</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">clay tablet</span><span class="sd-chip-kr">점토판</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">would mark</span><span class="sd-chip-kr">표시하곤 했다 (과거 습관)</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">02 &nbsp;·&nbsp; If they wanted to record five fish, they would mark five pictures of a fish.</div>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="5" width="400" height="36" rx="5" fill="none" stroke="#085041" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="210" y="4" font-size="10" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">If절 — 조건 부사절</text>
+  <text x="31" y="29" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">If</text>
+  <text x="31" y="62" font-size="12" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">만약 ~라면</text>
+  <rect x="54" y="12" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="86" y="31" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">they</text>
+  <text x="86" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들이</text>
+  <rect x="126" y="12" width="156" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="204" y="31" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">wanted to record</text>
+  <text x="204" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">기록하고 싶었다면 (V)</text>
+  <rect x="290" y="12" width="104" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="342" y="31" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">five fish</text>
+  <text x="342" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">다섯 마리의 물고기를</text>
+  <rect x="10" y="94" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">they</text>
+  <text x="42" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들은 (S)</text>
+  <rect x="82" y="94" width="113" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="138" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">would mark</text>
+  <text x="138" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">표시했을 것이다 (V)</text>
+  <rect x="203" y="94" width="200" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="303" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">five pictures of a fish</text>
+  <text x="303" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">물고기 그림 5개를 (O)</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">만약 그들이 다섯 마리의 물고기를 기록하고 싶었다면, 그들은 물고기 그림을 다섯 개 표시했을</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">것입니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">record</span><span class="sd-chip-kr">기록하다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">mark</span><span class="sd-chip-kr">표시하다</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">03 &nbsp;·&nbsp; Their first great intellectual leap came from separating the number from the object they were counting.</div>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="290" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="155" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Their first great intellectual leap</text>
+  <text x="155" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들의 첫 번째 위대한 지적 도약은 (S)</text>
+  <rect x="308" y="10" width="104" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="360" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">came from</text>
+  <text x="360" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">~에서 비롯되었다 (V)</text>
+  <rect x="10" y="94" width="113" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.5"/>
+  <text x="66" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">separating</text>
+  <text x="66" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">분리하는 것</text>
+  <rect x="131" y="94" width="113" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="187" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the number</text>
+  <text x="187" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">숫자를 (O)</text>
+  <rect x="252" y="94" width="148" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="326" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">from the object</text>
+  <text x="326" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">물체로부터</text>
+  <rect x="408" y="94" width="215" height="28" rx="3" fill="#EEEDFE" stroke="#CECBF6" stroke-width="1.5"/>
+  <text x="515" y="113" font-size="14" font-weight="500" fill="#3C3489" text-anchor="middle" font-family="Georgia,serif">(that) they were counting</text>
+  <text x="515" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들이 세고 있던 (관계절, that 생략)</text>
+  <path d="M 515,122 C 515,164 326,164 326,122" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="323,102 326,94 329,102" fill="#534AB7"/>
+  <rect x="345" y="166" width="150" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="420" y="177" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">관계절 → object 수식</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">그들의 첫 번째 위대한 지적 도약은 숫자를 그들이 세고 있던 물체로부터 분리하는 것에서</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">비롯되었습니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">intellectual leap</span><span class="sd-chip-kr">지적 도약</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">come from</span><span class="sd-chip-kr">~에서 비롯되다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">separate A from B</span><span class="sd-chip-kr">A를 B에서 분리하다</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">04 &nbsp;·&nbsp; In other words, they would represent five fish with a numeral for the number five alongside a symbol for the fish.</div>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="148" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="84" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">In other words,</text>
+  <text x="84" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">다시 말해</text>
+  <rect x="166" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="198" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">they</text>
+  <text x="198" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들은 (S)</text>
+  <rect x="238" y="10" width="148" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="312" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">would represent</text>
+  <text x="312" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">표현하곤 했다 (V)</text>
+  <rect x="394" y="10" width="104" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="446" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">five fish</text>
+  <text x="446" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">다섯 마리의 물고기를 (O)</text>
+  <rect x="10" y="94" width="283" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="151" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">with a numeral for the number five</text>
+  <text x="151" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">숫자 5를 나타내는 수자로</text>
+  <rect x="301" y="94" width="260" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="431" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">alongside a symbol for the fish</text>
+  <text x="431" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">물고기를 나타내는 기호와 나란히</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">다시 말해, 그들은 다섯 마리의 물고기를 숫자 5를 나타내는 수자와 물고기를 나타내는 기호를</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">나란히 사용하여 표현하곤 했습니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">in other words</span><span class="sd-chip-kr">다시 말해</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">represent</span><span class="sd-chip-kr">표현하다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">numeral</span><span class="sd-chip-kr">수자, 숫자 기호</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">alongside</span><span class="sd-chip-kr">~와 나란히</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">symbol</span><span class="sd-chip-kr">기호</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">05 &nbsp;·&nbsp; If they wanted to describe five of something else, they realized they could keep the same numeral and trade the object symbol for a cow, or a jar of oil, or whatever else they were interested in.</div>
+<svg viewBox="0 0 960 432" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="5" width="505" height="36" rx="5" fill="none" stroke="#085041" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="262" y="4" font-size="10" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">If절 — 조건 부사절</text>
+  <text x="31" y="29" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">If</text>
+  <text x="31" y="62" font-size="12" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">만약 ~라면</text>
+  <rect x="54" y="12" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="86" y="31" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">they</text>
+  <text x="86" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들이 (S)</text>
+  <rect x="126" y="12" width="172" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="212" y="31" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">wanted to describe</text>
+  <text x="212" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">묘사하고 싶었다면</text>
+  <rect x="306" y="12" width="193" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="402" y="31" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">five of something else</text>
+  <text x="402" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">다른 것 다섯 개를</text>
+  <rect x="10" y="94" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">they</text>
+  <text x="42" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들은 (S)</text>
+  <rect x="82" y="94" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="130" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">realized</text>
+  <text x="130" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">깨달았다 (V)</text>
+  <rect x="10" y="173" width="910" height="128" rx="5" fill="none" stroke="#6A1B9A" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="465" y="172" font-size="10" font-weight="400" fill="#6A1B9A" text-anchor="middle" font-family="sans-serif">명사절 (목적어) — realized의 목적절</text>
+  <rect x="16" y="181" width="64" height="30" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="48" y="202" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">they</text>
+  <text x="48" y="223" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들이 (S)</text>
+  <rect x="88" y="181" width="113" height="30" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="144" y="202" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">could keep</text>
+  <text x="144" y="223" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">유지할 수 있다 (V1)</text>
+  <rect x="209" y="181" width="156" height="30" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="287" y="202" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the same numeral</text>
+  <text x="287" y="223" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">같은 수자를 (O1)</text>
+  <text x="391" y="202" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="391" y="223" font-size="11" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="418" y="181" width="70" height="30" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="453" y="202" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">trade</text>
+  <text x="453" y="223" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">교체하다 (V2)</text>
+  <rect x="496" y="181" width="164" height="30" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="578" y="202" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the object symbol</text>
+  <text x="578" y="223" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">물체 기호를 (O2)</text>
+  <rect x="16" y="239" width="538" height="30" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="285" y="260" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">for a cow, or a jar of oil, or whatever else they were interested in</text>
+  <text x="285" y="281" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">소, 기름 항아리, 또는 관심 있는 무엇으로든</text>
+  <line x1="465" y1="301" x2="465" y2="250" stroke="#6A1B9A" stroke-width="1.3"/>
+  <line x1="465" y1="250" x2="130" y2="250" stroke="#6A1B9A" stroke-width="1.3"/>
+  <line x1="130" y1="250" x2="130" y2="94" stroke="#6A1B9A" stroke-width="1.3"/>
+  <polygon points="127,99 130,94 133,99" fill="#6A1B9A"/>
+  <rect x="212" y="252" width="171" height="16" rx="3" fill="#E6F1FB"/>
+  <text x="297" y="263" font-size="11" font-weight="500" fill="#6A1B9A" text-anchor="middle" font-family="sans-serif">that절 → realized의 목적어</text>
+  <line x1="10" y1="362" x2="950" y2="362" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="382" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">만약 그들이 다른 무언가 다섯 개를 묘사하고 싶었다면, 그들은 같은 수자를 유지하고 물체</text>
+  <text x="10" y="402" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">기호를 소, 기름 항아리, 또는 관심 있는 무엇이든으로 바꿀 수 있다는 것을 깨달았습니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">describe</span><span class="sd-chip-kr">묘사하다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">realize</span><span class="sd-chip-kr">깨닫다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">keep</span><span class="sd-chip-kr">유지하다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">trade A for B</span><span class="sd-chip-kr">A를 B로 교체하다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">whatever</span><span class="sd-chip-kr">무엇이든</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">06 &nbsp;·&nbsp; The Sumerians had developed the idea of an emancipated number, existing in its own right and independent of whatever it is being used to count.</div>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="132" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="76" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">The Sumerians</text>
+  <text x="76" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수메르인들은 (S)</text>
+  <rect x="150" y="10" width="132" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="216" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">had developed</text>
+  <text x="216" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">발전시켰다 (V, 과거완료)</text>
+  <rect x="290" y="10" width="275" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="427" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the idea of an emancipated number</text>
+  <text x="427" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">해방된 숫자의 개념을 (O)</text>
+  <rect x="10" y="94" width="215" height="28" rx="3" fill="#E8F5E9" stroke="#A5D6A7" stroke-width="1.3"/>
+  <text x="117" y="113" font-size="14" font-weight="500" fill="#1B5E20" text-anchor="middle" font-family="Georgia,serif">existing in its own right</text>
+  <text x="117" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그 자체로 존재하는 (분사구문)</text>
+  <text x="251" y="113" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="251" y="146" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="278" y="94" width="395" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="475" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">independent of whatever it is being used to count</text>
+  <text x="475" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">세는 데 쓰이는 무엇과도 독립적으로</text>
+  <path d="M 117,122 C 117,164 427,164 427,38" fill="none" stroke="#2E7D32" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="424,18 427,10 430,18" fill="#2E7D32"/>
+  <rect x="162" y="166" width="220" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="272" y="177" font-size="11" font-weight="500" fill="#2E7D32" text-anchor="middle" font-family="sans-serif">분사구문 → emancipated number 수식</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">수메르인들은 그것이 세는 데 사용되는 무엇과도 독립적으로, 그 자체로 존재하는 '해방된</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">숫자'의 개념을 발전시켰습니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">emancipated</span><span class="sd-chip-kr">해방된, 독립된</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">in its own right</span><span class="sd-chip-kr">그 자체로</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">independent of</span><span class="sd-chip-kr">~로부터 독립적인</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">07 &nbsp;·&nbsp; It is easy to take the emancipated number for granted as it is so deeply set into modern thought, but to the earliest civilizations it was intellectually new and extremely powerful.</div>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">It</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가주어</text>
+  <rect x="82" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="114" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="114" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다 (V)</text>
+  <rect x="154" y="10" width="64" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="186" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">easy</text>
+  <text x="186" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">쉬운 (C)</text>
+  <rect x="226" y="10" width="343" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="397" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">to take the emancipated number for granted</text>
+  <text x="397" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">해방된 숫자를 당연하게 여기기 (진주어 to부정사)</text>
+  <rect x="10" y="89" width="465" height="36" rx="5" fill="none" stroke="#085041" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="242" y="88" font-size="10" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">as절 — 이유 부사절</text>
+  <text x="31" y="113" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">as</text>
+  <text x="31" y="146" font-size="12" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">왜냐하면</text>
+  <rect x="54" y="96" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="86" y="115" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">it</text>
+  <text x="86" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그것이 (S)</text>
+  <rect x="126" y="96" width="185" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="218" y="115" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is so deeply set into</text>
+  <text x="218" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">너무 깊이 자리 잡혀 있어서 (V)</text>
+  <rect x="319" y="96" width="140" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="389" y="115" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">modern thought</text>
+  <text x="389" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">현대 사상에</text>
+  <text x="37" y="197" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">, but</text>
+  <text x="37" y="230" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">하지만</text>
+  <rect x="72" y="178" width="245" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="194" y="197" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">to the earliest civilizations</text>
+  <text x="194" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가장 초기의 문명들에게</text>
+  <rect x="325" y="178" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="357" y="197" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">it</text>
+  <text x="357" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그것은 (S)</text>
+  <rect x="397" y="178" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="429" y="197" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">was</text>
+  <text x="429" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이었다 (V)</text>
+  <rect x="469" y="178" width="172" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="555" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">intellectually new</text>
+  <text x="555" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">지적으로 새롭고</text>
+  <text x="667" y="197" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="667" y="230" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="694" y="178" width="172" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="780" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">extremely powerful</text>
+  <text x="780" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">극히 강력한 (C 병렬)</text>
+  <line x1="397" y1="38" x2="397" y2="82" stroke="#0C447C" stroke-width="1.3"/>
+  <line x1="397" y1="82" x2="186" y2="82" stroke="#0C447C" stroke-width="1.3"/>
+  <line x1="186" y1="82" x2="186" y2="10" stroke="#0C447C" stroke-width="1.3"/>
+  <polygon points="183,15 186,10 189,15" fill="#0C447C"/>
+  <rect x="192" y="84" width="199" height="16" rx="3" fill="#E6F1FB"/>
+  <text x="291" y="95" font-size="11" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="sans-serif">진주어 to부정사 → easy (가주어 구조)</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">해방된 숫자는 현대 사상에 너무 깊이 자리 잡고 있어서 당연하게 여기기 쉽지만, 가장 초기의</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">문명들에게 그것은 지적으로 새롭고 극히 강력한 것이었습니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">take ~ for granted</span><span class="sd-chip-kr">~을 당연하게 여기다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">deeply set into</span><span class="sd-chip-kr">~에 깊이 자리 잡은</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">civilization</span><span class="sd-chip-kr">문명</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">extremely powerful</span><span class="sd-chip-kr">극히 강력한</span></span></div>
 </div>
   </div>
   <div class="arrange-view" id="arrangeView">
@@ -865,5 +1179,49 @@ function buildMeaningQuiz(box){
 function checkMeaning(i,btn){const card=btn.closest('.quiz-card');const correct=card.dataset.answer;const isOk=btn.dataset.val===correct;card.querySelectorAll('.choice-btn').forEach(b=>{b.onclick=null;if(b.dataset.val===correct)b.classList.add('ok');else if(b===btn&&!isOk)b.classList.add('ng');});const fb=document.getElementById('mc-fb-'+i);fb.className='quiz-fb show '+(isOk?'ok':'ng');fb.innerHTML=isOk?'🎉 정답!':'❌ 정답: <strong>'+correct+'</strong>';vocabScores.meaning[i]=isOk?1:0;const done=Object.keys(vocabScores.meaning).length;const ok=Object.values(vocabScores.meaning).filter(v=>v===1).length;const sc=document.getElementById('meaning-score');if(sc)sc.textContent=`${ok} / ${done} 정답`;}
 function resetMeaning(){vocabScores.meaning={};buildVocab(2);}
 </script>
+
+<script>
+function switchSD(){
+  var rv=document.getElementById("readingView");if(rv)rv.style.display="none";
+  ["arrangeView","grammarView","vocabView"].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.remove("active");});
+  document.querySelectorAll(".view-tab").forEach(function(t){t.classList.remove("active");});
+  var p=document.getElementById("panelSD");if(p)p.style.display="block";
+  var tb=document.getElementById("tabSD");if(tb)tb.classList.add("active");
+}
+function printSD(){
+  document.body.classList.add("psd");
+  window.onafterprint=function(){document.body.classList.remove("psd");window.onafterprint=null;};
+  window.print();
+}
+(function(){
+  document.querySelectorAll(".s-card").forEach(function(card){
+    var sb=card.querySelector(".speak-icon"),we=card.querySelector(".wave");
+    function ds(e){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
+      if(card.classList.contains("playing")){stopSpeech();}else{speakCard(card);}}
+    if(sb){sb.onclick=null;sb.addEventListener("click",ds,true);}
+    if(we){we.onclick=null;we.addEventListener("click",ds,true);}
+    card.addEventListener("click",function(e){
+      if(e.target.closest(".speak-icon")||e.target.closest(".wave"))return;
+      e.stopImmediatePropagation();
+      if(typeof stopSpeech==="function"&&document.querySelector(".s-card.playing")&&!card.classList.contains("playing")){stopSpeech();}
+      var io=card.classList.contains("tapped")||card.classList.contains("pinned");
+      document.querySelectorAll(".s-card.tapped").forEach(function(tc){if(tc!==card)tc.classList.remove("tapped");});
+      if(card.classList.contains("pinned")){card.classList.remove("pinned");}
+      else{card.classList.toggle("tapped",!io);}
+    },true);
+    card.addEventListener("dblclick",function(e){e.preventDefault();card.classList.toggle("pinned");});
+  });
+})();
+(function(){
+  if(typeof switchView==="undefined")return;
+  var orig=switchView;
+  switchView=function(v){
+    var p=document.getElementById("panelSD");if(p)p.style.display="none";
+    var tb=document.getElementById("tabSD");if(tb)tb.classList.remove("active");
+    orig(v);
+  };
+})();
+</script>
+
 </body>
 </html>
