@@ -275,10 +275,65 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .nav-title-bar{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:1px;}
 .nav-badge{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--gold2);border:1px solid rgba(201,168,76,0.3);padding:3px 10px;border-radius:3px;white-space:nowrap;}
 .passage{max-width:860px;margin:0 auto;padding:68px 16px 64px;}
+
+/* ── 공통 행동 CSS ── */
+@media(hover:hover) and (pointer:fine){
+  .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card.grammar:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+}
+.s-card.vocab-only .s-kr-wrap,
+.s-card.pinned .s-kr-wrap,
+.s-card.tapped .s-kr-wrap{
+  display:flex!important;flex-wrap:wrap!important;
+  gap:6px!important;padding:8px 14px 10px!important;align-items:flex-start;
+}
+.s-card.pinned .s-kr,.s-card.tapped .s-kr,
+.s-card.pinned .s-grammar,.s-card.tapped .s-grammar,
+.s-card.pinned .s-meaning,.s-card.tapped .s-meaning{
+  width:100%;flex-basis:100%;order:1;
+}
+.s-card.vocab-only .s-vocab,
+.s-card.pinned .s-vocab,
+.s-card.tapped .s-vocab{
+  order:0;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25)!important;
+  border-radius:20px;padding:3px 12px 3px 8px!important;
+  white-space:nowrap;flex-shrink:0;border-top:none!important;
+  display:inline-flex!important;align-items:center;gap:4px;
+}
+.tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
+.tab-sd.active{background:#993C1D;color:white;border-color:#993C1D;}
+.sd-panel{display:none;padding:4px 0;max-width:860px;margin:0 auto;}
+.sd-card{background:white;border-radius:12px;box-shadow:0 2px 12px rgba(31,56,100,0.09);margin-bottom:16px;overflow:hidden;}
+.sd-hdr{padding:9px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;color:white;}
+.sd-card svg{width:100%;display:block;padding:10px 28px 14px;}
+.sd-vocab-row{display:flex;flex-wrap:wrap;gap:6px;padding:8px 14px 12px;border-top:1px dashed rgba(0,0,0,0.08);background:rgba(255,255,255,0.5);}
+.sd-vocab-chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:4px 11px 4px 8px;border-radius:16px;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25);white-space:nowrap;}
+.sd-chip-en{font-size:12px;font-weight:500;color:#1F3864;font-family:Georgia,serif;}
+.sd-chip-kr{font-size:11px;color:#5F5E5A;}
+.sd-print-btn{display:block;width:fit-content;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;padding:8px 22px;border-radius:7px;border:none;background:#3d3d3d;color:white;cursor:pointer;margin:0 0 14px auto;transition:background 0.2s;}
+.sd-print-btn:hover{background:#1F3864;}
+.print-brand{display:none;}
+@media print{
+  .print-brand{display:block;position:fixed;left:0;right:0;font-family:'JetBrains Mono',monospace;font-size:9px;color:#888;text-align:center;letter-spacing:0.5px;background:white;z-index:9999;}
+  .print-brand-top{top:0;border-bottom:0.5px solid #ddd;padding:4px 0 3px;}
+  .print-brand-bot{bottom:0;border-top:0.5px solid #ddd;padding:3px 0 4px;}
+  body:not(.psd) .sd-panel{display:none!important;}
+  body.psd .sd-panel{display:block!important;}
+  body.psd .top-nav,body.psd .page-header,body.psd .watermark,body.psd .view-tabs,body.psd .controls,body.psd .sd-print-btn,body.psd footer{display:none!important;}
+  body.psd .passage{padding:0!important;max-width:100%!important;}
+  body.psd .sd-card{break-inside:avoid;page-break-inside:avoid;margin-bottom:5mm;border:0.5px solid #ccc;box-shadow:none!important;border-radius:5px;overflow:hidden;}
+  body.psd .sd-hdr{font-size:9px!important;padding:5px 10px!important;}
+  body.psd .sd-card svg{width:100%!important;max-width:100%!important;height:auto!important;padding:6px 8px 8px!important;}
+  body.psd .sd-vocab-row{padding:4px 10px 6px!important;}
+  body.psd .sd-vocab-chip{font-size:10px!important;padding:2px 7px!important;}
+}
+
 </style>
 </head>
 <body>
 
+<div class="print-brand print-brand-top">✦ 목동서로영어학원 제작 &nbsp;|&nbsp; www.0505.co.kr</div>
+<div class="print-brand print-brand-bot">✦ 목동서로영어학원 제작 &nbsp;|&nbsp; www.0505.co.kr</div>
 <nav class="top-nav">
   <a class="home-btn" href="mock_march_2026.html">← 목록</a>
   <span class="nav-title-bar">2026 · 3월 · 고1 · 22번</span>
@@ -301,6 +356,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 
   <div class="view-tabs">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
+    <button class="view-tab tab-sd" id="tabSD" onclick="switchSD()">📐 문장구조도</button>
     <button class="view-tab tab-arrange" id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
     <button class="view-tab tab-grammar" id="tabG" onclick="switchView('grammar')">📝 어법 문제</button>
     <button class="view-tab tab-vocab" id="tabV" onclick="switchView('vocab')">📚 단어장</button>
@@ -308,7 +364,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 
   <div id="readingView">
     <div class="hints">
-      <div class="hint">🖱 PC: 마우스 올리기 → 해석 · 클릭 → 발음</div>
+      <div class="hint">🖱 PC: 클릭 → 해석 · 🔊 → 발음</div>
       <div class="hint">📱 모바일: 탭 → 해석 · 🔊 → 발음</div>
       <div class="hint">💡 노란박스 → 쉬운 풀이</div>
     </div>
@@ -349,7 +405,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 <div class="s-card" data-text="This is terrific news for adventurous eaters who want to expand their dinner menu, but it is amazing news for those eager to break poor diet habits.">
   <div class="card-top">
     <span class="s-num">02</span>
-    <div class="s-en"><span class="ref">This</span> is <span class="hl">terrific</span> news for <span class="hl">adventurous</span> eaters <span class="gm">who want to expand</span> their dinner menu — it is a big, tasty world out there! — but it's <span class="hl">amazing</span> news for <span class="gm">those eager to break</span> poor <span class="hl">diet habits</span>.</div>
+    <div class="s-en"><span class="ref">This</span> is <span class="hl">terrific</span> news for <span class="hl">adventurous</span> eaters <span class="gm">who want to expand</span> their dinner menu — it is a big, tasty world out there! — but it is <span class="hl">amazing</span> news for <span class="gm">those eager to break</span> poor <span class="hl">diet habits</span>.</div>
     <span class="speak-icon">🔊</span>
     <div class="wave"><span></span><span></span><span></span><span></span><span></span></div>
   </div>
@@ -483,6 +539,231 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
   </div><!-- /readingView -->
 
+  <div class="sd-panel" id="panelSD">
+<button class="sd-print-btn" onclick="printSD()">🖨️ 구조도 인쇄 (A4)</button>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">01 &nbsp;·&nbsp; Despite learned eating behaviors that are formed in early childhood and inborn biological differences, taste preferences can be changed throughout our lives due to neuroplasticity, our brain's amazing adaptability: There is far more flexibility in our food behaviors than most think, even as we age.</div>
+<svg viewBox="0 0 960 432" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="87" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="53" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">Despite</text>
+  <text x="53" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">~에도 불구하고</text>
+  <rect x="105" y="10" width="208" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="209" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">learned eating behaviors</text>
+  <text x="209" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">학습된 식습관</text>
+  <rect x="321" y="10" width="283" height="28" rx="3" fill="#EEEDFE" stroke="#CECBF6" stroke-width="1.5"/>
+  <text x="462" y="29" font-size="14" font-weight="500" fill="#3C3489" text-anchor="middle" font-family="Georgia,serif">that are formed in early childhood</text>
+  <text x="462" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">어린 시절에 형성된 (관계절)</text>
+  <text x="630" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="630" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="657" y="10" width="245" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="779" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">inborn biological differences</text>
+  <text x="779" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">타고난 생물학적 차이에도</text>
+  <rect x="10" y="94" width="164" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="92" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">taste preferences</text>
+  <text x="92" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">미각 선호도는 (S)</text>
+  <rect x="182" y="94" width="140" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="252" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">can be changed</text>
+  <text x="252" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">변할 수 있다 (V, 수동)</text>
+  <rect x="330" y="94" width="188" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="424" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">throughout our lives</text>
+  <text x="424" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">평생에 걸쳐</text>
+  <rect x="526" y="94" width="193" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="622" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">due to neuroplasticity</text>
+  <text x="622" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">신경가소성 덕분에</text>
+  <rect x="10" y="178" width="268" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="144" y="197" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">our brain's amazing adaptability</text>
+  <text x="144" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">뇌의 놀라운 적응력 (동격)</text>
+  <text x="25" y="281" font-size="14" font-weight="500" fill="#854F0B" text-anchor="middle" font-family="Georgia,serif">:</text>
+  <text x="25" y="314" font-size="12" font-weight="400" fill="#854F0B" text-anchor="middle" font-family="sans-serif">즉</text>
+  <rect x="48" y="262" width="70" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="83" y="281" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">There</text>
+  <text x="83" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">유도부사</text>
+  <rect x="126" y="262" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="158" y="281" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="158" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">있다 (V)</text>
+  <rect x="198" y="262" width="188" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="292" y="281" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">far more flexibility</text>
+  <text x="292" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">훨씬 더 많은 유연성이</text>
+  <rect x="394" y="262" width="185" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="486" y="281" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">in our food behaviors</text>
+  <text x="486" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리 식품 행동에</text>
+  <rect x="587" y="262" width="148" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="661" y="281" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">than most think</text>
+  <text x="661" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">대부분이 생각하는 것보다</text>
+  <rect x="743" y="262" width="140" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="813" y="281" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">even as we age</text>
+  <text x="813" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">나이가 들어도</text>
+  <path d="M 462,38 C 462,80 209,80 209,38" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="206,18 209,10 212,18" fill="#534AB7"/>
+  <rect x="253" y="82" width="164" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="335" y="93" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">that절 → behaviors 수식</text>
+  <line x1="10" y1="342" x2="950" y2="342" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="362" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">어린 시절에 형성된 학습된 식습관과 타고난 생물학적 차이에도 불구하고, 미각 선호도는</text>
+  <text x="10" y="382" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">신경가소성(뇌의 놀라운 적응력) 덕분에 평생에 걸쳐 변할 수 있습니다: 나이가 들어도 우리</text>
+  <text x="10" y="402" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">식품 행동에는 훨씬 더 많은 유연성이 있습니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">neuroplasticity</span><span class="sd-chip-kr">신경가소성</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">inborn</span><span class="sd-chip-kr">타고난</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">adaptability</span><span class="sd-chip-kr">적응력</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">flexibility</span><span class="sd-chip-kr">유연성</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">02 &nbsp;·&nbsp; This is terrific news for adventurous eaters who want to expand their dinner menu, but it is amazing news for those eager to break poor diet habits.</div>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">This</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이것은 (S)</text>
+  <rect x="82" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="114" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="114" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다 (V)</text>
+  <rect x="154" y="10" width="132" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="220" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">terrific news</text>
+  <text x="220" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">멋진 소식 (C)</text>
+  <rect x="294" y="10" width="193" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="390" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">for adventurous eaters</text>
+  <text x="390" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">모험적인 식사가들에게</text>
+  <rect x="495" y="5" width="366" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="678" y="4" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">관계절 — eaters 수식</text>
+  <rect x="501" y="12" width="172" height="28" rx="3" fill="#EEEDFE" stroke="#CECBF6" stroke-width="1.5"/>
+  <text x="587" y="31" font-size="13" font-weight="500" fill="#3C3489" text-anchor="middle" font-family="Georgia,serif">who want to expand</text>
+  <text x="587" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">넓히고 싶어 하는</text>
+  <rect x="681" y="12" width="164" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="763" y="31" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">their dinner menu</text>
+  <text x="763" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">저녁 메뉴를</text>
+  <text x="37" y="113" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">, but</text>
+  <text x="37" y="146" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">하지만</text>
+  <rect x="72" y="94" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="104" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">it</text>
+  <text x="104" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그것은 (S)</text>
+  <rect x="144" y="94" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="176" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="176" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다 (V)</text>
+  <rect x="216" y="94" width="124" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="278" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">amazing news</text>
+  <text x="278" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">놀라운 소식 (C)</text>
+  <rect x="348" y="94" width="335" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="515" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">for those eager to break poor diet habits</text>
+  <text x="515" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">나쁜 식습관을 깨고 싶은 사람들에게</text>
+  <path d="M 678,41 C 678,80 390,80 390,38" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="387,18 390,10 393,18" fill="#534AB7"/>
+  <rect x="459" y="82" width="150" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="534" y="93" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">who절 → eaters 수식</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">이것은 저녁 메뉴를 넓히고 싶은 모험적인 식사가들에게는 멋진 소식이지만, 나쁜 식습관을 깨고</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">싶어 하는 사람들에게는 놀라운 소식입니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">terrific</span><span class="sd-chip-kr">멋진, 훌륭한</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">adventurous</span><span class="sd-chip-kr">모험적인</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">eager to</span><span class="sd-chip-kr">~하고 싶어 하는</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">break</span><span class="sd-chip-kr">깨다, 없애다</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">03 &nbsp;·&nbsp; Just as kids gradually learn to like nutritious foods, so, too, can adults readjust their taste.</div>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="5" width="537" height="36" rx="5" fill="none" stroke="#085041" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="278" y="4" font-size="10" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">Just as절 — 비교 부사절</text>
+  <text x="51" y="29" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">Just as</text>
+  <text x="51" y="62" font-size="12" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">~하듯이</text>
+  <rect x="95" y="12" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="127" y="31" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">kids</text>
+  <text x="127" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">아이들이 (S)</text>
+  <rect x="167" y="12" width="200" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="267" y="31" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">gradually learn to like</text>
+  <text x="267" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">점차 좋아하게 되다 (V)</text>
+  <rect x="375" y="12" width="156" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="453" y="31" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">nutritious foods</text>
+  <text x="453" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">영양가 있는 음식을 (O)</text>
+  <text x="50" y="113" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">so, too,</text>
+  <text x="50" y="146" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">마찬가지로 (도치)</text>
+  <rect x="98" y="94" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="130" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">can</text>
+  <text x="130" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">할 수 있다 (도치)</text>
+  <rect x="170" y="94" width="79" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="209" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">adults</text>
+  <text x="209" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">어른들도 (S)</text>
+  <rect x="257" y="94" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="305" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">readjust</text>
+  <text x="305" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">재조정하다 (V)</text>
+  <rect x="361" y="94" width="116" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="419" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">their taste</text>
+  <text x="419" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들의 입맛을 (O)</text>
+  <line x1="278" y1="41" x2="278" y2="82" stroke="#085041" stroke-width="1.3"/>
+  <line x1="278" y1="82" x2="130" y2="82" stroke="#085041" stroke-width="1.3"/>
+  <line x1="130" y1="82" x2="130" y2="94" stroke="#085041" stroke-width="1.3"/>
+  <polygon points="127,99 130,94 133,99" fill="#085041"/>
+  <rect x="73" y="84" width="262" height="16" rx="3" fill="#E6F1FB"/>
+  <text x="204" y="95" font-size="11" font-weight="500" fill="#085041" text-anchor="middle" font-family="sans-serif">Just as A → so, too, can B (비교 도치)</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">아이들이 점차적으로 영양가 있는 음식을 좋아하게 되듯이, 어른들도 마찬가지로 입맛을 재조정할</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">수 있습니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">just as A, so B</span><span class="sd-chip-kr">A하듯이 B도 마찬가지</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">gradually</span><span class="sd-chip-kr">점차적으로</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">nutritious</span><span class="sd-chip-kr">영양가 있는</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">readjust</span><span class="sd-chip-kr">재조정하다</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">04 &nbsp;·&nbsp; Many who switch from processed grain foods like white bread and white rice to whole grain types, for instance, gradually learn to prefer the nutty flavors and chewy textures.</div>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Many</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">많은 사람들은 (S)</text>
+  <rect x="82" y="5" width="814" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="489" y="4" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">관계절 — Many 수식</text>
+  <text x="136" y="29" font-size="14" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="Georgia,serif">who switch</text>
+  <text x="136" y="62" font-size="12" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">바꾸는</text>
+  <rect x="193" y="12" width="223" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="304" y="31" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">from processed grain foods</text>
+  <text x="304" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가공 곡물 식품에서</text>
+  <rect x="424" y="12" width="260" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="554" y="31" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">like white bread and white rice</text>
+  <text x="554" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">흰빵·흰쌀 등</text>
+  <rect x="692" y="12" width="188" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="786" y="31" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">to whole grain types</text>
+  <text x="786" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">통곡물 종류로</text>
+  <rect x="10" y="94" width="148" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="84" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">, for instance,</text>
+  <text x="84" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">예를 들어</text>
+  <rect x="10" y="178" width="215" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="117" y="197" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">gradually learn to prefer</text>
+  <text x="117" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">점차 선호하게 되다 (V)</text>
+  <rect x="233" y="178" width="164" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="315" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the nutty flavors</text>
+  <text x="315" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">고소한 맛을 (O1)</text>
+  <text x="423" y="197" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="423" y="230" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="450" y="178" width="140" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="520" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">chewy textures</text>
+  <text x="520" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">씹히는 식감을 (O2)</text>
+  <path d="M 489,41 C 489,80 42,80 42,38" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="39,18 42,10 45,18" fill="#534AB7"/>
+  <rect x="190" y="82" width="150" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="265" y="93" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">who절 → Many 수식</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">예를 들어, 흰 빵이나 흰 쌀과 같은 가공된 곡물 식품에서 통곡물 종류로 바꾸는 많은 사람들은</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">점차 고소한 맛과 씹히는 식감을 선호하게 됩니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">switch from A to B</span><span class="sd-chip-kr">A에서 B로 바꾸다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">processed</span><span class="sd-chip-kr">가공된</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">whole grain</span><span class="sd-chip-kr">통곡물</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">nutty</span><span class="sd-chip-kr">고소한</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">chewy texture</span><span class="sd-chip-kr">씹히는 식감</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">05 &nbsp;·&nbsp; Repeated exposure and a willingness to change is the key.</div>
+<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="164" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="92" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Repeated exposure</text>
+  <text x="92" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">반복적인 노출이 (S)</text>
+  <text x="217" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">— and —</text>
+  <text x="217" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그리고 (삽입)</text>
+  <rect x="261" y="10" width="200" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="361" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">a willingness to change</text>
+  <text x="361" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">변화하려는 의지</text>
+  <rect x="469" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="501" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="501" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다 (V, 단수)</text>
+  <rect x="541" y="10" width="87" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="584" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the key</text>
+  <text x="584" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">핵심 (C)</text>
+  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">반복적인 노출 — 그리고 변화하려는 의지 — 이 핵심입니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">repeated exposure</span><span class="sd-chip-kr">반복적인 노출</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">willingness</span><span class="sd-chip-kr">의지, 기꺼이 하려는 마음</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">key</span><span class="sd-chip-kr">핵심</span></span></div>
+</div>
+  </div>
   <div class="arrange-view" id="arrangeView">
     <div class="score-bar"><div><div class="score-label">SCORE</div><span class="score-num" id="scoreNum">0</span><span class="score-total" id="scoreTotal"> / 0</span></div><button class="score-reset-all" onclick="resetAll()">↺ 전체 초기화</button></div>
     <div id="arrCards"></div>
@@ -857,5 +1138,56 @@ function buildMeaningQuiz(box){
 function checkMeaning(i,btn){const card=btn.closest('.quiz-card');const correct=card.dataset.answer;const isOk=btn.dataset.val===correct;card.querySelectorAll('.choice-btn').forEach(b=>{b.onclick=null;if(b.dataset.val===correct)b.classList.add('ok');else if(b===btn&&!isOk)b.classList.add('ng');});const fb=document.getElementById('mc-fb-'+i);fb.className='quiz-fb show '+(isOk?'ok':'ng');fb.innerHTML=isOk?'🎉 정답!':'❌ 정답: <strong>'+correct+'</strong>';vocabScores.meaning[i]=isOk?1:0;const done=Object.keys(vocabScores.meaning).length;const ok=Object.values(vocabScores.meaning).filter(v=>v===1).length;const sc=document.getElementById('meaning-score');if(sc)sc.textContent=`${ok} / ${done} 정답`;}
 function resetMeaning(){vocabScores.meaning={};buildVocab(2);}
 </script>
+
+<script>
+function switchSD(){
+  var rv=document.getElementById("readingView");
+  if(rv)rv.style.display="none";
+  ["arrangeView","grammarView","vocabView"].forEach(function(id){
+    var el=document.getElementById(id);if(el)el.classList.remove("active");
+  });
+  document.querySelectorAll(".view-tab").forEach(function(t){t.classList.remove("active");});
+  var p=document.getElementById("panelSD");if(p)p.style.display="block";
+  var tb=document.getElementById("tabSD");if(tb)tb.classList.add("active");
+}
+function printSD(){
+  document.body.classList.add("psd");
+  window.onafterprint=function(){document.body.classList.remove("psd");window.onafterprint=null;};
+  window.print();
+}
+(function(){
+  document.querySelectorAll(".s-card").forEach(function(card){
+    var speakBtn=card.querySelector(".speak-icon");
+    var waveEl=card.querySelector(".wave");
+    function doSpeak(e){
+      e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
+      if(card.classList.contains("playing")){stopSpeech();}
+      else{speakCard(card);}
+    }
+    if(speakBtn){speakBtn.onclick=null;speakBtn.addEventListener("click",doSpeak,true);}
+    if(waveEl){waveEl.onclick=null;waveEl.addEventListener("click",doSpeak,true);}
+    card.addEventListener("click",function(e){
+      if(e.target.closest(".speak-icon")||e.target.closest(".wave"))return;
+      e.stopImmediatePropagation();
+      if(typeof stopSpeech==="function"&&document.querySelector(".s-card.playing")&&!card.classList.contains("playing")){stopSpeech();}
+      var isOpen=card.classList.contains("tapped")||card.classList.contains("pinned");
+      document.querySelectorAll(".s-card.tapped").forEach(function(tc){if(tc!==card)tc.classList.remove("tapped");});
+      if(card.classList.contains("pinned")){card.classList.remove("pinned");}
+      else{card.classList.toggle("tapped",!isOpen);}
+    },true);
+    card.addEventListener("dblclick",function(e){e.preventDefault();card.classList.toggle("pinned");});
+  });
+})();
+(function(){
+  if(typeof switchView==="undefined")return;
+  var orig=switchView;
+  switchView=function(v){
+    var p=document.getElementById("panelSD");if(p)p.style.display="none";
+    var tb=document.getElementById("tabSD");if(tb)tb.classList.remove("active");
+    orig(v);
+  };
+})();
+</script>
+
 </body>
 </html>
