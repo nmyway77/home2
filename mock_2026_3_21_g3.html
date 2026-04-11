@@ -295,9 +295,53 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   letter-spacing:2px;color:var(--gold2);border:1px solid rgba(201,168,76,0.3);
   padding:3px 10px;border-radius:3px;white-space:nowrap;}
 .passage{max-width:860px;margin:0 auto;padding:68px 16px 64px;}
+
+/* ── 행동 패치 + SD CSS ── */
+@media(hover:hover) and (pointer:fine){
+  .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card.grammar:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+}
+.s-card.vocab-only .s-kr-wrap,.s-card.pinned .s-kr-wrap,.s-card.tapped .s-kr-wrap{
+  display:flex!important;flex-wrap:wrap!important;gap:6px!important;padding:8px 14px 10px!important;align-items:flex-start;}
+.s-card.pinned .s-kr,.s-card.tapped .s-kr,.s-card.pinned .s-grammar,.s-card.tapped .s-grammar,
+.s-card.pinned .s-meaning,.s-card.tapped .s-meaning{width:100%;flex-basis:100%;order:1;}
+.s-card.vocab-only .s-vocab,.s-card.pinned .s-vocab,.s-card.tapped .s-vocab{
+  order:0;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25)!important;border-radius:20px;
+  padding:3px 12px 3px 8px!important;white-space:nowrap;flex-shrink:0;border-top:none!important;
+  display:inline-flex!important;align-items:center;gap:4px;}
+.tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
+.tab-sd.active{background:#993C1D;color:white;border-color:#993C1D;}
+.sd-panel{display:none;padding:4px 0;max-width:860px;margin:0 auto;}
+.sd-card{background:white;border-radius:12px;box-shadow:0 2px 12px rgba(31,56,100,0.09);margin-bottom:16px;overflow:hidden;}
+.sd-hdr{padding:9px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;color:white;}
+.sd-card svg{width:100%;display:block;padding:10px 28px 14px;}
+.sd-vocab-row{display:flex;flex-wrap:wrap;gap:6px;padding:8px 14px 12px;border-top:1px dashed rgba(0,0,0,0.08);background:rgba(255,255,255,0.5);}
+.sd-vocab-chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:4px 11px 4px 8px;border-radius:16px;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25);white-space:nowrap;}
+.sd-chip-en{font-size:12px;font-weight:500;color:#1F3864;font-family:Georgia,serif;}
+.sd-chip-kr{font-size:11px;color:#5F5E5A;}
+.sd-print-btn{display:block;width:fit-content;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;padding:8px 22px;border-radius:7px;border:none;background:#3d3d3d;color:white;cursor:pointer;margin:0 0 14px auto;transition:background 0.2s;}
+.sd-print-btn:hover{background:#1F3864;}
+.print-brand{display:none;}
+@media print{
+  .print-brand{display:block;position:fixed;left:0;right:0;font-family:'JetBrains Mono',monospace;font-size:9px;color:#888;text-align:center;letter-spacing:0.5px;background:white;z-index:9999;}
+  .print-brand-top{top:0;border-bottom:0.5px solid #ddd;padding:4px 0 3px;}
+  .print-brand-bot{bottom:0;border-top:0.5px solid #ddd;padding:3px 0 4px;}
+  body:not(.psd) .sd-panel{display:none!important;}
+  body.psd .sd-panel{display:block!important;}
+  body.psd .top-nav,body.psd .page-header,body.psd .watermark,body.psd .view-tabs,body.psd .controls,body.psd .sd-print-btn,body.psd footer{display:none!important;}
+  body.psd .passage{padding:0!important;max-width:100%!important;}
+  body.psd .sd-card{break-inside:avoid;page-break-inside:avoid;margin-bottom:5mm;border:0.5px solid #ccc;box-shadow:none!important;border-radius:5px;overflow:hidden;}
+  body.psd .sd-hdr{font-size:9px!important;padding:5px 10px!important;}
+  body.psd .sd-card svg{width:100%!important;max-width:100%!important;height:auto!important;padding:6px 8px 8px!important;}
+  body.psd .sd-vocab-row{padding:4px 10px 6px!important;}
+  body.psd .sd-vocab-chip{font-size:10px!important;padding:2px 7px!important;}
+}
+
 </style>
 </head>
 <body>
+<div class="print-brand print-brand-top">✦ 목동서로영어학원 제작 &nbsp;|&nbsp; www.0505.co.kr</div>
+<div class="print-brand print-brand-bot">✦ 목동서로영어학원 제작 &nbsp;|&nbsp; www.0505.co.kr</div>
 <nav class="top-nav">
   <a class="home-btn" href="mock_march_2026_g3.html">← 목록</a>
   <span class="nav-title-bar">2026 · 3월 · 고3 · 21번</span>
@@ -316,13 +360,14 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
   <div class="view-tabs">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
+    <button class="view-tab tab-sd" id="tabSD" onclick="switchSD()">📐 문장구조도</button>
     <button class="view-tab tab-arrange"        id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
     <button class="view-tab tab-grammar"        id="tabG" onclick="switchView('grammar')">📝 어법 문제</button>
     <button class="view-tab tab-vocab"          id="tabV" onclick="switchView('vocab')">📚 단어장</button>
   </div>
   <div id="readingView">
     <div class="hints">
-      <div class="hint">🖱 PC: 마우스 올리기 → 해석 · 클릭 → 발음</div>
+      <div class="hint">🖱 PC: 클릭 → 해석 · 🔊 → 발음</div>
       <div class="hint">📱 모바일: 탭 → 해석 · 🔊 → 발음</div>
       <div class="hint">💡 노란박스 → 쉬운 풀이</div>
     </div>
@@ -486,6 +531,235 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <p style="text-align:center;font-size:12px;color:#444;">새로움에 대한 집착은 음악을 기술 경쟁으로 전락시킨다!</p>
     <p style="text-align:center;font-size:11px;color:#888;margin-top:6px;">novelty(새로움 집착) → technique alone(기술만 남음) → arms race(군비 경쟁) → pastiche(모방) → never-ending progress(끝없는 진보 압박) ✦</p>
   </div>
+</div>
+  </div>
+  <div class="sd-panel" id="panelSD">
+<button class="sd-print-btn" onclick="printSD()">🖨️ 구조도 인쇄 (A4)</button>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">01 &nbsp;·&nbsp; A brilliant musician can in fact be an innovator without strictly speaking being an inventor.</div>
+<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="188" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="104" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">A brilliant musician</text>
+  <text x="104" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">뛰어난 음악가는 (S)</text>
+  <rect x="206" y="10" width="116" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="264" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">can in fact</text>
+  <text x="264" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사실 ~할 수 있다</text>
+  <rect x="330" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="362" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">be</text>
+  <text x="362" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다 (V)</text>
+  <rect x="402" y="10" width="124" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="464" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">an innovator</text>
+  <text x="464" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">혁신가가 (C)</text>
+  <rect x="534" y="10" width="350" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="709" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">without strictly speaking being an inventor</text>
+  <text x="709" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">엄밀히 말해 발명가가 아니더라도 (without+동명사)</text>
+  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">뛰어난 음악가는 사실 엄밀히 말해 발명가가 아니더라도 혁신가가 될 수 있습니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">innovator</span><span class="sd-chip-kr">혁신가</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">inventor</span><span class="sd-chip-kr">발명가</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">strictly speaking</span><span class="sd-chip-kr">엄밀히 말해서</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">02 &nbsp;·&nbsp; In such cases, those who expect great discoveries will be disappointed.</div>
+<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="140" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="80" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">In such cases,</text>
+  <text x="80" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그런 경우에</text>
+  <rect x="158" y="10" width="70" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="193" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">those</text>
+  <text x="193" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사람들은 (S)</text>
+  <rect x="236" y="5" width="307" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="389" y="4" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">주격 관계절 — those 수식</text>
+  <rect x="242" y="12" width="113" height="28" rx="3" fill="#EEEDFE" stroke="#CECBF6" stroke-width="1.5"/>
+  <text x="298" y="31" font-size="13" font-weight="500" fill="#3C3489" text-anchor="middle" font-family="Georgia,serif">who expect</text>
+  <text x="298" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">기대하는 (주격 관계대명사)</text>
+  <rect x="363" y="12" width="164" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="445" y="31" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">great discoveries</text>
+  <text x="445" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">위대한 발견을</text>
+  <rect x="551" y="10" width="87" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="594" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">will be</text>
+  <text x="594" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">될 것이다 (V)</text>
+  <rect x="646" y="10" width="124" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="708" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">disappointed</text>
+  <text x="708" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">실망한 (C)</text>
+  <path d="M 389,41 C 389,80 193,80 193,38" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="190,18 193,10 196,18" fill="#534AB7"/>
+  <rect x="216" y="82" width="150" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="291" y="93" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">who절 → those 수식</text>
+  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">그런 경우에, 위대한 발견을 기대하는 사람들은 실망하게 될 것입니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">disappointed</span><span class="sd-chip-kr">실망한</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">03 &nbsp;·&nbsp; Let there be no doubt: the eager need for novelty, so characteristic of the escalating modernist auction, involves the idea that a musical act is a thing, in which case, music is no more than technique, technique alone.</div>
+<svg viewBox="0 0 960 432" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="193" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="106" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">Let there be no doubt:</text>
+  <text x="106" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">의심의 여지가 없다 (명령문 강조)</text>
+  <rect x="211" y="10" width="223" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="322" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the eager need for novelty</text>
+  <text x="322" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">신선함에 대한 간절한 욕구는 (S)</text>
+  <rect x="442" y="10" width="448" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="666" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">, so characteristic of the escalating modernist auction,</text>
+  <text x="666" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">점점 치솟는 모더니즘 경매에 너무도 특징적인 (삽입 형용사구)</text>
+  <rect x="10" y="94" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="58" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">involves</text>
+  <text x="58" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">내포한다 (V)</text>
+  <rect x="114" y="94" width="96" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="162" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the idea</text>
+  <text x="162" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">생각을 (O)</text>
+  <rect x="10" y="173" width="321" height="36" rx="5" fill="none" stroke="#6A1B9A" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="170" y="172" font-size="10" font-weight="400" fill="#6A1B9A" text-anchor="middle" font-family="sans-serif">동격 that절 — idea의 내용</text>
+  <rect x="16" y="180" width="132" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="82" y="199" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">a musical act</text>
+  <text x="82" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">음악적 행위가</text>
+  <rect x="156" y="180" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="188" y="199" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="188" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다</text>
+  <rect x="228" y="180" width="87" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="271" y="199" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">a thing</text>
+  <text x="271" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">하나의 물건</text>
+  <rect x="10" y="262" width="140" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="80" y="281" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">in which case,</text>
+  <text x="80" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그 경우 (관계절)</text>
+  <rect x="158" y="262" width="70" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="193" y="281" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">music</text>
+  <text x="193" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">음악은 (S)</text>
+  <rect x="236" y="262" width="148" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="310" y="281" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is no more than</text>
+  <text x="310" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">~에 불과하다 (V)</text>
+  <rect x="392" y="262" width="223" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="503" y="281" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">technique, technique alone</text>
+  <text x="503" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">기술, 오직 기술 (C)</text>
+  <line x1="10" y1="342" x2="950" y2="342" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="362" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">의심의 여지가 없습니다: 점점 치솟는 모더니즘 경매에 너무도 특징적인 신선함에 대한 간절한</text>
+  <text x="10" y="382" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">욕구는 음악적 행위가 하나의 물건이라는 생각을 내포하며, 그 경우 음악은 기술, 오직 기술에</text>
+  <text x="10" y="402" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">불과하게 됩니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">novelty</span><span class="sd-chip-kr">새로움, 참신함</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">escalating</span><span class="sd-chip-kr">점점 높아지는</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">auction</span><span class="sd-chip-kr">경매</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">no more than</span><span class="sd-chip-kr">~에 불과한</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">04 &nbsp;·&nbsp; And just as technique is the consequence of an indefinite process of perfection — with each automobile or kitchen appliance show introducing what is new and improved in comparison to last year's — so never-ending progress shall be the law of music. Farther, faster, more powerful!</div>
+<svg viewBox="0 0 960 432" xmlns="http://www.w3.org/2000/svg">
+  <text x="28" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">And</text>
+  <text x="28" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="55" y="10" width="590" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="350" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">just as technique is the consequence of an indefinite process of perfection</text>
+  <text x="350" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">마치 기술이 완성을 향한 끝없는 과정의 결과인 것처럼 (just as 비교절)</text>
+  <rect x="10" y="94" width="898" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="459" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">— with each automobile or kitchen appliance show introducing what is new and improved in comparison to last year's —</text>
+  <text x="459" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">각각의 전시회가 작년 것보다 새롭고 향상된 것을 선보이면서 (독립분사구문 삽입)</text>
+  <rect x="10" y="178" width="64" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="42" y="197" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">so</text>
+  <text x="42" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">마찬가지로</text>
+  <rect x="82" y="178" width="185" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="174" y="197" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">never-ending progress</text>
+  <text x="174" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">끝없는 진보가 (S)</text>
+  <rect x="275" y="178" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="323" y="197" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">shall be</text>
+  <text x="323" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">될 것이다 (V, 강한 당위)</text>
+  <rect x="379" y="178" width="156" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="457" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the law of music</text>
+  <text x="457" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">음악의 법칙이 (C)</text>
+  <rect x="10" y="262" width="260" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="140" y="281" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">Farther, faster, more powerful!</text>
+  <text x="140" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">더 멀리, 더 빠르게, 더 강력하게! (수사적 열거)</text>
+  <line x1="10" y1="342" x2="950" y2="342" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="362" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">그리고 마치 기술이 완성을 향한 끝없는 과정의 결과인 것처럼 — 각각의 자동차나 주방 가전제품</text>
+  <text x="10" y="382" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">전시회가 작년 것과 비교해 새롭고 향상된 것을 선보이면서 — 끝없는 진보가 음악의 법칙이 될</text>
+  <text x="10" y="402" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">것입니다. 더 멀리, 더 빠르게, 더 강력하게!</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">consequence</span><span class="sd-chip-kr">결과</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">indefinite</span><span class="sd-chip-kr">끝없는, 무한한</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">appliance</span><span class="sd-chip-kr">가전제품</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">in comparison to</span><span class="sd-chip-kr">~와 비교하여</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">05 &nbsp;·&nbsp; In this arms race, each new music, breaking its predecessor's records, offers itself as the last thing in modernity; and each musician, forcing predecessors into the category of the unfashionable and outmoded, claims the patent on the invention.</div>
+<svg viewBox="0 0 960 432" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="172" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="96" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">In this arms race,</text>
+  <text x="96" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이 군비 경쟁에서</text>
+  <rect x="190" y="10" width="140" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="260" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">each new music</text>
+  <text x="260" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">각각의 새로운 음악은 (S)</text>
+  <rect x="338" y="10" width="305" height="28" rx="3" fill="#E8F5E9" stroke="#A5D6A7" stroke-width="1.3"/>
+  <text x="490" y="29" font-size="14" font-weight="500" fill="#1B5E20" text-anchor="middle" font-family="Georgia,serif">, breaking its predecessor's records,</text>
+  <text x="490" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">전임자의 기록을 깨면서 (분사구문)</text>
+  <rect x="651" y="10" width="156" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="729" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">offers itself as</text>
+  <text x="729" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">자신을 ~로 내세운다 (V)</text>
+  <rect x="10" y="94" width="230" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="125" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the last thing in modernity</text>
+  <text x="125" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">현대성의 최신 것으로 (C)</text>
+  <text x="37" y="197" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">; and</text>
+  <text x="37" y="230" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그리고 (세미콜론 병렬)</text>
+  <rect x="72" y="178" width="132" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="138" y="197" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">each musician</text>
+  <text x="138" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">각각의 음악가는 (S)</text>
+  <rect x="212" y="178" width="590" height="28" rx="3" fill="#E8F5E9" stroke="#A5D6A7" stroke-width="1.3"/>
+  <text x="507" y="197" font-size="14" font-weight="500" fill="#1B5E20" text-anchor="middle" font-family="Georgia,serif">, forcing predecessors into the category of the unfashionable and outmoded,</text>
+  <text x="507" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">전임자들을 유행에 뒤진 범주로 몰아넣으면서 (분사구문)</text>
+  <rect x="810" y="178" width="79" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="849" y="197" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">claims</text>
+  <text x="849" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">주장한다 (V)</text>
+  <rect x="10" y="262" width="230" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="125" y="281" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the patent on the invention</text>
+  <text x="125" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그 발명의 특허를 (O)</text>
+  <line x1="10" y1="342" x2="950" y2="342" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="362" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">이 군비 경쟁에서, 각각의 새로운 음악은 전임자의 기록을 깨면서 자신을 현대성의 최신 것으로</text>
+  <text x="10" y="382" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">내세우고; 각각의 음악가는 전임자들을 유행에 뒤지고 시대에 뒤떨어진 범주로 몰아넣으면서 그</text>
+  <text x="10" y="402" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">발명의 특허를 주장합니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">arms race</span><span class="sd-chip-kr">군비 경쟁</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">predecessor</span><span class="sd-chip-kr">전임자, 이전 것</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">modernity</span><span class="sd-chip-kr">현대성</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">unfashionable</span><span class="sd-chip-kr">유행에 뒤진</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">outmoded</span><span class="sd-chip-kr">시대에 뒤떨어진</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">patent</span><span class="sd-chip-kr">특허</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">06 &nbsp;·&nbsp; In an era where pastiches of scientific investigation have become quasi-universal, musicians owe it to themselves to become researchers just like everyone else.</div>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="104" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="62" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">In an era</text>
+  <text x="62" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">한 시대에</text>
+  <rect x="122" y="5" width="627" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="435" y="4" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">where절 — era 수식 (관계부사)</text>
+  <text x="155" y="29" font-size="14" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="Georgia,serif">where</text>
+  <text x="155" y="62" font-size="12" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">(관계부사)</text>
+  <rect x="190" y="12" width="305" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="342" y="31" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">pastiches of scientific investigation</text>
+  <text x="342" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">과학적 탐구의 모방이</text>
+  <rect x="503" y="12" width="230" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="618" y="31" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">have become quasi-universal</text>
+  <text x="618" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">거의 보편화됐다 (V, 현재완료)</text>
+  <rect x="10" y="94" width="104" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="62" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">musicians</text>
+  <text x="62" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">음악가들은 (S)</text>
+  <rect x="122" y="94" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="154" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">owe</text>
+  <text x="154" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">있다 (V)</text>
+  <rect x="194" y="94" width="64" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="226" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">it</text>
+  <text x="226" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가목적어 (it)</text>
+  <rect x="266" y="94" width="132" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="332" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">to themselves</text>
+  <text x="332" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">자신에게</text>
+  <rect x="406" y="94" width="365" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="588" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to become researchers just like everyone else</text>
+  <text x="588" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">다른 모든 사람들처럼 연구자가 되어야 할 (진목적어 to부정사)</text>
+  <path d="M 435,41 C 435,80 62,80 62,38" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="59,18 62,10 65,18" fill="#534AB7"/>
+  <rect x="173" y="82" width="150" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="248" y="93" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">where절 → era 수식</text>
+  <path d="M 588,122 C 588,164 226,164 226,122" fill="none" stroke="#0C447C" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="223,102 226,94 229,102" fill="#0C447C"/>
+  <rect x="332" y="166" width="150" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="407" y="177" font-size="11" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="sans-serif">진목적어 → it(가목적어) 대체</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">과학적 탐구의 모방이 거의 보편화된 시대에, 음악가들은 다른 모든 사람들처럼 연구자가 되어야</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">할 의무가 자신에게 있습니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">pastiche</span><span class="sd-chip-kr">모방, 짜깁기</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">quasi-universal</span><span class="sd-chip-kr">거의 보편적인</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">owe it to oneself</span><span class="sd-chip-kr">~해야 할 의무가 있다</span></span></div>
 </div>
   </div>
   <div class="arrange-view" id="arrangeView">
@@ -803,5 +1077,49 @@ function buildMeaningQuiz(box){
 function checkMeaning(i,btn){const card=btn.closest('.quiz-card');const correct=card.dataset.answer;const isOk=btn.dataset.val===correct;card.querySelectorAll('.choice-btn').forEach(b=>{b.onclick=null;if(b.dataset.val===correct)b.classList.add('ok');else if(b===btn&&!isOk)b.classList.add('ng');});const fb=document.getElementById('mc-fb-'+i);fb.className='quiz-fb show '+(isOk?'ok':'ng');fb.innerHTML=isOk?'🎉 정답!':'❌ 정답: <strong>'+correct+'</strong>';vocabScores.meaning[i]=isOk?1:0;const done=Object.keys(vocabScores.meaning).length;const ok=Object.values(vocabScores.meaning).filter(v=>v===1).length;const sc=document.getElementById('meaning-score');if(sc)sc.textContent=`${ok} / ${done} 정답`;}
 function resetMeaning(){vocabScores.meaning={};buildVocab(2);}
 </script>
+
+<script>
+function switchSD(){
+  var rv=document.getElementById("readingView");if(rv)rv.style.display="none";
+  ["arrangeView","grammarView","vocabView"].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.remove("active");});
+  document.querySelectorAll(".view-tab").forEach(function(t){t.classList.remove("active");});
+  var p=document.getElementById("panelSD");if(p)p.style.display="block";
+  var tb=document.getElementById("tabSD");if(tb)tb.classList.add("active");
+}
+function printSD(){
+  document.body.classList.add("psd");
+  window.onafterprint=function(){document.body.classList.remove("psd");window.onafterprint=null;};
+  window.print();
+}
+(function(){
+  document.querySelectorAll(".s-card").forEach(function(card){
+    var sb=card.querySelector(".speak-icon"),we=card.querySelector(".wave");
+    function ds(e){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
+      if(card.classList.contains("playing")){stopSpeech();}else{speakCard(card);}}
+    if(sb){sb.onclick=null;sb.addEventListener("click",ds,true);}
+    if(we){we.onclick=null;we.addEventListener("click",ds,true);}
+    card.addEventListener("click",function(e){
+      if(e.target.closest(".speak-icon")||e.target.closest(".wave"))return;
+      e.stopImmediatePropagation();
+      if(typeof stopSpeech==="function"&&document.querySelector(".s-card.playing")&&!card.classList.contains("playing")){stopSpeech();}
+      var io=card.classList.contains("tapped")||card.classList.contains("pinned");
+      document.querySelectorAll(".s-card.tapped").forEach(function(tc){if(tc!==card)tc.classList.remove("tapped");});
+      if(card.classList.contains("pinned")){card.classList.remove("pinned");}
+      else{card.classList.toggle("tapped",!io);}
+    },true);
+    card.addEventListener("dblclick",function(e){e.preventDefault();card.classList.toggle("pinned");});
+  });
+})();
+(function(){
+  if(typeof switchView==="undefined")return;
+  var orig=switchView;
+  switchView=function(v){
+    var p=document.getElementById("panelSD");if(p)p.style.display="none";
+    var tb=document.getElementById("tabSD");if(tb)tb.classList.remove("active");
+    orig(v);
+  };
+})();
+</script>
+
 </body>
 </html>
