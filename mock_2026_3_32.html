@@ -19,7 +19,7 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 .nav-badge{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--gold2);border:1px solid rgba(201,168,76,0.3);padding:3px 10px;border-radius:3px;white-space:nowrap;}
 
 /* PASSAGE */
-.passage{max-width:860px;margin:0 auto;padding:68px 16px 64px;}
+.passage{max-width:860px;margin:0 auto;padding:68px 24px 64px;}
 
 /* PAGE HEADER */
 .page-header{margin:0 0 20px;border-left:5px solid var(--navy);padding-left:20px;}
@@ -274,16 +274,91 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .home-btn:hover{background:rgba(255,255,255,0.14);color:white;}
 .nav-title-bar{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:1px;}
 .nav-badge{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--gold2);border:1px solid rgba(201,168,76,0.3);padding:3px 10px;border-radius:3px;white-space:nowrap;}
-.passage{max-width:860px;margin:0 auto;padding:68px 16px 64px;}
+.passage{max-width:860px;margin:0 auto;padding:68px 24px 64px;}
 .top-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--navy);box-shadow:0 3px 16px rgba(31,56,100,0.35);display:flex;align-items:center;padding:0 16px;height:48px;gap:12px;}
 .home-btn{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.7);text-decoration:none;padding:4px 10px;border-radius:4px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);transition:all 0.2s;white-space:nowrap;}
 .home-btn:hover{background:rgba(255,255,255,0.14);color:white;}
 .nav-title-bar{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:1px;}
 .nav-badge{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--gold2);border:1px solid rgba(201,168,76,0.3);padding:3px 10px;border-radius:3px;white-space:nowrap;}
-.passage{max-width:860px;margin:0 auto;padding:68px 16px 64px;}
+.passage{max-width:860px;margin:0 auto;padding:68px 24px 64px;}
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--navy);
+  box-shadow:0 3px 16px rgba(31,56,100,0.35);display:flex;align-items:center;
+  padding:0 16px;height:48px;gap:12px;}
+.home-btn{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;
+  color:rgba(255,255,255,0.7);text-decoration:none;padding:4px 10px;border-radius:4px;
+  border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);
+  transition:all 0.2s;white-space:nowrap;}
+.home-btn:hover{background:rgba(255,255,255,0.14);color:white;}
+.nav-title-bar{font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:rgba(255,255,255,0.5);letter-spacing:1px;}
+.nav-badge{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:2px;color:var(--gold2);border:1px solid rgba(201,168,76,0.3);
+  padding:3px 10px;border-radius:3px;white-space:nowrap;}
+.passage{max-width:860px;margin:0 auto;padding:68px 24px 64px;}
+/* ── 공통 행동 CSS ── */
+/* 1. 호버 펼치기 완전 제거 */
+@media(hover:hover) and (pointer:fine){
+  .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card.grammar:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+}
+/* 2. 단어 가로 칩 배열 */
+.s-card.vocab-only .s-kr-wrap,
+.s-card.pinned .s-kr-wrap,
+.s-card.tapped .s-kr-wrap{
+  display:flex!important;flex-wrap:wrap!important;
+  gap:6px!important;padding:8px 14px 10px!important;align-items:flex-start;
+}
+.s-card.pinned .s-kr,.s-card.tapped .s-kr,
+.s-card.pinned .s-grammar,.s-card.tapped .s-grammar,
+.s-card.pinned .s-meaning,.s-card.tapped .s-meaning{
+  width:100%;flex-basis:100%;order:1;
+}
+.s-card.vocab-only .s-vocab,
+.s-card.pinned .s-vocab,
+.s-card.tapped .s-vocab{
+  order:0;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25)!important;
+  border-radius:20px;padding:3px 12px 3px 8px!important;
+  white-space:nowrap;flex-shrink:0;border-top:none!important;
+  display:inline-flex!important;align-items:center;gap:4px;
+}
+/* 3. 문장구조도 탭·패널 */
+.tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
+.tab-sd.active{background:#993C1D;color:white;border-color:#993C1D;}
+.sd-panel{display:none;padding:4px 0;max-width:860px;margin:0 auto;}
+.sd-card{background:white;border-radius:12px;box-shadow:0 2px 12px rgba(31,56,100,0.09);margin-bottom:16px;overflow:hidden;}
+.sd-hdr{padding:9px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;color:white;}
+.sd-card svg{width:100%;display:block;padding:10px 28px 14px;}
+/* 4. 구조도 vocab 칩 */
+.sd-vocab-row{display:flex;flex-wrap:wrap;gap:6px;padding:8px 14px 12px;border-top:1px dashed rgba(0,0,0,0.08);background:rgba(255,255,255,0.5);}
+.sd-vocab-chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:4px 11px 4px 8px;border-radius:16px;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25);white-space:nowrap;}
+.sd-chip-en{font-size:12px;font-weight:500;color:#1F3864;font-family:Georgia,serif;}
+.sd-chip-kr{font-size:11px;color:#5F5E5A;}
+/* 5. 구조도 인쇄 버튼 */
+.sd-print-btn{display:block;width:fit-content;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;padding:8px 22px;border-radius:7px;border:none;background:#3d3d3d;color:white;cursor:pointer;margin:0 0 14px auto;transition:background 0.2s;}
+.sd-print-btn:hover{background:#1F3864;}
+/* 6. 인쇄 브랜드 */
+.print-brand{display:none;}
+/* 7. 구조도 인쇄 */
+@media print{
+  .print-brand{display:block;position:fixed;left:0;right:0;font-family:'JetBrains Mono',monospace;font-size:9px;color:#888;text-align:center;letter-spacing:0.5px;background:white;z-index:9999;}
+  .print-brand-top{top:0;border-bottom:0.5px solid #ddd;padding:4px 0 3px;}
+  .print-brand-bot{bottom:0;border-top:0.5px solid #ddd;padding:3px 0 4px;}
+  body:not(.psd) .sd-panel{display:none!important;}
+  body.psd .sd-panel{display:block!important;}
+  body.psd .top-nav,body.psd .page-header,body.psd .watermark,body.psd .view-tabs,body.psd .controls,body.psd .sd-print-btn,body.psd footer{display:none!important;}
+  body.psd .passage{padding:0!important;max-width:100%!important;}
+  body.psd .sd-card{break-inside:avoid;page-break-inside:avoid;margin-bottom:5mm;border:0.5px solid #ccc;box-shadow:none!important;border-radius:5px;overflow:hidden;}
+  body.psd .sd-hdr{font-size:9px!important;padding:5px 10px!important;}
+  body.psd .sd-card svg{width:100%!important;max-width:100%!important;height:auto!important;padding:6px 8px 8px!important;}
+  body.psd .sd-vocab-row{padding:4px 10px 6px!important;}
+  body.psd .sd-vocab-chip{font-size:10px!important;padding:2px 7px!important;}
+}
+
 </style>
 </head>
 <body>
+<div class="print-brand print-brand-top">✦ 목동서로영어학원 제작 &nbsp;|&nbsp; www.0505.co.kr</div>
+<div class="print-brand print-brand-bot">✦ 목동서로영어학원 제작 &nbsp;|&nbsp; www.0505.co.kr</div>
 <nav class="top-nav">
   <a class="home-btn" href="mock_march_2026.html">← 목록</a>
   <span class="nav-title-bar">2026 · 3월 · 고1 · 32번</span>
@@ -297,19 +372,20 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
   <div class="page-header">
     <div class="page-label">✦ 32번 · 한줄해석 · Line-by-Line</div>
-    <div class="page-title">Illusion of Competence — 능숙함의 착각을 깨는 방법</div>
+    <div class="page-title">Illusion of Competence — 익숙함을 진짜 이해로 착각하지 마라</div>
     <div class="page-sub">2026년 3월 고1 모의고사 · 익숙함을 진짜 이해로 착각하지 마라</div>
   </div>
   <div class="view-tabs">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
-    <button class="view-tab tab-arrange" id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
-    <button class="view-tab tab-grammar" id="tabG" onclick="switchView('grammar')">📝 어법 문제</button>
-    <button class="view-tab tab-vocab" id="tabV" onclick="switchView('vocab')">📚 단어장</button>
+    <button class="view-tab tab-sd"             id="tabSD" onclick="switchSD()">📐 문장구조도</button>
+    <button class="view-tab tab-arrange"        id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
+    <button class="view-tab tab-grammar"        id="tabG" onclick="switchView('grammar')">📝 어법 문제</button>
+    <button class="view-tab tab-vocab"          id="tabV" onclick="switchView('vocab')">📚 단어장</button>
   </div>
   <div id="readingView">
     <div class="hints">
-      <div class="hint">🖱 PC: 마우스 올리기 → 해석 · 클릭 → 발음</div>
-      <div class="hint">📱 모바일: 탭 → 해석 · 🔊 → 발음</div>
+      <div class="hint">🖱 PC: 클릭 → 해석 · 🔊 → 발음</div>
+      <div class="hint">📱 모바일: 탭 → 해석</div>
       <div class="hint">💡 노란박스 → 쉬운 풀이</div>
     </div>
     <div class="legend">
@@ -469,6 +545,210 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     </div>
   </div>
   </div>
+  <div class="sd-panel" id="panelSD">
+<button class="sd-print-btn" onclick="printSD()">🖨️ 구조도 인쇄 (A4)</button>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">01 &nbsp;·&nbsp; Students often mistake familiarity with true mastery, creating a dangerous illusion of competence where recognizing information feels like genuine knowledge, but they struggle when asked to recall or apply it independently.</div>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="96" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="58" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Students</text>
+  <text x="58" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">학생들은 (S)</text>
+  <rect x="114" y="10" width="132" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="180" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">often mistake</text>
+  <text x="180" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">흔히 혼동한다 (V)</text>
+  <rect x="254" y="10" width="116" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="312" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">familiarity</text>
+  <text x="312" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">친숙함을 (O)</text>
+  <rect x="378" y="10" width="164" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="460" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">with true mastery</text>
+  <text x="460" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">진정한 숙달과</text>
+  <rect x="550" y="10" width="350" height="28" rx="3" fill="#E8F5E9" stroke="#A5D6A7" stroke-width="1.3"/>
+  <text x="725" y="29" font-size="14" font-weight="500" fill="#1B5E20" text-anchor="middle" font-family="Georgia,serif">creating a dangerous illusion of competence</text>
+  <text x="725" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">위험한 능력 착각을 만들면서 (분사구문)</text>
+  <rect x="10" y="89" width="515" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="267" y="88" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">where절 — illusion 수식 (~하는)</text>
+  <rect x="16" y="96" width="200" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="116" y="115" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">recognizing information</text>
+  <text x="116" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">정보를 인식하는 것이 (S)</text>
+  <rect x="224" y="96" width="113" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="280" y="115" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">feels like</text>
+  <text x="280" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">~처럼 느껴진다 (V)</text>
+  <rect x="345" y="96" width="164" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="427" y="115" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">genuine knowledge</text>
+  <text x="427" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">진정한 지식처럼 (C)</text>
+  <text x="560" y="113" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">, but</text>
+  <text x="560" y="146" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">하지만</text>
+  <rect x="595" y="94" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="627" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">they</text>
+  <text x="627" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들은 (S)</text>
+  <rect x="667" y="94" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="715" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">struggle</text>
+  <text x="715" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">어려움을 겪는다 (V)</text>
+  <rect x="10" y="178" width="373" height="28" rx="3" fill="#E1F5EE" stroke="#9FE1CB" stroke-width="1.2"/>
+  <text x="196" y="197" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">when asked to recall or apply it independently</text>
+  <text x="196" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">독립적으로 기억·적용하도록 요청받으면</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">학생들은 흔히 친숙함을 진정한 숙달과 혼동하여 위험한 능력 착각을 만드는데, 정보를 인식하는</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">것이 진정한 지식처럼 느껴지지만 독립적으로 기억하거나 적용하도록 요청받으면 어려움을 겪는다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">mistake A with B</span><span class="sd-chip-kr">A를 B로 혼동하다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">illusion of competence</span><span class="sd-chip-kr">능력 착각</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">familiarity</span><span class="sd-chip-kr">친숙함</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">02 &nbsp;·&nbsp; This cognitive bias, strengthened by passive study methods, leads learners to overestimate their understanding.</div>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="180" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="100" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">This cognitive bias</text>
+  <text x="100" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이 인지 편향은 (S)</text>
+  <rect x="198" y="10" width="305" height="28" rx="3" fill="#FFF3E0" stroke="#FFCC80" stroke-width="1.3"/>
+  <text x="350" y="29" font-size="14" font-weight="500" fill="#BF360C" text-anchor="middle" font-family="Georgia,serif">strengthened by passive study methods</text>
+  <text x="350" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수동적 학습 방법에 의해 강화된 (분사구문)</text>
+  <rect x="511" y="10" width="70" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="546" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">leads</text>
+  <text x="546" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이끈다 (V)</text>
+  <rect x="589" y="10" width="96" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="637" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">learners</text>
+  <text x="637" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">학습자들이 (O)</text>
+  <rect x="10" y="94" width="290" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="155" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">to overestimate their understanding</text>
+  <text x="155" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">자신의 이해를 과대평가하도록</text>
+  <path d="M 350,38 C 350,80 100,80 100,38" fill="none" stroke="#BF360C" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="97,18 100,10 103,18" fill="#BF360C"/>
+  <rect x="59" y="82" width="332" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="225" y="93" font-size="11" font-weight="500" fill="#BF360C" text-anchor="middle" font-family="sans-serif">strengthened → This cognitive bias 수식 (과거분사)</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">수동적인 학습 방법에 의해 강화된 이 인지 편향은 학습자들이 자신의 이해를 과대평가하도록</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">이끈다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">cognitive bias</span><span class="sd-chip-kr">인지 편향</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">passive study</span><span class="sd-chip-kr">수동적 학습</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">overestimate</span><span class="sd-chip-kr">과대평가하다</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">03 &nbsp;·&nbsp; Teaching materials actively counters this illusion by requiring deep processing, active recall, structured organization, and revealing gaps in knowledge.</div>
+<svg viewBox="0 0 960 348" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="172" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="96" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Teaching materials</text>
+  <text x="96" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">자료를 가르치는 것은 (S)</text>
+  <rect x="190" y="10" width="164" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="272" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">actively counters</text>
+  <text x="272" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">적극적으로 대항한다 (V)</text>
+  <rect x="362" y="10" width="132" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="428" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">this illusion</text>
+  <text x="428" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이 착각에 (O)</text>
+  <rect x="10" y="89" width="910" height="128" rx="5" fill="none" stroke="#993556" stroke-width="1.3" stroke-dasharray="4,3"/>
+  <text x="465" y="88" font-size="10" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">by + 동명사 병렬 (A, B, C, and D)</text>
+  <rect x="16" y="97" width="124" height="30" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="78" y="118" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">by requiring</text>
+  <text x="78" y="139" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">요구함으로써</text>
+  <rect x="148" y="97" width="148" height="30" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="222" y="118" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">deep processing</text>
+  <text x="222" y="139" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">깊은 처리</text>
+  <text x="319" y="118" font-size="14" font-weight="500" fill="#888" text-anchor="middle" font-family="Georgia,serif">,</text>
+  <text x="319" y="139" font-size="11" font-weight="400" fill="#888" text-anchor="middle" font-family="sans-serif"></text>
+  <rect x="342" y="97" width="132" height="30" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="408" y="118" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">active recall</text>
+  <text x="408" y="139" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">적극적 회상</text>
+  <text x="497" y="118" font-size="14" font-weight="500" fill="#888" text-anchor="middle" font-family="Georgia,serif">,</text>
+  <text x="497" y="139" font-size="11" font-weight="400" fill="#888" text-anchor="middle" font-family="sans-serif"></text>
+  <rect x="520" y="97" width="200" height="30" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="620" y="118" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">structured organization</text>
+  <text x="620" y="139" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">구조적 조직화</text>
+  <text x="755" y="118" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">, and</text>
+  <text x="755" y="139" font-size="11" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="16" y="155" width="230" height="30" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="131" y="176" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">revealing gaps in knowledge</text>
+  <text x="131" y="197" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">지식의 차이 드러내기</text>
+  <line x1="10" y1="278" x2="950" y2="278" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">자료를 가르치는 것은 깊은 처리, 적극적 회상, 구조적 조직화, 그리고 지식의 차이 드러내기를</text>
+  <text x="10" y="318" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">요구함으로써 이 착각에 적극적으로 대항한다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">counter</span><span class="sd-chip-kr">대항하다, 맞서다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">active recall</span><span class="sd-chip-kr">적극적 회상</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">structured organization</span><span class="sd-chip-kr">구조적 조직화</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">04 &nbsp;·&nbsp; It introduces powerful methods like teaching imaginary students, peer-teaching in study groups, employing the Feynman Technique, and writing explanations for others.</div>
+<svg viewBox="0 0 960 348" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">It</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그것은 (S)</text>
+  <rect x="82" y="10" width="113" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="138" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">introduces</text>
+  <text x="138" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">소개한다 (V)</text>
+  <rect x="203" y="10" width="156" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="281" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">powerful methods</text>
+  <text x="281" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">강력한 방법들을 (O)</text>
+  <rect x="10" y="89" width="910" height="128" rx="5" fill="none" stroke="#993556" stroke-width="1.3" stroke-dasharray="4,3"/>
+  <text x="465" y="88" font-size="10" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">like + 동명사 병렬 (A, B, C, and D) — methods 구체화</text>
+  <rect x="16" y="97" width="230" height="30" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="131" y="118" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">teaching imaginary students</text>
+  <text x="131" y="139" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가상의 학생들을 가르치기</text>
+  <text x="269" y="118" font-size="14" font-weight="500" fill="#888" text-anchor="middle" font-family="Georgia,serif">,</text>
+  <text x="269" y="139" font-size="11" font-weight="400" fill="#888" text-anchor="middle" font-family="sans-serif"></text>
+  <rect x="292" y="97" width="245" height="30" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="414" y="118" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">peer-teaching in study groups</text>
+  <text x="414" y="139" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">스터디 그룹에서 동료 교수법</text>
+  <text x="560" y="118" font-size="14" font-weight="500" fill="#888" text-anchor="middle" font-family="Georgia,serif">,</text>
+  <text x="560" y="139" font-size="11" font-weight="400" fill="#888" text-anchor="middle" font-family="sans-serif"></text>
+  <rect x="583" y="97" width="260" height="30" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="713" y="118" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">employing the Feynman Technique</text>
+  <text x="713" y="139" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">파인만 기법 활용</text>
+  <text x="43" y="176" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">, and</text>
+  <text x="43" y="197" font-size="11" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="78" y="155" width="260" height="30" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="208" y="176" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">writing explanations for others</text>
+  <text x="208" y="197" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">다른 사람들을 위한 설명 쓰기</text>
+  <path d="M 465,217 C 465,164 281,164 281,38" fill="none" stroke="#633806" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="278,18 281,10 284,18" fill="#633806"/>
+  <rect x="295" y="166" width="157" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="373" y="177" font-size="11" font-weight="500" fill="#633806" text-anchor="middle" font-family="sans-serif">like절 → methods 구체화</text>
+  <line x1="10" y1="278" x2="950" y2="278" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">그것은 가상의 학생들을 가르치기, 스터디 그룹에서 동료 교수법, 파인만 기법 활용, 그리고</text>
+  <text x="10" y="318" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">다른 사람들을 위한 설명 쓰기와 같은 강력한 방법들을 소개한다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">imaginary</span><span class="sd-chip-kr">가상의</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">peer-teaching</span><span class="sd-chip-kr">동료 교수법</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">Feynman Technique</span><span class="sd-chip-kr">파인만 기법</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">05 &nbsp;·&nbsp; Ultimately, adopting the teacher mindset transforms surface familiarity into real mastery, exposing and filling gaps in knowledge and ensuring solid, reliable understanding.</div>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="5" width="260" height="36" rx="5" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.5"/>
+  <text x="140" y="4" font-size="10" font-weight="400" fill="#0C447C" text-anchor="middle" font-family="sans-serif">동명사구 주어</text>
+  <rect x="16" y="12" width="238" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.5"/>
+  <text x="135" y="31" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">adopting the teacher mindset</text>
+  <text x="135" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">교사 마인드셋을 채택하는 것은</text>
+  <rect x="278" y="10" width="113" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="334" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">transforms</text>
+  <text x="334" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">변환시킨다 (V)</text>
+  <rect x="399" y="10" width="180" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="489" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">surface familiarity</text>
+  <text x="489" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">표면적 친숙함을 (O)</text>
+  <rect x="587" y="10" width="164" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="669" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">into real mastery</text>
+  <text x="669" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">진정한 숙달로</text>
+  <rect x="10" y="89" width="701" height="36" rx="5" fill="none" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="360" y="88" font-size="10" font-weight="400" fill="#2E7D32" text-anchor="middle" font-family="sans-serif">분사구문 병렬 — 결과 (exposing and ensuring)</text>
+  <rect x="16" y="96" width="313" height="28" rx="3" fill="#E8F5E9" stroke="#A5D6A7" stroke-width="1.3"/>
+  <text x="172" y="115" font-size="13" font-weight="500" fill="#1B5E20" text-anchor="middle" font-family="Georgia,serif">exposing and filling gaps in knowledge</text>
+  <text x="172" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">지식의 차이를 드러내고 채우며</text>
+  <text x="355" y="113" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="355" y="146" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="382" y="96" width="313" height="28" rx="3" fill="#E8F5E9" stroke="#A5D6A7" stroke-width="1.3"/>
+  <text x="538" y="115" font-size="13" font-weight="500" fill="#1B5E20" text-anchor="middle" font-family="Georgia,serif">ensuring solid, reliable understanding</text>
+  <text x="538" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">탄탄하고 믿을 수 있는 이해를 보장한다</text>
+  <line x1="140" y1="41" x2="140" y2="82" stroke="#0C447C" stroke-width="1.3"/>
+  <line x1="140" y1="82" x2="334" y2="82" stroke="#0C447C" stroke-width="1.3"/>
+  <line x1="334" y1="82" x2="334" y2="10" stroke="#0C447C" stroke-width="1.3"/>
+  <polygon points="331,15 334,10 337,15" fill="#0C447C"/>
+  <rect x="155" y="84" width="164" height="16" rx="3" fill="#E6F1FB"/>
+  <text x="237" y="95" font-size="11" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="sans-serif">동명사구 주어 → transforms</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">궁극적으로, 교사 마인드셋을 채택하는 것은 표면적 친숙함을 진정한 숙달로 변환시키고, 지식의</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">차이를 드러내고 채우며 탄탄하고 믿을 수 있는 이해를 보장한다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">teacher mindset</span><span class="sd-chip-kr">교사 마인드셋</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">surface familiarity</span><span class="sd-chip-kr">표면적 친숙함</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">reliable</span><span class="sd-chip-kr">믿을 수 있는</span></span></div>
+</div>
+  </div>
   <div class="arrange-view" id="arrangeView">
     <div class="score-bar"><div><div class="score-label">SCORE</div><span class="score-num" id="scoreNum">0</span><span class="score-total" id="scoreTotal"> / 0</span></div><button class="score-reset-all" onclick="resetAll()">↺ 전체 초기화</button></div>
     <div id="arrCards"></div>
@@ -488,8 +768,8 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="vocab-view" id="vocabView">
     <div class="vocab-tabs">
       <button class="vocab-tab active" id="vtab0" onclick="switchVocab(0)">📖 단어카드</button>
-      <button class="vocab-tab" id="vtab1" onclick="switchVocab(1)">✏️ 철자 퀴즈</button>
-      <button class="vocab-tab" id="vtab2" onclick="switchVocab(2)">🔤 뜻 퀴즈</button>
+      <button class="vocab-tab"        id="vtab1" onclick="switchVocab(1)">✏️ 철자 퀴즈</button>
+      <button class="vocab-tab"        id="vtab2" onclick="switchVocab(2)">🔤 뜻 퀴즈</button>
     </div>
     <div id="vocabContent"></div>
   </div>
@@ -847,6 +1127,64 @@ function buildMeaningQuiz(box){
 }
 function checkMeaning(i,btn){const card=btn.closest('.quiz-card');const correct=card.dataset.answer;const isOk=btn.dataset.val===correct;card.querySelectorAll('.choice-btn').forEach(b=>{b.onclick=null;if(b.dataset.val===correct)b.classList.add('ok');else if(b===btn&&!isOk)b.classList.add('ng');});const fb=document.getElementById('mc-fb-'+i);fb.className='quiz-fb show '+(isOk?'ok':'ng');fb.innerHTML=isOk?'🎉 정답!':'❌ 정답: <strong>'+correct+'</strong>';vocabScores.meaning[i]=isOk?1:0;const done=Object.keys(vocabScores.meaning).length;const ok=Object.values(vocabScores.meaning).filter(v=>v===1).length;const sc=document.getElementById('meaning-score');if(sc)sc.textContent=`${ok} / ${done} 정답`;}
 function resetMeaning(){vocabScores.meaning={};buildVocab(2);}
+</script>
+<script>
+// ── 문장구조도 탭 전환 ──
+function switchSD(){
+  var rv=document.getElementById("readingView");
+  if(rv)rv.style.display="none";
+  ["arrangeView","grammarView","vocabView"].forEach(function(id){
+    var el=document.getElementById(id);if(el)el.classList.remove("active");
+  });
+  if(typeof hideAllExtra==="function")hideAllExtra();
+  else{
+    document.querySelectorAll(".view-tab").forEach(function(t){t.classList.remove("active");});
+  }
+  var p=document.getElementById("panelSD");if(p)p.style.display="block";
+  var tb=document.getElementById("tabSD");if(tb)tb.classList.add("active");
+}
+// ── 구조도 인쇄 ──
+function printSD(){
+  document.body.classList.add("psd");
+  window.onafterprint=function(){document.body.classList.remove("psd");window.onafterprint=null;};
+  window.print();
+}
+// ── 카드 클릭=해석토글 / 스피커=소리토글 ──
+// capture=true + stopImmediatePropagation으로 _common.js 원본 리스너 완전 차단
+(function(){
+  document.querySelectorAll(".s-card").forEach(function(card){
+    var speakBtn=card.querySelector(".speak-icon");
+    var waveEl=card.querySelector(".wave");
+    function doSpeak(e){
+      e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
+      if(card.classList.contains("playing")){stopSpeech();}
+      else{speakCard(card);}
+    }
+    if(speakBtn){speakBtn.onclick=null;speakBtn.addEventListener("click",doSpeak,true);}
+    if(waveEl){waveEl.onclick=null;waveEl.addEventListener("click",doSpeak,true);}
+    card.addEventListener("click",function(e){
+      if(e.target.closest(".speak-icon")||e.target.closest(".wave"))return;
+      e.stopImmediatePropagation();
+      if(typeof stopSpeech==="function"&&document.querySelector(".s-card.playing")&&!card.classList.contains("playing")){stopSpeech();}
+      var isOpen=card.classList.contains("tapped")||card.classList.contains("pinned");
+      document.querySelectorAll(".s-card.tapped").forEach(function(tc){if(tc!==card)tc.classList.remove("tapped");});
+      if(card.classList.contains("pinned")){card.classList.remove("pinned");}
+      else{card.classList.toggle("tapped",!isOpen);}
+    },true);
+    card.addEventListener("dblclick",function(e){e.preventDefault();card.classList.toggle("pinned");});
+  });
+})();
+// ── switchView 오버라이드: SD패널 숨기기 ──
+(function(){
+  if(typeof switchView==="undefined")return;
+  var orig=switchView;
+  switchView=function(v){
+    var p=document.getElementById("panelSD");if(p)p.style.display="none";
+    var tb=document.getElementById("tabSD");if(tb)tb.classList.remove("active");
+    if(typeof hideAllExtra==="function")hideAllExtra();
+    orig(v);
+  };
+})();
 </script>
 </body>
 </html>
