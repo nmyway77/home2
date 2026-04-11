@@ -281,9 +281,53 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .nav-title-bar{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:1px;}
 .nav-badge{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--gold2);border:1px solid rgba(201,168,76,0.3);padding:3px 10px;border-radius:3px;white-space:nowrap;}
 .passage{max-width:860px;margin:0 auto;padding:68px 16px 64px;}
+
+/* ── 행동 패치 + SD CSS ── */
+@media(hover:hover) and (pointer:fine){
+  .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card.grammar:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+}
+.s-card.vocab-only .s-kr-wrap,.s-card.pinned .s-kr-wrap,.s-card.tapped .s-kr-wrap{
+  display:flex!important;flex-wrap:wrap!important;gap:6px!important;padding:8px 14px 10px!important;align-items:flex-start;}
+.s-card.pinned .s-kr,.s-card.tapped .s-kr,.s-card.pinned .s-grammar,.s-card.tapped .s-grammar,
+.s-card.pinned .s-meaning,.s-card.tapped .s-meaning{width:100%;flex-basis:100%;order:1;}
+.s-card.vocab-only .s-vocab,.s-card.pinned .s-vocab,.s-card.tapped .s-vocab{
+  order:0;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25)!important;border-radius:20px;
+  padding:3px 12px 3px 8px!important;white-space:nowrap;flex-shrink:0;border-top:none!important;
+  display:inline-flex!important;align-items:center;gap:4px;}
+.tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
+.tab-sd.active{background:#993C1D;color:white;border-color:#993C1D;}
+.sd-panel{display:none;padding:4px 0;max-width:860px;margin:0 auto;}
+.sd-card{background:white;border-radius:12px;box-shadow:0 2px 12px rgba(31,56,100,0.09);margin-bottom:16px;overflow:hidden;}
+.sd-hdr{padding:9px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;color:white;}
+.sd-card svg{width:100%;display:block;padding:10px 28px 14px;}
+.sd-vocab-row{display:flex;flex-wrap:wrap;gap:6px;padding:8px 14px 12px;border-top:1px dashed rgba(0,0,0,0.08);background:rgba(255,255,255,0.5);}
+.sd-vocab-chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:4px 11px 4px 8px;border-radius:16px;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25);white-space:nowrap;}
+.sd-chip-en{font-size:12px;font-weight:500;color:#1F3864;font-family:Georgia,serif;}
+.sd-chip-kr{font-size:11px;color:#5F5E5A;}
+.sd-print-btn{display:block;width:fit-content;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;padding:8px 22px;border-radius:7px;border:none;background:#3d3d3d;color:white;cursor:pointer;margin:0 0 14px auto;transition:background 0.2s;}
+.sd-print-btn:hover{background:#1F3864;}
+.print-brand{display:none;}
+@media print{
+  .print-brand{display:block;position:fixed;left:0;right:0;font-family:'JetBrains Mono',monospace;font-size:9px;color:#888;text-align:center;letter-spacing:0.5px;background:white;z-index:9999;}
+  .print-brand-top{top:0;border-bottom:0.5px solid #ddd;padding:4px 0 3px;}
+  .print-brand-bot{bottom:0;border-top:0.5px solid #ddd;padding:3px 0 4px;}
+  body:not(.psd) .sd-panel{display:none!important;}
+  body.psd .sd-panel{display:block!important;}
+  body.psd .top-nav,body.psd .page-header,body.psd .watermark,body.psd .view-tabs,body.psd .controls,body.psd .sd-print-btn,body.psd footer{display:none!important;}
+  body.psd .passage{padding:0!important;max-width:100%!important;}
+  body.psd .sd-card{break-inside:avoid;page-break-inside:avoid;margin-bottom:5mm;border:0.5px solid #ccc;box-shadow:none!important;border-radius:5px;overflow:hidden;}
+  body.psd .sd-hdr{font-size:9px!important;padding:5px 10px!important;}
+  body.psd .sd-card svg{width:100%!important;max-width:100%!important;height:auto!important;padding:6px 8px 8px!important;}
+  body.psd .sd-vocab-row{padding:4px 10px 6px!important;}
+  body.psd .sd-vocab-chip{font-size:10px!important;padding:2px 7px!important;}
+}
+
 </style>
 </head>
 <body>
+<div class="print-brand print-brand-top">✦ 목동서로영어학원 제작 &nbsp;|&nbsp; www.0505.co.kr</div>
+<div class="print-brand print-brand-bot">✦ 목동서로영어학원 제작 &nbsp;|&nbsp; www.0505.co.kr</div>
 <nav class="top-nav">
   <a class="home-btn" href="mock_march_2026.html">← 목록</a>
   <span class="nav-title-bar">2026 · 3월 · 고1 · 35번</span>
@@ -302,13 +346,14 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
   <div class="view-tabs">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
+    <button class="view-tab tab-sd" id="tabSD" onclick="switchSD()">📐 문장구조도</button>
     <button class="view-tab tab-arrange" id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
     <button class="view-tab tab-grammar" id="tabG" onclick="switchView('grammar')">📝 어법 문제</button>
     <button class="view-tab tab-vocab" id="tabV" onclick="switchView('vocab')">📚 단어장</button>
   </div>
   <div id="readingView">
     <div class="hints">
-      <div class="hint">🖱 PC: 마우스 올리기 → 해석 · 클릭 → 발음</div>
+      <div class="hint">🖱 PC: 클릭 → 해석 · 🔊 → 발음</div>
       <div class="hint">📱 모바일: 탭 → 해석 · 🔊 → 발음</div>
       <div class="hint">💡 노란박스 → 쉬운 풀이</div>
     </div>
@@ -485,6 +530,221 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
       <p style="text-align:center;font-size:11px;color:#888;margin-top:6px;">childhood fat cells → stable quantity → trigger → brain signal → battle with desire ✦</p>
     </div>
   </div>
+  </div>
+  <div class="sd-panel" id="panelSD">
+<button class="sd-print-btn" onclick="printSD()">🖨️ 구조도 인쇄 (A4)</button>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">01 &nbsp;·&nbsp; The set point theory concept is that your body has a stable quantity of fat cells by the time you are an adult.</div>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="238" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="129" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">The set point theory concept</text>
+  <text x="129" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">세트 포인트 이론의 개념은 (S)</text>
+  <rect x="256" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="288" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="288" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다 (V)</text>
+  <rect x="10" y="89" width="705" height="36" rx="5" fill="none" stroke="#6A1B9A" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="362" y="88" font-size="10" font-weight="400" fill="#6A1B9A" text-anchor="middle" font-family="sans-serif">that절 — 명사절 보어</text>
+  <rect x="16" y="96" width="104" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="68" y="115" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">your body</text>
+  <text x="68" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">신체는 (S)</text>
+  <rect x="128" y="96" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="160" y="115" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">has</text>
+  <text x="160" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가지게 된다 (V)</text>
+  <rect x="200" y="96" width="253" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="326" y="115" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">a stable quantity of fat cells</text>
+  <text x="326" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">안정적인 양의 지방 세포를 (O)</text>
+  <rect x="461" y="96" width="238" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="580" y="115" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">by the time you are an adult</text>
+  <text x="580" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">성인이 될 때쯤에는</text>
+  <line x1="362" y1="125" x2="362" y2="166" stroke="#6A1B9A" stroke-width="1.3"/>
+  <line x1="362" y1="166" x2="288" y2="166" stroke="#6A1B9A" stroke-width="1.3"/>
+  <line x1="288" y1="166" x2="288" y2="10" stroke="#6A1B9A" stroke-width="1.3"/>
+  <polygon points="285,15 288,10 291,15" fill="#6A1B9A"/>
+  <rect x="245" y="168" width="160" height="16" rx="3" fill="#E6F1FB"/>
+  <text x="325" y="179" font-size="11" font-weight="500" fill="#6A1B9A" text-anchor="middle" font-family="sans-serif">that절 → is의 보어</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">세트 포인트 이론의 개념은 여러분이 성인이 될 때쯤에는 신체가 안정적인 양의 지방 세포를</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">가지게 된다는 것입니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">set point theory</span><span class="sd-chip-kr">세트 포인트 이론</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">stable quantity</span><span class="sd-chip-kr">안정적인 양</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">by the time</span><span class="sd-chip-kr">~할 때쯤에는</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">02 &nbsp;·&nbsp; The more weight you carried in your childhood and your teenage years, the more fat cells you will have as an adult.</div>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="545" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="282" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">The more weight you carried in your childhood and your teenage years,</text>
+  <text x="282" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">어린 시절·십대에 더 많은 체중을 가졌을수록 (The more ~ 비례절)</text>
+  <rect x="10" y="94" width="172" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="96" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">the more fat cells</text>
+  <text x="96" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">더 많은 지방 세포를</text>
+  <rect x="190" y="94" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="222" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">you</text>
+  <text x="222" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">당신은 (S)</text>
+  <rect x="262" y="94" width="104" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="314" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">will have</text>
+  <text x="314" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">갖게 될 것이다 (V)</text>
+  <rect x="374" y="94" width="116" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="432" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">as an adult</text>
+  <text x="432" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">성인으로서</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">여러분이 어린 시절과 십대 시절에 더 많은 체중을 가졌을수록, 성인이 되어서 더 많은 지방</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">세포를 갖게 될 것입니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">the more ~ the more ~</span><span class="sd-chip-kr">~할수록 더 ~하다 (비례 비교)</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">childhood</span><span class="sd-chip-kr">어린 시절</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">teenage years</span><span class="sd-chip-kr">십대 시절</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">fat cell</span><span class="sd-chip-kr">지방 세포</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">03 &nbsp;·&nbsp; These fat cells then become fuller or thinner as you gain and lose weight as an adult.</div>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="148" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="84" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">These fat cells</text>
+  <text x="84" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이 지방 세포들은 (S)</text>
+  <rect x="166" y="10" width="64" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="198" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">then</text>
+  <text x="198" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그런 다음</text>
+  <rect x="238" y="10" width="79" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="277" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">become</text>
+  <text x="277" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">~이 되다 (V)</text>
+  <rect x="325" y="10" width="79" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="364" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">fuller</text>
+  <text x="364" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">더 꽉 차거나 (C1)</text>
+  <text x="427" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">or</text>
+  <text x="427" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">또는</text>
+  <rect x="450" y="10" width="87" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="493" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">thinner</text>
+  <text x="493" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">더 얇아지는 (C2)</text>
+  <rect x="10" y="89" width="475" height="36" rx="5" fill="none" stroke="#085041" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="247" y="88" font-size="10" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">as절 — 비례 부사절</text>
+  <text x="31" y="113" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">as</text>
+  <text x="31" y="146" font-size="12" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">~함에 따라</text>
+  <rect x="54" y="96" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="86" y="115" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">you</text>
+  <text x="86" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">당신이 (S)</text>
+  <rect x="126" y="96" width="132" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="192" y="115" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">gain and lose</text>
+  <text x="192" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">늘고 줄다 (V)</text>
+  <rect x="266" y="96" width="79" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="305" y="115" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">weight</text>
+  <text x="305" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">체중을 (O)</text>
+  <rect x="353" y="96" width="116" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="411" y="115" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">as an adult</text>
+  <text x="411" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">성인으로서</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">이 지방 세포들은 그런 다음 성인으로서 체중이 증가하고 감소함에 따라 더 꽉 차거나 더</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">얇아집니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">fuller</span><span class="sd-chip-kr">더 꽉 찬</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">thinner</span><span class="sd-chip-kr">더 얇은</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">gain weight</span><span class="sd-chip-kr">체중이 늘다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">lose weight</span><span class="sd-chip-kr">체중이 줄다</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">04 &nbsp;·&nbsp; The set point is the trigger in these cells that will send a message to your brain saying that your fat cells are getting too thin and that you must eat more.</div>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="132" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="76" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">The set point</text>
+  <text x="76" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">세트 포인트는 (S)</text>
+  <rect x="150" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="182" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="182" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다 (V)</text>
+  <rect x="222" y="10" width="223" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="333" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the trigger in these cells</text>
+  <text x="333" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이 세포들 안의 방아쇠 (C)</text>
+  <rect x="10" y="89" width="414" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="217" y="88" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">주격 관계절 — trigger 수식</text>
+  <rect x="16" y="96" width="140" height="28" rx="3" fill="#EEEDFE" stroke="#CECBF6" stroke-width="1.5"/>
+  <text x="86" y="115" font-size="13" font-weight="500" fill="#3C3489" text-anchor="middle" font-family="Georgia,serif">that will send</text>
+  <text x="86" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">보낼 (주격 관계대명사)</text>
+  <rect x="164" y="96" width="104" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="216" y="115" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">a message</text>
+  <text x="216" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">신호를</text>
+  <rect x="276" y="96" width="132" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="342" y="115" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">to your brain</text>
+  <text x="342" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">뇌에</text>
+  <rect x="10" y="178" width="380" height="28" rx="3" fill="#E8F5E9" stroke="#A5D6A7" stroke-width="1.3"/>
+  <text x="200" y="197" font-size="14" font-weight="500" fill="#1B5E20" text-anchor="middle" font-family="Georgia,serif">saying that your fat cells are getting too thin</text>
+  <text x="200" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">지방 세포들이 너무 얇아지고 있다고 (분사구문)</text>
+  <text x="416" y="197" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="416" y="230" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="443" y="178" width="193" height="28" rx="3" fill="#E8F5E9" stroke="#A5D6A7" stroke-width="1.3"/>
+  <text x="539" y="197" font-size="14" font-weight="500" fill="#1B5E20" text-anchor="middle" font-family="Georgia,serif">that you must eat more</text>
+  <text x="539" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">더 먹어야 한다고</text>
+  <path d="M 217,125 C 217,164 333,164 333,38" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="330,18 333,10 336,18" fill="#534AB7"/>
+  <rect x="200" y="166" width="150" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="275" y="177" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">that절 → trigger 수식</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">세트 포인트는 이 세포들 안의 방아쇠로, 지방 세포들이 너무 얇아지고 있으며 더 먹어야 한다고</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">뇌에 신호를 보낼 것입니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">trigger</span><span class="sd-chip-kr">방아쇠, 유발 장치</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">send a message</span><span class="sd-chip-kr">신호를 보내다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">getting too thin</span><span class="sd-chip-kr">너무 얇아지고 있다</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">05 &nbsp;·&nbsp; Different people's fat cells will have different set points, and the strength of the message is affected by the number of cells.</div>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="238" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="129" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Different people's fat cells</text>
+  <text x="129" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">다른 사람들의 지방 세포는 (S)</text>
+  <rect x="256" y="10" width="104" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="308" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">will have</text>
+  <text x="308" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">갖게 될 것이다 (V)</text>
+  <rect x="368" y="10" width="188" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="462" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">different set points</text>
+  <text x="462" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">다른 세트 포인트를 (O)</text>
+  <text x="591" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">, and</text>
+  <text x="591" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="10" y="94" width="230" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="125" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the strength of the message</text>
+  <text x="125" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">신호의 강도는 (S)</text>
+  <rect x="248" y="94" width="116" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="306" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is affected</text>
+  <text x="306" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">영향을 받는다 (V, 수동)</text>
+  <rect x="372" y="94" width="193" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="468" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">by the number of cells</text>
+  <text x="468" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">세포의 수에 의해</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">다른 사람들의 지방 세포는 다른 세트 포인트를 갖게 될 것이며, 신호의 강도는 세포의 수에</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">의해 영향을 받습니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">strength</span><span class="sd-chip-kr">강도, 세기</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">is affected by</span><span class="sd-chip-kr">~에 의해 영향을 받다 (수동)</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">number of cells</span><span class="sd-chip-kr">세포의 수</span></span></div>
+</div>
+
+<div class="sd-card">
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">06 &nbsp;·&nbsp; Thus a person with lots of fat cells and a high set point will battle with a strong desire for food when dieting.</div>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">Thus</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">따라서</text>
+  <rect x="82" y="10" width="96" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="130" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">a person</text>
+  <text x="130" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사람은 (S)</text>
+  <rect x="186" y="10" width="350" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="361" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">with lots of fat cells and a high set point</text>
+  <text x="361" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">많은 지방 세포와 높은 세트 포인트를 가진 (형용사구)</text>
+  <rect x="544" y="10" width="156" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="622" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">will battle with</text>
+  <text x="622" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">싸우게 될 것이다 (V)</text>
+  <rect x="10" y="94" width="208" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="114" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">a strong desire for food</text>
+  <text x="114" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">음식에 대한 강한 욕구와 (O)</text>
+  <rect x="10" y="173" width="163" height="36" rx="5" fill="none" stroke="#085041" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="91" y="172" font-size="10" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">when절 — 시간 부사절</text>
+  <text x="39" y="197" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">when</text>
+  <text x="39" y="230" font-size="12" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">~할 때</text>
+  <rect x="70" y="180" width="87" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="113" y="199" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">dieting</text>
+  <text x="113" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">다이어트하다 (분사구문, 주어·be 생략)</text>
+  <path d="M 361,38 C 361,80 130,80 130,38" fill="none" stroke="#BF360C" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="127,18 130,10 133,18" fill="#BF360C"/>
+  <rect x="170" y="82" width="150" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="245" y="93" font-size="11" font-weight="500" fill="#BF360C" text-anchor="middle" font-family="sans-serif">형용사구 → person 수식</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">따라서 많은 지방 세포와 높은 세트 포인트를 가진 사람은 다이어트를 할 때 음식에 대한 강한</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">욕구와 싸우게 될 것입니다.</text>
+</svg>
+<div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">thus</span><span class="sd-chip-kr">따라서</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">battle with</span><span class="sd-chip-kr">~와 싸우다</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">desire</span><span class="sd-chip-kr">욕구, 욕망</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">when dieting</span><span class="sd-chip-kr">다이어트를 할 때</span></span></div>
+</div>
   </div>
   <div class="arrange-view" id="arrangeView">
     <div class="score-bar"><div><div class="score-label">SCORE</div><span class="score-num" id="scoreNum">0</span><span class="score-total" id="scoreTotal"> / 0</span></div><button class="score-reset-all" onclick="resetAll()">↺ 전체 초기화</button></div>
@@ -862,5 +1122,49 @@ function buildMeaningQuiz(box){
 function checkMeaning(i,btn){const card=btn.closest('.quiz-card');const correct=card.dataset.answer;const isOk=btn.dataset.val===correct;card.querySelectorAll('.choice-btn').forEach(b=>{b.onclick=null;if(b.dataset.val===correct)b.classList.add('ok');else if(b===btn&&!isOk)b.classList.add('ng');});const fb=document.getElementById('mc-fb-'+i);fb.className='quiz-fb show '+(isOk?'ok':'ng');fb.innerHTML=isOk?'🎉 정답!':'❌ 정답: <strong>'+correct+'</strong>';vocabScores.meaning[i]=isOk?1:0;const done=Object.keys(vocabScores.meaning).length;const ok=Object.values(vocabScores.meaning).filter(v=>v===1).length;const sc=document.getElementById('meaning-score');if(sc)sc.textContent=`${ok} / ${done} 정답`;}
 function resetMeaning(){vocabScores.meaning={};buildVocab(2);}
 </script>
+
+<script>
+function switchSD(){
+  var rv=document.getElementById("readingView");if(rv)rv.style.display="none";
+  ["arrangeView","grammarView","vocabView"].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.remove("active");});
+  document.querySelectorAll(".view-tab").forEach(function(t){t.classList.remove("active");});
+  var p=document.getElementById("panelSD");if(p)p.style.display="block";
+  var tb=document.getElementById("tabSD");if(tb)tb.classList.add("active");
+}
+function printSD(){
+  document.body.classList.add("psd");
+  window.onafterprint=function(){document.body.classList.remove("psd");window.onafterprint=null;};
+  window.print();
+}
+(function(){
+  document.querySelectorAll(".s-card").forEach(function(card){
+    var sb=card.querySelector(".speak-icon"),we=card.querySelector(".wave");
+    function ds(e){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
+      if(card.classList.contains("playing")){stopSpeech();}else{speakCard(card);}}
+    if(sb){sb.onclick=null;sb.addEventListener("click",ds,true);}
+    if(we){we.onclick=null;we.addEventListener("click",ds,true);}
+    card.addEventListener("click",function(e){
+      if(e.target.closest(".speak-icon")||e.target.closest(".wave"))return;
+      e.stopImmediatePropagation();
+      if(typeof stopSpeech==="function"&&document.querySelector(".s-card.playing")&&!card.classList.contains("playing")){stopSpeech();}
+      var io=card.classList.contains("tapped")||card.classList.contains("pinned");
+      document.querySelectorAll(".s-card.tapped").forEach(function(tc){if(tc!==card)tc.classList.remove("tapped");});
+      if(card.classList.contains("pinned")){card.classList.remove("pinned");}
+      else{card.classList.toggle("tapped",!io);}
+    },true);
+    card.addEventListener("dblclick",function(e){e.preventDefault();card.classList.toggle("pinned");});
+  });
+})();
+(function(){
+  if(typeof switchView==="undefined")return;
+  var orig=switchView;
+  switchView=function(v){
+    var p=document.getElementById("panelSD");if(p)p.style.display="none";
+    var tb=document.getElementById("tabSD");if(tb)tb.classList.remove("active");
+    orig(v);
+  };
+})();
+</script>
+
 </body>
 </html>
