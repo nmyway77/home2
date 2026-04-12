@@ -943,28 +943,22 @@ NUMS.forEach(n => {
 });
 
 // 파일 존재 확인 (fetch HEAD 요청)
-async function checkFiles() {
+function checkFiles() {
   for (const n of NUMS) {
     const btn = document.getElementById('nb-' + n);
     if (INLINE.includes(n)) {
-      // 이 파일 안에 내장된 번호
+      // 이 파일에 내장된 번호만 활성
       btn.className = 'num-btn ready';
       btn.onclick = () => showInline(n);
     } else {
-      const file = `mock_${YEAR}_${MONTH}_${n}.html`;
-      try {
-        const res = await fetch(file, {method:'HEAD'});
-        if (res.ok) {
-          btn.className = 'num-btn ready';
-          btn.onclick = () => window.location.href = file;
-        } else {
-          btn.className = 'num-btn soon';
-          btn.onclick = null;
-        }
-      } catch {
-        btn.className = 'num-btn soon';
-        btn.onclick = null;
-      }
+      // 나머지는 샘플이므로 모두 비활성
+      btn.className = 'num-btn soon';
+      btn.style.opacity = '0.35';
+      btn.style.cursor = 'not-allowed';
+      btn.onclick = (e) => {
+        e.preventDefault();
+        alert('전체 자료는 비밀번호 입력 후 이용 가능합니다.\n\nindex.html 에서 입장해 주세요.');
+      };
     }
   }
 }
