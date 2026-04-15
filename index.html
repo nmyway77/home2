@@ -12,6 +12,14 @@
 <meta property="og:url" content="https://0505.co.kr/">
 <meta property="og:site_name" content="목동서로영어학원 0505.co.kr">
 <link rel="canonical" href="https://0505.co.kr/">
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0d1520">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="목동서로">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,400&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -509,6 +517,42 @@ footer{
   font-size:18px;color:rgba(255,255,255,0.25);transition:color 0.2s;
 }
 .pw-close:hover{color:rgba(255,255,255,0.8);}
+/* ── PWA 설치 버튼 ── */
+#pwa-install-bar{
+  position:fixed;bottom:20px;right:20px;z-index:999;
+  display:none;
+  animation:pwaSlide 0.4s cubic-bezier(0.2,0.8,0.2,1) both;
+}
+@keyframes pwaSlide{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+#pwa-install-btn{
+  display:flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,#1B2E4A,#0d1520);
+  border:1px solid rgba(201,168,76,0.5);
+  border-radius:14px;
+  padding:12px 20px;
+  cursor:pointer;
+  box-shadow:0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,168,76,0.2);
+  transition:transform 0.2s, box-shadow 0.2s;
+  text-decoration:none;
+}
+#pwa-install-btn:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,0.6);}
+.pwa-icon{font-size:20px;}
+.pwa-text{display:flex;flex-direction:column;}
+.pwa-text-main{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;font-weight:700;letter-spacing:1px;
+  color:var(--gold);
+}
+.pwa-text-sub{
+  font-size:10px;color:rgba(255,255,255,0.45);
+  margin-top:1px;
+}
+.pwa-close{
+  color:rgba(255,255,255,0.3);font-size:14px;cursor:pointer;
+  padding:0 0 0 6px;background:none;border:none;
+  transition:color 0.2s;
+}
+.pwa-close:hover{color:rgba(255,255,255,0.7);}
 </style>
 </head>
 <body>
@@ -1070,6 +1114,66 @@ document.addEventListener('mouseover',pause);
 document.addEventListener('mouseleave',resume);
 ['wheel','touchmove'].forEach(ev=>window.addEventListener(ev,()=>{done=true;pause();},{passive:true}));
 setTimeout(resume,1000);
+</script>
+<!-- PWA 설치 바 -->
+<div id="pwa-install-bar">
+  <div id="pwa-install-btn" onclick="pwaTriggerInstall()">
+    <span class="pwa-icon">📲</span>
+    <div class="pwa-text">
+      <span class="pwa-text-main">앱으로 설치</span>
+      <span class="pwa-text-sub">홈 화면에 추가하기</span>
+    </div>
+    <button class="pwa-close" onclick="event.stopPropagation();pwaHide();" title="닫기">✕</button>
+  </div>
+</div>
+
+<script>
+// ── PWA Service Worker 등록 ──
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .catch(() => {});
+  });
+}
+
+// ── 설치 프롬프트 처리 ──
+let _pwaPrompt = null;
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  _pwaPrompt = e;
+  // 3초 후 버튼 노출 (페이지 로드 직후 바로 뜨면 방해됨)
+  setTimeout(() => {
+    document.getElementById('pwa-install-bar').style.display = 'block';
+  }, 3000);
+});
+
+function pwaTriggerInstall(){
+  if(!_pwaPrompt) return;
+  _pwaPrompt.prompt();
+  _pwaPrompt.userChoice.then(r => {
+    if(r.outcome === 'accepted') pwaHide();
+    _pwaPrompt = null;
+  });
+}
+
+function pwaHide(){
+  const bar = document.getElementById('pwa-install-bar');
+  bar.style.animation = 'none';
+  bar.style.opacity = '0';
+  bar.style.transform = 'translateY(20px)';
+  bar.style.transition = 'all 0.3s';
+  setTimeout(() => bar.style.display = 'none', 300);
+  // 24시간 동안 다시 안 보임
+  localStorage.setItem('pwa-dismissed', Date.now());
+}
+
+// 이미 설치됐거나 24시간 내 닫은 경우 버튼 숨김
+window.addEventListener('appinstalled', pwaHide);
+const _dismissed = localStorage.getItem('pwa-dismissed');
+if(_dismissed && Date.now() - parseInt(_dismissed) < 86400000){
+  document.getElementById('pwa-install-bar').style.display = 'none';
+}
 </script>
 </body>
 </html>
