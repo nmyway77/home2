@@ -6,14 +6,7 @@
 <title>영어사전 | 목동서로영어학원 0505.co.kr</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;600;700&family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
-:root {
-  --ink:#0d1520;--navy:#1B2E4A;--gold:#C9A84C;--gold2:#f0d070;
-  --cream:#F5F0E8;--rule:rgba(255,255,255,0.08);
-  --syn:#4ADE80;--syn-bg:rgba(74,222,128,0.1);--syn-bdr:rgba(74,222,128,0.25);
-  --ant:#F87171;--ant-bg:rgba(248,113,113,0.1);--ant-bdr:rgba(248,113,113,0.25);
-  --sim:#60A5FA;--sim-bg:rgba(96,165,250,0.1);--sim-bdr:rgba(96,165,250,0.25);
-  --rel:#C084FC;--rel-bg:rgba(192,132,252,0.1);--rel-bdr:rgba(192,132,252,0.25);
-}
+:root{--ink:#0d1520;--navy:#1B2E4A;--gold:#C9A84C;--gold2:#f0d070;--cream:#F5F0E8;--rule:rgba(255,255,255,0.08);--syn:#4ADE80;--syn-bg:rgba(74,222,128,0.1);--syn-bdr:rgba(74,222,128,0.25);--ant:#F87171;--ant-bg:rgba(248,113,113,0.1);--ant-bdr:rgba(248,113,113,0.25);--sim:#60A5FA;--sim-bg:rgba(96,165,250,0.1);--sim-bdr:rgba(96,165,250,0.25);--rel:#C084FC;--rel-bg:rgba(192,132,252,0.1);--rel-bdr:rgba(192,132,252,0.25);}
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{background:var(--ink);color:var(--cream);font-family:'Noto Sans KR',sans-serif;min-height:100vh;overflow-x:hidden;}
@@ -25,12 +18,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,21,32,0.9
 .nav-title{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:3px;color:var(--gold);}
 
 .search-area{position:relative;z-index:10;max-width:560px;margin:70px auto 0;padding:0 16px;}
-.search-box{display:flex;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:50px;overflow:hidden;transition:border-color .2s,box-shadow .2s;}
+.search-box{display:flex;align-items:center;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:50px;overflow:hidden;transition:border-color .2s,box-shadow .2s;}
 .search-box:focus-within{border-color:rgba(201,168,76,0.5);box-shadow:0 0 24px rgba(201,168,76,0.1);}
-.search-icon{display:flex;align-items:center;padding-left:18px;color:rgba(255,255,255,0.25);}
-.search-input{flex:1;border:none;outline:none;background:transparent;padding:14px 12px;font-family:'Source Serif 4',serif;font-size:18px;color:var(--cream);letter-spacing:0.5px;}
+.dict-select{
+  font-family:'Noto Sans KR',sans-serif;font-size:11px;font-weight:600;
+  background:rgba(255,255,255,0.08);border:none;border-right:1px solid rgba(255,255,255,0.1);
+  color:var(--gold2);padding:14px 22px 14px 16px;cursor:pointer;outline:none;letter-spacing:0.3px;flex-shrink:0;
+}
+.dict-select option{background:#1B2E4A;color:white;}
+.search-input{flex:1;border:none;outline:none;background:transparent;padding:14px 12px;font-family:'Source Serif 4',serif;font-size:18px;color:var(--cream);letter-spacing:0.5px;min-width:0;}
 .search-input::placeholder{color:rgba(255,255,255,0.2);}
-.search-btn{background:linear-gradient(135deg,var(--navy),#2a3f6e);color:var(--gold);border:none;padding:14px 24px;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:700;cursor:pointer;border-radius:0 50px 50px 0;letter-spacing:1px;transition:filter .15s;}
+.search-btn{background:linear-gradient(135deg,var(--navy),#2a3f6e);color:var(--gold);border:none;padding:14px 24px;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:700;cursor:pointer;border-radius:0 50px 50px 0;letter-spacing:1px;transition:filter .15s;flex-shrink:0;}
 .search-btn:hover{filter:brightness(1.2);}
 
 .history{max-width:560px;margin:10px auto 0;padding:0 20px;display:flex;flex-wrap:wrap;gap:6px;}
@@ -96,6 +94,7 @@ footer a:hover{color:var(--gold);}
 @media(max-width:480px){
   .search-input{font-size:16px;padding:12px 10px;}
   .search-btn{padding:12px 18px;font-size:13px;}
+  .dict-select{font-size:10px;padding:12px 18px 12px 12px;}
   .word-main{font-size:32px;}
   .card{padding:18px;}
   .ko-main{font-size:16px;}
@@ -111,10 +110,17 @@ footer a:hover{color:var(--gold);}
 
 <div class="search-area">
   <div class="search-box">
-    <div class="search-icon">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    </div>
-    <input class="search-input" id="searchInput" type="text" placeholder="Search any English word..." autocomplete="off" autofocus>
+    <select class="dict-select" id="dictSelect">
+      <option value="thesaurus">동의어·반의어</option>
+      <option value="naver">네이버사전</option>
+      <option value="daum">다음사전</option>
+      <option value="cambridge">Cambridge</option>
+      <option value="oxford">Oxford</option>
+      <option value="merriam">Merriam-Webster</option>
+      <option value="longman">Longman</option>
+      <option value="collins">Collins</option>
+    </select>
+    <input class="search-input" id="searchInput" type="text" placeholder="영어 단어 검색..." autocomplete="off" autofocus>
     <button class="search-btn" onclick="doSearch()">검색</button>
   </div>
 </div>
@@ -144,20 +150,37 @@ footer a:hover{color:var(--gold);}
 const DICT_API='https://api.dictionaryapi.dev/api/v2/entries/en/';
 const DATAMUSE='https://api.datamuse.com/words?';
 const GT_API='https://translate.googleapis.com/translate_a/single';
+const DICT_URLS={
+  naver:w=>'https://en.dict.naver.com/#/search?query='+encodeURIComponent(w),
+  daum:w=>'https://dic.daum.net/search.do?q='+encodeURIComponent(w),
+  cambridge:w=>'https://dictionary.cambridge.org/dictionary/english/'+encodeURIComponent(w),
+  oxford:w=>'https://www.oxfordlearnersdictionaries.com/definition/english/'+encodeURIComponent(w),
+  merriam:w=>'https://www.merriam-webster.com/dictionary/'+encodeURIComponent(w),
+  longman:w=>'https://www.ldoceonline.com/dictionary/'+encodeURIComponent(w),
+  collins:w=>'https://www.collinsdictionary.com/dictionary/english/'+encodeURIComponent(w),
+};
 
 let hist=[];
 const input=document.getElementById('searchInput');
 const content=document.getElementById('content');
+const sel=document.getElementById('dictSelect');
+
 input.addEventListener('keydown',e=>{if(e.key==='Enter')doSearch();});
 
 function doSearch(){
   const w=input.value.trim().toLowerCase();
   if(!w)return;
+  const v=sel.value;
+  if(v!=='thesaurus'){
+    window.open(DICT_URLS[v](w),'_blank');
+    return;
+  }
   searchWord(w);
 }
 
 async function searchWord(word){
   input.value=word;
+  sel.value='thesaurus';
   content.innerHTML=`<div class="loading"><div class="spinner"></div><div class="loading-text">"${esc(word)}" 검색 중...</div></div>`;
   hist=[word,...hist.filter(h=>h!==word)].slice(0,15);
   renderHistory();
@@ -182,9 +205,8 @@ async function searchWord(word){
     const phonetic=entry?.phonetics?.find(p=>p.text)?.text||'';
     const audioUrl=entry?.phonetics?.find(p=>p.audio)?.audio||'';
 
-    // Google Translate parsing
-    let koMain='';
-    let koByPos=[];
+    // Google Translate
+    let koMain='',koByPos=[];
     if(gtRes){
       if(gtRes.sentences) koMain=gtRes.sentences.map(s=>s.trans||'').join('').trim();
       if(gtRes.dict) koByPos=gtRes.dict.map(d=>({pos:d.pos||'',meanings:(d.terms||[]).slice(0,8)}));
@@ -198,7 +220,6 @@ async function searchWord(word){
       if(audioUrl) html+=`<span class="play-btn" onclick="playAudio('${audioUrl}')" title="발음 듣기">🔊</span>`;
       html+=`</div>`;
     }
-    // Korean
     if(koMain||koByPos.length>0){
       html+=`<div class="ko-section">`;
       if(koByPos.length>0){
