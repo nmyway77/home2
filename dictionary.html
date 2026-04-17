@@ -7,272 +7,98 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;600;700&family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --ink:#0d1520; --navy:#1B2E4A; --gold:#C9A84C; --gold2:#f0d070;
-  --cream:#F5F0E8; --rule:rgba(255,255,255,0.08);
-  --syn:#4ADE80; --syn-bg:rgba(74,222,128,0.1); --syn-bdr:rgba(74,222,128,0.25);
-  --ant:#F87171; --ant-bg:rgba(248,113,113,0.1); --ant-bdr:rgba(248,113,113,0.25);
-  --sim:#60A5FA; --sim-bg:rgba(96,165,250,0.1); --sim-bdr:rgba(96,165,250,0.25);
-  --rel:#C084FC; --rel-bg:rgba(192,132,252,0.1); --rel-bdr:rgba(192,132,252,0.25);
+  --ink:#0d1520;--navy:#1B2E4A;--gold:#C9A84C;--gold2:#f0d070;
+  --cream:#F5F0E8;--rule:rgba(255,255,255,0.08);
+  --syn:#4ADE80;--syn-bg:rgba(74,222,128,0.1);--syn-bdr:rgba(74,222,128,0.25);
+  --ant:#F87171;--ant-bg:rgba(248,113,113,0.1);--ant-bdr:rgba(248,113,113,0.25);
+  --sim:#60A5FA;--sim-bg:rgba(96,165,250,0.1);--sim-bdr:rgba(96,165,250,0.25);
+  --rel:#C084FC;--rel-bg:rgba(192,132,252,0.1);--rel-bdr:rgba(192,132,252,0.25);
 }
-* { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-body {
-  background: var(--ink);
-  color: var(--cream);
-  font-family: 'Noto Sans KR', sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-body::before {
-  content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
-  background:
-    radial-gradient(ellipse at 15% 20%, rgba(46,117,182,0.10) 0%, transparent 50%),
-    radial-gradient(ellipse at 85% 80%, rgba(201,168,76,0.06) 0%, transparent 50%);
-}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--ink);color:var(--cream);font-family:'Noto Sans KR',sans-serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse at 15% 20%,rgba(46,117,182,0.10) 0%,transparent 50%),radial-gradient(ellipse at 85% 80%,rgba(201,168,76,0.06) 0%,transparent 50%);}
 
-/* NAV */
-nav {
-  position:fixed; top:0; left:0; right:0; z-index:100;
-  background:rgba(13,21,32,0.95);
-  backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--rule);
-  display:flex; align-items:center; justify-content:center;
-  padding:0 16px; height:50px; gap:10px;
-}
-.nav-back {
-  position:absolute; left:16px;
-  font-size:12px; color:rgba(255,255,255,0.4);
-  text-decoration:none; display:flex; align-items:center; gap:4px;
-  transition:color .2s;
-}
-.nav-back:hover { color:var(--gold2); }
-.nav-title {
-  font-family:'JetBrains Mono',monospace;
-  font-size:11px; font-weight:700; letter-spacing:3px;
-  color:var(--gold);
-}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,21,32,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--rule);display:flex;align-items:center;justify-content:center;padding:0 16px;height:50px;}
+.nav-back{position:absolute;left:16px;font-size:12px;color:rgba(255,255,255,0.4);text-decoration:none;display:flex;align-items:center;gap:4px;transition:color .2s;}
+.nav-back:hover{color:var(--gold2);}
+.nav-title{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:3px;color:var(--gold);}
 
-/* SEARCH */
-.search-area {
-  position:relative; z-index:10;
-  max-width:560px; margin:70px auto 0;
-  padding:0 16px;
-}
-.search-box {
-  display:flex;
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.12);
-  border-radius:50px;
-  overflow:hidden;
-  transition:border-color .2s, box-shadow .2s;
-}
-.search-box:focus-within {
-  border-color:rgba(201,168,76,0.5);
-  box-shadow:0 0 24px rgba(201,168,76,0.1);
-}
-.search-icon {
-  display:flex; align-items:center; padding-left:18px; color:rgba(255,255,255,0.25);
-}
-.search-input {
-  flex:1; border:none; outline:none;
-  background:transparent;
-  padding:14px 12px;
-  font-family:'Source Serif 4',serif;
-  font-size:18px; color:var(--cream);
-  letter-spacing:0.5px;
-}
-.search-input::placeholder { color:rgba(255,255,255,0.2); }
-.search-btn {
-  background:linear-gradient(135deg,var(--navy),#2a3f6e);
-  color:var(--gold);
-  border:none; padding:14px 24px;
-  font-family:'Noto Sans KR',sans-serif;
-  font-size:14px; font-weight:700;
-  cursor:pointer; border-radius:0 50px 50px 0;
-  letter-spacing:1px; transition:filter .15s;
-}
-.search-btn:hover { filter:brightness(1.2); }
+.search-area{position:relative;z-index:10;max-width:560px;margin:70px auto 0;padding:0 16px;}
+.search-box{display:flex;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:50px;overflow:hidden;transition:border-color .2s,box-shadow .2s;}
+.search-box:focus-within{border-color:rgba(201,168,76,0.5);box-shadow:0 0 24px rgba(201,168,76,0.1);}
+.search-icon{display:flex;align-items:center;padding-left:18px;color:rgba(255,255,255,0.25);}
+.search-input{flex:1;border:none;outline:none;background:transparent;padding:14px 12px;font-family:'Source Serif 4',serif;font-size:18px;color:var(--cream);letter-spacing:0.5px;}
+.search-input::placeholder{color:rgba(255,255,255,0.2);}
+.search-btn{background:linear-gradient(135deg,var(--navy),#2a3f6e);color:var(--gold);border:none;padding:14px 24px;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:700;cursor:pointer;border-radius:0 50px 50px 0;letter-spacing:1px;transition:filter .15s;}
+.search-btn:hover{filter:brightness(1.2);}
 
-/* HISTORY */
-.history {
-  max-width:560px; margin:10px auto 0; padding:0 20px;
-  display:flex; flex-wrap:wrap; gap:6px;
-}
-.history-chip {
-  background:rgba(201,168,76,0.08);
-  border:1px solid rgba(201,168,76,0.2);
-  border-radius:20px; padding:3px 13px;
-  font-size:13px; color:rgba(201,168,76,0.7);
-  cursor:pointer; font-family:'Source Serif 4',serif;
-  transition:all .15s;
-}
-.history-chip:hover { background:rgba(201,168,76,0.18); color:var(--gold2); }
+.history{max-width:560px;margin:10px auto 0;padding:0 20px;display:flex;flex-wrap:wrap;gap:6px;}
+.history-chip{background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:20px;padding:3px 13px;font-size:13px;color:rgba(201,168,76,0.7);cursor:pointer;font-family:'Source Serif 4',serif;transition:all .15s;}
+.history-chip:hover{background:rgba(201,168,76,0.18);color:var(--gold2);}
 
-/* CONTENT */
-.content {
-  max-width:560px; margin:20px auto 60px; padding:0 16px;
-  position:relative; z-index:1;
-}
+.content{max-width:560px;margin:20px auto 60px;padding:0 16px;position:relative;z-index:1;}
 
-/* EMPTY */
-.empty { text-align:center; padding:60px 20px; color:rgba(255,255,255,0.3); }
-.empty-icon { font-size:48px; margin-bottom:14px; }
-.empty-text { font-size:14px; line-height:1.9; }
-.empty-hint { margin-top:18px; display:flex; flex-wrap:wrap; justify-content:center; gap:8px; }
-.empty-word {
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:20px; padding:6px 15px;
-  font-family:'Source Serif 4',serif; font-size:14px;
-  color:rgba(255,255,255,0.5); cursor:pointer;
-  transition:all .15s;
-}
-.empty-word:hover { background:rgba(255,255,255,0.1); color:white; }
+.empty{text-align:center;padding:60px 20px;color:rgba(255,255,255,0.3);}
+.empty-icon{font-size:48px;margin-bottom:14px;}
+.empty-text{font-size:14px;line-height:1.9;}
+.empty-hint{margin-top:18px;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.empty-word{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:6px 15px;font-family:'Source Serif 4',serif;font-size:14px;color:rgba(255,255,255,0.5);cursor:pointer;transition:all .15s;}
+.empty-word:hover{background:rgba(255,255,255,0.1);color:white;}
 
-/* LOADING */
-.loading { text-align:center; padding:60px 20px; }
-.spinner {
-  width:32px; height:32px;
-  border:3px solid rgba(255,255,255,0.1);
-  border-top-color:var(--gold);
-  border-radius:50%;
-  animation:spin .7s linear infinite;
-  margin:0 auto 14px;
-}
-@keyframes spin { to { transform:rotate(360deg); } }
-.loading-text { font-size:13px; color:rgba(255,255,255,0.3); }
+.loading{text-align:center;padding:60px 20px;}
+.spinner{width:32px;height:32px;border:3px solid rgba(255,255,255,0.1);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 14px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loading-text{font-size:13px;color:rgba(255,255,255,0.3);}
 
-/* ERROR */
-.error-box {
-  background:rgba(248,113,113,0.08);
-  border:1px solid rgba(248,113,113,0.2);
-  border-radius:12px; padding:20px 24px;
-  text-align:center; color:#F87171; font-size:14px;
-}
+.error-box{background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.2);border-radius:12px;padding:20px 24px;text-align:center;color:#F87171;font-size:14px;}
 
-/* CARDS */
-.card {
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:14px; padding:24px;
-  margin-bottom:12px;
-  box-shadow:0 4px 20px rgba(0,0,0,0.2);
-  position:relative;
-}
-.card-glow::after {
-  content:''; position:absolute; top:0; left:24px; right:24px;
-  height:2px;
-  background:linear-gradient(90deg, transparent, var(--gold), transparent);
-  border-radius:0 0 2px 2px;
-}
+.card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:24px;margin-bottom:12px;box-shadow:0 4px 20px rgba(0,0,0,0.2);position:relative;}
+.card-glow::after{content:'';position:absolute;top:0;left:24px;right:24px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:0 0 2px 2px;}
 
-/* WORD HEADER */
-.word-main {
-  font-family:'Cormorant Garamond',serif;
-  font-size:40px; font-weight:700; color:white;
-  line-height:1.1;
-}
-.word-phonetic {
-  font-family:'JetBrains Mono',monospace;
-  font-size:15px; color:var(--gold);
-  margin-top:4px; display:flex; align-items:center; gap:10px;
-}
-.play-btn {
-  background:rgba(201,168,76,0.15);
-  border:1px solid rgba(201,168,76,0.3);
-  border-radius:50%; width:28px; height:28px;
-  display:inline-flex; align-items:center; justify-content:center;
-  cursor:pointer; font-size:13px; transition:all .15s;
-}
-.play-btn:hover { background:rgba(201,168,76,0.3); }
+.word-main{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:700;color:white;line-height:1.1;}
+.word-phonetic{font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--gold);margin-top:4px;display:flex;align-items:center;gap:10px;}
+.play-btn{background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);border-radius:50%;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;transition:all .15s;}
+.play-btn:hover{background:rgba(201,168,76,0.3);}
 
-/* POS */
-.pos-badge {
-  display:inline-block;
-  background:var(--navy); color:var(--gold);
-  padding:3px 14px; border-radius:4px;
-  font-size:12px; font-weight:700; letter-spacing:1px;
-  margin-bottom:12px;
-  font-family:'JetBrains Mono',monospace;
-}
+.ko-section{margin-top:14px;padding:14px 18px;background:rgba(74,222,128,0.06);border:1px solid rgba(74,222,128,0.15);border-radius:10px;}
+.ko-main{font-size:18px;font-weight:700;color:#4ADE80;margin-bottom:4px;}
+.ko-pos-group{margin-top:6px;}
+.ko-pos-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1px;color:rgba(74,222,128,0.5);margin-bottom:3px;}
+.ko-meanings{font-size:14px;font-weight:500;color:rgba(245,240,232,0.85);line-height:1.7;}
 
-/* DEFINITIONS */
-.def-item {
-  padding:10px 0 10px 16px;
-  border-left:3px solid var(--gold);
-  margin-bottom:8px;
-}
-.def-text {
-  font-family:'Source Serif 4',serif;
-  font-size:15px; color:var(--cream); line-height:1.6;
-}
-.def-example {
-  margin-top:5px;
-  font-family:'Source Serif 4',serif;
-  font-size:13.5px; font-style:italic;
-  color:rgba(255,255,255,0.4); line-height:1.5;
-}
-.def-syns {
-  margin-top:6px; display:flex; flex-wrap:wrap; gap:4px; align-items:center;
-}
-.def-syn-label {
-  font-size:10px; color:rgba(255,255,255,0.3);
-  font-weight:700; letter-spacing:0.5px;
-  font-family:'JetBrains Mono',monospace; margin-right:2px;
-}
-.mini-tag {
-  font-size:11px; padding:2px 8px; border-radius:3px;
-  cursor:pointer; transition:all .12s;
-  font-family:'Source Serif 4',serif;
-}
+.pos-badge{display:inline-block;background:var(--navy);color:var(--gold);padding:3px 14px;border-radius:4px;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:12px;font-family:'JetBrains Mono',monospace;}
+.def-item{padding:10px 0 10px 16px;border-left:3px solid var(--gold);margin-bottom:8px;}
+.def-text{font-family:'Source Serif 4',serif;font-size:15px;color:var(--cream);line-height:1.6;}
+.def-example{margin-top:5px;font-family:'Source Serif 4',serif;font-size:13.5px;font-style:italic;color:rgba(255,255,255,0.4);line-height:1.5;}
+.def-syns{margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;align-items:center;}
+.def-syn-label{font-size:10px;color:rgba(255,255,255,0.3);font-weight:700;letter-spacing:0.5px;font-family:'JetBrains Mono',monospace;margin-right:2px;}
+.mini-tag{font-size:11px;padding:2px 8px;border-radius:3px;cursor:pointer;transition:all .12s;font-family:'Source Serif 4',serif;}
 
-/* RELATION CARDS */
-.rel-title {
-  font-size:11px; font-weight:900; letter-spacing:2px;
-  text-transform:uppercase; margin-bottom:10px;
-  display:flex; align-items:center; gap:8px;
-  font-family:'JetBrains Mono',monospace;
-}
-.rel-icon {
-  width:22px; height:22px; border-radius:5px;
-  display:inline-flex; align-items:center; justify-content:center;
-  font-size:11px; font-weight:900; flex-shrink:0;
-}
-.rel-count {
-  font-weight:400; font-size:10px;
-  color:rgba(255,255,255,0.2); letter-spacing:0;
-}
-.tag-grid { display:flex; flex-wrap:wrap; gap:6px; }
-.tag {
-  padding:5px 13px; border-radius:6px;
-  font-family:'Source Serif 4',serif; font-size:14px;
-  cursor:pointer; transition:all .15s; border:1px solid;
-}
-.tag-syn { background:var(--syn-bg); border-color:var(--syn-bdr); color:var(--syn); }
-.tag-syn:hover { background:rgba(74,222,128,0.2); }
-.tag-ant { background:var(--ant-bg); border-color:var(--ant-bdr); color:var(--ant); }
-.tag-ant:hover { background:rgba(248,113,113,0.2); }
-.tag-sim { background:var(--sim-bg); border-color:var(--sim-bdr); color:var(--sim); }
-.tag-sim:hover { background:rgba(96,165,250,0.2); }
-.tag-rel { background:var(--rel-bg); border-color:var(--rel-bdr); color:var(--rel); }
-.tag-rel:hover { background:rgba(192,132,252,0.2); }
+.rel-title{font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;}
+.rel-icon{width:22px;height:22px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;flex-shrink:0;}
+.rel-count{font-weight:400;font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:0;}
+.tag-grid{display:flex;flex-wrap:wrap;gap:6px;}
+.tag{padding:5px 13px;border-radius:6px;font-family:'Source Serif 4',serif;font-size:14px;cursor:pointer;transition:all .15s;border:1px solid;}
+.tag-syn{background:var(--syn-bg);border-color:var(--syn-bdr);color:var(--syn);}
+.tag-syn:hover{background:rgba(74,222,128,0.2);}
+.tag-ant{background:var(--ant-bg);border-color:var(--ant-bdr);color:var(--ant);}
+.tag-ant:hover{background:rgba(248,113,113,0.2);}
+.tag-sim{background:var(--sim-bg);border-color:var(--sim-bdr);color:var(--sim);}
+.tag-sim:hover{background:rgba(96,165,250,0.2);}
+.tag-rel{background:var(--rel-bg);border-color:var(--rel-bdr);color:var(--rel);}
+.tag-rel:hover{background:rgba(192,132,252,0.2);}
 
-/* FOOTER */
-footer {
-  text-align:center; padding:24px 20px;
-  font-family:'JetBrains Mono',monospace;
-  font-size:9px; color:rgba(255,255,255,0.12);
-  letter-spacing:1px; border-top:1px solid rgba(255,255,255,0.04);
-  position:relative; z-index:1;
-}
-footer a { color:rgba(201,168,76,0.3); text-decoration:none; }
-footer a:hover { color:var(--gold); }
+footer{text-align:center;padding:24px 20px;font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.12);letter-spacing:1px;border-top:1px solid rgba(255,255,255,0.04);position:relative;z-index:1;}
+footer a{color:rgba(201,168,76,0.3);text-decoration:none;}
+footer a:hover{color:var(--gold);}
 
 @media(max-width:480px){
-  .search-input { font-size:16px; padding:12px 10px; }
-  .search-btn { padding:12px 18px; font-size:13px; }
-  .word-main { font-size:32px; }
-  .card { padding:18px; }
+  .search-input{font-size:16px;padding:12px 10px;}
+  .search-btn{padding:12px 18px;font-size:13px;}
+  .word-main{font-size:32px;}
+  .card{padding:18px;}
+  .ko-main{font-size:16px;}
 }
 </style>
 </head>
@@ -289,7 +115,7 @@ footer a:hover { color:var(--gold); }
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
     </div>
     <input class="search-input" id="searchInput" type="text" placeholder="Search any English word..." autocomplete="off" autofocus>
-    <button class="search-btn" id="searchBtn" onclick="doSearch()">검색</button>
+    <button class="search-btn" onclick="doSearch()">검색</button>
   </div>
 </div>
 
@@ -299,8 +125,8 @@ footer a:hover { color:var(--gold); }
     <div class="empty-icon">📖</div>
     <div class="empty-text">
       영어 단어를 입력하면<br>
-      뜻 · 동의어 · 반의어 · 연관어를<br>
-      자세히 보여드립니다.
+      한글 뜻 · 영영 정의 · 동의어 · 반의어<br>
+      연관어를 자세히 보여드립니다.
     </div>
     <div class="empty-hint">
       <span class="empty-word" onclick="searchWord('eloquent')">eloquent</span>
@@ -312,148 +138,141 @@ footer a:hover { color:var(--gold); }
   </div>
 </div>
 
-<footer>
-  <a href="index.html">www.0505.co.kr</a> · 목동서로영어학원
-</footer>
+<footer><a href="index.html">www.0505.co.kr</a> · 목동서로영어학원</footer>
 
 <script>
-const DICT_API = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
-const DATAMUSE = 'https://api.datamuse.com/words?';
-let history = [];
-const input = document.getElementById('searchInput');
-const content = document.getElementById('content');
+const DICT_API='https://api.dictionaryapi.dev/api/v2/entries/en/';
+const DATAMUSE='https://api.datamuse.com/words?';
+const GT_API='https://translate.googleapis.com/translate_a/single';
 
-input.addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+let hist=[];
+const input=document.getElementById('searchInput');
+const content=document.getElementById('content');
+input.addEventListener('keydown',e=>{if(e.key==='Enter')doSearch();});
 
-function doSearch() {
-  const w = input.value.trim().toLowerCase();
-  if (!w) return;
+function doSearch(){
+  const w=input.value.trim().toLowerCase();
+  if(!w)return;
   searchWord(w);
 }
 
-async function searchWord(word) {
-  input.value = word;
-  content.innerHTML = `
-    <div class="loading">
-      <div class="spinner"></div>
-      <div class="loading-text">Searching "${word}"...</div>
-    </div>`;
-
-  history = [word, ...history.filter(h => h !== word)].slice(0, 15);
+async function searchWord(word){
+  input.value=word;
+  content.innerHTML=`<div class="loading"><div class="spinner"></div><div class="loading-text">"${esc(word)}" 검색 중...</div></div>`;
+  hist=[word,...hist.filter(h=>h!==word)].slice(0,15);
   renderHistory();
 
-  try {
-    const [dictRes, synRes, antRes, relRes, simRes] = await Promise.all([
-      fetch(DICT_API + encodeURIComponent(word)).then(r => r.ok ? r.json() : null).catch(() => null),
-      fetch(DATAMUSE + `rel_syn=${encodeURIComponent(word)}&max=20`).then(r => r.json()).catch(() => []),
-      fetch(DATAMUSE + `rel_ant=${encodeURIComponent(word)}&max=15`).then(r => r.json()).catch(() => []),
-      fetch(DATAMUSE + `rel_trg=${encodeURIComponent(word)}&max=15`).then(r => r.json()).catch(() => []),
-      fetch(DATAMUSE + `ml=${encodeURIComponent(word)}&max=20`).then(r => r.json()).catch(() => []),
+  try{
+    const [dictRes,synRes,antRes,relRes,simRes,gtRes]=await Promise.all([
+      fetch(DICT_API+encodeURIComponent(word)).then(r=>r.ok?r.json():null).catch(()=>null),
+      fetch(DATAMUSE+`rel_syn=${encodeURIComponent(word)}&max=20`).then(r=>r.json()).catch(()=>[]),
+      fetch(DATAMUSE+`rel_ant=${encodeURIComponent(word)}&max=15`).then(r=>r.json()).catch(()=>[]),
+      fetch(DATAMUSE+`rel_trg=${encodeURIComponent(word)}&max=15`).then(r=>r.json()).catch(()=>[]),
+      fetch(DATAMUSE+`ml=${encodeURIComponent(word)}&max=20`).then(r=>r.json()).catch(()=>[]),
+      fetch(`${GT_API}?client=gtx&sl=en&tl=ko&dt=t&dt=bd&dj=1&q=${encodeURIComponent(word)}`).then(r=>r.json()).catch(()=>null),
     ]);
 
-    if (!dictRes && synRes.length === 0 && antRes.length === 0 && simRes.length === 0) {
-      content.innerHTML = `<div class="error-box">😕 "<strong>${word}</strong>" — 단어를 찾을 수 없습니다. 철자를 확인해주세요.</div>`;
+    if(!dictRes&&synRes.length===0&&antRes.length===0&&simRes.length===0&&!gtRes){
+      content.innerHTML=`<div class="error-box">😕 "<strong>${esc(word)}</strong>" — 단어를 찾을 수 없습니다. 철자를 확인해주세요.</div>`;
       return;
     }
 
-    let html = '';
-    const entry = dictRes ? dictRes[0] : null;
-    const phonetic = entry?.phonetics?.find(p => p.text)?.text || '';
-    const audioUrl = entry?.phonetics?.find(p => p.audio)?.audio || '';
+    let html='';
+    const entry=dictRes?dictRes[0]:null;
+    const phonetic=entry?.phonetics?.find(p=>p.text)?.text||'';
+    const audioUrl=entry?.phonetics?.find(p=>p.audio)?.audio||'';
+
+    // Google Translate parsing
+    let koMain='';
+    let koByPos=[];
+    if(gtRes){
+      if(gtRes.sentences) koMain=gtRes.sentences.map(s=>s.trans||'').join('').trim();
+      if(gtRes.dict) koByPos=gtRes.dict.map(d=>({pos:d.pos||'',meanings:(d.terms||[]).slice(0,8)}));
+    }
 
     // Word header
-    html += `<div class="card card-glow">
-      <div class="word-main">${esc(word)}</div>`;
-    if (phonetic || audioUrl) {
-      html += `<div class="word-phonetic">`;
-      if (phonetic) html += `<span>${esc(phonetic)}</span>`;
-      if (audioUrl) html += `<span class="play-btn" onclick="playAudio('${audioUrl}')" title="발음 듣기">🔊</span>`;
-      html += `</div>`;
+    html+=`<div class="card card-glow"><div class="word-main">${esc(word)}</div>`;
+    if(phonetic||audioUrl){
+      html+=`<div class="word-phonetic">`;
+      if(phonetic) html+=`<span>${esc(phonetic)}</span>`;
+      if(audioUrl) html+=`<span class="play-btn" onclick="playAudio('${audioUrl}')" title="발음 듣기">🔊</span>`;
+      html+=`</div>`;
     }
-    html += `</div>`;
-
-    // Definitions
-    if (entry?.meanings) {
-      for (const m of entry.meanings) {
-        html += `<div class="card"><div class="pos-badge">${esc(m.partOfSpeech)}</div>`;
-        for (const d of m.definitions.slice(0, 5)) {
-          html += `<div class="def-item"><div class="def-text">${esc(d.definition)}</div>`;
-          if (d.example) html += `<div class="def-example">"${esc(d.example)}"</div>`;
-          if (d.synonyms?.length) {
-            html += `<div class="def-syns"><span class="def-syn-label">SYN</span>`;
-            for (const s of d.synonyms.slice(0, 5))
-              html += `<span class="mini-tag tag-syn" onclick="searchWord('${escA(s)}')">${esc(s)}</span>`;
-            html += `</div>`;
-          }
-          if (d.antonyms?.length) {
-            html += `<div class="def-syns"><span class="def-syn-label">ANT</span>`;
-            for (const a of d.antonyms.slice(0, 5))
-              html += `<span class="mini-tag tag-ant" onclick="searchWord('${escA(a)}')">${esc(a)}</span>`;
-            html += `</div>`;
-          }
-          html += `</div>`;
+    // Korean
+    if(koMain||koByPos.length>0){
+      html+=`<div class="ko-section">`;
+      if(koByPos.length>0){
+        for(const g of koByPos){
+          html+=`<div class="ko-pos-group">`;
+          if(g.pos) html+=`<div class="ko-pos-label">${esc(g.pos)}</div>`;
+          html+=`<div class="ko-meanings">${g.meanings.map(m=>esc(m)).join(', ')}</div></div>`;
         }
-        html += `</div>`;
+      } else if(koMain){
+        html+=`<div class="ko-main">${esc(koMain)}</div>`;
+      }
+      html+=`</div>`;
+    }
+    html+=`</div>`;
+
+    // English definitions
+    if(entry?.meanings){
+      for(const m of entry.meanings){
+        html+=`<div class="card"><div class="pos-badge">${esc(m.partOfSpeech)}</div>`;
+        for(const d of m.definitions.slice(0,5)){
+          html+=`<div class="def-item"><div class="def-text">${esc(d.definition)}</div>`;
+          if(d.example) html+=`<div class="def-example">"${esc(d.example)}"</div>`;
+          if(d.synonyms?.length){
+            html+=`<div class="def-syns"><span class="def-syn-label">SYN</span>`;
+            for(const s of d.synonyms.slice(0,5)) html+=`<span class="mini-tag tag-syn" onclick="searchWord('${escA(s)}')">${esc(s)}</span>`;
+            html+=`</div>`;
+          }
+          if(d.antonyms?.length){
+            html+=`<div class="def-syns"><span class="def-syn-label">ANT</span>`;
+            for(const a of d.antonyms.slice(0,5)) html+=`<span class="mini-tag tag-ant" onclick="searchWord('${escA(a)}')">${esc(a)}</span>`;
+            html+=`</div>`;
+          }
+          html+=`</div>`;
+        }
+        html+=`</div>`;
       }
     }
 
-    // Datamuse sections
-    if (synRes.length > 0) html += relCard('동의어 · Synonyms', '≈', 'syn', synRes);
-    if (antRes.length > 0) html += relCard('반의어 · Antonyms', '⊘', 'ant', antRes);
-    const simF = simRes.filter(w => w.word !== word && !synRes.find(s => s.word === w.word)).slice(0, 15);
-    if (simF.length > 0) html += relCard('유사어 · Similar', '≃', 'sim', simF);
-    const relF = relRes.filter(w => w.word !== word);
-    if (relF.length > 0) html += relCard('연관어 · Associated', '◈', 'rel', relF);
+    // Datamuse
+    if(synRes.length>0) html+=relCard('동의어 · Synonyms','≈','syn',synRes);
+    if(antRes.length>0) html+=relCard('반의어 · Antonyms','⊘','ant',antRes);
+    const simF=simRes.filter(w=>w.word!==word&&!synRes.find(s=>s.word===w.word)).slice(0,15);
+    if(simF.length>0) html+=relCard('유사어 · Similar','≃','sim',simF);
+    const relF=relRes.filter(w=>w.word!==word);
+    if(relF.length>0) html+=relCard('연관어 · Associated','◈','rel',relF);
 
-    content.innerHTML = html;
-  } catch (err) {
+    content.innerHTML=html;
+  }catch(err){
     console.error(err);
-    content.innerHTML = `<div class="error-box">오류가 발생했습니다. 다시 시도해주세요.</div>`;
+    content.innerHTML=`<div class="error-box">오류가 발생했습니다. 다시 시도해주세요.</div>`;
   }
 }
 
-function relCard(title, icon, type, words) {
-  const cv = { syn:'var(--syn)', ant:'var(--ant)', sim:'var(--sim)', rel:'var(--rel)' };
-  const cb = { syn:'var(--syn-bg)', ant:'var(--ant-bg)', sim:'var(--sim-bg)', rel:'var(--rel-bg)' };
-  let h = `<div class="card">
-    <div class="rel-title" style="color:${cv[type]}">
-      <span class="rel-icon" style="background:${cb[type]};color:${cv[type]}">${icon}</span>
-      ${title}
-      <span class="rel-count">${words.length}개</span>
-    </div><div class="tag-grid">`;
-  for (const w of words) {
-    h += `<span class="tag tag-${type}" onclick="searchWord('${escA(w.word)}')">${esc(w.word)}</span>`;
-  }
-  h += `</div></div>`;
+function relCard(title,icon,type,words){
+  const cv={syn:'var(--syn)',ant:'var(--ant)',sim:'var(--sim)',rel:'var(--rel)'};
+  const cb={syn:'var(--syn-bg)',ant:'var(--ant-bg)',sim:'var(--sim-bg)',rel:'var(--rel-bg)'};
+  let h=`<div class="card"><div class="rel-title" style="color:${cv[type]}"><span class="rel-icon" style="background:${cb[type]};color:${cv[type]}">${icon}</span>${title}<span class="rel-count">${words.length}개</span></div><div class="tag-grid">`;
+  for(const w of words) h+=`<span class="tag tag-${type}" onclick="searchWord('${escA(w.word)}')">${esc(w.word)}</span>`;
+  h+=`</div></div>`;
   return h;
 }
 
-function renderHistory() {
-  document.getElementById('historyBar').innerHTML = history.map(w =>
-    `<span class="history-chip" onclick="searchWord('${escA(w)}')">${esc(w)}</span>`
-  ).join('');
+function renderHistory(){
+  document.getElementById('historyBar').innerHTML=hist.map(w=>`<span class="history-chip" onclick="searchWord('${escA(w)}')">${esc(w)}</span>`).join('');
 }
 
-function playAudio(url) {
-  if (!url) return;
-  new Audio(url).play().catch(() => {});
-}
+function playAudio(url){if(!url)return;new Audio(url).play().catch(()=>{});}
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+function escA(s){return s.replace(/'/g,"\\'").replace(/"/g,'&quot;');}
 
-function esc(s) {
-  const d = document.createElement('div');
-  d.textContent = s;
-  return d.innerHTML;
-}
-function escA(s) { return s.replace(/'/g, "\\'").replace(/"/g, '&quot;'); }
-
-// Auto-search from URL parameter (from index.html search bar)
+// Auto-search from URL ?q=
 (function(){
-  const params = new URLSearchParams(window.location.search);
-  const q = params.get('q');
-  if (q) {
-    input.value = q.trim();
-    searchWord(q.trim().toLowerCase());
-  }
+  const q=new URLSearchParams(window.location.search).get('q');
+  if(q){input.value=q.trim();searchWord(q.trim().toLowerCase());}
 })();
 </script>
 </body>
