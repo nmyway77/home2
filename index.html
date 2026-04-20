@@ -179,6 +179,10 @@ nav{
 .gc-rd:hover{box-shadow:0 16px 48px rgba(70,130,200,0.35);}
 .gc-ns{background:linear-gradient(145deg,#1a0a2e,#2e1a4e);border:1px solid rgba(160,100,220,0.35);box-shadow:0 8px 32px rgba(160,100,220,0.2);}
 .gc-ns:hover{box-shadow:0 16px 48px rgba(160,100,220,0.35);}
+.gc-perf{background:linear-gradient(145deg,#0a1e2e,#12304a);border:1px solid rgba(50,150,200,0.35);box-shadow:0 8px 32px rgba(50,150,200,0.2);}
+.gc-perf:hover{box-shadow:0 16px 48px rgba(50,150,200,0.35);}
+.gc-perf .gc-logo{background:radial-gradient(circle,rgba(50,150,200,0.4),rgba(50,150,200,0.1));border:1.5px solid rgba(50,150,200,0.5);}
+.gc-perf .gc-grade-sub{color:#80c8f0;}
 .gc-ns .gc-logo{background:radial-gradient(circle,rgba(160,100,220,0.4),rgba(160,100,220,0.1));border:1.5px solid rgba(160,100,220,0.5);}
 .gc-ns .gc-grade-sub{color:#c090f0;}
 .gc-ns-badge{
@@ -833,6 +837,40 @@ footer{
     </div>
   </div>
 
+  <!-- 교과 수행자료 -->
+  <div class="gc gc-perf" style="animation-delay:0.40s">
+    <div class="gc-inner">
+      <div class="gc-logo">📋</div>
+      <div class="gc-grade-sub">PERFORMANCE ASSESSMENT</div>
+      <div class="gc-name">교과 수행자료</div>
+      <div class="gc-items">
+        <div class="mock-select-wrap" onclick="event.stopPropagation()">
+          <div class="mock-select-label">🏫 학교·학년 선택</div>
+          <div class="mock-select-row">
+            <select class="mock-sel" id="perfschool" style="max-width:100%;">
+              <optgroup label="목동중학교">
+                <option value="pf_mokdong_m1">목동중 1학년</option>
+                <option value="pf_mokdong_m2">목동중 2학년</option>
+                <option value="pf_mokdong_m3">목동중 3학년</option>
+              </optgroup>
+              <optgroup label="목운중학교">
+                <option value="pf_mokun_m1">목운중 1학년</option>
+                <option value="pf_mokun_m2">목운중 2학년</option>
+                <option value="pf_mokun_m3">목운중 3학년</option>
+              </optgroup>
+              <optgroup label="신목고등학교">
+                <option value="pf_sinmok_h1">신목고 1학년</option>
+                <option value="pf_sinmok_h2">신목고 2학년</option>
+                <option value="pf_sinmok_h3">신목고 3학년</option>
+              </optgroup>
+            </select>
+            <button class="mock-go-btn" onclick="goPerf()">▶</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- 중·고등 내신자료 -->
   <div class="gc gc-ns" style="animation-delay:0.42s">
     <div class="gc-inner">
@@ -1045,6 +1083,19 @@ const MOCK_MAP = {
 const READY_FILES = ['mock_march_2025.html','mock_june_2025.html','mock_june_2025_g2.html','mock_march_2026.html','mock_march_2026_g2.html','mock_march_2026_g3.html','mokdong_m1.html','suneung_vocab.html','voca_mid_etymology.html','neunboka_high_etymology.html','ns_mokun_m3.html','ns_mokun_m3_01.html','ns_mokun_m3_02.html','ns_mokun_m3_03.html','ns_sinmok_h1.html','ns_sinmok_h1_naeshin.html','ns_sinmok_h1_01.html','ns_sinmok_h1_02.html','ns_sinmok_h1_04.html','ns_mokdong_m3.html','ns_mokdong_m3_02.html'];
 
 let _pwTarget = null;
+
+function goPerf(){
+  const val = document.getElementById('perfschool').value;
+  const map = {
+    'pf_mokdong_m1':'pf_mokdong_m1.html','pf_mokdong_m2':'pf_mokdong_m2.html','pf_mokdong_m3':'pf_mokdong_m3.html',
+    'pf_mokun_m1':'pf_mokun_m1.html','pf_mokun_m2':'pf_mokun_m2.html','pf_mokun_m3':'pf_mokun_m3.html',
+    'pf_sinmok_h1':'pf_sinmok_h1.html','pf_sinmok_h2':'pf_sinmok_h2.html','pf_sinmok_h3':'pf_sinmok_h3.html',
+  };
+  const file = map[val];
+  if(!file || !READY_FILES.includes(file)){ alert("곧 업로드됩니다! 😊"); return; }
+  _pwTarget = file;
+  openPwModal();
+}
 
 function goNaeshin(){
   const val = document.getElementById('nsschool').value;
