@@ -422,19 +422,16 @@ const WD=[
    q:'다음 능동태 문장을 <b>진행형 수동태</b>로 바꾸시오.',
    given:'They are building a new hospital in our town.',
    answers:['a new hospital is being built in our town'],
-   hint:'A new hospital ...',
    t:'수동태 (진행형)',d:'medium'},
   {type:'write',
    q:'다음 가정법 문장을 <b>직설법</b>으로 바꾸시오.',
    given:'If I were rich, I could travel around the world.',
    answers:['as i am not rich i cannot travel around the world','because i am not rich i cannot travel around the world','since i am not rich i cannot travel around the world','as i am not rich i can not travel around the world','because i am not rich i can not travel around the world'],
-   hint:'As[Because/Since] I am not ...',
    t:'가정법→직설법',d:'hard'},
   {type:'write',
    q:'다음 분사구문을 <b>접속사를 사용한 문장</b>으로 바꾸시오.',
    given:'Walking along the street, she found a wallet on the ground.',
    answers:['while she was walking along the street she found a wallet on the ground','as she was walking along the street she found a wallet on the ground','as she walked along the street she found a wallet on the ground','while she walked along the street she found a wallet on the ground','when she was walking along the street she found a wallet on the ground'],
-   hint:'While[As/When] she was walking ...',
    t:'분사구문→접속사',d:'hard'}
 ];
 
@@ -454,7 +451,6 @@ function renderWrit(){
       const shuffled=shuffleArr(it.words);
       h+=`<div class="writ-ko">📌 ${it.ko}</div>`;
       h+=`<div class="ans-zone" id="az${idx}"></div>`;
-      h+=`<div class="ans-hint">↑ 위 칸에 단어가 순서대로 배열됩니다</div>`;
       h+=`<div class="chip-pool" id="cp${idx}">`;
       shuffled.forEach((word,wi)=>{
         h+=`<span class="chip" id="chip${idx}_${wi}" data-word="${word}" data-idx="${idx}" data-wi="${wi}" onclick="addChip(${idx},${wi},'${word.replace(/'/g,"\\'")}')">${word}</span>`;
@@ -465,7 +461,6 @@ function renderWrit(){
         <div style="font-size:11px;color:var(--muted);font-weight:600;margin-bottom:6px;">주어진 문장</div>
         <div style="font-family:'EB Garamond',serif;font-size:18px;color:var(--navy);font-weight:600;">${it.given}</div>
       </div>`;
-      h+=`<div class="writ-ko">💡 힌트: ${it.hint}</div>`;
       h+=`<input type="text" class="writ-input" id="wi${idx}" placeholder="영어 문장을 입력하세요" oninput="writText[${idx}]=this.value" autocomplete="off" spellcheck="false">`;
     }
     h+='</div>';
