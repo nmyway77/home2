@@ -167,6 +167,10 @@ nav{
 .gc-g3:hover{box-shadow:0 16px 48px rgba(46,139,74,0.35);}
 .gc-m3{background:linear-gradient(145deg,#2e1508,#5e2a1a);border:1px solid rgba(197,90,17,0.35);box-shadow:0 8px 32px rgba(197,90,17,0.2);}
 .gc-m3:hover{box-shadow:0 16px 48px rgba(197,90,17,0.35);}
+.gc-suneung{background:linear-gradient(145deg,#3a0a0a,#6e1a1a);border:1px solid rgba(200,50,50,0.4);box-shadow:0 8px 32px rgba(200,50,50,0.22);}
+.gc-suneung:hover{box-shadow:0 16px 48px rgba(200,50,50,0.4);}
+.gc-suneung .gc-logo{background:radial-gradient(circle,rgba(200,50,50,0.4),rgba(200,50,50,0.1));border:1.5px solid rgba(200,50,50,0.5);}
+.gc-suneung .gc-grade-sub{color:#f09090;}
 .gc-ev1{background:linear-gradient(145deg,#0a2e2e,#0e3a3a);border:1px solid rgba(30,139,139,0.35);box-shadow:0 8px 32px rgba(30,139,139,0.2);}
 .gc-ev1:hover{box-shadow:0 16px 48px rgba(30,139,139,0.35);}
 .gc-ev2{background:linear-gradient(145deg,#2a2008,#3a2e0a);border:1px solid rgba(201,168,76,0.35);box-shadow:0 8px 32px rgba(201,168,76,0.18);}
@@ -690,8 +694,42 @@ footer{
     </div>
   </div>
 
+  <!-- 수학능력시험 -->
+  <div class="gc gc-suneung" style="animation-delay:0.18s">
+    <div class="gc-inner">
+      <div class="gc-logo"><span style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:white;">수능</span></div>
+      <div class="gc-grade-sub">COLLEGE SCHOLASTIC ABILITY TEST</div>
+      <div class="gc-name">수학능력시험</div>
+      <div class="gc-items">
+        <div class="mock-select-wrap" onclick="event.stopPropagation()">
+          <div class="mock-select-label">📝 수능 기출</div>
+          <div class="mock-select-row">
+            <select class="mock-sel" id="sunYear">
+              <option value="2026">26년도</option>
+              <option value="2025">25년도</option>
+              <option value="2024">24년도</option>
+            </select>
+            <button class="mock-go-btn" onclick="goSuneung()">▶</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 교과 · 어휘 라벨 -->
+<div class="section-label" style="padding-top:8px;">
+  <div class="sl-line"></div>
+  <div class="sl-text">교과 · 어휘 · 내신</div>
+  <div class="sl-line"></div>
+</div>
+
+<!-- 교과 + 어휘 + 내신 GRID (4열) -->
+<div class="grade-grid vocab-grid">
+
   <!-- 중·고등 교과분석 -->
-  <div class="gc gc-m3" style="animation-delay:0.2s">
+  <div class="gc gc-m3" style="animation-delay:0.22s">
     <div class="gc-inner">
       <div class="gc-logo"><span style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:white;">교과</span></div>
       <div class="gc-grade-sub">MIDDLE &amp; HIGH SCHOOL</div>
@@ -723,18 +761,6 @@ footer{
       </div>
     </div>
   </div>
-
-</div>
-
-<!-- 어휘 라벨 -->
-<div class="section-label" style="padding-top:8px;">
-  <div class="sl-line"></div>
-  <div class="sl-text">어휘 · 내신</div>
-  <div class="sl-line"></div>
-</div>
-
-<!-- 어휘 + 내신 GRID (4열) -->
-<div class="grade-grid vocab-grid">
 
   <!-- 초·중등 어휘 -->
   <div class="gc gc-ev1" style="animation-delay:0.24s">
@@ -1118,6 +1144,19 @@ function goDictSearch(){
   };
   const url = urls[sel];
   window.open(url, '_blank');
+}
+
+function goSuneung(){
+  const year = document.getElementById('sunYear').value;
+  const map = {
+    '2026':'suneung_2026.html',
+    '2025':'suneung_2025.html',
+    '2024':'suneung_2024.html',
+  };
+  const file = map[year];
+  if(!file){ alert("아직 준비 중입니다 😊"); return; }
+  if(!READY_FILES.includes(file)){ alert(year+"년도 수능 자료는 곧 업로드됩니다!"); return; }
+  window.location.href = file;
 }
 
 function goMock(grade){
