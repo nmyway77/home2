@@ -177,16 +177,70 @@
   /* ── 푸터 ── */
   .footer { text-align:center; padding:24px; font-size:12px; color:#aaa; }
 
+
+  /* ── 탭 바 ── */
+  .tab-bar{max-width:900px;margin:18px auto 0;padding:0 20px;display:flex;gap:8px;flex-wrap:wrap;}
+  .tab-btn{padding:9px 20px;border-radius:7px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;
+    font-size:12px;font-weight:700;border:2px solid transparent;transition:all .2s;white-space:nowrap;}
+  .tab-ref{background:white;color:#1a2a4a;border-color:rgba(26,42,74,.25);}
+  .tab-ref.active{background:#1a2a4a;color:white;}
+  .tab-q1{background:white;color:#6A1B9A;border-color:rgba(106,27,154,.25);}
+  .tab-q1.active{background:#6A1B9A;color:white;}
+  .tab-q2{background:white;color:#E65100;border-color:rgba(230,81,0,.25);}
+  .tab-q2.active{background:#E65100;color:white;}
+
+  /* ── 문제 패널 ── */
+  .quiz-panel{display:none;max-width:900px;margin:0 auto 50px;padding:0 20px;}
+  .quiz-panel.active{display:block;}
+
+  /* ── 문제지 헤더 ── */
+  .pv-header{display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:16px;flex-wrap:wrap;gap:10px;padding-top:18px;}
+  .pv-title{font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;color:var(--navy);}
+  .pv-print-btn{font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:700;
+    padding:9px 22px;border-radius:8px;border:none;background:var(--navy);color:white;
+    cursor:pointer;display:flex;align-items:center;gap:7px;transition:background .2s;}
+  .pv-print-btn:hover{background:#2e4a80;}
+
+  /* ── 문제지 본체 ── */
+  .pv-card{background:white;border-radius:12px;box-shadow:0 2px 14px rgba(26,42,74,.1);padding:22px;}
+  .pv-doc-title{text-align:center;font-size:15px;font-weight:700;color:var(--navy);
+    padding-bottom:10px;border-bottom:2.5px solid var(--navy);margin-bottom:6px;}
+  .pv-doc-sub{text-align:center;font-size:11px;color:#888;margin-bottom:14px;}
+  .pv-name-row{display:flex;justify-content:flex-end;gap:24px;font-size:11px;
+    color:#555;margin-bottom:12px;}
+  .pv-name-box{display:inline-block;width:80px;height:16px;border-bottom:1px solid #888;margin-left:4px;}
+  .pv-instr{text-align:center;font-size:11.5px;color:#6A1B9A;font-weight:700;
+    background:#f9f0ff;border:1px solid rgba(106,27,154,.2);border-radius:6px;
+    padding:6px 16px;margin-bottom:14px;}
+  .pv-two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+
+  /* ── 문제 표 ── */
+  .pt{width:100%;border-collapse:collapse;}
+  .pt th{background:#f4ece8;color:#333;font-size:11.5px;font-weight:700;
+    padding:7px 8px;text-align:center;border:1px solid #d0b8b0;}
+  .pt td{border:1px solid #d0b8b0;padding:5px 8px;font-size:12px;
+    height:30px;vertical-align:middle;text-align:center;color:#333;}
+  .pt tr:nth-child(even) td{background:#fdf7f5;}
+  .pt .td-no{width:32px;color:#888;font-size:11px;}
+  .pt .td-write{min-width:70px;background:#fafcff;}
+  .pt .td-ans{font-family:'EB Garamond',Georgia,serif;font-size:13px;
+    color:var(--navy);text-align:left;padding-left:10px;}
+  .pv-wm{margin-top:14px;text-align:center;font-size:10px;color:#ccc;letter-spacing:1px;}
+
   /* ── 인쇄 ── */
-  @media print {
-    body { background:#fff; }
-    .controls, .print-btn { display:none; }
-    .page-header { background:var(--navy)!important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-    .table-card { box-shadow:none; }
-    thead tr { background:var(--navy)!important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-    tbody tr.odd { background:#f0f5fc!important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-    td { padding:8px 10px; font-size:12px; }
-    td.v1, td.v2, td.v3 { font-size:13px; }
+  @media print{
+    @page{size:A4;margin:12mm 10mm;}
+    .controls,.tab-bar,.pv-header,.pv-print-btn,.table-wrap{display:none!important;}
+    .quiz-panel{display:none!important;}
+    .quiz-panel.active{display:block!important;}
+    .passage{padding:0!important;}
+    .page-header{display:none!important;}
+    body{background:#fff!important;}
+    .pv-card{box-shadow:none!important;padding:0!important;}
+    .pt th{background:#f4ece8!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .pt tr:nth-child(even) td{background:#fdf7f5!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .pv-two-col{display:grid!important;grid-template-columns:1fr 1fr;gap:16px;}
   }
 </style>
 </head>
@@ -215,7 +269,33 @@
   <button class="print-btn" onclick="window.print()">🖨️ 인쇄</button>
 </div>
 
-<div class="table-wrap">
+
+<!-- ── 탭 바 ── -->
+<div class="tab-bar">
+  <button class="tab-btn tab-ref active" onclick="switchTab('ref')">📋 전체 보기</button>
+  <button class="tab-btn tab-q1" onclick="switchTab('q1')">✏️ 문제 1 <span style="font-size:10px;opacity:.75">(원형 쓰기)</span></button>
+  <button class="tab-btn tab-q2" onclick="switchTab('q2')">✏️ 문제 2 <span style="font-size:10px;opacity:.75">(과거·분사 쓰기)</span></button>
+</div>
+
+<!-- ── 문제 1 패널 ── -->
+<div class="quiz-panel" id="panelQ1">
+  <div class="pv-header">
+    <span class="pv-title">✏️ 문제 1 — 과거형·과거분사·뜻을 보고 원형 쓰기</span>
+    <button class="pv-print-btn" onclick="window.print()">🖨️ 인쇄하기</button>
+  </div>
+  <div class="pv-card" id="pvCardQ1"></div>
+</div>
+
+<!-- ── 문제 2 패널 ── -->
+<div class="quiz-panel" id="panelQ2">
+  <div class="pv-header">
+    <span class="pv-title">✏️ 문제 2 — 원형·뜻을 보고 과거형·과거분사 쓰기</span>
+    <button class="pv-print-btn" onclick="window.print()">🖨️ 인쇄하기</button>
+  </div>
+  <div class="pv-card" id="pvCardQ2"></div>
+</div>
+
+<div class="table-wrap" id="tableWrap">
   <div class="table-card">
     <table id="verbTable">
       <colgroup>
@@ -441,6 +521,97 @@ function filterTable() {
 }
 
 buildTable(verbs);
+
+/* ── 탭 전환 ── */
+function switchTab(tab){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-btn.tab-'+tab).forEach(b=>b.classList.add('active'));
+  document.getElementById('tableWrap').style.display  = tab==='ref'?'':'none';
+  document.getElementById('panelQ1').classList.toggle('active', tab==='q1');
+  document.getElementById('panelQ2').classList.toggle('active', tab==='q2');
+  document.querySelector('.controls').style.display = tab==='ref'?'':'none';
+  if(tab==='q1') buildQuizView(1);
+  if(tab==='q2') buildQuizView(2);
+}
+
+/* ── 문제지 생성 ── */
+function buildQuizView(num){
+  const card = document.getElementById('pvCardQ'+num);
+  if(card.dataset.built) return;
+  card.dataset.built = '1';
+
+  const isQ1  = num===1;
+  const instr = isQ1
+    ? '과거형·과거분사·뜻을 보고 <strong>원형(원형)</strong>을 쓰세요.'
+    : '원형·뜻을 보고 <strong>과거형·과거분사</strong>를 쓰세요.';
+  const h1 = isQ1 ? '원형' : '과거형';
+  const h2 = isQ1 ? '과거형' : '과거분사';
+  const h3 = isQ1 ? '과거분사' : '뜻';
+
+  function makeRows(arr, startNo){
+    return arr.map((v, i)=>{
+      const no = startNo + i;
+      if(isQ1){
+        return `<tr>
+          <td class="td-no">${no}</td>
+          <td class="td-write"></td>
+          <td class="td-ans">${v.v2}</td>
+          <td class="td-ans">${v.v3}</td>
+          <td class="td-ans" style="font-family:'Noto Sans KR',sans-serif;font-size:11.5px;color:#555;text-align:left;">${v.ko}</td>
+        </tr>`;
+      } else {
+        return `<tr>
+          <td class="td-no">${no}</td>
+          <td class="td-ans">${v.v1}</td>
+          <td class="td-write"></td>
+          <td class="td-write"></td>
+          <td class="td-ans" style="font-family:'Noto Sans KR',sans-serif;font-size:11.5px;color:#555;text-align:left;">${v.ko}</td>
+        </tr>`;
+      }
+    }).join('');
+  }
+
+  const half  = Math.ceil(verbs.length / 2);
+  const left  = verbs.slice(0, half);
+  const right = verbs.slice(half);
+
+  const thStyle = '';
+  const hNo='No.', hKo='뜻';
+  const leftRows  = makeRows(left, 1);
+  const rightRows = makeRows(right, half+1);
+
+  card.innerHTML = `
+    <div class="pv-doc-title">✦ 불규칙 동사 총정리 — ${isQ1?'원형 쓰기':'과거형·과거분사 쓰기'}</div>
+    <div class="pv-doc-sub">목동서로영어학원 · 0505.co.kr · 총 ${verbs.length}개</div>
+    <div class="pv-name-row">
+      <span>이름: <span class="pv-name-box"></span></span>
+      <span>점수: <span class="pv-name-box"></span></span>
+    </div>
+    <div class="pv-instr">${instr}</div>
+    <div class="pv-two-col">
+      <table class="pt">
+        <thead><tr>
+          <th class="td-no">No.</th>
+          <th>${isQ1?'원형':'원형'}</th>
+          <th>${isQ1?'과거형':'과거형'}</th>
+          <th>${isQ1?'과거분사':'과거분사'}</th>
+          <th>뜻</th>
+        </tr></thead>
+        <tbody>${leftRows}</tbody>
+      </table>
+      <table class="pt">
+        <thead><tr>
+          <th class="td-no">No.</th>
+          <th>${isQ1?'원형':'원형'}</th>
+          <th>${isQ1?'과거형':'과거형'}</th>
+          <th>${isQ1?'과거분사':'과거분사'}</th>
+          <th>뜻</th>
+        </tr></thead>
+        <tbody>${rightRows}</tbody>
+      </table>
+    </div>
+    <div class="pv-wm">✦ 목동서로영어학원 · 본 자료는 목동서로영어학원에서 제작하였습니다 · 0505.co.kr ✦</div>`;
+}
 </script>
 </body>
 </html>
