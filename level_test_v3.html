@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>영어 레벨테스트 — 목동서로 영어학원</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1a2a4a;--navy2:#2e4a80;--red:#c0392b;--green:#1a7a4a;--gold:#c9a84c;--purple:#6a0dad;--blue:#1f4e79;--orange:#d35400;--bg:#f0f4f9;--text:#2c2c2c;--muted:#777;--border:#ccd8ee;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;color:var(--text);min-height:100vh;}
+.header{background:linear-gradient(135deg,#1a2a4a 0%,#2e4a80 60%,#1a2a4a 100%);padding:30px 30px 26px;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;top:-80px;right:-80px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.04);}
+.hdr-inner{max-width:900px;margin:0 auto;position:relative;z-index:1;}
+.badge{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#a8c4e8;font-size:10.5px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:10px;}
+.header h1{font-family:'Playfair Display',serif;font-size:30px;color:#fff;margin-bottom:5px;letter-spacing:-.5px;}
+.header p{color:#8aaad4;font-size:12px;font-weight:300;}
+.progress-wrap{max-width:900px;margin:0 auto;padding:14px 20px 0;}
+.progress-bar{background:#dde8f4;border-radius:20px;height:7px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),#e8c84c);border-radius:20px;transition:width .5s ease;width:0%;}
+.progress-labels{display:flex;justify-content:space-between;margin-top:5px;font-size:10px;color:var(--muted);}
+.progress-labels span.done{color:var(--green);font-weight:700;}
+.progress-labels span.current{color:var(--navy);font-weight:700;}
+.main{max-width:900px;margin:0 auto;padding:18px 20px 60px;}
+.step{display:none;animation:fadeIn .4s ease;}.step.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.card{background:#fff;border-radius:16px;padding:26px 30px;margin-bottom:18px;border:1px solid var(--border);box-shadow:0 4px 24px rgba(31,56,100,.08);}
+.card h2{font-size:17px;font-weight:700;color:var(--navy);margin-bottom:5px;}
+.card .sub{font-size:12.5px;color:var(--muted);margin-bottom:18px;}
+.intro-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0;}
+.intro-item{background:#f8fafd;border:1.5px solid var(--border);border-radius:12px;padding:16px 14px;text-align:center;transition:transform .2s;}
+.intro-item:hover{transform:translateY(-2px);}
+.intro-item .ii-icon{font-size:26px;margin-bottom:6px;}
+.intro-item .ii-title{font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:3px;}
+.intro-item .ii-desc{font-size:10.5px;color:var(--muted);line-height:1.5;}
+.intro-item.v{border-color:#7aaee8;background:#eef4fb;}
+.intro-item.g{border-color:#e0c070;background:#fef9f0;}
+.intro-item.r{border-color:#80c890;background:#f3fff6;}
+.intro-item.l{border-color:#c4a0e8;background:#f3e8ff;}
+.name-input,.grade-select{padding:11px 16px;border:2px solid var(--border);border-radius:10px;font-size:14px;font-family:'Noto Sans KR',sans-serif;outline:none;background:#fff;transition:border-color .2s;}
+.name-input:focus,.grade-select:focus{border-color:var(--navy);}
+.btn{padding:11px 28px;border:none;border-radius:10px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .2s;}
+.btn-primary{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;}
+.btn-primary:hover{opacity:.9;transform:translateY(-1px);}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#e0b84c);color:var(--navy);}
+.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--navy);}
+.btn-outline:hover{background:#eef4fb;}
+.btn-sm{padding:7px 16px;font-size:12px;border-radius:8px;}
+.btn-danger{background:var(--red);color:#fff;padding:7px 16px;font-size:12px;border-radius:8px;border:none;cursor:pointer;}
+.sec-hdr{border-radius:12px;padding:14px 20px;margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+.sec-num{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.25);color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sec-info{flex:1;}.sec-title{color:#fff;font-size:15px;font-weight:700;}.sec-sub{color:rgba(255,255,255,.7);font-size:11px;margin-top:2px;}
+.sec-timer{background:rgba(255,255,255,.18);color:#fff;padding:5px 12px;border-radius:8px;font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums;}
+.hv{background:linear-gradient(90deg,#1f3864,#2e4a80);}
+.hg{background:linear-gradient(90deg,#7a5000,#b88a20);}
+.hr{background:linear-gradient(90deg,#1a5c32,#2e9455);}
+.hl{background:linear-gradient(90deg,#4a0080,#7b20cc);}
+.q-card{background:#fff;border-radius:13px;padding:20px 24px;margin-bottom:12px;border:1px solid var(--border);box-shadow:0 2px 10px rgba(31,56,100,.05);transition:border-color .2s;}
+.q-card.answered{border-color:#80c890;}
+.q-num{font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:1.5px;margin-bottom:7px;}
+.q-text{font-size:14.5px;color:var(--text);line-height:1.7;margin-bottom:12px;font-weight:500;}
+.q-text .eng{font-family:'EB Garamond',serif;font-size:17px;font-weight:500;}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.opt{padding:10px 14px;border:1.5px solid #dde8f4;border-radius:9px;cursor:pointer;font-size:13px;transition:all .15s;display:flex;align-items:center;gap:9px;line-height:1.5;}
+.opt:hover{border-color:var(--navy);background:#eef4fb;}
+.opt.selected{border-color:var(--navy);background:var(--navy);color:#fff;}
+.opt-label{width:21px;height:21px;border-radius:50%;border:1.5px solid #bbb;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;flex-shrink:0;transition:all .15s;}
+.opt.selected .opt-label{background:#fff;color:var(--navy);border-color:#fff;}
+.passage{background:#f8fafd;border:1.5px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:18px;font-family:'EB Garamond',serif;font-size:16.5px;line-height:1.85;color:#333;}
+.passage-title{font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:1.5px;margin-bottom:10px;font-family:'Noto Sans KR',sans-serif;}
+.listen-box{background:#f3e8ff;border:1.5px solid #c4a0e8;border-radius:12px;padding:16px 20px;margin-bottom:12px;text-align:center;}
+.play-btn{padding:11px 24px;background:linear-gradient(135deg,#6a0dad,#9b30ff);color:#fff;border:none;border-radius:10px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .2s;display:inline-flex;align-items:center;gap:8px;}
+.play-btn:hover{opacity:.9;}.play-btn:disabled{opacity:.4;cursor:not-allowed;}
+.play-count{font-size:11px;color:var(--purple);margin-top:6px;}
+/* 결과 보고서 */
+.rpt-hero{background:linear-gradient(135deg,#0f1d33 0%,#1a2a4a 40%,#2e4a80 100%);border-radius:18px;padding:36px;margin-bottom:20px;position:relative;overflow:hidden;}
+.rpt-hero::before{content:'';position:absolute;top:-60px;right:-60px;width:250px;height:250px;border-radius:50%;background:rgba(201,168,76,.06);}
+.rpt-hdr{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:1;margin-bottom:28px;}
+.rpt-hdr-l .rb{font-size:10px;color:#a8c4e8;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
+.rpt-hdr-l h2{font-family:'Playfair Display',serif;font-size:24px;color:#fff;margin-bottom:4px;}
+.rpt-hdr-l .rd{font-size:11.5px;color:#6a8ab8;}
+.rpt-stamp{width:88px;height:88px;border:3px solid var(--gold);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;}
+.rpt-stamp::after{content:'';position:absolute;inset:4px;border:1.5px solid rgba(201,168,76,.4);border-radius:50%;}
+.rpt-stamp .sg{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);font-weight:800;line-height:1;}
+.rpt-stamp .sl{font-size:7.5px;color:#a8c4e8;font-weight:700;letter-spacing:1.5px;margin-top:2px;}
+.rpt-score-row{display:grid;grid-template-columns:180px 1fr;gap:28px;position:relative;z-index:1;align-items:center;}
+.rpt-circle{position:relative;width:170px;height:170px;margin:0 auto;}
+.rpt-circle svg{transform:rotate(-90deg);}
+.rpt-circle .rc-bg{fill:none;stroke:rgba(255,255,255,.08);stroke-width:12;}
+.rpt-circle .rc-fill{fill:none;stroke-width:12;stroke-linecap:round;transition:stroke-dashoffset 1.5s ease;}
+.rpt-cc{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;}
+.rpt-cc .rn{font-family:'Playfair Display',serif;font-size:46px;color:#fff;font-weight:800;line-height:1;}
+.rpt-cc .ru{font-size:11px;color:#8aaad4;margin-top:2px;}
+.rpt-li{color:#fff;}
+.rpt-ln{font-family:'Playfair Display',serif;font-size:30px;color:var(--gold);font-weight:700;margin-bottom:2px;}
+.rpt-lk{font-size:14px;color:#c8d8f0;margin-bottom:10px;}
+.rpt-ld{font-size:12.5px;color:#8aaad4;line-height:1.7;max-width:380px;}
+.rpt-tq{margin-top:12px;font-size:12.5px;color:#6a8ab8;}
+.rpt-tq b{color:var(--gold);font-family:'Playfair Display',serif;font-size:20px;}
+.gc{background:#fff;border-radius:16px;padding:26px 30px;margin-bottom:18px;border:1px solid var(--border);box-shadow:0 4px 24px rgba(31,56,100,.08);}
+.gc h2{font-size:17px;font-weight:700;color:var(--navy);margin-bottom:5px;}
+.gc .sub{font-size:12.5px;color:var(--muted);margin-bottom:18px;}
+.gg{position:relative;height:44px;background:#eef2f8;border-radius:22px;margin:18px 0 12px;overflow:visible;}
+.gg-fill{height:100%;border-radius:22px;transition:width 1.2s ease;position:relative;}
+.gg-marker{position:absolute;right:-2px;top:-6px;width:4px;height:56px;background:var(--red);border-radius:2px;box-shadow:0 0 8px rgba(192,57,43,.4);}
+.gg-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);padding:0 2px;}
+.gg-labels span{text-align:center;flex:1;}
+.gs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px;}
+.gs-item{text-align:center;padding:18px 12px;border-radius:12px;border:1.5px solid var(--border);}
+.gs-lbl{font-size:10.5px;color:var(--muted);font-weight:600;letter-spacing:1px;margin-bottom:6px;}
+.gs-val{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;}
+.gs-sub2{font-size:11px;color:var(--muted);margin-top:4px;}
+.sb-wrap{margin-bottom:16px;}
+.sb-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.sb-title{font-size:13px;font-weight:700;}
+.sb-score{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;}
+.sb{height:10px;background:#eef2f8;border-radius:10px;overflow:hidden;margin-bottom:4px;}
+.sb-fill{height:100%;border-radius:10px;transition:width 1s ease;}
+.sb-cmt{font-size:11.5px;color:var(--muted);line-height:1.5;}
+.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.diff-item{text-align:center;padding:20px 14px;border-radius:14px;}
+.di-lbl{font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:8px;}
+.di-pct{font-family:'Playfair Display',serif;font-size:34px;font-weight:800;}
+.di-det{font-size:11px;color:var(--muted);margin-top:6px;}
+.di-bar{height:6px;background:rgba(0,0,0,.08);border-radius:6px;margin-top:8px;overflow:hidden;}
+.di-bar-fill{height:100%;border-radius:6px;}
+.sk-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.sk-item{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:10px;background:#f8fafd;border:1px solid var(--border);}
+.sk-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.sk-name{font-size:12px;font-weight:600;flex:1;}
+.sk-st{font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px;}
+.sk-st.good{background:#e8f5e9;color:#2e7d32;}
+.sk-st.warn{background:#fff3cd;color:#8b6914;}
+.sk-st.bad{background:#fde8e8;color:#c0392b;}
+.wc{background:#fff;border-radius:13px;padding:18px 22px;margin-bottom:10px;border:1px solid #f0c0b8;}
+.wc .wq{font-size:12.5px;color:var(--text);margin-bottom:7px;line-height:1.6;}
+.wc .ww{color:var(--red);font-weight:600;font-size:12px;}
+.wc .wcr{color:var(--green);font-weight:600;font-size:12px;}
+.rec{background:linear-gradient(135deg,#fff9e6,#fef5e0);border:1.5px solid #e0c070;border-radius:14px;padding:22px 26px;margin-bottom:18px;}
+.rec h3{font-size:15px;font-weight:700;color:#7a5000;margin-bottom:12px;}
+.ri{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;font-size:12.5px;color:#555;line-height:1.7;}
+.ri-i{font-size:16px;flex-shrink:0;margin-top:1px;}
+.hc{background:#f8fafd;border:1.5px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:18px;}
+.hc h3{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:12px;}
+.ht{width:100%;border-collapse:collapse;font-size:12px;}
+.ht th{background:var(--navy);color:#fff;padding:8px 10px;text-align:left;font-weight:600;font-size:11px;}
+.ht th:first-child{border-radius:8px 0 0 0;}.ht th:last-child{border-radius:0 8px 0 0;}
+.ht td{padding:8px 10px;border-bottom:1px solid #e8eef6;}
+.ht tr:hover td{background:#eef4fb;}
+.hu{color:var(--green);font-weight:700;font-size:11px;}
+.hd{color:var(--red);font-weight:700;font-size:11px;}
+.pbw{text-align:center;margin-top:20px;padding-bottom:20px;}
+.rpt-ft{text-align:center;padding:24px 20px;margin-top:10px;border-top:2px solid var(--gold);font-size:11.5px;color:var(--muted);line-height:1.8;}
+.rpt-ft b{color:var(--navy);}
+.admin-btn{position:fixed;bottom:16px;right:16px;background:var(--navy);color:#fff;border:none;border-radius:50%;width:44px;height:44px;font-size:18px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);z-index:100;display:flex;align-items:center;justify-content:center;}
+.admin-btn:hover{opacity:.85;}
+.admin-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:center;justify-content:center;}
+.admin-overlay.show{display:flex;}
+.admin-panel{background:#fff;border-radius:16px;padding:28px 32px;max-width:700px;width:90%;max-height:80vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+.admin-panel h3{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:14px;}
+.pw-input{padding:10px 14px;border:2px solid var(--border);border-radius:8px;font-size:14px;font-family:'Noto Sans KR',sans-serif;outline:none;width:200px;}
+.pw-input:focus{border-color:var(--navy);}
+.dl-btn{padding:11px 24px;background:linear-gradient(135deg,#27ae60,#2ecc71);color:#fff;border:none;border-radius:10px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;display:inline-flex;align-items:center;gap:8px;}
+.dl-btn:hover{opacity:.9;}
+.dl-btn:disabled{opacity:.4;cursor:wait;}
+@media(max-width:700px){
+  .intro-grid{grid-template-columns:1fr 1fr;}.opts{grid-template-columns:1fr;}
+  .rpt-score-row{grid-template-columns:1fr;text-align:center;}.rpt-li{text-align:center;}.rpt-ld{max-width:100%;}
+  .gs-grid,.diff-grid{grid-template-columns:1fr;}.sk-grid{grid-template-columns:1fr;}
+  .header h1{font-size:22px;}.card,.gc{padding:18px 16px;}.rpt-hero{padding:24px 20px;}
+  .rpt-hdr{flex-direction:column;align-items:center;text-align:center;gap:14px;}
+}
+@media print{
+  body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .header,.rpt-hero,.sec-hdr,.hv,.hg,.hr,.hl{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .btn,.play-btn,.pbw,.progress-wrap,.admin-btn,.admin-overlay{display:none!important;}
+  .step:not(#step5){display:none!important;}#step5{display:block!important;}
+  .card,.gc{box-shadow:none;break-inside:avoid;}
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+<!-- 관리자 버튼 (항상 표시) -->
+<button class="admin-btn" onclick="openAdmin()" title="관리자 모드">🔒</button>
+<!-- 관리자 패널 오버레이 -->
+<div class="admin-overlay" id="adminOverlay" onclick="if(event.target===this)closeAdmin()">
+  <div class="admin-panel" id="adminPanel"></div>
+</div>
+<div class="header"><div class="hdr-inner"><div class="badge">목동서로 영어학원 · Level Test</div><h1>English Level Test</h1><p>어휘 · 문법 · 독해 · 듣기 — 4개 영역 종합 평가</p></div></div>
+<div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="pf"></div></div><div class="progress-labels"><span id="pl0" class="current">시작</span><span id="pl1">어휘</span><span id="pl2">문법</span><span id="pl3">독해</span><span id="pl4">듣기</span><span id="pl5">결과</span></div></div>
+<div class="main">
+<!-- STEP 0 -->
+<div class="step active" id="step0"><div class="card">
+  <h2>레벨테스트에 오신 것을 환영합니다!</h2><p class="sub">4개 영역 종합 평가 · 약 20~25분 소요 · 결과 자동 저장</p>
+  <div class="intro-grid"><div class="intro-item v"><div class="ii-icon">📝</div><div class="ii-title">어휘</div><div class="ii-desc">10문항·5분</div></div><div class="intro-item g"><div class="ii-icon">📐</div><div class="ii-title">문법</div><div class="ii-desc">10문항·5분</div></div><div class="intro-item r"><div class="ii-icon">📖</div><div class="ii-title">독해</div><div class="ii-desc">5문항·7분</div></div><div class="intro-item l"><div class="ii-icon">🎧</div><div class="ii-title">듣기</div><div class="ii-desc">5문항·5분</div></div></div>
+  <div style="background:#fff9e6;border-left:4px solid var(--gold);border-radius:0 10px 10px 0;padding:13px 16px;margin-bottom:20px;font-size:12.5px;color:#7a5000;line-height:1.7;"><b>📌 안내</b> · 듣기 최대 2회 재생 · 완료 후 <b>상세 분석 결과서</b> + <b>자동 저장</b> (다음에 이력 확인 가능)</div>
+  <div style="display:flex;align-items:end;gap:10px;margin-bottom:12px;flex-wrap:wrap;">
+    <div><label style="font-size:12px;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">이름</label><input type="text" id="sName" class="name-input" placeholder="홍길동" style="width:180px;"></div>
+    <div><label style="font-size:12px;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">학년</label><select id="sGrade" class="grade-select"><option value="중1">중1</option><option value="중2">중2</option><option value="중3">중3</option><option value="고1" selected>고1</option><option value="고2">고2</option><option value="고3">고3</option></select></div>
+  </div>
+  <button class="btn btn-primary" onclick="startTest()">테스트 시작하기 →</button>
+</div></div>
+<!-- STEP 1 --><div class="step" id="step1"><div class="sec-hdr hv"><div class="sec-num">1</div><div class="sec-info"><div class="sec-title">어휘 (Vocabulary)</div><div class="sec-sub">10문항 · 5분</div></div><div class="sec-timer" id="t1">05:00</div></div><div id="vQ"></div><div style="text-align:right;margin-top:8px;"><button class="btn btn-primary" onclick="goStep(2)">다음: 문법 →</button></div></div>
+<!-- STEP 2 --><div class="step" id="step2"><div class="sec-hdr hg"><div class="sec-num">2</div><div class="sec-info"><div class="sec-title">문법 (Grammar)</div><div class="sec-sub">10문항 · 5분</div></div><div class="sec-timer" id="t2">05:00</div></div><div id="gQ"></div><div style="text-align:right;margin-top:8px;"><button class="btn btn-primary" onclick="goStep(3)">다음: 독해 →</button></div></div>
+<!-- STEP 3 --><div class="step" id="step3"><div class="sec-hdr hr"><div class="sec-num">3</div><div class="sec-info"><div class="sec-title">독해 (Reading)</div><div class="sec-sub">5문항 · 7분</div></div><div class="sec-timer" id="t3">07:00</div></div>
+  <div class="passage"><div class="passage-title">📄 다음 글을 읽고 물음에 답하시오.</div><p>In recent years, the rise of social media has fundamentally transformed the way young people communicate and form relationships. While these platforms offer unprecedented opportunities for connection and self-expression, researchers have raised concerns about their impact on adolescent mental health.</p><p style="margin-top:10px;">A study conducted by the University of Pennsylvania found that limiting social media use to 30 minutes per day led to significant reductions in loneliness and depression among college students. The researchers noted that participants who reduced their usage reported feeling less anxious and experienced fewer feelings of "fear of missing out."</p><p style="margin-top:10px;">However, not all experts agree that social media is inherently harmful. Dr. Sarah Chen, a psychologist specializing in digital behavior, argues that the quality of online interactions matters more than the quantity of screen time. "When young people use social media to maintain meaningful relationships and engage with supportive communities, it can actually enhance their well-being," she explains.</p><p style="margin-top:10px;">The key, according to most researchers, lies in developing healthy digital habits rather than eliminating technology altogether. Schools and parents are encouraged to teach critical media literacy skills and to foster open conversations about online experiences.</p></div>
+  <div id="rQ"></div><div style="text-align:right;margin-top:8px;"><button class="btn btn-primary" onclick="goStep(4)">다음: 듣기 →</button></div></div>
+<!-- STEP 4 --><div class="step" id="step4"><div class="sec-hdr hl"><div class="sec-num">4</div><div class="sec-info"><div class="sec-title">듣기 (Listening)</div><div class="sec-sub">5문항 · 5분</div></div><div class="sec-timer" id="t4">05:00</div></div>
+  <div style="background:#fff9e6;border-left:4px solid var(--gold);border-radius:0 10px 10px 0;padding:11px 14px;margin-bottom:14px;font-size:12px;color:#7a5000;line-height:1.6;">🎧 음성 재생 버튼을 눌러 듣고 답하세요. 최대 <b>2회</b> 재생.</div>
+  <div id="lQ"></div><div style="text-align:right;margin-top:8px;"><button class="btn btn-gold" onclick="showResults()" style="font-size:14px;padding:13px 32px;">📊 결과 확인하기</button></div></div>
+<!-- STEP 5 --><div class="step" id="step5"><div id="rc"></div></div>
+</div>
+<script>
+const VD=[
+  {q:'What does <span class="eng">"reluctant"</span> mean?',o:['Eager and willing','Hesitant and unwilling','Angry and frustrated','Surprised and shocked'],a:1,d:'medium',t:'어휘 의미',e:'reluctant = 꺼리는, 마지못한'},
+  {q:'"The company decided to ___ the project due to lack of funding."',o:['abandon','achieve','admire','adopt'],a:0,d:'medium',t:'문맥 어휘',e:'abandon = 포기하다, 버리다'},
+  {q:'Synonym of <span class="eng">"approximately"</span>?',o:['Exactly','Roughly','Precisely','Definitely'],a:1,d:'easy',t:'동의어',e:'approximately ≈ roughly = 대략'},
+  {q:'"She showed great ___ during the crisis."',o:['courage','luggage','shortage','coverage'],a:0,d:'easy',t:'문맥 어휘',e:'courage = 용기'},
+  {q:'What does <span class="eng">"inevitable"</span> mean?',o:['Avoidable','Incredible','Unavoidable','Invisible'],a:2,d:'medium',t:'어휘 의미',e:'inevitable = 피할 수 없는 (in+evitable)'},
+  {q:'Antonym of <span class="eng">"abundant"</span>:',o:['Plenty','Sufficient','Scarce','Numerous'],a:2,d:'hard',t:'반의어',e:'abundant(풍부한) ↔ scarce(부족한)'},
+  {q:'"The new policy was ___ by the majority."',o:['embraced','embarrassed','embedded','embodied'],a:0,d:'hard',t:'문맥 어휘',e:'embrace = 받아들이다, 수용하다'},
+  {q:'What does <span class="eng">"comprehend"</span> mean?',o:['Compete','Complain','Understand','Complete'],a:2,d:'medium',t:'어휘 의미',e:'comprehend = 이해하다'},
+  {q:'"The government plans to ___ new regulations."',o:['implement','compliment','supplement','complement'],a:0,d:'hard',t:'문맥 어휘',e:'implement = 시행하다'},
+  {q:'What does <span class="eng">"ambiguous"</span> mean?',o:['Clear','Uncertain or unclear','Ambitious','Generous'],a:1,d:'hard',t:'어휘 의미',e:'ambiguous = 모호한, 애매한'}
+];
+const GD=[
+  {q:'<span class="eng">She decided ___ abroad next year.</span>',o:['study','studying','to study','studied'],a:2,d:'easy',t:'to부정사 vs 동명사',e:'decide + to V (미래 의도)'},
+  {q:'<span class="eng">I enjoy ___ classical music.</span>',o:['listen','to listen','listened','listening'],a:3,d:'easy',t:'to부정사 vs 동명사',e:'enjoy + V-ing (실제 경험)'},
+  {q:'<span class="eng">He avoided ___ about it.</span>',o:['to talk','talking','talk','talked'],a:1,d:'easy',t:'to부정사 vs 동명사',e:'avoid + V-ing'},
+  {q:'<span class="eng">If I ___ you, I would accept.</span>',o:['am','was','were','be'],a:2,d:'medium',t:'가정법',e:'가정법 과거: be → were'},
+  {q:'<span class="eng">The book ___ by a famous author last year.</span>',o:['wrote','was written','is written','writes'],a:1,d:'easy',t:'수동태',e:'수동태 과거: was written'},
+  {q:'<span class="eng">She ___ here since 2020.</span>',o:['lives','lived','has lived','is living'],a:2,d:'medium',t:'시제(현재완료)',e:'since → 현재완료(has lived)'},
+  {q:'<span class="eng">I remember ___ the door.</span> (과거에 잠근 것)',o:['lock','to lock','locking','locked'],a:2,d:'hard',t:'의미 차이 동사',e:'remember + V-ing = 과거 기억'},
+  {q:'<span class="eng">The teacher made them ___ it again.</span>',o:['do','to do','doing','did'],a:0,d:'medium',t:'사역동사',e:'make + O + 원형부정사'},
+  {q:'<span class="eng">Neither A nor the teacher ___ aware.</span>',o:['are','is','were','was'],a:3,d:'hard',t:'주어-동사 수일치',e:'neither A nor B → B에 일치'},
+  {q:'<span class="eng">Had I known, I ___ earlier.</span>',o:['would come','would have come','will come','came'],a:1,d:'hard',t:'가정법 과거완료',e:'Had+S+p.p. → would have p.p.'}
+];
+const RD=[
+  {q:'What is the main topic?',o:['History of social media','Impact on young people\'s mental health','How to create accounts','Financial benefits'],a:1,d:'easy',t:'주제 파악',e:'소셜미디어의 청소년 정신건강 영향'},
+  {q:'What happened when students limited use?',o:['Grades improved','More lonely','Less loneliness and depression','More addicted'],a:2,d:'easy',t:'세부 정보',e:'외로움과 우울감이 감소'},
+  {q:'What does Dr. Chen argue?',o:['Ban social media','Quality matters more than screen time','Always beneficial','Only adults should use'],a:1,d:'medium',t:'세부 정보',e:'상호작용의 질 > 스크린 시간'},
+  {q:'What can be inferred from the last paragraph?',o:['Remove technology','Monitor all activity','Digital literacy > banning','Schools have no role'],a:2,d:'hard',t:'추론',e:'차단보다 디지털 리터러시 교육'},
+  {q:'Author\'s attitude toward social media?',o:['Completely negative','Entirely positive','Balanced and nuanced','Indifferent'],a:2,d:'hard',t:'태도 파악',e:'균형 잡힌 시각'}
+];
+const LD=[
+  {au:"The flight to London has been delayed due to severe weather conditions. All passengers are advised to remain in the terminal.",q:'Why was the flight delayed?',o:['Mechanical problem','Severe weather','Security issue','Staff shortage'],a:1,d:'easy',t:'핵심 정보',e:'severe weather conditions'},
+  {au:"Excuse me, how do I get to the post office? Go straight for two blocks, then turn left at the traffic light. It will be on your right.",q:'Where to turn left?',o:['First block','Second intersection','Traffic light','Post office'],a:2,d:'easy',t:'세부 정보',e:'at the traffic light'},
+  {au:"The deadline for research papers has been extended to next Friday. However, late submissions after this new deadline will not be accepted under any circumstances.",q:'About the deadline?',o:['Cancelled','Moved earlier','Extended but final','Submit anytime'],a:2,d:'medium',t:'의도 파악',e:'연장되었지만 최종 마감'},
+  {au:"The company announced restructuring affecting three hundred employees. While some positions will be eliminated, retraining programs and internal transfer opportunities will be offered.",q:'What will affected employees receive?',o:['Higher salaries','Extended vacation','Retraining and transfers','Retirement packages'],a:2,d:'medium',t:'세부 정보',e:'retraining + internal transfers'},
+  {au:"Although renewable energy has become cheaper, developing countries still rely on fossil fuels because the initial infrastructure investment for clean energy remains prohibitively expensive.",q:'Why do they still use fossil fuels?',o:['Renewables unreliable','Fossils cheaper','Upfront cost too high','No sunlight or wind'],a:2,d:'hard',t:'원인·결과',e:'initial infrastructure investment가 너무 비쌈'}
+];
+
+let cs=0,ans={v:{},g:{},r:{},l:{}},tm={},ti={},pc={};
+
+function saveR(d){try{let h=JSON.parse(localStorage.getItem('lt_hist')||'[]');h.unshift(d);if(h.length>50)h=h.slice(0,50);localStorage.setItem('lt_hist',JSON.stringify(h));}catch(e){}}
+function loadH(){try{return JSON.parse(localStorage.getItem('lt_hist')||'[]');}catch(e){return[];}}
+function saveRpt(key,html){try{localStorage.setItem('lt_rpt_'+key,html);}catch(e){}}
+function loadRpt(key){try{return localStorage.getItem('lt_rpt_'+key)||null;}catch(e){return null;}}
+function viewSaved(key){const html=loadRpt(key);if(!html){alert('저장된 결과를 찾을 수 없습니다.');return;}document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));document.getElementById('step5').classList.add('active');document.getElementById('rc').innerHTML=html;cs=5;uP();window.scrollTo({top:0,behavior:'smooth'});}
+function clearAll(){const h=loadH();h.forEach(r=>{if(r.key)try{localStorage.removeItem('lt_rpt_'+r.key);}catch(e){}});localStorage.removeItem('lt_hist');}
+function showHP(){}  // no-op, history is now in admin panel only
+
+// ═══ 관리자 모드 (비밀번호 보호) ═══
+const ADMIN_PW='1234';  // ★ 비밀번호 변경 가능
+let adminUnlocked=false;
+
+function openAdmin(){
+  const panel=document.getElementById('adminPanel');
+  document.getElementById('adminOverlay').classList.add('show');
+  if(!adminUnlocked){
+    panel.innerHTML=`<h3>🔒 관리자 모드</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">테스트 기록 열람·삭제를 위해 비밀번호를 입력하세요.</p>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <input type="password" id="adminPw" class="pw-input" placeholder="비밀번호 입력" onkeydown="if(event.key==='Enter')checkPw()">
+        <button class="btn btn-primary" onclick="checkPw()">확인</button>
+      </div>
+      <div id="pwError" style="color:var(--red);font-size:12px;margin-top:8px;display:none;">비밀번호가 틀렸습니다.</div>
+      <div style="margin-top:16px;font-size:11px;color:#bbb;">기본 비밀번호: 1234 (HTML 파일에서 ADMIN_PW 값을 변경하세요)</div>`;
+    setTimeout(()=>{const inp=document.getElementById('adminPw');if(inp)inp.focus();},200);
+  } else {
+    renderAdminPanel();
+  }
+}
+
+function closeAdmin(){document.getElementById('adminOverlay').classList.remove('show');}
+
+function checkPw(){
+  const inp=document.getElementById('adminPw');
+  if(inp.value===ADMIN_PW){adminUnlocked=true;renderAdminPanel();}
+  else{document.getElementById('pwError').style.display='block';inp.value='';inp.focus();}
+}
+
+function renderAdminPanel(){
+  const h=loadH(),panel=document.getElementById('adminPanel');
+  let html=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+    <h3 style="margin:0;">🔓 관리자 — 테스트 기록 (${h.length}건)</h3>
+    <div style="display:flex;gap:8px;">
+      <button class="btn btn-outline" style="padding:7px 14px;font-size:12px;" onclick="closeAdmin()">닫기</button>
+    </div>
+  </div>`;
+  if(h.length===0){
+    html+='<p style="text-align:center;padding:30px;color:var(--muted);">저장된 기록이 없습니다.</p>';
+  } else {
+    html+='<table class="ht"><thead><tr><th>날짜</th><th>이름</th><th>학년</th><th>총점</th><th>등급</th><th>어휘</th><th>문법</th><th>독해</th><th>듣기</th><th style="width:140px;">관리</th></tr></thead><tbody>';
+    h.forEach((r,i)=>{
+      html+=`<tr><td>${r.dt}</td><td><b>${r.nm}</b></td><td>${r.gr||'-'}</td><td><b>${r.tp}점</b></td><td>${r.lk}</td><td>${r.vp}%</td><td>${r.gp}%</td><td>${r.rp}%</td><td>${r.lp}%</td>
+      <td style="white-space:nowrap;">
+        ${r.key?`<button style="background:var(--navy);color:#fff;padding:4px 10px;font-size:10.5px;border-radius:5px;border:none;cursor:pointer;margin-right:4px;" onclick="closeAdmin();viewSaved('${r.key}')">보기</button>`:''}
+        <button style="background:var(--red);color:#fff;padding:4px 10px;font-size:10.5px;border-radius:5px;border:none;cursor:pointer;" onclick="deleteOne(${i})">삭제</button>
+      </td></tr>`;
+    });
+    html+='</tbody></table>';
+    html+=`<div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center;">
+      <span style="font-size:11px;color:var(--muted);">개별 삭제 또는 전체 삭제 가능</span>
+      <button class="btn-danger" onclick="if(confirm('⚠️ 정말 모든 기록을 삭제할까요?\\n이 작업은 되돌릴 수 없습니다.')){clearAll();renderAdminPanel();}">🗑️ 전체 삭제</button>
+    </div>`;
+  }
+  panel.innerHTML=html;
+}
+
+function deleteOne(idx){
+  if(!confirm('이 기록을 삭제할까요?'))return;
+  let h=loadH();
+  const item=h[idx];
+  if(item&&item.key){try{localStorage.removeItem('lt_rpt_'+item.key);}catch(e){}}
+  h.splice(idx,1);
+  localStorage.setItem('lt_hist',JSON.stringify(h));
+  renderAdminPanel();
+}
+
+// ═══ 결과 이미지 다운로드 ═══
+function downloadResult(){
+  const btn=document.getElementById('dlBtn');
+  if(btn){btn.disabled=true;btn.textContent='⏳ 이미지 생성 중...';}
+  const el=document.getElementById('rc');
+  html2canvas(el,{
+    scale:2,
+    backgroundColor:'#f0f4f9',
+    useCORS:true,
+    logging:false,
+    windowWidth:960
+  }).then(canvas=>{
+    const link=document.createElement('a');
+    const nm=document.getElementById('sName')?document.getElementById('sName').value.trim():'학생';
+    const now=new Date();
+    const ds=now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0');
+    link.download=`레벨테스트_${nm}_${ds}.png`;
+    link.href=canvas.toDataURL('image/png');
+    link.click();
+    if(btn){btn.disabled=false;btn.textContent='📸 결과 이미지 다운로드';}
+  }).catch(err=>{
+    console.error(err);
+    alert('이미지 생성에 실패했습니다. 브라우저의 인쇄(Ctrl+P)로 PDF 저장을 이용해주세요.');
+    if(btn){btn.disabled=false;btn.textContent='📸 결과 이미지 다운로드';}
+  });
+}
+
+function startTest(){const n=document.getElementById('sName').value.trim();if(!n){document.getElementById('sName').style.borderColor='var(--red)';document.getElementById('sName').focus();return;}goStep(1);}
+function goStep(n){document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));document.getElementById('step'+n).classList.add('active');cs=n;uP();if(n>=1&&n<=4&&!tm[n]){const lm={1:300,2:300,3:420,4:300};sT(n,lm[n]);}window.scrollTo({top:0,behavior:'smooth'});}
+function uP(){const p=[0,20,40,60,80,100];document.getElementById('pf').style.width=p[cs]+'%';for(let i=0;i<=5;i++){document.getElementById('pl'+i).className=i<cs?'done':i===cs?'current':'';}}
+function sT(s,sec){tm[s]=sec;const el=document.getElementById('t'+s);ti[s]=setInterval(()=>{tm[s]--;if(tm[s]<=0){clearInterval(ti[s]);tm[s]=0;el.textContent='00:00';el.style.background='rgba(192,57,43,.4)';return;}el.textContent=String(Math.floor(tm[s]/60)).padStart(2,'0')+':'+String(tm[s]%60).padStart(2,'0');if(tm[s]<=30)el.style.background='rgba(192,57,43,.3)';},1000);}
+
+function rQ(data,cid,sec){const w=document.getElementById(cid);w.innerHTML='';data.forEach((it,i)=>{const dl=it.d==='easy'?'기초':it.d==='medium'?'중급':'고급',dc=it.d==='easy'?'#1a7a4a':it.d==='medium'?'#1f4e79':'#c0392b';let h=`<div class="q-card" id="${sec}_q${i}"><div class="q-num">Q${i+1} <span style="background:${dc};color:#fff;padding:2px 7px;border-radius:10px;font-size:9.5px;margin-left:5px;">${dl}</span></div><div class="q-text">${it.q}</div><div class="opts">`;['A','B','C','D'].forEach((l,oi)=>{h+=`<div class="opt" onclick="sA('${sec}',${i},${oi},this)"><span class="opt-label">${l}</span><span>${it.o[oi]}</span></div>`;});h+='</div></div>';w.insertAdjacentHTML('beforeend',h);});}
+
+function rLQ(){const w=document.getElementById('lQ');w.innerHTML='';LD.forEach((it,i)=>{pc[i]=0;let h=`<div class="q-card" id="l_q${i}"><div class="q-num">Q${i+1} <span style="background:#6a0dad;color:#fff;padding:2px 7px;border-radius:10px;font-size:9.5px;margin-left:5px;">듣기</span></div><div class="listen-box"><button class="play-btn" id="pb${i}" onclick="pA(${i})"><span style="font-size:16px;">▶</span> 음성 재생</button><div class="play-count" id="pc${i}">재생: 0/2</div></div><div class="q-text">${it.q}</div><div class="opts">`;['A','B','C','D'].forEach((l,oi)=>{h+=`<div class="opt" onclick="sA('l',${i},${oi},this)"><span class="opt-label">${l}</span><span>${it.o[oi]}</span></div>`;});h+='</div></div>';w.insertAdjacentHTML('beforeend',h);});}
+
+function sA(sec,qi,oi,el){ans[sec][qi]=oi;const c=document.getElementById(sec+'_q'+qi);c.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');c.classList.add('answered');
+  // ★ 듣기 답 선택 시 TTS 즉시 중단
+  if(sec==='l'&&'speechSynthesis' in window)window.speechSynthesis.cancel();}
+
+function pA(i){if(pc[i]>=2)return;pc[i]++;document.getElementById('pc'+i).textContent=`재생: ${pc[i]}/2`;const b=document.getElementById('pb'+i);if(pc[i]>=2){b.disabled=true;b.innerHTML='⏹ 재생 완료';}b.disabled=true;if('speechSynthesis' in window){window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(LD[i].au);u.lang='en-US';u.rate=0.85;const vs=window.speechSynthesis.getVoices(),ev=vs.find(v=>v.lang.startsWith('en-US'))||vs.find(v=>v.lang.startsWith('en'));if(ev)u.voice=ev;u.onstart=()=>{b.innerHTML='🔊 재생 중...';};u.onend=()=>{if(pc[i]<2){b.disabled=false;b.innerHTML='▶ 다시 듣기 (1회 남음)';}};u.onerror=()=>{b.disabled=false;};window.speechSynthesis.speak(u);}}
+if('speechSynthesis' in window){window.speechSynthesis.onvoiceschanged=()=>{};window.speechSynthesis.getVoices();}
+
+function cS(data,sec){let c=0,dt=[];data.forEach((it,i)=>{const ua=ans[sec][i],ok=ua===it.a;if(ok)c++;dt.push({i,q:it.q,ua,ca:it.a,ok,d:it.d,e:it.e,o:it.o,t:it.t});});return{c,tt:data.length,p:Math.round(c/data.length*100),dt};}
+function gL(p){if(p>=90)return{n:'Advanced',k:'고급(상위권)',cl:'#6a0dad',ds:'영어 전 영역에서 높은 수준입니다. 수능 1등급 도달이 가능합니다.'};if(p>=75)return{n:'Upper-Intermediate',k:'중상급',cl:'#1a7a4a',ds:'대부분의 상황에서 자신감 있게 소통 가능하며, 상위권 진입이 가능합니다.'};if(p>=55)return{n:'Intermediate',k:'중급',cl:'#1f4e79',ds:'기본 의사소통은 가능하나, 복잡한 표현과 고급 어휘 학습이 필요합니다.'};if(p>=35)return{n:'Elementary',k:'초중급',cl:'#b88a20',ds:'체계적 학습을 시작할 단계입니다. 꾸준한 학습으로 빠른 성장이 가능합니다.'};return{n:'Beginner',k:'초급(기초)',cl:'#c0392b',ds:'기초부터 탄탄하게 쌓으면 빠르게 성장할 수 있습니다.'};}
+function gGL(p){if(p>=93)return{g:'고3 심화',eq:'수능 1등급 수준',sne:'1',idx:7};if(p>=85)return{g:'고3',eq:'수능 2등급 수준',sne:'2',idx:6};if(p>=75)return{g:'고2~고3',eq:'수능 3등급 수준',sne:'3',idx:5};if(p>=65)return{g:'고1~고2',eq:'수능 4등급 수준',sne:'4',idx:4};if(p>=50)return{g:'고1',eq:'수능 5등급 수준',sne:'5',idx:3};if(p>=40)return{g:'중3~고1',eq:'수능 6등급 수준',sne:'6',idx:2};if(p>=25)return{g:'중2~중3',eq:'수능 7등급 수준',sne:'7',idx:1};return{g:'중1~중2',eq:'기초 학습 필요',sne:'8',idx:0};}
+function buildPyramid(ai){const lv=[{l:'중1~중2',c:'#c0392b',w:100},{l:'중2~중3',c:'#d35400',w:92},{l:'중3~고1',c:'#b88a20',w:84},{l:'고1',c:'#2980b9',w:76},{l:'고1~고2',c:'#1f4e79',w:68},{l:'고2~고3',c:'#1a7a4a',w:60},{l:'고3',c:'#27ae60',w:50},{l:'수능 상위권',c:'#6a0dad',w:38}];let h='<div style="display:flex;flex-direction:column;align-items:center;width:100%;">';for(let i=lv.length-1;i>=0;i--){const v=lv[i],act=i===ai,abv=i>ai;h+=`<div style="width:${v.w}%;height:34px;background:${act?v.c:abv?'#ddd':v.c};border-radius:5px;margin-bottom:3px;display:flex;align-items:center;justify-content:center;font-size:${act?'13px':'11px'};font-weight:${act?'800':'500'};color:${act||!abv?'#fff':'#aaa'};opacity:${abv?'0.35':'1'};position:relative;${act?'box-shadow:0 0 0 3px var(--gold),0 4px 16px rgba(201,168,76,.5);transform:scale(1.05);z-index:2;':''}">${v.l}${act?'<span style="position:absolute;right:-80px;font-size:11px;color:var(--red);font-weight:700;">◀ 현재</span>':''}</div>`;}h+='</div>';return h;}
+function gSC(p,s){const c={v:{h:'어휘력 우수! 고급 학술 어휘까지 확장하면 최상위권 가능.',m:'기본 어휘 OK. 수능 빈출 어휘 우선 학습 필요.',l:'핵심 기초 어휘부터 체계 학습 필요. 매일 20개씩 암기 추천.'},g:{h:'문법 이해도 높음! 고난도 어법 실전 연습으로 완성.',m:'기본 문법 이해 중. to부정사/동명사, 가정법 심화 필요.',l:'기초 문법(시제, 수동태) 단계적 복습 필수.'},r:{h:'독해력 우수! 추론·비판적 읽기 갖춰져 실전 강함.',m:'기본 내용 파악 OK. 심층 추론과 의도 파악 추가 연습.',l:'핵심 파악부터 시작. 짧은 지문 단계적 훈련.'},l:{h:'듣기 우수! 더 빠른 속도와 다양한 억양에 도전.',m:'일상 대화 이해 OK. 긴 문장·학술 내용 보강 필요.',l:'짧은 문장부터 시작, 점차 난이도 높이기.'}};return p>=70?c[s].h:p>=40?c[s].m:c[s].l;}
+
+function showResults(){
+  // ★ TTS 즉시 중단
+  if('speechSynthesis' in window)window.speechSynthesis.cancel();
+  Object.keys(ti).forEach(k=>clearInterval(ti[k]));
+
+  const vr=cS(VD,'v'),gr=cS(GD,'g'),rr=cS(RD,'r'),lr=cS(LD,'l');
+  const tc=vr.c+gr.c+rr.c+lr.c,tq=vr.tt+gr.tt+rr.tt+lr.tt,tp=Math.round(tc/tq*100);
+  const lv=gL(tp),gi=gGL(tp),nm=document.getElementById('sName').value.trim(),sg=document.getElementById('sGrade').value;
+  const now=new Date(),ds=now.getFullYear()+'.'+String(now.getMonth()+1).padStart(2,'0')+'.'+String(now.getDate()).padStart(2,'0'),ts=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+
+  // ★ 결과 저장
+  const rptKey=ds.replace(/\./g,'')+ts.replace(':','')+Math.random().toString(36).substr(2,4);
+  const hist=loadH(),prev=hist.length>0?hist[0]:null;
+  const circ=2*Math.PI*72;
+  let h='';
+
+  // 히어로
+  h+=`<div class="rpt-hero"><div class="rpt-hdr"><div class="rpt-hdr-l"><div class="rb">Level Test Report</div><h2>${nm} 학생 영어 레벨테스트 결과 보고서</h2><div class="rd">${ds} ${ts} · ${sg} · 목동서로 영어학원</div></div><div class="rpt-stamp"><span class="sg">${lv.n.charAt(0)}</span><span class="sl">${lv.k}</span></div></div>
+  <div class="rpt-score-row"><div class="rpt-circle"><svg width="170" height="170" viewBox="0 0 180 180"><circle class="rc-bg" cx="90" cy="90" r="72"/><circle class="rc-fill" cx="90" cy="90" r="72" stroke="${lv.cl}" stroke-dasharray="${circ}" stroke-dashoffset="${circ*(1-tp/100)}"/></svg><div class="rpt-cc"><div class="rn">${tp}</div><div class="ru">/ 100점</div></div></div>
+  <div class="rpt-li"><div class="rpt-ln">${lv.n}</div><div class="rpt-lk">${lv.k}</div><div class="rpt-ld">${lv.ds}</div><div class="rpt-tq">정답 <b>${tc}</b> / ${tq}문항${prev?` <span style="margin-left:10px;font-size:12px;color:${tp>prev.tp?'#6de89a':'#f0b0b0'};">${tp>prev.tp?'▲':'▼'} 이전 대비 ${Math.abs(tp-prev.tp)}점</span>`:''}</div></div></div></div>`;
+
+  // 학년 환산 — 피라미드
+  h+=`<div class="card"><h2>📏 학년 환산 — 현재 어디에 있는가?</h2><div class="sub">중·고등학교 학년 기준 현재 영어 수준</div>
+  <div style="display:flex;gap:24px;align-items:stretch;flex-wrap:wrap;">
+    <div style="flex:1;min-width:240px;">${buildPyramid(gi.idx)}</div>
+    <div style="flex:0 0 220px;display:flex;flex-direction:column;gap:8px;justify-content:center;">
+      <div style="background:#eef4fb;border:1.5px solid #7aaee8;border-radius:10px;padding:14px 16px;"><div style="font-size:10.5px;color:var(--muted);font-weight:600;margin-bottom:4px;">환산 학년</div><div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--navy);">${gi.g}</div><div style="font-size:11px;color:var(--muted);margin-top:4px;">수준의 영어 실력</div></div>
+      <div style="background:#fef9f0;border:1.5px solid #e0c070;border-radius:10px;padding:14px 16px;"><div style="font-size:10.5px;color:var(--muted);font-weight:600;margin-bottom:4px;">수능 등급 환산</div><div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#b88a20;">${gi.sne}등급</div><div style="font-size:11px;color:var(--muted);margin-top:4px;">${gi.eq}</div></div>
+      <div style="background:#fde8e8;border:1.5px solid #f0b0b0;border-radius:10px;padding:14px 16px;"><div style="font-size:10.5px;color:var(--muted);font-weight:600;margin-bottom:4px;">목표까지</div><div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--red);">${7-gi.idx}단계</div><div style="font-size:11px;color:var(--muted);margin-top:4px;">수능 상위권까지</div></div>
+    </div>
+  </div></div>`;
+
+  // 영역별 분석
+  const secs=[{k:'v',nm:'어휘',ic:'📝',rs:vr,cl:'#1f4e79'},{k:'g',nm:'문법',ic:'📐',rs:gr,cl:'#b88a20'},{k:'r',nm:'독해',ic:'📖',rs:rr,cl:'#1a7a4a'},{k:'l',nm:'듣기',ic:'🎧',rs:lr,cl:'#6a0dad'}];
+  h+='<div class="card"><h2>📊 영역별 상세 분석</h2><div class="sub">레이더 차트 + 영역별 점수 및 코멘트</div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 260px;gap:20px;align-items:start;"><div>';
+  secs.forEach(s=>{const cm=gSC(s.rs.p,s.k),em=s.rs.p>=70?'✅':s.rs.p>=40?'⚠️':'❗';h+=`<div class="sb-wrap"><div class="sb-hdr"><div class="sb-title">${s.ic} ${s.nm} ${em}</div><div class="sb-score" style="color:${s.cl}">${s.rs.p}점 <span style="font-size:12px;color:var(--muted);font-family:'Noto Sans KR';font-weight:400;">(${s.rs.c}/${s.rs.tt})</span></div></div><div class="sb"><div class="sb-fill" style="width:${s.rs.p}%;background:${s.cl};"></div></div><div class="sb-cmt">${cm}</div></div>`;});
+  h+='</div><div style="text-align:center;">'+bRC([vr.p,gr.p,rr.p,lr.p])+'</div></div></div>';
+
+  // 난이도별
+  const ad=[...vr.dt,...gr.dt,...rr.dt,...lr.dt],dfs={easy:{c:0,t:0},medium:{c:0,t:0},hard:{c:0,t:0}};
+  ad.forEach(d=>{dfs[d.d].t++;if(d.ok)dfs[d.d].c++;});
+  h+='<div class="card"><h2>📈 난이도별 정답률</h2><div class="sub">기초·중급·고급별 성취도 — 취약 난이도를 파악합니다</div><div class="diff-grid">';
+  [{k:'easy',l:'기초 문항',c:'#1a7a4a',bg:'#f3fff6',bc:'#c8e8cc'},{k:'medium',l:'중급 문항',c:'#1f4e79',bg:'#eef4fb',bc:'#a8c4e8'},{k:'hard',l:'고급 문항',c:'#c0392b',bg:'#fde8e8',bc:'#f0b0b0'}].forEach(d=>{
+    const p=dfs[d.k].t?Math.round(dfs[d.k].c/dfs[d.k].t*100):0,vd=p>=70?'우수':p>=40?'보통':'취약';
+    h+=`<div class="diff-item" style="background:${d.bg};border:1.5px solid ${d.bc};"><div class="di-lbl" style="color:${d.c};">${d.l}</div><div class="di-pct" style="color:${d.c};">${p}%</div><div class="di-det">${dfs[d.k].c}/${dfs[d.k].t}문항 · <b>${vd}</b></div><div class="di-bar"><div class="di-bar-fill" style="width:${p}%;background:${d.c};"></div></div></div>`;});
+  h+='</div></div>';
+
+  // 세부 역량
+  h+='<div class="card"><h2>🔬 세부 역량 진단</h2><div class="sub">문법·독해·듣기 세부 항목별 정답 진단</div>';
+  const tm2={};ad.forEach(d=>{if(!tm2[d.t])tm2[d.t]={c:0,t:0};tm2[d.t].t++;if(d.ok)tm2[d.t].c++;});
+  h+='<div class="sk-grid">';
+  Object.keys(tm2).forEach(tp=>{const t=tm2[tp],p=Math.round(t.c/t.t*100),cl=p>=70?'good':p>=40?'warn':'bad',lb=p>=70?'우수':p>=40?'보통':'취약',dc=p>=70?'#1a7a4a':p>=40?'#b88a20':'#c0392b';
+    h+=`<div class="sk-item"><div class="sk-dot" style="background:${dc}"></div><div class="sk-name">${tp}</div><span class="sk-st ${cl}">${lb} (${t.c}/${t.t})</span></div>`;});
+  h+='</div></div>';
+
+  // 오답 분석
+  let wc=0,wh='';
+  secs.forEach(s=>{s.rs.dt.forEach(d=>{if(!d.ok){wc++;const lb=['A','B','C','D'],ul=d.ua!==undefined?lb[d.ua]:'미응답',ut=d.ua!==undefined?d.o[d.ua]:'미선택';
+    wh+=`<div class="wc"><div style="font-size:10px;font-weight:700;color:${s.cl};letter-spacing:1px;margin-bottom:5px;">${s.ic} ${s.nm} Q${d.i+1} · ${d.t}</div><div class="wq">${d.q}</div><div class="ww" style="margin-bottom:3px;">✗ 내 답: ${ul}. ${ut}</div><div class="wcr">✓ 정답: ${lb[d.ca]}. ${d.o[d.ca]}</div><div style="margin-top:7px;padding:9px 12px;background:#f8fafd;border-radius:7px;font-size:12px;color:#555;line-height:1.6;border-left:3px solid var(--gold);">💡 ${d.e}</div></div>`;}});});
+  h+=`<div class="card"><h2>❌ 오답 분석 (${wc}문항)</h2><div class="sub">틀린 문항별 상세 해설 — 오답 노트로 활용하세요</div>`;
+  h+=wc===0?'<div style="text-align:center;padding:30px;font-size:15px;color:var(--green);font-weight:700;">🎉 모든 문항 정답! 완벽합니다!</div>':wh;
+  h+='</div>';
+
+  // 학습 추천
+  h+=`<div class="rec"><h3>📚 ${nm} 학생 맞춤 학습 로드맵</h3>`;
+  const rcs=[];
+  if(vr.p<70)rcs.push({i:'📝',t:`<b>어휘 강화:</b> ${vr.p}% → 수능 빈출 어휘 + 접두사/접미사 학습`});
+  if(gr.p<70){const wg=gr.dt.filter(d=>!d.ok).map(d=>d.t);rcs.push({i:'📐',t:`<b>문법 보강:</b> ${gr.p}% → <span style="color:var(--red)">${[...new Set(wg)].join(', ')}</span> 집중`});}
+  if(rr.p<70)rcs.push({i:'📖',t:`<b>독해 훈련:</b> ${rr.p}% → 지문 구조 파악 + 추론 능력 향상`});
+  if(lr.p<70)rcs.push({i:'🎧',t:`<b>듣기 연습:</b> ${lr.p}% → 쉐도잉 + 딕테이션 훈련`});
+  if(!rcs.length)rcs.push({i:'🏆',t:'<b>우수한 성적!</b> 원서·TED·에세이로 한 단계 UP'});
+  if(tp<50)rcs.push({i:'🎯',t:'<b>추천:</b> 기초 문법 → 필수 어휘 300 → 짧은 독해 → 기초 듣기 (주5회 1시간)'});
+  else if(tp<75)rcs.push({i:'🎯',t:'<b>추천:</b> 중급 문법 → 수능 어휘 → 중장문 독해 → 뉴스 듣기 (주5회 1.5시간)'});
+  else rcs.push({i:'🎯',t:'<b>추천:</b> 고급 독해(원서) → 학술 어휘 → 토론/에세이 → 팟캐스트 (주5회 2시간)'});
+  rcs.forEach(r=>{h+=`<div class="ri"><span class="ri-i">${r.i}</span><span>${r.t}</span></div>`;});
+  h+='</div>';
+
+  // 이력
+  if(hist.length>1){h+=`<div class="hc"><h3>📋 테스트 이력 (최근 5회)</h3><table class="ht"><thead><tr><th>날짜</th><th>이름</th><th>학년</th><th>총점</th><th>등급</th><th>어휘</th><th>문법</th><th>독해</th><th>듣기</th><th>변동</th></tr></thead><tbody>`;
+    hist.slice(0,5).forEach((r,i)=>{const pv=hist[i+1];let ch='';if(pv){const df=r.tp-pv.tp;ch=df>0?`<span class="hu">▲${df}</span>`:df<0?`<span class="hd">▼${Math.abs(df)}</span>`:'<span style="color:#999;">—</span>';}
+      h+=`<tr${i===0?' style="background:#eef4fb;font-weight:600;"':''}><td>${r.dt}</td><td>${r.nm}</td><td>${r.gr||'-'}</td><td>${r.tp}점</td><td>${r.lk}</td><td>${r.vp}%</td><td>${r.gp}%</td><td>${r.rp}%</td><td>${r.lp}%</td><td>${ch}</td></tr>`;});
+    h+='</tbody></table></div>';}
+
+  h+='<div class="pbw"><button class="dl-btn" id="dlBtn" onclick="downloadResult()">📸 결과 이미지 다운로드</button><br><br><button class="btn btn-primary" onclick="window.print()" style="margin-right:10px;">🖨️ 인쇄 / PDF 저장</button><button class="btn btn-outline" onclick="goStep(0)" style="margin-right:8px;">🏠 처음으로</button><button class="btn btn-outline" onclick="location.reload()">🔄 새 테스트</button></div>';
+  h+=`<div class="rpt-ft"><b>목동서로 영어학원</b> · English Level Test Report · ${ds}<br>본 결과서는 학생의 현재 영어 수준을 객관적으로 진단한 것이며,<br>체계적인 학습을 통해 목표 수준에 도달할 수 있습니다.<br><span style="color:var(--gold);font-weight:700;">☎ 상담 문의: 목동서로 영어학원</span></div>`;
+
+  document.getElementById('rc').innerHTML=h;
+  // ★ 저장: 요약 데이터 + 전체 보고서 HTML
+  saveR({nm,gr:sg,dt:ds,tm:ts,tp,tc,tq,ln:lv.n,lk:lv.k,vp:vr.p,gp:gr.p,rp:rr.p,lp:lr.p,ge:gi.g,key:rptKey});
+  saveRpt(rptKey,h);
+  goStep(5);
+}
+
+function bRC(data){const lb=['어휘','문법','독해','듣기'],cl=['#1f4e79','#b88a20','#1a7a4a','#6a0dad'],cx=130,cy=130,mr=100,ag=data.map((_,i)=>(Math.PI*2*i/4)-Math.PI/2);let s=`<svg width="260" height="260" viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">`;[20,40,60,80,100].forEach(p=>{const r=mr*p/100;s+=`<polygon points="${ag.map(a=>`${cx+r*Math.cos(a)},${cy+r*Math.sin(a)}`).join(' ')}" fill="none" stroke="#dde8f4" stroke-width="1"/>`;});ag.forEach(a=>{s+=`<line x1="${cx}" y1="${cy}" x2="${cx+mr*Math.cos(a)}" y2="${cy+mr*Math.sin(a)}" stroke="#ccd8ee" stroke-width="1"/>`;});s+=`<polygon points="${data.map((v,i)=>{const r=mr*v/100;return`${cx+r*Math.cos(ag[i])},${cy+r*Math.sin(ag[i])}`;}).join(' ')}" fill="rgba(201,168,76,.18)" stroke="var(--gold)" stroke-width="2.5"/>`;data.forEach((v,i)=>{const r=mr*v/100;s+=`<circle cx="${cx+r*Math.cos(ag[i])}" cy="${cy+r*Math.sin(ag[i])}" r="4.5" fill="${cl[i]}" stroke="#fff" stroke-width="2"/>`;});const lr2=mr+20;lb.forEach((l,i)=>{const x=cx+lr2*Math.cos(ag[i]),y=cy+lr2*Math.sin(ag[i]);s+=`<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="middle" font-size="11.5" font-weight="700" fill="${cl[i]}" font-family="'Noto Sans KR',sans-serif">${l}</text><text x="${x}" y="${y+13}" text-anchor="middle" font-size="10" fill="#999" font-family="'Noto Sans KR',sans-serif">${data[i]}%</text>`;});s+='</svg>';return s;}
+
+rQ(VD,'vQ','v');rQ(GD,'gQ','g');rQ(RD,'rQ','r');rLQ();showHP();
+</script>
+</body>
+</html>
