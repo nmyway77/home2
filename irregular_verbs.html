@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>불규칙 동사 총정리 — 목동서로 영어학원</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:   #1a2a4a;
+    --navy2:  #243559;
+    --red:    #c0392b;
+    --green:  #1a7a4a;
+    --gold:   #c9a84c;
+    --odd:    #f0f5fc;
+    --even:   #ffffff;
+    --border: #cad8ee;
+    --text:   #2c2c2c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #eef2f8;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── 헤더 ── */
+  .page-header {
+    background: linear-gradient(135deg, #1a2a4a 0%, #2e4a80 100%);
+    padding: 44px 40px 36px;
+    position: relative; overflow: hidden;
+  }
+  .page-header::before {
+    content:''; position:absolute; top:-50px; right:-50px;
+    width:260px; height:260px; border-radius:50%;
+    background:rgba(255,255,255,0.04);
+  }
+  .header-inner { max-width:900px; margin:0 auto; position:relative; z-index:1; }
+  .academy-badge {
+    display:inline-block;
+    background:rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.2);
+    color:#a8c0e8; font-size:11px; font-weight:500;
+    letter-spacing:2px; text-transform:uppercase;
+    padding:4px 14px; border-radius:20px; margin-bottom:14px;
+  }
+  .page-title {
+    font-family:'Playfair Display', serif;
+    font-size:40px; color:#fff; line-height:1.2;
+    margin-bottom:8px; letter-spacing:-0.5px;
+  }
+  .page-subtitle { color:#8aaad4; font-size:13px; font-weight:300; margin-bottom:26px; }
+  .legend { display:flex; gap:22px; flex-wrap:wrap; }
+  .legend-item { display:flex; align-items:center; gap:8px; font-size:13px; color:#c0d4ee; }
+  .legend-dot { width:11px; height:11px; border-radius:50%; }
+
+  /* ── 컨트롤 ── */
+  .controls {
+    max-width:900px; margin:24px auto 0; padding:0 20px;
+    display:flex; gap:12px; align-items:center; flex-wrap:wrap;
+  }
+  .search-box { flex:1; min-width:200px; max-width:380px; position:relative; }
+  .search-box input {
+    width:100%; padding:11px 16px 11px 42px;
+    border:1.5px solid var(--border); border-radius:10px;
+    font-size:14px; font-family:'Noto Sans KR', sans-serif;
+    background:#fff; color:var(--text); outline:none;
+    transition:border-color .2s;
+  }
+  .search-box input:focus { border-color:var(--navy2); }
+  .search-icon { position:absolute; left:13px; top:50%; transform:translateY(-50%); color:#aaa; font-size:15px; }
+  .count-badge {
+    background:var(--navy); color:#fff;
+    padding:7px 18px; border-radius:20px;
+    font-size:12.5px; font-weight:500; letter-spacing:0.5px;
+    white-space:nowrap;
+  }
+  .print-btn {
+    margin-left:auto; padding:10px 22px;
+    background:var(--gold); color:var(--navy);
+    border:none; border-radius:8px;
+    font-size:13px; font-weight:700; cursor:pointer;
+    font-family:'Noto Sans KR',sans-serif;
+    transition:opacity .2s;
+  }
+  .print-btn:hover { opacity:.85; }
+
+  /* ── 테이블 ── */
+  .table-wrap { max-width:900px; margin:22px auto 50px; padding:0 20px; }
+  .table-card {
+    background:#fff; border-radius:18px; overflow:hidden;
+    box-shadow:0 6px 32px rgba(26,42,74,.12);
+    border:1px solid var(--border);
+  }
+
+  table { width:100%; border-collapse:collapse; table-layout:fixed; }
+
+  /* 컬럼 비율: 번호 5% | 원형 18% | 과거 20% | 과거분사 22% | 뜻 35% */
+  col.c-no   { width:5%;  }
+  col.c-v1   { width:18%; }
+  col.c-v2   { width:20%; }
+  col.c-v3   { width:22%; }
+  col.c-ko   { width:35%; }
+
+  thead tr { background:linear-gradient(90deg, #1a2a4a 0%, #2e4a80 100%); }
+  thead th {
+    padding:15px 16px;
+    font-size:12.5px; font-weight:600; color:#fff;
+    letter-spacing:1.5px; text-transform:uppercase;
+    text-align:left; border-right:1px solid rgba(255,255,255,.12);
+  }
+  thead th.c-no { text-align:center; }
+  thead th:last-child { border-right:none; }
+
+  tbody tr { transition:background .15s; }
+  tbody tr:hover { background:#dceaf9 !important; }
+  tbody tr.odd  { background:var(--odd); }
+  tbody tr.even { background:var(--even); }
+  tbody tr.hidden { display:none; }
+
+  td {
+    padding:13px 16px;
+    font-size:15px;
+    border-right:1px solid #dde8f5;
+    border-bottom:1px solid #dde8f5;
+    vertical-align:middle;
+    line-height:1.5;
+  }
+  td:last-child { border-right:none; }
+  td.c-no {
+    text-align:center;
+    font-size:12px; font-weight:600;
+    color:#a0b4d0;
+    border-right:2px solid #cad8ee;
+  }
+  td.v1 {
+    font-family:'EB Garamond', serif;
+    font-weight:600; font-size:18px;
+    color:var(--navy);
+  }
+  td.v2 {
+    font-family:'EB Garamond', serif;
+    font-size:17px; color:var(--red);
+  }
+  td.v3 {
+    font-family:'EB Garamond', serif;
+    font-size:17px; color:var(--green);
+  }
+  td.ko {
+    font-size:13.5px; color:#555; font-weight:300;
+    line-height:1.6;
+  }
+
+  mark { background:#fff176; border-radius:3px; padding:0 2px; }
+
+  /* ── 섹션 구분행 (알파벳 그룹) ── */
+  tr.section-divider td {
+    background:linear-gradient(90deg, #2e4a80, #1a2a4a);
+    color:#fff; font-size:11px; font-weight:700;
+    letter-spacing:3px; text-transform:uppercase;
+    padding:7px 18px; border:none; text-align:center;
+    border-bottom:1px solid rgba(255,255,255,.1);
+  }
+
+  /* ── 추가 배지 ── */
+  .new-badge {
+    display:inline-block;
+    background:#e8f5e9; color:#2e7d32;
+    font-size:10px; font-weight:700;
+    padding:1px 7px; border-radius:10px;
+    border:1px solid #a5d6a7;
+    margin-left:6px; vertical-align:middle;
+    font-family:'Noto Sans KR',sans-serif;
+  }
+
+  /* ── 푸터 ── */
+  .footer { text-align:center; padding:24px; font-size:12px; color:#aaa; }
+
+  /* ── 인쇄 ── */
+  @media print {
+    body { background:#fff; }
+    .controls, .print-btn { display:none; }
+    .page-header { background:var(--navy)!important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    .table-card { box-shadow:none; }
+    thead tr { background:var(--navy)!important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    tbody tr.odd { background:#f0f5fc!important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    td { padding:8px 10px; font-size:12px; }
+    td.v1, td.v2, td.v3 { font-size:13px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="header-inner">
+    <div class="academy-badge">목동서로 영어학원</div>
+    <h1 class="page-title">불규칙 동사 총정리</h1>
+    <p class="page-subtitle">기출 + 출제 가능 불규칙 동사 132개 완전 정리</p>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#6a9fd8"></div>원형 (Base Form)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#e07070"></div>과거형 (Past)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#5aab7a"></div>과거분사 (Past Participle)</div>
+      <div class="legend-item"><span style="background:#e8f5e9;color:#2e7d32;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;border:1px solid #a5d6a7;">NEW</span>&nbsp;이번에 추가된 단어</div>
+    </div>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="search" placeholder="단어 검색 (예: fight, run, 이기다)..." oninput="filterTable()">
+  </div>
+  <span class="count-badge" id="countBadge">총 132개</span>
+  <button class="print-btn" onclick="window.print()">🖨️ 인쇄</button>
+</div>
+
+<div class="table-wrap">
+  <div class="table-card">
+    <table id="verbTable">
+      <colgroup>
+        <col class="c-no">
+        <col class="c-v1">
+        <col class="c-v2">
+        <col class="c-v3">
+        <col class="c-ko">
+      </colgroup>
+      <thead>
+        <tr>
+          <th class="c-no">#</th>
+          <th class="c-v1">원형</th>
+          <th class="c-v2">과거형</th>
+          <th class="c-v3">과거분사</th>
+          <th class="c-ko">뜻</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="footer">목동서로 영어학원 · 불규칙 동사 기출 총정리 · 총 132개</div>
+
+<script>
+// isNew: true = 이번에 추가된 단어
+const verbs = [
+  // A
+  {v1:'arise',      v2:'arose',           v3:'arisen',          ko:'발생하다, 일어나다',           isNew:true},
+  // B
+  {v1:'be',         v2:'was / were',      v3:'been',            ko:'이다, 있다',                   isNew:true},
+  {v1:'beat',       v2:'beat',            v3:'beaten',          ko:'두들기다, 이기다'},
+  {v1:'become',     v2:'became',          v3:'become',          ko:'~이 되다'},
+  {v1:'begin',      v2:'began',           v3:'begun',           ko:'시작하다'},
+  {v1:'bend',       v2:'bent',            v3:'bent',            ko:'구부리다'},
+  {v1:'bind',       v2:'bound',           v3:'bound',           ko:'묶다, 감다'},
+  {v1:'bite',       v2:'bit',             v3:'bitten',          ko:'씹다, 물다'},
+  {v1:'bleed',      v2:'bled',            v3:'bled',            ko:'피나다'},
+  {v1:'blow',       v2:'blew',            v3:'blown',           ko:'불다'},
+  {v1:'break',      v2:'broke',           v3:'broken',          ko:'깨뜨리다'},
+  {v1:'bring',      v2:'brought',         v3:'brought',         ko:'가져오다'},
+  {v1:'broadcast',  v2:'broadcast',       v3:'broadcast',       ko:'방송하다',                     isNew:true},
+  {v1:'build',      v2:'built',           v3:'built',           ko:'짓다'},
+  {v1:'burn',       v2:'burned / burnt',  v3:'burned / burnt',  ko:'타다'},
+  {v1:'burst',      v2:'burst',           v3:'burst',           ko:'터지다'},
+  {v1:'buy',        v2:'bought',          v3:'bought',          ko:'사다',                         isNew:true},
+  // C
+  {v1:'cast',       v2:'cast',            v3:'cast',            ko:'던지다, 배역을 맡기다',         isNew:true},
+  {v1:'catch',      v2:'caught',          v3:'caught',          ko:'붙잡다'},
+  {v1:'choose',     v2:'chose',           v3:'chosen',          ko:'선택하다'},
+  {v1:'cling',      v2:'clung',           v3:'clung',           ko:'매달리다'},
+  {v1:'come',       v2:'came',            v3:'come',            ko:'오다'},
+  {v1:'cost',       v2:'cost',            v3:'cost',            ko:'비용이 들다'},
+  {v1:'creep',      v2:'crept',           v3:'crept',           ko:'기어가다',                     isNew:true},
+  {v1:'cut',        v2:'cut',             v3:'cut',             ko:'자르다'},
+  // D
+  {v1:'deal',       v2:'dealt',           v3:'dealt',           ko:'다루다'},
+  {v1:'dig',        v2:'dug',             v3:'dug',             ko:'파다'},
+  {v1:'do',         v2:'did',             v3:'done',            ko:'하다'},
+  {v1:'draw',       v2:'drew',            v3:'drawn',           ko:'그리다, 끌어당기다'},
+  {v1:'dream',      v2:'dreamed / dreamt',v3:'dreamed / dreamt',ko:'꿈꾸다'},
+  {v1:'drink',      v2:'drank',           v3:'drunk',           ko:'마시다'},
+  {v1:'drive',      v2:'drove',           v3:'driven',          ko:'운전하다'},
+  // E
+  {v1:'eat',        v2:'ate',             v3:'eaten',           ko:'먹다'},
+  // F
+  {v1:'fall',       v2:'fell',            v3:'fallen',          ko:'떨어지다'},
+  {v1:'feed',       v2:'fed',             v3:'fed',             ko:'먹이를 주다'},
+  {v1:'feel',       v2:'felt',            v3:'felt',            ko:'느끼다'},
+  {v1:'fight',      v2:'fought',          v3:'fought',          ko:'싸우다',                       isNew:true},
+  {v1:'find',       v2:'found',           v3:'found',           ko:'발견하다'},
+  {v1:'flee',       v2:'fled',            v3:'fled',            ko:'도망가다',                     isNew:true},
+  {v1:'fly',        v2:'flew',            v3:'flown',           ko:'날다'},
+  {v1:'forbid',     v2:'forbade',         v3:'forbidden',       ko:'금지하다',                     isNew:true},
+  {v1:'forget',     v2:'forgot',          v3:'forgotten',       ko:'잊다'},
+  {v1:'forgive',    v2:'forgave',         v3:'forgiven',        ko:'용서하다',                     isNew:true},
+  {v1:'freeze',     v2:'froze',           v3:'frozen',          ko:'얼다'},
+  // G
+  {v1:'get',        v2:'got',             v3:'got(ten)',        ko:'얻다'},
+  {v1:'give',       v2:'gave',            v3:'given',           ko:'주다'},
+  {v1:'go',         v2:'went',            v3:'gone',            ko:'가다'},
+  {v1:'grow',       v2:'grew',            v3:'grown',           ko:'자라다'},
+  // H
+  {v1:'hang',       v2:'hung',            v3:'hung',            ko:'걸다, 매달리다'},
+  {v1:'hang',       v2:'hanged',          v3:'hanged',          ko:'목매달다 (사형)'},
+  {v1:'have',       v2:'had',             v3:'had',             ko:'가지다, 먹다'},
+  {v1:'hear',       v2:'heard',           v3:'heard',           ko:'듣다'},
+  {v1:'hide',       v2:'hid',             v3:'hidden',          ko:'숨기다'},
+  {v1:'hit',        v2:'hit',             v3:'hit',             ko:'치다, 때리다'},
+  {v1:'hold',       v2:'held',            v3:'held',            ko:'잡다'},
+  {v1:'hurt',       v2:'hurt',            v3:'hurt',            ko:'상처 입히다'},
+  // K
+  {v1:'keep',       v2:'kept',            v3:'kept',            ko:'지키다'},
+  {v1:'kneel',      v2:'knelt',           v3:'knelt',           ko:'무릎 꿇다',                    isNew:true},
+  {v1:'know',       v2:'knew',            v3:'known',           ko:'알다'},
+  // L
+  {v1:'lay',        v2:'laid',            v3:'laid',            ko:'눕히다, 낳다'},
+  {v1:'lead',       v2:'led',             v3:'led',             ko:'이끌다'},
+  {v1:'leap',       v2:'leapt / leaped',  v3:'leapt / leaped',  ko:'뛰어오르다',                   isNew:true},
+  {v1:'leave',      v2:'left',            v3:'left',            ko:'떠나다'},
+  {v1:'lend',       v2:'lent',            v3:'lent',            ko:'빌려주다'},
+  {v1:'let',        v2:'let',             v3:'let',             ko:'허락하다'},
+  {v1:'lie',        v2:'lay',             v3:'lain',            ko:'눕다, 놓여있다'},
+  {v1:'lie',        v2:'lied',            v3:'lied',            ko:'거짓말하다'},
+  {v1:'light',      v2:'lit',             v3:'lit',             ko:'불을 켜다'},
+  {v1:'lose',       v2:'lost',            v3:'lost',            ko:'잃다'},
+  // M
+  {v1:'make',       v2:'made',            v3:'made',            ko:'만들다'},
+  {v1:'mean',       v2:'meant',           v3:'meant',           ko:'의미하다'},
+  {v1:'meet',       v2:'met',             v3:'met',             ko:'만나다'},
+  {v1:'mistake',    v2:'mistook',         v3:'mistaken',        ko:'잘못 알다, 오해하다'},
+  // O
+  {v1:'overcome',   v2:'overcame',        v3:'overcome',        ko:'극복하다'},
+  // P
+  {v1:'pay',        v2:'paid',            v3:'paid',            ko:'지불하다'},
+  {v1:'prove',      v2:'proved',          v3:'proven / proved', ko:'증명하다',                     isNew:true},
+  {v1:'put',        v2:'put',             v3:'put',             ko:'놓다'},
+  // Q
+  {v1:'quit',       v2:'quit',            v3:'quit',            ko:'그만두다, 포기하다'},
+  // R
+  {v1:'raise',      v2:'raised',          v3:'raised',          ko:'올리다'},
+  {v1:'read',       v2:'read',            v3:'read',            ko:'읽다'},
+  {v1:'ride',       v2:'rode',            v3:'ridden',          ko:'타다'},
+  {v1:'ring',       v2:'rang',            v3:'rung',            ko:'울리다'},
+  {v1:'rise',       v2:'rose',            v3:'risen',           ko:'떠오르다, 상승하다'},
+  {v1:'run',        v2:'ran',             v3:'run',             ko:'달리다, 경영하다'},
+  // S
+  {v1:'say',        v2:'said',            v3:'said',            ko:'말하다'},
+  {v1:'see',        v2:'saw',             v3:'seen',            ko:'보다'},
+  {v1:'seek',       v2:'sought',          v3:'sought',          ko:'구하다, 애쓰다'},
+  {v1:'send',       v2:'sent',            v3:'sent',            ko:'보내다'},
+  {v1:'set',        v2:'set',             v3:'set',             ko:'놓다'},
+  {v1:'shake',      v2:'shook',           v3:'shaken',          ko:'흔들다'},
+  {v1:'shine',      v2:'shone',           v3:'shone',           ko:'빛나다'},
+  {v1:'shoot',      v2:'shot',            v3:'shot',            ko:'쏘다, 촬영하다'},
+  {v1:'show',       v2:'showed',          v3:'shown',           ko:'보여주다'},
+  {v1:'shrink',     v2:'shrank',          v3:'shrunk',          ko:'줄어들다',                     isNew:true},
+  {v1:'shut',       v2:'shut',            v3:'shut',            ko:'닫다'},
+  {v1:'sing',       v2:'sang',            v3:'sung',            ko:'노래하다'},
+  {v1:'sink',       v2:'sank',            v3:'sunk',            ko:'가라앉다'},
+  {v1:'sit',        v2:'sat',             v3:'sat',             ko:'앉다'},
+  {v1:'sleep',      v2:'slept',           v3:'slept',           ko:'자다'},
+  {v1:'slide',      v2:'slid',            v3:'slid',            ko:'미끄러지다',                   isNew:true},
+  {v1:'smell',      v2:'smelled / smelt', v3:'smelled / smelt', ko:'냄새나다, 냄새맡다'},
+  {v1:'speak',      v2:'spoke',           v3:'spoken',          ko:'말하다'},
+  {v1:'speed',      v2:'sped',            v3:'sped',            ko:'속도가 나다'},
+  {v1:'spend',      v2:'spent',           v3:'spent',           ko:'쓰다, 보내다'},
+  {v1:'spill',      v2:'spilt / spilled', v3:'spilt / spilled', ko:'흘리다'},
+  {v1:'spin',       v2:'spun',            v3:'spun',            ko:'회전하다'},
+  {v1:'split',      v2:'split',           v3:'split',           ko:'쪼개다, 갈라지다'},
+  {v1:'spread',     v2:'spread',          v3:'spread',          ko:'퍼지다, 번지다'},
+  {v1:'stand',      v2:'stood',           v3:'stood',           ko:'서다'},
+  {v1:'steal',      v2:'stole',           v3:'stolen',          ko:'훔치다'},
+  {v1:'stick',      v2:'stuck',           v3:'stuck',           ko:'붙다, 고수하다',               isNew:true},
+  {v1:'sting',      v2:'stung',           v3:'stung',           ko:'(벌레가) 쏘다',               isNew:true},
+  {v1:'strike',     v2:'struck',          v3:'struck',          ko:'치다, 강타하다'},
+  {v1:'swear',      v2:'swore',           v3:'sworn',           ko:'맹세하다'},
+  {v1:'swim',       v2:'swam',            v3:'swum',            ko:'수영하다'},
+  {v1:'swing',      v2:'swung',           v3:'swung',           ko:'흔들다, 휘두르다',             isNew:true},
+  // T
+  {v1:'take',       v2:'took',            v3:'taken',           ko:'가져가다'},
+  {v1:'teach',      v2:'taught',          v3:'taught',          ko:'가르치다'},
+  {v1:'tear',       v2:'tore',            v3:'torn',            ko:'찢다'},
+  {v1:'tell',       v2:'told',            v3:'told',            ko:'말하다'},
+  {v1:'think',      v2:'thought',         v3:'thought',         ko:'생각하다'},
+  {v1:'throw',      v2:'threw',           v3:'thrown',          ko:'던지다'},
+  // U
+  {v1:'undergo',    v2:'underwent',       v3:'undergone',       ko:'겪다, 받다',                   isNew:true},
+  {v1:'understand', v2:'understood',      v3:'understood',      ko:'이해하다'},
+  {v1:'upset',      v2:'upset',           v3:'upset',           ko:'뒤엎다, 속상하게 하다',         isNew:true},
+  // W
+  {v1:'wake',       v2:'woke / waked',    v3:'woken / waked',   ko:'깨다, 깨우다'},
+  {v1:'wear',       v2:'wore',            v3:'worn',            ko:'입다'},
+  {v1:'weep',       v2:'wept',            v3:'wept',            ko:'울다'},
+  {v1:'win',        v2:'won',             v3:'won',             ko:'이기다'},
+  {v1:'wind',       v2:'wound',           v3:'wound',           ko:'감다'},
+  {v1:'withdraw',   v2:'withdrew',        v3:'withdrawn',       ko:'철수하다, 인출하다',            isNew:true},
+  {v1:'write',      v2:'wrote',           v3:'written',         ko:'쓰다'},
+];
+
+let query = '';
+
+function hl(text) {
+  if (!query) return text;
+  const re = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+  return text.replace(re, '<mark>$1</mark>');
+}
+
+function buildTable(list) {
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+  let lastLetter = '';
+  list.forEach((v, i) => {
+    const letter = v.v1[0].toUpperCase();
+    if (letter !== lastLetter && !query) {
+      lastLetter = letter;
+      tbody.insertAdjacentHTML('beforeend',
+        `<tr class="section-divider"><td colspan="5">${letter}</td></tr>`);
+    }
+    const cls = i % 2 === 0 ? 'odd' : 'even';
+    const newBadge = v.isNew ? '<span class="new-badge">NEW</span>' : '';
+    tbody.insertAdjacentHTML('beforeend', `
+      <tr class="${cls}">
+        <td class="c-no">${i+1}</td>
+        <td class="v1">${hl(v.v1)}${newBadge}</td>
+        <td class="v2">${hl(v.v2)}</td>
+        <td class="v3">${hl(v.v3)}</td>
+        <td class="ko">${hl(v.ko)}</td>
+      </tr>
+    `);
+  });
+}
+
+function filterTable() {
+  query = document.getElementById('search').value.trim().toLowerCase();
+  const filtered = query
+    ? verbs.filter(v => [v.v1,v.v2,v.v3,v.ko].some(s => s.toLowerCase().includes(query)))
+    : verbs;
+  buildTable(filtered);
+  document.getElementById('countBadge').textContent =
+    query ? `${filtered.length}개 검색됨` : `총 ${verbs.length}개`;
+}
+
+buildTable(verbs);
+</script>
+</body>
+</html>
