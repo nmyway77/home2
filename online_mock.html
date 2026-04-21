@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>온라인 모의고사 — 목동서로영어학원 0505.co.kr</title>
+<meta name="description" content="전국모의고사 온라인 시험. 실제 시험 환경, 자동 채점, 등급 산출, 오답 상세 분석. 목동서로영어학원 0505.co.kr">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f1ec;--navy:#1F3864;--blue-card:#EBF3FB;--blue-border:#2E75B6;--gold2:#f0d070;--shadow:rgba(31,56,100,0.10);--text:#1a1a2e;--text-sub:#4a4a6a;--green:#22c55e;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;min-height:100vh;color:var(--text);}
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--navy);box-shadow:0 3px 16px rgba(31,56,100,0.35);display:flex;align-items:center;padding:0 16px;height:48px;gap:12px;}
+.home-btn{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.7);text-decoration:none;padding:4px 10px;border-radius:4px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);transition:all 0.2s;white-space:nowrap;}
+.home-btn:hover{background:rgba(255,255,255,0.14);color:white;}
+.nav-title-bar{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:1px;}
+.nav-badge{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--gold2);border:1px solid rgba(201,168,76,0.3);padding:3px 10px;border-radius:3px;white-space:nowrap;}
+.wrap{max-width:720px;margin:0 auto;padding:72px 16px 64px;}
+.page-header{margin:0 0 28px;border-left:5px solid var(--navy);padding-left:20px;}
+.page-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--blue-border);margin-bottom:8px;}
+.page-title{font-family:'Playfair Display',serif;font-size:clamp(18px,3.5vw,26px);font-weight:700;color:var(--navy);line-height:1.3;margin-bottom:6px;}
+.page-sub{font-size:12px;color:var(--text-sub);font-weight:300;}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blue-border);margin:24px 0 14px;}
+.info-box{background:linear-gradient(135deg,#0d1b2a,#1b2d4f);border-radius:14px;padding:22px 24px;margin-bottom:24px;border:1px solid rgba(74,222,128,0.15);}
+.info-box-title{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(74,222,128,0.7);margin-bottom:12px;}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+@media(max-width:560px){.info-grid{grid-template-columns:1fr;}}
+.info-item{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;text-align:center;}
+.info-icon{font-size:24px;margin-bottom:6px;}
+.info-text{font-size:12px;color:rgba(255,255,255,0.8);font-weight:500;}
+.info-desc{font-size:10px;color:rgba(255,255,255,0.35);margin-top:3px;}
+.test-card{display:flex;align-items:center;gap:16px;background:white;border-radius:14px;padding:18px 22px;margin-bottom:14px;box-shadow:0 2px 14px var(--shadow);border:1px solid rgba(46,117,182,0.12);cursor:pointer;transition:all 0.2s;text-decoration:none;color:inherit;}
+.test-card:hover{transform:translateX(4px);box-shadow:0 4px 22px rgba(31,56,100,0.16);border-color:var(--blue-border);}
+.test-card.highlight{border-color:rgba(34,197,94,0.3);background:linear-gradient(135deg,#f0fdf4,white);}
+.test-card.highlight:hover{border-color:var(--green);box-shadow:0 4px 22px rgba(34,197,94,0.18);}
+.test-badge{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:white;background:var(--navy);border-radius:8px;padding:6px 10px;white-space:nowrap;flex-shrink:0;text-align:center;line-height:1.4;}
+.test-card.highlight .test-badge{background:var(--green);}
+.test-body{flex:1;}
+.test-en{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;color:var(--navy);margin-bottom:4px;}
+.test-ko{font-size:12px;color:var(--text-sub);}
+.test-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;background:var(--blue-card);color:var(--blue-border);border:1px solid rgba(46,117,182,0.2);border-radius:4px;padding:2px 8px;white-space:nowrap;flex-shrink:0;}
+.test-card.highlight .test-tag{background:#dcfce7;color:#16a34a;border-color:rgba(34,197,94,0.3);}
+.test-arrow{font-size:16px;color:var(--blue-border);flex-shrink:0;}
+.test-card.highlight .test-arrow{color:var(--green);}
+.soon-card{display:flex;align-items:center;gap:16px;background:rgba(255,255,255,0.5);border-radius:14px;padding:18px 22px;margin-bottom:14px;border:1px dashed rgba(31,56,100,0.18);opacity:0.6;}
+.soon-badge{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:white;background:#aaa;border-radius:8px;padding:6px 10px;white-space:nowrap;text-align:center;line-height:1.4;}
+.soon-body{flex:1;}
+.soon-en{font-size:14px;font-weight:500;color:#888;margin-bottom:3px;}
+.soon-ko{font-size:11px;color:#aaa;}
+.soon-tag{font-family:'JetBrains Mono',monospace;font-size:9px;background:#eee;color:#999;border-radius:4px;padding:2px 8px;}
+footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(31,56,100,0.25);letter-spacing:1px;}
+</style>
+</head>
+<body>
+<nav class="top-nav">
+  <a class="home-btn" href="index.html">🏠 홈</a>
+  <span class="nav-title-bar">온라인 모의고사</span>
+  <span class="nav-badge">✦ ONLINE TEST</span>
+</nav>
+
+<div class="wrap">
+  <div class="page-header">
+    <div class="page-label">ONLINE MOCK TEST</div>
+    <div class="page-title">전국모의고사 온라인 시험</div>
+    <div class="page-sub">실제 시험 환경 · 자동 채점 · 등급 산출 · 오답 상세 분석</div>
+  </div>
+
+  <div class="info-box">
+    <div class="info-box-title">📋 시험 안내</div>
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="info-icon">🎧</div>
+        <div class="info-text">듣기 1~17번</div>
+        <div class="info-desc">MP3 자동 재생</div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📖</div>
+        <div class="info-text">읽기 18~45번</div>
+        <div class="info-desc">지문 + 객관식 28문항</div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📊</div>
+        <div class="info-text">결과 분석</div>
+        <div class="info-desc">등급·유형별 상세 보고서</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">📝 2026학년도</div>
+
+  <a class="test-card highlight" href="https://magical-daffodil-82a955.netlify.app" target="_blank">
+    <div class="test-badge">26년<br>3월</div>
+    <div class="test-body">
+      <div class="test-en">2026학년도 3월 고3 전국연합학력평가</div>
+      <div class="test-ko">영어 영역 · 45문항 · 100점 만점 · 70분</div>
+    </div>
+    <span class="test-tag">NEW</span>
+    <span class="test-arrow">→</span>
+  </a>
+
+  <div class="soon-card">
+    <div class="soon-badge">26년<br>6월</div>
+    <div class="soon-body">
+      <div class="soon-en">2026학년도 6월 모의평가</div>
+      <div class="soon-ko">업로드 예정</div>
+    </div>
+    <span class="soon-tag">준비 중</span>
+  </div>
+
+  <div class="section-label">📝 2025학년도</div>
+
+  <div class="soon-card">
+    <div class="soon-badge">25년<br>3월</div>
+    <div class="soon-body">
+      <div class="soon-en">2025학년도 3월 고3 전국연합학력평가</div>
+      <div class="soon-ko">업로드 예정</div>
+    </div>
+    <span class="soon-tag">준비 중</span>
+  </div>
+
+  <div class="soon-card">
+    <div class="soon-badge">25년<br>6월</div>
+    <div class="soon-body">
+      <div class="soon-en">2025학년도 6월 모의평가</div>
+      <div class="soon-ko">업로드 예정</div>
+    </div>
+    <span class="soon-tag">준비 중</span>
+  </div>
+
+  <div class="soon-card">
+    <div class="soon-badge">25년<br>9월</div>
+    <div class="soon-body">
+      <div class="soon-en">2025학년도 9월 모의평가</div>
+      <div class="soon-ko">업로드 예정</div>
+    </div>
+    <span class="soon-tag">준비 중</span>
+  </div>
+
+  <div class="soon-card">
+    <div class="soon-badge">25년<br>수능</div>
+    <div class="soon-body">
+      <div class="soon-en">2025학년도 대학수학능력시험</div>
+      <div class="soon-ko">업로드 예정</div>
+    </div>
+    <span class="soon-tag">준비 중</span>
+  </div>
+
+</div>
+
+<footer>✦ 온라인 모의고사 · 목동서로영어학원 · 0505.co.kr ✦</footer>
+</body>
+</html>
