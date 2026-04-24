@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>전국모의고사 온라인 응시 — 0505.co.kr</title>
+<meta name="description" content="수능 및 전국모의고사 온라인 응시 · 시험결과 상세보고서 및 오답정보 상세제공">
+<link rel="canonical" href="https://0505.co.kr/online_test.html">
+<meta property="og:title" content="전국모의고사 온라인 응시">
+<meta property="og:description" content="수능 및 전국모의고사 온라인 응시 · 시험결과 상세보고서 및 오답정보 상세제공">
+<meta property="og:url" content="https://0505.co.kr/online_test.html">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f1ec;
+  --navy:#1F3864;
+  --navy-deep:#0d1b2a;
+  --mint-bg:#f0fdf4;
+  --mint-card:#ecfdf5;
+  --mint-card-hover:#d1fae5;
+  --mint-border:#bbf7d0;
+  --emerald:#10B981;
+  --emerald-dark:#047857;
+  --emerald-deep:#065f46;
+  --red-badge:#dc2626;
+  --red-badge-dark:#991b1b;
+  --text:#1a1a2e;
+  --text-sub:#6b7280;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;min-height:100vh;color:var(--text);}
+
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--navy-deep);box-shadow:0 3px 16px rgba(0,0,0,0.35);display:flex;align-items:center;padding:0 16px;height:48px;gap:12px;}
+.home-btn{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.7);text-decoration:none;padding:4px 10px;border-radius:4px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);transition:all 0.2s;white-space:nowrap;}
+.home-btn:hover{background:rgba(255,255,255,0.14);color:white;}
+.nav-title-bar{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:1px;}
+.nav-badge{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:#4ADE80;border:1px solid rgba(74,222,128,0.3);padding:3px 10px;border-radius:3px;white-space:nowrap;}
+
+.wrap{max-width:1000px;margin:0 auto;padding:72px 20px 64px;}
+
+.page-header{margin:0 0 32px;border-left:5px solid var(--emerald);padding-left:20px;}
+.page-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--emerald-dark);margin-bottom:8px;}
+.page-title{font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,32px);font-weight:700;color:var(--navy);line-height:1.3;margin-bottom:6px;}
+.page-sub{font-size:13px;color:var(--text-sub);font-weight:300;}
+
+.year-label{display:flex;align-items:center;gap:10px;margin:28px 0 14px;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:700;color:var(--emerald-deep);letter-spacing:2px;}
+.year-label-emoji{font-size:16px;}
+
+.exam-card{display:flex;align-items:center;gap:18px;background:var(--mint-card);border:1px solid var(--mint-border);border-radius:14px;padding:16px 22px;margin-bottom:10px;text-decoration:none;color:inherit;transition:all 0.25s ease;}
+.exam-card:hover{background:var(--mint-card-hover);border-color:var(--emerald);transform:translateX(3px);box-shadow:0 4px 16px rgba(16,185,129,0.15);}
+
+.exam-badge{flex-shrink:0;width:62px;height:58px;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;font-weight:700;line-height:1.1;gap:3px;box-shadow:0 2px 6px rgba(0,0,0,0.12);}
+.exam-badge.red{background:linear-gradient(135deg,var(--red-badge),var(--red-badge-dark));}
+.exam-badge.green{background:linear-gradient(135deg,var(--emerald),var(--emerald-dark));}
+.exam-badge-year{font-size:12px;font-weight:700;opacity:0.95;}
+.exam-badge-round{font-size:14px;font-weight:800;letter-spacing:-0.3px;}
+
+.exam-body{flex:1;min-width:0;}
+.exam-title{font-family:'Noto Sans KR',sans-serif;font-size:clamp(15px,2vw,17px);font-weight:700;color:var(--navy);margin-bottom:5px;line-height:1.35;}
+.exam-meta{font-size:12.5px;color:var(--text-sub);font-weight:400;}
+.exam-meta .dot{margin:0 5px;color:#cbd5e1;font-weight:600;}
+
+.exam-right{display:flex;align-items:center;gap:12px;flex-shrink:0;}
+.exam-tag{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1px;color:var(--emerald-deep);background:white;border:1.5px solid var(--emerald);border-radius:6px;padding:4px 10px;white-space:nowrap;}
+.exam-arrow{font-size:18px;color:var(--emerald);font-weight:400;transition:transform 0.2s;}
+.exam-card:hover .exam-arrow{transform:translateX(3px);}
+
+.exam-card.soon{opacity:0.6;background:rgba(255,255,255,0.55);border-style:dashed;border-color:rgba(31,56,100,0.15);cursor:default;pointer-events:none;}
+.exam-card.soon .exam-badge{background:linear-gradient(135deg,#9ca3af,#6b7280);box-shadow:none;}
+.exam-card.soon .exam-title{color:#6b7280;}
+.exam-card.soon .exam-tag{color:#9ca3af;background:#f3f4f6;border-color:#d1d5db;}
+.exam-card.soon .exam-arrow{color:#d1d5db;}
+
+@media(max-width:560px){
+  .exam-card{padding:14px 16px;gap:14px;}
+  .exam-badge{width:54px;height:52px;}
+  .exam-badge-year{font-size:11px;}
+  .exam-badge-round{font-size:13px;}
+  .exam-title{font-size:14px;}
+  .exam-meta{font-size:11.5px;}
+  .exam-tag{font-size:9px;padding:3px 8px;}
+}
+
+footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(31,56,100,0.25);letter-spacing:1px;}
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a class="home-btn" href="index.html">🏠 홈</a>
+  <span class="nav-title-bar">전국모의고사 · 온라인 응시</span>
+  <span class="nav-badge">✦ ONLINE TEST</span>
+</nav>
+
+<div class="wrap">
+
+  <div class="page-header">
+    <div class="page-label">MOCK EXAM · ONLINE TEST</div>
+    <div class="page-title">전국모의고사 온라인 응시</div>
+    <div class="page-sub">시험결과 상세보고서 및 오답정보 상세제공</div>
+  </div>
+
+  <!-- ═══════════════ 2026학년도 ═══════════════ -->
+  <div class="year-label">
+    <span class="year-label-emoji">📝</span>
+    <span>2026학년도</span>
+  </div>
+
+  <!-- 수능 -->
+  <a class="exam-card" href="https://magical-daffodil-82a955.netlify.app/su2026/" target="_blank" rel="noopener">
+    <div class="exam-badge red">
+      <span class="exam-badge-year">26년</span>
+      <span class="exam-badge-round">수능</span>
+    </div>
+    <div class="exam-body">
+      <div class="exam-title">2026학년도 대학수학능력시험</div>
+      <div class="exam-meta">영어 영역 <span class="dot">·</span> 45문항 <span class="dot">·</span> 100점 만점 <span class="dot">·</span> 70분</div>
+    </div>
+    <div class="exam-right">
+      <span class="exam-tag">응시</span>
+      <span class="exam-arrow">→</span>
+    </div>
+  </a>
+
+  <!-- 3월 고3 -->
+  <a class="exam-card" href="https://magical-daffodil-82a955.netlify.app/mock_exam_2026_03h3/" target="_blank" rel="noopener">
+    <div class="exam-badge green">
+      <span class="exam-badge-year">26년</span>
+      <span class="exam-badge-round">3월</span>
+    </div>
+    <div class="exam-body">
+      <div class="exam-title">2026학년도 3월 고3 전국연합학력평가</div>
+      <div class="exam-meta">영어 영역 <span class="dot">·</span> 45문항 <span class="dot">·</span> 100점 만점 <span class="dot">·</span> 70분</div>
+    </div>
+    <div class="exam-right">
+      <span class="exam-tag">응시</span>
+      <span class="exam-arrow">→</span>
+    </div>
+  </a>
+
+  <!-- 3월 고2 -->
+  <a class="exam-card" href="https://magical-daffodil-82a955.netlify.app/mock_exam_2026_03h2/" target="_blank" rel="noopener">
+    <div class="exam-badge green">
+      <span class="exam-badge-year">26년</span>
+      <span class="exam-badge-round">3월</span>
+    </div>
+    <div class="exam-body">
+      <div class="exam-title">2026학년도 3월 고2 전국연합학력평가</div>
+      <div class="exam-meta">영어 영역 <span class="dot">·</span> 45문항 <span class="dot">·</span> 100점 만점 <span class="dot">·</span> 70분</div>
+    </div>
+    <div class="exam-right">
+      <span class="exam-tag">응시</span>
+      <span class="exam-arrow">→</span>
+    </div>
+  </a>
+
+  <!-- 3월 고1 -->
+  <a class="exam-card" href="https://magical-daffodil-82a955.netlify.app/mock_exam_2026_03h1/" target="_blank" rel="noopener">
+    <div class="exam-badge green">
+      <span class="exam-badge-year">26년</span>
+      <span class="exam-badge-round">3월</span>
+    </div>
+    <div class="exam-body">
+      <div class="exam-title">2026학년도 3월 고1 전국연합학력평가</div>
+      <div class="exam-meta">영어 영역 <span class="dot">·</span> 45문항 <span class="dot">·</span> 100점 만점 <span class="dot">·</span> 70분</div>
+    </div>
+    <div class="exam-right">
+      <span class="exam-tag">응시</span>
+      <span class="exam-arrow">→</span>
+    </div>
+  </a>
+
+</div>
+
+<footer>✦ 목동서로영어학원 · 0505.co.kr · 전국모의고사 온라인 응시 ✦</footer>
+
+</body>
+</html>
