@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>초등용 영어도서관 — 듣기·배열영작 연습 | 0505.co.kr</title>
+<meta name="description" content="초등용 영어도서관 — 명작 동화로 배우는 영어 듣기·배열영작 연습. The Gift of the Magi 외 단계별 학습. 목동서로영어학원 0505.co.kr">
+<link rel="canonical" href="https://0505.co.kr/elementary_library.html">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f1ec;
+  --navy:#1F3864;
+  --blue-card:#EBF3FB;
+  --blue-border:#2E75B6;
+  --gold2:#f0d070;
+  --cyan:#0EA5E9;
+  --cyan-light:#7DD3FC;
+  --shadow:rgba(31,56,100,0.10);
+  --text:#1a1a2e;
+  --text-sub:#4a4a6a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;min-height:100vh;color:var(--text);}
+
+/* ── 상단 네비 ── */
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--navy);box-shadow:0 3px 16px rgba(31,56,100,0.35);display:flex;align-items:center;padding:0 16px;height:48px;gap:12px;}
+.home-btn{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.7);text-decoration:none;padding:4px 10px;border-radius:4px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);transition:all 0.2s;white-space:nowrap;}
+.home-btn:hover{background:rgba(255,255,255,0.14);color:white;}
+.nav-title-bar{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:1px;}
+.nav-badge{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--gold2);border:1px solid rgba(201,168,76,0.3);padding:3px 10px;border-radius:3px;white-space:nowrap;}
+
+/* ── 페이지 wrap ── */
+.wrap{max-width:1100px;margin:0 auto;padding:72px 16px 64px;}
+
+.page-header{margin:0 0 28px;border-left:5px solid var(--cyan);padding-left:20px;}
+.page-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:8px;}
+.page-title{font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,32px);font-weight:700;color:var(--navy);line-height:1.25;margin-bottom:6px;}
+.page-sub{font-size:13px;color:var(--text-sub);font-weight:300;}
+
+/* ── 섹션 라벨 ── */
+.section-label{display:flex;align-items:center;gap:10px;margin:28px 0 14px;}
+.sl-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(46,117,182,0.25),transparent);}
+.sl-text{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--blue-border);text-transform:uppercase;font-weight:700;}
+
+/* ── 책 카드 그리드 (3열) ── */
+.book-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px;}
+
+/* ── 책 카드 ── */
+.book-card{position:relative;display:block;background:white;border-radius:14px;padding:18px 18px 16px;box-shadow:0 3px 14px var(--shadow);border:1px solid rgba(46,117,182,0.12);cursor:pointer;transition:all 0.25s;text-decoration:none;color:inherit;overflow:hidden;}
+.book-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--cyan-light),var(--cyan));opacity:0;transition:opacity 0.25s;}
+.book-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(14,165,233,0.18);border-color:var(--cyan);}
+.book-card:hover::before{opacity:1;}
+
+.book-cover{position:relative;height:130px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;overflow:hidden;background:linear-gradient(135deg,var(--book-grad-1),var(--book-grad-2));}
+.book-cover-icon{font-size:46px;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.18));}
+.book-cover-label{position:absolute;top:8px;right:8px;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:1.5px;color:white;background:rgba(0,0,0,0.32);backdrop-filter:blur(4px);padding:3px 8px;border-radius:4px;font-weight:700;}
+
+.book-title{font-family:'Playfair Display',serif;font-size:14.5px;font-weight:700;color:var(--navy);line-height:1.3;margin-bottom:4px;min-height:38px;}
+.book-author{font-size:11.5px;color:var(--text-sub);margin-bottom:10px;font-style:italic;}
+
+.book-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:10px;border-top:1px solid rgba(46,117,182,0.08);}
+.book-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.8px;background:var(--blue-card);color:var(--cyan);border:1px solid rgba(14,165,233,0.25);border-radius:4px;padding:2px 7px;font-weight:700;}
+.book-arrow{font-size:14px;color:var(--cyan);transition:transform 0.25s;}
+.book-card:hover .book-arrow{transform:translateX(3px);}
+
+/* 책 표지 색상 (책마다 다른 그라디언트) */
+.book-card[data-cover="emerald"]{--book-grad-1:#10B981;--book-grad-2:#047857;}
+.book-card[data-cover="rose"]{--book-grad-1:#F43F5E;--book-grad-2:#9F1239;}
+.book-card[data-cover="amber"]{--book-grad-1:#F59E0B;--book-grad-2:#92400E;}
+.book-card[data-cover="indigo"]{--book-grad-1:#6366F1;--book-grad-2:#3730A3;}
+.book-card[data-cover="cyan"]{--book-grad-1:#06B6D4;--book-grad-2:#0E7490;}
+.book-card[data-cover="violet"]{--book-grad-1:#A855F7;--book-grad-2:#6B21A8;}
+.book-card[data-cover="teal"]{--book-grad-1:#14B8A6;--book-grad-2:#0F766E;}
+.book-card[data-cover="orange"]{--book-grad-1:#F97316;--book-grad-2:#9A3412;}
+.book-card[data-cover="navy"]{--book-grad-1:#3B82F6;--book-grad-2:#1E3A8A;}
+
+/* 준비중 카드 */
+.book-card.soon{cursor:default;opacity:0.5;background:rgba(255,255,255,0.5);border:1px dashed rgba(31,56,100,0.18);box-shadow:none;}
+.book-card.soon:hover{transform:none;box-shadow:none;border-color:rgba(31,56,100,0.18);}
+.book-card.soon::before{display:none;}
+.book-card.soon .book-cover{background:linear-gradient(135deg,#cbd5e1,#94a3b8);}
+.book-card.soon .book-title{color:#888;}
+.book-card.soon .book-author{color:#aaa;}
+.book-card.soon .book-tag{background:#eee;color:#999;border-color:#ddd;}
+.book-card.soon .book-arrow{display:none;}
+.book-card.soon .soon-text{font-family:'JetBrains Mono',monospace;font-size:9px;color:#aaa;letter-spacing:1px;}
+
+/* ── 푸터 ── */
+footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(31,56,100,0.25);letter-spacing:1px;}
+
+/* ── 모바일 반응형 ── */
+@media(max-width:768px){
+  .book-grid{grid-template-columns:repeat(2,1fr);gap:12px;}
+}
+@media(max-width:480px){
+  .book-grid{grid-template-columns:1fr;}
+  .book-cover{height:110px;}
+  .book-cover-icon{font-size:40px;}
+}
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a class="home-btn" href="index.html">🏠 홈</a>
+  <span class="nav-title-bar">초등용 영어도서관 · 듣기·배열영작</span>
+  <span class="nav-badge">✦ 재원생 전용</span>
+</nav>
+
+<div class="wrap">
+
+  <div class="page-header">
+    <div class="page-label">🎧 ELEMENTARY ENGLISH LIBRARY</div>
+    <div class="page-title">초등용 영어도서관</div>
+    <div class="page-sub">명작 동화로 배우는 영어 — 듣기 · 배열영작 · 단계별 학습</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       📚 STORYBOOK COLLECTION
+  ═══════════════════════════════════════════════ -->
+  <div class="section-label">
+    <div class="sl-line"></div>
+    <div class="sl-text">📚 Storybook Collection</div>
+    <div class="sl-line"></div>
+  </div>
+
+  <div class="book-grid">
+
+    <!-- Book 001 — The Gift of the Magi (활성) -->
+    <a class="book-card" href="https://magical-daffodil-82a955.netlify.app/storybook/book001/" data-cover="rose" target="_blank" rel="noopener">
+      <div class="book-cover">
+        <div class="book-cover-label">BOOK 001</div>
+        <div class="book-cover-icon">🎁</div>
+      </div>
+      <div class="book-title">The Gift of the Magi</div>
+      <div class="book-author">O. Henry · 동방박사의 선물</div>
+      <div class="book-meta">
+        <span class="book-tag">완성</span>
+        <span class="book-arrow">→</span>
+      </div>
+    </a>
+
+    <!-- Book 002 - 준비중 -->
+    <div class="book-card soon">
+      <div class="book-cover">
+        <div class="book-cover-label">BOOK 002</div>
+        <div class="book-cover-icon">📖</div>
+      </div>
+      <div class="book-title">준비 중</div>
+      <div class="book-author">다음 동화를 기다려 주세요</div>
+      <div class="book-meta">
+        <span class="book-tag">예정</span>
+        <span class="soon-text">COMING SOON</span>
+      </div>
+    </div>
+
+    <!-- Book 003 - 준비중 -->
+    <div class="book-card soon">
+      <div class="book-cover">
+        <div class="book-cover-label">BOOK 003</div>
+        <div class="book-cover-icon">📖</div>
+      </div>
+      <div class="book-title">준비 중</div>
+      <div class="book-author">다음 동화를 기다려 주세요</div>
+      <div class="book-meta">
+        <span class="book-tag">예정</span>
+        <span class="soon-text">COMING SOON</span>
+      </div>
+    </div>
+
+    <!-- Book 004 - 준비중 -->
+    <div class="book-card soon">
+      <div class="book-cover">
+        <div class="book-cover-label">BOOK 004</div>
+        <div class="book-cover-icon">📖</div>
+      </div>
+      <div class="book-title">준비 중</div>
+      <div class="book-author">다음 동화를 기다려 주세요</div>
+      <div class="book-meta">
+        <span class="book-tag">예정</span>
+        <span class="soon-text">COMING SOON</span>
+      </div>
+    </div>
+
+    <!-- Book 005 - 준비중 -->
+    <div class="book-card soon">
+      <div class="book-cover">
+        <div class="book-cover-label">BOOK 005</div>
+        <div class="book-cover-icon">📖</div>
+      </div>
+      <div class="book-title">준비 중</div>
+      <div class="book-author">다음 동화를 기다려 주세요</div>
+      <div class="book-meta">
+        <span class="book-tag">예정</span>
+        <span class="soon-text">COMING SOON</span>
+      </div>
+    </div>
+
+    <!-- Book 006 - 준비중 -->
+    <div class="book-card soon">
+      <div class="book-cover">
+        <div class="book-cover-label">BOOK 006</div>
+        <div class="book-cover-icon">📖</div>
+      </div>
+      <div class="book-title">준비 중</div>
+      <div class="book-author">다음 동화를 기다려 주세요</div>
+      <div class="book-meta">
+        <span class="book-tag">예정</span>
+        <span class="soon-text">COMING SOON</span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>✦ 초등용 영어도서관 · 목동서로영어학원 · 0505.co.kr ✦</footer>
+
+</body>
+</html>
