@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>지문 기반 유형별 문제 — Find a Dream and Live It! (David Parker)</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+  :root {
+    --bg: #FAF7F2;
+    --paper: #FFFFFF;
+    --ink: #1A1815;
+    --ink2: #4A4642;
+    --muted: #8B8680;
+    --line: #E5DFD5;
+    --accent: #B8763D;
+    /* 7가지 유형 색상 */
+    --t-grammar: #1F4E79;
+    --t-pronoun: #6B5BA0;
+    --t-reading: #2A8B7F;
+    --t-context: #8B4A6F;
+    --t-cloze:   #B8763D;
+    --t-vocab:   #D97A47;
+    --t-writing: #4A6B85;
+    --green: #4A8B5C;
+    --yellow: #C9A227;
+    --orange: #D97A47;
+    --red: #B53737;
+    --navy-950:#0A1E3A;
+    --navy-800:#1F3557;
+    --cream:#FAF6EE;
+    --gold:#C99B4E;
+    --gold-light:#E4C589;
+    --slate-300:#CBD5E1;
+    --slate-400:#94A3B8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { overflow-x: hidden; max-width: 100vw; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 36px 60px; }
+
+  /* HERO */
+  .hero-banner {
+    background:
+      radial-gradient(ellipse at 12% 20%, rgba(201,155,78,0.18), transparent 45%),
+      linear-gradient(135deg, var(--navy-950) 0%, var(--navy-800) 100%);
+    color: var(--cream);
+    padding: 44px 0 36px;
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; padding: 0 36px; font-family: 'Pretendard Variable', sans-serif; }
+  .brand-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 30px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 18px; color: var(--navy-950); }
+  .brand-text { font-size: 12px; letter-spacing: 0.1em; color: var(--cream); font-weight: 500; }
+  .brand-text .sub { color: var(--slate-400); font-size: 10.5px; margin-top: 2px; }
+  .home-btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); color: var(--navy-950); font-family: 'Pretendard Variable', sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 0.1em; border-radius: 999px; text-decoration: none; }
+  .home-btn svg { width: 13px; height: 13px; fill: var(--navy-950); }
+  .kicker { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-light); font-weight: 600; margin-bottom: 12px; }
+  h1.title { font-family: 'Playfair Display', serif; font-weight: 800; font-size: clamp(28px, 4.5vw, 48px); line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 8px; }
+  h1.title em { font-style: italic; color: var(--gold-light); font-weight: 400; }
+  h1.title .kor { font-family: 'Pretendard Variable', sans-serif; font-weight: 800; letter-spacing: -0.02em; display: block; margin-top: 6px; font-size: clamp(16px, 2.4vw, 22px); color: var(--gold-light); }
+  .meta-info { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .meta-tag { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid rgba(228,197,137,0.4); border-radius: 999px; font-size: 11.5px; color: var(--gold-light); font-family: 'Pretendard Variable', sans-serif; font-weight: 500; letter-spacing: 0.04em; }
+
+  /* TYPE NAV — sticky */
+  .type-nav-wrap { background: var(--navy-950); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(228,197,137,0.15); }
+  .type-nav { max-width: 1100px; margin: 0 auto; padding: 0 36px; display: flex; gap: 0; overflow-x: auto; scrollbar-width: thin; -webkit-overflow-scrolling: touch; }
+  .type-nav::-webkit-scrollbar { height: 4px; }
+  .type-nav::-webkit-scrollbar-thumb { background: rgba(228,197,137,0.3); border-radius: 2px; }
+  .nav-tab { background: transparent; border: none; color: var(--slate-400); padding: 14px 16px; cursor: pointer; font-family: 'Pretendard Variable', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; border-bottom: 3px solid transparent; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 7px; }
+  .nav-tab:hover { color: var(--gold-light); }
+  .nav-tab.active { color: var(--gold-light); border-bottom-color: var(--gold); }
+  .nav-tab .nav-count { font-family: 'JetBrains Mono', monospace; font-size: 10px; background: rgba(228,197,137,0.15); color: var(--gold-light); padding: 2px 6px; border-radius: 4px; font-weight: 700; }
+  .nav-tab.active .nav-count { background: var(--gold); color: var(--navy-950); }
+  .nav-color-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* PASSAGE BOX */
+  .passage-box { background: var(--paper); border: 1px solid var(--line); margin-top: 36px; border-radius: 4px; }
+  .passage-box summary { list-style: none; cursor: pointer; padding: 18px 26px; display: flex; align-items: center; justify-content: space-between; font-family: 'Pretendard Variable', sans-serif; font-weight: 800; font-size: 15px; color: var(--ink); background: linear-gradient(180deg, #FAF7F2 0%, #FFFFFF 100%); border-bottom: 1px solid transparent; border-radius: 4px; }
+  .passage-box[open] summary { border-bottom: 1px solid var(--line); border-radius: 4px 4px 0 0; }
+  .passage-box summary::-webkit-details-marker { display: none; }
+  .passage-box summary .toggle-mark { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); letter-spacing: 0.08em; font-weight: 700; }
+  .passage-box summary .toggle-mark::before { content: '＋ 펼치기'; }
+  .passage-box[open] summary .toggle-mark::before { content: '－ 접기'; }
+  .passage-text { padding: 22px 28px; font-family: 'Inter', sans-serif; line-height: 1.85; font-size: 14.5px; color: var(--ink2); }
+  .passage-text p { margin-bottom: 12px; }
+
+  /* SECTION HEAD (TYPE GROUP MARKER) */
+  .section-head { margin: 50px 0 22px; padding: 18px 22px; background: white; border: 1px solid var(--line); border-left: 5px solid; }
+  .section-head[data-section-type="grammar"]     { border-left-color: var(--t-grammar); }
+  .section-head[data-section-type="pronoun"]     { border-left-color: var(--t-pronoun); }
+  .section-head[data-section-type="reading"]     { border-left-color: var(--t-reading); }
+  .section-head[data-section-type="context"]     { border-left-color: var(--t-context); }
+  .section-head[data-section-type="cloze"]       { border-left-color: var(--t-cloze); }
+  .section-head[data-section-type="vocab"]       { border-left-color: var(--t-vocab); }
+  .section-head[data-section-type="writing"]     { border-left-color: var(--t-writing); }
+  .section-head .num-line { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.18em; margin-bottom: 6px; font-weight: 700; }
+  .section-head h2 { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 5px; }
+  .section-head h2 .kor { font-family: 'Pretendard Variable', sans-serif; font-weight: 800; font-size: 14px; color: var(--ink2); margin-left: 10px; letter-spacing: -0.01em; }
+  .section-head .desc { font-size: 12.5px; color: var(--muted); line-height: 1.6; margin-top: 4px; }
+
+  /* QUESTION CARD */
+  .q-card { background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--t-grammar); margin-bottom: 14px; padding: 18px 22px; transition: opacity 0.2s ease; }
+  .q-card[data-type="pronoun"]  { border-left-color: var(--t-pronoun); }
+  .q-card[data-type="reading"]  { border-left-color: var(--t-reading); }
+  .q-card[data-type="context"]  { border-left-color: var(--t-context); }
+  .q-card[data-type="cloze"]    { border-left-color: var(--t-cloze); }
+  .q-card[data-type="vocab"]    { border-left-color: var(--t-vocab); }
+  .q-card[data-type="writing"]  { border-left-color: var(--t-writing); }
+
+  .q-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+  .q-num { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; line-height: 1; margin-right: 4px; }
+  .type-tag { display: inline-block; padding: 4px 10px; border-radius: 3px; font-family: 'Pretendard Variable', sans-serif; font-size: 11px; font-weight: 800; letter-spacing: -0.01em; color: white; }
+  .type-tag.grammar  { background: var(--t-grammar); }
+  .type-tag.pronoun  { background: var(--t-pronoun); }
+  .type-tag.reading  { background: var(--t-reading); }
+  .type-tag.context  { background: var(--t-context); }
+  .type-tag.cloze    { background: var(--t-cloze); }
+  .type-tag.vocab    { background: var(--t-vocab); }
+  .type-tag.writing  { background: var(--t-writing); }
+
+  .var-pill { display: inline-block; padding: 3px 8px; font-size: 10px; font-family: 'JetBrains Mono', monospace; font-weight: 700; letter-spacing: 0.08em; border-radius: 3px; }
+  .var-light { background: #ECF7EE; color: #2D6E3F; border: 1px solid #B8DBC1; }
+  .var-mod   { background: #FFF8E0; color: #7A5F0A; border: 1px solid #E8D9A0; }
+  .var-major { background: #FFEDD8; color: #A04A0E; border: 1px solid #F0CFAA; }
+  .var-new   { background: #FCE0E0; color: #8E1A1A; border: 1px solid #E8B8B8; }
+
+  .q-focus { display: inline-block; padding: 3px 8px; font-size: 10px; font-family: 'Pretendard Variable', sans-serif; font-weight: 700; letter-spacing: -0.01em; background: #F5F2ED; color: var(--ink2); border: 1px solid var(--line); border-radius: 3px; }
+  .q-pts { margin-left: auto; font-family: 'Fraunces', serif; font-size: 16px; font-weight: 800; color: var(--accent); letter-spacing: -0.02em; }
+
+  .q-prompt { font-family: 'Pretendard Variable', sans-serif; font-size: 14.5px; font-weight: 700; color: var(--ink); line-height: 1.55; margin-bottom: 10px; letter-spacing: -0.01em; }
+  .q-passage { background: #FAF7F2; border: 1px solid var(--line); border-left: 3px solid var(--accent); padding: 12px 16px; margin-bottom: 10px; font-size: 13px; line-height: 1.8; color: var(--ink2); font-family: 'Inter', sans-serif; border-radius: 0 3px 3px 0; }
+  .q-passage u { text-decoration: underline; text-underline-offset: 3px; }
+  .q-passage b { color: var(--ink); font-weight: 700; }
+  .q-passage i { font-style: italic; color: var(--accent); }
+  .q-choices { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+  .q-choices .c { display: flex; gap: 7px; padding: 7px 11px; background: #FBFAF7; border: 1px solid var(--line); border-radius: 3px; font-size: 13px; line-height: 1.55; color: var(--ink2); font-family: 'Pretendard Variable', sans-serif; }
+  .q-choices .c .num { font-weight: 800; color: var(--accent); flex-shrink: 0; min-width: 22px; }
+  .q-choices.horz { flex-direction: row; flex-wrap: wrap; }
+  .q-choices.horz .c { flex: 1 0 calc(33% - 6px); }
+  .q-choices.horz5 { flex-direction: row; flex-wrap: wrap; }
+  .q-choices.horz5 .c { flex: 1 0 calc(20% - 6px); justify-content: center; }
+  .q-blank { color: var(--accent); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+  .word-bank { background: #FFFAF0; border: 1px dashed var(--accent); padding: 10px 14px; margin: 10px 0; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.7; color: var(--ink); font-weight: 500; }
+  .word-bank b { color: var(--accent); }
+  .answer-line { background: #F5F2ED; padding: 10px 14px; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.9; margin: 8px 0; }
+  .answer-line .underline { display: inline-block; min-width: 70px; border-bottom: 1.5px solid var(--ink); margin: 0 3px; padding: 0 2px; vertical-align: bottom; }
+  .answer-line .star { color: var(--gold); font-weight: 800; font-size: 17px; padding: 0 6px; }
+
+  /* ANSWER PANEL */
+  details.ans { background: var(--navy-950); color: var(--cream); border-radius: 4px; overflow: hidden; margin-top: 6px; }
+  details.ans summary { list-style: none; cursor: pointer; padding: 11px 18px; font-family: 'Pretendard Variable', sans-serif; font-weight: 700; font-size: 12.5px; color: var(--gold-light); letter-spacing: 0.04em; display: flex; align-items: center; justify-content: space-between; }
+  details.ans summary::-webkit-details-marker { display: none; }
+  details.ans summary::after { content: '＋'; font-family: 'JetBrains Mono', monospace; color: var(--gold); }
+  details.ans[open] summary::after { content: '－'; }
+  .ans-body { padding: 4px 20px 18px; font-family: 'Pretendard Variable', sans-serif; color: #E1D9C8; font-size: 13px; line-height: 1.7; }
+  .ans-body .ans-main { font-size: 13.5px; font-weight: 700; color: var(--gold-light); margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed rgba(228,197,137,0.3); }
+  .ans-body .ans-detail { color: #C8C0AE; font-size: 12.5px; }
+  .ans-body .ans-detail b { color: var(--gold-light); font-weight: 700; }
+  .ans-body em { color: var(--gold-light); font-style: italic; font-family: 'Fraunces', serif; font-weight: 600; }
+
+  .q-card.hidden { display: none; }
+  .section-head.hidden { display: none; }
+
+  /* FOOTER */
+  .made-by { text-align: center; padding: 24px 20px 30px; background: var(--navy-950); margin: 50px -36px 0; color: var(--gold-light); font-family: 'Pretendard Variable', sans-serif; font-size: 12.5px; font-weight: 600; letter-spacing: 0.1em; }
+  .made-by .credit { display: block; margin-top: 6px; font-size: 10.5px; color: rgba(228,197,137,0.6); }
+
+  @media (max-width: 760px) {
+    .container { padding: 0 22px 50px; }
+    .hero-inner, .type-nav { padding: 0 22px; }
+    .nav-tab { padding: 12px 10px; font-size: 12px; gap: 5px; }
+    .nav-tab .nav-count { font-size: 9.5px; padding: 1px 5px; }
+    .q-card { padding: 16px 18px; }
+    .q-passage { padding: 11px 13px; font-size: 12.5px; }
+    .q-num { font-size: 20px; }
+    .q-prompt { font-size: 14px; }
+    .made-by { margin: 50px -22px 0; }
+    .q-choices.horz .c, .q-choices.horz5 .c { flex: 1 0 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero-banner">
+  <div class="hero-inner">
+    <div class="brand-row">
+      <div class="brand">
+        <div class="brand-mark">목</div>
+        <div class="brand-text">
+          목동중학교 3학년 영어
+          <div class="sub">DONG-A · YOON JEONG-MI · LESSON 1</div>
+        </div>
+      </div>
+      <a href="https://0505.co.kr" target="_blank" rel="noopener" class="home-btn">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2.5L2 11h3v9h5v-6h4v6h5v-9h3z"/>
+        </svg>
+        HOME
+      </a>
+    </div>
+
+    <div class="kicker">PASSAGE-BASED PRACTICE SET · 유형별 변형 문제집</div>
+    <h1 class="title">
+      Find a <em>Dream</em> and Live It!
+      <span class="kor">L1 본문 — David Parker 사진작가 · 7유형 63문제 · 시험 패턴 100% 반영</span>
+    </h1>
+
+    <div class="meta-info">
+      <span class="meta-tag">📖 본문 1과 풀세트</span>
+      <span class="meta-tag">🎯 7개 유형 매트릭스</span>
+      <span class="meta-tag">🔧 변형도 4단계 매핑</span>
+      <span class="meta-tag">✏️ 서술형 배열영작 포함</span>
+    </div>
+  </div>
+</section>
+
+<!-- TYPE NAV -->
+<div class="type-nav-wrap">
+  <nav class="type-nav" id="typeNav">
+    <button class="nav-tab active" data-type="all">전체 <span class="nav-count">63</span></button>
+    <button class="nav-tab" data-type="grammar"><span class="nav-color-dot" style="background:var(--t-grammar)"></span>어법 <span class="nav-count">17</span></button>
+    <button class="nav-tab" data-type="pronoun"><span class="nav-color-dot" style="background:var(--t-pronoun)"></span>대명사 <span class="nav-count">5</span></button>
+    <button class="nav-tab" data-type="reading"><span class="nav-color-dot" style="background:var(--t-reading)"></span>독해 <span class="nav-count">5</span></button>
+    <button class="nav-tab" data-type="context"><span class="nav-color-dot" style="background:var(--t-context)"></span>문맥 <span class="nav-count">6</span></button>
+    <button class="nav-tab" data-type="cloze"><span class="nav-color-dot" style="background:var(--t-cloze)"></span>빈칸 <span class="nav-count">14</span></button>
+    <button class="nav-tab" data-type="vocab"><span class="nav-color-dot" style="background:var(--t-vocab)"></span>어휘·숙어 <span class="nav-count">13</span></button>
+    <button class="nav-tab" data-type="writing"><span class="nav-color-dot" style="background:var(--t-writing)"></span>서술형 <span class="nav-count">3</span></button>
+  </nav>
+</div>
+
+<div class="container">
+
+<!-- ORIGINAL PASSAGE -->
+<details class="passage-box" open>
+  <summary>
+    <span>📄 원문 지문 — Find a Dream and Live It!</span>
+    <span class="toggle-mark"></span>
+  </summary>
+  <div class="passage-text">
+<p>Hello, everyone. My name is David Parker, and I'm a photographer. Today, I'm going to tell you how I found my dream and realized it. I hope my story can inspire you.</p>
+<p>When I was young, I loved stars. I also liked taking pictures. However, I never thought these things could lead to a job. In fact, I didn't have a dream at all.</p>
+<p>When I had to decide on a major in college, I chose engineering. Being an engineer looked OK. After college, I got a job at an engineering company. It was a stable job, but I didn't know whether I really enjoyed it.</p>
+<p>Everything changed when I went on vacation to Iceland one winter. There I got a chance to see the Northern Lights. The lights were amazing, and I took many pictures of the dancing lights in the sky. For the first time in many years, I could feel my heart beating fast.</p>
+<p>After I came back, I entered a photo contest with the pictures I took in Iceland. Surprisingly, I won first prize, and this gave me a chance to think about my life. I realized that taking pictures made me happy. Suddenly, I wanted to become a good photographer, so I started to learn more about photography. After years of trial and error, I got better, and I began to do some part-time work as a photographer.</p>
+<p>Then one day, I made a bold decision. I quit my job and decided to take pictures for a living. I wasn't sure if I could succeed, but I decided to try. I really wanted to do something that made me happy. Now, I'm a professional photographer, and I'm happy.</p>
+<p>So do you want to find a dream and realize it? Here's some advice to help you. First, follow your heart. Think about what you like to do and what makes you happy. Second, work hard. Pursuing a dream is not easy. I became a photographer through hard work. Third, be bold. You need courage to make decisions that will change your life. I was afraid but I took a chance. I truly hope you can find a dream, pursue it, and live it!</p>
+  </div>
+</details>
+
+<!-- =============== ⓐ 어법 GRAMMAR (15문항) =============== -->
+<div class="section-head" data-section-type="grammar" data-section-marker>
+  <div class="num-line">SECTION A · 어법 · GRAMMAR · 17 ITEMS</div>
+  <h2>어법 <span class="kor">동명사·to부정사·관계대명사·간접의문문·사역동사·분사 종합</span></h2>
+  <p class="desc">목동중 시험 최대 비중(29%) 영역. 본문에 등장하는 모든 핵심 어법을 15개 문항으로 분해. 미세 변형(본문 그대로) → 소폭 변형(응용) → 대폭 변형(종합) 순.</p>
+</div>
+
+
+<!-- ===== Section A: GRAMMAR ===== -->
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">1</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">동명사 vs to부정사 (목적어)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>1.</b> 다음 빈칸에 들어갈 말로 어법상 알맞은 것을 모두 고르면?</div>
+  <div class="q-passage">When I was young, I loved stars. I also liked <span class="q-blank">______</span> pictures.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>take</span><span class="c"><span class="num">②</span>taking</span><span class="c"><span class="num">③</span>to take</span><span class="c"><span class="num">④</span>took</span><span class="c"><span class="num">⑤</span>taken</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ②, ③ — like는 동명사(taking)와 to부정사(to take) 둘 다 가능</div>
+  <div class="ans-detail"><b>like + V-ing / to V</b> 둘 다 어법상 옳음. 동사원형(take), 과거형(took), 과거분사(taken)는 동사 like 직후에 올 수 없음. ※ love, hate, start, begin, continue 등도 동일 패턴.</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">2</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">동명사 주어 (단수 동사)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>2.</b> 어법상 옳은 문장을 모두 고르면?</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> Take pictures was just a free time activity.</span>
+    <span class="c"><span class="num">②</span> Taking pictures was just a free time activity.</span>
+    <span class="c"><span class="num">③</span> Taking pictures were just a free time activity.</span>
+    <span class="c"><span class="num">④</span> Being an engineer looked OK.</span>
+    <span class="c"><span class="num">⑤</span> Be an engineer looked OK.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ②, ④ — 동명사 주어는 항상 단수 취급</div>
+  <div class="ans-detail"><b>동명사 주어 규칙:</b><br>① ✗ 동사원형 Take는 주어로 못 옴<br>② ✓ Taking pictures(주어) + was(단수) ✓<br>③ ✗ 동명사 주어는 단수 취급이므로 was, were 아님<br>④ ✓ Being an engineer(주어) + looked ✓<br>⑤ ✗ 동사원형 Be는 주어로 못 옴</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">3</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">to부정사 형용사적 용법</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>3.</b> 다음 우리말과 일치하도록 빈칸에 들어갈 말로 알맞은 것은?</div>
+  <div class="q-passage">There I got a chance <span class="q-blank">______</span> the Northern Lights.<br>(나는 그곳에서 오로라를 볼 기회를 얻었다.)</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>see</span><span class="c"><span class="num">②</span>saw</span><span class="c"><span class="num">③</span>seeing</span><span class="c"><span class="num">④</span>to see</span><span class="c"><span class="num">⑤</span>seen</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ④ to see — 명사 chance를 뒤에서 수식하는 to부정사 형용사적 용법</div>
+  <div class="ans-detail"><b>형용사적 용법 핵심 패턴:</b> a chance/way/time/courage/decision/something + <b>to V</b>. 본문에는 <em>"a chance to see"</em>, <em>"a chance to think"</em>, <em>"courage to make decisions"</em> 등 다수 등장. ※ "이 순간 보기 위해서"가 아닌 "볼 기회"이므로 부사적이 아니라 형용사적.</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">4</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">분사 형용사 (-ing vs -ed)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>4.</b> 빈칸에 들어갈 말로 알맞은 것은?</div>
+  <div class="q-passage">The lights were <span class="q-blank">______</span>, and I took many pictures of the dancing lights.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>amaze</span><span class="c"><span class="num">②</span>amazed</span><span class="c"><span class="num">③</span>amazing</span><span class="c"><span class="num">④</span>amazement</span><span class="c"><span class="num">⑤</span>to amaze</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ amazing — 주어가 감정을 일으키는 주체</div>
+  <div class="ans-detail"><b>분사 형용사 규칙:</b> 주어가 <b>감정을 일으키는 주체</b>이면 <b>-ing</b>(현재분사) / 주어가 <b>감정을 느끼는 대상</b>이면 <b>-ed</b>(과거분사). 여기서는 <em>The lights</em>(빛)가 사람에게 놀라움을 일으키는 주체이므로 <b>amazing</b>. amazed로 쓰면 "빛이 놀랐다"는 어색한 의미.<br>※ 같은 패턴: bored/boring, tired/tiring, interested/interesting, surprised/surprising</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">5</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">지각동사 + 분사</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>5.</b> 빈칸에 들어갈 수 <b>없는</b> 것은?</div>
+  <div class="q-passage">For the first time in many years, I could feel my heart <span class="q-blank">______</span> fast.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>beat</span><span class="c"><span class="num">②</span>beating</span><span class="c"><span class="num">③</span>to beat</span><span class="c"><span class="num">④</span>beats</span><span class="c"><span class="num">⑤</span>was beating</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③, ④, ⑤ (모두 불가) — feel은 지각동사이므로 동사원형/현재분사만 가능</div>
+  <div class="ans-detail"><b>지각동사(feel/see/hear/watch/listen to) 5형식:</b> 목적어 + <b>동사원형</b> 또는 <b>현재분사</b>(진행/지속 강조). to부정사·완전한 절은 못 옴.<br>① ✓ feel + my heart + beat (동작 자체)<br>② ✓ feel + my heart + beating (지속 강조 — 본문 형태)<br>③ ✗ to beat 불가<br>④ ✗ 정형동사 beats 불가<br>⑤ ✗ 정형동사절 was beating 불가</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">6</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">사역동사 make + 형용사/동사원형</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>6.</b> 어법상 옳은 문장을 모두 고르면?</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> I realized that taking pictures made me happy.</span>
+    <span class="c"><span class="num">②</span> I realized that taking pictures made me happily.</span>
+    <span class="c"><span class="num">③</span> I really wanted to do something that made me happy.</span>
+    <span class="c"><span class="num">④</span> I really wanted to do something that made me to be happy.</span>
+    <span class="c"><span class="num">⑤</span> I really wanted to do something that made me happily.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ①, ③ — make + 목적어 + <b>형용사/동사원형</b> (부사·to V 불가)</div>
+  <div class="ans-detail"><b>사역동사 make의 5형식:</b> make + 목적어 + 형용사 OR 동사원형. happy(형용사) ✓ / happily(부사) ✗ / to be happy(to부정사) ✗.<br>※ 같은 사역동사 패턴: have/let + 목적어 + 동사원형 / get + 목적어 + to부정사</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">7</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">관계대명사 주격 that</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>7.</b> 어법상 <b>틀린</b> 문장은?</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> I really wanted to do something that made me happy.</span>
+    <span class="c"><span class="num">②</span> I really wanted to do something which made me happy.</span>
+    <span class="c"><span class="num">③</span> I really wanted to do something made me happy.</span>
+    <span class="c"><span class="num">④</span> You need courage to make decisions that will change your life.</span>
+    <span class="c"><span class="num">⑤</span> You need courage to make decisions which will change your life.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ — 주격 관계대명사는 <b>생략 불가</b></div>
+  <div class="ans-detail"><b>관계대명사 생략 규칙:</b> <b>주격</b>은 생략 불가, <b>목적격</b>은 생략 가능. ③은 something(주격 선행사) + that/which 생략 → 비문. 사물 선행사이므로 that이나 which 둘 다 가능.<br>※ 본문 <em>"the pictures (that) I took"</em>은 목적격이라 생략 가능 — 이 차이를 구분하는 게 핵심.</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">8</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">관계대명사 목적격 생략</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>8.</b> 다음 두 문장이 같은 의미가 되도록 빈칸을 채울 때, 빈칸에 <b>모두</b> 들어갈 수 있는 것은?</div>
+  <div class="q-passage">
+  ⓐ I entered a photo contest with the pictures I took in Iceland.<br>
+  ⓑ I entered a photo contest with the pictures <span class="q-blank">______</span> I took in Iceland.
+  </div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>that</span><span class="c"><span class="num">②</span>which</span><span class="c"><span class="num">③</span>who</span><span class="c"><span class="num">④</span>what</span><span class="c"><span class="num">⑤</span>whose</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① that, ② which (둘 다 가능)</div>
+  <div class="ans-detail"><b>목적격 관계대명사:</b> <em>the pictures</em>는 사물 선행사 + 동사 <em>took</em>의 목적어 자리(I took ___) → that/which 둘 다 OK. 사람이면 who(m)이지만 사물은 불가. what은 선행사 포함 관계대명사라 the pictures가 있을 때는 못 씀. whose는 소유격이라 의미 안 맞음.</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">9</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">관계대명사 what</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>9.</b> 다음 글에서 빈칸 (A)와 (B)에 공통으로 들어갈 단어는?</div>
+  <div class="q-passage">First, follow your heart. Think about <span class="q-blank">__(A)__</span> you like to do and <span class="q-blank">__(B)__</span> makes you happy.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>that</span><span class="c"><span class="num">②</span>which</span><span class="c"><span class="num">③</span>what</span><span class="c"><span class="num">④</span>how</span><span class="c"><span class="num">⑤</span>whose</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ what (선행사 포함 관계대명사 = the thing(s) which)</div>
+  <div class="ans-detail"><b>관계대명사 what의 핵심:</b> 선행사를 포함하는 관계대명사 (= the thing(s) that/which). "<b>~하는 것</b>"으로 해석.<br>(A) Think about <em>what you like to do</em> = 네가 하고 싶어하는 <b>것</b><br>(B) <em>what makes you happy</em> = 너를 행복하게 만드는 <b>것</b><br>※ that/which는 선행사가 있을 때만 사용. 본문에는 선행사 없음 → what.</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">10</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">간접의문문 if/whether</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>10.</b> 다음 빈칸에 들어갈 수 <b>없는</b> 것은?</div>
+  <div class="q-passage">
+  ⓐ It was a stable job, but I didn't know <span class="q-blank">______</span> I really enjoyed it.<br>
+  ⓑ I wasn't sure <span class="q-blank">______</span> I could succeed, but I decided to try.
+  </div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>if</span><span class="c"><span class="num">②</span>whether</span><span class="c"><span class="num">③</span>that</span><span class="c"><span class="num">④</span>whether or not</span><span class="c"><span class="num">⑤</span>if or not</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ that, ⑤ if or not (둘 다 불가)</div>
+  <div class="ans-detail"><b>~인지 아닌지 의미의 명사절</b>은 if/whether 둘 다 가능, 하지만 <b>that은 단정적 사실</b>이므로 의미상 못 옴.<br>③ that ✗ — "정말 즐겼다는 사실"이라는 단정적 의미가 되어 흐름과 모순<br>⑤ if or not ✗ — <b>if 바로 뒤에 or not</b>은 못 붙음 (whether or not은 가능)<br>① ✓, ② ✓, ④ ✓ — whether or not은 정상 결합<br>※ 학교 프린트 if/whether 학습지 핵심 규칙.</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">11</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">간접의문문 어순</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>11.</b> 본문 표현을 활용한 다음 두 문장이 어법상 옳도록 어순을 정한 것은?</div>
+  <div class="q-passage">
+  (1) I'm going to tell you ____. (나는 너에게 어떻게 내가 꿈을 찾아 실현했는지 말해줄게)<br>
+  (2) I really wonder ____. (나는 그가 정말로 그것을 즐겼는지 정말 궁금해)
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> (1) how did I find my dream / (2) if did he really enjoy it</span>
+    <span class="c"><span class="num">②</span> (1) how I found my dream / (2) if he really enjoyed it</span>
+    <span class="c"><span class="num">③</span> (1) how I did find my dream / (2) if did he enjoy it really</span>
+    <span class="c"><span class="num">④</span> (1) how found I my dream / (2) whether enjoyed he really it</span>
+    <span class="c"><span class="num">⑤</span> (1) how I find my dream / (2) if he did really enjoyed it</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② — 간접의문문 어순은 <b>의문사 + 주어 + 동사</b></div>
+  <div class="ans-detail"><b>간접의문문 핵심:</b><br>(1) 의문사 의문문 → <b>의문사 + 주어 + 동사</b> + (do/does/did 사라짐, 시제는 본동사에 반영)<br>"How did I find ~?" → "how I <b>found</b> ~"<br>(2) Yes/No 의문문 → <b>if/whether + 주어 + 동사</b> + (do/did 사라짐)<br>"Did he really enjoy ~?" → "if he really <b>enjoyed</b> ~"</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">12</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">동사 + to부정사 (수식 동사)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>12.</b> 본문에 사용된 동사 패턴 중 어법상 <b>틀린</b> 것은?</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> I wanted to become a good photographer.</span>
+    <span class="c"><span class="num">②</span> I decided to take pictures for a living.</span>
+    <span class="c"><span class="num">③</span> I started to learn more about photography.</span>
+    <span class="c"><span class="num">④</span> I hope my story can inspire you.</span>
+    <span class="c"><span class="num">⑤</span> I quit to take pictures for a living.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ⑤ — quit은 <b>동명사(V-ing)</b>만 목적어로 가짐</div>
+  <div class="ans-detail"><b>quit/finish/enjoy/avoid/give up + V-ing</b> (동명사만 가능). "I quit <b>taking</b> pictures"는 가능하지만 "I quit to take"는 비문. 본문에서는 <em>"I quit my job"</em>으로 my job(명사 목적어) + decided to take로 to부정사를 받음.<br>① want + to V ✓ / ② decide + to V ✓ / ③ start + to V/V-ing ✓ / ④ hope + that절 ✓ / ⑤ quit + to V ✗</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">13</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">전치사 + 동명사</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>13.</b> 다음 문장에서 어법상 옳은 것은?</div>
+  <div class="q-passage">I became a photographer ____ hard work. After years of trial and error, I got better, and I began ____ some part-time work.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> through / to do</span>
+    <span class="c"><span class="num">②</span> through / doing</span>
+    <span class="c"><span class="num">③</span> through / to doing</span>
+    <span class="c"><span class="num">④</span> by / to doing</span>
+    <span class="c"><span class="num">⑤</span> ① and ② both</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ⑤ — begin은 to V / V-ing 둘 다 가능</div>
+  <div class="ans-detail"><b>두 자리 분석:</b><br>1) "____ hard work" → <b>through</b>(~을 통해) 본문 그대로<br>2) "I began ____ some part-time work" → begin은 like, love, start와 같이 to V/V-ing 둘 다 가능<br>※ 동사 begin/start/continue/like/love/hate는 to부정사·동명사 모두 가능, 의미 차이 거의 없음.</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">14</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">5형식 → 4형식 변환 (give)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>14.</b> 다음 두 문장이 같은 의미가 되도록 빈칸을 채울 때 어법상 옳은 것은?</div>
+  <div class="q-passage">
+  ⓐ This gave me a chance to think about my life.<br>
+  ⓑ This gave a chance to think about my life ____ me.
+  </div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>to</span><span class="c"><span class="num">②</span>for</span><span class="c"><span class="num">③</span>of</span><span class="c"><span class="num">④</span>at</span><span class="c"><span class="num">⑤</span>with</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① to — give A B ↔ give B <b>to</b> A</div>
+  <div class="ans-detail"><b>4형식 ↔ 3형식 변환의 전치사:</b><br>▸ <b>to</b>: give, send, tell, show, teach, lend, write, pass<br>▸ <b>for</b>: make, buy, get, find, cook, choose<br>▸ <b>of</b>: ask, inquire<br>"give"는 to 동사이므로 ①.</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">15</span><span class="type-tag grammar">어법</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">종합 — 어법 5개 동시 검증</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>15.</b> 다음 글의 밑줄 친 ⓐ~ⓔ 중 어법상 옳은 것의 개수는?</div>
+  <div class="q-passage">When I had to decide on a major in college, I chose engineering. <u>ⓐBe</u> an engineer looked OK. After college, I got a job at an engineering company. It was a stable job, but I didn't know <u>ⓑwhether</u> I really enjoyed it. Everything changed when I went on vacation to Iceland one winter. There I got a chance <u>ⓒseeing</u> the Northern Lights. The lights were <u>ⓓamazing</u>, and I took many pictures of the dancing lights. For the first time in many years, I could feel my heart <u>ⓔto beat</u> fast.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>1개</span><span class="c"><span class="num">②</span>2개</span><span class="c"><span class="num">③</span>3개</span><span class="c"><span class="num">④</span>4개</span><span class="c"><span class="num">⑤</span>5개</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② 2개 (ⓑ, ⓓ만 옳음)</div>
+  <div class="ans-detail"><b>각 검증:</b><br>ⓐ <em>Be</em> ✗ → <b>Being</b> (동명사 주어)<br>ⓑ <em>whether</em> ✓ — ~인지 아닌지 명사절<br>ⓒ <em>seeing</em> ✗ → <b>to see</b> (chance + to부정사 형용사적)<br>ⓓ <em>amazing</em> ✓ — 빛이 감정을 일으키는 주체이므로 현재분사<br>ⓔ <em>to beat</em> ✗ → <b>beat 또는 beating</b> (지각동사 feel + 동사원형/현재분사)<br><br>옳은 것: ⓑ + ⓓ = <b>2개</b></div></div></details>
+</article>
+
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">16</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">5개 동시 어법 검증 — 본문 후반</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>16.</b> 다음 글의 밑줄 친 ⓐ~ⓔ 중 어법상 옳지 <b>않은</b> 것을 모두 고르면? (정답 2개)</div>
+  <div class="q-passage">After I came back, I entered a photo contest with the pictures <u>ⓐI took</u> in Iceland. Surprisingly, I won first prize, and this gave me a chance <u>ⓑto think</u> about my life. I realized <u>ⓒwhat</u> taking pictures made me happy. Suddenly, I wanted <u>ⓓbecome</u> a good photographer, so I started to learn more about photography. After years of trial and error, I got better, and I began to do some part-time work <u>ⓔas</u> a photographer.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>ⓐ</span><span class="c"><span class="num">②</span>ⓑ</span><span class="c"><span class="num">③</span>ⓒ</span><span class="c"><span class="num">④</span>ⓓ</span><span class="c"><span class="num">⑤</span>ⓔ</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ ⓒ → <em>that</em> / ④ ⓓ → <em>to become</em></div>
+  <div class="ans-detail"><b>각 검증:</b><br>
+  ⓐ <em>I took</em> ✓ — pictures (that) I took: 목적격 관계대명사 생략 가능<br>
+  ⓑ <em>to think</em> ✓ — chance + to부정사 (형용사적 용법)<br>
+  ⓒ <em>what</em> ✗ → <b>that</b> — realize 다음에 명사절을 이끄는 단정적 접속사 that이 와야 함. what은 선행사 포함 관계대명사이므로 부적합 (뒤에 완전한 절이 오면 that)<br>
+  ⓓ <em>become</em> ✗ → <b>to become</b> — want + to V (to부정사 목적어)<br>
+  ⓔ <em>as</em> ✓ — work as a photographer: ~로서 (자격·역할)<br><br>
+  <b>※ 5개 동시 검증 풀이 절차:</b> 보기 5개에 O/X/△ 명확히 표시 → △는 마지막 재검토. 시험 출제 빈도 최고 패턴.</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">17</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">5개 동시 어법 검증 — 본문 조언부</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>17.</b> 다음 글의 밑줄 친 부분 중 어법상 옳은 것의 개수는?</div>
+  <div class="q-passage">So do you want to <u>ⓐfind</u> a dream and realize it? First, follow your heart. Think about <u>ⓑthat</u> you like to do. Second, work hard. <u>ⓒPursue</u> a dream is not easy. I became a photographer through hard work. Third, be bold. You need courage <u>ⓓto make</u> decisions <u>ⓔwhich</u> will change your life.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>1개</span><span class="c"><span class="num">②</span>2개</span><span class="c"><span class="num">③</span>3개</span><span class="c"><span class="num">④</span>4개</span><span class="c"><span class="num">⑤</span>5개</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ 3개 (ⓐ, ⓓ, ⓔ만 옳음)</div>
+  <div class="ans-detail"><b>각 검증:</b><br>
+  ⓐ <em>find</em> ✓ — want + <b>to V</b>(to find)이지만, 여기는 to부정사 일부로 to가 앞에 있음 (to find a dream)<br>
+  ⓑ <em>that</em> ✗ → <b>what</b> — 선행사 없는 명사절 (= the thing(s) which)<br>
+  ⓒ <em>Pursue</em> ✗ → <b>Pursuing</b> — 동명사 주어 (단수 동사 is와 호응)<br>
+  ⓓ <em>to make</em> ✓ — courage + to V (형용사적 용법)<br>
+  ⓔ <em>which</em> ✓ — decisions(사물 선행사) + 주격 관계대명사. that과 호환<br><br>
+  옳은 것: ⓐ + ⓓ + ⓔ = <b>3개</b><br><br>
+  <b>※ 카운트형 함정:</b> 시험 빈도 매우 높음. "옳은 것의 개수"는 보기 5개를 모두 검증해야만 답이 나오는 노동 집약형.</div></div></details>
+</article>
+
+
+<!-- ===== Section B: PRONOUN ===== -->
+<div class="section-head" data-section-type="pronoun" data-section-marker>
+  <div class="num-line">SECTION B · 대명사 · PRONOUNS · 5 ITEMS</div>
+  <h2>대명사 <span class="kor">지시·인칭·부정·관계·재귀대명사 종합</span></h2>
+  <p class="desc">본문에 등장하는 다양한 대명사 패턴 분석. these/this(지시), something/one(부정), what/that(관계), 인칭대명사 격, 재귀대명사 응용.</p>
+</div>
+
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">18</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">지시대명사 these/this</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>18.</b> 다음 글의 밑줄 친 <u>these things</u>가 가리키는 것을 <b>모두</b> 고르면?</div>
+  <div class="q-passage">When I was young, I loved stars. I also liked taking pictures. However, I never thought <u>these things</u> could lead to a job.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> stars I loved</span>
+    <span class="c"><span class="num">②</span> taking pictures I liked</span>
+    <span class="c"><span class="num">③</span> jobs I wanted to get</span>
+    <span class="c"><span class="num">④</span> things I never thought about</span>
+    <span class="c"><span class="num">⑤</span> the stable job at an engineering company</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ①, ② — 앞 문장의 두 가지 (별 좋아함 + 사진 찍기)</div>
+  <div class="ans-detail"><b>지시대명사 these</b>는 앞에 나온 <b>복수 명사·내용</b>을 받음. 본문에서는 직전 두 문장 "I loved stars" + "I also liked taking pictures"의 두 가지를 동시에 가리킴 → 복수 these가 정확.<br>※ this(단수) ↔ these(복수), that(먼 단수) ↔ those(먼 복수). 본문에서 "this gave me a chance"의 this는 직전 단수 사건(won first prize)을 받음.</div></div></details>
+</article>
+
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">19</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">부정대명사 something + 형용사 + to V</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>19.</b> 다음 빈칸에 들어갈 어법상 옳은 표현은?</div>
+  <div class="q-passage">I quit my job and decided to take pictures for a living. I really wanted to do <span class="q-blank">______</span>.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> happy something that made me</span>
+    <span class="c"><span class="num">②</span> something happy that made me</span>
+    <span class="c"><span class="num">③</span> something that made me happy</span>
+    <span class="c"><span class="num">④</span> something which I made happy</span>
+    <span class="c"><span class="num">⑤</span> happy that made something me</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ — something that made me happy</div>
+  <div class="ans-detail"><b>-thing/-one/-body 부정대명사 어순:</b><br>▸ 형용사가 단독 수식 → <b>something + 형용사</b> (예: something special)<br>▸ 관계대명사절·to부정사가 수식 → <b>something + 절/to V</b><br>▸ 형용사 + 절 모두 있을 때 → <b>something + 형용사 + 절/to V</b><br>본문은 something + that절 + me + happy(목적격 보어) 구조.<br>① ✗ happy something(어순 오류) / ② ✗ that의 선행사가 something happy로 잘못됨 / ④ ✗ 의미상 모순(내가 something을 happy하게 만들었다) / ⑤ ✗ 어순 와해</div></div></details>
+</article>
+
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">20</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">관계대명사 what vs that 구분</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>20.</b> 다음 빈칸 (A)~(D)에 들어갈 단어가 모두 바르게 짝지어진 것은?</div>
+  <div class="q-passage">
+  Think about <span class="q-blank">__(A)__</span> you like to do.<br>
+  I did something <span class="q-blank">__(B)__</span> made me happy.<br>
+  Decisions <span class="q-blank">__(C)__</span> will change your life need courage.<br>
+  I'm not sure <span class="q-blank">__(D)__</span> I can succeed.
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> what / that / that / if</span>
+    <span class="c"><span class="num">②</span> that / what / which / that</span>
+    <span class="c"><span class="num">③</span> what / what / which / what</span>
+    <span class="c"><span class="num">④</span> that / which / that / whether</span>
+    <span class="c"><span class="num">⑤</span> what / which / that / that</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① what / that / that / if</div>
+  <div class="ans-detail"><b>각 자리 분석:</b><br>(A) <b>what</b>: 선행사 없는 명사절 (= the thing(s) which) — "Think about <em>what</em> you like to do"<br>(B) <b>that</b>: 사물 선행사 something + 주격 관계대명사<br>(C) <b>that</b>: 사물 선행사 decisions + 주격 관계대명사 (which도 가능)<br>(D) <b>if</b>: ~인지 아닌지 명사절 (whether도 가능). that은 단정적 사실이라 의미상 부적절.<br><br>※ <b>핵심:</b> what(선행사 X) ↔ that/which(선행사 ㅇ)의 차이를 정확히 구분.</div></div></details>
+</article>
+
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">21</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">재귀대명사 + 본문 응용</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>21.</b> 본문 메시지에 따라 빈칸 (A), (B)에 들어갈 가장 적절한 재귀대명사는?</div>
+  <div class="q-passage">David Parker's story shows that you should believe in <span class="q-blank">__(A)__</span> and not push <span class="q-blank">__(B)__</span> into a job that doesn't make you happy.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> you / you</span>
+    <span class="c"><span class="num">②</span> yourself / yourself</span>
+    <span class="c"><span class="num">③</span> yours / yours</span>
+    <span class="c"><span class="num">④</span> your / your</span>
+    <span class="c"><span class="num">⑤</span> yourselves / yourselves</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② yourself / yourself — 주어와 목적어가 동일인일 때 재귀대명사</div>
+  <div class="ans-detail"><b>재귀대명사(-self/-selves):</b> 주어와 목적어가 같을 때 또는 강조할 때 사용.<br>(A) <em>believe in <b>yourself</b></em> = 자기 자신을 믿어라 (관용 표현)<br>(B) <em>push <b>yourself</b> into ~</em> = 너 자신을 ~로 밀어 넣다<br>※ "you" 한 명을 가리키므로 yourselves(복수) 아님. 단·복수 구분 함정.<br><br>대표 표현: enjoy yourself / by yourself / take care of yourself / hurt yourself</div></div></details>
+</article>
+
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">22</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">인칭대명사 격 변환</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>22.</b> 본문을 기자가 3인칭으로 다시 쓸 때, 빈칸 (A)~(E)에 들어갈 인칭대명사가 모두 바르게 짝지어진 것은?</div>
+  <div class="q-passage">
+  David Parker is a photographer. <span class="q-blank">__(A)__</span> mother says <span class="q-blank">__(B)__</span> son is so brave because <span class="q-blank">__(C)__</span> quit a stable job. The decision was completely <span class="q-blank">__(D)__</span>. The story can inspire <span class="q-blank">__(E)__</span> readers around the world.<br>
+  <small>※ 빈칸 자리: (A) 소유격 / (B) 소유격 / (C) 주격 / (D) 소유대명사 / (E) 인칭대명사</small>
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> Him / him / he / him / him</span>
+    <span class="c"><span class="num">②</span> His / her / he / his / its</span>
+    <span class="c"><span class="num">③</span> His / her / he / his / its</span>
+    <span class="c"><span class="num">④</span> His / her / he / his / them</span>
+    <span class="c"><span class="num">⑤</span> He / hers / his / he / their</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ④ His / her / he / his / them</div>
+  <div class="ans-detail"><b>각 자리 격 분석:</b><br>(A) <b>His</b> mother — 소유격 + 명사<br>(B) <b>her</b> son says ~ — David의 어머니가 자기 아들을 가리킴 → her<br>(C) <b>he</b> quit — 주격 (David)<br>(D) was completely <b>his</b> — 소유대명사 = his decision<br>(E) inspire <b>them</b> — readers를 받는 목적격<br><br><b>인칭대명사 5격 종합표:</b><br>주격(I/he/she/we/they) — 소유격(my/his/her/our/their) — 목적격(me/him/her/us/them) — 소유대명사(mine/his/hers/ours/theirs) — 재귀(myself/himself/herself...)</div></div></details>
+</article>
+
+
+<!-- ===== Section C: READING ===== -->
+<div class="section-head" data-section-type="reading" data-section-marker>
+  <div class="num-line">SECTION C · 독해 · READING · 5 ITEMS</div>
+  <h2>독해 <span class="kor">일치·요지·인터뷰 변환</span></h2>
+  <p class="desc">본문 정밀 매칭형 일치 문항(직접·인터뷰 변환) + 요지 추론.</p>
+</div>
+
+<article class="q-card" data-type="reading">
+  <div class="q-meta"><span class="q-num">23</span><span class="type-tag reading">독해</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">내용 일치/불일치</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>23.</b> David Parker에 관한 윗글의 내용과 일치하지 <b>않는</b> 것은?</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> 어렸을 때 별과 사진 찍는 것을 좋아했다.</span>
+    <span class="c"><span class="num">②</span> 어릴 적부터 사진작가가 되겠다는 꿈을 가지고 있었다.</span>
+    <span class="c"><span class="num">③</span> 대학에서 공학을 전공하고 공학 회사에 취직했다.</span>
+    <span class="c"><span class="num">④</span> 아이슬란드에서 오로라 사진을 찍었고 사진전에서 1등을 했다.</span>
+    <span class="c"><span class="num">⑤</span> 엔지니어 직장을 그만두고 전문 사진작가가 되었다.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② — 본문 결정적 근거: <em>"I didn't have a dream at all"</em></div>
+  <div class="ans-detail"><b>본문 핵심:</b> 별·사진을 좋아했지만 "이런 것들이 직업으로 이어진다고 한 번도 생각하지 못함" + "꿈이 전혀 없었다"고 명시. 사진작가의 꿈은 <b>아이슬란드 여행 이후</b>에 생긴 것.</div></div></details>
+</article>
+
+<article class="q-card" data-type="reading">
+  <div class="q-meta"><span class="q-num">24</span><span class="type-tag reading">독해</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">인터뷰 변환 일치</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>24.</b> 다음은 David Parker를 인터뷰한 것이다. 윗글의 내용과 일치하지 <b>않는</b> 것은?</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> Q: What is your job now? / A: I'm a professional photographer.</span>
+    <span class="c"><span class="num">②</span> Q: Why did you choose engineering in college? / A: Because being an engineer looked OK at the time.</span>
+    <span class="c"><span class="num">③</span> Q: When did everything change? / A: When I went on vacation to Iceland one winter.</span>
+    <span class="c"><span class="num">④</span> Q: Why did you enter the photo contest? / A: <u>Because I wanted to become a famous engineer.</u></span>
+    <span class="c"><span class="num">⑤</span> Q: What's your advice for finding a dream? / A: Follow your heart, work hard, and be bold.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ④ — 사진 콘테스트 참가 이유는 "유명한 엔지니어가 되기 위해"가 아님</div>
+  <div class="ans-detail">본문은 <em>"After I came back, I entered a photo contest with the pictures I took in Iceland"</em>로, 아이슬란드에서 찍은 사진들로 자연스럽게 출품한 것. <b>오히려 본문은 엔지니어 직장에 대한 회의감</b>을 드러냄.</div></div></details>
+</article>
+
+<article class="q-card" data-type="reading">
+  <div class="q-meta"><span class="q-num">25</span><span class="type-tag reading">독해</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">요지·주제</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>25.</b> 윗글의 화자(David Parker)가 말하고 싶은 요지로 가장 알맞은 것은?</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> Choose a stable job for your family.</span>
+    <span class="c"><span class="num">②</span> Find what makes you happy and pursue it with courage.</span>
+    <span class="c"><span class="num">③</span> Don't make any bold decisions until you finish college.</span>
+    <span class="c"><span class="num">④</span> Anyone who likes taking photos can become a photographer.</span>
+    <span class="c"><span class="num">⑤</span> Engineering is a more reliable major than photography.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② — "행복하게 만드는 것을 찾아 용기 있게 추구하라"</div>
+  <div class="ans-detail"><b>본문 3대 메시지:</b> Follow your heart(마음을 따르라) + Work hard(열심히 하라) + Be bold(과감해지라). 핵심 인용: <em>"I really wanted to do something that made me happy"</em> + <em>"You need courage to make decisions that will change your life"</em>.<br>※ ①·③·⑤는 본문 메시지의 정반대.</div></div></details>
+</article>
+
+
+<article class="q-card" data-type="reading">
+  <div class="q-meta"><span class="q-num">26</span><span class="type-tag reading">독해</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">시각화 — T/F 표 일치</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>26.</b> 윗글의 내용을 정리한 다음 표에서 T/F 표시가 <b>잘못된</b> 것은?</div>
+  <div class="q-passage" style="padding:0">
+  <table style="width:100%;border-collapse:collapse;font-size:13px;font-family:'Pretendard Variable',sans-serif">
+  <thead style="background:#FAF7F2">
+    <tr><th style="padding:8px 10px;border:1px solid #E5DFD5;text-align:left;width:40px">#</th><th style="padding:8px 10px;border:1px solid #E5DFD5;text-align:left">진술</th><th style="padding:8px 10px;border:1px solid #E5DFD5;text-align:center;width:60px">표시</th></tr>
+  </thead>
+  <tbody>
+    <tr><td style="padding:8px 10px;border:1px solid #E5DFD5"><b>ⓐ</b></td><td style="padding:8px 10px;border:1px solid #E5DFD5">David Parker는 어렸을 때 별과 사진 찍는 것을 좋아했다.</td><td style="padding:8px 10px;border:1px solid #E5DFD5;text-align:center;color:#2D6E3F;font-weight:700">T</td></tr>
+    <tr><td style="padding:8px 10px;border:1px solid #E5DFD5"><b>ⓑ</b></td><td style="padding:8px 10px;border:1px solid #E5DFD5">대학 졸업 후 그는 안정적인 공학 회사에 취직했다.</td><td style="padding:8px 10px;border:1px solid #E5DFD5;text-align:center;color:#2D6E3F;font-weight:700">T</td></tr>
+    <tr><td style="padding:8px 10px;border:1px solid #E5DFD5"><b>ⓒ</b></td><td style="padding:8px 10px;border:1px solid #E5DFD5">그는 아이슬란드 여행에서 오로라 사진으로 1등 상을 받았다.</td><td style="padding:8px 10px;border:1px solid #E5DFD5;text-align:center;color:#2D6E3F;font-weight:700">T</td></tr>
+    <tr><td style="padding:8px 10px;border:1px solid #E5DFD5"><b>ⓓ</b></td><td style="padding:8px 10px;border:1px solid #E5DFD5">그는 직장을 그만둔 직후 곧바로 전문 사진작가가 되었다.</td><td style="padding:8px 10px;border:1px solid #E5DFD5;text-align:center;color:#2D6E3F;font-weight:700">T</td></tr>
+    <tr><td style="padding:8px 10px;border:1px solid #E5DFD5"><b>ⓔ</b></td><td style="padding:8px 10px;border:1px solid #E5DFD5">그는 꿈을 찾기 위한 3가지 조언을 제시한다.</td><td style="padding:8px 10px;border:1px solid #E5DFD5;text-align:center;color:#2D6E3F;font-weight:700">T</td></tr>
+  </tbody>
+  </table>
+  </div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>ⓐ</span><span class="c"><span class="num">②</span>ⓑ</span><span class="c"><span class="num">③</span>ⓒ</span><span class="c"><span class="num">④</span>ⓓ</span><span class="c"><span class="num">⑤</span>ⓔ</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ ⓒ — 시제·인과 함정. 사진은 아이슬란드에서 찍었지만 대회 참가는 <b>돌아온 후</b></div>
+  <div class="ans-detail"><b>본문 정밀 인용:</b><br>
+  ▸ <em>"After I came back, I entered a photo contest with the pictures I took in Iceland"</em><br>
+  → 사진은 아이슬란드에서 찍음 ✓ but 대회 참가는 귀국 후 ✓<br>
+  → ⓒ "아이슬란드 여행에서... 1등 상을 받았다"는 마치 <b>여행 중에 수상</b>한 것처럼 진술 → F가 맞음<br><br>
+  ⓓ ✓ — 본문은 part-time work 단계 거쳐서 결국 quit하고 professional이 됨. "직후 곧바로"라는 표현은 약간 압축됐지만, 본문의 단계적 변화 흐름과 모순되지는 않음 (논쟁 가능 영역, 더 명확한 함정 ⓒ가 정답)<br><br>
+  <b>※ T/F 표 풀이 절차:</b> 본문 시제·인과 관계 정확히 매칭. 시험 Q12 패턴 그대로.</div></div></details>
+</article>
+
+<article class="q-card" data-type="reading">
+  <div class="q-meta"><span class="q-num">27</span><span class="type-tag reading">독해</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">시각화 — 인생 흐름도 매칭</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>27.</b> 다음은 David Parker의 인생을 시간순으로 정리한 흐름도이다. 빈칸 (A)~(D)에 들어갈 단계가 모두 바르게 짝지어진 것은?</div>
+  <div class="q-passage" style="background:#FFFFFF;border-left-color:var(--gold)">
+  <div style="font-family:'Pretendard Variable',sans-serif;line-height:2;font-size:13.5px">
+  <b style="color:var(--accent);font-size:14px">▶ David Parker's Life Journey</b><br><br>
+  <b>1단계</b> — 어렸을 때: 별·사진을 좋아했지만 꿈 없음<br>
+  <span style="color:var(--accent)">↓</span><br>
+  <b>2단계</b> — 대학 시절: <b style="background:#FFEDD8;padding:2px 6px;border-radius:3px">(A)</b><br>
+  <span style="color:var(--accent)">↓</span><br>
+  <b>3단계</b> — 졸업 후: 공학 회사 취직 (안정적이지만 회의감)<br>
+  <span style="color:var(--accent)">↓</span><br>
+  <b>4단계</b> — 어느 겨울: <b style="background:#FFEDD8;padding:2px 6px;border-radius:3px">(B)</b><br>
+  <span style="color:var(--accent)">↓</span><br>
+  <b>5단계</b> — 귀국 후: <b style="background:#FFEDD8;padding:2px 6px;border-radius:3px">(C)</b><br>
+  <span style="color:var(--accent)">↓</span><br>
+  <b>6단계</b> — 시행착오 끝: 파트타임 사진 작업 시작<br>
+  <span style="color:var(--accent)">↓</span><br>
+  <b>7단계</b> — 어느 날: <b style="background:#FFEDD8;padding:2px 6px;border-radius:3px">(D)</b><br>
+  <span style="color:var(--accent)">↓</span><br>
+  <b>8단계</b> — 현재: 행복한 전문 사진작가
+  </div>
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> (A) 공학 전공 선택 / (B) 아이슬란드 오로라 / (C) 사진 콘테스트 1등 / (D) 직장 그만두기</span>
+    <span class="c"><span class="num">②</span> (A) 사진작가 되겠다 결심 / (B) 회사 취직 / (C) 사진작가로 전향 / (D) 1등 상 수상</span>
+    <span class="c"><span class="num">③</span> (A) 공학 전공 선택 / (B) 사진 콘테스트 출전 / (C) 직장 그만두기 / (D) 오로라 발견</span>
+    <span class="c"><span class="num">④</span> (A) 별 좋아함 / (B) 직장 그만두기 / (C) 사진 공부 / (D) 오로라 본 일</span>
+    <span class="c"><span class="num">⑤</span> (A) 사진 공부 시작 / (B) 직장 그만두기 / (C) 오로라 본 일 / (D) 1등 상 수상</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① (A) 공학 전공 / (B) 아이슬란드 오로라 / (C) 사진 콘테스트 1등 / (D) 직장 그만두기</div>
+  <div class="ans-detail"><b>본문 시간 순서 정리:</b><br>
+  1️⃣ 어렸을 때 별·사진 좋아함 (꿈 없음)<br>
+  2️⃣ 대학 → <b>공학 전공 선택</b> ← (A)<br>
+  3️⃣ 졸업 후 공학 회사 취직 (회의감)<br>
+  4️⃣ 어느 겨울 → <b>아이슬란드 여행 + 오로라</b> ← (B)<br>
+  5️⃣ 귀국 후 → <b>사진 콘테스트 출전 + 1등 수상</b> ← (C)<br>
+  6️⃣ 사진 공부 + 시행착오 → 파트타임 사진 작업<br>
+  7️⃣ 어느 날 → <b>직장 그만두고 사진작가 전환</b> ← (D)<br>
+  8️⃣ 현재 행복한 전문 사진작가<br><br>
+  <b>※ 시각화 매칭형:</b> 본문 시간 흐름을 흐름도로 정리하는 능력 측정. 각 단계가 본문 어느 구절에 해당하는지 정밀 추적.</div></div></details>
+</article>
+
+
+<!-- ===== Section D: CONTEXT ===== -->
+<div class="section-head" data-section-type="context" data-section-marker>
+  <div class="num-line">SECTION D · 문맥 · CONTEXT · 6 ITEMS</div>
+  <h2>문맥/흐름 <span class="kor">어색한 문장·문장 삽입·순서·연결어</span></h2>
+  <p class="desc">단어·문장 단위가 아닌 글 전체 흐름을 묻는 메타 인지형. 어색한 문장 식별·삽입 위치·문단 순서·연결어 추론.</p>
+</div>
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">28</span><span class="type-tag context">문맥</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">어색한 문장 (관광 정보 함정)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>28.</b> 다음 글의 흐름상 어색한 문장은?</div>
+  <div class="q-passage">Everything changed when I went on vacation to Iceland one winter. <u>ⓐThere I got a chance to see the Northern Lights.</u> <u>ⓑThe lights were amazing, and I took many pictures of the dancing lights in the sky.</u> <u>ⓒFor the first time in many years, I could feel my heart beating fast.</u> <u>ⓓIceland is one of the most popular tourist destinations in Europe with many famous hot springs.</u> <u>ⓔAfter I came back, I entered a photo contest with the pictures I took in Iceland.</u></div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>ⓐ</span><span class="c"><span class="num">②</span>ⓑ</span><span class="c"><span class="num">③</span>ⓒ</span><span class="c"><span class="num">④</span>ⓓ</span><span class="c"><span class="num">⑤</span>ⓔ</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ④ ⓓ — 아이슬란드 일반 관광 정보는 화자의 개인적 전환 흐름과 무관</div>
+  <div class="ans-detail">단락의 핵심은 화자의 <b>개인적 전환점</b>(여행→오로라→심장 두근거림→사진 콘테스트). ⓓ는 갑자기 "유럽 인기 관광지·온천"이라는 일반 정보로 빠져 흐름 단절.</div></div></details>
+</article>
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">29</span><span class="type-tag context">문맥</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">문장 삽입 위치</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>29.</b> 다음 문장이 들어가기에 가장 적절한 위치는?</div>
+  <div class="word-bank"><b>&lt;삽입 문장&gt;</b> Surprisingly, I won first prize, and this gave me a chance to think about my life.</div>
+  <div class="q-passage">After I came back, I entered a photo contest with the pictures I took in Iceland. ( ① ) I realized that taking pictures made me happy. ( ② ) Suddenly, I wanted to become a good photographer, so I started to learn more about photography. ( ③ ) After years of trial and error, I got better, and I began to do some part-time work as a photographer. ( ④ ) Then one day, I made a bold decision. ( ⑤ ) I quit my job and decided to take pictures for a living.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>①</span><span class="c"><span class="num">②</span>②</span><span class="c"><span class="num">③</span>③</span><span class="c"><span class="num">④</span>④</span><span class="c"><span class="num">⑤</span>⑤</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① — 사진전 참가 직후, 깨달음 직전 자리</div>
+  <div class="ans-detail">삽입 문장의 핵심: <em>"I won first prize"</em>(1등 수상) + <em>"this gave me a chance to think about my life"</em>(인생 돌아볼 기회). 직전: 사진전 참가 → 직후: 그래서 깨달음. ①번 자리에 들어가야 자연스러움.</div></div></details>
+</article>
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">30</span><span class="type-tag context">문맥</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">단락 순서 배열</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>30.</b> 다음 글에서 (A), (B), (C)를 글의 흐름에 맞게 순서대로 배열한 것은?</div>
+  <div class="q-passage">
+  Hello, everyone. My name is David Parker, and I'm a photographer.<br><br>
+  <b>(A)</b> Everything changed when I went on vacation to Iceland one winter. There I got a chance to see the Northern Lights. The lights were amazing.<br><br>
+  <b>(B)</b> When I was young, I loved stars. I also liked taking pictures. However, I never thought these things could lead to a job. In fact, I didn't have a dream at all.<br><br>
+  <b>(C)</b> When I had to decide on a major in college, I chose engineering. After college, I got a job at an engineering company. It was a stable job, but I didn't know whether I really enjoyed it.
+  </div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>(A)-(B)-(C)</span><span class="c"><span class="num">②</span>(B)-(A)-(C)</span><span class="c"><span class="num">③</span>(B)-(C)-(A)</span><span class="c"><span class="num">④</span>(C)-(A)-(B)</span><span class="c"><span class="num">⑤</span>(C)-(B)-(A)</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ (B) → (C) → (A)</div>
+  <div class="ans-detail"><b>시간 순서로 정리:</b><br>① <b>(B) 어렸을 때</b>: 별·사진 좋아했지만 꿈 없음<br>② <b>(C) 대학 시절~취직 후</b>: 공학 전공·엔지니어 취직, 안정적이지만 회의감<br>③ <b>(A) 어느 겨울</b>: 아이슬란드 여행 → 오로라 → 전환점<br><br>※ "Everything changed"는 <b>이전 상태(C)</b>가 있어야 가능한 표현이므로 (A)는 마지막.</div></div></details>
+</article>
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">31</span><span class="type-tag context">문맥</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">연결어 빈칸</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>31.</b> 다음 글의 빈칸 (A), (B)에 들어갈 연결어로 가장 적절한 것은?</div>
+  <div class="q-passage">When I was young, I loved stars. I also liked taking pictures. <span class="q-blank">__(A)__</span>, I never thought these things could lead to a job. <span class="q-blank">__(B)__</span>, I didn't have a dream at all.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> However / In fact</span>
+    <span class="c"><span class="num">②</span> Therefore / However</span>
+    <span class="c"><span class="num">③</span> However / Therefore</span>
+    <span class="c"><span class="num">④</span> For example / In addition</span>
+    <span class="c"><span class="num">⑤</span> Suddenly / In short</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① However / In fact</div>
+  <div class="ans-detail"><b>흐름 분석:</b><br>(A) "별·사진을 좋아했다 ↔ 직업이 될 거라 생각 못함" → <b>역접 However</b>(그러나)<br>(B) "직업으로 생각 못함" + 더 강한 진술 "꿈이 전혀 없었음" → <b>강조 In fact</b>(사실은)<br>※ 본문 그대로의 연결어 패턴.</div></div></details>
+</article>
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">32</span><span class="type-tag context">문맥</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">결론 적절성 판단</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>32.</b> 다음 글의 결론으로 빈칸 ★에 들어갈 말로 적절하지 <b>않은</b> 것을 모두 고르면? (정답 2개)</div>
+  <div class="q-passage">So do you want to find a dream and realize it? First, follow your heart. Second, work hard. Pursuing a dream is not easy. Third, be bold. You need courage to make decisions that will change your life. <span style="color:var(--gold);font-weight:800">★</span></div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> I truly hope you can find a dream, pursue it, and live it!</span>
+    <span class="c"><span class="num">②</span> Don't be afraid to take a chance on what makes you happy.</span>
+    <span class="c"><span class="num">③</span> Remember: a stable job always brings the most happiness.</span>
+    <span class="c"><span class="num">④</span> Following your heart and being brave can lead you to your dream.</span>
+    <span class="c"><span class="num">⑤</span> The best way to be successful is to avoid making bold decisions.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③, ⑤ — 본문 메시지와 정반대</div>
+  <div class="ans-detail">본문 핵심: <b>마음을 따르고, 열심히 하고, 과감해져라</b>. 단순히 안정적 직장이 행복을 가져다 준다는 건 본문과 정반대(③). 과감한 결정을 피하라는 메시지(⑤)도 "Be bold"와 모순. ①②④는 모두 본문 핵심과 일치.</div></div></details>
+</article>
+
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">33</span><span class="type-tag context">문맥</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">인과 방향 함정 — 본문 메시지 정반대 표현</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>33.</b> 다음 중 윗글의 핵심 메시지를 <b>가장 잘못</b> 해석한 것은?</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> 좋아하는 일을 직업으로 삼으면 행복해질 수 있다.</span>
+    <span class="c"><span class="num">②</span> 시행착오를 거치며 노력하면 실력이 향상된다.</span>
+    <span class="c"><span class="num">③</span> <u>안정적인 직장이 사람을 행복하게 만들기 때문에 도전을 피해야 한다.</u></span>
+    <span class="c"><span class="num">④</span> 인생의 큰 결정을 내리려면 용기가 필요하다.</span>
+    <span class="c"><span class="num">⑤</span> 자신을 행복하게 만드는 것이 무엇인지 생각해보는 것이 중요하다.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ — 인과 방향이 본문과 <b>완전히 반대</b></div>
+  <div class="ans-detail"><b>본문 핵심 인과 관계 (정확한 방향):</b><br>
+  ▸ "안정적 직장(stable job) → 정말 즐기는지 모름(didn't know whether I really enjoyed it)"<br>
+  ▸ "직장 그만둠(quit my job) → 행복함(I'm happy)"<br>
+  ▸ "용기 있는 결정(bold decision) → 인생 변화(change your life)"<br><br>
+  <b>③번의 거짓 진술:</b><br>
+  ▸ "안정적 직장이 사람을 행복하게 만든다" ✗ — 본문은 정반대로 안정적 직장에 회의를 느낀 화자의 이야기<br>
+  ▸ "도전을 피해야 한다" ✗ — 본문은 "Be bold(과감해져라)"가 핵심 조언<br><br>
+  <b>나머지 검토:</b><br>
+  ① ✓ "I really wanted to do something that made me happy"<br>
+  ② ✓ "After years of trial and error, I got better"<br>
+  ④ ✓ "You need courage to make decisions that will change your life"<br>
+  ⑤ ✓ "Think about what you like to do and what makes you happy"<br><br>
+  <b>※ 인과 방향 함정 유형:</b> 시험 Q22(결론 빈칸)·Q27(다이아몬드 도난)에서 본 패턴. 본문의 원인-결과를 뒤집거나 정반대로 표현한 함정. 단순 단어 매칭으로는 걸리기 쉬움.</div></div></details>
+</article>
+
+
+<!-- ===== Section E: CLOZE ===== -->
+<div class="section-head" data-section-type="cloze" data-section-marker>
+  <div class="num-line">SECTION E · 빈칸 · CLOZE · 14 ITEMS</div>
+  <h2>빈칸 추론 <span class="kor">단어·전치사·접속사·어구·역추론 + 결론문 변형 묶음 종합</span></h2>
+  <p class="desc">본문의 다양한 자리에 빈칸을 만들어 단어·전치사·접속사·시제·어구를 추론. 일반 빈칸 + "안 들어가는 단어" 역추론 + <strong>결론문 변형 묶음(Conclusion Cluster)</strong>으로 paraphrase 3개에 빈칸 9개 분산 출제.</p>
+</div>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">34</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">but 다음 부정적 흐름</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>34.</b> 다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+  <div class="q-passage">After college, I got a job at an engineering company. It was a stable job, but <span class="q-blank">__________</span>.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> I didn't know whether I really enjoyed it</span>
+    <span class="c"><span class="num">②</span> I was sure I loved my work</span>
+    <span class="c"><span class="num">③</span> I had always dreamed of being an engineer</span>
+    <span class="c"><span class="num">④</span> the job paid less than I expected</span>
+    <span class="c"><span class="num">⑤</span> I quickly became famous in the company</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① — but 다음에는 안정성과 대조되는 부정적 평가가 와야 함</div>
+  <div class="ans-detail"><b>흐름:</b> "안정적 직장이었다 <b>but</b> ___" + 다음 단락 "Everything changed when I went to Iceland"(모든 게 바뀜). 따라서 <b>회의감/불확실성</b>이 와야 함.</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">35</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">단어 빈칸 (안 들어가는 것)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>35.</b> 다음 글의 빈칸 어디에도 들어갈 수 <b>없는</b> 단어는? (순서 상관없음)</div>
+  <div class="q-passage">So do you want to find a <span class="q-blank">__①__</span> and realize it? First, follow your <span class="q-blank">__②__</span>. Second, work <span class="q-blank">__③__</span>. Pursuing a dream is not easy. Third, be <span class="q-blank">__④__</span>. You need <span class="q-blank">__⑤__</span> to make decisions that will change your life.</div>
+  <div class="q-choices horz"><span class="c"><span class="num">①</span>dream</span><span class="c"><span class="num">②</span>heart</span><span class="c"><span class="num">③</span>hard</span><span class="c"><span class="num">④</span>bold</span><span class="c"><span class="num">⑤</span>safety</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ⑤ safety — 본문 메시지(courage)와 정반대</div>
+  <div class="ans-detail">5개 빈칸: dream / heart / hard / bold / <b>courage</b>. 보기에서 courage 자리에 safety(안전)는 어울리지 않음 — "Be bold(과감해져라)"가 핵심인데 "안전이 필요하다"는 정반대.</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">36</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">전치사 빈칸 (안 들어가는 것)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>36.</b> 다음 빈칸에 들어갈 수 <b>없는</b> 전치사는? (순서 상관없음)</div>
+  <div class="q-passage">
+  ⓐ Everything changed when I went <span class="q-blank">______</span> vacation to Iceland one winter.<br>
+  ⓑ <span class="q-blank">______</span> the first time in many years, I could feel my heart beating fast.<br>
+  ⓒ I quit my job and decided to take pictures <span class="q-blank">______</span> a living.<br>
+  ⓓ I became a photographer <span class="q-blank">______</span> hard work.
+  </div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>on</span><span class="c"><span class="num">②</span>for</span><span class="c"><span class="num">③</span>through</span><span class="c"><span class="num">④</span>at</span><span class="c"><span class="num">⑤</span>off</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ④ at, ⑤ off — 어떤 빈칸에도 안 어울림</div>
+  <div class="ans-detail"><b>각 빈칸 정답:</b><br>ⓐ <b>on</b> vacation (휴가 중)<br>ⓑ <b>For</b> the first time (처음으로)<br>ⓒ <b>for</b> a living (생계로)<br>ⓓ <b>through</b> hard work (~을 통해)<br><br>at·off는 어떤 자리에도 의미상 안 들어감.</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">37</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">접속사 빈칸</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>37.</b> 다음 빈칸에 들어갈 접속사로 가장 알맞은 것은?</div>
+  <div class="q-passage">It was a stable job, but I didn't know <span class="q-blank">__________</span> I really enjoyed it.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>that</span><span class="c"><span class="num">②</span>because</span><span class="c"><span class="num">③</span>whether</span><span class="c"><span class="num">④</span>although</span><span class="c"><span class="num">⑤</span>since</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ whether (~인지 아닌지)</div>
+  <div class="ans-detail">"즐겼는지 아닌지 몰랐다"는 의미 → <b>whether/if</b>(~인지 아닌지). that은 단정적 사실, because/since는 이유, although는 양보로 의미 부적합.</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">38</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">부사 빈칸</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>38.</b> 다음 빈칸 (A), (B)에 들어갈 부사로 가장 알맞은 것은?</div>
+  <div class="q-passage">
+  <span class="q-blank">__(A)__</span>, I won first prize, and this gave me a chance to think about my life.<br>
+  <span class="q-blank">__(B)__</span>, I wanted to become a good photographer, so I started to learn more about photography.
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> Surprisingly / Suddenly</span>
+    <span class="c"><span class="num">②</span> Sadly / Slowly</span>
+    <span class="c"><span class="num">③</span> Frankly / Quietly</span>
+    <span class="c"><span class="num">④</span> Hopefully / Eventually</span>
+    <span class="c"><span class="num">⑤</span> Boldly / Carefully</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① Surprisingly / Suddenly</div>
+  <div class="ans-detail">(A) 1등 수상 → "Surprisingly(놀랍게도)" 본문 그대로<br>(B) 깨달음 후 사진작가가 되고 싶어진 갑작스러운 변화 → "Suddenly(갑자기)" 본문 그대로</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">39</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">시제 빈칸 (과거 vs 현재)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>39.</b> 다음 빈칸에 들어갈 동사 형태로 알맞은 것은?</div>
+  <div class="q-passage">After years of trial and error, I <span class="q-blank">______</span> better, and I <span class="q-blank">______</span> to do some part-time work as a photographer. Now, I <span class="q-blank">______</span> a professional photographer.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> got / began / am</span>
+    <span class="c"><span class="num">②</span> get / begin / am</span>
+    <span class="c"><span class="num">③</span> get / began / was</span>
+    <span class="c"><span class="num">④</span> got / begin / was</span>
+    <span class="c"><span class="num">⑤</span> got / beginning / am</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① got / began / am</div>
+  <div class="ans-detail">앞 두 빈칸은 <b>과거 사건</b>(trial and error 이후 단계 발전) → got, began.<br>마지막은 <b>Now</b>(현재) → am. 본문 시제 그대로 — 과거와 현재가 명확히 구분.</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">40</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">동사 빈칸 (의미 단어)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>40.</b> 다음 빈칸에 들어갈 가장 알맞은 동사는?</div>
+  <div class="q-passage">However, I never thought these things could <span class="q-blank">______</span> to a job.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>look</span><span class="c"><span class="num">②</span>lead</span><span class="c"><span class="num">③</span>say</span><span class="c"><span class="num">④</span>belong</span><span class="c"><span class="num">⑤</span>refer</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② lead — "lead to ~"(~로 이어지다)</div>
+  <div class="ans-detail">"이런 것들이 직업으로 이어질 수 있다고 생각 못 했다" → <b>lead to</b>가 정확. ④ belong to(~에 속하다)는 의미 다름.</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">41</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">관사·한정사</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>41.</b> 다음 빈칸에 들어갈 가장 알맞은 것은?</div>
+  <div class="q-passage">When I had to decide on <span class="q-blank">__(A)__</span> major in college, I chose engineering. After college, I got <span class="q-blank">__(B)__</span> job at <span class="q-blank">__(C)__</span> engineering company.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> a / a / a</span>
+    <span class="c"><span class="num">②</span> a / a / an</span>
+    <span class="c"><span class="num">③</span> the / the / the</span>
+    <span class="c"><span class="num">④</span> a / the / an</span>
+    <span class="c"><span class="num">⑤</span> the / a / a</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② a / a / an</div>
+  <div class="ans-detail">처음 언급되는 가산명사이므로 모두 부정관사. <b>(C) "engineering"의 첫 발음이 모음 /e/</b>이므로 <b>an engineering company</b>. (A)(B)는 자음 시작이라 a.</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">42</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">조동사·표현</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>42.</b> 다음 빈칸에 들어갈 가장 알맞은 표현은?</div>
+  <div class="q-passage">For the first time in many years, I <span class="q-blank">______</span> feel my heart beating fast.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>could</span><span class="c"><span class="num">②</span>must</span><span class="c"><span class="num">③</span>should</span><span class="c"><span class="num">④</span>have to</span><span class="c"><span class="num">⑤</span>used to</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① could (~할 수 있었다)</div>
+  <div class="ans-detail">"수년 만에 처음으로 ~ 느낄 수 있었다" — 과거의 능력·가능 <b>could</b>. must(추측·의무), should(권유), have to(필요), used to(과거 습관)는 의미 부적합.</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">43</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">어구 빈칸 (다중 단어)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>43.</b> 다음 빈칸 (A), (B), (C)에 들어갈 어구가 모두 바르게 짝지어진 것은?</div>
+  <div class="q-passage">
+  In fact, I didn't have a dream <span class="q-blank">__(A)__</span>.<br>
+  After years of <span class="q-blank">__(B)__</span>, I got better.<br>
+  Then one day, I made a bold decision. I quit my job and decided to take pictures <span class="q-blank">__(C)__</span>.
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> at all / trial and error / for a living</span>
+    <span class="c"><span class="num">②</span> in fact / try and fail / on living</span>
+    <span class="c"><span class="num">③</span> at last / first try / for life</span>
+    <span class="c"><span class="num">④</span> at all / fail and try / for living</span>
+    <span class="c"><span class="num">⑤</span> in all / trial and fail / for a life</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① at all / trial and error / for a living</div>
+  <div class="ans-detail"><b>본문 핵심 숙어 3개:</b><br>(A) <b>at all</b> = 전혀 (부정문에서 강조)<br>(B) <b>trial and error</b> = 시행착오 (고정 표현)<br>(C) <b>for a living</b> = 생계로 (관용 표현, "to live"가 아님)</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">44</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">의문사 빈칸</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>44.</b> 다음 빈칸 (A), (B)에 공통으로 들어갈 단어는?</div>
+  <div class="q-passage">First, follow your heart. Think about <span class="q-blank">__(A)__</span> you like to do and <span class="q-blank">__(B)__</span> makes you happy.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>that</span><span class="c"><span class="num">②</span>which</span><span class="c"><span class="num">③</span>what</span><span class="c"><span class="num">④</span>how</span><span class="c"><span class="num">⑤</span>why</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ what — 선행사 포함 관계대명사</div>
+  <div class="ans-detail">(A) "네가 하고 싶어 하는 <b>것</b>" / (B) "너를 행복하게 만드는 <b>것</b>" — 둘 다 선행사 없는 명사절 = <b>what</b>(= the thing(s) which).</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">45</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">동사구·시제 결합</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>45.</b> 다음 글의 빈칸 (A), (B), (C)에 들어갈 동사를 본문 흐름에 맞게 변형한 것은?</div>
+  <div class="q-passage">Today, I'm going to <span class="q-blank">__(A) (tell)__</span> you how I <span class="q-blank">__(B) (find)__</span> my dream and realized it. I hope my story can <span class="q-blank">__(C) (inspire)__</span> you.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> tell / found / inspire</span>
+    <span class="c"><span class="num">②</span> told / found / inspired</span>
+    <span class="c"><span class="num">③</span> telling / find / inspires</span>
+    <span class="c"><span class="num">④</span> tell / find / inspire</span>
+    <span class="c"><span class="num">⑤</span> tell / found / inspires</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① tell / found / inspire</div>
+  <div class="ans-detail">(A) be going to + <b>동사원형</b> tell<br>(B) 간접의문문 + 본동사 과거 found(realized와 시제 일치)<br>(C) 조동사 can + <b>동사원형</b> inspire</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">46</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">종합 — 단어 5개 모두 검증</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>46.</b> 다음 글의 빈칸에 들어갈 수 <b>없는</b> 단어를 모두 고르면? (순서 상관없음, 정답 2개)</div>
+  <div class="q-passage">
+  ⓐ I really wanted to do something that <span class="q-blank">______</span> me happy.<br>
+  ⓑ I quit my job and <span class="q-blank">______</span> to take pictures for a living.<br>
+  ⓒ I became a photographer <span class="q-blank">______</span> hard work.<br>
+  ⓓ I <span class="q-blank">______</span> hope you can find a dream.
+  </div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>made</span><span class="c"><span class="num">②</span>decided</span><span class="c"><span class="num">③</span>through</span><span class="c"><span class="num">④</span>truly</span><span class="c"><span class="num">⑤</span>finished</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ⑤ finished — 어디에도 안 들어감</div>
+  <div class="ans-detail"><b>각 빈칸 정답:</b><br>ⓐ made(사역동사) ✓<br>ⓑ decided(decided to V) ✓<br>ⓒ through(전치사) ✓<br>ⓓ truly(부사) ✓<br><br>finished는 어떤 빈칸에도 안 어울림. <em>"정답 2개"</em> 출제 가능성 시 함정 답으로 추가 1개를 의도적으로 비대칭 배치하기도 함 — 풀이 시 모든 자리 검증 필수.<br><br>※ <b>본 문항은 단일 정답이지만 "정답 2개"로 묻는 형식 연습용</b>. 실제 시험에서는 함정 답 2개를 만들기도 함.</div></div></details>
+</article>
+
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">47</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">결론문 변형 묶음 (Conclusion Cluster)</span><span class="q-pts">9점</span></div>
+  <div class="q-prompt"><b>47.</b> 다음은 윗글의 핵심 메시지를 약간씩 다른 표현으로 paraphrase한 3개의 결론문이다. 각 빈칸 (A)~(I)에 들어갈 가장 알맞은 단어를 본문에서 찾아 쓰시오. (각 1점, 총 9점)</div>
+
+  <div class="q-passage" style="background:#FFF8F0;border-left-color:var(--gold)">
+  <b style="color:var(--accent)">▶ 변형문 1 — Following Your Heart</b><br>
+  To <span class="q-blank">__(A)__</span> your dream, you must follow your <span class="q-blank">__(B)__</span> and be <span class="q-blank">__(C)__</span> enough to take chances when life-changing moments come.
+  </div>
+
+  <div class="q-passage" style="background:#FFF8F0;border-left-color:var(--gold)">
+  <b style="color:var(--accent)">▶ 변형문 2 — Through Hard Work</b><br>
+  Anyone who wants to <span class="q-blank">__(D)__</span> a dream needs both <span class="q-blank">__(E)__</span> work and the <span class="q-blank">__(F)__</span> to make decisions that will change their life.
+  </div>
+
+  <div class="q-passage" style="background:#FFF8F0;border-left-color:var(--gold)">
+  <b style="color:var(--accent)">▶ 변형문 3 — David's Lesson</b><br>
+  David Parker's story shows that <span class="q-blank">__(G)__</span> a stable job for something that makes you <span class="q-blank">__(H)__</span> requires bold <span class="q-blank">__(I)__</span> — and a willingness to face uncertainty.
+  </div>
+
+  <div class="answer-line" style="margin-top:12px">
+  ▸ (A) <span class="underline" style="min-width:80px"></span> &nbsp;
+  (B) <span class="underline" style="min-width:80px"></span> &nbsp;
+  (C) <span class="underline" style="min-width:80px"></span><br>
+  ▸ (D) <span class="underline" style="min-width:80px"></span> &nbsp;
+  (E) <span class="underline" style="min-width:80px"></span> &nbsp;
+  (F) <span class="underline" style="min-width:80px"></span><br>
+  ▸ (G) <span class="underline" style="min-width:80px"></span> &nbsp;
+  (H) <span class="underline" style="min-width:80px"></span> &nbsp;
+  (I) <span class="underline" style="min-width:80px"></span>
+  </div>
+
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: (A) realize / (B) heart / (C) bold / (D) pursue / (E) hard / (F) courage / (G) quitting (또는 leaving) / (H) happy / (I) decisions</div>
+  <div class="ans-detail">
+  <b>변형문 1 — "Follow your heart" 메시지 변환:</b><br>
+  ▸ (A) <em>realize</em> = 본문 "found my dream and <b>realized</b> it"<br>
+  ▸ (B) <em>heart</em> = 본문 "Follow your <b>heart</b>"<br>
+  ▸ (C) <em>bold</em> = 본문 "be <b>bold</b>" + "I made a <b>bold</b> decision"<br><br>
+
+  <b>변형문 2 — "Work hard" 메시지 변환:</b><br>
+  ▸ (D) <em>pursue</em> = 본문 "find a dream, <b>pursue</b> it" + "<b>Pursuing</b> a dream is not easy"<br>
+  ▸ (E) <em>hard</em> = 본문 "work <b>hard</b>" + "through <b>hard</b> work"<br>
+  ▸ (F) <em>courage</em> = 본문 "You need <b>courage</b> to make decisions"<br><br>
+
+  <b>변형문 3 — David의 행동 변환:</b><br>
+  ▸ (G) <em>quitting / leaving</em> = 본문 "I <b>quit</b> my job"<br>
+  ▸ (H) <em>happy</em> = 본문 "something that made me <b>happy</b>"<br>
+  ▸ (I) <em>decisions</em> = 본문 "make <b>decisions</b> that will change your life"<br><br>
+
+  <b>※ 출제 의도:</b><br>
+  본문의 핵심 단어가 paraphrase 표현 안에서도 일관되게 사용된다는 것을 확인. 단순 본문 암기가 아니라 <em>"본문 메시지를 다른 표현으로 만났을 때도 인식하는 능력"</em>을 측정.<br><br>
+
+  <b>※ 학습 효과:</b><br>
+  같은 의미를 3가지 다른 paraphrase로 학습하면 동의어·동의 구문이 자연스럽게 익혀짐.
+  </div></div></details>
+</article>
+
+
+<!-- ===== Section F: VOCAB ===== -->
+<div class="section-head" data-section-type="vocab" data-section-marker>
+  <div class="num-line">SECTION F · 어휘·숙어 · VOCABULARY · 13 ITEMS</div>
+  <h2>어휘·숙어 <span class="kor">영영풀이·다의어·구동사·관용표현·어미 변화·단어 가족 종합</span></h2>
+  <p class="desc">본문 핵심 단어의 정의·다의어·반의어·동의어 + <strong>본문 등장 숙어/관용 표현</strong>(lead to / for a living / at all / on vacation / take a chance 등) + <strong>어미 변화 단어쌍 (sensitive/sensible류) + 단복수 불규칙 + 단어 가족 변환</strong> 종합.</p>
+</div>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">48</span><span class="type-tag vocab">어휘</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">영영풀이 매칭</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>48.</b> 다음 영영풀이에 해당하는 단어가 본문에 등장하지 <b>않는</b> 것은?</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> staying the same, with no big changes or problems → <b>stable</b></span>
+    <span class="c"><span class="num">②</span> the main subject that a person studies in college → <b>major</b></span>
+    <span class="c"><span class="num">③</span> doing a sport or activity for money, as a job → <b>professional</b></span>
+    <span class="c"><span class="num">④</span> the ability to do something that frightens one → <b>courage</b></span>
+    <span class="c"><span class="num">⑤</span> a feeling of being relaxed and free from worry → <b>comfort</b></span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ⑤ comfort — 본문에 등장하지 않음 (L2 본문에 등장)</div>
+  <div class="ans-detail">①~④ 모두 본문 등장: <em>stable job / major in college / professional photographer / courage to make decisions</em>. ⑤ comfort는 L2 본문(Comfort Food)에 등장하므로 함정.</div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">49</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">영영풀이 → 단어 (십자말)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>49.</b> 영영풀이에 해당하는 단어로 다음 퍼즐을 풀이할 때, ⓐ~ⓓ에 들어갈 철자를 순서대로 배열한 것은?</div>
+  <div class="q-passage">
+<b>Across →</b><br>
+(1) C R ⓐ S P → firm but breaking easily into pieces<br>
+(2) ⓑ T A B L E → staying the same, with no big changes<br>
+(3) S A T ⓒ S F Y → to make someone feel happy by doing what he or she wants<br>
+(4) P ⓓ E L → the skin of a fruit or vegetable
+  </div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>ENPP</span><span class="c"><span class="num">②</span>ESTP</span><span class="c"><span class="num">③</span>INFP</span><span class="c"><span class="num">④</span>INTJ</span><span class="c"><span class="num">⑤</span>ISTP</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ⑤ I-S-T-P</div>
+  <div class="ans-detail">(1) CR<b>I</b>SP → ⓐ=I / (2) <b>S</b>TABLE → ⓑ=S / (3) SAT<b>I</b>SFY → ⓒ=I / (4) P<b>E</b>EL → ⓓ=E. 학교 프린트 어휘표 그대로.</div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">50</span><span class="type-tag vocab">어휘</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">다의어 쓰임 — 정답 2개 (시험 Q6 패턴)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>50.</b> 다음 중 본문에 사용된 단어와 보기의 단어가 <b>같은 의미</b>로 쓰인 것을 모두 고르면? (정답 2개)</div>
+  <div class="q-passage">
+  ▸ I chose engineering as my <u>major</u> in college.<br>
+  ▸ I never thought these things could <u>lead</u> to a job.<br>
+  ▸ For the first time, I could feel my heart <u>beating</u> fast.<br>
+  ▸ I made a <u>bold</u> decision to quit my job.<br>
+  ▸ I really wanted to do something that <u>made</u> me happy.
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> <u>major</u>: He plays a <u>major</u> role in the project.</span>
+    <span class="c"><span class="num">②</span> <u>lead</u>: The captain will <u>lead</u> his team to victory.</span>
+    <span class="c"><span class="num">③</span> <u>beat</u>: My favorite team will <u>beat</u> the champion.</span>
+    <span class="c"><span class="num">④</span> <u>bold</u>: She is <u>bold</u> enough to challenge the rules.</span>
+    <span class="c"><span class="num">⑤</span> <u>make</u>: This music <u>makes</u> me feel relaxed.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ④, ⑤ (둘 다 같은 의미)</div>
+  <div class="ans-detail"><b>각 보기 검증 (다의어 함정):</b><br><br>
+  ① <em>major</em> ✗ — 본문 "전공"(명사) vs 보기 "주된"(형용사)<br>
+  ② <em>lead</em> ✗ — 본문 "lead to ~"(~로 이어지다) vs 보기 "이끌다"(사람·팀)<br>
+  ③ <em>beat</em> ✗ — 본문 "(심장이) 뛰다" vs 보기 "이기다, 무찌르다"<br>
+  ④ <em>bold</em> ✓ — 본문 "과감한, 대담한" = 보기 "과감한, 대담한" (동일)<br>
+  ⑤ <em>make</em> ✓ — 본문 "사역동사 (~하게 만들다)" = 보기 "사역동사 (~하게 만들다)" (동일)<br><br>
+  <b>※ 시험 Q6 패턴 그대로:</b> 같은 스펠링이라도 의미가 다르면 오답. 시험에서 가장 자주 출제되는 다의어 함정 + 정답 2개 결합형.<br><br>
+  <b>※ 자주 헷갈리는 다의어 (필수 정리):</b><br>
+  ▸ <b>major</b>: 명사 "전공" / 형용사 "주된, 중요한"<br>
+  ▸ <b>lead (V)</b>: "lead to N"(~로 이어지다) / "lead 사람"(이끌다)<br>
+  ▸ <b>beat</b>: "(심장이) 뛰다" / "(달걀을) 휘젓다" / "(상대를) 이기다"<br>
+  ▸ <b>realize</b>: "깨닫다" / "(꿈·계획을) 실현하다"<br>
+  ▸ <b>fix</b>: "고치다, 수리하다" / "(시간·날짜를) 정하다"
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">51</span><span class="type-tag vocab">숙어</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">숙어 — lead to / decide on</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>51.</b> 다음 빈칸에 들어갈 가장 알맞은 표현은?</div>
+  <div class="q-passage">
+  ⓐ I never thought these things could <span class="q-blank">______</span> a job.<br>
+  ⓑ When I had to <span class="q-blank">______</span> a major in college, I chose engineering.
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> lead to / decide on</span>
+    <span class="c"><span class="num">②</span> lead with / decide for</span>
+    <span class="c"><span class="num">③</span> belong to / decide with</span>
+    <span class="c"><span class="num">④</span> bring of / decide of</span>
+    <span class="c"><span class="num">⑤</span> lead at / decide at</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① lead to / decide on</div>
+  <div class="ans-detail"><b>본문 등장 숙어:</b><br>▸ <b>lead to</b> ~ = ~로 이어지다 / ~를 야기하다<br>▸ <b>decide on</b> ~ = ~을 (선택해서) 결정하다<br>※ decide와 decide on의 차이: decide + to V/that절(결정하다) vs decide on + 명사(선택)</div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">52</span><span class="type-tag vocab">숙어</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">숙어 — for a living / on vacation</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>52.</b> 다음 우리말과 일치하도록 빈칸에 들어갈 알맞은 어구는?</div>
+  <div class="q-passage">
+  ⓐ Everything changed when I went <span class="q-blank">______</span> to Iceland one winter. (휴가로)<br>
+  ⓑ I quit my job and decided to take pictures <span class="q-blank">______</span>. (생계로)
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> on vacation / for a living</span>
+    <span class="c"><span class="num">②</span> in vacation / for living</span>
+    <span class="c"><span class="num">③</span> at vacation / on a living</span>
+    <span class="c"><span class="num">④</span> on vacation / on a life</span>
+    <span class="c"><span class="num">⑤</span> on holiday / by a living</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① on vacation / for a living</div>
+  <div class="ans-detail"><b>핵심 관용 표현:</b><br>▸ <b>go on vacation</b> = 휴가를 가다 (전치사 on 고정)<br>▸ <b>for a living</b> = 생계로, 생업으로 (관용 표현, "to live"가 아님)<br>※ 동의 표현: go on holiday(영국식), make a living, earn a living</div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">53</span><span class="type-tag vocab">숙어</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">숙어 — at all / in fact / for the first time</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>53.</b> 다음 우리말과 일치하도록 빈칸에 들어갈 표현이 모두 바르게 짝지어진 것은?</div>
+  <div class="q-passage">
+  ⓐ I never thought these things could lead to a job. <span class="q-blank">__(A)__</span>, I didn't have a dream <span class="q-blank">__(B)__</span>. <span style="color:var(--muted)">(사실은 / 전혀)</span><br>
+  ⓑ <span class="q-blank">__(C)__</span>, I could feel my heart beating fast. <span style="color:var(--muted)">(처음으로)</span>
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> In fact / at all / For the first time</span>
+    <span class="c"><span class="num">②</span> By fact / not at all / On the first time</span>
+    <span class="c"><span class="num">③</span> In fact / not all / At first</span>
+    <span class="c"><span class="num">④</span> Of fact / at all / In first time</span>
+    <span class="c"><span class="num">⑤</span> Indeed / for all / Firstly</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① In fact / at all / For the first time</div>
+  <div class="ans-detail"><b>본문 핵심 관용 표현:</b><br>▸ <b>in fact</b> = 사실은 (앞 내용 강조·부연)<br>▸ <b>(not) ~ at all</b> = 전혀 ~않다 (부정 강조)<br>▸ <b>for the first time</b> = 처음으로 (관용 어구, in many years와 자주 결합)</div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">54</span><span class="type-tag vocab">숙어</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">구동사 — make/take a 명사</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>54.</b> 본문에 등장하는 표현으로 빈칸을 채울 때 가장 알맞은 것은?</div>
+  <div class="q-passage">
+  ⓐ Then one day, I <span class="q-blank">______</span> a bold decision. <span style="color:var(--muted)">(과감한 결정을 내렸다)</span><br>
+  ⓑ I was afraid but I <span class="q-blank">______</span> a chance. <span style="color:var(--muted)">(한번 시도해 봤다)</span>
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> made / took</span>
+    <span class="c"><span class="num">②</span> did / did</span>
+    <span class="c"><span class="num">③</span> got / had</span>
+    <span class="c"><span class="num">④</span> took / made</span>
+    <span class="c"><span class="num">⑤</span> picked / picked</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① made / took</div>
+  <div class="ans-detail"><b>핵심 동사 + 명사 결합 (collocation):</b><br>▸ <b>make a decision</b> = 결정하다 (do a decision ✗)<br>▸ <b>take a chance</b> = 위험을 무릅쓰다, 한번 시도하다 (have/get a chance와는 다름)<br><br>※ 비슷한 표현: make a choice, make a mistake, take a risk, take a step</div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">55</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">동의어 (amazing)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>55.</b> 다음 밑줄 친 단어와 의미가 가장 가까운 것은?</div>
+  <div class="q-passage">The lights were <u>amazing</u>, and I took many pictures of the dancing lights in the sky.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>boring</span><span class="c"><span class="num">②</span>terrible</span><span class="c"><span class="num">③</span>incredible</span><span class="c"><span class="num">④</span>ordinary</span><span class="c"><span class="num">⑤</span>typical</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ incredible (믿을 수 없을 정도의, 굉장한)</div>
+  <div class="ans-detail">amazing = wonderful, astonishing, breathtaking, <b>incredible</b>. ① boring(지루한), ② terrible(끔찍한)는 반의어 / ④ ordinary(평범한), ⑤ typical(전형적)은 의미 무관.</div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">56</span><span class="type-tag vocab">어휘</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">반의어 (bold ↔ ?)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>56.</b> 다음 밑줄 친 단어와 의미가 <b>반대</b>인 것은?</div>
+  <div class="q-passage">Then one day, I made a <u>bold</u> decision. I quit my job and decided to take pictures for a living.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>brave</span><span class="c"><span class="num">②</span>daring</span><span class="c"><span class="num">③</span>fearful</span><span class="c"><span class="num">④</span>confident</span><span class="c"><span class="num">⑤</span>courageous</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ fearful (두려워하는)</div>
+  <div class="ans-detail"><b>bold</b>(과감한, 용감한)의 반의어 = <b>fearful</b>(두려워하는), timid(소심한), cautious(조심스러운).<br>나머지는 모두 동의어: brave/daring/confident/courageous = 용감한·자신 있는.<br><br>※ 본문 핵심 메시지 "Be bold(과감해져라)"의 반의어 인식.</div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">57</span><span class="type-tag vocab">숙어</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">관용표현 종합 (정답 2개)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>57.</b> 본문에 사용된 표현과 의미가 가장 가까운 것을 <b>모두</b> 고르면? (정답 2개)</div>
+  <div class="q-passage">
+  ▸ I want to do something that makes me happy <u>for a living</u>.<br>
+  ▸ I won first prize, <u>and this gave me a chance to think about my life</u>.
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> for a living = as my main job to earn money</span>
+    <span class="c"><span class="num">②</span> for a living = while I am still alive</span>
+    <span class="c"><span class="num">③</span> gave me a chance to think = forced me to give up thinking</span>
+    <span class="c"><span class="num">④</span> gave me a chance to think = let me reflect on my life</span>
+    <span class="c"><span class="num">⑤</span> for a living = for a vacation life</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ①, ④</div>
+  <div class="ans-detail">▸ <b>for a living</b> = ~을 직업으로 하여, 생계로 = "as one's main job to earn money" ✓<br>▸ <b>give A a chance to V</b> = A에게 ~할 기회를 주다 = "let A reflect/do" ✓<br><br>② "살아 있는 동안"은 "while alive" 의미로 다름 / ③ 정반대(생각을 강요하지 않음, 기회를 줌) / ⑤ "휴가 인생"은 황당한 의미.</div></div></details>
+</article>
+
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">58</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">어미 변화 단어 — sensitive/sensible류</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>58.</b> 다음 빈칸에 들어갈 단어로 가장 알맞은 것을 짝지은 것은? (어근은 같지만 접미사에 따라 의미가 다른 단어쌍)</div>
+  <div class="q-passage">
+  ⓐ David Parker quit a stable job for something that made him happy. His decision was very <span class="q-blank">______</span>. <span style="color:var(--muted)">(분별 있는, 현명한)</span><br>
+  ⓑ He was <span class="q-blank">______</span> to the beauty of the Northern Lights, and felt his heart beating fast. <span style="color:var(--muted)">(민감한, 잘 느끼는)</span>
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> sensitive / sensible</span>
+    <span class="c"><span class="num">②</span> sensible / sensitive</span>
+    <span class="c"><span class="num">③</span> sensible / sensible</span>
+    <span class="c"><span class="num">④</span> sensitive / sensitive</span>
+    <span class="c"><span class="num">⑤</span> sensitive / sensational</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② sensible (분별 있는) / sensitive (민감한)</div>
+  <div class="ans-detail"><b>어근 sense에서 파생된 단어쌍:</b><br>
+  ▸ <b>sensible</b> = 분별 있는, 현명한, 합리적인 (≈ wise, reasonable)<br>
+  ▸ <b>sensitive</b> = 민감한, 예민한, 잘 느끼는 (≈ easily affected)<br><br>
+  ⓐ "그의 결정은 매우 <em>현명했다</em>" → sensible<br>
+  ⓑ "그는 오로라의 아름다움에 <em>민감했다</em>" → sensitive<br><br>
+  <b>※ 같은 패턴의 어미 변화 단어쌍 (외워두기 필수):</b><br>
+  ▸ <b>economic</b>(경제의) / <b>economical</b>(절약하는, 알뜰한)<br>
+  ▸ <b>historic</b>(역사적으로 중요한) / <b>historical</b>(역사의, 역사에 관한)<br>
+  ▸ <b>considerate</b>(사려 깊은) / <b>considerable</b>(상당한, 많은)<br>
+  ▸ <b>respectful</b>(존중하는) / <b>respectable</b>(존경할 만한) / <b>respective</b>(각각의)<br>
+  ▸ <b>imaginary</b>(가상의) / <b>imaginative</b>(상상력 풍부한) / <b>imaginable</b>(상상할 수 있는)<br>
+  ▸ <b>memorable</b>(기억할 만한) / <b>memorial</b>(추모의)<br>
+  ▸ <b>successful</b>(성공적인) / <b>successive</b>(연속적인)
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">59</span><span class="type-tag vocab">어휘</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">단어 가족 변환 (품사 변환)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>59.</b> 본문에 사용된 단어의 품사 변환이 <b>잘못된</b> 것은?</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> inspire (동사: 영감을 주다) → inspiration (명사: 영감) → inspiring (형용사: 영감을 주는)</span>
+    <span class="c"><span class="num">②</span> realize (동사: 깨닫다, 실현하다) → realization (명사: 깨달음, 실현) → real (형용사: 진짜의)</span>
+    <span class="c"><span class="num">③</span> succeed (동사: 성공하다) → success (명사: 성공) → successful (형용사: 성공적인)</span>
+    <span class="c"><span class="num">④</span> decide (동사: 결정하다) → decision (명사: 결정) → <u>decisive (형용사: 결정적인)</u> → <u>decisively (부사: 우유부단하게)</u></span>
+    <span class="c"><span class="num">⑤</span> photograph (동사: 사진 찍다) → photographer (명사: 사진작가) → photographic (형용사: 사진의)</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ④ decisively는 "<b>단호하게, 결정적으로</b>"이지 "우유부단하게"가 아님</div>
+  <div class="ans-detail">
+  <b>각 단어 가족 검증:</b><br>
+  ① inspire / inspiration / inspiring ✓<br>
+  ② realize / realization / real ✓ (※ realistic도 형용사로 가능)<br>
+  ③ succeed / success / successful ✓<br>
+  ④ decide / decision / decisive ✓ — 단, <em>decisively</em> = "단호하게, 결정적으로" (반의어: indecisively = 우유부단하게) ✗<br>
+  ⑤ photograph / photographer / photographic ✓<br><br>
+  <b>※ 본문 단어 가족 변환표 (Lesson 1 단어 정리):</b><br>
+  • inspire ↔ inspiration ↔ inspiring/inspired ↔ inspirational<br>
+  • realize ↔ realization ↔ real/realistic ↔ really/realistically<br>
+  • photograph ↔ photographer/photography/photo ↔ photographic<br>
+  • amaze ↔ amazement ↔ amazing/amazed ↔ amazingly<br>
+  • profession ↔ professional ↔ professional ↔ professionally<br>
+  • succeed ↔ success ↔ successful/successive ↔ successfully<br>
+  • decide ↔ decision ↔ decisive ↔ <b>decisively (단호하게)</b><br>
+  • courage ↔ — ↔ courageous ↔ courageously<br>
+  • stable ↔ stability ↔ stable ↔ stably
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">60</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">단복수 불규칙 변화</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>60.</b> 다음 단수형-복수형 짝 중 <b>잘못된</b> 것을 모두 고르면? (정답 2개)</div>
+  <div class="q-choices horz">
+    <span class="c"><span class="num">①</span> child — children</span>
+    <span class="c"><span class="num">②</span> foot — foots</span>
+    <span class="c"><span class="num">③</span> tooth — teeth</span>
+    <span class="c"><span class="num">④</span> mouse — mouses</span>
+    <span class="c"><span class="num">⑤</span> person — people</span>
+    <span class="c"><span class="num">⑥</span> woman — women</span>
+    <span class="c"><span class="num">⑦</span> datum — data</span>
+    <span class="c"><span class="num">⑧</span> criterion — criteria</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② foot → <b>feet</b> (foots ✗) / ④ mouse → <b>mice</b> (mouses ✗ ※ 컴퓨터 마우스 의미일 때만 mouses 가능)</div>
+  <div class="ans-detail">
+  <b>영어의 불규칙 복수형 (필수 암기):</b><br><br>
+  <b>모음 변화형:</b><br>
+  ▸ foot → <b>feet</b> · tooth → <b>teeth</b> · goose → <b>geese</b> · man → <b>men</b> · woman → <b>women</b><br><br>
+  <b>-en/-ren 형:</b><br>
+  ▸ child → <b>children</b> · ox → <b>oxen</b><br><br>
+  <b>완전 변화형:</b><br>
+  ▸ mouse → <b>mice</b> (쥐) · person → <b>people</b><br><br>
+  <b>외래어형 (라틴/그리스어 기원):</b><br>
+  ▸ datum → <b>data</b> · medium → <b>media</b> · criterion → <b>criteria</b> · phenomenon → <b>phenomena</b> · analysis → <b>analyses</b> · crisis → <b>crises</b> · basis → <b>bases</b><br><br>
+  <b>※ 함정:</b> mouse(쥐)의 복수는 mice이지만, 컴퓨터 마우스는 mice/mouses 둘 다 허용됨. 일반적으로 시험에서는 <b>mice</b>가 정답.<br><br>
+  <b>※ 단복수 동일형 (참고):</b> sheep, deer, fish, species, series, means
+  </div></div></details>
+</article>
+
+
+<!-- ===== Section G: WRITING ===== -->
+<div class="section-head" data-section-type="writing" data-section-marker>
+  <div class="num-line">SECTION G · 서술형 · WRITING · 3 ITEMS</div>
+  <h2>서술형 배열영작 <span class="kor">주제와 어울리는 핵심 문장 영작 (문법 2가지 이상 결합)</span></h2>
+  <p class="desc">본문에서 <strong>주제(꿈·용기·행복)와 어울리고 + 문법 2가지 이상이 결합된</strong> 핵심 문장 3개를 골라 단어 배열 영작 출제. 각 문장의 문법 포인트는 학습 자료의 핵심 패턴.</p>
+</div>
+
+<article class="q-card" data-type="writing">
+  <div class="q-meta"><span class="q-num">61</span><span class="type-tag writing">서술형</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">to부정사 형용사적 + 주격 관계대명사</span><span class="q-pts">5점</span></div>
+  <div class="q-prompt"><b>61.</b> &lt;보기&gt;의 단어들을 모두 사용하여 우리말 의미에 맞게 영작하시오. (단, 한 단어를 두 번 이상 쓰지 말 것)</div>
+  <div class="word-bank"><b>&lt;우리말&gt;</b> 너는 너의 인생을 바꿀 결정을 하기 위해 용기가 필요해.<br><br>
+  <b>&lt;보기&gt;</b> ( <b>that / make / will / to / change / courage / decisions</b> )</div>
+  <div class="answer-line">
+  ⇒ You need <span class="underline">①</span> <span class="underline">②</span> <span class="underline">③</span> <span class="underline">④</span> <span class="underline">⑤</span> <span class="underline">⑥</span> <span class="underline">⑦</span> your life.
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: You need <b>courage to make decisions that will change</b> your life.</div>
+  <div class="ans-detail"><b>핵심 결합 문법 2가지:</b><br>① <b>to부정사 형용사적 용법</b>: courage <b>to make decisions</b> (결정을 할 용기)<br>② <b>주격 관계대명사 that</b>: decisions <b>that will change</b> your life (인생을 바꿀 결정들)<br><br><b>각 자리:</b><br>① courage / ② to / ③ make / ④ decisions / ⑤ that / ⑥ will / ⑦ change<br><br><b>※ 변형 가능:</b> that ↔ which 둘 다 가능 (사물 선행사 + 주격). 단, 보기에 that만 있으므로 that 사용.</div></div></details>
+</article>
+
+<article class="q-card" data-type="writing">
+  <div class="q-meta"><span class="q-num">62</span><span class="type-tag writing">서술형</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">want + to부정사 + 주격 관계대명사 + 사역동사 make</span><span class="q-pts">5점</span></div>
+  <div class="q-prompt"><b>62.</b> &lt;보기&gt;의 단어들을 모두 사용하여 우리말 의미에 맞게 영작하시오. (단어 추가·변형 불가)</div>
+  <div class="word-bank"><b>&lt;우리말&gt;</b> 나는 나를 행복하게 만드는 어떤 것을 정말 하고 싶었다.<br><br>
+  <b>&lt;보기&gt;</b> ( <b>I / really / wanted / to / do / something / that / made / me / happy</b> )</div>
+  <div class="answer-line">
+  ⇒ <span class="underline" style="min-width:380px"></span>.
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <b>I really wanted to do something that made me happy.</b></div>
+  <div class="ans-detail"><b>핵심 결합 문법 3가지(2가지 이상 충족):</b><br>① <b>want + to부정사</b>: wanted <b>to do</b><br>② <b>주격 관계대명사 that</b>: something <b>that made</b> me happy<br>③ <b>사역동사 make + 목적어 + 형용사</b>: made <b>me happy</b> (happily X, to be happy X)<br><br><b>구조:</b> [I really wanted] + [to do something] + [that made me happy]<br>주절(과거) — to부정사구 — 관계대명사절(과거 시제 일치)<br><br><b>※ 자주 하는 실수:</b><br>- "made me happily" — 사역동사는 부사 X, 형용사 ㅇ<br>- "made me to be happy" — 사역동사 + to부정사 X<br>- "something made me happy" — 주격 that 빠뜨리면 비문</div></div></details>
+</article>
+
+<article class="q-card" data-type="writing">
+  <div class="q-meta"><span class="q-num">63</span><span class="type-tag writing">서술형</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">지각동사 + 분사 + 부사구</span><span class="q-pts">5점</span></div>
+  <div class="q-prompt"><b>63.</b> &lt;보기&gt;의 단어들을 모두 사용하여 우리말 의미에 맞게 영작하시오. (단, 필요시 단어 변형 가능)</div>
+  <div class="word-bank"><b>&lt;우리말&gt;</b> 수년 만에 처음으로, 나는 내 심장이 빠르게 뛰는 것을 느낄 수 있었다.<br><br>
+  <b>&lt;보기&gt;</b> ( <b>could / for / fast / many / I / years / first / in / beat / feel / the / time / heart / my</b> )</div>
+  <div class="answer-line">
+  ⇒ <span class="underline" style="min-width:550px"></span>.
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <b>For the first time in many years, I could feel my heart beating fast.</b></div>
+  <div class="ans-detail"><b>핵심 결합 문법 2가지:</b><br>① <b>지각동사 feel + 목적어 + 현재분사(beating)</b>: feel my heart <b>beating</b> (지속·진행 강조). 동사원형 beat도 가능하지만 보기에서 변형 가능하므로 beating이 자연스러움.<br>② <b>관용 부사구</b>: <b>For the first time</b> (처음으로) + <b>in many years</b> (수년 만에)<br><br><b>구조:</b> [부사구 — For the first time in many years] + [주절 — I could feel] + [목적어 — my heart] + [현재분사 — beating fast]<br><br><b>※ 자주 하는 실수:</b><br>- "feel my heart to beat fast" — 지각동사 + to부정사 X<br>- "In the first time" — 관용구는 <b>For</b> the first time<br>- "many years for" — 어순 도치 함정</div></div></details>
+</article>
+
+
+<!-- ===== END OF QUESTIONS ===== -->
+
+
+</div>
+
+<div class="made-by">
+  <div>목동서로영어학원 — Passage-Based Practice Set</div>
+  <div class="credit">MOKDONG SEORO ENGLISH ACADEMY · 0505.co.kr</div>
+</div>
+
+<script>
+  document.querySelectorAll('.nav-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const type = tab.dataset.type;
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelectorAll('.q-card').forEach(card => {
+        card.classList.toggle('hidden', !(type === 'all' || card.dataset.type === type));
+      });
+      document.querySelectorAll('.section-head[data-section-type]').forEach(sh => {
+        const sectType = sh.dataset.sectionType;
+        sh.classList.toggle('hidden', !(type === 'all' || sectType === type));
+      });
+      const firstVisible = document.querySelector('.q-card:not(.hidden), .section-head:not(.hidden)[data-section-type]');
+      if (firstVisible && type !== 'all') {
+        const navHeight = document.querySelector('.type-nav-wrap').offsetHeight;
+        const top = firstVisible.getBoundingClientRect().top + window.scrollY - navHeight - 20;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
