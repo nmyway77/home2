@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>지문 기반 유형별 문제 — Word Origins: Shampoo & Robot (목동중 3-1)</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+  :root {
+    --navy-950: #0A1E3A; --navy-900: #142845; --navy-800: #1F3354; --navy-700: #2A3F66;
+    --gold: #C99B4E; --gold-light: #E4C589;
+    --cream: #F5EFE0; --paper: #FAF7F2; --line: #E8E2D5;
+    --ink: #1A1612; --muted: #6B6457; --slate-400: #94a3b8; --accent: #B8853F;
+    --t-grammar: #3B5BBF; --t-pronoun: #6B4FBF; --t-reading: #2F8C7C;
+    --t-context: #BF5C3B; --t-cloze: #8C7A2F; --t-vocab: #BF3B6F; --t-writing: #2F5C8C;
+  }
+  * { box-sizing: border-box; }
+  html, body { overflow-x: hidden; max-width: 100vw; }
+  body { background: var(--paper); color: var(--ink); margin: 0; font-family: 'Pretendard Variable', sans-serif; line-height: 1.7; }
+  img, svg, video, iframe { max-width: 100%; height: auto; }
+
+  .hero { background: linear-gradient(180deg, var(--navy-950) 0%, var(--navy-900) 100%); color: var(--cream); padding: 56px 36px 44px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: 0; right: 0; width: 50%; height: 100%; background: radial-gradient(ellipse at right, rgba(228,197,137,0.08), transparent 70%); pointer-events: none; }
+  .hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+  .kicker { font-family: 'Playfair Display', serif; font-size: 11px; font-weight: 800; letter-spacing: 0.32em; color: var(--gold); text-transform: uppercase; margin-bottom: 16px; }
+  .hero h1 { font-family: 'Fraunces', 'Playfair Display', serif; font-weight: 900; font-size: clamp(28px, 5vw, 44px); line-height: 1.12; margin: 0 0 14px; color: var(--gold-light); letter-spacing: -0.02em; }
+  .hero h1 em { font-style: italic; color: var(--cream); font-weight: 400; }
+  .hero .lead { font-size: 14px; color: rgba(245,239,224,0.78); max-width: 720px; line-height: 1.65; }
+  .hero .lead b { color: var(--gold-light); font-weight: 700; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+  .hero-meta .meta-tag { background: rgba(228,197,137,0.1); border: 1px solid rgba(228,197,137,0.25); color: var(--gold-light); padding: 6px 13px; border-radius: 999px; font-family: 'Pretendard Variable', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; }
+
+  .type-nav-wrap { background: var(--navy-950); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(228,197,137,0.15); }
+  .type-nav { max-width: 1100px; margin: 0 auto; padding: 0 36px; display: flex; gap: 0; overflow-x: auto; align-items: center; }
+  .nav-color-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+  .nav-tab { background: transparent; border: none; color: var(--slate-400); padding: 14px 16px; cursor: pointer; font-family: 'Pretendard Variable', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; border-bottom: 3px solid transparent; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 7px; }
+  .nav-tab:hover { color: var(--gold-light); }
+  .nav-tab.active { color: var(--gold-light); border-bottom-color: var(--gold); }
+  .nav-tab .nav-count { font-family: 'JetBrains Mono', monospace; font-size: 10px; background: rgba(228,197,137,0.15); color: var(--gold-light); padding: 2px 6px; border-radius: 4px; font-weight: 700; }
+  .nav-tab.active .nav-count { background: var(--gold); color: var(--navy-950); }
+
+  .nav-print { background: transparent; border: none; color: var(--slate-400); padding: 14px 8px 14px 4px; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.18s ease; display: inline-flex; align-items: center; margin-right: 6px; border-left: 1px dotted rgba(228,197,137,0.18); }
+  .nav-print:hover { color: var(--gold-light); transform: translateY(-1px); }
+  .nav-print:active { transform: translateY(0); }
+  .nav-print svg { width: 15px; height: 15px; fill: currentColor; }
+  .nav-print[data-print-type="all"] { border-left: none; }
+
+  .print-toolbar { background: linear-gradient(180deg, #FAF7F2 0%, #FFFFFF 100%); border-bottom: 1px solid var(--line); }
+  .print-toolbar-inner { max-width: 1100px; margin: 0 auto; padding: 12px 36px; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-family: 'Pretendard Variable', sans-serif; }
+  .pt-label { font-family: 'Playfair Display', serif; font-size: 11px; letter-spacing: 0.18em; color: var(--accent); font-weight: 800; text-transform: uppercase; }
+  .pt-btn { background: white; border: 1px solid var(--gold); color: var(--navy-950); padding: 6px 14px; font-family: 'Pretendard Variable', sans-serif; font-size: 12px; font-weight: 700; border-radius: 999px; cursor: pointer; transition: all 0.18s ease; }
+  .pt-btn:hover { background: var(--gold); color: white; }
+  .pt-btn.active { background: var(--navy-950); color: var(--gold-light); border-color: var(--navy-950); }
+  .pt-hint { font-size: 11.5px; color: var(--muted); font-weight: 500; line-height: 1.5; flex: 1; min-width: 200px; }
+  .pt-hint b { color: var(--ink); font-weight: 800; }
+  .pt-icon { width: 11px; height: 11px; fill: var(--accent); vertical-align: -1px; margin: 0 2px; }
+
+  .passage-box { background: var(--paper); border: 1px solid var(--line); margin-top: 36px; border-radius: 4px; }
+  .passage-box summary { list-style: none; cursor: pointer; padding: 18px 26px; display: flex; align-items: center; justify-content: space-between; font-family: 'Pretendard Variable', sans-serif; font-weight: 800; font-size: 15px; color: var(--ink); background: linear-gradient(180deg, #FAF7F2 0%, #FFFFFF 100%); border-bottom: 1px solid transparent; border-radius: 4px; }
+  .passage-box[open] summary { border-bottom: 1px solid var(--line); border-radius: 4px 4px 0 0; }
+  .passage-box summary::-webkit-details-marker { display: none; }
+  .passage-box summary .toggle-mark { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); letter-spacing: 0.08em; font-weight: 700; }
+  .passage-box summary .toggle-mark::before { content: '＋ 펼치기'; }
+  .passage-box[open] summary .toggle-mark::before { content: '－ 접기'; }
+  .passage-text { padding: 24px 30px 28px; font-family: 'Inter', 'Pretendard Variable', sans-serif; font-size: 14.5px; line-height: 1.78; color: var(--ink); }
+  .passage-text p { margin: 0 0 14px; }
+  .passage-text .ko { display: block; color: var(--muted); font-size: 12.5px; font-family: 'Pretendard Variable', sans-serif; margin-top: 4px; line-height: 1.6; }
+  .passage-text .topic { font-family: 'Fraunces', serif; font-style: italic; font-weight: 700; font-size: 17px; color: var(--accent); margin: 22px 0 6px; }
+  .passage-text b { color: var(--accent); font-weight: 700; }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 8px 36px 60px; }
+
+  .section-head { margin: 56px 0 24px; padding: 22px 26px 18px; background: linear-gradient(180deg, var(--navy-950) 0%, var(--navy-900) 100%); color: var(--cream); border-radius: 6px; border-left: 4px solid var(--gold); }
+  .section-head .num-line { font-family: 'Playfair Display', serif; font-size: 11px; letter-spacing: 0.32em; color: var(--gold); margin-bottom: 8px; font-weight: 800; text-transform: uppercase; }
+  .section-head h2 { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 800; margin: 0 0 6px; color: var(--gold-light); letter-spacing: -0.01em; }
+  .section-head h2 .kor { font-size: 15px; color: var(--cream); font-weight: 600; margin-left: 10px; }
+  .section-head .desc { font-size: 12.5px; color: rgba(245,239,224,0.7); line-height: 1.55; }
+  .section-head .desc b { color: var(--gold-light); font-weight: 700; }
+
+  .q-card { background: white; border: 1px solid var(--line); border-radius: 6px; padding: 22px 26px 18px; margin-bottom: 18px; box-shadow: 0 1px 2px rgba(20,40,69,0.04); position: relative; }
+  .q-card.hidden { display: none; }
+  .q-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px dashed var(--line); }
+  .q-num { font-family: 'Fraunces', 'Playfair Display', serif; font-size: 22px; font-weight: 800; color: var(--navy-950); margin-right: 4px; line-height: 1; }
+  .type-tag { font-family: 'Pretendard Variable', sans-serif; font-size: 10.5px; padding: 3px 8px; border-radius: 3px; color: white; font-weight: 700; letter-spacing: 0.04em; }
+  .type-tag.grammar { background: var(--t-grammar); }
+  .type-tag.pronoun { background: var(--t-pronoun); }
+  .type-tag.reading { background: var(--t-reading); }
+  .type-tag.context { background: var(--t-context); }
+  .type-tag.cloze   { background: var(--t-cloze); }
+  .type-tag.vocab   { background: var(--t-vocab); }
+  .type-tag.writing { background: var(--t-writing); }
+  .var-pill { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; padding: 2px 7px; border-radius: 3px; font-weight: 600; letter-spacing: 0.05em; }
+  .var-pill.var-light { background: #E4F1E5; color: #2F6B3E; border: 1px solid #B8D9BE; }
+  .var-pill.var-mod { background: #FBF3D9; color: #8C7A2F; border: 1px solid #E8D9A4; }
+  .var-pill.var-major { background: #F5DCE0; color: #A02E48; border: 1px solid #DBA9B3; }
+  .q-focus { font-family: 'Pretendard Variable', sans-serif; font-size: 12px; font-weight: 600; color: var(--muted); }
+  .q-pts { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--accent); background: var(--cream); padding: 3px 9px; border-radius: 3px; }
+  .q-prompt { font-family: 'Pretendard Variable', sans-serif; font-size: 14px; font-weight: 600; color: var(--ink); margin: 0 0 12px; line-height: 1.65; }
+  .q-prompt b { color: var(--navy-950); font-weight: 800; }
+  .q-passage { padding: 14px 18px; background: var(--paper); border: 1px solid var(--line); border-left: 3px solid var(--gold); margin: 10px 0 14px; font-size: 14px; line-height: 1.7; font-family: 'Inter', 'Pretendard Variable', sans-serif; word-break: break-word; overflow-wrap: anywhere; }
+  .q-passage em { color: var(--accent); font-style: italic; font-family: 'Fraunces', serif; font-weight: 600; }
+  .q-blank { display: inline-block; min-width: 60px; border-bottom: 1.5px solid var(--accent); color: var(--accent); font-weight: 700; padding: 0 6px; text-align: center; }
+  .q-choices { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 12px 0 6px; padding: 0; list-style: none; }
+  .q-choices.horz5 .c { flex: 1 1 0; min-width: 80px; }
+  .q-choices .c { font-size: 13.5px; line-height: 1.55; padding: 4px 0; word-break: break-word; overflow-wrap: anywhere; font-family: 'Inter', 'Pretendard Variable', sans-serif; }
+  .q-choices .c .num { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--accent); margin-right: 5px; }
+  .word-bank { padding: 13px 17px; background: #fafaf3; border: 1px dashed #b8a878; border-radius: 4px; margin: 10px 0 12px; font-size: 13.5px; line-height: 1.7; font-family: 'Inter', 'Pretendard Variable', sans-serif; }
+  .word-bank b { color: var(--navy-950); font-weight: 800; }
+  .answer-line { margin: 12px 0 4px; font-size: 14px; line-height: 1.85; font-family: 'Inter', 'Pretendard Variable', sans-serif; }
+  .answer-line .underline { display: inline-block; min-width: 36px; border-bottom: 1.2px solid var(--ink); margin: 0 3px; }
+
+  details.ans { margin-top: 14px; background: #0A0A0A; border-radius: 5px; }
+  details.ans summary { list-style: none; cursor: pointer; padding: 11px 18px; font-family: 'Pretendard Variable', sans-serif; font-weight: 700; font-size: 12px; color: var(--gold-light); letter-spacing: 0.08em; display: flex; align-items: center; justify-content: space-between; word-break: break-word; }
+  details.ans summary::-webkit-details-marker { display: none; }
+  details.ans summary::after { content: '＋'; font-family: 'JetBrains Mono', monospace; font-weight: 700; }
+  details.ans[open] summary::after { content: '－'; }
+  details.ans .ans-body { padding: 0 20px 18px; color: #E0D7C0; font-size: 13px; line-height: 1.7; word-break: break-word; overflow-wrap: anywhere; }
+  details.ans .ans-body .ans-main { font-size: 13.5px; font-weight: 700; color: var(--gold-light); padding: 8px 0 12px; border-bottom: 1px dashed rgba(228,197,137,0.25); margin-bottom: 12px; }
+  details.ans .ans-body .ans-main em { color: white; font-style: italic; font-family: 'Fraunces', serif; font-weight: 600; }
+  details.ans .ans-body .ans-detail { color: #C8BFA8; font-size: 12.5px; line-height: 1.75; font-family: 'Pretendard Variable', sans-serif; }
+  details.ans .ans-body .ans-detail b { color: var(--gold-light); font-weight: 700; }
+  details.ans .ans-body .ans-detail em { color: white; font-style: italic; font-family: 'Fraunces', serif; font-weight: 600; }
+
+  .opt-analysis { margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(228,197,137,0.25); }
+  .opt-analysis .opt-title { font-family: 'Pretendard Variable', sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.12em; color: var(--gold); margin-bottom: 10px; text-transform: uppercase; }
+  .opt-row { padding: 8px 11px 9px; margin-bottom: 5px; border-radius: 3px; background: rgba(255,255,255,0.025); border-left: 2.5px solid rgba(228,197,137,0.18); }
+  .opt-row.good { background: rgba(74,139,92,0.12); border-left-color: #6FBE7E; }
+  .opt-row.bad { background: rgba(181,55,55,0.09); border-left-color: rgba(224,138,138,0.55); }
+  .opt-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px; font-size: 12.5px; line-height: 1.45; color: #E1D9C8; }
+  .opt-num { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--gold-light); min-width: 16px; flex-shrink: 0; }
+  .opt-en { font-weight: 600; font-family: 'Inter', sans-serif; color: #E8DFC8; word-break: break-word; overflow-wrap: anywhere; }
+  .opt-ko { color: #B8B0A0; font-size: 12px; font-family: 'Pretendard Variable', sans-serif; word-break: break-word; overflow-wrap: anywhere; }
+  .opt-mark { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 13px; flex-shrink: 0; }
+  .opt-row.good .opt-mark { color: #6FBE7E; }
+  .opt-row.bad .opt-mark { color: #E08A8A; }
+  .opt-why { font-size: 11.5px; color: #C8C0AE; line-height: 1.62; margin-top: 3px; padding-left: 22px; font-family: 'Pretendard Variable', sans-serif; }
+  .opt-why b { color: var(--gold-light); font-weight: 700; }
+  .opt-why em { color: var(--gold-light); font-style: italic; font-family: 'Fraunces', serif; font-weight: 600; }
+
+  .passage, .q-prompt, .ans-detail, .ans-main, .ko-trans, .c, .desc, details.ans summary, .opt-en, .opt-ko, .opt-why { word-break: break-word; overflow-wrap: anywhere; }
+  table { display: block; max-width: 100%; overflow-x: auto; }
+  @media (max-width: 760px) {
+    .hero { padding: 38px 22px 32px; }
+    .container { padding: 8px 22px 50px; }
+    .type-nav { padding: 0 22px; }
+    .nav-tab { padding: 12px 10px; font-size: 12px; gap: 5px; }
+    .nav-tab .nav-count { font-size: 9.5px; padding: 1px 5px; }
+    .print-toolbar-inner { padding: 10px 22px; gap: 8px; }
+    .pt-hint { font-size: 11px; min-width: 100%; }
+    .pt-btn { padding: 5px 11px; font-size: 11.5px; }
+    .section-head { margin: 38px 0 18px; padding: 16px 18px 14px; }
+    .section-head h2 { font-size: 18px; }
+    .section-head h2 .kor { font-size: 13px; margin-left: 0; display: block; margin-top: 4px; }
+    .q-card { padding: 16px 18px 14px; }
+    .q-num { font-size: 18px; }
+    .q-passage { padding: 11px 14px; font-size: 13px; }
+    .opt-head { font-size: 12px; gap: 5px; }
+    .opt-ko { font-size: 11.5px; }
+    .opt-why { font-size: 11px; padding-left: 18px; }
+    .opt-row { padding: 7px 10px 8px; }
+    .made-by { margin: 50px -22px 0; }
+  }
+
+  /* @media print */
+  @media print {
+    @page { size: A4 portrait; margin: 11mm 13mm 13mm 13mm; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+    html, body { background: white !important; color: black !important; font-size: 10pt !important; line-height: 1.42 !important; max-width: 100% !important; overflow: visible !important; }
+    .hero, .type-nav-wrap, .print-toolbar, .made-by, .nav-print { display: none !important; }
+    .hidden { display: none !important; }
+    .container { padding: 0 !important; max-width: 100% !important; margin: 0 !important; }
+    .print-header { display: block !important; text-align: center; font-family: 'Pretendard Variable', sans-serif; font-size: 9pt; color: #555; border-bottom: 0.5pt solid #999; padding-bottom: 1.5mm; margin-bottom: 3mm; font-weight: 600; letter-spacing: 0.05em; }
+    .print-header b { color: #000; }
+    .passage-box:not([open]) { display: none !important; }
+    .passage-box { margin: 0 0 4mm 0 !important; border: 0.6pt solid #888 !important; border-radius: 0 !important; background: white !important; }
+    .passage-box summary { display: none !important; }
+    .passage-text { padding: 3mm 4mm !important; font-size: 9.5pt !important; line-height: 1.55 !important; color: #000 !important; }
+    .passage-text p { margin-bottom: 2mm !important; }
+    .passage-text .ko { font-size: 8.5pt !important; color: #555 !important; }
+    .passage-text .topic { font-size: 11pt !important; color: black !important; margin: 2mm 0 1mm !important; }
+    .section-head { margin: 0 0 3mm 0 !important; padding: 2.5mm 0 1.5mm !important; background: white !important; border: none !important; border-bottom: 1.4pt solid black !important; page-break-after: avoid !important; break-after: avoid !important; page-break-inside: avoid !important; break-inside: avoid !important; }
+    .section-head .num-line { font-size: 7.5pt !important; color: #555 !important; margin: 0 0 0.5mm 0 !important; letter-spacing: 0.18em !important; }
+    .section-head h2 { font-size: 13pt !important; color: black !important; margin: 0 !important; line-height: 1.15 !important; }
+    .section-head h2 .kor { font-size: 10pt !important; color: #333 !important; margin-left: 6px !important; }
+    .section-head .desc { font-size: 8.5pt !important; color: #444 !important; margin: 1mm 0 0 0 !important; line-height: 1.45 !important; }
+    .section-head + .q-card { page-break-before: avoid !important; break-before: avoid !important; }
+    .q-card { page-break-inside: avoid !important; break-inside: avoid !important; margin: 0 0 3mm 0 !important; padding: 2.5mm 0 2mm !important; border: none !important; border-bottom: 0.4pt dotted #999 !important; background: white !important; box-shadow: none !important; }
+    .q-card:last-child { border-bottom: none !important; }
+    .q-meta { display: flex !important; flex-wrap: wrap !important; align-items: center !important; gap: 5px !important; margin-bottom: 2mm !important; font-size: 9pt !important; padding-bottom: 1mm !important; }
+    .q-num { font-family: 'Fraunces','Playfair Display',serif !important; font-size: 14pt !important; font-weight: 800 !important; color: black !important; background: transparent !important; margin-right: 3px !important; }
+    .type-tag, .var-pill { font-size: 7.5pt !important; padding: 1pt 5pt !important; border-radius: 2pt !important; font-weight: 700 !important; }
+    .q-focus { font-size: 8.5pt !important; color: #333 !important; font-weight: 600 !important; background: transparent !important; }
+    .q-pts { font-size: 8.5pt !important; color: black !important; font-weight: 700 !important; margin-left: auto !important; background: transparent !important; }
+    .q-prompt, .q-passage, .q-choices, .word-bank, .answer-line { font-size: 10pt !important; line-height: 1.45 !important; color: black !important; background: white !important; }
+    .q-passage { padding: 2mm 3mm !important; background: #fafafa !important; border: 0.4pt solid #ccc !important; margin: 1.5mm 0 !important; font-size: 9.5pt !important; line-height: 1.5 !important; }
+    .q-blank { color: black !important; font-weight: 700 !important; }
+    .q-choices { display: flex !important; flex-wrap: wrap !important; gap: 6pt 14pt !important; margin: 1.5mm 0 !important; }
+    .q-choices .c { font-size: 9.5pt !important; padding: 0 !important; }
+    .q-choices .c .num { color: black !important; font-weight: 700 !important; margin-right: 2pt !important; }
+    .word-bank { padding: 2mm 3mm !important; background: #f5f3ec !important; border: 0.5pt dashed #888 !important; margin: 1.5mm 0 !important; font-size: 9.5pt !important; }
+    .answer-line { margin: 1.5mm 0 !important; font-size: 10pt !important; }
+    .answer-line .underline { display: inline-block !important; min-width: 36pt !important; border-bottom: 0.5pt solid black !important; margin: 0 2pt !important; }
+    details.ans:not([open]) { display: none !important; }
+    details.ans { display: block !important; margin-top: 1.5mm !important; background: transparent !important; border-radius: 0 !important; }
+    details.ans > summary { display: none !important; }
+    details.ans .ans-body { display: block !important; padding: 2mm 3mm !important; background: #f0eee6 !important; border: 0.4pt solid #999 !important; border-radius: 0 !important; color: black !important; font-size: 9pt !important; line-height: 1.45 !important; margin: 0 !important; }
+    details.ans .ans-body .ans-main { font-size: 9.5pt !important; font-weight: 800 !important; color: black !important; background: transparent !important; margin-bottom: 1.5mm !important; padding-bottom: 1.5mm !important; border-bottom: 0.3pt dashed #999 !important; }
+    details.ans .ans-body .ans-detail { font-size: 8.5pt !important; color: black !important; background: transparent !important; line-height: 1.5 !important; }
+    details.ans .ans-body em { color: #B53737 !important; font-style: italic !important; font-family: 'Fraunces',serif !important; font-weight: 600 !important; }
+    details.ans .ans-body b { color: black !important; font-weight: 800 !important; }
+    .opt-analysis { margin-top: 2mm !important; padding-top: 1.5mm !important; border-top: 0.3pt dashed #999 !important; }
+    .opt-analysis .opt-title { font-size: 7.5pt !important; color: #555 !important; letter-spacing: 0.12em !important; font-weight: 800 !important; margin-bottom: 1.2mm !important; text-transform: uppercase !important; }
+    .opt-row { padding: 1mm 2mm 1.2mm !important; margin-bottom: 0.6mm !important; border-radius: 0 !important; background: white !important; border-left: 1pt solid #aaa !important; }
+    .opt-row.good { background: #eef6ee !important; border-left: 1.5pt solid #2E7D32 !important; }
+    .opt-row.bad { background: white !important; border-left: 1pt solid #bbb !important; }
+    .opt-head { display: flex !important; align-items: baseline !important; flex-wrap: wrap !important; gap: 3pt !important; font-size: 8.5pt !important; line-height: 1.35 !important; color: black !important; }
+    .opt-num { font-size: 8.5pt !important; font-weight: 800 !important; color: black !important; min-width: 11pt !important; }
+    .opt-en  { font-size: 8.5pt !important; font-weight: 700 !important; color: black !important; }
+    .opt-ko  { font-size: 8pt !important; color: #333 !important; }
+    .opt-mark { margin-left: auto !important; font-size: 9pt !important; font-weight: 800 !important; }
+    .opt-row.good .opt-mark { color: #2E7D32 !important; }
+    .opt-row.bad  .opt-mark { color: #999 !important; }
+    .opt-why { font-size: 7.8pt !important; color: #222 !important; line-height: 1.5 !important; margin-top: 0.6mm !important; padding-left: 13pt !important; }
+    .opt-why b  { color: black !important; font-weight: 800 !important; }
+    .opt-why em { color: #B53737 !important; font-style: italic !important; font-family: 'Fraunces',serif !important; }
+    .type-tag.grammar { background: var(--t-grammar) !important; color: white !important; }
+    .type-tag.pronoun { background: var(--t-pronoun) !important; color: white !important; }
+    .type-tag.reading { background: var(--t-reading) !important; color: white !important; }
+    .type-tag.context { background: var(--t-context) !important; color: white !important; }
+    .type-tag.cloze   { background: var(--t-cloze) !important;   color: white !important; }
+    .type-tag.vocab   { background: var(--t-vocab) !important;   color: white !important; }
+    .type-tag.writing { background: var(--t-writing) !important; color: white !important; }
+    .var-pill { border: 0.3pt solid #999 !important; background: white !important; color: #333 !important; }
+    .print-footer { display: block !important; margin-top: 5mm; padding-top: 1.5mm; border-top: 0.4pt solid #999; text-align: center; font-family: 'Pretendard Variable', sans-serif; font-size: 8pt; color: #666; letter-spacing: 0.05em; }
+    .container > *:first-child { margin-top: 0 !important; }
+    .section-head:first-child { margin-top: 0 !important; }
+  }
+  .print-header, .print-footer { display: none; }
+
+  .made-by { text-align: center; padding: 24px 20px 30px; background: var(--navy-950); margin: 50px -36px 0; color: var(--gold-light); font-family: 'Pretendard Variable', sans-serif; font-size: 12.5px; font-weight: 600; letter-spacing: 0.1em; }
+  .made-by .credit { display: block; margin-top: 6px; font-size: 10.5px; color: rgba(228,197,137,0.6); }
+</style>
+</head>
+<body>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="kicker">MOKDONG MIDDLE · 3-1 · WORD ORIGINS · TYPE-BASED PRACTICE</div>
+    <h1>Word Origins<br><em>Shampoo &amp; Robot</em></h1>
+    <p class="lead">목동중 3학년 1과 — 차용어의 흐름을 추적하는 본문. <b>introduce 4형식 불가 / enter 전치사 불가 / present 위치별 의미 / 관계대명사 계속적 용법 / 가주어 it ~ that</b> 등 어법 핵심과, <b>shampoo · robot</b> 두 단어의 차용 인과 사슬이 시험 핵심.</p>
+    <div class="hero-meta">
+      <span class="meta-tag">📚 목동중 3학년 1과</span>
+      <span class="meta-tag">🎯 30문항 · 7유형</span>
+      <span class="meta-tag">🆕 보기별 한국어 해석 + 정답·오답 이유</span>
+      <span class="meta-tag">🖨️ 유형별 A4 인쇄 지원</span>
+    </div>
+  </div>
+</section>
+
+<div class="type-nav-wrap">
+  <nav class="type-nav" id="typeNav">
+    <button class="nav-tab active" data-type="all">전체 <span class="nav-count">30</span></button>
+    <button class="nav-print" data-print-type="all" title="전체 인쇄" aria-label="전체 인쇄" type="button"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+    <button class="nav-tab" data-type="grammar"><span class="nav-color-dot" style="background:var(--t-grammar)"></span>어법 <span class="nav-count">8</span></button>
+    <button class="nav-print" data-print-type="grammar" title="어법 인쇄" aria-label="어법 인쇄" type="button"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+    <button class="nav-tab" data-type="pronoun"><span class="nav-color-dot" style="background:var(--t-pronoun)"></span>대명사 <span class="nav-count">2</span></button>
+    <button class="nav-print" data-print-type="pronoun" title="대명사 인쇄" aria-label="대명사 인쇄" type="button"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+    <button class="nav-tab" data-type="reading"><span class="nav-color-dot" style="background:var(--t-reading)"></span>독해 <span class="nav-count">3</span></button>
+    <button class="nav-print" data-print-type="reading" title="독해 인쇄" aria-label="독해 인쇄" type="button"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+    <button class="nav-tab" data-type="context"><span class="nav-color-dot" style="background:var(--t-context)"></span>문맥 <span class="nav-count">3</span></button>
+    <button class="nav-print" data-print-type="context" title="문맥 인쇄" aria-label="문맥 인쇄" type="button"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+    <button class="nav-tab" data-type="cloze"><span class="nav-color-dot" style="background:var(--t-cloze)"></span>빈칸 <span class="nav-count">6</span></button>
+    <button class="nav-print" data-print-type="cloze" title="빈칸 인쇄" aria-label="빈칸 인쇄" type="button"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+    <button class="nav-tab" data-type="vocab"><span class="nav-color-dot" style="background:var(--t-vocab)"></span>어휘·숙어 <span class="nav-count">6</span></button>
+    <button class="nav-print" data-print-type="vocab" title="어휘 인쇄" aria-label="어휘 인쇄" type="button"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+    <button class="nav-tab" data-type="writing"><span class="nav-color-dot" style="background:var(--t-writing)"></span>서술형 <span class="nav-count">2</span></button>
+    <button class="nav-print" data-print-type="writing" title="서술형 인쇄" aria-label="서술형 인쇄" type="button"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+  </nav>
+</div>
+
+<div class="print-toolbar">
+  <div class="print-toolbar-inner">
+    <span class="pt-label">📄 인쇄 옵션</span>
+    <button class="pt-btn" id="answerToggle" type="button">정답 모두 펼치기</button>
+    <button class="pt-btn" id="passageToggle" type="button">지문 펼치기/접기</button>
+    <span class="pt-hint">→ 위 인쇄 버튼(<svg viewBox="0 0 24 24" class="pt-icon"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>)을 누르면 <b>현재 화면 그대로</b> A4로 인쇄됩니다. 정답을 빼려면 <b>'정답 모두 접기'</b>를 먼저 누르세요.</span>
+  </div>
+</div>
+
+<div class="container">
+
+<div class="print-header">
+  <b>목동서로영어학원</b> · 목동중 3학년 1과 — Word Origins (Shampoo &amp; Robot) 유형문제집 · <span id="printSectionLabel">전체</span> · 0505.co.kr
+</div>
+
+<details class="passage-box" open>
+  <summary>
+    <span>📄 원문 지문 — Word Origins: Shampoo &amp; Robot</span>
+    <span class="toggle-mark"></span>
+  </summary>
+  <div class="passage-text">
+    <p>English has often <b>borrowed</b> words from other <b>cultures</b> or <b>languages</b>. Here are some <b>examples</b> with interesting stories.</p>
+    <p class="topic">shampoo</p>
+    <p>The word <em>shampoo</em> <b>comes from</b> the Hindi word <em>chāmpo</em>, which <b>means</b> "to <b>press</b>." In India, the word was used for a head <b>massage</b>.</p>
+    <p>British <b>traders</b> in India <b>experienced</b> a bath with a head massage and <b>introduced</b> it to Britain in the 18th century. The <b>meaning</b> of the word <em>shampoo</em> <b>changed</b> a few times after it first <b>entered</b> English around 1762.</p>
+    <p>In the 19th century, <em>shampoo</em> got its <b>present</b> meaning of "washing the hair." <b>Shortly after</b> that, the word began to be also used for a <b>special soap</b> for the hair.</p>
+    <p class="topic">robot</p>
+    <p>The word <em>robot</em> comes from the <b>play</b> R.U.R., which was written in 1920 by a <b>Czech</b> writer Karel Čapek. In the play, robots are <b>machines</b> that look like <b>humans</b>. They are <b>designed</b> to work for humans and are <b>produced</b> in a <b>factory</b>.</p>
+    <p>It is interesting that the <b>idea</b> of using the word <em>robot</em> didn't come from Karel Čapek <b>himself</b>. He <b>originally called</b> the machines in his play <em>labori</em> from the <b>Latin</b> word for "work." However, his brother <b>suggested</b> <em>roboti</em>, which means "<b>slave</b> workers" in Czech.</p>
+    <p>Karel Čapek liked the idea and <b>decided</b> to use the word <em>roboti</em>. In 1938, the play was made into a <b>science fiction show</b> on television in Britain.</p>
+  </div>
+</details>
+
+
+<section data-section-type="grammar">
+<div class="section-head" data-section-type="grammar">
+  <div class="num-line">SECTION A · GRAMMAR</div>
+  <h2>Grammar <span class="kor">어법 (8문항)</span></h2>
+  <div class="desc">본문 핵심 어법 8가지 모두 응용: <b>introduce 4형식 불가 / enter 전치사 불가 / present 위치별 의미 / begin + to V·V-ing / which 계속적 용법 / 가주어 it ~ that / 수동태 / -self 강조</b></div>
+</div>
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">1</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">introduce: 4형식 불가</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>1.</b> 다음 우리말 의미와 일치하도록 빈칸에 들어갈 말로 알맞은 것은?</div><div class="q-passage">British traders in India experienced a bath with a head massage and <span class="q-blank">______</span> in the 18th century.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>introduced it Britain</span><span class="c"><span class="num">②</span>introduced Britain it</span><span class="c"><span class="num">③</span>introduced for Britain it</span><span class="c"><span class="num">④</span>introduced Britain to it</span><span class="c"><span class="num">⑤</span>introduced it to Britain</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ⑤ <em>introduced it to Britain</em></div>
+  <div class="ans-detail"><b>introduce는 4형식(SVOO)으로 못 씀</b>. 항상 <em>introduce + 사물 + <b>to</b> + 사람/장소</em>의 3형식만 가능. 본문 그대로의 형태.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">introduced it Britain</span> <span class="opt-ko">"그것을 영국 도입했다"</span> <span class="opt-mark">✗</span></div><div class="opt-why"><b>introduce는 4형식 불가</b> — to가 반드시 필요</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">introduced Britain it</span> <span class="opt-ko">"영국에 그것을 도입했다(4형식)"</span> <span class="opt-mark">✗</span></div><div class="opt-why"><b>introduce는 4형식으로 못 씀</b> — give·send와 헷갈림</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">introduced for Britain it</span> <span class="opt-ko">"영국을 위해 그것을 도입했다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">introduce는 <em>for</em>가 아닌 <em>to</em>를 동반</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">introduced Britain to it</span> <span class="opt-ko">"영국을 그것에 도입했다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">주어와 목적어가 뒤바뀜 — 의미 모순</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">introduced it to Britain</span> <span class="opt-ko">"그것을 영국에 도입했다"</span> <span class="opt-mark">✓</span></div><div class="opt-why"><em>introduce 사물 to 사람/장소</em> 3형식 ✓ 본문 형태</div></div>
+  </div>
+  </div></details>
+</article>
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">2</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">enter: 전치사 불가</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>2.</b> 다음 빈칸에 들어갈 말로 알맞은 것은?</div><div class="q-passage">The meaning of the word shampoo changed a few times after it first <span class="q-blank">______</span> around 1762.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>entered to English</span><span class="c"><span class="num">②</span>entered into English</span><span class="c"><span class="num">③</span>entered English</span><span class="c"><span class="num">④</span>entered in English</span><span class="c"><span class="num">⑤</span>entered for English</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ③ <em>entered English</em></div>
+  <div class="ans-detail"><b>enter(들어가다) 뒤에는 전치사를 쓰지 않음</b> — discuss·attend·marry·reach·approach 동일 패턴. 본문 <em>"entered English around 1762"</em>.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">entered to English</span> <span class="opt-ko">"영어로 들어갔다"</span> <span class="opt-mark">✗</span></div><div class="opt-why"><b>enter 뒤 전치사 불가</b></div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">entered into English</span> <span class="opt-ko">"영어로 들어갔다"</span> <span class="opt-mark">✗</span></div><div class="opt-why"><b>enter 뒤 전치사 불가</b> — into도 X (※ enter into는 "협상에 들어가다" 다른 의미)</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">entered English</span> <span class="opt-ko">"영어에 들어왔다"</span> <span class="opt-mark">✓</span></div><div class="opt-why"><em>enter + 목적어</em> 직접 연결 ✓ 본문 형태</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">entered in English</span> <span class="opt-ko">"영어 안으로 들어갔다"</span> <span class="opt-mark">✗</span></div><div class="opt-why"><b>enter 뒤 전치사 불가</b></div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">entered for English</span> <span class="opt-ko">"영어를 위해 들어갔다"</span> <span class="opt-mark">✗</span></div><div class="opt-why"><b>enter 뒤 전치사 불가</b></div></div>
+  </div>
+  </div></details>
+</article>
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">3</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">present: 위치별 의미</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>3.</b> 다음 중 밑줄 친 단어의 쓰임이 본문과 <em>같은</em> 것은?<br><span style="color:var(--muted);font-size:13px;">[본문] In the 19th century, shampoo got its <b>present</b> meaning of "washing the hair."</span></div>
+  <div class="q-choices"><span class="c"><span class="num">①</span>The students <em>present</em> at the lecture took notes.</span><span class="c"><span class="num">②</span>I bought a nice <em>present</em> for my friend.</span><span class="c"><span class="num">③</span>The <em>present</em> situation requires careful action.</span><span class="c"><span class="num">④</span>He will <em>present</em> his report tomorrow.</span><span class="c"><span class="num">⑤</span>Only ten members were <em>present</em> at the meeting.</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ③</div>
+  <div class="ans-detail"><b>present는 명사 앞 = "현재의" / 명사 뒤 = "참석한"</b>. 본문 <em>its present meaning</em>은 명사 meaning 앞 → "현재의". ③ <em>present situation</em>도 명사 앞 → "현재의" ✓.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">The students <em>present</em> at the lecture took notes.</span> <span class="opt-ko">"강의에 참석한 학생들"</span> <span class="opt-mark">✗</span></div><div class="opt-why">명사 students <b>뒤</b> → "참석한" — 본문과 위치/뜻 모두 다름</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">I bought a nice <em>present</em> for my friend.</span> <span class="opt-ko">"친구에게 멋진 선물"</span> <span class="opt-mark">✗</span></div><div class="opt-why">여기서 present는 <b>명사 "선물"</b> — 형용사 아님</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">The <em>present</em> situation requires careful action.</span> <span class="opt-ko">"현재의 상황은 신중한 조치를 요구한다"</span> <span class="opt-mark">✓</span></div><div class="opt-why">명사 situation <b>앞</b> → "현재의" ✓ 본문과 같은 쓰임</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">He will <em>present</em> his report tomorrow.</span> <span class="opt-ko">"그는 내일 보고서를 발표할 것이다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">여기서 present는 <b>동사 "발표하다"</b></div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">Only ten members were <em>present</em> at the meeting.</span> <span class="opt-ko">"회의에 10명만 참석했다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">be동사 + present → "참석한" — 본문과 뜻 다름</div></div>
+  </div>
+  </div></details>
+</article>
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">4</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">begin + to V / V-ing</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>4.</b> 다음 중 빈칸에 들어갈 수 있는 것을 <em>모두</em> 고르면? <b>(정답 2개)</b></div><div class="q-passage">Shortly after that, the word began <span class="q-blank">______</span> also used for a special soap for the hair.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>be</span><span class="c"><span class="num">②</span>to be</span><span class="c"><span class="num">③</span>being</span><span class="c"><span class="num">④</span>been</span><span class="c"><span class="num">⑤</span>was</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ②, ③ <em>to be / being</em></div>
+  <div class="ans-detail"><b>begin은 to부정사와 동명사를 모두 목적어로</b> (start·like·love·hate·prefer 동일). 본문은 <em>began to be also used</em> 형태.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">be</span> <span class="opt-ko">동사원형</span> <span class="opt-mark">✗</span></div><div class="opt-why">began 뒤에 동사원형 단독 불가</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">to be</span> <span class="opt-ko">to부정사</span> <span class="opt-mark">✓</span></div><div class="opt-why"><em>begin + to V</em> ✓ 본문 그대로</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">being</span> <span class="opt-ko">동명사</span> <span class="opt-mark">✓</span></div><div class="opt-why"><em>begin + V-ing</em>도 가능</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">been</span> <span class="opt-ko">과거분사</span> <span class="opt-mark">✗</span></div><div class="opt-why">과거분사는 begin의 목적어 자리 부적합</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">was</span> <span class="opt-ko">과거형 정형동사</span> <span class="opt-mark">✗</span></div><div class="opt-why">정형동사는 다른 동사의 목적어로 못 옴</div></div>
+  </div>
+  </div></details>
+</article>
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">5</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">which 계속적 용법 (콤마 뒤 that 불가)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>5.</b> 다음 빈칸에 들어갈 수 <em>없는</em> 것은?</div><div class="q-passage">The word shampoo comes from the Hindi word chāmpo, <span class="q-blank">______</span> means "to press."</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>which</span><span class="c"><span class="num">②</span>that</span><span class="c"><span class="num">③</span>and it</span><span class="c"><span class="num">④</span>and that</span><span class="c"><span class="num">⑤</span>which also</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ② <em>that</em></div>
+  <div class="ans-detail"><b>콤마(,) 뒤에 오는 계속적 용법은 that을 쓸 수 없다</b>. 본문 <em>which means</em> 그대로. ① which / ③ and it (지시) / ④ and that (지시) / ⑤ which also (관계대명사 + 부사)는 모두 들어감. <b>② that 만이 들어갈 수 없는 보기</b>.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">which</span> <span class="opt-ko">계속적 용법 관계대명사</span> <span class="opt-mark">✗</span></div><div class="opt-why"><b>콤마 뒤 사물 선행사 → which 가능</b> ✓ 본문 형태</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">that</span> <span class="opt-ko">관계대명사</span> <span class="opt-mark">✓</span></div><div class="opt-why"><b>that은 계속적 용법(콤마 뒤) 절대 불가</b> ✓ 정답</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">and it</span> <span class="opt-ko">접속사 + 대명사</span> <span class="opt-mark">✗</span></div><div class="opt-why">which를 풀어쓴 형태 — 가능</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">and that</span> <span class="opt-ko">접속사 + 지시대명사</span> <span class="opt-mark">✗</span></div><div class="opt-why">풀어쓰기로 보면 가능 (※ 학교에선 ②가 더 명백한 오답)</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">which also</span> <span class="opt-ko">관계대명사 + 부사</span> <span class="opt-mark">✗</span></div><div class="opt-why"><em>which also means</em> 형태로 들어감 — 의미상 자연스러움 (★ 빈칸에 들어가는 보기)</div></div>
+  </div>
+  </div></details>
+</article>
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">6</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">가주어 it ~ that</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>6.</b> 다음 우리말 의미와 일치하도록 빈칸에 들어갈 말로 가장 알맞은 것은?</div><div class="q-passage"><span class="q-blank">______</span> the idea of using the word robot didn't come from Karel Čapek himself.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>That is interesting</span><span class="c"><span class="num">②</span>It is interesting that</span><span class="c"><span class="num">③</span>What interesting</span><span class="c"><span class="num">④</span>This interest that</span><span class="c"><span class="num">⑤</span>Interesting it that</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ② <em>It is interesting that</em></div>
+  <div class="ans-detail"><b>가주어 It + 동사 + 형용사 + 진주어 that절</b>의 전형적 구조. 본문 그대로 <em>"It is interesting that the idea ... didn't come"</em>.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">That is interesting</span> <span class="opt-ko">"그것은 흥미롭다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">That절을 진주어 자리에 못 두는 어순</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">It is interesting that</span> <span class="opt-ko">"~라는 것이 흥미롭다"</span> <span class="opt-mark">✓</span></div><div class="opt-why"><b>가주어 It + that절</b> ✓ 본문 형태</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">What interesting</span> <span class="opt-ko">"무엇이 흥미로운"</span> <span class="opt-mark">✗</span></div><div class="opt-why">의문사 What은 절 도입에 부적합</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">This interest that</span> <span class="opt-ko">"이것은 흥미가 ~라는"</span> <span class="opt-mark">✗</span></div><div class="opt-why">interest는 동사면 3인칭 단수 -s 필요, 명사면 어색</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">Interesting it that</span> <span class="opt-ko">"흥미로운 그것 ~라는"</span> <span class="opt-mark">✗</span></div><div class="opt-why">어순 와해 — 비문</div></div>
+  </div>
+  </div></details>
+</article>
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">7</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">수동태 (be designed / produced)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>7.</b> 다음 빈칸 (A), (B)에 들어갈 말이 바르게 짝지어진 것은?</div><div class="q-passage">In the play, robots are machines that look like humans. They <span class="q-blank">(A)</span> to work for humans and <span class="q-blank">(B)</span> in a factory.</div>
+  <div class="q-choices"><span class="c"><span class="num">①</span>design / produce</span><span class="c"><span class="num">②</span>are designed / are produced</span><span class="c"><span class="num">③</span>designed / produced</span><span class="c"><span class="num">④</span>designing / producing</span><span class="c"><span class="num">⑤</span>are designing / are producing</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ② <em>are designed / are produced</em></div>
+  <div class="ans-detail">주어 They(robots)가 <b>설계되는 대상 + 생산되는 대상</b>이므로 둘 다 <b>수동태</b>. <em>are designed</em> + <em>are produced</em>.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">design / produce</span> <span class="opt-ko">"설계한다 / 생산한다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">능동태 — 로봇이 스스로 설계하지 않음</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">are designed / are produced</span> <span class="opt-ko">"설계된다 / 생산된다"</span> <span class="opt-mark">✓</span></div><div class="opt-why"><b>수동태 are p.p.</b> ✓ 본문 그대로</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">designed / produced</span> <span class="opt-ko">"설계된 / 생산된"</span> <span class="opt-mark">✗</span></div><div class="opt-why">be동사 빠진 과거분사 단독 — 비문</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">designing / producing</span> <span class="opt-ko">"설계하면서 / 생산하면서"</span> <span class="opt-mark">✗</span></div><div class="opt-why">be동사 빠진 V-ing — 비문</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">are designing / are producing</span> <span class="opt-ko">"설계하고 있다 / 생산하고 있다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">진행형 능동 — 의미 부적합</div></div>
+  </div>
+  </div></details>
+</article>
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">8</span><span class="type-tag grammar">어법</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">본문 어법 종합 (5개 검증)</span><span class="q-pts">5점</span></div>
+  <div class="q-prompt"><b>8.</b> 다음 ⓐ~ⓔ 중 어법상 <em>옳은</em> 것의 개수는?</div><div class="q-passage">ⓐ British traders introduced it Britain in the 18th century.<br>ⓑ The word entered English around 1762.<br>ⓒ Shampoo got its present meaning of "washing the hair."<br>ⓓ R.U.R., that was written in 1920, became famous.<br>ⓔ It is interesting that Karel Čapek didn't create the word himself.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>1개</span><span class="c"><span class="num">②</span>2개</span><span class="c"><span class="num">③</span>3개</span><span class="c"><span class="num">④</span>4개</span><span class="c"><span class="num">⑤</span>5개</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ③ 3개</div>
+  <div class="ans-detail">ⓐ ✗ <b>introduce 4형식 불가</b> → introduced it <b>to</b> Britain / ⓑ ✓ enter 전치사 없음 / ⓒ ✓ present + 명사 = "현재의" / ⓓ ✗ <b>콤마 뒤 that 불가</b> → which / ⓔ ✓ 가주어 It ~ that. 옳은 것: <b>ⓑ, ⓒ, ⓔ = 3개</b>.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">1개</span> <span class="opt-ko">ⓑ만 옳음</span> <span class="opt-mark">✗</span></div><div class="opt-why">ⓒ·ⓔ도 옳음 — 1개 아님</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">2개</span> <span class="opt-ko">둘만 옳음</span> <span class="opt-mark">✗</span></div><div class="opt-why">실제로 3개가 옳음</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">3개</span> <span class="opt-ko">ⓑ, ⓒ, ⓔ 옳음</span> <span class="opt-mark">✓</span></div><div class="opt-why"><b>ⓑ enter 전치사 없음 / ⓒ present + 명사 / ⓔ 가주어 It ~ that</b> ✓ 정답</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">4개</span> <span class="opt-ko">네 개 옳음</span> <span class="opt-mark">✗</span></div><div class="opt-why">ⓐ는 introduce 4형식 불가, ⓓ는 콤마 뒤 that 불가 — 둘 다 오류</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">5개</span> <span class="opt-ko">모두 옳음</span> <span class="opt-mark">✗</span></div><div class="opt-why">ⓐ·ⓓ는 명백한 어법 오류</div></div>
+  </div>
+  </div></details>
+</article>
+</section>
+
+<section data-section-type="pronoun">
+<div class="section-head" data-section-type="pronoun">
+  <div class="num-line">SECTION B · PRONOUN</div>
+  <h2>Pronoun & Reference <span class="kor">대명사·지칭 (2문항)</span></h2>
+  <div class="desc">본문의 <b>it · its · himself · his · they</b> 등이 가리키는 대상 추적</div>
+</div>
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">9</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">it 지칭 (a bath with a head massage)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>9.</b> 본문 밑줄 친 <em>it</em>이 가리키는 것으로 가장 알맞은 것은?</div><div class="q-passage">British traders in India experienced a bath with a head massage and introduced <em>it</em> to Britain in the 18th century.</div>
+  <div class="q-choices"><span class="c"><span class="num">①</span>India</span><span class="c"><span class="num">②</span>the 18th century</span><span class="c"><span class="num">③</span>the Hindi word chāmpo</span><span class="c"><span class="num">④</span>British traders</span><span class="c"><span class="num">⑤</span>a bath with a head massage</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ⑤ <em>a bath with a head massage</em></div>
+  <div class="ans-detail">직전에 등장한 <em>"experienced a bath with a head massage"</em>의 그 행위 자체를 영국에 도입한 것 — it은 그 머리 마사지가 있는 목욕을 가리킴.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">India</span> <span class="opt-ko">"인도"</span> <span class="opt-mark">✗</span></div><div class="opt-why">인도는 장소이지 도입 대상 아님</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">the 18th century</span> <span class="opt-ko">"18세기"</span> <span class="opt-mark">✗</span></div><div class="opt-why">시점 부사구 — 지칭 대상 아님</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">the Hindi word chāmpo</span> <span class="opt-ko">"힌디어 chāmpo"</span> <span class="opt-mark">✗</span></div><div class="opt-why">단어가 아니라 행위(목욕+마사지)를 도입함</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">British traders</span> <span class="opt-ko">"영국 상인들"</span> <span class="opt-mark">✗</span></div><div class="opt-why">주어이며 도입의 주체 — 목적어 it이 가리킬 수 없음</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">a bath with a head massage</span> <span class="opt-ko">"머리 마사지가 있는 목욕"</span> <span class="opt-mark">✓</span></div><div class="opt-why">직전 목적어 — 도입한 것이 바로 이 행위 ✓</div></div>
+  </div>
+  </div></details>
+</article>
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">10</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">himself 강조용법</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>10.</b> 본문 밑줄 친 <em>himself</em>의 쓰임과 같은 것은?<br><span style="color:var(--muted);font-size:13px;">[본문] The idea of using the word robot didn't come from Karel Čapek <em>himself</em>.</span></div>
+  <div class="q-choices"><span class="c"><span class="num">①</span>He hurt himself with the knife.</span><span class="c"><span class="num">②</span>She blamed herself for the mistake.</span><span class="c"><span class="num">③</span>He bought himself a new car.</span><span class="c"><span class="num">④</span>The cat washed itself in the sun.</span><span class="c"><span class="num">⑤</span>The president himself attended the ceremony.</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ⑤ <em>The president himself attended the ceremony.</em></div>
+  <div class="ans-detail">본문 <em>himself</em>는 <b>강조 용법</b> — Karel Čapek "본인이 직접"을 강조하며 <b>생략 가능</b>. 재귀 용법(주어=목적어)과 구별. ②도 강조 용법 (대통령 "본인이").</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">He hurt himself with the knife.</span> <span class="opt-ko">"그는 칼로 자신을 다치게 했다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">주어=목적어 — <b>재귀 용법</b> (생략 불가)</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">She blamed herself for the mistake.</span> <span class="opt-ko">"그녀는 자신을 비난했다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">재귀 용법 — blamed의 목적어</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">He bought himself a new car.</span> <span class="opt-ko">"그는 자신에게 새 차를 사줬다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">재귀 용법 — 간접목적어</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">The cat washed itself in the sun.</span> <span class="opt-ko">"고양이는 자신을 씻었다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">재귀 용법 — washed의 목적어</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">The president himself attended the ceremony.</span> <span class="opt-ko">"대통령 본인이 직접 참석했다"</span> <span class="opt-mark">✓</span></div><div class="opt-why"><b>강조 용법</b> — himself 생략해도 문장 성립 ✓ 본문과 같음</div></div>
+  </div>
+  </div></details>
+</article>
+</section>
+
+<section data-section-type="reading">
+<div class="section-head" data-section-type="reading">
+  <div class="num-line">SECTION C · READING</div>
+  <h2>Reading Comprehension <span class="kor">독해 (3문항)</span></h2>
+  <div class="desc">본문 사실 일치·불일치 / 글의 요지 / 글의 흐름 추적</div>
+</div>
+<article class="q-card" data-type="reading">
+  <div class="q-meta"><span class="q-num">11</span><span class="type-tag reading">독해</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">본문 사실 일치 확인</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>11.</b> 본문의 내용과 일치하지 <em>않는</em> 것은?</div>
+  <div class="q-choices"><span class="c"><span class="num">①</span>shampoo는 힌디어에서 유래했고 원래 "누르다"를 뜻한다.</span><span class="c"><span class="num">②</span>shampoo는 1762년경 영어에 처음 들어왔다.</span><span class="c"><span class="num">③</span>희곡 R.U.R.은 영국 작가가 1920년에 썼다.</span><span class="c"><span class="num">④</span>Karel Čapek은 처음에 기계를 labori라고 불렀다.</span><span class="c"><span class="num">⑤</span>roboti는 체코어로 "노예 노동자"를 뜻한다.</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ③</div>
+  <div class="ans-detail">본문 <em>"a Czech writer Karel Čapek"</em> — Karel Čapek은 <b>체코</b> 작가이지 영국 작가가 아님. ③이 본문 정면 모순.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-ko">shampoo는 힌디어에서 유래했고 원래 "누르다"를 뜻한다.</span> <span class="opt-mark">✗</span></div><div class="opt-why">본문 <em>"comes from the Hindi word chāmpo, which means 'to press'"</em> — 일치</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-ko">shampoo는 1762년경 영어에 처음 들어왔다.</span> <span class="opt-mark">✗</span></div><div class="opt-why">본문 <em>"entered English around 1762"</em> — 일치</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-ko">희곡 R.U.R.은 영국 작가가 1920년에 썼다.</span> <span class="opt-mark">✓</span></div><div class="opt-why"><b>본문 정반대</b> — Karel Čapek은 <em>Czech writer</em>(체코 작가) → 정답</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-ko">Karel Čapek은 처음에 기계를 labori라고 불렀다.</span> <span class="opt-mark">✗</span></div><div class="opt-why">본문 <em>"He originally called the machines ... labori"</em> — 일치</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-ko">roboti는 체코어로 "노예 노동자"를 뜻한다.</span> <span class="opt-mark">✗</span></div><div class="opt-why">본문 <em>"roboti, which means 'slave workers' in Czech"</em> — 일치</div></div>
+  </div>
+  </div></details>
+</article>
+<article class="q-card" data-type="reading">
+  <div class="q-meta"><span class="q-num">12</span><span class="type-tag reading">독해</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">글의 요지 (주제)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>12.</b> 윗글의 요지로 가장 알맞은 것은?</div>
+  <div class="q-choices"><span class="c"><span class="num">①</span>인도와 영국의 문화 교류는 18세기에 시작됐다.</span><span class="c"><span class="num">②</span>로봇은 인간을 위해 일하도록 설계된 기계다.</span><span class="c"><span class="num">③</span>shampoo와 robot은 모두 19세기에 발명되었다.</span><span class="c"><span class="num">④</span>영어 단어들은 다른 문화·언어에서 차용되어 흥미로운 이야기를 가진다.</span><span class="c"><span class="num">⑤</span>희곡은 영화나 TV쇼로 만들어질 때 의미가 변한다.</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ④</div>
+  <div class="ans-detail">글 첫 문장 <em>"English has often borrowed words from other cultures or languages. Here are some examples..."</em>가 글 전체의 요지. shampoo·robot 두 사례는 이 주제를 뒷받침하는 예시.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span>  <span class="opt-ko">인도와 영국의 문화 교류는 18세기에 시작됐다.</span> <span class="opt-mark">✗</span></div><div class="opt-why">본문 일부 사실이지만 글의 핵심 주제 아님</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span>  <span class="opt-ko">로봇은 인간을 위해 일하도록 설계된 기계다.</span> <span class="opt-mark">✗</span></div><div class="opt-why">희곡 속 설정의 일부 — 글의 요지 아님</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span>  <span class="opt-ko">shampoo와 robot은 모두 19세기에 발명되었다.</span> <span class="opt-mark">✗</span></div><div class="opt-why">본문 정보와 시기 모순 (shampoo 1762년, robot 1920년)</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">④</span>  <span class="opt-ko">영어 단어들은 다른 문화·언어에서 차용되어 흥미로운 이야기를 가진다.</span> <span class="opt-mark">✓</span></div><div class="opt-why"><b>본문 첫 문장의 주제 그대로</b> ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span>  <span class="opt-ko">희곡은 영화나 TV쇼로 만들어질 때 의미가 변한다.</span> <span class="opt-mark">✗</span></div><div class="opt-why">본문에 없는 내용</div></div>
+  </div>
+  </div></details>
+</article>
+<article class="q-card" data-type="reading">
+  <div class="q-meta"><span class="q-num">13</span><span class="type-tag reading">독해</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">시각화: 표 매칭 (시간 흐름)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>13.</b> 윗글을 시간 순서로 정리한 표가 다음과 같을 때, (A)~(C)에 들어갈 내용이 바르게 짝지어진 것은?</div><div class="q-passage" style="font-family:monospace;font-size:12.5px;">┌──────────────┬─────────────────────────────┐<br>│ 18세기            │ <b>(A)</b>                                  │<br>│ 1762년경        │ shampoo가 영어에 처음 들어옴       │<br>│ 19세기            │ <b>(B)</b>                                  │<br>│ 1920년           │ <b>(C)</b>                                  │<br>│ 1938년           │ R.U.R.이 영국 TV SF 쇼로 제작     │<br>└──────────────┴─────────────────────────────┘</div>
+  <div class="q-choices"><span class="c"><span class="num">①</span>(A) shampoo가 비누 의미 / (B) 영국 상인이 인도에 도입 / (C) Čapek이 R.U.R. 집필</span><span class="c"><span class="num">②</span>(A) 영국 상인이 영국에 마사지 목욕 도입 / (B) shampoo가 "머리 감기" 의미 획득 / (C) Čapek이 R.U.R. 집필</span><span class="c"><span class="num">③</span>(A) shampoo가 인도에 들어옴 / (B) Čapek이 R.U.R. 집필 / (C) shampoo가 비누 의미</span><span class="c"><span class="num">④</span>(A) 영국 상인이 영국에 마사지 목욕 도입 / (B) Čapek이 R.U.R. 집필 / (C) shampoo가 비누 의미</span><span class="c"><span class="num">⑤</span>(A) Karel Čapek 출생 / (B) shampoo가 "머리 감기" 의미 / (C) 영국 상인이 영국에 마사지 도입</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ② <em>(A) 영국 상인이 영국에 마사지 목욕 도입 / (B) shampoo가 "머리 감기" 의미 획득 / (C) Čapek이 R.U.R. 집필</em></div>
+  <div class="ans-detail">본문 시간 순서: 18세기 영국 상인이 영국에 도입(A) → 1762년경 영어 진입 → 19세기 "머리 감기" 의미(B) → 1920년 R.U.R. 집필(C) → 1938년 TV쇼.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-ko">(A) shampoo가 비누 의미 / (B) 영국 상인이 인도에 도입 / (C) Čapek이 R.U.R. 집필</span> <span class="opt-mark">✗</span></div><div class="opt-why">시간 순서 어긋남 — 비누 의미는 19세기 후반</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-ko">(A) 영국 상인이 영국에 마사지 목욕 도입 / (B) shampoo가 "머리 감기" 의미 획득 / (C) Čapek이 R.U.R. 집필</span> <span class="opt-mark">✓</span></div><div class="opt-why"><b>본문 시간 흐름 정확</b> ✓ 정답</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-ko">(A) shampoo가 인도에 들어옴 / (B) Čapek이 R.U.R. 집필 / (C) shampoo가 비누 의미</span> <span class="opt-mark">✗</span></div><div class="opt-why">shampoo는 인도에 "들어온" 게 아니라 인도에서 영어로 차용됨</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-ko">(A) 영국 상인이 영국에 마사지 목욕 도입 / (B) Čapek이 R.U.R. 집필 / (C) shampoo가 비누 의미</span> <span class="opt-mark">✗</span></div><div class="opt-why">(B)와 (C) 위치 바뀜 — R.U.R. 집필은 1920년</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-ko">(A) Karel Čapek 출생 / (B) shampoo가 "머리 감기" 의미 / (C) 영국 상인이 영국에 마사지 도입</span> <span class="opt-mark">✗</span></div><div class="opt-why">Čapek 출생은 본문에 없음</div></div>
+  </div>
+  </div></details>
+</article>
+</section>
+
+<section data-section-type="context">
+<div class="section-head" data-section-type="context">
+  <div class="num-line">SECTION D · CONTEXT</div>
+  <h2>Context Flow <span class="kor">문맥·흐름 (3문항)</span></h2>
+  <div class="desc">본문 흐름·연결어·인접 문장 관계 추적</div>
+</div>
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">14</span><span class="type-tag context">문맥</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">흐름상 어색한 문장 찾기</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>14.</b> 다음 글의 흐름으로 보아 가장 어색한 문장은?</div><div class="q-passage">The word <em>shampoo</em> comes from the Hindi word <em>chāmpo</em>, which means "to press." ① In India, the word was used for a head massage. ② British traders in India experienced a bath with a head massage and introduced it to Britain in the 18th century. ③ Many Indian people enjoy spicy curry with rice every day. ④ The meaning of the word <em>shampoo</em> changed a few times after it first entered English around 1762. ⑤ In the 19th century, <em>shampoo</em> got its present meaning of "washing the hair."</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span></span><span class="c"><span class="num">②</span></span><span class="c"><span class="num">③</span></span><span class="c"><span class="num">④</span></span><span class="c"><span class="num">⑤</span></span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ③</div>
+  <div class="ans-detail">③번은 <em>"인도인들이 매운 카레와 밥을 즐긴다"</em>는 일반적 식문화 정보 — shampoo 단어 차용 흐름과 무관. 나머지는 모두 shampoo 단어의 의미 변천 흐름을 따라감.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-ko">"인도에서 그 단어는 머리 마사지를 가리키는 데 쓰였다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">힌디어 chāmpo의 인도 사용 → 흐름 자연</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-ko">"영국 상인이 마사지 목욕을 영국에 도입했다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">인도 → 영국 차용 인과 — 흐름 자연</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-ko">"많은 인도인이 매일 매운 카레와 밥을 즐긴다"</span> <span class="opt-mark">✓</span></div><div class="opt-why"><b>shampoo 차용 주제와 무관한 식문화 정보</b> — 흐름 단절 ✓ 정답</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-ko">"shampoo의 의미가 영어 진입 후 몇 차례 변했다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">차용 후 의미 변화 — 흐름 자연</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-ko">"19세기에 '머리 감기' 의미를 얻었다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">의미 변천의 결말 — 흐름 자연</div></div>
+  </div>
+  </div></details>
+</article>
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">15</span><span class="type-tag context">문맥</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">문장 삽입 위치</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>15.</b> 글의 흐름으로 보아 다음 문장이 들어가기에 가장 알맞은 곳은?</div><div class="word-bank"><b>However, his brother suggested <em>roboti</em>, which means "slave workers" in Czech.</b></div><div class="q-passage">( ① ) It is interesting that the idea of using the word <em>robot</em> didn't come from Karel Čapek himself. ( ② ) He originally called the machines in his play <em>labori</em> from the Latin word for "work." ( ③ ) Karel Čapek liked the idea and decided to use the word <em>roboti</em>. ( ④ ) In 1938, the play was made into a science fiction show on television in Britain. ( ⑤ )</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span></span><span class="c"><span class="num">②</span></span><span class="c"><span class="num">③</span></span><span class="c"><span class="num">④</span></span><span class="c"><span class="num">⑤</span></span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ③</div>
+  <div class="ans-detail">삽입 문장은 <em>"형이 roboti를 제안했다"</em>. 직전 문장은 Čapek이 처음 labori라고 불렀다는 내용, 직후 문장은 <em>"Čapek liked the idea"</em>라며 그 제안을 받아들였다는 흐름. <b>"the idea"가 가리킬 대상(=형의 roboti 제안)이 직전에 와야 하므로 ③번 자리</b>가 정답.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-ko">글 시작 (Čapek 자신에게서 안 나옴 이전)</span> <span class="opt-mark">✗</span></div><div class="opt-why">아직 핵심 사실 자체가 제시되지 않은 자리 — 흐름 단절</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-ko">"Čapek 자신에게서 안 나옴" 직후</span> <span class="opt-mark">✗</span></div><div class="opt-why">labori 명명 이전 — "그 idea"가 가리킬 대상이 아직 없음</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-ko">"labori라고 불렀다" 직후</span> <span class="opt-mark">✓</span></div><div class="opt-why"><b>형의 roboti 제안 → Čapek이 "그 idea"를 좋아함</b> 인과 연결 ✓ 정답</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-ko">"roboti 사용 결정" 직후</span> <span class="opt-mark">✗</span></div><div class="opt-why">이미 결정한 뒤에 형이 제안한 건 시간 모순</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-ko">글 마지막 (1938 TV쇼 이후)</span> <span class="opt-mark">✗</span></div><div class="opt-why">제안은 1920년 집필 단계의 일 — 1938년 TV쇼 이후 자리 부적합</div></div>
+  </div>
+  </div></details>
+</article>
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">16</span><span class="type-tag context">문맥</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">인과 방향 함정 (정반대 진술)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>16.</b> 본문의 내용을 바탕으로 추론할 때, 가장 옳지 <em>않은</em> 것은?</div>
+  <div class="q-choices"><span class="c"><span class="num">①</span>shampoo는 인도 → 영국으로 단어가 흘러갔다.</span><span class="c"><span class="num">②</span>roboti라는 단어는 Čapek의 형에게서 나왔지 Čapek 자신이 처음 만든 것이 아니다.</span><span class="c"><span class="num">③</span>roboti는 체코어이며 "일"을 뜻하는 라틴어와는 다른 어원이다.</span><span class="c"><span class="num">④</span>shampoo는 처음에는 머리 감기를, 나중에 머리 마사지를 뜻하게 되었다.</span><span class="c"><span class="num">⑤</span>R.U.R.은 1920년 출판 후 18년 만에 영국 TV로 옮겨졌다.</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ④</div>
+  <div class="ans-detail"><b>인과·시간 방향 정반대 함정</b>. 본문 순서: 인도 chāmpo("누르다, 마사지") → 영어 진입 후 의미 변천 → 19세기에 "머리 감기" 의미 획득. ④는 이 인과를 뒤집은 진술 → 오답.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-ko">shampoo는 인도 → 영국으로 단어가 흘러갔다.</span> <span class="opt-mark">✗</span></div><div class="opt-why">본문 일치 — 18세기 영국 상인이 도입</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-ko">roboti라는 단어는 Čapek의 형에게서 나왔지 Čapek 자신이 처음 만든 것이 아니다.</span> <span class="opt-mark">✗</span></div><div class="opt-why">본문 일치 — <em>"didn't come from Karel Čapek himself"</em></div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-ko">roboti는 체코어이며 "일"을 뜻하는 라틴어와는 다른 어원이다.</span> <span class="opt-mark">✗</span></div><div class="opt-why">본문 일치 — labori(라틴어 "일") vs roboti(체코어 "노예")</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-ko">shampoo는 처음에는 머리 감기를, 나중에 머리 마사지를 뜻하게 되었다.</span> <span class="opt-mark">✓</span></div><div class="opt-why"><b>본문 정반대 — 인과 방향 뒤집기 함정</b> ✓ 정답</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-ko">R.U.R.은 1920년 출판 후 18년 만에 영국 TV로 옮겨졌다.</span> <span class="opt-mark">✗</span></div><div class="opt-why">본문 일치 — 1920년 집필, 1938년 TV쇼 = 18년 차이</div></div>
+  </div>
+  </div></details>
+</article>
+<div class="section-head" data-section-type="cloze">
+  <div class="num-line">SECTION E · CLOZE</div>
+  <h2>Cloze (Fill-in-the-blank) <span class="kor">빈칸 (6문항)</span></h2>
+  <div class="desc">본문 핵심 문장에 빈칸 — 어휘·연결어·결론 추론</div>
+</div>
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">17</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">핵심 표현: come from</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>17.</b> 다음 빈칸에 들어갈 말로 가장 알맞은 것은?</div><div class="q-passage">The word <em>shampoo</em> <span class="q-blank">______</span> the Hindi word <em>chāmpo</em>, which means "to press."</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>comes from</span><span class="c"><span class="num">②</span>goes into</span><span class="c"><span class="num">③</span>looks at</span><span class="c"><span class="num">④</span>turns off</span><span class="c"><span class="num">⑤</span>takes away</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ① <em>comes from</em></div>
+  <div class="ans-detail"><b>come from = ~에서 유래하다</b>. 본문 핵심 어구. <em>The word shampoo comes from the Hindi word chāmpo</em>.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">comes from</span> <span class="opt-ko">"~에서 유래하다"</span> <span class="opt-mark">✓</span></div><div class="opt-why">본문 핵심 어구 ✓ "단어가 ~에서 유래했다"</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">goes into</span> <span class="opt-ko">"~안으로 들어가다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">의미 부적합</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">looks at</span> <span class="opt-ko">"~을 바라보다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">의미 부적합</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">turns off</span> <span class="opt-ko">"끄다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">의미 부적합</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">takes away</span> <span class="opt-ko">"가져가다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">의미 부적합</div></div>
+  </div>
+  </div></details>
+</article>
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">18</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">수동태 + 전치사 for</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>18.</b> 다음 빈칸에 들어갈 말로 가장 알맞은 것은?</div><div class="q-passage">In India, the word was <span class="q-blank">______</span> for a head massage.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>used</span><span class="c"><span class="num">②</span>using</span><span class="c"><span class="num">③</span>use</span><span class="c"><span class="num">④</span>uses</span><span class="c"><span class="num">⑤</span>to use</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ① <em>used</em></div>
+  <div class="ans-detail"><b>be + 과거분사(p.p.) = 수동태</b> "사용되었다". 본문 그대로 <em>was used for</em>.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">used</span> <span class="opt-ko">과거분사</span> <span class="opt-mark">✓</span></div><div class="opt-why"><em>be + p.p.</em> 수동태 ✓ 본문 그대로</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">using</span> <span class="opt-ko">현재분사</span> <span class="opt-mark">✗</span></div><div class="opt-why">be + V-ing는 진행형 — 의미 부적합 (단어가 사용하는 게 아님)</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">use</span> <span class="opt-ko">동사원형</span> <span class="opt-mark">✗</span></div><div class="opt-why">be + 동사원형 불가</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">uses</span> <span class="opt-ko">3인칭 단수형</span> <span class="opt-mark">✗</span></div><div class="opt-why">be + 정형동사 불가</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">to use</span> <span class="opt-ko">to부정사</span> <span class="opt-mark">✗</span></div><div class="opt-why">"사용하기 위해" 의미 — 흐름 부적합</div></div>
+  </div>
+  </div></details>
+</article>
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">19</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">시간 부사구: Shortly after</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>19.</b> 다음 빈칸에 들어갈 말로 가장 알맞은 것은?</div><div class="q-passage">In the 19th century, <em>shampoo</em> got its present meaning of "washing the hair." <span class="q-blank">______</span>, the word began to be also used for a special soap for the hair.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>Shortly after that</span><span class="c"><span class="num">②</span>Long before that</span><span class="c"><span class="num">③</span>However</span><span class="c"><span class="num">④</span>For example</span><span class="c"><span class="num">⑤</span>On the contrary</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ① <em>Shortly after that</em></div>
+  <div class="ans-detail">"머리 감기" 의미 획득(앞문장) → "비누" 의미로 확장(뒷문장)은 <b>시간 순서대로 일어난 일</b>이며 <b>같은 방향 의미 확장</b>. <em>Shortly after that = 그 직후</em>가 자연스러움.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">Shortly after that</span> <span class="opt-ko">"그 직후"</span> <span class="opt-mark">✓</span></div><div class="opt-why">시간 순서·확장 흐름 ✓ 본문 그대로</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">Long before that</span> <span class="opt-ko">"그보다 훨씬 전에"</span> <span class="opt-mark">✗</span></div><div class="opt-why">시간 역순 — 본문 흐름 모순</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">However</span> <span class="opt-ko">"그러나"</span> <span class="opt-mark">✗</span></div><div class="opt-why">역접 — 의미 확장은 모순이 아님</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">For example</span> <span class="opt-ko">"예를 들어"</span> <span class="opt-mark">✗</span></div><div class="opt-why">예시 관계 아님</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">On the contrary</span> <span class="opt-ko">"반대로"</span> <span class="opt-mark">✗</span></div><div class="opt-why">대조 — 의미 확장과 안 맞음</div></div>
+  </div>
+  </div></details>
+</article>
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">20</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">관계대명사 that 자리</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>20.</b> 다음 빈칸에 들어갈 말로 가장 알맞은 것은?</div><div class="q-passage">In the play, robots are machines <span class="q-blank">______</span> humans.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>that look like</span><span class="c"><span class="num">②</span>that looks like</span><span class="c"><span class="num">③</span>what look like</span><span class="c"><span class="num">④</span>look like</span><span class="c"><span class="num">⑤</span>that looking like</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ① <em>that look like</em></div>
+  <div class="ans-detail">선행사 <em>machines</em>(복수) → 주격 관계대명사 that + <b>복수 동사 look</b>. <em>look like + 명사</em> = "~처럼 생기다".</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">that look like</span> <span class="opt-ko">"~처럼 생긴"</span> <span class="opt-mark">✓</span></div><div class="opt-why">주격 that + 복수 동사 look ✓ 본문 형태</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">that looks like</span> <span class="opt-ko">단수 동사</span> <span class="opt-mark">✗</span></div><div class="opt-why">선행사 machines가 복수 — 단수 looks ✗</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">what look like</span> <span class="opt-ko">선행사 포함</span> <span class="opt-mark">✗</span></div><div class="opt-why">machines라는 선행사 있으므로 what 못 씀</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">look like</span> <span class="opt-ko">관계대명사 빠짐</span> <span class="opt-mark">✗</span></div><div class="opt-why">주격 관계대명사는 생략 불가</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">that looking like</span> <span class="opt-ko">that + V-ing</span> <span class="opt-mark">✗</span></div><div class="opt-why">주격 자리에 정형동사 필요 — V-ing 단독 불가</div></div>
+  </div>
+  </div></details>
+</article>
+</section>
+
+<section data-section-type="cloze">
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">21</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">be designed to V</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>21.</b> 다음 빈칸에 들어갈 말로 가장 알맞은 것은?</div><div class="q-passage">They are designed <span class="q-blank">______</span> for humans and are produced in a factory.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>work</span><span class="c"><span class="num">②</span>working</span><span class="c"><span class="num">③</span>worked</span><span class="c"><span class="num">④</span>to work</span><span class="c"><span class="num">⑤</span>be working</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ④ <em>to work</em></div>
+  <div class="ans-detail"><b>be designed + to V (목적)</b> = "~하도록 설계되다". 본문 <em>"designed to work for humans"</em> 그대로.</div>
+  <div class="opt-analysis"><div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">work</span> <span class="opt-ko">동사원형</span> <span class="opt-mark">✗</span></div><div class="opt-why">문장에서 동사 자리 아님</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">working</span> <span class="opt-ko">현재분사</span> <span class="opt-mark">✗</span></div><div class="opt-why">designed working은 비문</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">worked</span> <span class="opt-ko">과거형/p.p.</span> <span class="opt-mark">✗</span></div><div class="opt-why">의미·구조 부적합</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">to work</span> <span class="opt-ko">to부정사</span> <span class="opt-mark">✓</span></div><div class="opt-why"><em>be designed + to V</em> 목적 ✓ 본문 그대로</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">be working</span> <span class="opt-ko">진행형</span> <span class="opt-mark">✗</span></div><div class="opt-why">designed 뒤 to 없이 be working 어색</div></div>
+  </div>
+  </div></details>
+</article>
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">22</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">be made into = 변환되다</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>22.</b> 다음 빈칸에 들어갈 말로 가장 알맞은 것은?</div><div class="q-passage">In 1938, the play was <span class="q-blank">______</span> a science fiction show on television in Britain.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>made into</span><span class="c"><span class="num">②</span>made of</span><span class="c"><span class="num">③</span>made for</span><span class="c"><span class="num">④</span>made in</span><span class="c"><span class="num">⑤</span>made up</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ① <em>made into</em></div>
+  <div class="ans-detail"><b>be made into = ~로 만들어지다(변환되다)</b>. <em>be made of</em>(재료) / <em>be made from</em>(원료) / <em>be made in</em>(장소)와 구별.</div>
+  <div class="opt-analysis"><div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">made into</span> <span class="opt-ko">"~로 만들어지다(변환)"</span> <span class="opt-mark">✓</span></div><div class="opt-why"><em>희곡 → TV쇼 형태 변환</em> ✓ 본문 그대로</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">made of</span> <span class="opt-ko">"~로 만들어지다(재료)"</span> <span class="opt-mark">✗</span></div><div class="opt-why">재료 표현 — 형태 변환 부적합</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">made for</span> <span class="opt-ko">"~을 위해 만들어지다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">용도 표현 — 변환 의미 아님</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">made in</span> <span class="opt-ko">"~에서 만들어지다(장소)"</span> <span class="opt-mark">✗</span></div><div class="opt-why">장소 표현 — Britain은 이미 뒤에 있음</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">made up</span> <span class="opt-ko">"꾸며내다 / 구성하다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">be made up of(~로 구성되다) — 의미 부적합</div></div>
+  </div>
+  </div></details>
+</article>
+</section>
+
+<section data-section-type="vocab">
+<div class="section-head" data-section-type="vocab">
+  <div class="num-line">SECTION F · VOCAB</div>
+  <h2>Vocabulary & Idioms <span class="kor">어휘·숙어 (6문항)</span></h2>
+  <div class="desc">핵심 어휘 의미·동의어·반의어·영영풀이·단어가족·다의어</div>
+</div>
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">23</span><span class="type-tag vocab">어휘·숙어</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">동의어: borrow</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>23.</b> 다음 밑줄 친 단어와 뜻이 가장 가까운 것은?</div><div class="q-passage">English has often <em>borrowed</em> words from other cultures or languages.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>created</span><span class="c"><span class="num">②</span>taken</span><span class="c"><span class="num">③</span>removed</span><span class="c"><span class="num">④</span>banned</span><span class="c"><span class="num">⑤</span>forgotten</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ② <em>taken</em></div>
+  <div class="ans-detail"><b>borrow words = 단어를 차용(取)하다</b>. 동의어로는 <em>take</em>(가져오다), <em>adopt</em>(채택하다), <em>derive</em>(유래하다). ②가 가장 근접.</div>
+  <div class="opt-analysis"><div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">created</span> <span class="opt-ko">"창조했다"</span> <span class="opt-mark">✗</span></div><div class="opt-why"><b>반의어</b> — 차용 ≠ 창조</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">taken</span> <span class="opt-ko">"가져왔다"</span> <span class="opt-mark">✓</span></div><div class="opt-why">borrow의 가까운 동의어 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">removed</span> <span class="opt-ko">"제거했다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">의미 무관</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">banned</span> <span class="opt-ko">"금지했다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">의미 무관 (반대 뉘앙스)</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">forgotten</span> <span class="opt-ko">"잊었다"</span> <span class="opt-mark">✗</span></div><div class="opt-why">의미 무관</div></div>
+  </div>
+  </div></details>
+</article>
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">24</span><span class="type-tag vocab">어휘·숙어</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">다의어: present</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>24.</b> 본문 밑줄 친 <em>present</em>의 뜻과 가장 가까운 것은?<br><span style="color:var(--muted);font-size:13px;">[본문] In the 19th century, shampoo got its <em>present</em> meaning of "washing the hair."</span></div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>gift</span><span class="c"><span class="num">②</span>attending</span><span class="c"><span class="num">③</span>future</span><span class="c"><span class="num">④</span>missing</span><span class="c"><span class="num">⑤</span>current</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ⑤ <em>current</em></div>
+  <div class="ans-detail"><b>명사 앞 present = "현재의(=current)"</b>. 다른 뜻: 명사 "선물" / 동사 "발표하다" / 명사 뒤 형용사 "참석한". 본문은 명사 meaning 앞이므로 "현재의" → current.</div>
+  <div class="opt-analysis"><div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">gift</span> <span class="opt-ko">"선물"</span> <span class="opt-mark">✗</span></div><div class="opt-why">명사 뜻 — 본문은 형용사</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">attending</span> <span class="opt-ko">"참석한"</span> <span class="opt-mark">✗</span></div><div class="opt-why">명사 뒤 present의 뜻 — 본문 위치와 다름</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">future</span> <span class="opt-ko">"미래의"</span> <span class="opt-mark">✗</span></div><div class="opt-why">시제 반대</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">missing</span> <span class="opt-ko">"빠진/없는"</span> <span class="opt-mark">✗</span></div><div class="opt-why">반대 뉘앙스</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">current</span> <span class="opt-ko">"현재의"</span> <span class="opt-mark">✓</span></div><div class="opt-why">명사 앞 present의 뜻 ✓</div></div>
+  </div>
+  </div></details>
+</article>
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">25</span><span class="type-tag vocab">어휘·숙어</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">영영풀이: trader</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>25.</b> 다음 영영풀이가 가리키는 단어로 가장 알맞은 것은?</div><div class="q-passage"><em>a person who buys and sells goods, especially in different countries</em></div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>writer</span><span class="c"><span class="num">②</span>trader</span><span class="c"><span class="num">③</span>worker</span><span class="c"><span class="num">④</span>massage</span><span class="c"><span class="num">⑤</span>factory</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ② <em>trader</em></div>
+  <div class="ans-detail"><b>trader = 상인(상품을 사고파는 사람)</b>. 본문 <em>"British traders in India"</em>의 그 단어.</div>
+  <div class="opt-analysis"><div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">writer</span> <span class="opt-ko">"작가"</span> <span class="opt-mark">✗</span></div><div class="opt-why">글을 쓰는 사람</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">trader</span> <span class="opt-ko">"상인"</span> <span class="opt-mark">✓</span></div><div class="opt-why">상품을 사고파는 사람 ✓ 본문 trader</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">worker</span> <span class="opt-ko">"노동자"</span> <span class="opt-mark">✗</span></div><div class="opt-why">일반적 노동자 — 사고파는 행위 강조 안 됨</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">massage</span> <span class="opt-ko">"마사지"</span> <span class="opt-mark">✗</span></div><div class="opt-why">명사 — 사람 아님</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">factory</span> <span class="opt-ko">"공장"</span> <span class="opt-mark">✗</span></div><div class="opt-why">장소 — 사람 아님</div></div>
+  </div>
+  </div></details>
+</article>
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">26</span><span class="type-tag vocab">어휘·숙어</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">단어가족: 품사 변환</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>26.</b> 다음 단어 가족 중 짝지음이 <em>잘못된</em> 것은?</div>
+  <div class="q-choices"><span class="c"><span class="num">①</span>decide(결정하다, 동사) — decision(결정, 명사)</span><span class="c"><span class="num">②</span>introduce(도입하다, 동사) — introduction(도입, 명사)</span><span class="c"><span class="num">③</span>produce(생산하다, 동사) — product(제품, 명사) — productive(생산적인, 형용사)</span><span class="c"><span class="num">④</span>suggest(제안하다, 동사) — suggestive(제안받은, 형용사)</span><span class="c"><span class="num">⑤</span>mean(뜻하다, 동사) — meaning(의미, 명사) — meaningful(의미 있는, 형용사)</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ④</div>
+  <div class="ans-detail"><b>suggestive = "암시하는 / 시사하는"</b>이지 "제안받은"이 아님. "제안받은"은 <em>suggested</em>(과거분사). 다른 짝지음은 모두 정확.</div>
+  <div class="opt-analysis"><div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-ko">decide — decision</span> <span class="opt-mark">✗</span></div><div class="opt-why">동사 → 명사 변환 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-ko">introduce — introduction</span> <span class="opt-mark">✗</span></div><div class="opt-why">동사 → 명사 변환 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-ko">produce — product — productive</span> <span class="opt-mark">✗</span></div><div class="opt-why">동사 → 명사 → 형용사 ✓</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-ko">suggest — suggestive(제안받은)</span> <span class="opt-mark">✓</span></div><div class="opt-why"><b>suggestive는 "암시하는" 의미</b> — "제안받은"은 suggested → 정답</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-ko">mean — meaning — meaningful</span> <span class="opt-mark">✗</span></div><div class="opt-why">동사 → 명사 → 형용사 ✓</div></div>
+  </div>
+  </div></details>
+</article>
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">27</span><span class="type-tag vocab">어휘·숙어</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">빈칸에 안 들어가는 어휘 (5개 동시 검증)</span><span class="q-pts">5점</span></div>
+  <div class="q-prompt"><b>27.</b> 다음 (A)~(E)에 들어갈 단어로 짝지을 수 <em>없는</em> 것은?</div><div class="q-passage">(A) British <span class="q-blank">______</span> in India experienced a bath with a head massage.<br>(B) The word shampoo <span class="q-blank">______</span> from the Hindi word chāmpo.<br>(C) Robots are designed to work for humans and are produced in a <span class="q-blank">______</span>.<br>(D) <em>roboti</em> means "<span class="q-blank">______</span> workers" in Czech.<br>(E) The play was made into a <span class="q-blank">______</span> show on television.</div>
+  <div class="q-choices"><span class="c"><span class="num">①</span>(A) traders</span><span class="c"><span class="num">②</span>(B) comes</span><span class="c"><span class="num">③</span>(C) factory</span><span class="c"><span class="num">④</span>(D) machine</span><span class="c"><span class="num">⑤</span>(E) science fiction</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ④ <em>(D) machine</em></div>
+  <div class="ans-detail">본문 <em>"roboti, which means 'slave workers' in Czech"</em> — (D)에는 <b>slave</b>가 들어가야 함. <em>machine workers</em>는 본문에 없는 표현이며 의미도 어색.</div>
+  <div class="opt-analysis"><div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-ko">(A) traders</span> <span class="opt-mark">✗</span></div><div class="opt-why">본문 <em>"British traders in India"</em> ✓ 들어감</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-ko">(B) comes</span> <span class="opt-mark">✗</span></div><div class="opt-why">본문 <em>"comes from the Hindi word"</em> ✓ 들어감</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-ko">(C) factory</span> <span class="opt-mark">✗</span></div><div class="opt-why">본문 <em>"produced in a factory"</em> ✓ 들어감</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-ko">(D) machine</span> <span class="opt-mark">✓</span></div><div class="opt-why"><b>본문은 slave workers</b> — machine은 들어갈 수 없음 ✓ 정답</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-ko">(E) science fiction</span> <span class="opt-mark">✗</span></div><div class="opt-why">본문 <em>"a science fiction show"</em> ✓ 들어감</div></div>
+  </div>
+  </div></details>
+</article>
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">28</span><span class="type-tag vocab">어휘·숙어</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">숙어 종합 (come from / be made into / look like)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>28.</b> 다음 빈칸 (A), (B), (C)에 들어갈 표현이 바르게 짝지어진 것은?</div><div class="q-passage">(A) The word robot <span class="q-blank">______</span> the play R.U.R.<br>(B) Robots are machines that <span class="q-blank">______</span> humans.<br>(C) In 1938, the play was <span class="q-blank">______</span> a TV show.</div>
+  <div class="q-choices"><span class="c"><span class="num">①</span>comes from / look like / made into</span><span class="c"><span class="num">②</span>goes to / look at / made of</span><span class="c"><span class="num">③</span>comes from / looks like / made of</span><span class="c"><span class="num">④</span>goes from / look as / made from</span><span class="c"><span class="num">⑤</span>comes to / looks at / made for</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답 ① <em>comes from / look like / made into</em></div>
+  <div class="ans-detail">본문 핵심 숙어 3종: <b>come from</b>(~에서 유래) + <b>look like + N</b>(~처럼 생기다) + <b>be made into</b>(~로 만들어지다, 변환).</div>
+  <div class="opt-analysis"><div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-ko">comes from / look like / made into</span> <span class="opt-mark">✓</span></div><div class="opt-why"><b>본문 핵심 숙어 3종 정확</b> ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-ko">goes to / look at / made of</span> <span class="opt-mark">✗</span></div><div class="opt-why">goes to(가다) / look at(바라보다) / made of(재료) — 모두 의미 다름</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-ko">comes from / looks like / made of</span> <span class="opt-mark">✗</span></div><div class="opt-why">(B) 선행사 machines(복수)에 단수 looks ✗ / (C) made of는 재료</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-ko">goes from / look as / made from</span> <span class="opt-mark">✗</span></div><div class="opt-why">goes from·look as·made from 모두 본문 표현 아님</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-ko">comes to / looks at / made for</span> <span class="opt-mark">✗</span></div><div class="opt-why">모두 다른 의미 숙어</div></div>
+  </div>
+  </div></details>
+</article>
+</section>
+
+<section data-section-type="writing">
+<div class="section-head" data-section-type="writing">
+  <div class="num-line">SECTION G · WRITING</div>
+  <h2>Writing (Word Arrangement) <span class="kor">서술형 영작 (2문항)</span></h2>
+  <div class="desc">본문 핵심 문장 — 보기 단어를 무작위 섞어 어순 재구성</div>
+</div>
+<article class="q-card" data-type="writing">
+  <div class="q-meta"><span class="q-num">29</span><span class="type-tag writing">서술형</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">introduce + 사물 + to + 장소 영작</span><span class="q-pts">5점</span></div>
+  <div class="q-prompt"><b>29.</b> 다음 우리말 의미와 일치하도록 <보기>의 단어를 모두 사용하여 영작하시오. <span style="color:var(--accent);">★ <em>introduce</em>는 4형식으로 못 씀에 주의</span></div><div class="word-bank"><b>&lt;우리말&gt;</b> 인도의 영국 상인들은 머리 마사지가 있는 목욕을 경험했고 그것을 영국에 도입했다.<br><br><b>&lt;보기&gt;</b> ( <b>massage / Britain / it / British / India / a / bath / and / introduced / experienced / with / to / a / head / in / traders</b> )</div><div class="answer-line">⇒ <span class="underline" style="min-width:90%;">　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　</span></div>
+  
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답: <em>British traders in India experienced a bath with a head massage and introduced it to Britain.</em></div>
+  <div class="ans-detail"><b>핵심 결합 문법 3가지</b>:<br>① <em>British traders in India</em>(주어 + 후치수식) — "인도의 영국 상인들"<br>② <em>experienced a bath with a head massage</em>(과거시제 능동태) — with + 명사 후치수식<br>③ <em>introduced <b>it</b> <b>to</b> Britain</em> — <b>introduce는 4형식 불가</b>, 반드시 <em>introduce + 사물 + to + 장소</em>의 3형식<br><br>★ 채점 포인트: <em>introduced it Britain</em> ✗ / <em>introduced Britain it</em> ✗ → 모두 4형식 잘못.</div>
+  </div></details>
+</article>
+<article class="q-card" data-type="writing">
+  <div class="q-meta"><span class="q-num">30</span><span class="type-tag writing">서술형</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">가주어 It ~ that + 강조 himself 영작</span><span class="q-pts">5점</span></div>
+  <div class="q-prompt"><b>30.</b> 다음 우리말 의미와 일치하도록 <보기>의 단어를 모두 사용하여 영작하시오. <span style="color:var(--accent);">★ <em>가주어 It ~ that</em> 구조와 <em>himself</em> 강조 용법 활용</span></div><div class="word-bank"><b>&lt;우리말&gt;</b> robot이라는 단어를 사용하는 아이디어가 Karel Čapek 자신에게서 나온 것이 아니라는 점이 흥미롭다.<br><br><b>&lt;보기&gt;</b> ( <b>didn't / himself / using / it / from / interesting / Karel Čapek / robot / is / that / the / come / idea / of / word / the</b> )</div><div class="answer-line">⇒ <span class="underline" style="min-width:90%;">　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　</span></div>
+  
+  <details class="ans"><summary>정답 &amp; 해설</summary>
+  <div class="ans-body">
+  <div class="ans-main">정답: <em>It is interesting that the idea of using the word robot didn't come from Karel Čapek himself.</em></div>
+  <div class="ans-detail"><b>핵심 결합 문법 3가지</b>:<br>① <em>It is interesting that ~</em> — <b>가주어 It + 형용사 + 진주어 that절</b><br>② <em>the idea of using the word robot</em> — <b>전치사 of + 동명사 using</b> (전치사 뒤 동명사)<br>③ <em>didn't come from Karel Čapek <b>himself</b></em> — <b>himself 강조 용법</b>(생략 가능, "자신이 직접" 강조)<br><br>★ 채점 포인트: <em>That is interesting</em> ✗(가주어 못 씀) / <em>using → to use</em> ✗(전치사 of 뒤 to부정사 불가) / <em>himself</em> 자리 — Karel Čapek 직후가 자연스러움.</div>
+  </div></details>
+</article>
+</section>
+
+</div>
+<div class="print-footer">목동서로영어학원 제작 · MOKDONG SEORO ENGLISH ACADEMY · 0505.co.kr</div>
+<div class="made-by">
+  <div>목동서로영어학원 — Passage-Based Practice Set</div>
+  <div class="credit">MOKDONG SEORO ENGLISH ACADEMY · 0505.co.kr</div>
+</div>
+<script>
+  const TYPE_LABELS = {
+    all: '전체 30문항', grammar: '어법 (8문항)', pronoun: '대명사 (2문항)',
+    reading: '독해 (3문항)', context: '문맥 (3문항)', cloze: '빈칸 (6문항)',
+    vocab: '어휘·숙어 (6문항)', writing: '서술형 (2문항)'
+  };
+  function applyFilter(type) {
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.toggle('active', t.dataset.type === type));
+    document.querySelectorAll('.q-card').forEach(card => card.classList.toggle('hidden', !(type === 'all' || card.dataset.type === type)));
+    document.querySelectorAll('.section-head[data-section-type]').forEach(sh => sh.classList.toggle('hidden', !(type === 'all' || sh.dataset.sectionType === type)));
+    const lbl = document.getElementById('printSectionLabel');
+    if (lbl) lbl.textContent = TYPE_LABELS[type] || '전체';
+  }
+  document.querySelectorAll('.nav-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      applyFilter(tab.dataset.type);
+      const fv = document.querySelector('.q-card:not(.hidden), .section-head:not(.hidden)[data-section-type]');
+      if (fv && tab.dataset.type !== 'all') {
+        const navH = document.querySelector('.type-nav-wrap').offsetHeight;
+        window.scrollTo({ top: fv.getBoundingClientRect().top + window.scrollY - navH - 20, behavior: 'smooth' });
+      }
+    });
+  });
+  document.querySelectorAll('.nav-print').forEach(btn => {
+    btn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); applyFilter(btn.dataset.printType); setTimeout(() => window.print(), 200); });
+  });
+  let answersOpen = false;
+  document.getElementById('answerToggle')?.addEventListener('click', () => {
+    answersOpen = !answersOpen;
+    document.querySelectorAll('details.ans').forEach(d => d.open = answersOpen);
+    const b = document.getElementById('answerToggle');
+    b.textContent = answersOpen ? '정답 모두 접기' : '정답 모두 펼치기';
+    b.classList.toggle('active', answersOpen);
+  });
+  document.getElementById('passageToggle')?.addEventListener('click', () => {
+    const box = document.querySelector('.passage-box');
+    if (box) { box.open = !box.open; document.getElementById('passageToggle').classList.toggle('active', box.open); }
+  });
+  const ib = document.querySelector('.passage-box');
+  if (ib && ib.open) document.getElementById('passageToggle').classList.add('active');
+</script>
+</body>
+</html>
