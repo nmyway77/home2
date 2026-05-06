@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>지문 기반 유형별 문제 — Waking Up to an Earthquake Part 1 (목운중 L3)</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+  :root {
+    --bg: #FAF7F2;
+    --paper: #FFFFFF;
+    --ink: #1A1815;
+    --ink2: #4A4642;
+    --muted: #8B8680;
+    --line: #E5DFD5;
+    --accent: #B8763D;
+    /* 7가지 유형 색상 */
+    --t-grammar: #1F4E79;
+    --t-pronoun: #6B5BA0;
+    --t-reading: #2A8B7F;
+    --t-context: #8B4A6F;
+    --t-cloze:   #B8763D;
+    --t-vocab:   #D97A47;
+    --t-writing: #4A6B85;
+    --green: #4A8B5C;
+    --yellow: #C9A227;
+    --orange: #D97A47;
+    --red: #B53737;
+    --navy-950:#0A1E3A;
+    --navy-800:#1F3557;
+    --cream:#FAF6EE;
+    --gold:#C99B4E;
+    --gold-light:#E4C589;
+    --slate-300:#CBD5E1;
+    --slate-400:#94A3B8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { overflow-x: hidden; max-width: 100vw; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 36px 60px; }
+
+  /* HERO */
+  .hero-banner {
+    background:
+      radial-gradient(ellipse at 12% 20%, rgba(201,155,78,0.18), transparent 45%),
+      linear-gradient(135deg, var(--navy-950) 0%, var(--navy-800) 100%);
+    color: var(--cream);
+    padding: 44px 0 36px;
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; padding: 0 36px; font-family: 'Pretendard Variable', sans-serif; }
+  .brand-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 30px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 18px; color: var(--navy-950); }
+  .brand-text { font-size: 12px; letter-spacing: 0.1em; color: var(--cream); font-weight: 500; }
+  .brand-text .sub { color: var(--slate-400); font-size: 10.5px; margin-top: 2px; }
+  .home-btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); color: var(--navy-950); font-family: 'Pretendard Variable', sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 0.1em; border-radius: 999px; text-decoration: none; }
+  .home-btn svg { width: 13px; height: 13px; fill: var(--navy-950); }
+  .kicker { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-light); font-weight: 600; margin-bottom: 12px; }
+  h1.title { font-family: 'Playfair Display', serif; font-weight: 800; font-size: clamp(28px, 4.5vw, 48px); line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 8px; }
+  h1.title em { font-style: italic; color: var(--gold-light); font-weight: 400; }
+  h1.title .kor { font-family: 'Pretendard Variable', sans-serif; font-weight: 800; letter-spacing: -0.02em; display: block; margin-top: 6px; font-size: clamp(16px, 2.4vw, 22px); color: var(--gold-light); }
+  .meta-info { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .meta-tag { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid rgba(228,197,137,0.4); border-radius: 999px; font-size: 11.5px; color: var(--gold-light); font-family: 'Pretendard Variable', sans-serif; font-weight: 500; letter-spacing: 0.04em; }
+
+  /* TYPE NAV — sticky */
+  .type-nav-wrap { background: var(--navy-950); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(228,197,137,0.15); }
+  .type-nav { max-width: 1100px; margin: 0 auto; padding: 0 36px; display: flex; gap: 0; overflow-x: auto; scrollbar-width: thin; -webkit-overflow-scrolling: touch; }
+  .type-nav::-webkit-scrollbar { height: 4px; }
+  .type-nav::-webkit-scrollbar-thumb { background: rgba(228,197,137,0.3); border-radius: 2px; }
+  .nav-tab { background: transparent; border: none; color: var(--slate-400); padding: 14px 16px; cursor: pointer; font-family: 'Pretendard Variable', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; border-bottom: 3px solid transparent; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 7px; }
+  .nav-tab:hover { color: var(--gold-light); }
+  .nav-tab.active { color: var(--gold-light); border-bottom-color: var(--gold); }
+  .nav-tab .nav-count { font-family: 'JetBrains Mono', monospace; font-size: 10px; background: rgba(228,197,137,0.15); color: var(--gold-light); padding: 2px 6px; border-radius: 4px; font-weight: 700; }
+  .nav-tab.active .nav-count { background: var(--gold); color: var(--navy-950); }
+  .nav-color-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* NAV PRINT BUTTON — 각 유형 옆에 작은 인쇄 버튼 */
+  .nav-print {
+    background: transparent;
+    border: none;
+    color: var(--slate-400);
+    padding: 14px 8px 14px 4px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.18s ease;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 6px;
+    border-left: 1px dotted rgba(228,197,137,0.18);
+  }
+  .nav-print:hover { color: var(--gold-light); transform: translateY(-1px); }
+  .nav-print:active { transform: translateY(0); }
+  .nav-print svg { width: 15px; height: 15px; fill: currentColor; }
+  .nav-print[data-print-type="all"] { border-left: none; }
+
+  /* PRINT TOOLBAR — 정답 펼치기/접기 토글 + 안내문 */
+  .print-toolbar { background: linear-gradient(180deg, #FAF7F2 0%, #FFFFFF 100%); border-bottom: 1px solid var(--line); }
+  .print-toolbar-inner { max-width: 1100px; margin: 0 auto; padding: 12px 36px; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-family: 'Pretendard Variable', sans-serif; }
+  .pt-label { font-family: 'Playfair Display', serif; font-size: 11px; letter-spacing: 0.18em; color: var(--accent); font-weight: 800; text-transform: uppercase; }
+  .pt-btn { background: white; border: 1px solid var(--gold); color: var(--navy-950); padding: 6px 14px; font-family: 'Pretendard Variable', sans-serif; font-size: 12px; font-weight: 700; border-radius: 999px; cursor: pointer; transition: all 0.18s ease; }
+  .pt-btn:hover { background: var(--gold); color: white; }
+  .pt-btn.active { background: var(--navy-950); color: var(--gold-light); border-color: var(--navy-950); }
+  .pt-hint { font-size: 11.5px; color: var(--muted); font-weight: 500; line-height: 1.5; flex: 1; min-width: 200px; }
+  .pt-hint b { color: var(--ink); font-weight: 800; }
+  .pt-icon { width: 11px; height: 11px; fill: var(--accent); vertical-align: -1px; margin: 0 2px; }
+
+  /* ============================================
+     @media print — A4 용지 최적화 인쇄 스타일
+     ============================================ */
+  @media print {
+    /* A4 페이지 — 12mm 마진(종이 낭비 최소화) */
+    @page {
+      size: A4 portrait;
+      margin: 11mm 13mm 13mm 13mm;
+    }
+
+    /* 색상·배경 강제 인쇄 (브라우저 옵션 무관) */
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+
+    /* 전체 리셋 — 흰 배경, 검은 글씨 기본 */
+    html, body {
+      background: white !important;
+      color: black !important;
+      font-size: 10pt !important;
+      line-height: 1.42 !important;
+      max-width: 100% !important;
+      overflow: visible !important;
+    }
+
+    /* UI 크롬 숨김 — 화면 전용 요소 모두 제거 */
+    .hero-banner,
+    .type-nav-wrap,
+    .print-toolbar,
+    .made-by,
+    .home-btn,
+    .nav-print { display: none !important; }
+
+    /* 필터 hidden 숨김 — 현재 선택된 유형만 인쇄 */
+    .hidden { display: none !important; }
+
+    /* 컨테이너 — 페이지 전체 폭 사용 */
+    .container { padding: 0 !important; max-width: 100% !important; margin: 0 !important; }
+
+    /* 인쇄 헤더 — 학원명 표기 */
+    .print-header {
+      display: block !important;
+      text-align: center;
+      font-family: 'Pretendard Variable', sans-serif;
+      font-size: 9pt;
+      color: #555;
+      border-bottom: 0.5pt solid #999;
+      padding-bottom: 1.5mm;
+      margin-bottom: 3mm;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    .print-header b { color: #000; }
+
+    /* 지문 박스 — 펼쳐진 경우만 인쇄 */
+    .passage-box:not([open]) { display: none !important; }
+    .passage-box { margin: 0 0 4mm 0 !important; border: 0.6pt solid #888 !important; border-radius: 0 !important; background: white !important; }
+    .passage-box summary { display: none !important; }
+    .passage-text { padding: 3mm 4mm !important; font-size: 9.5pt !important; line-height: 1.55 !important; color: #000 !important; }
+    .passage-text p { margin-bottom: 2mm !important; }
+
+    /* 섹션 헤더 — 컴팩트, 페이지 마지막 한 줄 방지 */
+    .section-head {
+      margin: 0 0 3mm 0 !important;
+      padding: 2.5mm 0 1.5mm !important;
+      background: white !important;
+      border: none !important;
+      border-bottom: 1.4pt solid black !important;
+      page-break-after: avoid !important;
+      break-after: avoid !important;
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+    }
+    .section-head .num-line { font-size: 7.5pt !important; color: #555 !important; margin: 0 0 0.5mm 0 !important; letter-spacing: 0.18em !important; }
+    .section-head h2 { font-size: 13pt !important; color: black !important; margin: 0 !important; line-height: 1.15 !important; }
+    .section-head h2 .kor { font-size: 10pt !important; color: #333 !important; margin-left: 6px !important; }
+    .section-head .desc { font-size: 8.5pt !important; color: #444 !important; margin: 1mm 0 0 0 !important; line-height: 1.45 !important; }
+
+    /* 섹션 헤더 다음에 페이지 시작하지 않도록 — 첫 q-card와 함께 묶기 */
+    .section-head + .q-card { page-break-before: avoid !important; break-before: avoid !important; }
+
+    /* 문항 카드 — 페이지 중간에 끊기지 않도록, 컴팩트 간격 */
+    .q-card {
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+      margin: 0 0 3mm 0 !important;
+      padding: 2.5mm 0 2mm !important;
+      border: none !important;
+      border-bottom: 0.4pt dotted #999 !important;
+      background: white !important;
+      box-shadow: none !important;
+    }
+    .q-card:last-child { border-bottom: none !important; }
+
+    /* 문항 메타 라인 — 한 줄에 컴팩트 */
+    .q-meta {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      gap: 5px !important;
+      margin-bottom: 2mm !important;
+      font-size: 9pt !important;
+    }
+    .q-num {
+      font-family: 'Fraunces', 'Playfair Display', serif !important;
+      font-size: 14pt !important;
+      font-weight: 800 !important;
+      color: black !important;
+      margin-right: 3px !important;
+    }
+    .type-tag,
+    .var-pill {
+      font-size: 7.5pt !important;
+      padding: 1pt 5pt !important;
+      border-radius: 2pt !important;
+      font-weight: 700 !important;
+      letter-spacing: 0 !important;
+    }
+    .q-focus { font-size: 8.5pt !important; color: #333 !important; font-weight: 600 !important; }
+    .q-pts { font-size: 8.5pt !important; color: black !important; font-weight: 700 !important; margin-left: auto !important; }
+
+    /* 문항 본문 (지문, 선지, 보기 등) */
+    .q-card p,
+    .q-card div:not(.ans-body):not(.q-meta),
+    .q-card ul,
+    .q-card ol,
+    .q-card li {
+      font-size: 10pt !important;
+      line-height: 1.42 !important;
+      color: black !important;
+      background: white !important;
+    }
+    .q-card .q-passage { padding: 2mm 3mm !important; background: #fafafa !important; border: 0.4pt solid #ccc !important; margin: 1.5mm 0 !important; font-size: 9.5pt !important; line-height: 1.5 !important; }
+    .q-card .q-box { padding: 2mm 3mm !important; background: #f6f6f6 !important; border-left: 1.5pt solid #555 !important; margin: 1.5mm 0 !important; font-size: 9.5pt !important; }
+    .q-card ul.q-choices li,
+    .q-card ol.q-choices li { padding: 0.5mm 0 !important; font-size: 9.5pt !important; line-height: 1.45 !important; }
+    .q-card table { font-size: 9pt !important; border-collapse: collapse !important; }
+    .q-card table th,
+    .q-card table td { padding: 1mm 2mm !important; border: 0.3pt solid #999 !important; }
+
+    /* 정답 박스 — 펼쳐진 경우만 인쇄 (사용자 선택 그대로) */
+    details.ans:not([open]) { display: none !important; }
+    details.ans { display: block !important; margin-top: 1.5mm !important; background: transparent !important; }
+    details.ans > summary { display: none !important; }
+    details.ans .ans-body {
+      display: block !important;
+      padding: 2mm 3mm !important;
+      background: #f0eee6 !important;
+      border: 0.4pt solid #999 !important;
+      border-radius: 0 !important;
+      color: black !important;
+      font-size: 9pt !important;
+      line-height: 1.45 !important;
+      margin: 0 !important;
+    }
+    details.ans .ans-body * {
+      color: black !important;
+      background: transparent !important;
+    }
+    details.ans .ans-body .ans-label {
+      font-size: 7pt !important;
+      color: #555 !important;
+      letter-spacing: 0.18em !important;
+      margin-bottom: 1mm !important;
+    }
+    details.ans .ans-body .ans-main { font-size: 9.5pt !important; font-weight: 800 !important; margin-bottom: 1.5mm !important; }
+    details.ans .ans-body .ans-main .correct { color: #B53737 !important; font-weight: 800 !important; }
+    details.ans .ans-body .breakdown { padding-left: 4mm !important; margin: 1mm 0 !important; }
+    details.ans .ans-body .breakdown li { margin-bottom: 1mm !important; font-size: 8.5pt !important; }
+    details.ans .ans-body .note,
+    details.ans .ans-body .trap {
+      padding: 1.5mm 2.5mm !important;
+      margin-top: 1.5mm !important;
+      font-size: 8pt !important;
+      border: 0.3pt solid #aaa !important;
+      background: #fafafa !important;
+    }
+
+    /* 색상 보존 — 유형 태그 */
+    .type-tag.grammar { background: var(--t-grammar) !important; color: white !important; }
+    .type-tag.pronoun { background: var(--t-pronoun) !important; color: white !important; }
+    .type-tag.reading { background: var(--t-reading) !important; color: white !important; }
+    .type-tag.context { background: var(--t-context) !important; color: white !important; }
+    .type-tag.cloze   { background: var(--t-cloze) !important;   color: white !important; }
+    .type-tag.vocab   { background: var(--t-vocab) !important;   color: white !important; }
+    .type-tag.writing { background: var(--t-writing) !important; color: white !important; }
+    .var-pill { border: 0.3pt solid #999 !important; background: white !important; color: #333 !important; }
+
+    /* 인쇄 풋터 — 학원 정보 */
+    .print-footer {
+      display: block !important;
+      margin-top: 5mm;
+      padding-top: 1.5mm;
+      border-top: 0.4pt solid #999;
+      text-align: center;
+      font-family: 'Pretendard Variable', sans-serif;
+      font-size: 8pt;
+      color: #666;
+      letter-spacing: 0.05em;
+    }
+
+    /* 첫 페이지 빈공간 방지 — 모든 첫 요소 위 마진 0 */
+    .container > *:first-child { margin-top: 0 !important; }
+    .section-head:first-child { margin-top: 0 !important; }
+  }
+
+  /* 인쇄 전용 헤더/풋터 — 화면에서는 숨김 */
+  .print-header,
+  .print-footer { display: none; }
+
+  /* PASSAGE BOX */
+  .passage-box { background: var(--paper); border: 1px solid var(--line); margin-top: 36px; border-radius: 4px; }
+  .passage-box summary { list-style: none; cursor: pointer; padding: 18px 26px; display: flex; align-items: center; justify-content: space-between; font-family: 'Pretendard Variable', sans-serif; font-weight: 800; font-size: 15px; color: var(--ink); background: linear-gradient(180deg, #FAF7F2 0%, #FFFFFF 100%); border-bottom: 1px solid transparent; border-radius: 4px; }
+  .passage-box[open] summary { border-bottom: 1px solid var(--line); border-radius: 4px 4px 0 0; }
+  .passage-box summary::-webkit-details-marker { display: none; }
+  .passage-box summary .toggle-mark { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); letter-spacing: 0.08em; font-weight: 700; }
+  .passage-box summary .toggle-mark::before { content: '＋ 펼치기'; }
+  .passage-box[open] summary .toggle-mark::before { content: '－ 접기'; }
+  .passage-text { padding: 22px 28px; font-family: 'Inter', sans-serif; line-height: 1.85; font-size: 14.5px; color: var(--ink2); }
+  .passage-text p { margin-bottom: 12px; }
+
+  /* SECTION HEAD (TYPE GROUP MARKER) */
+  .section-head { margin: 50px 0 22px; padding: 18px 22px; background: white; border: 1px solid var(--line); border-left: 5px solid; }
+  .section-head[data-section-type="grammar"]     { border-left-color: var(--t-grammar); }
+  .section-head[data-section-type="pronoun"]     { border-left-color: var(--t-pronoun); }
+  .section-head[data-section-type="reading"]     { border-left-color: var(--t-reading); }
+  .section-head[data-section-type="context"]     { border-left-color: var(--t-context); }
+  .section-head[data-section-type="cloze"]       { border-left-color: var(--t-cloze); }
+  .section-head[data-section-type="vocab"]       { border-left-color: var(--t-vocab); }
+  .section-head[data-section-type="writing"]     { border-left-color: var(--t-writing); }
+  .section-head .num-line { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.18em; margin-bottom: 6px; font-weight: 700; }
+  .section-head h2 { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 5px; }
+  .section-head h2 .kor { font-family: 'Pretendard Variable', sans-serif; font-weight: 800; font-size: 14px; color: var(--ink2); margin-left: 10px; letter-spacing: -0.01em; }
+  .section-head .desc { font-size: 12.5px; color: var(--muted); line-height: 1.6; margin-top: 4px; }
+
+  /* QUESTION CARD */
+  .q-card { background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--t-grammar); margin-bottom: 14px; padding: 18px 22px; transition: opacity 0.2s ease; }
+  .q-card[data-type="pronoun"]  { border-left-color: var(--t-pronoun); }
+  .q-card[data-type="reading"]  { border-left-color: var(--t-reading); }
+  .q-card[data-type="context"]  { border-left-color: var(--t-context); }
+  .q-card[data-type="cloze"]    { border-left-color: var(--t-cloze); }
+  .q-card[data-type="vocab"]    { border-left-color: var(--t-vocab); }
+  .q-card[data-type="writing"]  { border-left-color: var(--t-writing); }
+
+  .q-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+  .q-num { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; line-height: 1; margin-right: 4px; }
+  .type-tag { display: inline-block; padding: 4px 10px; border-radius: 3px; font-family: 'Pretendard Variable', sans-serif; font-size: 11px; font-weight: 800; letter-spacing: -0.01em; color: white; }
+  .type-tag.grammar  { background: var(--t-grammar); }
+  .type-tag.pronoun  { background: var(--t-pronoun); }
+  .type-tag.reading  { background: var(--t-reading); }
+  .type-tag.context  { background: var(--t-context); }
+  .type-tag.cloze    { background: var(--t-cloze); }
+  .type-tag.vocab    { background: var(--t-vocab); }
+  .type-tag.writing  { background: var(--t-writing); }
+
+  .var-pill { display: inline-block; padding: 3px 8px; font-size: 10px; font-family: 'JetBrains Mono', monospace; font-weight: 700; letter-spacing: 0.08em; border-radius: 3px; }
+  .var-light { background: #ECF7EE; color: #2D6E3F; border: 1px solid #B8DBC1; }
+  .var-mod   { background: #FFF8E0; color: #7A5F0A; border: 1px solid #E8D9A0; }
+  .var-major { background: #FFEDD8; color: #A04A0E; border: 1px solid #F0CFAA; }
+  .var-new   { background: #FCE0E0; color: #8E1A1A; border: 1px solid #E8B8B8; }
+
+  .q-focus { display: inline-block; padding: 3px 8px; font-size: 10px; font-family: 'Pretendard Variable', sans-serif; font-weight: 700; letter-spacing: -0.01em; background: #F5F2ED; color: var(--ink2); border: 1px solid var(--line); border-radius: 3px; }
+  .q-pts { margin-left: auto; font-family: 'Fraunces', serif; font-size: 16px; font-weight: 800; color: var(--accent); letter-spacing: -0.02em; }
+
+  .q-prompt { font-family: 'Pretendard Variable', sans-serif; font-size: 14.5px; font-weight: 700; color: var(--ink); line-height: 1.55; margin-bottom: 10px; letter-spacing: -0.01em; }
+  .q-passage { background: #FAF7F2; border: 1px solid var(--line); border-left: 3px solid var(--accent); padding: 12px 16px; margin-bottom: 10px; font-size: 13px; line-height: 1.8; color: var(--ink2); font-family: 'Inter', sans-serif; border-radius: 0 3px 3px 0; }
+  .q-passage u { text-decoration: underline; text-underline-offset: 3px; }
+  .q-passage b { color: var(--ink); font-weight: 700; }
+  .q-passage i { font-style: italic; color: var(--accent); }
+  .q-choices { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+  .q-choices .c { display: flex; gap: 7px; padding: 7px 11px; background: #FBFAF7; border: 1px solid var(--line); border-radius: 3px; font-size: 13px; line-height: 1.55; color: var(--ink2); font-family: 'Pretendard Variable', sans-serif; }
+  .q-choices .c .num { font-weight: 800; color: var(--accent); flex-shrink: 0; min-width: 22px; }
+  .q-choices.horz { flex-direction: row; flex-wrap: wrap; }
+  .q-choices.horz .c { flex: 1 0 calc(33% - 6px); }
+  .q-choices.horz5 { flex-direction: row; flex-wrap: wrap; }
+  .q-choices.horz5 .c { flex: 1 0 calc(20% - 6px); justify-content: center; }
+  .q-blank { color: var(--accent); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+  .word-bank { background: #FFFAF0; border: 1px dashed var(--accent); padding: 10px 14px; margin: 10px 0; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.7; color: var(--ink); font-weight: 500; }
+  .word-bank b { color: var(--accent); }
+  .answer-line { background: #F5F2ED; padding: 10px 14px; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.9; margin: 8px 0; }
+  .answer-line .underline { display: inline-block; min-width: 70px; border-bottom: 1.5px solid var(--ink); margin: 0 3px; padding: 0 2px; vertical-align: bottom; }
+  .answer-line .star { color: var(--gold); font-weight: 800; font-size: 17px; padding: 0 6px; }
+
+  /* ANSWER PANEL */
+  details.ans { background: var(--navy-950); color: var(--cream); border-radius: 4px; overflow: hidden; margin-top: 6px; }
+  details.ans summary { list-style: none; cursor: pointer; padding: 11px 18px; font-family: 'Pretendard Variable', sans-serif; font-weight: 700; font-size: 12.5px; color: var(--gold-light); letter-spacing: 0.04em; display: flex; align-items: center; justify-content: space-between; }
+  details.ans summary::-webkit-details-marker { display: none; }
+  details.ans summary::after { content: '＋'; font-family: 'JetBrains Mono', monospace; color: var(--gold); }
+  details.ans[open] summary::after { content: '－'; }
+  .ans-body { padding: 4px 20px 18px; font-family: 'Pretendard Variable', sans-serif; color: #E1D9C8; font-size: 13px; line-height: 1.7; }
+  .ans-body .ans-main { font-size: 13.5px; font-weight: 700; color: var(--gold-light); margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed rgba(228,197,137,0.3); }
+  .ans-body .ans-detail { color: #C8C0AE; font-size: 12.5px; }
+  .ans-body .ans-detail b { color: var(--gold-light); font-weight: 700; }
+  .ans-body em { color: var(--gold-light); font-style: italic; font-family: 'Fraunces', serif; font-weight: 600; }
+
+  .q-card.hidden { display: none; }
+  .section-head.hidden { display: none; }
+
+  /* FOOTER */
+  .made-by { text-align: center; padding: 24px 20px 30px; background: var(--navy-950); margin: 50px -36px 0; color: var(--gold-light); font-family: 'Pretendard Variable', sans-serif; font-size: 12.5px; font-weight: 600; letter-spacing: 0.1em; }
+  .made-by .credit { display: block; margin-top: 6px; font-size: 10.5px; color: rgba(228,197,137,0.6); }
+
+  @media (max-width: 760px) {
+    .container { padding: 0 22px 50px; }
+    .hero-inner, .type-nav { padding: 0 22px; }
+    .nav-tab { padding: 12px 10px; font-size: 12px; gap: 5px; }
+    .nav-tab .nav-count { font-size: 9.5px; padding: 1px 5px; }
+    .q-card { padding: 16px 18px; }
+    .q-passage { padding: 11px 13px; font-size: 12.5px; }
+    .q-num { font-size: 20px; }
+    .q-prompt { font-size: 14px; }
+    .made-by { margin: 50px -22px 0; }
+    .q-choices.horz .c, .q-choices.horz5 .c { flex: 1 0 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero-banner">
+  <div class="hero-inner">
+    <div class="brand-row">
+      <div class="brand">
+        <div class="brand-mark">목</div>
+        <div class="brand-text">
+          목운중학교 3학년 영어
+          <div class="sub">MOKUN MIDDLE SCHOOL · LESSON 3 · PART 1</div>
+        </div>
+      </div>
+      <a href="https://0505.co.kr" target="_blank" rel="noopener" class="home-btn">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2.5L2 11h3v9h5v-6h4v6h5v-9h3z"/>
+        </svg>
+        HOME
+      </a>
+    </div>
+
+    <div class="kicker">PASSAGE-BASED PRACTICE SET · 유형별 변형 문제집</div>
+    <h1 class="title">
+      Waking Up <em>to</em> an Earthquake
+      <span class="kor">L3 본문 1 — 지진을 처음 겪은 그날 밤 · 7유형 30문제 · 목운중 패턴 반영</span>
+    </h1>
+
+    <div class="meta-info">
+      <span class="meta-tag">📖 L3 Part 1 풀세트 30문항</span>
+      <span class="meta-tag">🎯 목운중 출제 패턴 반영</span>
+      <span class="meta-tag">⭐ 5점 고배점 2개 + 4점 6개 + 3점 22개</span>
+      <span class="meta-tag">🖨 유형별 인쇄 가능</span>
+    </div>
+  </div>
+</section>
+
+<!-- TYPE NAV -->
+<div class="type-nav-wrap">
+  <nav class="type-nav" id="typeNav">
+    <button class="nav-tab active" data-type="all">전체 <span class="nav-count">30</span></button>
+    <button class="nav-print" data-print-type="all" title="전체 인쇄" aria-label="전체 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+
+    <button class="nav-tab" data-type="grammar"><span class="nav-color-dot" style="background:var(--t-grammar)"></span>어법 <span class="nav-count">8</span></button>
+    <button class="nav-print" data-print-type="grammar" title="어법 유형 인쇄" aria-label="어법 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+
+    <button class="nav-tab" data-type="pronoun"><span class="nav-color-dot" style="background:var(--t-pronoun)"></span>대명사 <span class="nav-count">3</span></button>
+    <button class="nav-print" data-print-type="pronoun" title="대명사 유형 인쇄" aria-label="대명사 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+
+    <button class="nav-tab" data-type="reading"><span class="nav-color-dot" style="background:var(--t-reading)"></span>독해 <span class="nav-count">2</span></button>
+    <button class="nav-print" data-print-type="reading" title="독해 유형 인쇄" aria-label="독해 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+
+    <button class="nav-tab" data-type="context"><span class="nav-color-dot" style="background:var(--t-context)"></span>문맥 <span class="nav-count">3</span></button>
+    <button class="nav-print" data-print-type="context" title="문맥 유형 인쇄" aria-label="문맥 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+
+    <button class="nav-tab" data-type="cloze"><span class="nav-color-dot" style="background:var(--t-cloze)"></span>빈칸 <span class="nav-count">7</span></button>
+    <button class="nav-print" data-print-type="cloze" title="빈칸 유형 인쇄" aria-label="빈칸 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+
+    <button class="nav-tab" data-type="vocab"><span class="nav-color-dot" style="background:var(--t-vocab)"></span>어휘·숙어 <span class="nav-count">5</span></button>
+    <button class="nav-print" data-print-type="vocab" title="어휘·숙어 유형 인쇄" aria-label="어휘·숙어 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+
+    <button class="nav-tab" data-type="writing"><span class="nav-color-dot" style="background:var(--t-writing)"></span>서술형 <span class="nav-count">2</span></button>
+    <button class="nav-print" data-print-type="writing" title="서술형 유형 인쇄" aria-label="서술형 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+  </nav>
+</div>
+
+<!-- PRINT TOOLBAR — 인쇄 옵션 -->
+<div class="print-toolbar">
+  <div class="print-toolbar-inner">
+    <span class="pt-label">📄 인쇄 옵션</span>
+    <button class="pt-btn" id="answerToggle" type="button">정답 모두 펼치기</button>
+    <button class="pt-btn pt-passage" id="passageToggle" type="button">지문 펼치기/접기</button>
+    <span class="pt-hint">→ 위 인쇄 버튼(<svg viewBox="0 0 24 24" class="pt-icon"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>)을 누르면 <b>현재 화면 그대로</b> A4로 인쇄됩니다. 정답을 빼려면 <b>'정답 모두 접기'</b>를 먼저 누르세요.</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- 인쇄 전용 헤더 (화면에서는 숨김) -->
+<div class="print-header">
+  <b>목동서로영어학원</b> · 목운중 L3 Part 1 Waking Up to an Earthquake 유형문제집 · <span id="printSectionLabel">전체</span> · 0505.co.kr
+</div>
+
+<!-- ORIGINAL PASSAGE -->
+<details class="passage-box" open>
+  <summary>
+    <span>📄 원문 지문 — Waking Up to an Earthquake (Part 1)</span>
+    <span class="toggle-mark"></span>
+  </summary>
+  <div class="passage-text">
+<p>One night in February, after I had gone to bed, an earthquake hit. I woke up suddenly because my bed was shaking. I thought my brother was shaking my bed as a joke. But then I heard the mirror on my desk fall to the floor and break into pieces. I knew it wasn't my brother then, but I still didn't know what exactly was happening.</p>
+<p>Soon the whole room began to shake violently, and my confusion turned to panic. My mom shouted that it was an earthquake and ran into my room. Since it was my first time experiencing an earthquake, I didn't know how to react. I just kept saying, "What should I do?"</p>
+  </div>
+</details>
+
+<!-- =============== 30문항 SECTION 영역 (여기에 삽입) =============== -->
+<!-- =============== ⓐ 어법 GRAMMAR (8문항) =============== -->
+<div class="section-head" data-section-type="grammar" data-section-marker>
+  <div class="num-line">SECTION A · 어법 · GRAMMAR · 8 ITEMS</div>
+  <h2>어법 <span class="kor">지각동사·과거완료·과거진행·간접의문문·keep+Ving·my first time+Ving</span></h2>
+  <p class="desc">본문 핵심 어법 8개 종합. 목운중 단골 출제 영역(지각동사 + 동사원형, 과거완료, 간접의문문)을 모두 다룸. <strong>5점 고배점 1개 (Q5 어법 오류 개수 세기) + 4점 1개 (Q3 두 개 고르기)</strong> 포함.</p>
+</div>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">1</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">지각동사 hear + O + 동사원형</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>1.</b> 다음 빈칸에 들어갈 말로 <b>어법상 적절한</b> 것은?</div>
+  <div class="q-passage">I heard the mirror on my desk <span class="q-blank">______</span> to the floor and break into pieces.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>fall</span><span class="c"><span class="num">②</span>fell</span><span class="c"><span class="num">③</span>to fall</span><span class="c"><span class="num">④</span>falling</span><span class="c"><span class="num">⑤</span>fallen</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">①  fall</span></div>
+  <div class="ans-detail"><b>지각동사 + 목적어 + 동사원형(또는 -ing)</b> 구조. hear/see/feel/watch/listen to 뒤의 목적격 보어로는 <b>동사원형</b>(완전한 동작) 또는 <b>현재분사 -ing</b>(진행 중)만 가능. to부정사·과거형은 불가. 본문에서는 거울이 떨어지는 동작 전체를 들었으므로 동사원형 fall이 정답. 또한 fall과 break가 and로 병렬 연결되어 두 동사 모두 동사원형이어야 함.</div>
+  <div class="note"><b>🔑 지각동사 5형식 정리.</b><br>
+  • see/hear/feel + O + <b>V원형</b> (동작 전체)<br>
+  • see/hear/feel + O + <b>Ving</b> (진행 중인 동작)<br>
+  • see/hear/feel + O + <b>p.p.</b> (수동)<br>
+  → to부정사는 절대 불가.</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">2</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">과거완료 had + p.p.</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>2.</b> 다음 빈칸에 들어갈 말로 <b>어법상 알맞은</b> 것은?</div>
+  <div class="q-passage">One night in February, after I <span class="q-blank">______</span> to bed, an earthquake hit.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>go</span><span class="c"><span class="num">②</span>went</span><span class="c"><span class="num">③</span>have gone</span><span class="c"><span class="num">④</span>had gone</span><span class="c"><span class="num">⑤</span>was going</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">④  had gone</span></div>
+  <div class="ans-detail"><b>과거완료 (had + p.p.)</b> = "과거의 어떤 시점보다 더 이전에 일어난 일". 본문에서 지진이 일어난 시점(an earthquake hit)이 과거이고, "잠자리에 든 것"은 그보다 더 이전이므로 과거완료를 써야 함. <br>• 잠자리에 든 시점 (먼저, 더 과거) → had gone<br>• 지진이 일어난 시점 (나중, 과거) → hit<br>특히 "after"는 두 시점의 선후관계를 명확히 하는 접속사이므로 과거완료와 자주 함께 등장.</div>
+  <div class="note"><b>🔑 과거완료 단서.</b> after/before/by the time/until/when 다음에 두 과거 시점이 등장하면 더 먼저 일어난 일에 과거완료(had+p.p.) 사용.</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">3</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">어법상 옳은 것 두 개 고르기 (4점)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>3.</b> 다음 중 <b>어법상 옳은 것</b>을 모두 고르시오. <span style="color:var(--muted)">(2개)</span></div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>I woke up suddenly because my bed <b>shaking</b> violently.</li>
+    <li><span class="num">②</span>My mom shouted <b>that</b> it was an earthquake.</li>
+    <li><span class="num">③</span>Since it was my first time <b>experience</b> an earthquake, I didn't know what to do.</li>
+    <li><span class="num">④</span>I just kept <b>saying</b>, "What should I do?"</li>
+    <li><span class="num">⑤</span>I thought my brother <b>shake</b> my bed as a joke.</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">②  +  ④</span></div>
+  <div class="ans-detail"><b>각 선지 분석:</b><br>
+  ▸ ① 🚨 <b>be 동사 누락</b> — "my bed shaking"이 진행형이려면 was shaking이 필요. shaking 단독은 분사이므로 동사 역할 못 함. → "my bed <b>was</b> shaking"<br>
+  ▸ ② ✓ <b>전달동사 + that절</b> — shouted that ~ "~라고 외쳤다". that은 명사절 접속사로 정확.<br>
+  ▸ ③ 🚨 <b>my first time + Ving</b> — "내가 ~한 첫 번째 시간"은 동명사 사용. → "my first time <b>experiencing</b> an earthquake"<br>
+  ▸ ④ ✓ <b>keep + Ving</b> — "계속 ~하다"는 동명사 사용. saying은 정확.<br>
+  ▸ ⑤ 🚨 <b>thought 다음 절의 동사 시제</b> — "내 동생이 침대를 흔들고 있는 것"은 진행형이어야 함. → "my brother <b>was shaking</b>"</div>
+  <div class="note"><b>🔑 핵심 어법 4가지.</b><br>
+  • be + Ving (진행형)<br>
+  • shout/say/think + that절<br>
+  • my first time + Ving (= my first time of Ving)<br>
+  • keep/stop/finish/enjoy + Ving</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">4</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">간접의문문 어순 (의문사 + 주어 + 동사)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>4.</b> 다음 우리말과 같도록 영작할 때, <b>어법상 가장 적절한</b> 것은?</div>
+  <div class="q-box"><b>나는 정확히 무슨 일이 일어나고 있는지 여전히 알지 못했다.</b></div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>I still didn't know what was exactly happening.</li>
+    <li><span class="num">②</span>I still didn't know what exactly was happening.</li>
+    <li><span class="num">③</span>I still didn't know what exactly happening was.</li>
+    <li><span class="num">④</span>I still didn't know what was happening exactly.</li>
+    <li><span class="num">⑤</span>I still didn't know what did exactly happen.</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">②  what exactly was happening</span></div>
+  <div class="ans-detail"><b>간접의문문 어순:</b> 의문사 + (부사) + 주어 + 동사. 직접의문문 "What exactly is happening?"이 know의 목적어로 들어가면, 주어-동사가 도치되지 않은 평서문 어순이 됨.<br>
+  ▸ ① 부사 exactly의 위치가 was와 happening 사이에 들어가 어색<br>
+  ▸ ② ✓ exactly가 의문사 what 바로 뒤에 와서 자연스러움 (본문 표현)<br>
+  ▸ ③ 어순 완전히 어긋남 (was가 마지막에 위치)<br>
+  ▸ ④ exactly의 위치가 문장 마지막 (가능하나 본문은 ②)<br>
+  ▸ ⑤ did 사용 = 직접의문문 형태 잔존 → 비문</div>
+  <div class="note"><b>🔑 간접의문문 핵심.</b><br>
+  • 직접: What is happening? (의문사+동사+주어)<br>
+  • 간접: I know what is happening. (의문사+주어+동사)<br>
+  → 의문사가 주어인 경우(예: who came)는 어순 그대로 유지.</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">5</span><span class="type-tag grammar">어법</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">어법 오류 개수 세기 (5점 고배점)</span><span class="q-pts">5점</span></div>
+  <div class="q-prompt"><b>5.</b> 다음 글에서 <b>어법상 옳지 않은 것</b>의 개수는?</div>
+  <div class="q-passage">One night in February, after I <u>ⓐ have gone</u> to bed, an earthquake hit. I woke up suddenly because my bed <u>ⓑ was shaking</u>. I thought my brother <u>ⓒ shaking</u> my bed as a joke. But then I heard the mirror on my desk <u>ⓓ to fall</u> to the floor. Soon the whole room <u>ⓔ began</u> to shake violently.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>1개</span><span class="c"><span class="num">②</span>2개</span><span class="c"><span class="num">③</span>3개</span><span class="c"><span class="num">④</span>4개</span><span class="c"><span class="num">⑤</span>5개</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③  3개  (ⓐ, ⓒ, ⓓ)</span></div>
+  <div class="ans-detail"><b>각 밑줄 검증:</b><br>
+  ▸ ⓐ 🚨 <b>have gone → had gone</b> — 지진(과거 hit)보다 더 이전에 잠든 것이므로 <b>과거완료</b> 필요. 현재완료(have gone)는 현재 시점과 연결되므로 부적합.<br>
+  ▸ ⓑ ✓ was shaking — 과거 진행형 (침대가 흔들리고 있던 상태) 정확.<br>
+  ▸ ⓒ 🚨 <b>shaking → was shaking</b> — that절 안에서 thought의 시제(과거)와 일치하는 과거진행 필요. 분사 단독으로는 동사 역할 못 함.<br>
+  ▸ ⓓ 🚨 <b>to fall → fall</b> — 지각동사(hear) 다음 목적격 보어는 동사원형 또는 -ing. to부정사 불가.<br>
+  ▸ ⓔ ✓ began — begin의 과거형 정확.</div>
+  <div class="trap"><b>⚠️ 함정 패턴.</b><br>
+  • have gone(현재완료) ↔ had gone(과거완료)<br>
+  • Ving(분사) 단독으로는 동사가 아님<br>
+  • 지각동사 + to V는 절대 불가</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">6</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">since (~이므로) + 절</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>6.</b> 다음 빈칸에 공통으로 들어갈 접속사로 가장 적절한 것은?</div>
+  <div class="q-passage">
+  • <span class="q-blank">______</span> it was my first time experiencing an earthquake, I didn't know how to react.<br>
+  • <span class="q-blank">______</span> the building was old, we worried about its safety.
+  </div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>Although</span><span class="c"><span class="num">②</span>Since</span><span class="c"><span class="num">③</span>Unless</span><span class="c"><span class="num">④</span>While</span><span class="c"><span class="num">⑤</span>Whether</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">②  Since</span></div>
+  <div class="ans-detail"><b>Since의 두 가지 용법:</b><br>
+  ① 시간: ~이래로 (현재완료와 함께)<br>
+  ② <b>이유: ~이므로 (= because, as)</b> ← 이 문제<br>
+  본문 맥락: "지진을 겪는 것이 처음이었기 <b>때문에</b>, 어떻게 반응해야 할지 몰랐다." → 이유 접속사.<br>
+  ▸ ① Although = ~에도 불구하고 (양보) — 의미 정반대<br>
+  ▸ ② ✓ Since = ~이므로 (이유)<br>
+  ▸ ③ Unless = ~하지 않으면 (조건)<br>
+  ▸ ④ While = ~하는 동안 (시간) 또는 ~인 반면 (대조)<br>
+  ▸ ⑤ Whether = ~인지 아닌지 (명사절 접속사)</div>
+  <div class="note"><b>🔑 since 구별법.</b> Since 다음에 <b>현재완료가 따라 나오면 시간(~이래로)</b>, 다른 시제면 보통 이유(~이므로). "Since 1990, I have lived..." (시간) vs "Since you are tired, rest." (이유)</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">7</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">how + to부정사 (의문사 + to V)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>7.</b> 다음 밑줄 친 부분 중 <b>어법상 어색한</b> 것은?</div>
+  <div class="q-passage">Since it was my first time experiencing an earthquake, I didn't know <u>① how</u> <u>② to</u> <u>③ react</u>. I just <u>④ kept</u> <u>⑤ to say</u>, "What should I do?"</div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">⑤  to say  →  saying</span></div>
+  <div class="ans-detail"><b>핵심 어법:</b> keep + Ving = "계속 ~하다". keep은 to부정사 목적어를 받지 않고 <b>동명사(Ving)</b>를 받음.<br>
+  ▸ ①②③ "how + to + 동사원형" = "~하는 방법" → 의문사+to부정사 정확<br>
+  ▸ ④ kept (keep의 과거형)<br>
+  ▸ ⑤ 🚨 <b>to say → saying</b> 필요. keep은 동명사만 받는 동사.<br>
+  <br>
+  <b>동명사만 받는 동사 (반드시 암기):</b><br>
+  enjoy, finish, keep, mind, avoid, give up, practice, suggest, deny, admit + <b>Ving</b><br>
+  <br>
+  <b>to부정사만 받는 동사:</b><br>
+  want, hope, plan, decide, expect, agree, refuse + <b>to V</b></div>
+  <div class="note"><b>🔑 의문사 + to부정사.</b> how to react / what to do / where to go / when to leave / who to ask — 모두 "~할지/~하는 방법" 의미.</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">8</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">break into pieces (전치사 into)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>8.</b> 다음 빈칸에 들어갈 전치사로 가장 알맞은 것은?</div>
+  <div class="q-passage">The mirror fell to the floor and broke <span class="q-blank">______</span> pieces.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>at</span><span class="c"><span class="num">②</span>on</span><span class="c"><span class="num">③</span>into</span><span class="c"><span class="num">④</span>for</span><span class="c"><span class="num">⑤</span>with</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③  into</span></div>
+  <div class="ans-detail"><b>break into pieces</b> = "산산조각이 나다, 부서지다." 한 덩어리에서 여러 조각이라는 <b>상태 변화</b>를 나타내는 전치사 into 사용.<br>
+  <b>유사 표현 — into를 쓰는 변화:</b><br>
+  • turn into ~ (~로 변하다): water turns into ice<br>
+  • change into ~ (~로 바뀌다)<br>
+  • cut into ~ (~로 자르다): cut into pieces<br>
+  • divide into ~ (~로 나누다)<br>
+  • make into ~ (~로 만들다)<br>
+  → "한 상태 → 다른 상태"의 변화에 모두 into 사용.</div>
+  <div class="trap"><b>⚠️ 자주 헷갈림:</b> break <b>down</b>(고장 나다, 분해되다) ≠ break <b>into pieces</b>(산산조각). 전치사 하나로 의미 완전히 달라짐.</div></div></details>
+</article>
+
+
+<!-- =============== ⓑ 대명사 PRONOUN (3문항) =============== -->
+<div class="section-head" data-section-type="pronoun" data-section-marker>
+  <div class="num-line">SECTION B · 대명사 · PRONOUN · 3 ITEMS</div>
+  <h2>대명사 <span class="kor">it·this·that·what이 가리키는 대상 추적 + 단복수 일치</span></h2>
+  <p class="desc">본문에 등장하는 it/that/this/what이 무엇을 가리키는지 정확히 식별. 목운중 시험 단골 출제 영역.</p>
+</div>
+
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">9</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">it이 가리키는 대상</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>9.</b> 다음 글의 밑줄 친 <b>it</b>이 가리키는 것으로 가장 알맞은 것은?</div>
+  <div class="q-passage">I knew <u>it</u> wasn't my brother then, but I still didn't know what exactly was happening.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>침대를 흔든 것</span><span class="c"><span class="num">②</span>거울이 깨진 것</span><span class="c"><span class="num">③</span>지진</span><span class="c"><span class="num">④</span>방</span><span class="c"><span class="num">⑤</span>책상</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">①  침대를 흔든 것</span></div>
+  <div class="ans-detail">앞 문장에서 "I thought my brother was shaking my bed as a joke(나는 동생이 장난으로 침대를 흔든다고 생각했다)"라고 했으나, 거울이 떨어지는 소리를 듣고 "<b>it</b> wasn't my brother(그게 동생이 아니었다)"라고 깨달음. 즉 it = "침대를 흔드는 행위/원인". 정황상 ②③도 가능해 보일 수 있으나, "동생이 아니다"라는 부정 진술의 주어이므로 <b>"동생이 했다고 의심한 행위(=침대를 흔든 것)"</b>가 정답.</div></div></details>
+</article>
+
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">10</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">that 명사절 vs 지시대명사</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>10.</b> 다음 문장의 밑줄 친 <b>that</b>의 쓰임을 가장 잘 설명한 것은?</div>
+  <div class="q-passage">My mom shouted <u>that</u> it was an earthquake and ran into my room.</div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>지시대명사 (그것)</li>
+    <li><span class="num">②</span>지시형용사 (그)</li>
+    <li><span class="num">③</span>관계대명사 (선행사 수식)</li>
+    <li><span class="num">④</span>명사절 접속사 (~라는 것)</li>
+    <li><span class="num">⑤</span>강조구문 (it ~ that ...)</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">④  명사절 접속사</span></div>
+  <div class="ans-detail">shouted (외쳤다) 같은 <b>전달동사</b>의 목적어 자리에 that절이 옴 → that은 "~라는 것/~라고"의 의미를 가지는 <b>명사절 접속사</b>. shouted that S+V = "S가 V라고 외쳤다."<br>
+  <br>
+  <b>that의 5가지 쓰임 구별:</b><br>
+  ① 지시대명사: That is mine. (저것)<br>
+  ② 지시형용사: that book (그 책)<br>
+  ③ 관계대명사: the book that I read (선행사 book 수식)<br>
+  ④ <b>명사절 접속사</b>: I think that ~ ← 이 문제<br>
+  ⑤ 강조구문: It is X that ~<br>
+  <br>
+  <b>핵심 단서:</b> shout/say/think/know/believe/hope 같은 동사 뒤의 that은 거의 항상 ④번.</div></div></details>
+</article>
+
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">11</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">간접의문문 what (의문사 = 대명사 역할)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>11.</b> 다음 문장에서 밑줄 친 <b>what</b>의 역할을 가장 정확히 설명한 것은?</div>
+  <div class="q-passage">I still didn't know <u>what</u> exactly was happening.</div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>의문대명사 — 명사절 안에서 주어 역할</li>
+    <li><span class="num">②</span>의문대명사 — 명사절 안에서 목적어 역할</li>
+    <li><span class="num">③</span>관계대명사 — 선행사를 포함하여 "~하는 것"</li>
+    <li><span class="num">④</span>감탄문의 의문사</li>
+    <li><span class="num">⑤</span>지시대명사 (저것)</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">①  의문대명사 — 명사절 안에서 주어 역할</span></div>
+  <div class="ans-detail">"I still didn't know <b>what</b> exactly was happening" 분석:<br>
+  ▸ 전체 문장의 동사 know의 목적어 = "what exactly was happening" (간접의문문 명사절)<br>
+  ▸ 그 명사절 안에서 동사 was happening의 <b>주어 = what</b><br>
+  → 따라서 what은 명사절을 이끄는 의문사이면서 그 절 안에서 주어 역할을 하는 의문대명사.<br>
+  <br>
+  ② 만약 what이 목적어 역할이면: "what I thought" 같이 뒤에 주어+동사가 따로 있어야 함. 이 문장은 was happening의 주어가 따로 없으므로 what이 주어.<br>
+  ③ 관계대명사 what은 선행사 없이 "~하는 것" 의미인데, 이 문장은 know의 목적어로 "무엇이 일어나고 있는지"라는 <b>의문</b>의 의미가 강함 → 의문대명사.</div>
+  <div class="note"><b>🔑 what의 두 가지 명사절 용법.</b><br>
+  • 의문대명사: I don't know <b>what</b> happened. (무엇이 ~인지)<br>
+  • 관계대명사: <b>What</b> I want is rest. (~하는 것)<br>
+  → 의미가 "무엇/얼마나"의 의문이면 의문대명사, "것"이면 관계대명사.</div></div></details>
+</article>
+
+
+<!-- =============== ⓒ 독해 READING (2문항) =============== -->
+<div class="section-head" data-section-type="reading" data-section-marker>
+  <div class="num-line">SECTION C · 독해 · READING · 2 ITEMS</div>
+  <h2>독해 <span class="kor">본문 일치/요지 종합</span></h2>
+  <p class="desc">본문 내용 정확 이해 + 글쓴이 심정·요지 추론.</p>
+</div>
+
+<article class="q-card" data-type="reading">
+  <div class="q-meta"><span class="q-num">12</span><span class="type-tag reading">독해</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">본문 내용 일치 (T/F 종합)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>12.</b> 본문의 내용과 <b>일치하지 않는</b> 것은?</div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>지진은 2월의 어느 날 밤에 일어났다.</li>
+    <li><span class="num">②</span>글쓴이는 침대가 흔들려서 잠에서 깼다.</li>
+    <li><span class="num">③</span>책상 위에 있던 거울이 바닥에 떨어져 깨졌다.</li>
+    <li><span class="num">④</span>글쓴이는 처음에 동생이 장난친다고 생각했다.</li>
+    <li><span class="num">⑤</span>글쓴이는 이전에도 지진을 여러 번 경험했었다.</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">⑤</span></div>
+  <div class="ans-detail">본문 핵심 단서: "<b>Since it was my first time experiencing an earthquake</b>, I didn't know how to react." → 지진은 글쓴이에게 <b>처음</b>이었음. ⑤는 정반대.<br>
+  <br>
+  ▸ ① ✓ "One night in February"<br>
+  ▸ ② ✓ "I woke up suddenly because my bed was shaking"<br>
+  ▸ ③ ✓ "the mirror on my desk fall to the floor and break into pieces"<br>
+  ▸ ④ ✓ "I thought my brother was shaking my bed as a joke"<br>
+  ▸ ⑤ 🚨 <b>my first time</b> = 처음 → "여러 번 경험했다"는 정반대</div></div></details>
+</article>
+
+<article class="q-card" data-type="reading">
+  <div class="q-meta"><span class="q-num">13</span><span class="type-tag reading">독해</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">글쓴이의 심정 변화</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>13.</b> 본문에 나타난 글쓴이의 <b>심정 변화</b>로 가장 적절한 것은?</div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>excited → bored</li>
+    <li><span class="num">②</span>angry → calm</li>
+    <li><span class="num">③</span>confused → panicked</li>
+    <li><span class="num">④</span>sad → relieved</li>
+    <li><span class="num">⑤</span>hopeful → disappointed</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③  confused → panicked  (혼란 → 공포)</span></div>
+  <div class="ans-detail">본문 결정적 단서: "Soon the whole room began to shake violently, and <b>my confusion turned to panic</b>." → 명시적으로 confusion(혼란) → panic(공포)으로 심정이 변함을 진술.<br>
+  <br>
+  <b>심정 변화 추적:</b><br>
+  ① 처음: "I still didn't know what exactly was happening" → 혼란(confusion)<br>
+  ② 방 전체 흔들림 + 심한 진동 → 공포(panic)<br>
+  ③ 어떻게 반응할지 모름, "What should I do?" 반복 → 공포 상태 지속<br>
+  → ③ confused → panicked가 정확.</div></div></details>
+</article>
+
+
+<!-- =============== ⓓ 문맥 CONTEXT (3문항) =============== -->
+<div class="section-head" data-section-type="context" data-section-marker>
+  <div class="num-line">SECTION D · 문맥 · CONTEXT · 3 ITEMS</div>
+  <h2>문맥 <span class="kor">흐름·연결어·문장 삽입</span></h2>
+  <p class="desc">글의 자연스러운 흐름을 파악하고 적절한 연결어·삽입 위치를 찾는 능력 평가.</p>
+</div>
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">14</span><span class="type-tag context">문맥</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">시간 부사 Soon — 흐름의 전환</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>14.</b> 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+  <div class="q-passage">I knew it wasn't my brother then, but I still didn't know what exactly was happening. <span class="q-blank">______</span> the whole room began to shake violently, and my confusion turned to panic.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>However</span><span class="c"><span class="num">②</span>Soon</span><span class="c"><span class="num">③</span>For example</span><span class="c"><span class="num">④</span>Therefore</span><span class="c"><span class="num">⑤</span>In contrast</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">②  Soon</span></div>
+  <div class="ans-detail">빈칸 앞: "여전히 무엇이 일어나는지 모름" → 빈칸 뒤: "방 전체가 격렬하게 흔들리기 시작" + "혼란이 공포로". <b>시간 흐름의 전환</b>(잠시 후 더 심해짐)이므로 시간 부사 Soon이 적합.<br>
+  <br>
+  ▸ ① However = 그러나 (대조) — 흐름이 대조가 아니라 시간 진행<br>
+  ▸ ② ✓ Soon = 곧, 잠시 후 — 시간 진행<br>
+  ▸ ③ For example = 예를 들어 — 예시 관계 아님<br>
+  ▸ ④ Therefore = 그러므로 — 인과 관계가 아님<br>
+  ▸ ⑤ In contrast = 대조적으로 — 대조 아님</div></div></details>
+</article>
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">15</span><span class="type-tag context">문맥</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">문장 삽입 위치 (4점)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>15.</b> 다음 문장이 들어갈 위치로 가장 알맞은 곳은?</div>
+  <div class="q-box"><b>But then I heard the mirror on my desk fall to the floor and break into pieces.</b></div>
+  <div class="q-passage">I woke up suddenly because my bed was shaking. <b>(①)</b> I thought my brother was shaking my bed as a joke. <b>(②)</b> I knew it wasn't my brother then, <b>(③)</b> but I still didn't know what exactly was happening. <b>(④)</b> Soon the whole room began to shake violently, <b>(⑤)</b> and my confusion turned to panic.</div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">②</span></div>
+  <div class="ans-detail"><b>핵심 단서:</b> 삽입 문장 "But then I heard <b>the mirror</b>... break into pieces"는 글쓴이가 "동생이 장난치고 있다"는 추측을 <b>뒤집는 결정적 사건</b>. 이 사건 후에 "그게 동생이 아니라는 것을 알았다(I knew it wasn't my brother)"는 깨달음이 따라옴.<br>
+  <br>
+  <b>흐름 분석:</b><br>
+  • 침대가 흔들려서 잠 깸 → ①<br>
+  • <b>동생이 장난친다고 추측</b><br>
+  • <b>★ 거울이 깨지는 소리 들음 (삽입 문장)</b> ← ②<br>
+  • <b>동생이 아니라는 것을 깨달음 (it wasn't my brother)</b><br>
+  • 무엇인지는 여전히 모름<br>
+  • Soon ~ violently<br>
+  → ②자리에 들어가야 "동생 추측 → 거울 깨짐 → 동생 아님 깨달음"의 인과 흐름이 자연스러움.</div>
+  <div class="trap"><b>⚠️ 단서:</b> "I knew it <b>wasn't</b> my brother <b>then</b>"의 then(그때)이 가리키는 사건이 바로 "거울이 깨지는 소리"임. 이 인과 관계가 결정적 단서.</div></div></details>
+</article>
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">16</span><span class="type-tag context">문맥</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">흐름상 어색한 문장</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>16.</b> 다음 글에서 <b>흐름상 어색한</b> 문장은?</div>
+  <div class="q-passage">One night in February, after I had gone to bed, an earthquake hit. <span class="num">①</span>I woke up suddenly because my bed was shaking. <span class="num">②</span>I thought my brother was shaking my bed as a joke. <span class="num">③</span>My brother and I always enjoyed playing soccer in the park together. <span class="num">④</span>But then I heard the mirror on my desk fall to the floor and break into pieces. <span class="num">⑤</span>I knew it wasn't my brother then, but I still didn't know what exactly was happening.</div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③</span></div>
+  <div class="ans-detail">글의 주제: <b>지진을 처음 경험한 그날 밤의 혼란스러운 상황</b>.<br>
+  <br>
+  ▸ ①②④⑤는 모두 그날 밤 사건의 시간 순 진행.<br>
+  ▸ ③ "동생과 항상 공원에서 축구를 즐겼다"는 글쓴이와 동생의 <b>일반적·과거의 일상</b>으로, 지진이 일어난 그날 밤의 사건 흐름과 무관.<br>
+  <br>
+  <b>흐름상 어색한 문장 판별 기준:</b><br>
+  ① 시제·시간이 본문 흐름과 다름 (③은 일반과거 enjoyed로 일상 묘사)<br>
+  ② 주제와 무관한 정보 (축구 vs 지진)<br>
+  ③ 같은 단어(brother)가 등장해도 <b>맥락이 다름</b></div>
+  <div class="trap"><b>⚠️ 함정:</b> ③에 "brother"라는 본문 핵심어가 들어가 있어 본문과 연결된 듯 보임. 그러나 본문의 brother는 "흔드는 사람으로 의심된 인물"이고, ③은 "축구를 같이 한 일상의 형제" — <b>같은 단어, 다른 맥락</b>.</div></div></details>
+</article>
+<!-- =============== ⓔ 빈칸 CLOZE (7문항) =============== -->
+<div class="section-head" data-section-type="cloze" data-section-marker>
+  <div class="num-line">SECTION E · 빈칸 · CLOZE · 7 ITEMS</div>
+  <h2>빈칸 <span class="kor">단어·구·문장 빈칸 종합</span></h2>
+  <p class="desc">본문 핵심 어휘·표현을 빈칸으로 묻는 문항. 단어·구·이중 빈칸 모두 포함.</p>
+</div>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">17</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">부사 — suddenly (갑자기)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>17.</b> 다음 빈칸에 들어갈 부사로 가장 알맞은 것은?</div>
+  <div class="q-passage">I woke up <span class="q-blank">______</span> because my bed was shaking.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>slowly</span><span class="c"><span class="num">②</span>quietly</span><span class="c"><span class="num">③</span>suddenly</span><span class="c"><span class="num">④</span>finally</span><span class="c"><span class="num">⑤</span>luckily</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③  suddenly  (갑자기)</span></div>
+  <div class="ans-detail"><b>맥락:</b> 지진으로 침대가 갑자기 흔들려 깬 상황. wake up + suddenly = "갑자기 깨다"는 자연스러운 호응. 본문 표현 그대로.<br>
+  ▸ ① slowly = 천천히 (지진은 갑작스러운 사건)<br>
+  ▸ ② quietly = 조용히 (지진은 시끄러운 사건)<br>
+  ▸ ③ ✓ suddenly = 갑자기 (본문)<br>
+  ▸ ④ finally = 마침내 (긴 시간 끝의 결과)<br>
+  ▸ ⑤ luckily = 운 좋게도 (긍정적 평가)</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">18</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">부사 — violently (격렬하게)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>18.</b> 다음 빈칸에 들어갈 단어로 가장 적절한 것은?</div>
+  <div class="q-passage">Soon the whole room began to shake <span class="q-blank">______</span>, and my confusion turned to panic.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>gently</span><span class="c"><span class="num">②</span>silently</span><span class="c"><span class="num">③</span>kindly</span><span class="c"><span class="num">④</span>violently</span><span class="c"><span class="num">⑤</span>peacefully</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">④  violently  (격렬하게)</span></div>
+  <div class="ans-detail"><b>핵심 단서:</b> 다음 절 "my confusion <b>turned to panic</b>(혼란이 공포로 바뀌었다)"이 결정적 단서. 공포가 생긴 이유는 진동이 <b>매우 격렬</b>해졌기 때문.<br>
+  <br>
+  ▸ ① gently = 부드럽게 (정반대)<br>
+  ▸ ② silently = 조용히 (지진은 소리 발생)<br>
+  ▸ ③ kindly = 친절하게 (맥락 무관)<br>
+  ▸ ④ ✓ violently = 격렬하게, 맹렬하게 (본문)<br>
+  ▸ ⑤ peacefully = 평화롭게 (정반대)</div>
+  <div class="note"><b>🔑 부사 -ly 어휘 정리.</b><br>
+  • violent (형) 격렬한 → violently (부)<br>
+  • sudden → suddenly<br>
+  • exact → exactly<br>
+  • quick → quickly<br>
+  → 형용사 + ly = 부사. 본문 빈출.</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">19</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">감정 명사 — confusion / panic</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>19.</b> 다음 빈칸 (A)와 (B)에 들어갈 말이 바르게 짝지어진 것은?</div>
+  <div class="q-passage">My <span class="q-blank">__(A)__</span> turned to <span class="q-blank">__(B)__</span> as the whole room began to shake violently.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span>excitement / sadness</span>
+    <span class="c"><span class="num">②</span>confusion / panic</span>
+    <span class="c"><span class="num">③</span>panic / confusion</span>
+    <span class="c"><span class="num">④</span>happiness / boredom</span>
+    <span class="c"><span class="num">⑤</span>fear / joy</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">②  confusion  /  panic</span></div>
+  <div class="ans-detail"><b>본문 그대로:</b> "my <b>confusion</b> turned to <b>panic</b>" — "혼란이 공포로 바뀌었다."<br>
+  <b>심정 변화의 순서가 결정적:</b><br>
+  • 처음에는 무엇이 일어나는지 몰라 혼란(confusion)<br>
+  • 진동이 격렬해지면서 → 공포(panic)<br>
+  → confusion이 먼저, panic이 나중. 순서 바뀌면 ③번 함정.<br>
+  <br>
+  ▸ ③ panic → confusion은 정반대 순서 (공포 후 혼란이 되는 흐름은 어색)<br>
+  ▸ ①④⑤는 본문 단어와 무관</div>
+  <div class="trap"><b>⚠️ 함정:</b> 두 단어 모두 본문에 나오지만 <b>순서가 거꾸로</b>인 ③번이 함정으로 가장 위험.</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">20</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">동사구 — turn to (변하다)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>20.</b> 다음 빈칸에 들어갈 동사로 가장 적절한 것은?</div>
+  <div class="q-passage">My confusion <span class="q-blank">______</span> to panic.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>turned</span><span class="c"><span class="num">②</span>turn</span><span class="c"><span class="num">③</span>turning</span><span class="c"><span class="num">④</span>turns</span><span class="c"><span class="num">⑤</span>has turned</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">①  turned</span></div>
+  <div class="ans-detail"><b>turn to + 명사</b> = "~로 변하다, ~로 바뀌다." 본문은 과거 시점이므로 과거형 turned 정확.<br>
+  ▸ ① ✓ turned (과거형)<br>
+  ▸ ② turn (원형) — 시제 일치 안 됨<br>
+  ▸ ③ turning (분사) — 동사 역할 못 함, be 동사 필요<br>
+  ▸ ④ turns (3인칭 단수 현재) — 시제 어긋남<br>
+  ▸ ⑤ has turned (현재완료) — 본문 전체 시제(과거) 와 어긋남<br>
+  <br>
+  <b>turn into vs turn to:</b><br>
+  • turn into = 완전히 다른 것으로 변형 (water → ice)<br>
+  • turn to = 한 상태에서 다른 상태로 (혼란 → 공포)<br>
+  → 본문은 감정 변화이므로 turn to가 자연스러움.</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">21</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">시간 부사구 — 한 단어 보충 (then)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>21.</b> 다음 빈칸에 들어갈 단어로 가장 알맞은 것은?</div>
+  <div class="q-passage">I knew it wasn't my brother <span class="q-blank">______</span>, but I still didn't know what exactly was happening.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>now</span><span class="c"><span class="num">②</span>then</span><span class="c"><span class="num">③</span>before</span><span class="c"><span class="num">④</span>since</span><span class="c"><span class="num">⑤</span>after</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">②  then  (그때)</span></div>
+  <div class="ans-detail"><b>then</b> = "그때" — 과거의 특정 시점을 가리키는 부사. 본문은 거울이 깨진 직후의 시점을 가리킴.<br>
+  ▸ ① now = 지금 (현재 시점) — 본문은 과거<br>
+  ▸ ② ✓ then = 그때 (과거)<br>
+  ▸ ③ before = 이전에 (시점 모호)<br>
+  ▸ ④ since = ~이래로 (전치사·접속사로는 가능하나 단독 부사로는 어색)<br>
+  ▸ ⑤ after = ~ 후에 (전치사·접속사이므로 단독 부사 부적합)<br>
+  <br>
+  <b>본문 시제 단서:</b> knew (과거) → "그때 알게 되었다"는 의미이므로 then.</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">22</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">전치사 — out of bed (침대 밖으로)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>22.</b> 다음 빈칸에 공통으로 들어갈 말로 가장 알맞은 것은?</div>
+  <div class="q-passage">
+  • She ran <span class="q-blank">______</span> my room when she heard me cry.<br>
+  • The cat jumped <span class="q-blank">______</span> the window suddenly.
+  </div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>at</span><span class="c"><span class="num">②</span>on</span><span class="c"><span class="num">③</span>into</span><span class="c"><span class="num">④</span>under</span><span class="c"><span class="num">⑤</span>beside</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③  into</span></div>
+  <div class="ans-detail">두 문장 모두 <b>외부 → 내부 이동</b>이므로 전치사 into.<br>
+  ▸ run into ~ = "~ 안으로 뛰어 들어가다" (본문: ran into my room)<br>
+  ▸ jump into ~ = "~ 안으로 뛰어 들어가다"<br>
+  <br>
+  <b>전치사 in vs into:</b><br>
+  • in = 정지된 상태 ("She is in the room.")<br>
+  • <b>into</b> = 이동 방향 ("She ran into the room.")<br>
+  → 본문 ran(이동 동사) 다음에는 into.<br>
+  <br>
+  ※ run into는 다른 의미("우연히 만나다")로도 사용되나, 본문은 물리적 이동.</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">23</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">전체 문맥 빈칸 (요약문)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>23.</b> 다음은 본문의 요약문이다. 빈칸 (A)·(B)에 들어갈 말로 가장 적절한 것은?</div>
+  <div class="q-passage">The narrator was woken up by his shaking bed and at first thought his brother was <span class="q-blank">__(A)__</span>. However, when the mirror fell and broke, he realized something unusual was happening. As the room shook more violently, his confusion <span class="q-blank">__(B)__</span> and he didn't know how to react.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span>joking / disappeared</span>
+    <span class="c"><span class="num">②</span>joking / grew worse</span>
+    <span class="c"><span class="num">③</span>sleeping / disappeared</span>
+    <span class="c"><span class="num">④</span>sleeping / grew worse</span>
+    <span class="c"><span class="num">⑤</span>shouting / grew worse</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">②  joking  /  grew worse</span></div>
+  <div class="ans-detail"><b>(A)</b> 본문: "I thought my brother was shaking my bed <b>as a joke</b>(장난으로)" → 동생이 <b>joking</b>(장난치는 중)이라고 생각.<br>
+  ▸ joking = 장난치고 있는 (본문 as a joke의 동사형)<br>
+  ▸ sleeping = 자고 있는 (본문 무관)<br>
+  ▸ shouting = 외치고 있는 (mom이 외친 것)<br>
+  <br>
+  <b>(B)</b> 본문: "my confusion <b>turned to panic</b>(공포로 바뀜)" → 혼란이 더 심해짐. 즉 <b>grew worse</b>(더 심해졌다, 악화되었다).<br>
+  ▸ disappeared = 사라졌다 (정반대)<br>
+  ▸ ✓ grew worse = 악화되었다 (본문 turned to panic의 의미 paraphrase)<br>
+  <br>
+  → (A) joking + (B) grew worse 조합이 정확.</div></div></details>
+</article>
+
+
+<!-- =============== ⓕ 어휘·숙어 VOCAB (5문항) =============== -->
+<div class="section-head" data-section-type="vocab" data-section-marker>
+  <div class="num-line">SECTION F · 어휘·숙어 · VOCAB · 5 ITEMS</div>
+  <h2>어휘·숙어 <span class="kor">동의어·반의어·영영풀이·동사 가족·구동사</span></h2>
+  <p class="desc">본문 핵심 어휘·구동사 종합. 영영풀이·반의어·단어 가족 변환 다룸.</p>
+</div>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">24</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">영영풀이 — confusion · panic</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>24.</b> 다음 영영풀이가 가리키는 단어로 가장 알맞은 것은?</div>
+  <div class="q-box">a feeling of being unable to think clearly or understand what is happening</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>panic</span><span class="c"><span class="num">②</span>confusion</span><span class="c"><span class="num">③</span>excitement</span><span class="c"><span class="num">④</span>boredom</span><span class="c"><span class="num">⑤</span>relief</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">②  confusion</span></div>
+  <div class="ans-detail"><b>영영풀이 분석:</b> "분명하게 생각할 수 없거나 무엇이 일어나는지 이해할 수 없는 감정" → <b>confusion(혼란)</b>의 정확한 정의.<br>
+  <br>
+  ▸ ① panic = 공포, 패닉 — "급작스러운 두려움(sudden strong fear)"<br>
+  ▸ ② ✓ confusion = 혼란 — "이해 못 함, 분명히 생각 못 함"<br>
+  ▸ ③ excitement = 흥분<br>
+  ▸ ④ boredom = 지루함<br>
+  ▸ ⑤ relief = 안도<br>
+  <br>
+  <b>핵심 차이 (panic vs confusion):</b><br>
+  • confusion = 인지적 혼란 (무엇인지 모름)<br>
+  • panic = 정서적 공포 (위험을 느낌)<br>
+  → 본문은 confusion → panic의 순서로 인지 혼란이 정서 공포로 변함을 보여줌.</div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">25</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">반의어 — suddenly ↔ gradually</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>25.</b> 다음 밑줄 친 단어와 의미가 <b>가장 반대</b>인 것은?</div>
+  <div class="q-passage">I woke up <u>suddenly</u> because my bed was shaking.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>quickly</span><span class="c"><span class="num">②</span>immediately</span><span class="c"><span class="num">③</span>gradually</span><span class="c"><span class="num">④</span>instantly</span><span class="c"><span class="num">⑤</span>abruptly</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③  gradually  (점차, 서서히)</span></div>
+  <div class="ans-detail"><b>suddenly</b>(갑자기) ↔ <b>gradually</b>(점차, 서서히) — 가장 정확한 반의어.<br>
+  <br>
+  ▸ ① quickly = 빠르게 — suddenly와 비슷한 의미 (속도)<br>
+  ▸ ② immediately = 즉시 — suddenly의 동의어<br>
+  ▸ ③ ✓ gradually = 점차 — suddenly의 정반대<br>
+  ▸ ④ instantly = 즉시 — suddenly의 동의어<br>
+  ▸ ⑤ abruptly = 갑작스럽게 — suddenly의 동의어<br>
+  <br>
+  <b>핵심 어휘 묶음:</b><br>
+  • <b>갑자기 (≒ suddenly):</b> abruptly, instantly, immediately, all of a sudden, out of the blue<br>
+  • <b>점차 (↔ suddenly):</b> gradually, slowly, little by little, step by step</div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">26</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">단어 가족 — confuse / confused / confusion / confusing (4점)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>26.</b> 다음 빈칸에 들어갈 단어 가족(word family)이 옳지 <u>않은</u> 것은?</div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>(동사) <b>confuse</b> — to make someone unable to understand</li>
+    <li><span class="num">②</span>(명사) <b>confusion</b> — the feeling of being unable to understand</li>
+    <li><span class="num">③</span>(형용사, 사람) <b>confused</b> — feeling unable to understand</li>
+    <li><span class="num">④</span>(형용사, 사물) <b>confusing</b> — making someone unable to understand</li>
+    <li><span class="num">⑤</span>(부사) <b>confusedly</b> — in a way that is easy to understand</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">⑤</span></div>
+  <div class="ans-detail">⑤ confusedly의 의미가 정반대로 표기됨. <b>confusedly</b>는 "혼란스러운 방식으로(in a confused way)"라는 뜻 — "이해하기 쉬운 방식"의 정반대.<br>
+  <br>
+  <b>confuse 단어 가족 정리:</b><br>
+  ▸ confuse [동] 혼란시키다, 헷갈리게 하다 ✓<br>
+  ▸ confusion [명] 혼란 ✓<br>
+  ▸ confused [형] (사람이) 혼란스러운 ✓<br>
+  ▸ confusing [형] (사물이) 혼란을 일으키는 ✓<br>
+  ▸ confusedly [부] 혼란스럽게, 헷갈리게 — 🚨 ⑤번은 정반대 정의<br>
+  <br>
+  <b>형용사 -ed vs -ing 핵심 규칙:</b><br>
+  • <b>-ed</b>: 사람이 그 감정을 <b>받는</b> 상태 (I am confused.)<br>
+  • <b>-ing</b>: 사물이 그 감정을 <b>일으키는</b> 상태 (The book is confusing.)<br>
+  → 같은 패턴: surprised/surprising, excited/exciting, bored/boring</div>
+  <div class="note"><b>🔑 본문 어휘 가족 확장 정리.</b><br>
+  • shake (동, 흔들다) → shaking (분, 흔드는) → shaken (분, 흔들린)<br>
+  • react (동, 반응하다) → reaction (명, 반응) → reactive (형)<br>
+  • experience (동/명, 경험) → experienced (형, 경험 많은)<br>
+  • panic (명/동, 공포·당황) → panicked (형) → panicky (형)</div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">27</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">동의어 — react · respond</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>27.</b> 다음 밑줄 친 단어와 가장 가까운 의미를 가진 것은?</div>
+  <div class="q-passage">Since it was my first time experiencing an earthquake, I didn't know how to <u>react</u>.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>respond</span><span class="c"><span class="num">②</span>create</span><span class="c"><span class="num">③</span>protect</span><span class="c"><span class="num">④</span>destroy</span><span class="c"><span class="num">⑤</span>imagine</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">①  respond</span></div>
+  <div class="ans-detail"><b>react</b> = "(어떤 일·상황에) 반응하다, 대응하다" → <b>respond</b>(응답하다, 반응하다)와 동의어.<br>
+  ▸ react to a situation = respond to a situation (상황에 반응하다)<br>
+  ▸ ① ✓ respond = 반응하다, 응답하다<br>
+  ▸ ② create = 창조하다 (정반대 영역)<br>
+  ▸ ③ protect = 보호하다 (다른 의미)<br>
+  ▸ ④ destroy = 파괴하다 (다른 의미)<br>
+  ▸ ⑤ imagine = 상상하다 (다른 의미)<br>
+  <br>
+  <b>react vs respond 미세 차이:</b><br>
+  • react = 본능적·즉각적 반응 (감정 포함)<br>
+  • respond = 의식적·신중한 답변 또는 반응<br>
+  → 일상 영어에서는 거의 동의어로 사용. 본문 맥락(지진 상황)에서는 둘 다 자연스러움.</div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">28</span><span class="type-tag vocab">어휘</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">구동사 종합 — wake up / break into / run into / turn to / fall to (4점)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>28.</b> 다음 빈칸에 들어갈 동사 표현이 <b>잘못 짝지어진</b> 것은?</div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>I <b>woke up</b> suddenly. → 깨어났다</li>
+    <li><span class="num">②</span>The mirror <b>broke into</b> pieces. → 산산이 부서졌다</li>
+    <li><span class="num">③</span>My mom <b>ran into</b> my room. → 내 방 밖으로 도망갔다</li>
+    <li><span class="num">④</span>My confusion <b>turned to</b> panic. → 혼란이 공포로 바뀌었다</li>
+    <li><span class="num">⑤</span>The mirror <b>fell to</b> the floor. → 거울이 바닥으로 떨어졌다</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③</span></div>
+  <div class="ans-detail">③ run into = "~ 안으로 뛰어 <b>들어가다</b>"이지 "도망가다"가 아님. 정반대 방향 의미. ran into my room = "내 방 안으로 뛰어들어 갔다"가 정확.<br>
+  <br>
+  <b>각 구동사 정확한 의미:</b><br>
+  ▸ ① wake up = 깨어나다 ✓<br>
+  ▸ ② break into pieces = 산산조각이 나다 ✓<br>
+  ▸ ③ 🚨 run into ~ = ~ <b>안으로</b> 뛰어들다 (≠ 도망가다)<br>
+  ▸ ④ turn to ~ = ~로 바뀌다 ✓<br>
+  ▸ ⑤ fall to ~ = ~로 떨어지다 ✓<br>
+  <br>
+  <b>※ run into의 두 가지 의미:</b><br>
+  ① ~ 안으로 뛰어들다 (물리적, 본문)<br>
+  ② ~을 우연히 만나다: I ran into my old friend at the mall.<br>
+  → 두 의미 모두 "도망"과는 무관.</div>
+  <div class="note"><b>🔑 비슷한 구동사 헷갈리지 말 것:</b><br>
+  • run into = 안으로 뛰어들다 / 우연히 만나다<br>
+  • run away (from) = 도망가다<br>
+  • run out of = 다 떨어지다<br>
+  • run over = 차로 치다</div></div></details>
+</article>
+
+
+<!-- =============== ⓖ 서술형 WRITING (2문항) =============== -->
+<div class="section-head" data-section-type="writing" data-section-marker>
+  <div class="num-line">SECTION G · 서술형 · WRITING · 2 ITEMS</div>
+  <h2>서술형 <span class="kor">단어 배열 영작 (★자리 + 어형 변형)</span></h2>
+  <p class="desc">목운중 시험 단골 영작 패턴. 보기 단어를 정답 어순과 다르게 무작위 배치하여 학생이 어순을 직접 재구성해야 함.</p>
+</div>
+
+<article class="q-card" data-type="writing">
+  <div class="q-meta"><span class="q-num">29</span><span class="type-tag writing">서술형</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">단어 14개 영작 — 지각동사 + 동사원형 + 병렬 (5점 고배점)</span><span class="q-pts">5점</span></div>
+  <div class="q-prompt"><b>29.</b> 다음 우리말과 같도록 〈보기〉의 단어 13개를 모두 사용하여 영작하시오. <span style="color:var(--muted)">(★ 자리에 들어갈 한 단어를 답안에 명시할 것)</span></div>
+  <div class="q-box"><b>그러나 그때 나는 책상 위 거울이 바닥에 떨어져서 산산조각이 나는 소리를 들었다.</b></div>
+  <div class="q-passage" style="background:#FFFAF0;padding:12px 14px;border-radius:6px;border-left:3px solid #C9A227">
+  〈보기〉<br>
+  <span class="word-bank-inline">on / pieces / heard / fall / and / desk / I / the / mirror / break / to / But / then / floor / my / into / the</span><br>
+  <span class="word-bank-note" style="color:var(--muted);font-size:12.5px">※ 정답은 ★ 자리 포함 17단어로 구성됨. 단어 어형은 변형 없이 그대로 사용.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">But then I heard the mirror on my desk ★fall to the floor and break into pieces.</span><br>★ 자리: <b>fall</b></div>
+  <div class="ans-detail"><b>구문 분석:</b><br>
+  • But then = 그러나 그때 (시간 부사구)<br>
+  • I heard = 나는 들었다 (지각동사 과거)<br>
+  • the mirror on my desk = 책상 위 거울 (목적어 + 후치 수식)<br>
+  • <b>★fall</b> to the floor = 바닥으로 떨어지다 (지각동사 보어 = 동사원형)<br>
+  • and break into pieces = 산산조각이 나다 (병렬 두 번째 동사원형)<br>
+  <br>
+  <b>핵심 문법 3가지:</b><br>
+  ① <b>지각동사 + O + 동사원형</b>: heard the mirror fall (× to fall)<br>
+  ② <b>and 병렬</b>: fall ~ and break (둘 다 동사원형)<br>
+  ③ <b>전치사구 후치 수식</b>: on my desk가 mirror 수식<br>
+  <br>
+  <b>★ 자리 함정:</b> heard the mirror 다음에 falling이나 to fall을 쓰면 비문. 반드시 동사원형 fall.</div>
+  <div class="note"><b>🔑 영작 단계별 풀이.</b><br>
+  ① 시간 부사구 먼저: But then<br>
+  ② 주어 + 동사: I heard<br>
+  ③ 목적어 + 후치 수식: the mirror on my desk<br>
+  ④ 목적격 보어(동사원형): fall<br>
+  ⑤ 전치사구: to the floor<br>
+  ⑥ and 병렬: and break into pieces</div></div></details>
+</article>
+
+<article class="q-card" data-type="writing">
+  <div class="q-meta"><span class="q-num">30</span><span class="type-tag writing">서술형</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">단어 배열 영작 — Since 절 + my first time + Ving (4점)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>30.</b> 다음 우리말과 같도록 〈보기〉의 단어를 모두 사용하여 영작하시오. <span style="color:var(--muted)">(★ 자리에 들어갈 한 단어를 답안에 명시할 것)</span></div>
+  <div class="q-box"><b>지진을 경험하는 것이 처음이었기 때문에, 나는 어떻게 반응해야 할지 몰랐다.</b></div>
+  <div class="q-passage" style="background:#FFFAF0;padding:12px 14px;border-radius:6px;border-left:3px solid #C9A227">
+  〈보기〉<br>
+  <span class="word-bank-inline">react / experiencing / didn't / Since / time / I / earthquake / it / first / how / was / know / an / to / my</span><br>
+  <span class="word-bank-note" style="color:var(--muted);font-size:12.5px">※ ★ 자리 포함 15단어로 구성됨 (콤마는 단어로 세지 않음). ★자리는 콤마 다음에 등장하는 단어. 단어 어형 변형 없음.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">Since it was my first time experiencing an earthquake, ★I didn't know how to react.</span><br>★ 자리: <b>I</b></div>
+  <div class="ans-detail"><b>구문 분석:</b><br>
+  • Since = ~이므로 (이유 접속사)<br>
+  • it was my first time = 그것이 내 처음이었다<br>
+  • experiencing an earthquake = 지진을 경험하는 것 (동명사구, my first time 수식)<br>
+  • ★I didn't know = 나는 몰랐다 (주절 시작)<br>
+  • how to react = 어떻게 반응할지 (의문사 + to부정사)<br>
+  <br>
+  <b>핵심 문법 3가지:</b><br>
+  ① <b>Since (~이므로)</b> + 절 → 이유 부사절<br>
+  ② <b>my first time + Ving</b>(동명사) — to부정사 불가<br>
+  ③ <b>how + to V</b> = "~하는 방법"<br>
+  <br>
+  <b>★ 자리 함정:</b> 콤마 다음에 주절이 시작하므로 주어 I가 와야 함. how나 didn't가 먼저 오면 비문.</div>
+  <div class="note"><b>🔑 핵심 표현 3가지 정리.</b><br>
+  • <b>my first/second time + Ving</b>: 처음/두 번째 ~하는 것<br>
+  • <b>Since + S + V (이유)</b>: ~이므로 (= because)<br>
+  • <b>how/what/where + to V</b>: ~할 방법/것/곳<br>
+  → 모두 본문 핵심 어법, 시험 단골.</div></div></details>
+</article>
+
+
+<!-- 인쇄 전용 풋터 (화면에서는 숨김) -->
+<div class="print-footer">
+  목동서로영어학원 제작 · MOKDONG SEORO ENGLISH ACADEMY · 0505.co.kr
+</div>
+
+<div class="made-by">
+  <div>목동서로영어학원 — Passage-Based Practice Set</div>
+  <div class="credit">MOKDONG SEORO ENGLISH ACADEMY · 0505.co.kr</div>
+</div>
+
+<script>
+  // 유형 라벨 매핑 (인쇄 헤더용)
+  const TYPE_LABELS = {
+    all: '전체 30문항',
+    grammar: '어법 (8문항)',
+    pronoun: '대명사 (3문항)',
+    reading: '독해 (2문항)',
+    context: '문맥 (3문항)',
+    cloze: '빈칸 (7문항)',
+    vocab: '어휘·숙어 (5문항)',
+    writing: '서술형 (2문항)'
+  };
+
+  // ────────────────────────────────────────────
+  // 1. 네비게이션 탭 — 유형 필터링 (기존 기능)
+  // ────────────────────────────────────────────
+  function applyFilter(type) {
+    document.querySelectorAll('.nav-tab').forEach(t => {
+      t.classList.toggle('active', t.dataset.type === type);
+    });
+    document.querySelectorAll('.q-card').forEach(card => {
+      card.classList.toggle('hidden', !(type === 'all' || card.dataset.type === type));
+    });
+    document.querySelectorAll('.section-head[data-section-type]').forEach(sh => {
+      const sectType = sh.dataset.sectionType;
+      sh.classList.toggle('hidden', !(type === 'all' || sectType === type));
+    });
+    // 인쇄 헤더 라벨 갱신
+    const lbl = document.getElementById('printSectionLabel');
+    if (lbl) lbl.textContent = TYPE_LABELS[type] || '전체';
+  }
+
+  document.querySelectorAll('.nav-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const type = tab.dataset.type;
+      applyFilter(type);
+      const firstVisible = document.querySelector('.q-card:not(.hidden), .section-head:not(.hidden)[data-section-type]');
+      if (firstVisible && type !== 'all') {
+        const navHeight = document.querySelector('.type-nav-wrap').offsetHeight;
+        const top = firstVisible.getBoundingClientRect().top + window.scrollY - navHeight - 20;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // ────────────────────────────────────────────
+  // 2. 인쇄 버튼 — 유형 필터 적용 후 인쇄 호출
+  // ────────────────────────────────────────────
+  document.querySelectorAll('.nav-print').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const type = btn.dataset.printType;
+      // (1) 해당 유형 필터 적용 (인쇄 대상만 보이도록)
+      applyFilter(type);
+      // (2) 짧은 지연 후 인쇄 다이얼로그 호출 (DOM 갱신 시간 확보)
+      setTimeout(() => {
+        window.print();
+      }, 180);
+    });
+  });
+
+  // ────────────────────────────────────────────
+  // 3. 정답 모두 펼치기/접기 토글 (인쇄 옵션)
+  // ────────────────────────────────────────────
+  let answersOpen = false;
+  const answerToggleBtn = document.getElementById('answerToggle');
+  if (answerToggleBtn) {
+    answerToggleBtn.addEventListener('click', () => {
+      answersOpen = !answersOpen;
+      document.querySelectorAll('details.ans').forEach(d => { d.open = answersOpen; });
+      answerToggleBtn.textContent = answersOpen ? '정답 모두 접기' : '정답 모두 펼치기';
+      answerToggleBtn.classList.toggle('active', answersOpen);
+    });
+  }
+
+  // ────────────────────────────────────────────
+  // 4. 지문 펼치기/접기 토글 (인쇄 옵션)
+  // ────────────────────────────────────────────
+  const passageToggleBtn = document.getElementById('passageToggle');
+  if (passageToggleBtn) {
+    passageToggleBtn.addEventListener('click', () => {
+      const box = document.querySelector('.passage-box');
+      if (box) {
+        box.open = !box.open;
+        passageToggleBtn.classList.toggle('active', box.open);
+      }
+    });
+    // 초기 상태 동기화
+    const box = document.querySelector('.passage-box');
+    if (box && box.open) passageToggleBtn.classList.add('active');
+  }
+
+  // ────────────────────────────────────────────
+  // 5. Ctrl/Cmd + P 단축키 → 안내 메시지
+  // ────────────────────────────────────────────
+  // 사용자가 브라우저 기본 인쇄(Ctrl+P)를 사용해도 정상 동작.
+  // 현재 화면(필터링된 상태) + 펼쳐진 정답이 그대로 인쇄됨.
+</script>
+
+</body>
+</html>
