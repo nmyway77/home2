@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>지문 기반 유형별 문제 — Waking Up to an Earthquake Part 2 (목운중 L3)</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+  :root {
+    --bg: #FAF7F2;
+    --paper: #FFFFFF;
+    --ink: #1A1815;
+    --ink2: #4A4642;
+    --muted: #8B8680;
+    --line: #E5DFD5;
+    --accent: #B8763D;
+    /* 7가지 유형 색상 */
+    --t-grammar: #1F4E79;
+    --t-pronoun: #6B5BA0;
+    --t-reading: #2A8B7F;
+    --t-context: #8B4A6F;
+    --t-cloze:   #B8763D;
+    --t-vocab:   #D97A47;
+    --t-writing: #4A6B85;
+    --green: #4A8B5C;
+    --yellow: #C9A227;
+    --orange: #D97A47;
+    --red: #B53737;
+    --navy-950:#0A1E3A;
+    --navy-800:#1F3557;
+    --cream:#FAF6EE;
+    --gold:#C99B4E;
+    --gold-light:#E4C589;
+    --slate-300:#CBD5E1;
+    --slate-400:#94A3B8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { overflow-x: hidden; max-width: 100vw; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 36px 60px; }
+
+  /* HERO */
+  .hero-banner {
+    background:
+      radial-gradient(ellipse at 12% 20%, rgba(201,155,78,0.18), transparent 45%),
+      linear-gradient(135deg, var(--navy-950) 0%, var(--navy-800) 100%);
+    color: var(--cream);
+    padding: 44px 0 36px;
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; padding: 0 36px; font-family: 'Pretendard Variable', sans-serif; }
+  .brand-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 30px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 18px; color: var(--navy-950); }
+  .brand-text { font-size: 12px; letter-spacing: 0.1em; color: var(--cream); font-weight: 500; }
+  .brand-text .sub { color: var(--slate-400); font-size: 10.5px; margin-top: 2px; }
+  .home-btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); color: var(--navy-950); font-family: 'Pretendard Variable', sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 0.1em; border-radius: 999px; text-decoration: none; }
+  .home-btn svg { width: 13px; height: 13px; fill: var(--navy-950); }
+  .kicker { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-light); font-weight: 600; margin-bottom: 12px; }
+  h1.title { font-family: 'Playfair Display', serif; font-weight: 800; font-size: clamp(28px, 4.5vw, 48px); line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 8px; }
+  h1.title em { font-style: italic; color: var(--gold-light); font-weight: 400; }
+  h1.title .kor { font-family: 'Pretendard Variable', sans-serif; font-weight: 800; letter-spacing: -0.02em; display: block; margin-top: 6px; font-size: clamp(16px, 2.4vw, 22px); color: var(--gold-light); }
+  .meta-info { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .meta-tag { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid rgba(228,197,137,0.4); border-radius: 999px; font-size: 11.5px; color: var(--gold-light); font-family: 'Pretendard Variable', sans-serif; font-weight: 500; letter-spacing: 0.04em; }
+
+  /* TYPE NAV — sticky */
+  .type-nav-wrap { background: var(--navy-950); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(228,197,137,0.15); }
+  .type-nav { max-width: 1100px; margin: 0 auto; padding: 0 36px; display: flex; gap: 0; overflow-x: auto; scrollbar-width: thin; -webkit-overflow-scrolling: touch; }
+  .type-nav::-webkit-scrollbar { height: 4px; }
+  .type-nav::-webkit-scrollbar-thumb { background: rgba(228,197,137,0.3); border-radius: 2px; }
+  .nav-tab { background: transparent; border: none; color: var(--slate-400); padding: 14px 16px; cursor: pointer; font-family: 'Pretendard Variable', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; border-bottom: 3px solid transparent; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 7px; }
+  .nav-tab:hover { color: var(--gold-light); }
+  .nav-tab.active { color: var(--gold-light); border-bottom-color: var(--gold); }
+  .nav-tab .nav-count { font-family: 'JetBrains Mono', monospace; font-size: 10px; background: rgba(228,197,137,0.15); color: var(--gold-light); padding: 2px 6px; border-radius: 4px; font-weight: 700; }
+  .nav-tab.active .nav-count { background: var(--gold); color: var(--navy-950); }
+  .nav-color-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* NAV PRINT BUTTON — 각 유형 옆에 작은 인쇄 버튼 */
+  .nav-print {
+    background: transparent;
+    border: none;
+    color: var(--slate-400);
+    padding: 14px 8px 14px 4px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.18s ease;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 6px;
+    border-left: 1px dotted rgba(228,197,137,0.18);
+  }
+  .nav-print:hover { color: var(--gold-light); transform: translateY(-1px); }
+  .nav-print:active { transform: translateY(0); }
+  .nav-print svg { width: 15px; height: 15px; fill: currentColor; }
+  .nav-print[data-print-type="all"] { border-left: none; }
+
+  /* PRINT TOOLBAR — 정답 펼치기/접기 토글 + 안내문 */
+  .print-toolbar { background: linear-gradient(180deg, #FAF7F2 0%, #FFFFFF 100%); border-bottom: 1px solid var(--line); }
+  .print-toolbar-inner { max-width: 1100px; margin: 0 auto; padding: 12px 36px; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-family: 'Pretendard Variable', sans-serif; }
+  .pt-label { font-family: 'Playfair Display', serif; font-size: 11px; letter-spacing: 0.18em; color: var(--accent); font-weight: 800; text-transform: uppercase; }
+  .pt-btn { background: white; border: 1px solid var(--gold); color: var(--navy-950); padding: 6px 14px; font-family: 'Pretendard Variable', sans-serif; font-size: 12px; font-weight: 700; border-radius: 999px; cursor: pointer; transition: all 0.18s ease; }
+  .pt-btn:hover { background: var(--gold); color: white; }
+  .pt-btn.active { background: var(--navy-950); color: var(--gold-light); border-color: var(--navy-950); }
+  .pt-hint { font-size: 11.5px; color: var(--muted); font-weight: 500; line-height: 1.5; flex: 1; min-width: 200px; }
+  .pt-hint b { color: var(--ink); font-weight: 800; }
+  .pt-icon { width: 11px; height: 11px; fill: var(--accent); vertical-align: -1px; margin: 0 2px; }
+
+  /* ============================================
+     @media print — A4 용지 최적화 인쇄 스타일
+     ============================================ */
+  @media print {
+    /* A4 페이지 — 12mm 마진(종이 낭비 최소화) */
+    @page {
+      size: A4 portrait;
+      margin: 11mm 13mm 13mm 13mm;
+    }
+
+    /* 색상·배경 강제 인쇄 (브라우저 옵션 무관) */
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+
+    /* 전체 리셋 — 흰 배경, 검은 글씨 기본 */
+    html, body {
+      background: white !important;
+      color: black !important;
+      font-size: 10pt !important;
+      line-height: 1.42 !important;
+      max-width: 100% !important;
+      overflow: visible !important;
+    }
+
+    /* UI 크롬 숨김 — 화면 전용 요소 모두 제거 */
+    .hero-banner,
+    .type-nav-wrap,
+    .print-toolbar,
+    .made-by,
+    .home-btn,
+    .nav-print { display: none !important; }
+
+    /* 필터 hidden 숨김 — 현재 선택된 유형만 인쇄 */
+    .hidden { display: none !important; }
+
+    /* 컨테이너 — 페이지 전체 폭 사용 */
+    .container { padding: 0 !important; max-width: 100% !important; margin: 0 !important; }
+
+    /* 인쇄 헤더 — 학원명 표기 */
+    .print-header {
+      display: block !important;
+      text-align: center;
+      font-family: 'Pretendard Variable', sans-serif;
+      font-size: 9pt;
+      color: #555;
+      border-bottom: 0.5pt solid #999;
+      padding-bottom: 1.5mm;
+      margin-bottom: 3mm;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    .print-header b { color: #000; }
+
+    /* 지문 박스 — 펼쳐진 경우만 인쇄 */
+    .passage-box:not([open]) { display: none !important; }
+    .passage-box { margin: 0 0 4mm 0 !important; border: 0.6pt solid #888 !important; border-radius: 0 !important; background: white !important; }
+    .passage-box summary { display: none !important; }
+    .passage-text { padding: 3mm 4mm !important; font-size: 9.5pt !important; line-height: 1.55 !important; color: #000 !important; }
+    .passage-text p { margin-bottom: 2mm !important; }
+
+    /* 섹션 헤더 — 컴팩트, 페이지 마지막 한 줄 방지 */
+    .section-head {
+      margin: 0 0 3mm 0 !important;
+      padding: 2.5mm 0 1.5mm !important;
+      background: white !important;
+      border: none !important;
+      border-bottom: 1.4pt solid black !important;
+      page-break-after: avoid !important;
+      break-after: avoid !important;
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+    }
+    .section-head .num-line { font-size: 7.5pt !important; color: #555 !important; margin: 0 0 0.5mm 0 !important; letter-spacing: 0.18em !important; }
+    .section-head h2 { font-size: 13pt !important; color: black !important; margin: 0 !important; line-height: 1.15 !important; }
+    .section-head h2 .kor { font-size: 10pt !important; color: #333 !important; margin-left: 6px !important; }
+    .section-head .desc { font-size: 8.5pt !important; color: #444 !important; margin: 1mm 0 0 0 !important; line-height: 1.45 !important; }
+
+    /* 섹션 헤더 다음에 페이지 시작하지 않도록 — 첫 q-card와 함께 묶기 */
+    .section-head + .q-card { page-break-before: avoid !important; break-before: avoid !important; }
+
+    /* 문항 카드 — 페이지 중간에 끊기지 않도록, 컴팩트 간격 */
+    .q-card {
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+      margin: 0 0 3mm 0 !important;
+      padding: 2.5mm 0 2mm !important;
+      border: none !important;
+      border-bottom: 0.4pt dotted #999 !important;
+      background: white !important;
+      box-shadow: none !important;
+    }
+    .q-card:last-child { border-bottom: none !important; }
+
+    /* 문항 메타 라인 — 한 줄에 컴팩트 */
+    .q-meta {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      gap: 5px !important;
+      margin-bottom: 2mm !important;
+      font-size: 9pt !important;
+    }
+    .q-num {
+      font-family: 'Fraunces', 'Playfair Display', serif !important;
+      font-size: 14pt !important;
+      font-weight: 800 !important;
+      color: black !important;
+      margin-right: 3px !important;
+    }
+    .type-tag,
+    .var-pill {
+      font-size: 7.5pt !important;
+      padding: 1pt 5pt !important;
+      border-radius: 2pt !important;
+      font-weight: 700 !important;
+      letter-spacing: 0 !important;
+    }
+    .q-focus { font-size: 8.5pt !important; color: #333 !important; font-weight: 600 !important; }
+    .q-pts { font-size: 8.5pt !important; color: black !important; font-weight: 700 !important; margin-left: auto !important; }
+
+    /* 문항 본문 (지문, 선지, 보기 등) */
+    .q-card p,
+    .q-card div:not(.ans-body):not(.q-meta),
+    .q-card ul,
+    .q-card ol,
+    .q-card li {
+      font-size: 10pt !important;
+      line-height: 1.42 !important;
+      color: black !important;
+      background: white !important;
+    }
+    .q-card .q-passage { padding: 2mm 3mm !important; background: #fafafa !important; border: 0.4pt solid #ccc !important; margin: 1.5mm 0 !important; font-size: 9.5pt !important; line-height: 1.5 !important; }
+    .q-card .q-box { padding: 2mm 3mm !important; background: #f6f6f6 !important; border-left: 1.5pt solid #555 !important; margin: 1.5mm 0 !important; font-size: 9.5pt !important; }
+    .q-card ul.q-choices li,
+    .q-card ol.q-choices li { padding: 0.5mm 0 !important; font-size: 9.5pt !important; line-height: 1.45 !important; }
+    .q-card table { font-size: 9pt !important; border-collapse: collapse !important; }
+    .q-card table th,
+    .q-card table td { padding: 1mm 2mm !important; border: 0.3pt solid #999 !important; }
+
+    /* 정답 박스 — 펼쳐진 경우만 인쇄 (사용자 선택 그대로) */
+    details.ans:not([open]) { display: none !important; }
+    details.ans { display: block !important; margin-top: 1.5mm !important; background: transparent !important; }
+    details.ans > summary { display: none !important; }
+    details.ans .ans-body {
+      display: block !important;
+      padding: 2mm 3mm !important;
+      background: #f0eee6 !important;
+      border: 0.4pt solid #999 !important;
+      border-radius: 0 !important;
+      color: black !important;
+      font-size: 9pt !important;
+      line-height: 1.45 !important;
+      margin: 0 !important;
+    }
+    details.ans .ans-body * {
+      color: black !important;
+      background: transparent !important;
+    }
+    details.ans .ans-body .ans-label {
+      font-size: 7pt !important;
+      color: #555 !important;
+      letter-spacing: 0.18em !important;
+      margin-bottom: 1mm !important;
+    }
+    details.ans .ans-body .ans-main { font-size: 9.5pt !important; font-weight: 800 !important; margin-bottom: 1.5mm !important; }
+    details.ans .ans-body .ans-main .correct { color: #B53737 !important; font-weight: 800 !important; }
+    details.ans .ans-body .breakdown { padding-left: 4mm !important; margin: 1mm 0 !important; }
+    details.ans .ans-body .breakdown li { margin-bottom: 1mm !important; font-size: 8.5pt !important; }
+    details.ans .ans-body .note,
+    details.ans .ans-body .trap {
+      padding: 1.5mm 2.5mm !important;
+      margin-top: 1.5mm !important;
+      font-size: 8pt !important;
+      border: 0.3pt solid #aaa !important;
+      background: #fafafa !important;
+    }
+
+    /* 색상 보존 — 유형 태그 */
+    .type-tag.grammar { background: var(--t-grammar) !important; color: white !important; }
+    .type-tag.pronoun { background: var(--t-pronoun) !important; color: white !important; }
+    .type-tag.reading { background: var(--t-reading) !important; color: white !important; }
+    .type-tag.context { background: var(--t-context) !important; color: white !important; }
+    .type-tag.cloze   { background: var(--t-cloze) !important;   color: white !important; }
+    .type-tag.vocab   { background: var(--t-vocab) !important;   color: white !important; }
+    .type-tag.writing { background: var(--t-writing) !important; color: white !important; }
+    .var-pill { border: 0.3pt solid #999 !important; background: white !important; color: #333 !important; }
+
+    /* 인쇄 풋터 — 학원 정보 */
+    .print-footer {
+      display: block !important;
+      margin-top: 5mm;
+      padding-top: 1.5mm;
+      border-top: 0.4pt solid #999;
+      text-align: center;
+      font-family: 'Pretendard Variable', sans-serif;
+      font-size: 8pt;
+      color: #666;
+      letter-spacing: 0.05em;
+    }
+
+    /* 첫 페이지 빈공간 방지 — 모든 첫 요소 위 마진 0 */
+    .container > *:first-child { margin-top: 0 !important; }
+    .section-head:first-child { margin-top: 0 !important; }
+  }
+
+  /* 인쇄 전용 헤더/풋터 — 화면에서는 숨김 */
+  .print-header,
+  .print-footer { display: none; }
+
+  /* PASSAGE BOX */
+  .passage-box { background: var(--paper); border: 1px solid var(--line); margin-top: 36px; border-radius: 4px; }
+  .passage-box summary { list-style: none; cursor: pointer; padding: 18px 26px; display: flex; align-items: center; justify-content: space-between; font-family: 'Pretendard Variable', sans-serif; font-weight: 800; font-size: 15px; color: var(--ink); background: linear-gradient(180deg, #FAF7F2 0%, #FFFFFF 100%); border-bottom: 1px solid transparent; border-radius: 4px; }
+  .passage-box[open] summary { border-bottom: 1px solid var(--line); border-radius: 4px 4px 0 0; }
+  .passage-box summary::-webkit-details-marker { display: none; }
+  .passage-box summary .toggle-mark { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); letter-spacing: 0.08em; font-weight: 700; }
+  .passage-box summary .toggle-mark::before { content: '＋ 펼치기'; }
+  .passage-box[open] summary .toggle-mark::before { content: '－ 접기'; }
+  .passage-text { padding: 22px 28px; font-family: 'Inter', sans-serif; line-height: 1.85; font-size: 14.5px; color: var(--ink2); }
+  .passage-text p { margin-bottom: 12px; }
+
+  /* SECTION HEAD (TYPE GROUP MARKER) */
+  .section-head { margin: 50px 0 22px; padding: 18px 22px; background: white; border: 1px solid var(--line); border-left: 5px solid; }
+  .section-head[data-section-type="grammar"]     { border-left-color: var(--t-grammar); }
+  .section-head[data-section-type="pronoun"]     { border-left-color: var(--t-pronoun); }
+  .section-head[data-section-type="reading"]     { border-left-color: var(--t-reading); }
+  .section-head[data-section-type="context"]     { border-left-color: var(--t-context); }
+  .section-head[data-section-type="cloze"]       { border-left-color: var(--t-cloze); }
+  .section-head[data-section-type="vocab"]       { border-left-color: var(--t-vocab); }
+  .section-head[data-section-type="writing"]     { border-left-color: var(--t-writing); }
+  .section-head .num-line { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.18em; margin-bottom: 6px; font-weight: 700; }
+  .section-head h2 { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 5px; }
+  .section-head h2 .kor { font-family: 'Pretendard Variable', sans-serif; font-weight: 800; font-size: 14px; color: var(--ink2); margin-left: 10px; letter-spacing: -0.01em; }
+  .section-head .desc { font-size: 12.5px; color: var(--muted); line-height: 1.6; margin-top: 4px; }
+
+  /* QUESTION CARD */
+  .q-card { background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--t-grammar); margin-bottom: 14px; padding: 18px 22px; transition: opacity 0.2s ease; }
+  .q-card[data-type="pronoun"]  { border-left-color: var(--t-pronoun); }
+  .q-card[data-type="reading"]  { border-left-color: var(--t-reading); }
+  .q-card[data-type="context"]  { border-left-color: var(--t-context); }
+  .q-card[data-type="cloze"]    { border-left-color: var(--t-cloze); }
+  .q-card[data-type="vocab"]    { border-left-color: var(--t-vocab); }
+  .q-card[data-type="writing"]  { border-left-color: var(--t-writing); }
+
+  .q-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+  .q-num { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; line-height: 1; margin-right: 4px; }
+  .type-tag { display: inline-block; padding: 4px 10px; border-radius: 3px; font-family: 'Pretendard Variable', sans-serif; font-size: 11px; font-weight: 800; letter-spacing: -0.01em; color: white; }
+  .type-tag.grammar  { background: var(--t-grammar); }
+  .type-tag.pronoun  { background: var(--t-pronoun); }
+  .type-tag.reading  { background: var(--t-reading); }
+  .type-tag.context  { background: var(--t-context); }
+  .type-tag.cloze    { background: var(--t-cloze); }
+  .type-tag.vocab    { background: var(--t-vocab); }
+  .type-tag.writing  { background: var(--t-writing); }
+
+  .var-pill { display: inline-block; padding: 3px 8px; font-size: 10px; font-family: 'JetBrains Mono', monospace; font-weight: 700; letter-spacing: 0.08em; border-radius: 3px; }
+  .var-light { background: #ECF7EE; color: #2D6E3F; border: 1px solid #B8DBC1; }
+  .var-mod   { background: #FFF8E0; color: #7A5F0A; border: 1px solid #E8D9A0; }
+  .var-major { background: #FFEDD8; color: #A04A0E; border: 1px solid #F0CFAA; }
+  .var-new   { background: #FCE0E0; color: #8E1A1A; border: 1px solid #E8B8B8; }
+
+  .q-focus { display: inline-block; padding: 3px 8px; font-size: 10px; font-family: 'Pretendard Variable', sans-serif; font-weight: 700; letter-spacing: -0.01em; background: #F5F2ED; color: var(--ink2); border: 1px solid var(--line); border-radius: 3px; }
+  .q-pts { margin-left: auto; font-family: 'Fraunces', serif; font-size: 16px; font-weight: 800; color: var(--accent); letter-spacing: -0.02em; }
+
+  .q-prompt { font-family: 'Pretendard Variable', sans-serif; font-size: 14.5px; font-weight: 700; color: var(--ink); line-height: 1.55; margin-bottom: 10px; letter-spacing: -0.01em; }
+  .q-passage { background: #FAF7F2; border: 1px solid var(--line); border-left: 3px solid var(--accent); padding: 12px 16px; margin-bottom: 10px; font-size: 13px; line-height: 1.8; color: var(--ink2); font-family: 'Inter', sans-serif; border-radius: 0 3px 3px 0; }
+  .q-passage u { text-decoration: underline; text-underline-offset: 3px; }
+  .q-passage b { color: var(--ink); font-weight: 700; }
+  .q-passage i { font-style: italic; color: var(--accent); }
+  .q-choices { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+  .q-choices .c { display: flex; gap: 7px; padding: 7px 11px; background: #FBFAF7; border: 1px solid var(--line); border-radius: 3px; font-size: 13px; line-height: 1.55; color: var(--ink2); font-family: 'Pretendard Variable', sans-serif; }
+  .q-choices .c .num { font-weight: 800; color: var(--accent); flex-shrink: 0; min-width: 22px; }
+  .q-choices.horz { flex-direction: row; flex-wrap: wrap; }
+  .q-choices.horz .c { flex: 1 0 calc(33% - 6px); }
+  .q-choices.horz5 { flex-direction: row; flex-wrap: wrap; }
+  .q-choices.horz5 .c { flex: 1 0 calc(20% - 6px); justify-content: center; }
+  .q-blank { color: var(--accent); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+  .word-bank { background: #FFFAF0; border: 1px dashed var(--accent); padding: 10px 14px; margin: 10px 0; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.7; color: var(--ink); font-weight: 500; }
+  .word-bank b { color: var(--accent); }
+  .answer-line { background: #F5F2ED; padding: 10px 14px; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.9; margin: 8px 0; }
+  .answer-line .underline { display: inline-block; min-width: 70px; border-bottom: 1.5px solid var(--ink); margin: 0 3px; padding: 0 2px; vertical-align: bottom; }
+  .answer-line .star { color: var(--gold); font-weight: 800; font-size: 17px; padding: 0 6px; }
+
+  /* ANSWER PANEL */
+  details.ans { background: var(--navy-950); color: var(--cream); border-radius: 4px; overflow: hidden; margin-top: 6px; }
+  details.ans summary { list-style: none; cursor: pointer; padding: 11px 18px; font-family: 'Pretendard Variable', sans-serif; font-weight: 700; font-size: 12.5px; color: var(--gold-light); letter-spacing: 0.04em; display: flex; align-items: center; justify-content: space-between; }
+  details.ans summary::-webkit-details-marker { display: none; }
+  details.ans summary::after { content: '＋'; font-family: 'JetBrains Mono', monospace; color: var(--gold); }
+  details.ans[open] summary::after { content: '－'; }
+  .ans-body { padding: 4px 20px 18px; font-family: 'Pretendard Variable', sans-serif; color: #E1D9C8; font-size: 13px; line-height: 1.7; }
+  .ans-body .ans-main { font-size: 13.5px; font-weight: 700; color: var(--gold-light); margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed rgba(228,197,137,0.3); }
+  .ans-body .ans-detail { color: #C8C0AE; font-size: 12.5px; }
+  .ans-body .ans-detail b { color: var(--gold-light); font-weight: 700; }
+  .ans-body em { color: var(--gold-light); font-style: italic; font-family: 'Fraunces', serif; font-weight: 600; }
+
+  .q-card.hidden { display: none; }
+  .section-head.hidden { display: none; }
+
+  /* FOOTER */
+  .made-by { text-align: center; padding: 24px 20px 30px; background: var(--navy-950); margin: 50px -36px 0; color: var(--gold-light); font-family: 'Pretendard Variable', sans-serif; font-size: 12.5px; font-weight: 600; letter-spacing: 0.1em; }
+  .made-by .credit { display: block; margin-top: 6px; font-size: 10.5px; color: rgba(228,197,137,0.6); }
+
+  @media (max-width: 760px) {
+    .container { padding: 0 22px 50px; }
+    .hero-inner, .type-nav { padding: 0 22px; }
+    .nav-tab { padding: 12px 10px; font-size: 12px; gap: 5px; }
+    .nav-tab .nav-count { font-size: 9.5px; padding: 1px 5px; }
+    .q-card { padding: 16px 18px; }
+    .q-passage { padding: 11px 13px; font-size: 12.5px; }
+    .q-num { font-size: 20px; }
+    .q-prompt { font-size: 14px; }
+    .made-by { margin: 50px -22px 0; }
+    .q-choices.horz .c, .q-choices.horz5 .c { flex: 1 0 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero-banner">
+  <div class="hero-inner">
+    <div class="brand-row">
+      <div class="brand">
+        <div class="brand-mark">목</div>
+        <div class="brand-text">
+          목운중학교 3학년 영어
+          <div class="sub">MOKUN MIDDLE SCHOOL · LESSON 3 · PART 2</div>
+        </div>
+      </div>
+      <a href="https://0505.co.kr" target="_blank" rel="noopener" class="home-btn">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2.5L2 11h3v9h5v-6h4v6h5v-9h3z"/>
+        </svg>
+        HOME
+      </a>
+    </div>
+
+    <div class="kicker">PASSAGE-BASED PRACTICE SET · 유형별 변형 문제집</div>
+    <h1 class="title">
+      Waking Up <em>to</em> an Earthquake
+      <span class="kor">L3 본문 2 — 아빠와의 통화·계단으로 대피·지진 훈련의 교훈 · 7유형 30문제 · 목운중 패턴 반영</span>
+    </h1>
+
+    <div class="meta-info">
+      <span class="meta-tag">📖 L3 Part 2 풀세트 30문항</span>
+      <span class="meta-tag">🎯 목운중 출제 패턴 반영</span>
+      <span class="meta-tag">⭐ 5점 고배점 2개 + 4점 6개 + 3점 22개</span>
+      <span class="meta-tag">🖨 유형별 인쇄 가능</span>
+    </div>
+  </div>
+</section>
+
+<!-- TYPE NAV -->
+<div class="type-nav-wrap">
+  <nav class="type-nav" id="typeNav">
+    <button class="nav-tab active" data-type="all">전체 <span class="nav-count">30</span></button>
+    <button class="nav-print" data-print-type="all" title="전체 인쇄" aria-label="전체 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+
+    <button class="nav-tab" data-type="grammar"><span class="nav-color-dot" style="background:var(--t-grammar)"></span>어법 <span class="nav-count">8</span></button>
+    <button class="nav-print" data-print-type="grammar" title="어법 유형 인쇄" aria-label="어법 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+
+    <button class="nav-tab" data-type="pronoun"><span class="nav-color-dot" style="background:var(--t-pronoun)"></span>대명사 <span class="nav-count">3</span></button>
+    <button class="nav-print" data-print-type="pronoun" title="대명사 유형 인쇄" aria-label="대명사 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+
+    <button class="nav-tab" data-type="reading"><span class="nav-color-dot" style="background:var(--t-reading)"></span>독해 <span class="nav-count">2</span></button>
+    <button class="nav-print" data-print-type="reading" title="독해 유형 인쇄" aria-label="독해 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+
+    <button class="nav-tab" data-type="context"><span class="nav-color-dot" style="background:var(--t-context)"></span>문맥 <span class="nav-count">3</span></button>
+    <button class="nav-print" data-print-type="context" title="문맥 유형 인쇄" aria-label="문맥 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+
+    <button class="nav-tab" data-type="cloze"><span class="nav-color-dot" style="background:var(--t-cloze)"></span>빈칸 <span class="nav-count">7</span></button>
+    <button class="nav-print" data-print-type="cloze" title="빈칸 유형 인쇄" aria-label="빈칸 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+
+    <button class="nav-tab" data-type="vocab"><span class="nav-color-dot" style="background:var(--t-vocab)"></span>어휘·숙어 <span class="nav-count">5</span></button>
+    <button class="nav-print" data-print-type="vocab" title="어휘·숙어 유형 인쇄" aria-label="어휘·숙어 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+
+    <button class="nav-tab" data-type="writing"><span class="nav-color-dot" style="background:var(--t-writing)"></span>서술형 <span class="nav-count">2</span></button>
+    <button class="nav-print" data-print-type="writing" title="서술형 유형 인쇄" aria-label="서술형 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+  </nav>
+</div>
+
+<!-- PRINT TOOLBAR — 인쇄 옵션 -->
+<div class="print-toolbar">
+  <div class="print-toolbar-inner">
+    <span class="pt-label">📄 인쇄 옵션</span>
+    <button class="pt-btn" id="answerToggle" type="button">정답 모두 펼치기</button>
+    <button class="pt-btn pt-passage" id="passageToggle" type="button">지문 펼치기/접기</button>
+    <span class="pt-hint">→ 위 인쇄 버튼(<svg viewBox="0 0 24 24" class="pt-icon"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>)을 누르면 <b>현재 화면 그대로</b> A4로 인쇄됩니다. 정답을 빼려면 <b>'정답 모두 접기'</b>를 먼저 누르세요.</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- 인쇄 전용 헤더 (화면에서는 숨김) -->
+<div class="print-header">
+  <b>목동서로영어학원</b> · 목운중 L3 Part 2 Waking Up to an Earthquake 유형문제집 · <span id="printSectionLabel">전체</span> · 0505.co.kr
+</div>
+
+<!-- ORIGINAL PASSAGE -->
+<details class="passage-box" open>
+  <summary>
+    <span>📄 원문 지문 — Waking Up to an Earthquake (Part 2)</span>
+    <span class="toggle-mark"></span>
+  </summary>
+  <div class="passage-text">
+<p>Then the shaking seemed to stop. We started crawling toward the door. At that moment, my mom's cell phone rang. It was my dad, who was coming home from work.</p>
+<p>He shouted, "It stopped! Get out of the building! Take the stairs! Don't take the elevator! Hurry!" "Where are you? Are you okay?" my mom asked urgently. My dad answered, "Don't worry. I'm okay. I was driving home when the shaking started. But I pulled over immediately. I'm listening to the radio right now to find out what's going on."</p>
+<p>We nervously made our way down the stairs and outside. I looked around. Parts of buildings had fallen and had smashed several cars. We went to an open space to avoid more falling pieces. How could all this have happened in a few minutes?</p>
+<p>Although I had done many earthquake drills in school, I had never thought I'd experience a real earthquake. I still get scared when I remember that night. I can't forget the panic I felt when the furniture was shaking and things were falling to the floor. After that night, I began to take earthquake drills seriously. I realized that I should be prepared for the next earthquake, which can occur at any time.</p>
+  </div>
+</details>
+
+<!-- =============== 30문항 SECTION 영역 (여기에 삽입) =============== -->
+<!-- =============== ⓐ 어법 GRAMMAR (8문항) =============== -->
+<div class="section-head" data-section-type="grammar" data-section-marker>
+  <div class="num-line">SECTION A · 어법 · GRAMMAR · 8 ITEMS</div>
+  <h2>어법 <span class="kor">seem to·과거완료·계속적용법·조동사+have p.p.·관계사 생략·get+형용사·should be p.p.</span></h2>
+  <p class="desc">본문 핵심 어법 8개 종합. <strong>5점 고배점 1개 (Q5 어법 오류 개수 세기) + 4점 1개 (Q3 두 개 고르기)</strong> 포함. Part 2의 핵심 어법인 <em>조동사+have p.p.(추측), 계속적 용법 which, Although+과거완료, get+형용사</em>를 모두 다룸.</p>
+</div>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">1</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">seem to + 동사원형</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>1.</b> 다음 빈칸에 들어갈 말로 <b>어법상 적절한</b> 것은?</div>
+  <div class="q-passage">Then the shaking seemed <span class="q-blank">______</span>.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>stop</span><span class="c"><span class="num">②</span>stopped</span><span class="c"><span class="num">③</span>to stop</span><span class="c"><span class="num">④</span>stopping</span><span class="c"><span class="num">⑤</span>has stopped</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③  to stop</span></div>
+  <div class="ans-detail"><b>seem + to부정사</b> = "~인 것 같다, ~처럼 보이다." seem은 항상 to부정사를 받는 동사. 동명사(Ving)·동사원형 모두 불가.<br>
+  <br>
+  <b>seem 용법 정리:</b><br>
+  ① S + seem + to V: He seems to know the answer.<br>
+  ② It seems that S + V: It seems that he knows the answer.<br>
+  → 두 문장 의미 동일. 단, seem 다음에는 to부정사만 가능.<br>
+  <br>
+  <b>비슷한 동사 (to부정사만 받는 동사):</b><br>
+  appear/seem/tend/happen/turn out + <b>to V</b><br>
+  → I happen to know him. / He tends to be late.</div>
+  <div class="note"><b>🔑 seem과 비슷해 보이는 함정:</b> appear도 같은 패턴. He appears to be tired. ✓ / He appears being tired. ✗</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">2</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">관계대명사 계속적 용법 (콤마 + who)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>2.</b> 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+  <div class="q-passage">It was my dad, <span class="q-blank">______</span> was coming home from work.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>that</span><span class="c"><span class="num">②</span>which</span><span class="c"><span class="num">③</span>who</span><span class="c"><span class="num">④</span>whom</span><span class="c"><span class="num">⑤</span>whose</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③  who</span></div>
+  <div class="ans-detail"><b>두 가지 단서로 정답 확정:</b><br>
+  ① 선행사: <b>my dad (사람)</b> → who 또는 whom<br>
+  ② 관계사절 안에서 주어 역할 (was coming의 주어) → 주격 <b>who</b><br>
+  ③ <b>콤마 + 관계대명사</b> = 계속적 용법 → that 사용 불가<br>
+  <br>
+  ▸ ① that ✗ — 콤마 뒤(계속적 용법)에는 that 사용 불가<br>
+  ▸ ② which ✗ — 선행사가 사람(my dad)이므로 부적합<br>
+  ▸ ③ ✓ who — 사람 + 주격<br>
+  ▸ ④ whom ✗ — 목적격이므로 was coming의 주어 자리에 부적합<br>
+  ▸ ⑤ whose ✗ — 소유격<br>
+  <br>
+  <b>계속적 용법 = 부가 설명:</b> "그것은 우리 아빠였는데, 아빠는 일에서 집으로 오는 중이었다." 콤마는 "추가 정보를 덧붙임"의 신호.</div>
+  <div class="note"><b>🔑 관계대명사 5가지 정리.</b><br>
+  • who (주격, 사람) / whom (목적격, 사람) / whose (소유격)<br>
+  • which (사물·동물) / that (사람·사물·동물 — 단, 계속적 용법 불가)</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">3</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">어법상 옳은 것 두 개 고르기 (4점)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>3.</b> 다음 중 <b>어법상 옳은 것</b>을 모두 고르시오. <span style="color:var(--muted)">(2개)</span></div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>I was driving home <b>when</b> the shaking started.</li>
+    <li><span class="num">②</span>How could all this <b>have happened</b> in a few minutes?</li>
+    <li><span class="num">③</span>Although I <b>have done</b> many earthquake drills in school, I had never thought I'd experience a real earthquake.</li>
+    <li><span class="num">④</span>I still <b>am scared</b> when I remember that night.</li>
+    <li><span class="num">⑤</span>I realized that I should <b>preparing</b> for the next earthquake.</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">①  +  ②</span></div>
+  <div class="ans-detail"><b>각 선지 분석:</b><br>
+  ▸ ① ✓ <b>was driving + when 절</b> — 과거진행(was driving) 중에 일어난 단순과거 사건(started). when은 "~할 때"의 시간 접속사로 자연스러움. 본문 표현 그대로.<br>
+  ▸ ② ✓ <b>How could + 주어 + have p.p.</b> — "어떻게 ~할 수 있었을까?"라는 과거 사건에 대한 의아함. 조동사 + have + p.p. 정확. 본문 표현 그대로.<br>
+  ▸ ③ 🚨 <b>have done → had done</b>. 주절이 "had never thought"(과거완료)이므로 부사절도 과거완료로 시제 일치 필요. 본문은 "Although I had done"이 정확.<br>
+  ▸ ④ 🚨 <b>am scared → get scared</b>. "I still <b>get</b> scared(여전히 무서워진다)"는 본문 표현. get + 형용사 = "~한 상태가 되다"의 변화. am scared는 "지금 무서운 상태"로 다른 의미.<br>
+  ▸ ⑤ 🚨 <b>preparing → be prepared</b>. should + 동사원형 + 수동(be prepared) 구조. preparing은 동명사·분사이므로 should 다음에 올 수 없음. 본문 "I should be prepared"가 정확.</div>
+  <div class="note"><b>🔑 핵심 어법 5가지.</b><br>
+  • 과거진행 + when 절: was Ving when S + 과거동사<br>
+  • How could + S + have p.p.: 과거 사건 의아함<br>
+  • Although + 과거완료: 더 먼저 일어난 사건<br>
+  • get + 형용사: 상태 변화 (become과 비슷)<br>
+  • should + be + p.p.: 의무 + 수동</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">4</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">조동사 + have + p.p. (과거 추측)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>4.</b> 다음 빈칸에 들어갈 말로 <b>어법상 알맞은</b> 것은?</div>
+  <div class="q-passage">How could all this <span class="q-blank">______</span> in a few minutes?</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>happen</span><span class="c"><span class="num">②</span>happened</span><span class="c"><span class="num">③</span>have happened</span><span class="c"><span class="num">④</span>happening</span><span class="c"><span class="num">⑤</span>has happened</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③  have happened</span></div>
+  <div class="ans-detail"><b>조동사 + have + p.p.</b>는 과거 사건에 대한 추측·후회·의아함을 표현.<br>
+  <br>
+  <b>주요 패턴 정리 (반드시 암기):</b><br>
+  ▸ <b>could have p.p.</b> — "~했을 수도 있다"(가능성) / "어떻게 ~할 수 있었을까?"(의아함)<br>
+  ▸ <b>must have p.p.</b> — "~했음에 틀림없다"(강한 추측)<br>
+  ▸ <b>may/might have p.p.</b> — "~했을지도 모른다"(약한 추측)<br>
+  ▸ <b>should have p.p.</b> — "~했어야 했다"(과거 후회)<br>
+  ▸ <b>cannot have p.p.</b> — "~했을 리 없다"(강한 부정 추측)<br>
+  <br>
+  본문은 "How could all this have happened ~?" = "어떻게 이런 일이 일어날 수 있었을까?"라는 <b>지나간 사건에 대한 의아함·놀라움</b>의 표현.<br>
+  <br>
+  ▸ ① happen 동사원형 — could 다음에는 have p.p. 형태가 와야 과거 의미<br>
+  ▸ ② happened 과거형 — could 뒤에는 동사원형 또는 have p.p.<br>
+  ▸ ④ happening 분사 — 비문<br>
+  ▸ ⑤ has happened 현재완료 — 조동사 다음에 has 불가</div>
+  <div class="note"><b>🔑 조동사 + 동사원형 vs 조동사 + have p.p.</b><br>
+  • He could be tired. (지금 피곤할 수도 있다 — 현재 추측)<br>
+  • He could have been tired. (피곤했었을 수도 있다 — 과거 추측)</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">5</span><span class="type-tag grammar">어법</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">어법 오류 개수 세기 (5점 고배점)</span><span class="q-pts">5점</span></div>
+  <div class="q-prompt"><b>5.</b> 다음 글에서 <b>어법상 옳지 않은 것</b>의 개수는?</div>
+  <div class="q-passage">Although I <u>ⓐ have done</u> many earthquake drills in school, I <u>ⓑ had never thought</u> I'd experience a real earthquake. I still <u>ⓒ get scared</u> when I remember that night. I can't forget the panic <u>ⓓ I felt</u> when the furniture <u>ⓔ was shaking</u>. I realized that I should <u>ⓕ be prepared</u> for the next earthquake.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>1개</span><span class="c"><span class="num">②</span>2개</span><span class="c"><span class="num">③</span>3개</span><span class="c"><span class="num">④</span>4개</span><span class="c"><span class="num">⑤</span>5개</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">①  1개  (ⓐ만 오류)</span></div>
+  <div class="ans-detail"><b>각 밑줄 검증:</b><br>
+  ▸ ⓐ 🚨 <b>have done → had done</b>. 주절의 "had never thought"(과거완료)에 시제 일치 필요. Although가 이끄는 부사절도 과거완료여야 함. 본문은 "I had done many earthquake drills"로 정확하게 과거완료 사용.<br>
+  ▸ ⓑ ✓ had never thought — 과거완료 + 부사 never 위치 정확.<br>
+  ▸ ⓒ ✓ get scared — get + 형용사(scared) = "무서워진다"의 상태 변화.<br>
+  ▸ ⓓ ✓ I felt — 관계대명사 that/which 생략된 구조. "the panic (that) I felt"로 panic을 수식.<br>
+  ▸ ⓔ ✓ was shaking — 과거진행. 가구가 흔들리고 있는 상태.<br>
+  ▸ ⓕ ✓ be prepared — should + be + p.p. (수동, 의무).</div>
+  <div class="trap"><b>⚠️ 함정 패턴.</b><br>
+  • have done(현재완료) ↔ had done(과거완료) — 한 글자 차이로 시제가 완전히 다름<br>
+  • Although가 이끄는 부사절은 주절 시제와 일치해야 자연스러움</div>
+  <div class="note"><b>🔑 시제 일치 검증법.</b> 주절의 시제를 먼저 파악 → 부사절·관계사절도 같은 차원의 시제로 일치. "had thought"(과거보다 더 과거) ↔ 부사절도 "had done"(같은 차원).</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">6</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">관계대명사 계속적 용법 — which (사물 / 앞 명사 수식)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>6.</b> 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+  <div class="q-passage">I should be prepared for the next earthquake, <span class="q-blank">______</span> can occur at any time.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>that</span><span class="c"><span class="num">②</span>who</span><span class="c"><span class="num">③</span>which</span><span class="c"><span class="num">④</span>what</span><span class="c"><span class="num">⑤</span>where</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③  which</span></div>
+  <div class="ans-detail"><b>세 가지 단서로 정답 확정:</b><br>
+  ① 선행사: <b>the next earthquake</b> (사물)<br>
+  ② 관계사절 안에서 주어 역할 (can occur의 주어)<br>
+  ③ <b>콤마 + 관계대명사</b> = 계속적 용법<br>
+  <br>
+  ▸ ① that ✗ — 계속적 용법(콤마 뒤)에서는 that 사용 불가<br>
+  ▸ ② who ✗ — earthquake는 사물<br>
+  ▸ ③ ✓ which — 사물 + 주격 + 계속적 용법 가능<br>
+  ▸ ④ what ✗ — 선행사를 포함하므로 선행사가 따로 있는 자리에 사용 불가<br>
+  ▸ ⑤ where ✗ — 관계부사로 장소 선행사를 받음. 주어 역할 못 함.<br>
+  <br>
+  <b>계속적 용법 의미:</b> "다음 지진을 대비해야 한다, <u>그것은 언제든 일어날 수 있다</u>." 콤마는 "추가 정보 부가" 신호.</div>
+  <div class="trap"><b>⚠️ Q2와 Q6 비교:</b><br>
+  • Q2: "It was my dad, <b>who</b>..." (사람 선행사)<br>
+  • Q6: "the next earthquake, <b>which</b>..." (사물 선행사)<br>
+  → 둘 다 콤마 뒤 계속적 용법이지만 선행사 종류로 who/which 결정.</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">7</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">관계대명사 목적격 생략 — the panic (that) I felt</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>7.</b> 다음 문장에서 <b>생략된 관계대명사</b>를 정확히 표시한 것은?</div>
+  <div class="q-passage">I can't forget the panic I felt when the furniture was shaking.</div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>the panic <b>(that)</b> I felt — 목적격 관계대명사 생략</li>
+    <li><span class="num">②</span>the panic <b>(who)</b> I felt — 사람 선행사이므로 who</li>
+    <li><span class="num">③</span>the panic <b>(what)</b> I felt — 선행사 포함 관계대명사</li>
+    <li><span class="num">④</span>the panic I felt <b>(when)</b> — 관계부사 생략</li>
+    <li><span class="num">⑤</span>관계대명사가 생략된 곳이 없음</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">①  the panic (that) I felt</span></div>
+  <div class="ans-detail"><b>관계대명사 생략의 조건:</b><br>
+  ① 목적격 관계대명사 (that, which, whom)는 자주 생략됨<br>
+  ② 주격 관계대명사는 일반적으로 생략 불가 (단, "주격 + be동사"는 함께 생략 가능)<br>
+  <br>
+  <b>본문 분석:</b><br>
+  "the panic I felt" = "the panic (that) I felt(내가 느낀 그 공포)"<br>
+  ▸ 선행사: the panic (사물·추상)<br>
+  ▸ 관계사절: (that) I felt — felt의 <b>목적어</b> 역할 (목적격)<br>
+  ▸ 따라서 that 또는 which가 생략됨.<br>
+  <br>
+  ▸ ② who ✗ — 사람 선행사 아님<br>
+  ▸ ③ what ✗ — 본문에 선행사(panic)가 있으므로 what 불가<br>
+  ▸ ④ when ✗ — when은 the time 같은 시간 선행사일 때 가능. felt의 목적어 자리는 관계대명사.<br>
+  <br>
+  <b>※ 같은 구조 본문 예:</b> "the panic I felt" = "the panic which/that I felt"</div>
+  <div class="note"><b>🔑 관계대명사 생략 판별법.</b><br>
+  ① 명사 + 주어 + 동사 패턴이면 그 사이에 목적격 관계대명사 생략<br>
+  ② 명사 + 동사 패턴이면 주격 관계대명사 (생략 불가)<br>
+  • the book I read = the book (that) I read ✓<br>
+  • the book is on the desk = the book (which) is on the desk ✗ (생략 불가)</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">8</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">to부정사 vs 동명사 — start/begin · avoid · seem</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>8.</b> 다음 밑줄 친 부분 중 <b>어법상 어색한</b> 것은?</div>
+  <div class="q-passage">We started <u>① crawling</u> toward the door. The shaking seemed <u>② to stop</u>. We went to an open space <u>③ to avoid</u> more falling pieces. After that night, I began <u>④ to take</u> earthquake drills seriously. I should be prepared <u>⑤ for prepare</u> for the next earthquake.</div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">⑤  for prepare  →  for the next earthquake</span></div>
+  <div class="ans-detail">⑤번 자체가 비문. 본문은 "be prepared <b>for + 명사</b>" 구조 (~을 대비하다). prepare는 동사이므로 전치사 for 다음에 올 수 없음. 명사가 와야 함.<br>
+  <br>
+  ▸ ① ✓ start + Ving — start는 to부정사·동명사 둘 다 가능. crawling 정확.<br>
+  ▸ ② ✓ seem + to V — seem은 to부정사만 받음. to stop 정확.<br>
+  ▸ ③ ✓ to avoid — 목적의 to부정사 ("피하기 위해").<br>
+  ▸ ④ ✓ begin + to V — begin도 to부정사·동명사 둘 다 가능.<br>
+  ▸ ⑤ 🚨 for prepare ✗ → "for the next earthquake" (전치사 + 명사) 또는 "be prepared for + 명사" 사용.<br>
+  <br>
+  <b>be prepared for + 명사:</b><br>
+  ▸ be prepared for the test (시험을 대비하다)<br>
+  ▸ be prepared for the worst (최악을 대비하다)<br>
+  ▸ <b>be prepared for the next earthquake</b> (다음 지진을 대비하다) ← 본문</div>
+  <div class="note"><b>🔑 to부정사·동명사를 모두 받는 동사:</b><br>
+  start / begin / continue / like / love / hate / prefer / hesitate<br>
+  → 의미 차이 거의 없음. 두 형태 모두 정답.<br>
+  <br>
+  <b>🔑 to부정사만 받는 동사:</b> seem, appear, tend, hope, want, decide, plan, agree, refuse + <b>to V</b><br>
+  <b>🔑 동명사만 받는 동사:</b> enjoy, finish, keep, mind, avoid, give up, suggest + <b>Ving</b></div></div></details>
+</article>
+
+
+<!-- =============== ⓑ 대명사 PRONOUN (3문항) =============== -->
+<div class="section-head" data-section-type="pronoun" data-section-marker>
+  <div class="num-line">SECTION B · 대명사 · PRONOUN · 3 ITEMS</div>
+  <h2>대명사 <span class="kor">It·this·that·what이 가리키는 대상 추적 + 인용문 안 대명사</span></h2>
+  <p class="desc">본문에 등장하는 대명사·지시어가 가리키는 대상 정확 식별. 특히 인용문 안에서 화자에 따라 변하는 인칭 대명사 주의.</p>
+</div>
+
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">9</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">It이 가리키는 대상 — 강조구문 vs 일반 대명사</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>9.</b> 다음 밑줄 친 두 개의 <b>It</b>이 가리키는 것을 바르게 짝지은 것은?</div>
+  <div class="q-passage">My mom's cell phone rang. <u>(A) It</u> was my dad, who was coming home from work. He shouted, "<u>(B) It</u> stopped! Get out of the building!"</div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>(A) 휴대폰 / (B) 빌딩</li>
+    <li><span class="num">②</span>(A) 휴대폰 / (B) 흔들림(지진)</li>
+    <li><span class="num">③</span>(A) 전화를 건 사람 / (B) 흔들림(지진)</li>
+    <li><span class="num">④</span>(A) 엄마 / (B) 빌딩</li>
+    <li><span class="num">⑤</span>(A) 아빠 / (B) 흔들림(지진)</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③  (A) 전화를 건 사람  /  (B) 흔들림(지진)</span></div>
+  <div class="ans-detail"><b>(A) "It was my dad, who..."</b> 분석:<br>
+  이 구문은 "It is/was ~ who ..." 형태로, "전화를 건 사람은 다름 아닌 아빠였다"는 <b>강조구문</b>. 즉 It은 "전화를 건 사람"을 가리킴.<br>
+  ※ 단순히 "휴대폰"을 가리킨다면 의미가 어색해짐 ("휴대폰 = 우리 아빠" 비문).<br>
+  <br>
+  <b>(B) "It stopped!"</b> 분석:<br>
+  아빠의 발언 시점에서 가장 자연스러운 지시 대상은 <b>지진의 흔들림(shaking)</b>. 본문 첫 부분 "the shaking seemed to stop"과 호응. 아빠는 라디오·뉴스로 흔들림이 멈췄음을 듣고 외친 것.<br>
+  <br>
+  ▸ ② "휴대폰" — A는 강조구문이므로 "전화 건 사람"이 자연스러움<br>
+  ▸ ④⑤ — 엄마/아빠가 (A)에 들어가는 건 가능하나 ⑤는 "아빠 = 아빠"라는 동어반복</div>
+  <div class="note"><b>🔑 It is/was ~ who/that 구문 두 가지 해석.</b><br>
+  ① 강조구문: It is X who/that ~ (다름 아닌 X가)<br>
+  ② 단순 분리: It은 비인칭 주어, who/that 절은 부가 설명<br>
+  → 본문의 "It was my dad, who..."는 콤마가 있으므로 사실상 단순 분리 + 부가 설명. 의미적으로는 "전화 건 사람은 우리 아빠였다"의 강조 효과.</div></div></details>
+</article>
+
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">10</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">인용문 속 인칭 대명사 — I/you 관점 전환</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>10.</b> 다음 인용문에서 밑줄 친 <b>I</b>와 <b>you</b>가 각각 가리키는 사람은?</div>
+  <div class="q-passage">My mom asked, "Where are <u>you</u>? Are <u>you</u> okay?" My dad answered, "Don't worry. <u>I</u>'m okay. <u>I</u> was driving home when the shaking started."</div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>I = 엄마 / you = 글쓴이</li>
+    <li><span class="num">②</span>I = 아빠 / you = 엄마</li>
+    <li><span class="num">③</span>I = 아빠 / you = 아빠</li>
+    <li><span class="num">④</span>I = 글쓴이 / you = 아빠</li>
+    <li><span class="num">⑤</span>I = 엄마 / you = 아빠</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">②  I = 아빠  /  you = 엄마</span></div>
+  <div class="ans-detail"><b>인용문에서 인칭 대명사는 화자/청자 기준으로 결정:</b><br>
+  ▸ "Where are <b>you</b>?" — 화자: 엄마, 청자: 아빠 → you = <b>아빠</b>를 가리킴<br>
+  ▸ "I'm okay" — 화자: 아빠 → I = <b>아빠</b><br>
+  ▸ "I was driving home" — 화자: 아빠 → I = <b>아빠</b><br>
+  <br>
+  <b>"인용문 안 대명사 = 화자 시점"이 핵심:</b><br>
+  • 큰따옴표 안의 I는 항상 그 발화의 <b>화자</b>를 가리킴<br>
+  • 큰따옴표 안의 you는 그 발화의 <b>청자</b>를 가리킴<br>
+  → 발화자가 누구인지(asked/answered/said 다음 사람)를 정확히 추적해야 함.</div>
+  <div class="trap"><b>⚠️ 함정.</b> 글쓴이(서술자)가 등장하면 자동으로 I = 글쓴이로 착각하기 쉬움. 그러나 <b>인용문 안에서는 서술자가 아닌 인용문 화자가 I</b>. 본문에서 큰따옴표 안 I는 모두 엄마 또는 아빠.</div></div></details>
+</article>
+
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">11</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">that night가 가리키는 시점 + the panic의 지칭</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>11.</b> 다음 글의 밑줄 친 <b>that night</b>이 가리키는 것은?</div>
+  <div class="q-passage">I still get scared when I remember <u>that night</u>. I can't forget the panic I felt when the furniture was shaking and things were falling to the floor. After that night, I began to take earthquake drills seriously.</div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>아빠가 일에서 돌아오던 밤</li>
+    <li><span class="num">②</span>학교에서 지진 훈련을 한 어떤 밤</li>
+    <li><span class="num">③</span>지진을 처음 경험한 그날 밤 (2월의 어느 밤)</li>
+    <li><span class="num">④</span>가구가 모두 새것이었던 밤</li>
+    <li><span class="num">⑤</span>다음 지진이 일어날 미래의 밤</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③  지진을 처음 경험한 그날 밤</span></div>
+  <div class="ans-detail"><b>that night가 가리키는 시점 단서:</b><br>
+  ① 본문 1(파트1): "<b>One night in February</b>, after I had gone to bed, an earthquake hit." — 2월의 어느 밤 지진 발생.<br>
+  ② 본문 4: "I can't forget <b>the panic</b> I felt when the furniture was shaking" — 가구가 흔들린 그날 밤의 공포.<br>
+  ③ 본문 1: "<b>Since it was my first time</b> experiencing an earthquake" — 그것이 처음이었음.<br>
+  → that night는 글 전체의 핵심인 "그 지진의 밤"을 지시.<br>
+  <br>
+  ▸ ① 아빠는 "그날 밤" 그 사건의 일부지만, that night가 아빠의 귀가만 가리키지는 않음<br>
+  ▸ ② 지진 훈련을 한 밤이 아니라 <b>실제 지진</b>이 일어난 밤<br>
+  ▸ ④ 본문에 가구가 새것이라는 정보 없음<br>
+  ▸ ⑤ that night는 과거 지시 (현재완료 remember의 대상)</div>
+  <div class="note"><b>🔑 지시어 추적 원칙.</b> that, this, these, those 등은 <b>가장 가까운 명백한 명사·사건</b>을 우선 지시. 단, 글의 주제·중심 사건이 더 강한 단서면 그것을 따름.</div></div></details>
+</article>
+
+
+<!-- =============== ⓒ 독해 READING (2문항) =============== -->
+<div class="section-head" data-section-type="reading" data-section-marker>
+  <div class="num-line">SECTION C · 독해 · READING · 2 ITEMS</div>
+  <h2>독해 <span class="kor">본문 일치 + 글쓴이의 깨달음(요지)</span></h2>
+  <p class="desc">본문 사실 정확 이해 + 글쓴이의 변화·깨달음 추론.</p>
+</div>
+
+<article class="q-card" data-type="reading">
+  <div class="q-meta"><span class="q-num">12</span><span class="type-tag reading">독해</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">본문 내용 일치 (T/F 종합)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>12.</b> 본문의 내용과 <b>일치하지 않는</b> 것은?</div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>아빠는 일에서 집으로 오는 길에 흔들림이 시작되었다.</li>
+    <li><span class="num">②</span>아빠는 가족에게 계단으로 건물에서 나오라고 했다.</li>
+    <li><span class="num">③</span>아빠는 운전 중이었지만 즉시 차를 갓길에 세웠다.</li>
+    <li><span class="num">④</span>건물 일부가 떨어져 여러 자동차를 부쉈다.</li>
+    <li><span class="num">⑤</span>글쓴이는 학교에서 지진 훈련을 한 적이 한 번도 없었다.</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">⑤</span></div>
+  <div class="ans-detail">본문 결정적 단서: "<b>Although I had done many earthquake drills in school</b>, I had never thought I'd experience a real earthquake." → 학교에서 <b>여러 번</b> 지진 훈련을 했음. ⑤는 정반대.<br>
+  <br>
+  ▸ ① ✓ "I was driving home when the shaking started"<br>
+  ▸ ② ✓ "Take the stairs! Don't take the elevator!"<br>
+  ▸ ③ ✓ "But I pulled over immediately"<br>
+  ▸ ④ ✓ "Parts of buildings had fallen and had smashed several cars"<br>
+  ▸ ⑤ 🚨 <b>many earthquake drills</b>(여러 번) → "한 번도 없었다"는 정반대.<br>
+  <br>
+  <b>핵심 함정:</b> Although(~에도 불구하고)가 도입하는 부사절이 사실 정보를 담고 있음. "지진 훈련은 많이 했음에도 실제 지진을 겪을 줄 몰랐다"의 구조.</div></div></details>
+</article>
+
+<article class="q-card" data-type="reading">
+  <div class="q-meta"><span class="q-num">13</span><span class="type-tag reading">독해</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">글쓴이의 깨달음(요지)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>13.</b> 본문에 나타난 글쓴이의 <b>깨달음</b>으로 가장 적절한 것은?</div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>지진 훈련은 학교에서만 하면 충분하다.</li>
+    <li><span class="num">②</span>지진은 다시는 일어나지 않을 것이다.</li>
+    <li><span class="num">③</span>지진은 언제든 일어날 수 있으므로 항상 대비해야 한다.</li>
+    <li><span class="num">④</span>지진 발생 시 엘리베이터를 이용하는 것이 빠르다.</li>
+    <li><span class="num">⑤</span>가족과 떨어져 있을 때 지진이 일어나면 위험하다.</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③</span></div>
+  <div class="ans-detail"><b>본문 결정적 문장 (글의 결론):</b><br>
+  "I realized that <b>I should be prepared for the next earthquake, which can occur at any time</b>."<br>
+  → "다음 지진을 대비해야 한다, 그 지진은 <b>언제든</b> 일어날 수 있다"는 깨달음.<br>
+  <br>
+  <b>글쓴이 변화 추적:</b><br>
+  ① 처음: "지진 훈련을 많이 했지만 실제 지진은 안 일어날 줄 알았다"(안일한 태도)<br>
+  ② 실제 경험: 거울 깨짐, 가구 흔들림, 빌딩 부서짐 → 충격<br>
+  ③ 깨달음: "지진 훈련을 진지하게 받기 시작했다"(I began to take earthquake drills seriously)<br>
+  ④ 결론: "언제든 일어날 수 있는 지진에 대비"<br>
+  <br>
+  ▸ ① 정반대 — "학교에서만"은 본문 의도와 다름. 글쓴이는 평소에도 진지하게 대비.<br>
+  ▸ ② 정반대 — "can occur at any time"<br>
+  ▸ ④ 정반대 — "Don't take the elevator"<br>
+  ▸ ⑤ 본문에 그런 메시지 없음 (가족 관련은 부수적 정보)</div></div></details>
+</article>
+
+
+<!-- =============== ⓓ 문맥 CONTEXT (3문항) =============== -->
+<div class="section-head" data-section-type="context" data-section-marker>
+  <div class="num-line">SECTION D · 문맥 · CONTEXT · 3 ITEMS</div>
+  <h2>문맥 <span class="kor">흐름·연결어·문장 삽입</span></h2>
+  <p class="desc">본문 단락 내·단락 간 흐름 파악. 시간·인과·대조 연결어 정확 사용.</p>
+</div>
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">14</span><span class="type-tag context">문맥</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">대조 접속사 — Although</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>14.</b> 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+  <div class="q-passage"><span class="q-blank">______</span> I had done many earthquake drills in school, I had never thought I'd experience a real earthquake.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>Because</span><span class="c"><span class="num">②</span>Since</span><span class="c"><span class="num">③</span>If</span><span class="c"><span class="num">④</span>Although</span><span class="c"><span class="num">⑤</span>When</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">④  Although  (~에도 불구하고)</span></div>
+  <div class="ans-detail"><b>두 절의 의미 관계:</b><br>
+  • 부사절: "지진 훈련을 많이 했다" (긍정적 사실)<br>
+  • 주절: "실제 지진은 경험할 줄 몰랐다" (그 사실의 한계)<br>
+  → <b>대조·양보 관계</b>이므로 Although(~에도 불구하고) 적합.<br>
+  <br>
+  ▸ ① Because = ~이기 때문에 (인과) — "훈련했기 때문에 경험할 줄 몰랐다"는 비논리적<br>
+  ▸ ② Since = ~이므로 (이유) — Because와 같은 인과<br>
+  ▸ ③ If = ~한다면 (조건)<br>
+  ▸ ④ ✓ Although = ~에도 불구하고 (양보, 대조)<br>
+  ▸ ⑤ When = ~할 때 (시간)<br>
+  <br>
+  <b>Although vs Even though vs Though:</b><br>
+  • Although (가장 격식)<br>
+  • Even though (강조)<br>
+  • Though (격식 낮음, 문장 끝에서 부사로도 사용)<br>
+  → 의미 거의 동일. 본문은 Although.</div></div></details>
+</article>
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">15</span><span class="type-tag context">문맥</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">문장 삽입 위치 (4점)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>15.</b> 다음 문장이 들어갈 위치로 가장 적절한 곳은?</div>
+  <div class="q-box"><b>But I pulled over immediately.</b></div>
+  <div class="q-passage">My dad answered, "Don't worry. I'm okay. <b>(①)</b> I was driving home when the shaking started. <b>(②)</b> I'm listening to the radio right now <b>(③)</b> to find out what's going on. <b>(④)</b> Where are you all? <b>(⑤)</b> Stay safe."</div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">②</span></div>
+  <div class="ans-detail"><b>핵심 단서:</b> 삽입 문장 "But I pulled over immediately(그러나 나는 즉시 차를 갓길에 댔다)"는 <b>"운전 중이었음에도 불구하고"</b>라는 대조의 But을 사용.<br>
+  <br>
+  <b>흐름 분석:</b><br>
+  • "I was driving home when the shaking started" — 운전 중 흔들림 시작<br>
+  • <b>★ But I pulled over immediately</b> — <u>그러나 즉시 차를 갓길에 댐</u> ← ②자리<br>
+  • "I'm listening to the radio right now to find out what's going on" — 차에 멈춰 라디오 청취<br>
+  <br>
+  → 운전 중 흔들림 시작 → <b>차를 멈춤</b> → 차에서 라디오 청취 흐름이 자연스러움. ②자리에 들어가야 "운전 → 멈춤 → 라디오"의 시간·인과 흐름이 완성됨.<br>
+  <br>
+  <b>① 부적합:</b> "I'm okay" 직후이므로 운전·갓길 정보가 도입 전. ①에 들어가면 운전 시작 전에 멈춰 있는 셈.<br>
+  <b>③④⑤ 부적합:</b> 라디오 청취 이후라면 갓길에 댄 시점이 너무 늦음.</div>
+  <div class="trap"><b>⚠️ 단서 재확인:</b> But(대조) + immediately(즉시) → "흔들림 시작 직후 즉각 행동"이라는 시간 인접성. 따라서 "운전 시작" 직후, "라디오 청취" 직전 위치 = ②.</div></div></details>
+</article>
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">16</span><span class="type-tag context">문맥</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">흐름상 어색한 문장</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>16.</b> 다음 글에서 <b>흐름상 어색한</b> 문장은?</div>
+  <div class="q-passage">We nervously made our way down the stairs and outside. <span class="num">①</span>I looked around. <span class="num">②</span>Parts of buildings had fallen and had smashed several cars. <span class="num">③</span>The mall near our apartment had a big sale on summer clothes. <span class="num">④</span>We went to an open space to avoid more falling pieces. <span class="num">⑤</span>How could all this have happened in a few minutes?</div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③</span></div>
+  <div class="ans-detail">글의 주제: <b>지진 직후 건물 밖으로 대피한 충격적인 상황</b>.<br>
+  <br>
+  ▸ ①②④⑤는 모두 지진 직후 거리 풍경·대피·놀라움을 묘사하는 흐름.<br>
+  ▸ ③ "근처 쇼핑몰에서 여름 옷 세일을 크게 했다"는 <b>쇼핑·일상</b>에 관한 정보로 지진 대피 상황과 무관.<br>
+  <br>
+  <b>흐름상 어색한 문장 판별:</b><br>
+  ① 시간·장소가 본문 흐름과 다름 (③은 일반적 쇼핑 정보)<br>
+  ② 주제와 무관한 정보 (지진 대피 vs 옷 세일)<br>
+  ③ 같은 단어(near our apartment)가 등장해도 <b>맥락이 다름</b><br>
+  <br>
+  <b>각 선지 확인:</b><br>
+  ▸ ① 거리를 둘러보는 동작 (대피 상황 자연)<br>
+  ▸ ② 무너진 건물 묘사 (충격적 광경)<br>
+  ▸ ③ 🚨 쇼핑몰 세일 (지진과 무관)<br>
+  ▸ ④ 안전한 빈 공간으로 이동 (대피 행동)<br>
+  ▸ ⑤ 글쓴이의 놀라움 표현</div>
+  <div class="trap"><b>⚠️ 함정:</b> ③에 "our apartment"라는 본문 어휘가 등장하여 본문과 연결된 듯 보이지만, 본문 맥락은 "지진 대피"이고 ③은 "쇼핑몰 세일" — <b>같은 장소, 다른 맥락</b>.</div></div></details>
+</article>
+<!-- =============== ⓔ 빈칸 CLOZE (7문항) =============== -->
+<div class="section-head" data-section-type="cloze" data-section-marker>
+  <div class="num-line">SECTION E · 빈칸 · CLOZE · 7 ITEMS</div>
+  <h2>빈칸 <span class="kor">단어·구·이중 빈칸 종합</span></h2>
+  <p class="desc">본문 핵심 어휘·표현 빈칸 종합. 부사·구동사·시간 표현·요약문 빈칸 모두 다룸.</p>
+</div>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">17</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">부사 — urgently (다급하게)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>17.</b> 다음 빈칸에 들어갈 부사로 가장 알맞은 것은?</div>
+  <div class="q-passage">"Where are you? Are you okay?" my mom asked <span class="q-blank">______</span>.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>quietly</span><span class="c"><span class="num">②</span>politely</span><span class="c"><span class="num">③</span>urgently</span><span class="c"><span class="num">④</span>kindly</span><span class="c"><span class="num">⑤</span>peacefully</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③  urgently  (다급하게)</span></div>
+  <div class="ans-detail"><b>맥락:</b> 지진 상황에서 아빠의 안전을 묻는 엄마의 말투. "Where are you? Are you okay?"라는 <b>다급한 질문</b>이므로 urgently가 정확.<br>
+  ▸ ① quietly = 조용히 (위급 상황과 부적합)<br>
+  ▸ ② politely = 정중히 (긴급한 상황보다 격식)<br>
+  ▸ ③ ✓ urgently = 다급하게, 긴급히 (본문)<br>
+  ▸ ④ kindly = 친절하게 (위급함 표현 부족)<br>
+  ▸ ⑤ peacefully = 평화롭게 (정반대)<br>
+  <br>
+  <b>urgent 단어 가족:</b><br>
+  • urgent [형] 긴급한 → urgently [부] 긴급히<br>
+  • urgency [명] 긴급함</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">18</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">부사 — nervously (불안하게)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>18.</b> 다음 빈칸에 들어갈 단어로 가장 적절한 것은?</div>
+  <div class="q-passage">We <span class="q-blank">______</span> made our way down the stairs and outside.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>happily</span><span class="c"><span class="num">②</span>nervously</span><span class="c"><span class="num">③</span>slowly</span><span class="c"><span class="num">④</span>excitedly</span><span class="c"><span class="num">⑤</span>luckily</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">②  nervously  (불안하게, 초조하게)</span></div>
+  <div class="ans-detail"><b>맥락 단서:</b> 지진 직후 건물 안에서 밖으로 대피하는 상황. 두렵고 위험한 상황이므로 <b>nervously</b>(불안하게, 초조하게)가 가장 자연스러움.<br>
+  <br>
+  ▸ ① happily = 행복하게 (정반대)<br>
+  ▸ ② ✓ nervously = 불안하게 (본문)<br>
+  ▸ ③ slowly = 천천히 (가능하나 본문은 nervously로 심리 강조)<br>
+  ▸ ④ excitedly = 흥분하여 (긍정적 흥분이라 부적합)<br>
+  ▸ ⑤ luckily = 운 좋게도 (상황 평가 부사)<br>
+  <br>
+  <b>nervous 단어 가족:</b><br>
+  • nervous [형] 불안한, 초조한<br>
+  • nervously [부] 불안하게<br>
+  • nervousness [명] 불안<br>
+  <br>
+  <b>본문 빈출 부사 정리:</b><br>
+  • suddenly (갑자기 — 파트 1)<br>
+  • violently (격렬하게 — 파트 1)<br>
+  • urgently (다급하게)<br>
+  • nervously (불안하게)<br>
+  • immediately (즉시)<br>
+  • seriously (진지하게)</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">19</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">구동사 — pull over (차를 갓길에 대다)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>19.</b> 다음 빈칸에 공통으로 들어갈 동사로 가장 적절한 것은?</div>
+  <div class="q-passage">
+  • I was driving home when the shaking started. But I <span class="q-blank">______</span> over immediately.<br>
+  • The driver <span class="q-blank">______</span> over to the side of the road when he saw the police car.
+  </div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>got</span><span class="c"><span class="num">②</span>pulled</span><span class="c"><span class="num">③</span>turned</span><span class="c"><span class="num">④</span>came</span><span class="c"><span class="num">⑤</span>walked</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">②  pulled</span></div>
+  <div class="ans-detail"><b>pull over</b> = "차를 길 옆/갓길에 대다." 운전 중 차를 잠시 정지시키는 행위.<br>
+  ▸ 본문: "I pulled over immediately(나는 즉시 차를 갓길에 댔다)"<br>
+  <br>
+  ▸ ① got over = 극복하다 (다른 의미)<br>
+  ▸ ② ✓ pull over = 차를 갓길에 대다<br>
+  ▸ ③ turn over = 뒤집다, 넘기다<br>
+  ▸ ④ come over = 들르다, 다가오다<br>
+  ▸ ⑤ walk over = 걸어가다 (가능하지만 운전 맥락 부적합)<br>
+  <br>
+  <b>비슷한 운전 관련 구동사:</b><br>
+  • pull up = 차를 멈춰 세우다 (목적지 도착)<br>
+  • pull out = 차고에서 차를 빼내다, 끼어들다<br>
+  • pull off = 도로에서 빠져나가다<br>
+  → over는 "한쪽으로"의 뉘앙스(갓길로).</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">20</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">구동사 — find out (알아내다)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>20.</b> 다음 빈칸에 공통으로 들어갈 표현으로 가장 적절한 것은?</div>
+  <div class="q-passage">
+  • I'm listening to the radio right now to <span class="q-blank">______</span> what's going on.<br>
+  • She tried to <span class="q-blank">______</span> the truth about the accident.
+  </div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>find out</span><span class="c"><span class="num">②</span>find in</span><span class="c"><span class="num">③</span>find on</span><span class="c"><span class="num">④</span>find at</span><span class="c"><span class="num">⑤</span>find for</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">①  find out</span></div>
+  <div class="ans-detail"><b>find out</b> = "알아내다, 발견하다, 정보를 얻다." 모르던 정보를 의도적으로 알아낼 때 사용.<br>
+  ▸ 본문: "to find out <b>what's going on</b>(무슨 일이 일어나는지 알아내기 위해)"<br>
+  <br>
+  <b>find out + 명사/명사절:</b><br>
+  • find out the truth<br>
+  • find out the answer<br>
+  • find out what/how/where + S + V (간접의문문)<br>
+  → 본문은 find out + 간접의문문(what's going on).<br>
+  <br>
+  <b>비슷한 표현:</b><br>
+  • discover = 발견하다 (find out과 동의어)<br>
+  • figure out = 알아내다, 이해하다 (생각·추론으로)<br>
+  • work out = 해결하다, 풀어내다<br>
+  → 모두 "정보를 얻거나 알아내다"의 의미.</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">21</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">구동사 — get out of (~에서 나오다) (4점)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>21.</b> 다음 빈칸에 공통으로 들어갈 전치사를 바르게 짝지은 것은?</div>
+  <div class="q-passage">
+  • Get <span class="q-blank">__(A)__</span> <span class="q-blank">__(B)__</span> the building! Take the stairs!<br>
+  • Please get <span class="q-blank">__(A)__</span> <span class="q-blank">__(B)__</span> the car carefully.
+  </div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>in / for</span><span class="c"><span class="num">②</span>out / of</span><span class="c"><span class="num">③</span>off / from</span><span class="c"><span class="num">④</span>on / to</span><span class="c"><span class="num">⑤</span>up / for</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">②  out / of</span></div>
+  <div class="ans-detail"><b>get out of + 명사</b> = "~에서 나오다, ~에서 빠져나오다."<br>
+  ▸ 본문: "Get out of the building!(건물에서 나가라!)"<br>
+  ▸ get out of the car (차에서 내리다)<br>
+  <br>
+  <b>get + 전치사 정리 (3대 패턴):</b><br>
+  ▸ <b>get in/into + 명사</b> = ~ 안으로 들어가다, 차에 타다<br>
+  ▸ <b>get out of + 명사</b> = ~ 밖으로 나오다, 차에서 내리다<br>
+  ▸ <b>get on + 명사</b> = (버스·기차·자전거에) 타다<br>
+  ▸ <b>get off + 명사</b> = (버스·기차·자전거에서) 내리다<br>
+  <br>
+  <b>차종에 따른 동사 차이:</b><br>
+  • 작은 탈것 (자동차, 택시): get in / get out (몸을 굽혀 타고 내림)<br>
+  • 큰 탈것 (버스, 지하철, 비행기): get on / get off (걸어서 타고 내림)</div>
+  <div class="note"><b>🔑 본문 명령문 정리.</b><br>
+  • Get out of the building! (건물에서 나가라)<br>
+  • Take the stairs! (계단을 이용하라)<br>
+  • Don't take the elevator! (엘리베이터를 타지 마라)<br>
+  • Hurry! (서둘러라)<br>
+  → 모두 동사원형으로 시작하는 명령문 + 부정 명령(Don't + V원형).</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">22</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">표현 — take (something) seriously</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>22.</b> 다음 빈칸에 들어갈 부사로 가장 적절한 것은?</div>
+  <div class="q-passage">After that night, I began to take earthquake drills <span class="q-blank">______</span>.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>quickly</span><span class="c"><span class="num">②</span>slowly</span><span class="c"><span class="num">③</span>seriously</span><span class="c"><span class="num">④</span>kindly</span><span class="c"><span class="num">⑤</span>quietly</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③  seriously  (진지하게)</span></div>
+  <div class="ans-detail"><b>take + 명사 + seriously</b> = "~을 진지하게 받아들이다, 가볍게 여기지 않다." 가장 자주 쓰이는 표현.<br>
+  ▸ 본문 맥락: 실제 지진 경험 후 → 지진 훈련의 중요성을 깨달음 → "<b>진지하게</b> 받아들이기 시작함."<br>
+  <br>
+  ▸ ① quickly = 빠르게 (속도와 무관한 자세 표현 필요)<br>
+  ▸ ② slowly = 천천히 (자세 표현 부적합)<br>
+  ▸ ③ ✓ seriously = 진지하게<br>
+  ▸ ④ kindly = 친절하게 (지진 훈련에 친절은 부적합)<br>
+  ▸ ⑤ quietly = 조용히 (자세 표현 부적합)<br>
+  <br>
+  <b>관용 표현 — take ~ seriously:</b><br>
+  • Take it seriously. (진지하게 받아들여라.)<br>
+  • Don't take her words too seriously. (그녀의 말을 너무 진지하게 받아들이지 마.)<br>
+  • She took the warning seriously. (그녀는 그 경고를 진지하게 받아들였다.)</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">23</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">전체 문맥 빈칸 (요약문) (4점)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>23.</b> 다음은 본문의 요약문이다. 빈칸 (A)·(B)에 들어갈 말로 가장 적절한 것은?</div>
+  <div class="q-passage">After the shaking stopped, the family received a call from the father, who told them to <span class="q-blank">__(A)__</span> the building using the stairs. They went outside and saw parts of buildings <span class="q-blank">__(B)__</span>. The narrator realized the importance of taking earthquake drills seriously and being prepared for the next earthquake.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span>enter / standing tall</span>
+    <span class="c"><span class="num">②</span>leave / fallen down</span>
+    <span class="c"><span class="num">③</span>enter / fallen down</span>
+    <span class="c"><span class="num">④</span>leave / standing tall</span>
+    <span class="c"><span class="num">⑤</span>repair / built up</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">②  leave  /  fallen down</span></div>
+  <div class="ans-detail"><b>(A)</b> 본문 단서: "Get out of the building! Take the stairs!" → 건물에서 <b>나가라</b>(=leave the building).<br>
+  ▸ enter = 들어가다 (정반대)<br>
+  ▸ ✓ leave = 떠나다, 나가다<br>
+  ▸ repair = 수리하다 (맥락 무관)<br>
+  <br>
+  <b>(B)</b> 본문 단서: "Parts of buildings <b>had fallen</b> and had smashed several cars" → 건물 일부가 <b>무너져 떨어진</b> 상태(=fallen down).<br>
+  ▸ standing tall = 우뚝 서 있는 (정반대)<br>
+  ▸ ✓ fallen down = 무너진, 떨어진<br>
+  ▸ built up = 세워진 (정반대)<br>
+  <br>
+  → (A) leave + (B) fallen down 조합이 정확.<br>
+  <br>
+  <b>본문 → 요약문 변환 패턴:</b><br>
+  • Get out of = leave<br>
+  • Parts had fallen = parts (had) fallen down (분사 단축)<br>
+  • should be prepared = importance of being prepared</div></div></details>
+</article>
+
+
+<!-- =============== ⓕ 어휘·숙어 VOCAB (5문항) =============== -->
+<div class="section-head" data-section-type="vocab" data-section-marker>
+  <div class="num-line">SECTION F · 어휘·숙어 · VOCAB · 5 ITEMS</div>
+  <h2>어휘·숙어 <span class="kor">동의어·반의어·영영풀이·단어 가족·구동사</span></h2>
+  <p class="desc">본문 핵심 어휘·숙어 종합. 영영풀이·반의어·단어 가족·구동사 다룸.</p>
+</div>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">24</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">영영풀이 — drill (반복 훈련)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>24.</b> 다음 영영풀이가 가리키는 단어로 가장 알맞은 것은?</div>
+  <div class="q-box">a way of practicing something many times so that you can do it well in a real situation</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>drill</span><span class="c"><span class="num">②</span>shaking</span><span class="c"><span class="num">③</span>panic</span><span class="c"><span class="num">④</span>furniture</span><span class="c"><span class="num">⑤</span>elevator</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">①  drill  (반복 훈련, 연습)</span></div>
+  <div class="ans-detail"><b>영영풀이 분석:</b> "실제 상황에서 잘할 수 있도록 무언가를 여러 번 연습하는 방법" → <b>drill(훈련, 연습)</b>의 정확한 정의.<br>
+  ▸ 본문: "earthquake drill(지진 훈련)"<br>
+  ▸ 본문: "I had done many earthquake drills in school"<br>
+  <br>
+  ▸ ① ✓ drill = 반복 훈련, 연습<br>
+  ▸ ② shaking = 흔들림 (지진의 결과)<br>
+  ▸ ③ panic = 공포<br>
+  ▸ ④ furniture = 가구<br>
+  ▸ ⑤ elevator = 엘리베이터<br>
+  <br>
+  <b>drill의 다른 의미 (다의어):</b><br>
+  • 반복 훈련, 연습 ← 본문<br>
+  • 드릴, 송곳 (도구)<br>
+  → 본문 맥락은 첫 번째 의미.<br>
+  <br>
+  <b>유사 어휘:</b><br>
+  • practice = 연습 (자유로운 반복)<br>
+  • drill = 반복 훈련 (정해진 절차의 반복)<br>
+  • exercise = 운동, 연습<br>
+  • rehearsal = 리허설 (공연 사전 연습)</div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">25</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">동의어 — smash · destroy · crush</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>25.</b> 다음 밑줄 친 단어와 의미가 <b>가장 가까운</b> 것은?</div>
+  <div class="q-passage">Parts of buildings had fallen and had <u>smashed</u> several cars.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>created</span><span class="c"><span class="num">②</span>repaired</span><span class="c"><span class="num">③</span>protected</span><span class="c"><span class="num">④</span>crushed</span><span class="c"><span class="num">⑤</span>cleaned</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">④  crushed  (짓누르다, 부수다)</span></div>
+  <div class="ans-detail"><b>smash</b> = "강한 힘으로 부수다, 박살내다" → <b>crush</b>(짓눌러 부수다)와 동의어. 둘 다 강한 충격으로 무언가를 파괴하는 의미.<br>
+  ▸ 본문: "Parts of buildings had fallen and had smashed several cars(건물 일부가 떨어져 자동차 여러 대를 부쉈다)"<br>
+  <br>
+  ▸ ① created = 만들었다 (정반대)<br>
+  ▸ ② repaired = 수리했다 (정반대)<br>
+  ▸ ③ protected = 보호했다 (정반대)<br>
+  ▸ ④ ✓ crushed = 짓눌러 부쉈다<br>
+  ▸ ⑤ cleaned = 청소했다 (다른 의미)<br>
+  <br>
+  <b>"부수다" 동의어 그룹:</b><br>
+  • smash — 강한 힘으로 박살내기 (유리·자동차 등)<br>
+  • crush — 짓눌러 부수기 (위에서 누르기)<br>
+  • break — 일반적 부수기<br>
+  • destroy — 완전히 파괴<br>
+  • wreck — 망가뜨리다<br>
+  → 본문은 떨어진 건물 잔해가 차를 짓누른 상황 → smash/crush 모두 자연스러움.</div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">26</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">단어 가족 — prepare / prepared / preparation / preparing (4점)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>26.</b> 다음 빈칸에 들어갈 단어 가족(word family) 짝짓기가 옳지 <u>않은</u> 것은?</div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>(동사) <b>prepare</b> — to make something ready for use</li>
+    <li><span class="num">②</span>(명사) <b>preparation</b> — the process of getting ready</li>
+    <li><span class="num">③</span>(형용사) <b>prepared</b> — ready for something that will happen</li>
+    <li><span class="num">④</span>(부사) <b>preparedly</b> — in a way of getting ready</li>
+    <li><span class="num">⑤</span>(과거분사) <b>prepared</b> — used after "be" to form passive (e.g., be prepared)</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">④</span></div>
+  <div class="ans-detail">④ <b>preparedly</b>는 표준 영어에서 거의 사용되지 않는 단어. "준비된 방식으로"라는 부사 형태가 정상적으로 존재하지 않음.<br>
+  <br>
+  <b>prepare 단어 가족 정리:</b><br>
+  ▸ prepare [동] 준비하다 ✓<br>
+  ▸ preparation [명] 준비 ✓<br>
+  ▸ prepared [형/p.p.] 준비된 ✓<br>
+  ▸ preparing [현재분사/동명사] 준비하고 있는 / 준비하는 것<br>
+  ▸ preparedly [부] 🚨 표준 어휘 아님 — 잘 쓰이지 않음<br>
+  <br>
+  <b>관련 형용사 형태:</b><br>
+  • preparatory [형] 준비의, 예비의 (예: preparatory school = 예비학교)<br>
+  → 부사 형태가 필요하면 "in preparation" 같은 명사구를 사용.<br>
+  <br>
+  <b>본문 빈출 단어 가족:</b><br>
+  ▸ <b>prepare/prepared/preparation</b> — be prepared for the next earthquake<br>
+  ▸ realize/realization — I realized that...<br>
+  ▸ react/reaction — I didn't know how to react<br>
+  ▸ avoid/avoidable/avoidance — to avoid more falling pieces</div>
+  <div class="note"><b>🔑 -ed/-ing 형용사 vs -ly 부사 구별:</b><br>
+  • prepared (형용사, "준비된") — be prepared, well-prepared, fully prepared<br>
+  • preparing (동명사/분사, "준비하고 있는") — preparing food, the preparing process<br>
+  • preparedly (?) — 거의 사용 X. 부사가 필요하면 "with preparation"이나 다른 부사 사용.</div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">27</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">반의어 — nervously ↔ calmly</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>27.</b> 다음 밑줄 친 단어와 의미가 <b>가장 반대</b>인 것은?</div>
+  <div class="q-passage">We <u>nervously</u> made our way down the stairs and outside.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>anxiously</span><span class="c"><span class="num">②</span>worriedly</span><span class="c"><span class="num">③</span>fearfully</span><span class="c"><span class="num">④</span>calmly</span><span class="c"><span class="num">⑤</span>tensely</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">④  calmly  (차분하게)</span></div>
+  <div class="ans-detail"><b>nervously</b>(불안하게) ↔ <b>calmly</b>(차분하게, 침착하게) — 가장 정확한 반의어.<br>
+  <br>
+  ▸ ① anxiously = 걱정스럽게 (nervously와 동의어)<br>
+  ▸ ② worriedly = 걱정하며 (nervously와 동의어)<br>
+  ▸ ③ fearfully = 두려워하며 (nervously와 동의어)<br>
+  ▸ ④ ✓ calmly = 차분하게, 침착하게 (nervously의 정반대)<br>
+  ▸ ⑤ tensely = 긴장하여 (nervously와 동의어)<br>
+  <br>
+  <b>핵심 어휘 묶음:</b><br>
+  • <b>불안하게 (≒ nervously):</b> anxiously, worriedly, fearfully, tensely, uneasily<br>
+  • <b>차분하게 (↔ nervously):</b> calmly, peacefully, quietly, coolly, composedly<br>
+  <br>
+  <b>calm 단어 가족:</b><br>
+  • calm [형/명/동] 차분한 / 평온 / 진정시키다<br>
+  • calmly [부] 차분하게<br>
+  • calmness [명] 평온, 차분함</div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">28</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">동의어 — occur · happen · take place</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>28.</b> 다음 밑줄 친 단어와 의미가 <b>가장 가까운</b> 것은?</div>
+  <div class="q-passage">I should be prepared for the next earthquake, which can <u>occur</u> at any time.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>disappear</span><span class="c"><span class="num">②</span>happen</span><span class="c"><span class="num">③</span>create</span><span class="c"><span class="num">④</span>predict</span><span class="c"><span class="num">⑤</span>prevent</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">②  happen</span></div>
+  <div class="ans-detail"><b>occur</b> = "(사건이) 일어나다, 발생하다" → <b>happen</b>(일어나다)과 동의어. occur는 happen보다 약간 격식 있는 표현.<br>
+  ▸ 본문: "the next earthquake, which can <b>occur</b> at any time(언제든 일어날 수 있는 다음 지진)"<br>
+  <br>
+  ▸ ① disappear = 사라지다 (정반대)<br>
+  ▸ ② ✓ happen = 일어나다, 발생하다<br>
+  ▸ ③ create = 만들어내다 (의도적 행위)<br>
+  ▸ ④ predict = 예측하다 (사건 발생이 아니라 예상)<br>
+  ▸ ⑤ prevent = 막다 (정반대)<br>
+  <br>
+  <b>"일어나다" 동의어 그룹:</b><br>
+  • happen — 가장 일반적, 구어체에 사용<br>
+  • occur — 격식적, 학술·뉴스에 사용<br>
+  • take place — 계획된 사건에 사용 (행사·회의)<br>
+  • come about — 어떻게 일어나게 되었는지 강조<br>
+  → 본문은 자연 재해이므로 occur(격식)가 자연스러움.</div>
+  <div class="note"><b>🔑 occur 핵심 활용:</b><br>
+  • An accident occurred. (사고가 발생했다.)<br>
+  • Earthquakes occur frequently in this region. (이 지역에서 지진이 자주 일어난다.)<br>
+  • It occurs to me that... (~라는 생각이 떠오른다.) ← 관용 표현</div></div></details>
+</article>
+
+
+<!-- =============== ⓖ 서술형 WRITING (2문항) =============== -->
+<div class="section-head" data-section-type="writing" data-section-marker>
+  <div class="num-line">SECTION G · 서술형 · WRITING · 2 ITEMS</div>
+  <h2>서술형 <span class="kor">단어 배열 영작 (★자리 + 어형 변형)</span></h2>
+  <p class="desc">목운중 시험 단골 영작 패턴. 보기 단어를 정답 어순과 다르게 무작위 배치하여 학생이 어순을 직접 재구성해야 함.</p>
+</div>
+
+<article class="q-card" data-type="writing">
+  <div class="q-meta"><span class="q-num">29</span><span class="type-tag writing">서술형</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">단어 배열 영작 — 조동사+have p.p. + 의문문 (5점 고배점)</span><span class="q-pts">5점</span></div>
+  <div class="q-prompt"><b>29.</b> 다음 우리말과 같도록 〈보기〉의 단어를 모두 사용하여 영작하시오. <span style="color:var(--muted)">(★ 자리에 들어갈 한 단어를 답안에 명시할 것)</span></div>
+  <div class="q-box"><b>어떻게 이 모든 일이 단 몇 분 안에 일어날 수 있었을까?</b></div>
+  <div class="q-passage" style="background:#FFFAF0;padding:12px 14px;border-radius:6px;border-left:3px solid #C9A227">
+  〈보기〉<br>
+  <span class="word-bank-inline">in / minutes / How / this / few / a / could / happened / have / all</span><br>
+  <span class="word-bank-note" style="color:var(--muted);font-size:12.5px">※ 정답은 ★ 자리 포함 10단어로 구성됨. 단어 어형 변형 없음.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">How could all this ★have happened in a few minutes?</span><br>★ 자리: <b>have</b></div>
+  <div class="ans-detail"><b>구문 분석:</b><br>
+  • How = 어떻게 (의문사)<br>
+  • could = ~할 수 있었을까 (조동사 의문문 도치)<br>
+  • all this = 이 모든 일 (주어, 단수 취급)<br>
+  • <b>★have happened</b> = 일어났을까 (have + p.p. 과거 추측)<br>
+  • in a few minutes = 단 몇 분 안에 (시간 부사구)<br>
+  <br>
+  <b>핵심 문법 3가지:</b><br>
+  ① <b>의문문 도치</b>: How + 조동사(could) + 주어(all this) + 본동사(have happened)<br>
+  ② <b>조동사 + have + p.p.</b>: 과거 사건에 대한 의아함<br>
+  ③ <b>in + 기간</b>: ~ 안에 (시간 한정)<br>
+  <br>
+  <b>★ 자리 함정:</b> could 다음에 바로 happened가 올 수 없음 (could happened ✗). 반드시 could + have + p.p. 형태이므로 ★자리는 <b>have</b>.<br>
+  <br>
+  <b>단어 보기 어순(섞인 순서):</b><br>
+  in / minutes / How / this / few / a / could / happened / have / all<br>
+  → 정답 어순(How could all this have happened in a few minutes)과 다르게 보기는 무작위 섞임. 학생이 직접 어순 재구성 필요.</div>
+  <div class="note"><b>🔑 영작 단계별 풀이.</b><br>
+  ① 의문사 먼저: How<br>
+  ② 조동사 도치: could<br>
+  ③ 주어: all this<br>
+  ④ have + p.p.: have happened (★자리는 have)<br>
+  ⑤ 시간 부사구: in a few minutes</div></div></details>
+</article>
+
+<article class="q-card" data-type="writing">
+  <div class="q-meta"><span class="q-num">30</span><span class="type-tag writing">서술형</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">단어 배열 영작 — Although + 과거완료 + 관계대명사 (4점)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>30.</b> 다음 우리말과 같도록 〈보기〉의 단어를 모두 사용하여 영작하시오. <span style="color:var(--muted)">(★ 자리에 들어갈 한 단어를 답안에 명시할 것)</span></div>
+  <div class="q-box"><b>나는 학교에서 많은 지진 훈련을 했었음에도 불구하고, 실제 지진을 경험하리라고는 결코 생각해 본 적이 없었다.</b></div>
+  <div class="q-passage" style="background:#FFFAF0;padding:12px 14px;border-radius:6px;border-left:3px solid #C9A227">
+  〈보기〉<br>
+  <span class="word-bank-inline">real / drills / I / had / Although / experience / a / never / thought / earthquake / done / I / earthquake / many / school / had / I'd / in</span><br>
+  <span class="word-bank-note" style="color:var(--muted);font-size:12.5px">※ 정답은 ★ 자리 포함 18단어로 구성됨 (콤마는 단어로 세지 않음). ★자리는 콤마 다음 등장하는 단어. 단어 어형 변형 없음. <b>I는 2개, had는 2개, earthquake는 2개</b> 등장함.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">Although I had done many earthquake drills in school, ★I had never thought I'd experience a real earthquake.</span><br>★ 자리: <b>I</b></div>
+  <div class="ans-detail"><b>구문 분석:</b><br>
+  • Although = ~에도 불구하고 (양보 접속사)<br>
+  • I had done = 나는 했었다 (부사절 과거완료)<br>
+  • many earthquake drills in school = 많은 지진 훈련을 학교에서<br>
+  • <b>★I had never thought</b> = 나는 결코 ~라고 생각해 본 적 없었다 (주절 과거완료)<br>
+  • I'd experience a real earthquake = 내가 실제 지진을 경험하리라는 것을 (= I would experience...)<br>
+  <br>
+  <b>핵심 문법 3가지:</b><br>
+  ① <b>Although + 과거완료</b> (부사절): 더 먼저 일어난 사건<br>
+  ② <b>주절도 과거완료</b>: 시제 일치 (had never thought)<br>
+  ③ <b>I'd</b> = I would: 과거 시점에서 본 미래 (시제 일치 후 had → would)<br>
+  <br>
+  <b>★ 자리 함정:</b> 콤마 다음에 주절이 시작하므로 주어 I가 와야 함. had/never가 먼저 오면 비문.<br>
+  <br>
+  <b>단어 보기 어순(섞인 순서):</b><br>
+  real / drills / I / had / Although / experience / a / never / thought / earthquake / done / I / earthquake / many / school / had / I'd / in<br>
+  → 정답 어순과 다르게 무작위 섞임. <b>I·had·earthquake는 각 2회</b> 등장하며, 학생이 직접 어느 위치에 어떤 단어를 넣을지 판단해야 함.</div>
+  <div class="note"><b>🔑 핵심 표현 3가지 정리.</b><br>
+  • <b>Although + S + had p.p.</b>: ~했었음에도 불구하고<br>
+  • <b>S + had never thought</b>: 결코 ~라고 생각해 본 적 없다<br>
+  • <b>I'd (= I would) + V원형</b>: ~할 것이라고 (간접화법 시제 일치 후)<br>
+  → 모두 본문 핵심 어법, 시험 단골.</div>
+  <div class="trap"><b>⚠️ 중복 단어 함정:</b> 보기에 <b>had 2개, I 2개, earthquake 2개</b>가 있음 — 정답에 모두 다른 위치에서 사용됨.<br>• had ① (부사절 had done) + had ② (주절 had thought) — 둘 다 과거완료 조동사<br>• I ① (Although절 주어) + I ② (주절 주어) — 두 절의 주어<br>• earthquake ① (earthquake drills) + earthquake ② (a real earthquake) — 두 다른 명사구<br>• I'd는 따로 등장 (= I would)</div></div></details>
+</article>
+
+
+
+<!-- 인쇄 전용 풋터 (화면에서는 숨김) -->
+<div class="print-footer">
+  목동서로영어학원 제작 · MOKDONG SEORO ENGLISH ACADEMY · 0505.co.kr
+</div>
+
+<div class="made-by">
+  <div>목동서로영어학원 — Passage-Based Practice Set</div>
+  <div class="credit">MOKDONG SEORO ENGLISH ACADEMY · 0505.co.kr</div>
+</div>
+
+<script>
+  // 유형 라벨 매핑 (인쇄 헤더용)
+  const TYPE_LABELS = {
+    all: '전체 30문항',
+    grammar: '어법 (8문항)',
+    pronoun: '대명사 (3문항)',
+    reading: '독해 (2문항)',
+    context: '문맥 (3문항)',
+    cloze: '빈칸 (7문항)',
+    vocab: '어휘·숙어 (5문항)',
+    writing: '서술형 (2문항)'
+  };
+
+  // ────────────────────────────────────────────
+  // 1. 네비게이션 탭 — 유형 필터링 (기존 기능)
+  // ────────────────────────────────────────────
+  function applyFilter(type) {
+    document.querySelectorAll('.nav-tab').forEach(t => {
+      t.classList.toggle('active', t.dataset.type === type);
+    });
+    document.querySelectorAll('.q-card').forEach(card => {
+      card.classList.toggle('hidden', !(type === 'all' || card.dataset.type === type));
+    });
+    document.querySelectorAll('.section-head[data-section-type]').forEach(sh => {
+      const sectType = sh.dataset.sectionType;
+      sh.classList.toggle('hidden', !(type === 'all' || sectType === type));
+    });
+    // 인쇄 헤더 라벨 갱신
+    const lbl = document.getElementById('printSectionLabel');
+    if (lbl) lbl.textContent = TYPE_LABELS[type] || '전체';
+  }
+
+  document.querySelectorAll('.nav-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const type = tab.dataset.type;
+      applyFilter(type);
+      const firstVisible = document.querySelector('.q-card:not(.hidden), .section-head:not(.hidden)[data-section-type]');
+      if (firstVisible && type !== 'all') {
+        const navHeight = document.querySelector('.type-nav-wrap').offsetHeight;
+        const top = firstVisible.getBoundingClientRect().top + window.scrollY - navHeight - 20;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // ────────────────────────────────────────────
+  // 2. 인쇄 버튼 — 유형 필터 적용 후 인쇄 호출
+  // ────────────────────────────────────────────
+  document.querySelectorAll('.nav-print').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const type = btn.dataset.printType;
+      // (1) 해당 유형 필터 적용 (인쇄 대상만 보이도록)
+      applyFilter(type);
+      // (2) 짧은 지연 후 인쇄 다이얼로그 호출 (DOM 갱신 시간 확보)
+      setTimeout(() => {
+        window.print();
+      }, 180);
+    });
+  });
+
+  // ────────────────────────────────────────────
+  // 3. 정답 모두 펼치기/접기 토글 (인쇄 옵션)
+  // ────────────────────────────────────────────
+  let answersOpen = false;
+  const answerToggleBtn = document.getElementById('answerToggle');
+  if (answerToggleBtn) {
+    answerToggleBtn.addEventListener('click', () => {
+      answersOpen = !answersOpen;
+      document.querySelectorAll('details.ans').forEach(d => { d.open = answersOpen; });
+      answerToggleBtn.textContent = answersOpen ? '정답 모두 접기' : '정답 모두 펼치기';
+      answerToggleBtn.classList.toggle('active', answersOpen);
+    });
+  }
+
+  // ────────────────────────────────────────────
+  // 4. 지문 펼치기/접기 토글 (인쇄 옵션)
+  // ────────────────────────────────────────────
+  const passageToggleBtn = document.getElementById('passageToggle');
+  if (passageToggleBtn) {
+    passageToggleBtn.addEventListener('click', () => {
+      const box = document.querySelector('.passage-box');
+      if (box) {
+        box.open = !box.open;
+        passageToggleBtn.classList.toggle('active', box.open);
+      }
+    });
+    // 초기 상태 동기화
+    const box = document.querySelector('.passage-box');
+    if (box && box.open) passageToggleBtn.classList.add('active');
+  }
+
+  // ────────────────────────────────────────────
+  // 5. Ctrl/Cmd + P 단축키 → 안내 메시지
+  // ────────────────────────────────────────────
+  // 사용자가 브라우저 기본 인쇄(Ctrl+P)를 사용해도 정상 동작.
+  // 현재 화면(필터링된 상태) + 펼쳐진 정답이 그대로 인쇄됨.
+</script>
+
+</body>
+</html>

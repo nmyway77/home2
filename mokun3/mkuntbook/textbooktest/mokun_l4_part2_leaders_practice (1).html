@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>지문 기반 유형별 문제 — We Are All Leaders Part 2 (목운중 L4)</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+  :root {
+    --bg: #FAF7F2;
+    --paper: #FFFFFF;
+    --ink: #1A1815;
+    --ink2: #4A4642;
+    --muted: #8B8680;
+    --line: #E5DFD5;
+    --accent: #B8763D;
+    /* 7가지 유형 색상 */
+    --t-grammar: #1F4E79;
+    --t-pronoun: #6B5BA0;
+    --t-reading: #2A8B7F;
+    --t-context: #8B4A6F;
+    --t-cloze:   #B8763D;
+    --t-vocab:   #D97A47;
+    --t-writing: #4A6B85;
+    --green: #4A8B5C;
+    --yellow: #C9A227;
+    --orange: #D97A47;
+    --red: #B53737;
+    --navy-950:#0A1E3A;
+    --navy-800:#1F3557;
+    --cream:#FAF6EE;
+    --gold:#C99B4E;
+    --gold-light:#E4C589;
+    --slate-300:#CBD5E1;
+    --slate-400:#94A3B8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { overflow-x: hidden; max-width: 100vw; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 36px 60px; }
+
+  /* HERO */
+  .hero-banner {
+    background:
+      radial-gradient(ellipse at 12% 20%, rgba(201,155,78,0.18), transparent 45%),
+      linear-gradient(135deg, var(--navy-950) 0%, var(--navy-800) 100%);
+    color: var(--cream);
+    padding: 44px 0 36px;
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; padding: 0 36px; font-family: 'Pretendard Variable', sans-serif; }
+  .brand-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 30px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 18px; color: var(--navy-950); }
+  .brand-text { font-size: 12px; letter-spacing: 0.1em; color: var(--cream); font-weight: 500; }
+  .brand-text .sub { color: var(--slate-400); font-size: 10.5px; margin-top: 2px; }
+  .home-btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); color: var(--navy-950); font-family: 'Pretendard Variable', sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 0.1em; border-radius: 999px; text-decoration: none; }
+  .home-btn svg { width: 13px; height: 13px; fill: var(--navy-950); }
+  .kicker { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-light); font-weight: 600; margin-bottom: 12px; }
+  h1.title { font-family: 'Playfair Display', serif; font-weight: 800; font-size: clamp(28px, 4.5vw, 48px); line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 8px; }
+  h1.title em { font-style: italic; color: var(--gold-light); font-weight: 400; }
+  h1.title .kor { font-family: 'Pretendard Variable', sans-serif; font-weight: 800; letter-spacing: -0.02em; display: block; margin-top: 6px; font-size: clamp(16px, 2.4vw, 22px); color: var(--gold-light); }
+  .meta-info { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .meta-tag { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid rgba(228,197,137,0.4); border-radius: 999px; font-size: 11.5px; color: var(--gold-light); font-family: 'Pretendard Variable', sans-serif; font-weight: 500; letter-spacing: 0.04em; }
+
+  /* TYPE NAV — sticky */
+  .type-nav-wrap { background: var(--navy-950); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(228,197,137,0.15); }
+  .type-nav { max-width: 1100px; margin: 0 auto; padding: 0 36px; display: flex; gap: 0; overflow-x: auto; scrollbar-width: thin; -webkit-overflow-scrolling: touch; }
+  .type-nav::-webkit-scrollbar { height: 4px; }
+  .type-nav::-webkit-scrollbar-thumb { background: rgba(228,197,137,0.3); border-radius: 2px; }
+  .nav-tab { background: transparent; border: none; color: var(--slate-400); padding: 14px 16px; cursor: pointer; font-family: 'Pretendard Variable', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; border-bottom: 3px solid transparent; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 7px; }
+  .nav-tab:hover { color: var(--gold-light); }
+  .nav-tab.active { color: var(--gold-light); border-bottom-color: var(--gold); }
+  .nav-tab .nav-count { font-family: 'JetBrains Mono', monospace; font-size: 10px; background: rgba(228,197,137,0.15); color: var(--gold-light); padding: 2px 6px; border-radius: 4px; font-weight: 700; }
+  .nav-tab.active .nav-count { background: var(--gold); color: var(--navy-950); }
+  .nav-color-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* NAV PRINT BUTTON — 각 유형 옆에 작은 인쇄 버튼 */
+  .nav-print {
+    background: transparent;
+    border: none;
+    color: var(--slate-400);
+    padding: 14px 8px 14px 4px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.18s ease;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 6px;
+    border-left: 1px dotted rgba(228,197,137,0.18);
+  }
+  .nav-print:hover { color: var(--gold-light); transform: translateY(-1px); }
+  .nav-print:active { transform: translateY(0); }
+  .nav-print svg { width: 15px; height: 15px; fill: currentColor; }
+  .nav-print[data-print-type="all"] { border-left: none; }
+
+  /* PRINT TOOLBAR — 정답 펼치기/접기 토글 + 안내문 */
+  .print-toolbar { background: linear-gradient(180deg, #FAF7F2 0%, #FFFFFF 100%); border-bottom: 1px solid var(--line); }
+  .print-toolbar-inner { max-width: 1100px; margin: 0 auto; padding: 12px 36px; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-family: 'Pretendard Variable', sans-serif; }
+  .pt-label { font-family: 'Playfair Display', serif; font-size: 11px; letter-spacing: 0.18em; color: var(--accent); font-weight: 800; text-transform: uppercase; }
+  .pt-btn { background: white; border: 1px solid var(--gold); color: var(--navy-950); padding: 6px 14px; font-family: 'Pretendard Variable', sans-serif; font-size: 12px; font-weight: 700; border-radius: 999px; cursor: pointer; transition: all 0.18s ease; }
+  .pt-btn:hover { background: var(--gold); color: white; }
+  .pt-btn.active { background: var(--navy-950); color: var(--gold-light); border-color: var(--navy-950); }
+  .pt-hint { font-size: 11.5px; color: var(--muted); font-weight: 500; line-height: 1.5; flex: 1; min-width: 200px; }
+  .pt-hint b { color: var(--ink); font-weight: 800; }
+  .pt-icon { width: 11px; height: 11px; fill: var(--accent); vertical-align: -1px; margin: 0 2px; }
+
+  /* ============================================
+     @media print — A4 용지 최적화 인쇄 스타일
+     ============================================ */
+  @media print {
+    /* A4 페이지 — 12mm 마진(종이 낭비 최소화) */
+    @page {
+      size: A4 portrait;
+      margin: 11mm 13mm 13mm 13mm;
+    }
+
+    /* 색상·배경 강제 인쇄 (브라우저 옵션 무관) */
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+
+    /* 전체 리셋 — 흰 배경, 검은 글씨 기본 */
+    html, body {
+      background: white !important;
+      color: black !important;
+      font-size: 10pt !important;
+      line-height: 1.42 !important;
+      max-width: 100% !important;
+      overflow: visible !important;
+    }
+
+    /* UI 크롬 숨김 — 화면 전용 요소 모두 제거 */
+    .hero-banner,
+    .type-nav-wrap,
+    .print-toolbar,
+    .made-by,
+    .home-btn,
+    .nav-print { display: none !important; }
+
+    /* 필터 hidden 숨김 — 현재 선택된 유형만 인쇄 */
+    .hidden { display: none !important; }
+
+    /* 컨테이너 — 페이지 전체 폭 사용 */
+    .container { padding: 0 !important; max-width: 100% !important; margin: 0 !important; }
+
+    /* 인쇄 헤더 — 학원명 표기 */
+    .print-header {
+      display: block !important;
+      text-align: center;
+      font-family: 'Pretendard Variable', sans-serif;
+      font-size: 9pt;
+      color: #555;
+      border-bottom: 0.5pt solid #999;
+      padding-bottom: 1.5mm;
+      margin-bottom: 3mm;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    .print-header b { color: #000; }
+
+    /* 지문 박스 — 펼쳐진 경우만 인쇄 */
+    .passage-box:not([open]) { display: none !important; }
+    .passage-box { margin: 0 0 4mm 0 !important; border: 0.6pt solid #888 !important; border-radius: 0 !important; background: white !important; }
+    .passage-box summary { display: none !important; }
+    .passage-text { padding: 3mm 4mm !important; font-size: 9.5pt !important; line-height: 1.55 !important; color: #000 !important; }
+    .passage-text p { margin-bottom: 2mm !important; }
+
+    /* 섹션 헤더 — 컴팩트, 페이지 마지막 한 줄 방지 */
+    .section-head {
+      margin: 0 0 3mm 0 !important;
+      padding: 2.5mm 0 1.5mm !important;
+      background: white !important;
+      border: none !important;
+      border-bottom: 1.4pt solid black !important;
+      page-break-after: avoid !important;
+      break-after: avoid !important;
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+    }
+    .section-head .num-line { font-size: 7.5pt !important; color: #555 !important; margin: 0 0 0.5mm 0 !important; letter-spacing: 0.18em !important; }
+    .section-head h2 { font-size: 13pt !important; color: black !important; margin: 0 !important; line-height: 1.15 !important; }
+    .section-head h2 .kor { font-size: 10pt !important; color: #333 !important; margin-left: 6px !important; }
+    .section-head .desc { font-size: 8.5pt !important; color: #444 !important; margin: 1mm 0 0 0 !important; line-height: 1.45 !important; }
+
+    /* 섹션 헤더 다음에 페이지 시작하지 않도록 — 첫 q-card와 함께 묶기 */
+    .section-head + .q-card { page-break-before: avoid !important; break-before: avoid !important; }
+
+    /* 문항 카드 — 페이지 중간에 끊기지 않도록, 컴팩트 간격 */
+    .q-card {
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+      margin: 0 0 3mm 0 !important;
+      padding: 2.5mm 0 2mm !important;
+      border: none !important;
+      border-bottom: 0.4pt dotted #999 !important;
+      background: white !important;
+      box-shadow: none !important;
+    }
+    .q-card:last-child { border-bottom: none !important; }
+
+    /* 문항 메타 라인 — 한 줄에 컴팩트 */
+    .q-meta {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      gap: 5px !important;
+      margin-bottom: 2mm !important;
+      font-size: 9pt !important;
+    }
+    .q-num {
+      font-family: 'Fraunces', 'Playfair Display', serif !important;
+      font-size: 14pt !important;
+      font-weight: 800 !important;
+      color: black !important;
+      margin-right: 3px !important;
+    }
+    .type-tag,
+    .var-pill {
+      font-size: 7.5pt !important;
+      padding: 1pt 5pt !important;
+      border-radius: 2pt !important;
+      font-weight: 700 !important;
+      letter-spacing: 0 !important;
+    }
+    .q-focus { font-size: 8.5pt !important; color: #333 !important; font-weight: 600 !important; }
+    .q-pts { font-size: 8.5pt !important; color: black !important; font-weight: 700 !important; margin-left: auto !important; }
+
+    /* 문항 본문 (지문, 선지, 보기 등) */
+    .q-card p,
+    .q-card div:not(.ans-body):not(.q-meta),
+    .q-card ul,
+    .q-card ol,
+    .q-card li {
+      font-size: 10pt !important;
+      line-height: 1.42 !important;
+      color: black !important;
+      background: white !important;
+    }
+    .q-card .q-passage { padding: 2mm 3mm !important; background: #fafafa !important; border: 0.4pt solid #ccc !important; margin: 1.5mm 0 !important; font-size: 9.5pt !important; line-height: 1.5 !important; }
+    .q-card .q-box { padding: 2mm 3mm !important; background: #f6f6f6 !important; border-left: 1.5pt solid #555 !important; margin: 1.5mm 0 !important; font-size: 9.5pt !important; }
+    .q-card ul.q-choices li,
+    .q-card ol.q-choices li { padding: 0.5mm 0 !important; font-size: 9.5pt !important; line-height: 1.45 !important; }
+    .q-card table { font-size: 9pt !important; border-collapse: collapse !important; }
+    .q-card table th,
+    .q-card table td { padding: 1mm 2mm !important; border: 0.3pt solid #999 !important; }
+
+    /* 정답 박스 — 펼쳐진 경우만 인쇄 (사용자 선택 그대로) */
+    details.ans:not([open]) { display: none !important; }
+    details.ans { display: block !important; margin-top: 1.5mm !important; background: transparent !important; }
+    details.ans > summary { display: none !important; }
+    details.ans .ans-body {
+      display: block !important;
+      padding: 2mm 3mm !important;
+      background: #f0eee6 !important;
+      border: 0.4pt solid #999 !important;
+      border-radius: 0 !important;
+      color: black !important;
+      font-size: 9pt !important;
+      line-height: 1.45 !important;
+      margin: 0 !important;
+    }
+    details.ans .ans-body * {
+      color: black !important;
+      background: transparent !important;
+    }
+    details.ans .ans-body .ans-label {
+      font-size: 7pt !important;
+      color: #555 !important;
+      letter-spacing: 0.18em !important;
+      margin-bottom: 1mm !important;
+    }
+    details.ans .ans-body .ans-main { font-size: 9.5pt !important; font-weight: 800 !important; margin-bottom: 1.5mm !important; }
+    details.ans .ans-body .ans-main .correct { color: #B53737 !important; font-weight: 800 !important; }
+    details.ans .ans-body .breakdown { padding-left: 4mm !important; margin: 1mm 0 !important; }
+    details.ans .ans-body .breakdown li { margin-bottom: 1mm !important; font-size: 8.5pt !important; }
+    details.ans .ans-body .note,
+    details.ans .ans-body .trap {
+      padding: 1.5mm 2.5mm !important;
+      margin-top: 1.5mm !important;
+      font-size: 8pt !important;
+      border: 0.3pt solid #aaa !important;
+      background: #fafafa !important;
+    }
+
+    /* 색상 보존 — 유형 태그 */
+    .type-tag.grammar { background: var(--t-grammar) !important; color: white !important; }
+    .type-tag.pronoun { background: var(--t-pronoun) !important; color: white !important; }
+    .type-tag.reading { background: var(--t-reading) !important; color: white !important; }
+    .type-tag.context { background: var(--t-context) !important; color: white !important; }
+    .type-tag.cloze   { background: var(--t-cloze) !important;   color: white !important; }
+    .type-tag.vocab   { background: var(--t-vocab) !important;   color: white !important; }
+    .type-tag.writing { background: var(--t-writing) !important; color: white !important; }
+    .var-pill { border: 0.3pt solid #999 !important; background: white !important; color: #333 !important; }
+
+    /* 인쇄 풋터 — 학원 정보 */
+    .print-footer {
+      display: block !important;
+      margin-top: 5mm;
+      padding-top: 1.5mm;
+      border-top: 0.4pt solid #999;
+      text-align: center;
+      font-family: 'Pretendard Variable', sans-serif;
+      font-size: 8pt;
+      color: #666;
+      letter-spacing: 0.05em;
+    }
+
+    /* 첫 페이지 빈공간 방지 — 모든 첫 요소 위 마진 0 */
+    .container > *:first-child { margin-top: 0 !important; }
+    .section-head:first-child { margin-top: 0 !important; }
+  }
+
+  /* 인쇄 전용 헤더/풋터 — 화면에서는 숨김 */
+  .print-header,
+  .print-footer { display: none; }
+
+  /* PASSAGE BOX */
+  .passage-box { background: var(--paper); border: 1px solid var(--line); margin-top: 36px; border-radius: 4px; }
+  .passage-box summary { list-style: none; cursor: pointer; padding: 18px 26px; display: flex; align-items: center; justify-content: space-between; font-family: 'Pretendard Variable', sans-serif; font-weight: 800; font-size: 15px; color: var(--ink); background: linear-gradient(180deg, #FAF7F2 0%, #FFFFFF 100%); border-bottom: 1px solid transparent; border-radius: 4px; }
+  .passage-box[open] summary { border-bottom: 1px solid var(--line); border-radius: 4px 4px 0 0; }
+  .passage-box summary::-webkit-details-marker { display: none; }
+  .passage-box summary .toggle-mark { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); letter-spacing: 0.08em; font-weight: 700; }
+  .passage-box summary .toggle-mark::before { content: '＋ 펼치기'; }
+  .passage-box[open] summary .toggle-mark::before { content: '－ 접기'; }
+  .passage-text { padding: 22px 28px; font-family: 'Inter', sans-serif; line-height: 1.85; font-size: 14.5px; color: var(--ink2); }
+  .passage-text p { margin-bottom: 12px; }
+
+  /* SECTION HEAD (TYPE GROUP MARKER) */
+  .section-head { margin: 50px 0 22px; padding: 18px 22px; background: white; border: 1px solid var(--line); border-left: 5px solid; }
+  .section-head[data-section-type="grammar"]     { border-left-color: var(--t-grammar); }
+  .section-head[data-section-type="pronoun"]     { border-left-color: var(--t-pronoun); }
+  .section-head[data-section-type="reading"]     { border-left-color: var(--t-reading); }
+  .section-head[data-section-type="context"]     { border-left-color: var(--t-context); }
+  .section-head[data-section-type="cloze"]       { border-left-color: var(--t-cloze); }
+  .section-head[data-section-type="vocab"]       { border-left-color: var(--t-vocab); }
+  .section-head[data-section-type="writing"]     { border-left-color: var(--t-writing); }
+  .section-head .num-line { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.18em; margin-bottom: 6px; font-weight: 700; }
+  .section-head h2 { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 5px; }
+  .section-head h2 .kor { font-family: 'Pretendard Variable', sans-serif; font-weight: 800; font-size: 14px; color: var(--ink2); margin-left: 10px; letter-spacing: -0.01em; }
+  .section-head .desc { font-size: 12.5px; color: var(--muted); line-height: 1.6; margin-top: 4px; }
+
+  /* QUESTION CARD */
+  .q-card { background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--t-grammar); margin-bottom: 14px; padding: 18px 22px; transition: opacity 0.2s ease; }
+  .q-card[data-type="pronoun"]  { border-left-color: var(--t-pronoun); }
+  .q-card[data-type="reading"]  { border-left-color: var(--t-reading); }
+  .q-card[data-type="context"]  { border-left-color: var(--t-context); }
+  .q-card[data-type="cloze"]    { border-left-color: var(--t-cloze); }
+  .q-card[data-type="vocab"]    { border-left-color: var(--t-vocab); }
+  .q-card[data-type="writing"]  { border-left-color: var(--t-writing); }
+
+  .q-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+  .q-num { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; line-height: 1; margin-right: 4px; }
+  .type-tag { display: inline-block; padding: 4px 10px; border-radius: 3px; font-family: 'Pretendard Variable', sans-serif; font-size: 11px; font-weight: 800; letter-spacing: -0.01em; color: white; }
+  .type-tag.grammar  { background: var(--t-grammar); }
+  .type-tag.pronoun  { background: var(--t-pronoun); }
+  .type-tag.reading  { background: var(--t-reading); }
+  .type-tag.context  { background: var(--t-context); }
+  .type-tag.cloze    { background: var(--t-cloze); }
+  .type-tag.vocab    { background: var(--t-vocab); }
+  .type-tag.writing  { background: var(--t-writing); }
+
+  .var-pill { display: inline-block; padding: 3px 8px; font-size: 10px; font-family: 'JetBrains Mono', monospace; font-weight: 700; letter-spacing: 0.08em; border-radius: 3px; }
+  .var-light { background: #ECF7EE; color: #2D6E3F; border: 1px solid #B8DBC1; }
+  .var-mod   { background: #FFF8E0; color: #7A5F0A; border: 1px solid #E8D9A0; }
+  .var-major { background: #FFEDD8; color: #A04A0E; border: 1px solid #F0CFAA; }
+  .var-new   { background: #FCE0E0; color: #8E1A1A; border: 1px solid #E8B8B8; }
+
+  .q-focus { display: inline-block; padding: 3px 8px; font-size: 10px; font-family: 'Pretendard Variable', sans-serif; font-weight: 700; letter-spacing: -0.01em; background: #F5F2ED; color: var(--ink2); border: 1px solid var(--line); border-radius: 3px; }
+  .q-pts { margin-left: auto; font-family: 'Fraunces', serif; font-size: 16px; font-weight: 800; color: var(--accent); letter-spacing: -0.02em; }
+
+  .q-prompt { font-family: 'Pretendard Variable', sans-serif; font-size: 14.5px; font-weight: 700; color: var(--ink); line-height: 1.55; margin-bottom: 10px; letter-spacing: -0.01em; }
+  .q-passage { background: #FAF7F2; border: 1px solid var(--line); border-left: 3px solid var(--accent); padding: 12px 16px; margin-bottom: 10px; font-size: 13px; line-height: 1.8; color: var(--ink2); font-family: 'Inter', sans-serif; border-radius: 0 3px 3px 0; }
+  .q-passage u { text-decoration: underline; text-underline-offset: 3px; }
+  .q-passage b { color: var(--ink); font-weight: 700; }
+  .q-passage i { font-style: italic; color: var(--accent); }
+  .q-choices { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+  .q-choices .c { display: flex; gap: 7px; padding: 7px 11px; background: #FBFAF7; border: 1px solid var(--line); border-radius: 3px; font-size: 13px; line-height: 1.55; color: var(--ink2); font-family: 'Pretendard Variable', sans-serif; }
+  .q-choices .c .num { font-weight: 800; color: var(--accent); flex-shrink: 0; min-width: 22px; }
+  .q-choices.horz { flex-direction: row; flex-wrap: wrap; }
+  .q-choices.horz .c { flex: 1 0 calc(33% - 6px); }
+  .q-choices.horz5 { flex-direction: row; flex-wrap: wrap; }
+  .q-choices.horz5 .c { flex: 1 0 calc(20% - 6px); justify-content: center; }
+  .q-blank { color: var(--accent); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+  .word-bank { background: #FFFAF0; border: 1px dashed var(--accent); padding: 10px 14px; margin: 10px 0; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.7; color: var(--ink); font-weight: 500; }
+  .word-bank b { color: var(--accent); }
+  .answer-line { background: #F5F2ED; padding: 10px 14px; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.9; margin: 8px 0; }
+  .answer-line .underline { display: inline-block; min-width: 70px; border-bottom: 1.5px solid var(--ink); margin: 0 3px; padding: 0 2px; vertical-align: bottom; }
+  .answer-line .star { color: var(--gold); font-weight: 800; font-size: 17px; padding: 0 6px; }
+
+  /* ANSWER PANEL */
+  details.ans { background: var(--navy-950); color: var(--cream); border-radius: 4px; overflow: hidden; margin-top: 6px; }
+  details.ans summary { list-style: none; cursor: pointer; padding: 11px 18px; font-family: 'Pretendard Variable', sans-serif; font-weight: 700; font-size: 12.5px; color: var(--gold-light); letter-spacing: 0.04em; display: flex; align-items: center; justify-content: space-between; }
+  details.ans summary::-webkit-details-marker { display: none; }
+  details.ans summary::after { content: '＋'; font-family: 'JetBrains Mono', monospace; color: var(--gold); }
+  details.ans[open] summary::after { content: '－'; }
+  .ans-body { padding: 4px 20px 18px; font-family: 'Pretendard Variable', sans-serif; color: #E1D9C8; font-size: 13px; line-height: 1.7; }
+  .ans-body .ans-main { font-size: 13.5px; font-weight: 700; color: var(--gold-light); margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed rgba(228,197,137,0.3); }
+  .ans-body .ans-detail { color: #C8C0AE; font-size: 12.5px; }
+  .ans-body .ans-detail b { color: var(--gold-light); font-weight: 700; }
+  .ans-body em { color: var(--gold-light); font-style: italic; font-family: 'Fraunces', serif; font-weight: 600; }
+
+  .q-card.hidden { display: none; }
+  .section-head.hidden { display: none; }
+
+  /* FOOTER */
+  .made-by { text-align: center; padding: 24px 20px 30px; background: var(--navy-950); margin: 50px -36px 0; color: var(--gold-light); font-family: 'Pretendard Variable', sans-serif; font-size: 12.5px; font-weight: 600; letter-spacing: 0.1em; }
+  .made-by .credit { display: block; margin-top: 6px; font-size: 10.5px; color: rgba(228,197,137,0.6); }
+
+  @media (max-width: 760px) {
+    .container { padding: 0 22px 50px; }
+    .hero-inner, .type-nav { padding: 0 22px; }
+    .nav-tab { padding: 12px 10px; font-size: 12px; gap: 5px; }
+    .nav-tab .nav-count { font-size: 9.5px; padding: 1px 5px; }
+    .q-card { padding: 16px 18px; }
+    .q-passage { padding: 11px 13px; font-size: 12.5px; }
+    .q-num { font-size: 20px; }
+    .q-prompt { font-size: 14px; }
+    .made-by { margin: 50px -22px 0; }
+    .q-choices.horz .c, .q-choices.horz5 .c { flex: 1 0 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero-banner">
+  <div class="hero-inner">
+    <div class="brand-row">
+      <div class="brand">
+        <div class="brand-mark">목</div>
+        <div class="brand-text">
+          목운중학교 3학년 영어
+          <div class="sub">MOKUN MIDDLE SCHOOL · LESSON 4 · PART 2</div>
+        </div>
+      </div>
+      <a href="https://0505.co.kr" target="_blank" rel="noopener" class="home-btn">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2.5L2 11h3v9h5v-6h4v6h5v-9h3z"/>
+        </svg>
+        HOME
+      </a>
+    </div>
+
+    <div class="kicker">PASSAGE-BASED PRACTICE SET · 유형별 변형 문제집</div>
+    <h1 class="title">
+      We Are All <em>Leaders</em>
+      <span class="kor">L4 본문 2 — 6가지 색깔 리더 스타일·Yumi의 깨달음과 결심 · 7유형 30문제 · 목운중 패턴 반영</span>
+    </h1>
+
+    <div class="meta-info">
+      <span class="meta-tag">📖 L4 Part 2 풀세트 30문항</span>
+      <span class="meta-tag">🎯 목운중 출제 패턴 반영</span>
+      <span class="meta-tag">⭐ 5점 고배점 2개 + 4점 6개 + 3점 22개</span>
+      <span class="meta-tag">🖨 유형별 인쇄 가능</span>
+    </div>
+  </div>
+</section>
+
+<!-- TYPE NAV -->
+<div class="type-nav-wrap">
+  <nav class="type-nav" id="typeNav">
+    <button class="nav-tab active" data-type="all">전체 <span class="nav-count">30</span></button>
+    <button class="nav-print" data-print-type="all" title="전체 인쇄" aria-label="전체 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+
+    <button class="nav-tab" data-type="grammar"><span class="nav-color-dot" style="background:var(--t-grammar)"></span>어법 <span class="nav-count">8</span></button>
+    <button class="nav-print" data-print-type="grammar" title="어법 유형 인쇄" aria-label="어법 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+
+    <button class="nav-tab" data-type="pronoun"><span class="nav-color-dot" style="background:var(--t-pronoun)"></span>대명사 <span class="nav-count">3</span></button>
+    <button class="nav-print" data-print-type="pronoun" title="대명사 유형 인쇄" aria-label="대명사 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+
+    <button class="nav-tab" data-type="reading"><span class="nav-color-dot" style="background:var(--t-reading)"></span>독해 <span class="nav-count">2</span></button>
+    <button class="nav-print" data-print-type="reading" title="독해 유형 인쇄" aria-label="독해 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+
+    <button class="nav-tab" data-type="context"><span class="nav-color-dot" style="background:var(--t-context)"></span>문맥 <span class="nav-count">3</span></button>
+    <button class="nav-print" data-print-type="context" title="문맥 유형 인쇄" aria-label="문맥 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+
+    <button class="nav-tab" data-type="cloze"><span class="nav-color-dot" style="background:var(--t-cloze)"></span>빈칸 <span class="nav-count">7</span></button>
+    <button class="nav-print" data-print-type="cloze" title="빈칸 유형 인쇄" aria-label="빈칸 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+
+    <button class="nav-tab" data-type="vocab"><span class="nav-color-dot" style="background:var(--t-vocab)"></span>어휘·숙어 <span class="nav-count">5</span></button>
+    <button class="nav-print" data-print-type="vocab" title="어휘·숙어 유형 인쇄" aria-label="어휘·숙어 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+
+    <button class="nav-tab" data-type="writing"><span class="nav-color-dot" style="background:var(--t-writing)"></span>서술형 <span class="nav-count">2</span></button>
+    <button class="nav-print" data-print-type="writing" title="서술형 유형 인쇄" aria-label="서술형 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+  </nav>
+</div>
+
+<!-- PRINT TOOLBAR — 인쇄 옵션 -->
+<div class="print-toolbar">
+  <div class="print-toolbar-inner">
+    <span class="pt-label">📄 인쇄 옵션</span>
+    <button class="pt-btn" id="answerToggle" type="button">정답 모두 펼치기</button>
+    <button class="pt-btn pt-passage" id="passageToggle" type="button">지문 펼치기/접기</button>
+    <span class="pt-hint">→ 위 인쇄 버튼(<svg viewBox="0 0 24 24" class="pt-icon"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>)을 누르면 <b>현재 화면 그대로</b> A4로 인쇄됩니다. 정답을 빼려면 <b>'정답 모두 접기'</b>를 먼저 누르세요.</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- 인쇄 전용 헤더 (화면에서는 숨김) -->
+<div class="print-header">
+  <b>목동서로영어학원</b> · 목운중 L4 Part 2 We Are All Leaders 유형문제집 · <span id="printSectionLabel">전체</span> · 0505.co.kr
+</div>
+
+<!-- ORIGINAL PASSAGE -->
+<details class="passage-box" open>
+  <summary>
+    <span>📄 원문 지문 — We Are All Leaders (Part 2)</span>
+    <span class="toggle-mark"></span>
+  </summary>
+  <div class="passage-text">
+<p style="font-weight:700;color:var(--accent);margin-bottom:14px">— Here's what I found! —</p>
+
+<div style="display:grid;grid-template-columns:1fr;gap:10px;margin:12px 0">
+<div style="border-left:4px solid #4A8B5C;padding:10px 14px;background:#F0F7F0">
+<b style="color:#4A8B5C">🟢 GREEN LEADERS — "Team Builders"</b><br>
+• Ensure that the team feels valued<br>
+• Create a positive environment<br>
+• Are friendly and easy to talk to
+</div>
+<div style="border-left:4px solid #B53737;padding:10px 14px;background:#FAF0F0">
+<b style="color:#B53737">🔴 RED LEADERS — "Logical Analysts"</b><br>
+• Have good reasoning skills<br>
+• Analyze problems and situations<br>
+• Think of the most effective ways to achieve the team's goals
+</div>
+<div style="border-left:4px solid #6B5BA0;padding:10px 14px;background:#F4F2FA">
+<b style="color:#6B5BA0">🟣 PURPLE LEADERS — "Hands-Off Managers"</b><br>
+• Allow others to work on their own<br>
+• Do not try to control people<br>
+• Give advice only when it is needed
+</div>
+<div style="border-left:4px solid #D97A47;padding:10px 14px;background:#FAF3ED">
+<b style="color:#D97A47">🟠 ORANGE LEADERS — "Strict Directors"</b><br>
+• Make everyone's role clear<br>
+• Make sure everything is finished on time<br>
+• Ensure each step is done properly
+</div>
+<div style="border-left:4px solid #C9A227;padding:10px 14px;background:#FBF7E8">
+<b style="color:#C9A227">🟡 YELLOW LEADERS — "Quiet Supporters"</b><br>
+• Lead by example<br>
+• Let the team members shine instead<br>
+• Meet the team members' needs
+</div>
+<div style="border-left:4px solid #2A5D9F;padding:10px 14px;background:#EFF4FA">
+<b style="color:#2A5D9F">🔵 BLUE LEADERS — "Creative Thinkers"</b><br>
+• Approach problems in new ways<br>
+• Come up with fresh ideas<br>
+• Deal with tasks differently from others
+</div>
+</div>
+
+<p>I was surprised that there are actually many different leadership styles, but soon I realized the reason. We belong to many different groups, and many different situations can come up in our lives. They all call for different leadership styles. Each group's unique situation determines the best leadership style.</p>
+<p style="font-style:italic;color:var(--accent);padding-left:14px;border-left:2px solid var(--gold)">"I am a part of many different groups, and I have different responsibilities in each group."</p>
+<p>After reading everything, I became more confident. I discovered that I have some of the qualities of a "green leader." If my classmates think a green leader would make our class better, they might pick me to be class representative! Okay, let's try it!</p>
+  </div>
+</details>
+
+<!-- =============== 30문항 SECTION 영역 (여기에 삽입) =============== -->
+<!-- =============== ⓐ 어법 GRAMMAR (8문항) =============== -->
+<div class="section-head" data-section-type="grammar" data-section-marker>
+  <div class="num-line">SECTION A · 어법 · GRAMMAR · 8 ITEMS</div>
+  <h2>어법 <span class="kor">사역동사 let·allow+O+to V·Make+O+형용사·ensure that·Each+단수동사·수동태</span></h2>
+  <p class="desc">본문 핵심 어법 8개 종합. <strong>5점 고배점 1개 (Q5 어법 오류 개수 세기) + 4점 1개 (Q3 두 개 고르기)</strong> 포함. L4 Part 2의 핵심 어법인 <em>사역동사 let, allow+O+to V, Make+O+형용사, ensure/make sure that 절, Each+단수동사, 수동태</em>를 모두 다룸.</p>
+</div>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">1</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">사역동사 let + 목적어 + 동사원형</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>1.</b> 다음 빈칸에 들어갈 말로 <b>어법상 적절한</b> 것은?</div>
+  <div class="q-passage">Yellow leaders let the team members <span class="q-blank">______</span> instead.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>shine</span><span class="c"><span class="num">②</span>shines</span><span class="c"><span class="num">③</span>shone</span><span class="c"><span class="num">④</span>to shine</span><span class="c"><span class="num">⑤</span>shining</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">①  shine</span></div>
+  <div class="ans-detail"><b>사역동사 let + 목적어 + 동사원형</b> = "~가 ~하도록 허락하다, 두다." let의 목적격 보어로는 반드시 <b>동사원형</b>만 가능. to부정사·동명사·과거형 모두 불가.<br>
+  ▸ 본문: "Let the team members <b>shine</b> instead(팀원들이 대신 빛나도록 하라)"<br>
+  <br>
+  <b>사역동사 정리 (반드시 암기):</b><br>
+  ▸ <b>let / make / have</b> + O + <b>V원형</b> (능동)<br>
+  &nbsp;&nbsp;예: She let me <b>go</b>. / Mom made me <b>study</b>. / I had him <b>fix</b> it.<br>
+  ▸ <b>have</b> + O + <b>p.p.</b> (수동)<br>
+  &nbsp;&nbsp;예: I had my hair <b>cut</b>. (머리를 자르게 했다)<br>
+  ▸ <b>make</b>의 수동태 (be made + to V)<br>
+  &nbsp;&nbsp;예: I was made <b>to study</b>. (수동에서는 to 부활)<br>
+  <br>
+  ※ <b>let은 수동태가 없음</b> — 수동의 의미는 "be allowed to V"로 표현.</div>
+  <div class="note"><b>🔑 사역·준사역·지각동사 비교.</b><br>
+  • 사역(let/make/have): + V원형 만<br>
+  • 준사역(help): + V원형 / to V<br>
+  • 지각(see/hear/feel): + V원형 / Ving<br>
+  → let·make·have가 가장 엄격(원형만).</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">2</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">allow + 목적어 + to부정사</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>2.</b> 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+  <div class="q-passage">Purple leaders allow others <span class="q-blank">______</span> on their own.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>work</span><span class="c"><span class="num">②</span>works</span><span class="c"><span class="num">③</span>worked</span><span class="c"><span class="num">④</span>to work</span><span class="c"><span class="num">⑤</span>working</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">④  to work</span></div>
+  <div class="ans-detail"><b>allow + 목적어 + to부정사</b> = "~가 ~하도록 허락하다." allow는 5형식 동사로 목적격 보어에 <b>to부정사</b>만 받음. 동사원형(let/make와 다름) 불가.<br>
+  ▸ 본문: "Allow others <b>to work</b> on their own(다른 사람들이 스스로 일하도록 허락하다)"<br>
+  <br>
+  ▸ ① work ✗ — 동사원형은 사역동사(let/make/have)만<br>
+  ▸ ② works/③ worked ✗ — 어떤 시제도 보어 자리에 부적합<br>
+  ▸ ④ ✓ to work — allow는 to V<br>
+  ▸ ⑤ working ✗ — 동명사·분사 형태도 부적합<br>
+  <br>
+  <b>5형식 동사별 보어 형태 정리 (반드시 암기):</b><br>
+  ▸ <b>to부정사 받는 동사</b>: allow / want / expect / ask / tell / advise / order / persuade / force / encourage<br>
+  ▸ <b>동사원형 받는 동사</b>: let / make / have (사역)<br>
+  ▸ <b>둘 다 받는 동사</b>: help (준사역)<br>
+  ▸ <b>V원형 또는 Ving</b>: see / hear / feel / watch (지각)<br>
+  <br>
+  <b>비슷한 동사 묶음 (allow와 같은 패턴):</b><br>
+  • allow A to V = A가 ~하도록 허락하다<br>
+  • permit A to V = A가 ~하도록 허락하다<br>
+  • enable A to V = A가 ~할 수 있게 하다<br>
+  • encourage A to V = A가 ~하도록 격려하다</div>
+  <div class="trap"><b>⚠️ let vs allow 함정:</b><br>
+  • Let me go. ✓ (let + V원형)<br>
+  • Allow me to go. ✓ (allow + to V)<br>
+  • Allow me go. ✗ / Let me to go. ✗<br>
+  → 같은 의미 "허락하다"이지만 보어 형태가 다름.</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">3</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">어법상 옳은 것 두 개 고르기 (4점)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>3.</b> 다음 중 <b>어법상 옳은 것</b>을 모두 고르시오. <span style="color:var(--muted)">(2개)</span></div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>Make sure everything <b>is finished</b> on time.</li>
+    <li><span class="num">②</span>Make everyone's role <b>clearly</b>.</li>
+    <li><span class="num">③</span>Each group's unique situation <b>determines</b> the best leadership style.</li>
+    <li><span class="num">④</span>I was <b>surprising</b> that there are actually many different leadership styles.</li>
+    <li><span class="num">⑤</span>Many different situations can <b>came</b> up in our lives.</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">①  +  ③</span></div>
+  <div class="ans-detail"><b>각 선지 분석:</b><br>
+  ▸ ① ✓ <b>Make sure everything is finished</b> — make sure + (that) + 절. that 절 안에서 수동태(is finished). 본문 표현 그대로.<br>
+  ▸ ② 🚨 <b>clearly → clear</b>. <b>make + 목적어 + 형용사 보어</b> 구조이므로 보어 자리에 형용사(clear)가 와야 함. 부사 clearly는 비문. 본문은 "Make everyone's role <b>clear</b>".<br>
+  ▸ ③ ✓ <b>Each group's unique situation determines</b> — Each는 단수 취급이므로 단수 동사 determines. 정확.<br>
+  ▸ ④ 🚨 <b>was surprising → was surprised</b>. 감정 동사의 -ed/-ing 형용사 구별: <b>surprised</b>(놀란, 사람이 놀란 상태) ↔ <b>surprising</b>(놀라운, 사물이 놀라움을 일으키는). 주어가 사람(I)이고 "놀라움을 받은 상태"이므로 <b>surprised</b>가 정확. 본문도 "I was surprised that ~".<br>
+  ▸ ⑤ 🚨 <b>came → come</b>. 조동사 can 다음에는 동사원형(come). 과거형 came은 비문.<br>
+  </div>
+  <div class="note"><b>🔑 핵심 어법 5가지.</b><br>
+  • make + O + 형용사 (보어 자리는 형용사)<br>
+  • make sure + (that) + 절 (확실히 ~하도록 하다)<br>
+  • Each + 단수명사 + 단수동사<br>
+  • be surprised that ~ (감정 + that 절)<br>
+  • 조동사 + 동사원형 (can come, will go)</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">4</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">make + 목적어 + 형용사 (5형식)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>4.</b> 다음 빈칸에 들어갈 말로 <b>어법상 알맞은</b> 것은?</div>
+  <div class="q-passage">Orange leaders make everyone's role <span class="q-blank">______</span>.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>clear</span><span class="c"><span class="num">②</span>clearly</span><span class="c"><span class="num">③</span>clearer</span><span class="c"><span class="num">④</span>clearness</span><span class="c"><span class="num">⑤</span>cleared</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">①  clear  (형용사)</span></div>
+  <div class="ans-detail"><b>make + 목적어 + 형용사 보어</b> = "~을 ~한 상태로 만들다" — 5형식 동사 구조. 보어 자리에는 반드시 <b>형용사</b>가 옴. 부사·명사·과거분사는 의미가 다름.<br>
+  ▸ 본문: "Make everyone's role <b>clear</b>(모든 사람의 역할을 명확하게 만든다)"<br>
+  <br>
+  ▸ ① ✓ clear (형용사) — "명확한"<br>
+  ▸ ② clearly (부사) — 부사는 보어 자리 불가<br>
+  ▸ ③ clearer (비교급 형용사) — 본문은 단순 진술이므로 비교급 부적합<br>
+  ▸ ④ clearness (명사) — 명사는 다른 의미("명확함")<br>
+  ▸ ⑤ cleared (과거분사) — "정리된"이라는 다른 의미<br>
+  <br>
+  <b>5형식 make 정리:</b><br>
+  ▸ make + O + <b>형용사</b>: ~을 ~하게 만들다<br>
+  &nbsp;&nbsp;예: make me <b>happy</b> / make her <b>angry</b><br>
+  ▸ make + O + <b>명사</b>: ~을 ~으로 만들다<br>
+  &nbsp;&nbsp;예: make him <b>a leader</b><br>
+  ▸ make + O + <b>V원형</b>: ~가 ~하게 하다 (사역)<br>
+  &nbsp;&nbsp;예: make me <b>study</b><br>
+  ▸ make + O + <b>p.p.</b>: ~이 ~된 상태로 만들다<br>
+  &nbsp;&nbsp;예: make myself <b>understood</b> (내 말을 이해받게 하다)</div>
+  <div class="note"><b>🔑 부사 vs 형용사 빠른 구별.</b><br>
+  • 동사 수식 → 부사 (work hard, run fast)<br>
+  • 명사·대명사 수식 → 형용사 (a hard job, a fast car)<br>
+  • 보어 자리 → 형용사 (be happy, become tired, make clear)</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">5</span><span class="type-tag grammar">어법</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">어법 오류 개수 세기 (5점 고배점)</span><span class="q-pts">5점</span></div>
+  <div class="q-prompt"><b>5.</b> 다음 글에서 <b>어법상 옳지 않은 것</b>의 개수는?</div>
+  <div class="q-passage">Yellow leaders <u>ⓐ lead</u> by example. They <u>ⓑ let</u> the team members shine instead. They also <u>ⓒ meet</u> the team members' needs. Blue leaders <u>ⓓ approach</u> problems in new ways. They <u>ⓔ come up</u> with fresh ideas and <u>ⓕ deal with</u> tasks <u>ⓖ different</u> from others.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>1개</span><span class="c"><span class="num">②</span>2개</span><span class="c"><span class="num">③</span>3개</span><span class="c"><span class="num">④</span>4개</span><span class="c"><span class="num">⑤</span>5개</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">①  1개  (ⓖ만 오류)</span></div>
+  <div class="ans-detail"><b>각 밑줄 검증:</b><br>
+  ▸ ⓐ ✓ lead — 동사 lead "이끌다." lead by example = "솔선수범하다."<br>
+  ▸ ⓑ ✓ let — 사역동사 let + V원형(shine). 정확.<br>
+  ▸ ⓒ ✓ meet — meet the needs = "필요를 충족시키다." 관용 표현.<br>
+  ▸ ⓓ ✓ approach — 동사 "접근하다, 다가가다."<br>
+  ▸ ⓔ ✓ come up — come up with ~ "~을 생각해내다." 정확.<br>
+  ▸ ⓕ ✓ deal with — "~을 다루다, 처리하다." 정확.<br>
+  ▸ ⓖ 🚨 <b>different → differently</b>. "deal with tasks <u>다르게</u>"라는 의미로 동사 deal with를 수식하므로 <b>부사</b>가 와야 함. 형용사 different는 명사를 수식하지 동사를 수식하지 못함. 본문은 "deal with tasks <b>differently</b> from others".<br>
+  <br>
+  <b>differently from ~ 구조:</b><br>
+  • differently from = ~와 다르게 (부사 + from)<br>
+  • different from = ~와 다른 (형용사 + from) — 명사 수식<br>
+  → 본문은 동사 deal with를 수식하는 부사 자리.</div>
+  <div class="trap"><b>⚠️ 부사·형용사 함정 패턴:</b><br>
+  • work <b>hard</b> (열심히 일하다 — 부사 hard) ↔ a <b>hard</b> work (어려운 일 — 형용사)<br>
+  • run <b>fast</b> (빠르게 달리다 — 부사 fast) ↔ a <b>fast</b> car (빠른 차 — 형용사)<br>
+  • differ <b>differently</b> from (다르게 — 부사) ↔ <b>different</b> from (다른 — 형용사)<br>
+  → 동사·문장 수식이면 부사, 명사 수식이면 형용사.</div>
+  <div class="note"><b>🔑 본문의 8가지 구동사 정리 (반드시 암기).</b><br>
+  • lead by example (솔선수범)<br>
+  • come up with ~ (떠올리다)<br>
+  • deal with ~ (다루다)<br>
+  • belong to ~ (소속되다)<br>
+  • call for ~ (~을 요구하다)<br>
+  • approach ~ (접근하다)<br>
+  • meet the needs (필요를 충족시키다)<br>
+  • work on one's own (혼자 일하다)</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">6</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">Each + 단수명사 + 단수동사</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>6.</b> 다음 빈칸에 들어갈 동사 형태로 가장 적절한 것은?</div>
+  <div class="q-passage">Each group's unique situation <span class="q-blank">______</span> the best leadership style.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>determine</span><span class="c"><span class="num">②</span>determines</span><span class="c"><span class="num">③</span>determined</span><span class="c"><span class="num">④</span>determining</span><span class="c"><span class="num">⑤</span>are determining</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">②  determines  (3인칭 단수 현재)</span></div>
+  <div class="ans-detail"><b>주어 분석:</b> "Each group's unique situation"<br>
+  ▸ <b>Each</b>는 항상 단수 취급<br>
+  ▸ 핵심 명사는 situation(단수)<br>
+  ▸ 본문 시제는 일반적 사실(현재)<br>
+  → 3인칭 단수 현재 동사 <b>determines</b>(-s 추가)<br>
+  <br>
+  ▸ ① determine ✗ — 1·2인칭, 복수 주어용<br>
+  ▸ ② ✓ determines — 3인칭 단수 현재<br>
+  ▸ ③ determined ✗ — 과거형 (시제 불일치)<br>
+  ▸ ④ determining ✗ — 분사·동명사 형태 (be 동사 필요)<br>
+  ▸ ⑤ are determining ✗ — 복수 are가 단수 주어와 불일치<br>
+  <br>
+  <b>"단수 취급"으로 시험 단골:</b><br>
+  ▸ <b>Each</b> (of N) + 단수동사<br>
+  ▸ <b>Every</b> (~) + 단수동사<br>
+  ▸ <b>One</b> (of N) + 단수동사<br>
+  ▸ <b>Either / Neither</b> (of N) + 단수동사<br>
+  ▸ <b>Everyone / Everybody / Everything</b> + 단수동사<br>
+  ▸ <b>The number of N</b> + 단수동사 (cf. A number of N + 복수동사)<br>
+  → "of 복수명사"가 뒤에 와도 주어는 위 단어이므로 단수.</div>
+  <div class="note"><b>🔑 본문 같은 패턴.</b><br>
+  • Each group's <b>situation determines</b> ~ (본문)<br>
+  • Each step <b>is</b> done properly. (본문 — Orange Leaders)<br>
+  • Each + 단수 명사 + 단수 동사 일관 적용.</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">7</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">수동태 + 부사 — be done properly</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>7.</b> 다음 빈칸에 들어갈 말로 <b>어법상 알맞은</b> 것은?</div>
+  <div class="q-passage">Orange leaders ensure each step is <span class="q-blank">______</span> properly.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>do</span><span class="c"><span class="num">②</span>does</span><span class="c"><span class="num">③</span>did</span><span class="c"><span class="num">④</span>doing</span><span class="c"><span class="num">⑤</span>done</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">⑤  done  (과거분사 — 수동태)</span></div>
+  <div class="ans-detail"><b>be + 과거분사(p.p.)</b> = 수동태. each step은 <b>처리되는 대상</b>이므로 수동태가 필요.<br>
+  ▸ 본문: "each step is <b>done</b> properly(각 단계가 적절하게 <u>처리된다</u>)"<br>
+  <br>
+  ▸ ① do ✗ — 능동 동사원형<br>
+  ▸ ② does ✗ — 능동 3인칭 단수<br>
+  ▸ ③ did ✗ — 능동 과거형<br>
+  ▸ ④ doing ✗ — 진행형 또는 동명사 (be doing은 진행형이지만 "각 단계가 하고 있다"는 비문)<br>
+  ▸ ⑤ ✓ done — 수동태의 과거분사<br>
+  <br>
+  <b>능동 vs 수동 빠른 판단:</b><br>
+  ▸ 주어가 행위를 <b>한다</b> → 능동 (S + V)<br>
+  ▸ 주어가 행위를 <b>받는다</b> → 수동 (S + be + p.p.)<br>
+  → "each step(각 단계)"은 사람의 행위를 받는 대상이지 스스로 무언가를 하지 않음. → 수동.<br>
+  <br>
+  <b>수동태 + 부사 위치:</b><br>
+  ▸ be + p.p. + <b>부사</b><br>
+  &nbsp;&nbsp;예: is done <b>properly</b> (적절히 처리되다)<br>
+  &nbsp;&nbsp;예: was hurt <b>seriously</b> (심하게 다쳤다)<br>
+  &nbsp;&nbsp;예: is loved <b>by everyone</b> (모두에게 사랑받다)</div>
+  <div class="note"><b>🔑 ensure / make sure 다음 절 패턴.</b><br>
+  • ensure (that) + 절 = 확실히 ~하도록 하다<br>
+  • make sure (that) + 절 = 반드시 ~하도록 하다<br>
+  → 본문에 두 표현 모두 등장:<br>
+  &nbsp;&nbsp;Make sure everything <b>is finished</b> on time. (수동)<br>
+  &nbsp;&nbsp;Ensure each step <b>is done</b> properly. (수동)<br>
+  • Ensure that the team <b>feels valued</b>. (수동)</div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">8</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">After + 동명사 vs After + 절</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>8.</b> 다음 밑줄 친 부분 중 <b>어법상 어색한</b> 것은?</div>
+  <div class="q-passage"><u>① After</u> reading everything, I <u>② became</u> more confident. I <u>③ discovered</u> that I have some of the qualities of a "green leader." If my classmates <u>④ think</u> a green leader would make our class better, they might <u>⑤ picking</u> me to be class representative.</div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">⑤  picking  →  pick</span></div>
+  <div class="ans-detail">⑤ "might picking"은 비문. 조동사 might 다음에는 반드시 <b>동사원형</b>이 와야 함. 동명사·분사 형태 불가.<br>
+  ▸ 본문: "they might <b>pick</b> me to be class representative(그들이 나를 학급 대표로 뽑을지도 모른다)"<br>
+  <br>
+  ▸ ① ✓ After + Ving — "~한 후에" (After reading = 모든 것을 읽은 후에). After 다음 동명사 정확.<br>
+  ▸ ② ✓ became — become의 과거형. 정확.<br>
+  ▸ ③ ✓ discovered — 동사 과거형. 정확.<br>
+  ▸ ④ ✓ think — If 절의 현재시제(미래 의미). 정확.<br>
+  ▸ ⑤ 🚨 might picking ✗ → might pick.<br>
+  <br>
+  <b>After 다음 두 가지 형태:</b><br>
+  ① <b>After + 명사/동명사</b>: After dinner / After reading the book<br>
+  ② <b>After + 주어 + 동사 (절)</b>: After I read the book, ~<br>
+  → 둘 다 "~한 후에" 의미. 본문은 ①.<br>
+  <br>
+  <b>조동사 + 동사원형 (불변 규칙):</b><br>
+  • can / could / may / might / will / would / shall / should / must + <b>V원형</b><br>
+  → 조동사 다음에 -ing, -ed, -s 모두 불가.</div>
+  <div class="note"><b>🔑 pick + O + to be (5형식 변형).</b><br>
+  • pick A to be B = A를 B로 뽑다<br>
+  &nbsp;&nbsp;예: They picked her to be the leader.<br>
+  • elect A (as) B = A를 B로 선출하다<br>
+  • choose A as B = A를 B로 선택하다<br>
+  → 모두 "~로 뽑다·선출하다" 의미.</div></div></details>
+</article>
+
+
+<!-- =============== ⓑ 대명사 PRONOUN (3문항) =============== -->
+<div class="section-head" data-section-type="pronoun" data-section-marker>
+  <div class="num-line">SECTION B · 대명사 · PRONOUN · 3 ITEMS</div>
+  <h2>대명사 <span class="kor">they·each·it이 가리키는 대상 추적</span></h2>
+  <p class="desc">본문에 등장하는 대명사·지시어가 가리키는 대상 정확 식별. 인용문 안 인칭 대명사 주의.</p>
+</div>
+
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">9</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">they가 가리키는 대상</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>9.</b> 다음 글의 밑줄 친 <b>They</b>가 가리키는 것으로 가장 알맞은 것은?</div>
+  <div class="q-passage">We belong to many different groups, and many different situations can come up in our lives. <u>They</u> all call for different leadership styles.</div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>여러 다른 그룹들 (different groups)</li>
+    <li><span class="num">②</span>여러 다른 상황들 (different situations)</li>
+    <li><span class="num">③</span>리더십 스타일들 (leadership styles)</li>
+    <li><span class="num">④</span>여러 다른 그룹과 상황 모두</li>
+    <li><span class="num">⑤</span>우리(we)</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">②  여러 다른 상황들 (different situations)</span></div>
+  <div class="ans-detail"><b>They가 가리키는 단서:</b><br>
+  바로 앞 절 "many different situations can come up in our lives"의 주어 <b>situations</b>를 그대로 받음. They 다음 동사가 "all call for different leadership styles(모두 다른 리더십 스타일을 요구한다)"이므로, "리더십을 요구하는 주체"가 무엇인지 생각해야 함.<br>
+  <br>
+  → "상황들이 다른 리더십을 요구한다"가 자연스러움 (상황에 따라 필요한 리더십이 다름).<br>
+  <br>
+  ▸ ① 여러 그룹들 — 가능하나 직전 절은 situations에 더 가까움. 또한 그룹이 직접 리더십을 요구하지는 않음(그룹의 상황이 요구).<br>
+  ▸ ② ✓ 정답 — 직전 명사이며 의미적으로도 일치<br>
+  ▸ ③ leadership styles는 They가 가리키는 대상이 아니라 They가 요구하는 대상<br>
+  ▸ ④ 너무 광범위. 직전 명사인 situations가 더 정확.<br>
+  ▸ ⑤ we는 사람 주어이므로 "리더십을 요구한다"는 의미와 부적합<br>
+  <br>
+  <b>지시어 추적 원칙:</b><br>
+  ① 가장 가까운 복수 명사 우선 (직전: situations)<br>
+  ② 의미적 호응 점검 ("요구한다"의 주체)<br>
+  ③ 두 조건이 맞으면 정답 — situations.</div></div></details>
+</article>
+
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">10</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">it이 가리키는 대상 — when it is needed</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>10.</b> 다음 글의 밑줄 친 <b>it</b>이 가리키는 것으로 가장 알맞은 것은?</div>
+  <div class="q-passage">Purple leaders give advice only when <u>it</u> is needed.</div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>purple leaders</li>
+    <li><span class="num">②</span>advice</li>
+    <li><span class="num">③</span>others (다른 사람들)</li>
+    <li><span class="num">④</span>need</li>
+    <li><span class="num">⑤</span>비인칭 주어 (날씨·시간)</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">②  advice  (조언)</span></div>
+  <div class="ans-detail"><b>it이 가리키는 단서:</b><br>
+  바로 앞 명사 "advice(조언)"를 그대로 받음. "조언이 필요할 때만 조언을 한다"가 본문 의미.<br>
+  ▸ 본문: "give <b>advice</b> only when <b>it</b>(=advice) is needed"<br>
+  <br>
+  <b>분석:</b> 한 문장 안의 같은 명사를 반복 피하기 위해 it으로 받음. 단수 가산명사는 it, 복수는 they.<br>
+  <br>
+  ▸ ① purple leaders는 give의 주어이지 it과 다른 인물<br>
+  ▸ ② ✓ advice — 직전 단수 가산명사<br>
+  ▸ ③ others — 본문에 없는 명사<br>
+  ▸ ④ need는 동사 need가 아닌 "need(필요)" 명사로 봐도 의미가 다름<br>
+  ▸ ⑤ 비인칭 주어는 날씨/시간/거리 등 — 본문은 명백히 advice 지칭<br>
+  <br>
+  <b>※ advice의 특이성 (불가산 명사):</b><br>
+  • advice는 영어에서 <b>불가산 명사</b>로 a/an 사용 불가, 복수형 advices 비문.<br>
+  • 따라서 "조언 한 가지"는 a piece of advice.<br>
+  • 그러나 it으로 받는 것은 가능 (단수 취급 가능).</div></div></details>
+</article>
+
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">11</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">each group의 의미·each member 차이</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>11.</b> 다음 글의 밑줄 친 <b>each group</b>이 가리키는 의미를 가장 정확히 설명한 것은?</div>
+  <div class="q-passage">"I am a part of many different groups, and I have different responsibilities in <u>each group</u>."</div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>모든 그룹 전체의 합 (= all groups together)</li>
+    <li><span class="num">②</span>한 그룹 안의 각 구성원 (= each member of a group)</li>
+    <li><span class="num">③</span>속해 있는 모든 그룹 각각 (= every group I belong to, considered separately)</li>
+    <li><span class="num">④</span>가장 큰 그룹 (= the largest group)</li>
+    <li><span class="num">⑤</span>리더가 있는 그룹만 (= groups with a leader)</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③  속해 있는 모든 그룹 각각</span></div>
+  <div class="ans-detail"><b>each의 핵심 의미:</b><br>
+  each = "(여러 개 중) 각각, 하나하나" — 전체를 보지 않고 <b>개별 단위</b>를 강조. 단수 취급.<br>
+  <br>
+  본문: "I am a part of many different groups, and I have different responsibilities in <b>each group</b>."<br>
+  → "내가 속한 여러 다른 그룹들에 대해, 각각의 그룹에서 다른 책임이 있다"<br>
+  → each group = 가족·학교·동아리 등 자신이 속한 모든 그룹을 한 번에 한 그룹씩 가리킴.<br>
+  <br>
+  ▸ ① 모든 그룹의 합 — 이는 all groups 또는 every group의 의미. each는 개별 강조이므로 부적합.<br>
+  ▸ ② 그룹 구성원은 each member이지 each group 아님<br>
+  ▸ ③ ✓ 정답 — 모든 그룹 각각<br>
+  ▸ ④ 본문에 크기 비교 정보 없음<br>
+  ▸ ⑤ 본문에 리더 유무 조건 없음<br>
+  <br>
+  <b>each vs every vs all 비교:</b><br>
+  ▸ <b>each</b> = 각각 (개별 강조, 단수 취급)<br>
+  ▸ <b>every</b> = 모두, 매 (전체 강조, 단수 취급)<br>
+  ▸ <b>all</b> = 전부 (전체, 복수·단수 둘 다)<br>
+  → "in each group" = 각 그룹마다 / "in every group" = 모든 그룹에 / "in all groups" = 전체 그룹에.</div>
+  <div class="note"><b>🔑 본문 각 표현이 가리키는 의미.</b><br>
+  • many different groups = 가족·학교·동아리 등 다양한 그룹<br>
+  • each group = 그 다양한 그룹 하나하나<br>
+  • different responsibilities in each group = 그룹마다 다른 책임 (한 사람이 그룹마다 다른 역할)<br>
+  → 이것이 글의 핵심 통찰: 같은 사람도 그룹·상황에 따라 다른 리더십이 필요.</div></div></details>
+</article>
+
+
+<!-- =============== ⓒ 독해 READING (2문항) =============== -->
+<div class="section-head" data-section-type="reading" data-section-marker>
+  <div class="num-line">SECTION C · 독해 · READING · 2 ITEMS</div>
+  <h2>독해 <span class="kor">6 색깔 리더 매칭 + 글의 주제·요지</span></h2>
+  <p class="desc">6가지 리더 스타일의 특징 정확 매칭 + 글 전체의 핵심 메시지 추론.</p>
+</div>
+
+<article class="q-card" data-type="reading">
+  <div class="q-meta"><span class="q-num">12</span><span class="type-tag reading">독해</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">6 색깔 리더 매칭 (일치)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>12.</b> 본문의 6가지 리더 스타일과 특징의 짝짓기로 <b>일치하지 않는</b> 것은?</div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>Green Leaders (Team Builders) — 팀이 가치 있다고 느끼게 하고 긍정적인 환경을 만든다.</li>
+    <li><span class="num">②</span>Red Leaders (Logical Analysts) — 논리적 추론 능력을 가지고 문제와 상황을 분석한다.</li>
+    <li><span class="num">③</span>Purple Leaders (Hands-Off Managers) — 사람들을 통제하지 않고 필요할 때만 조언을 준다.</li>
+    <li><span class="num">④</span>Yellow Leaders (Quiet Supporters) — 명확한 역할을 정하고 모든 일이 제때 끝나게 한다.</li>
+    <li><span class="num">⑤</span>Blue Leaders (Creative Thinkers) — 새로운 방식으로 문제에 접근하고 신선한 아이디어를 떠올린다.</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">④</span></div>
+  <div class="ans-detail">④번은 <b>Orange Leaders (Strict Directors)</b>의 특징을 Yellow Leaders와 잘못 매칭한 함정.<br>
+  <br>
+  <b>본문에 따른 정확한 매칭:</b><br>
+  ▸ ① ✓ <b>Green Leaders</b> = "Ensure that the team feels valued / Create a positive environment / Are friendly and easy to talk to"<br>
+  ▸ ② ✓ <b>Red Leaders</b> = "Have good reasoning skills / Analyze problems and situations"<br>
+  ▸ ③ ✓ <b>Purple Leaders</b> = "Allow others to work on their own / Do not try to control people / Give advice only when it is needed"<br>
+  ▸ ④ 🚨 <b>Yellow Leaders ≠ "명확한 역할·제때 끝남"</b>. 이는 <b>Orange Leaders</b>의 특징.<br>
+  &nbsp;&nbsp;Yellow Leaders 실제: "Lead by example / Let the team members shine instead / Meet the team members' needs"<br>
+  ▸ ⑤ ✓ <b>Blue Leaders</b> = "Approach problems in new ways / Come up with fresh ideas"<br>
+  <br>
+  <b>색깔별 키워드 정리 (반드시 암기):</b><br>
+  ▸ <b>Green</b> 🟢 → 팀 빌더 (가치·긍정·친절)<br>
+  ▸ <b>Red</b> 🔴 → 논리 분석가 (추론·분석·효과적)<br>
+  ▸ <b>Purple</b> 🟣 → 자유방임 (자율·간섭X·조언 최소)<br>
+  ▸ <b>Orange</b> 🟠 → 엄격 관리자 (명확한 역할·시간엄수·정확)<br>
+  ▸ <b>Yellow</b> 🟡 → 조용한 지지자 (모범·팀 빛나게·필요 충족)<br>
+  ▸ <b>Blue</b> 🔵 → 창의 사상가 (새로움·신선한 아이디어·다르게)</div>
+  <div class="trap"><b>⚠️ 함정 유형:</b> 다른 색깔 리더의 특징을 가져와 매칭하는 "혼동 함정." 6 색깔 모두 정확히 구별해 암기 필요.</div></div></details>
+</article>
+
+<article class="q-card" data-type="reading">
+  <div class="q-meta"><span class="q-num">13</span><span class="type-tag reading">독해</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">글의 요지 — Yumi의 깨달음 핵심</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>13.</b> 본문에 나타난 글의 <b>핵심 메시지</b>로 가장 적절한 것은?</div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>좋은 리더는 단 한 가지 자질만 있으면 된다.</li>
+    <li><span class="num">②</span>리더십 스타일은 다양하며, 상황과 그룹에 따라 적합한 스타일이 다르다.</li>
+    <li><span class="num">③</span>모든 사람은 반드시 학급 대표가 되어야 한다.</li>
+    <li><span class="num">④</span>Green Leader가 다른 모든 리더 유형보다 우월하다.</li>
+    <li><span class="num">⑤</span>리더가 되려면 외향적이고 친절해야 한다.</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">②</span></div>
+  <div class="ans-detail"><b>본문 결정적 단서 (글의 결론):</b><br>
+  • "I was surprised that there are <b>actually many different leadership styles</b>"<br>
+  • "We belong to many different groups, and many different situations can come up in our lives. They all <b>call for different leadership styles</b>."<br>
+  • "Each group's <b>unique situation determines the best leadership style</b>."<br>
+  → "다양한 리더십 스타일이 존재하며, 각 상황·그룹마다 적합한 스타일이 다르다"가 핵심.<br>
+  <br>
+  ▸ ① 정반대 — 본문은 다양한 자질을 강조<br>
+  ▸ ② ✓ 정답 — Yumi의 깨달음의 핵심<br>
+  ▸ ③ 본문은 "학급 대표가 될 수도 있다(might pick me)"의 가능성이지 의무가 아님<br>
+  ▸ ④ 본문은 6 스타일 모두 동등하게 제시. Green이 우월하다는 진술 없음.<br>
+  ▸ ⑤ Green Leader의 특징 중 일부지만, 글의 전체 메시지는 "다양성"이지 "외향·친절"이 아님<br>
+  <br>
+  <b>글의 제목 "We Are All Leaders"의 의미:</b><br>
+  → 모든 사람이 리더가 될 수 있다 (자기에게 맞는 스타일이 있으므로). Yumi 같은 친절한 사람도 Green Leader로서 리더가 될 수 있음.</div>
+  <div class="note"><b>🔑 글의 메시지와 Yumi의 결론.</b><br>
+  • Yumi가 처음에 좌절: "I don't have any of those things"(비전·목표·동기 부여 없음)<br>
+  • Yumi의 발견: 다양한 리더십 스타일 존재<br>
+  • Yumi의 결론: "I have some of the qualities of a 'green leader'"<br>
+  • Yumi의 결심: "Okay, let's try it!" (출마 결심)<br>
+  → "리더십은 한 가지 모습이 아니다"라는 깨달음이 행동으로 이어짐.</div></div></details>
+</article>
+
+
+<!-- =============== ⓓ 문맥 CONTEXT (3문항) =============== -->
+<div class="section-head" data-section-type="context" data-section-marker>
+  <div class="num-line">SECTION D · 문맥 · CONTEXT · 3 ITEMS</div>
+  <h2>문맥 <span class="kor">흐름·연결어·문장 삽입</span></h2>
+  <p class="desc">본문 흐름의 자연스러운 연결 파악 + 6 색깔 리더 묘사 흐름 추적.</p>
+</div>
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">14</span><span class="type-tag context">문맥</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">대조 접속사 — but</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>14.</b> 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+  <div class="q-passage">I was surprised that there are actually many different leadership styles, <span class="q-blank">______</span> soon I realized the reason.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>so</span><span class="c"><span class="num">②</span>and</span><span class="c"><span class="num">③</span>but</span><span class="c"><span class="num">④</span>or</span><span class="c"><span class="num">⑤</span>because</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③  but  (그러나)</span></div>
+  <div class="ans-detail"><b>두 절의 의미 관계:</b><br>
+  • 앞: "I was surprised(나는 놀랐다)"<br>
+  • 뒤: "soon I realized the reason(곧 그 이유를 깨달았다)"<br>
+  → "놀랐다 → 그러나 깨달았다"의 <b>대조·전환</b> 관계. but이 가장 자연스러움.<br>
+  <br>
+  ▸ ① so = 그래서 (인과)<br>
+  ▸ ② and = 그리고 (병렬·추가)<br>
+  ▸ ③ ✓ but = 그러나 (대조)<br>
+  ▸ ④ or = 또는 (선택)<br>
+  ▸ ⑤ because = ~이기 때문에 (인과 - 종속절)<br>
+  <br>
+  <b>but 사용 분석:</b><br>
+  본문 "I was surprised, but soon I realized" = "놀랐지만 곧 이해했다" — 처음의 감정에서 이성적 깨달음으로 변화하는 흐름. but이 그 전환점.<br>
+  <br>
+  ※ ② and도 약하게 가능하나, "놀라움 → 이해"는 단순 추가가 아니라 변화의 흐름이므로 but이 더 정확.</div>
+  <div class="note"><b>🔑 등위접속사 7가지 정리.</b><br>
+  • <b>FANBOYS</b>: For / And / Nor / But / Or / Yet / So<br>
+  • for = ~이므로 (이유)<br>
+  • and = 그리고 (병렬)<br>
+  • nor = ~도 아니다 (부정 추가)<br>
+  • but = 그러나 (대조)<br>
+  • or = 또는 (선택)<br>
+  • yet = 그렇지만 (대조, but과 비슷)<br>
+  • so = 그래서 (결과)</div></div></details>
+</article>
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">15</span><span class="type-tag context">문맥</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">문장 삽입 위치 (4점)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>15.</b> 다음 문장이 들어갈 위치로 가장 적절한 곳은?</div>
+  <div class="q-box"><b>I discovered that I have some of the qualities of a "green leader."</b></div>
+  <div class="q-passage">"I am a part of many different groups, and I have different responsibilities in each group." <b>(①)</b> After reading everything, I became more confident. <b>(②)</b> If my classmates think a green leader would make our class better, <b>(③)</b> they might pick me to be class representative! <b>(④)</b> Okay, let's try it! <b>(⑤)</b></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">②</span></div>
+  <div class="ans-detail"><b>핵심 단서:</b> 삽입 문장 "I discovered that I have some of the qualities of a '<b>green leader</b>'(나는 'green leader'의 자질 일부를 가지고 있다는 것을 발견했다)"는 Yumi의 <b>구체적 발견</b>. 이 발견이 출마 결심의 근거.<br>
+  <br>
+  <b>흐름 분석:</b><br>
+  • 인용문: "나는 여러 그룹에 속해 있고 각 그룹에서 다른 책임이 있다"<br>
+  • <b>(①) → After reading everything, I became more confident</b><br>
+  • <b>(②) ★ I discovered ... green leader's qualities</b> ← 자신감의 구체적 근거<br>
+  • <b>(③) → If my classmates think a green leader would make our class better</b><br>
+  • <b>(④) → they might pick me to be class representative</b><br>
+  • <b>(⑤) → Okay, let's try it!</b><br>
+  <br>
+  → 흐름: "자신감 회복 → <b>구체적 발견(green leader 자질)</b> → 가정 → 결과 → 결심"<br>
+  → ②자리에 들어가야 "자신감 회복의 구체적 근거"가 자연스럽게 따라옴.<br>
+  <br>
+  ▸ ① 인용문 직후 — 인용문은 일반론, 자신감 진술 없음<br>
+  ▸ ③ If 절 시작 직전 — green leader 언급이 If절에 등장하므로 그 전에 도입 필요. 그러나 ②가 더 자연스러움(자신감 회복 직후)<br>
+  ▸ ④⑤ — 결심 직전·직후로 너무 늦음</div>
+  <div class="trap"><b>⚠️ 단서 재확인:</b> "green leader"라는 키워드가 삽입 문장과 ③ 다음 If 절에 모두 등장. 즉 ②자리에 삽입하면 "green leader 자질 발견 → If green leader가 좋다면..."의 자연스러운 도입.</div></div></details>
+</article>
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">16</span><span class="type-tag context">문맥</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">흐름상 어색한 문장</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>16.</b> 다음 글에서 <b>흐름상 어색한</b> 문장은?</div>
+  <div class="q-passage">We belong to many different groups, and many different situations can come up in our lives. <span class="num">①</span>They all call for different leadership styles. <span class="num">②</span>Each group's unique situation determines the best leadership style. <span class="num">③</span>Soccer is the most popular sport in the world among young people. <span class="num">④</span>I am a part of many different groups, and I have different responsibilities in each group. <span class="num">⑤</span>After reading everything, I became more confident.</div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③</span></div>
+  <div class="ans-detail">글의 주제: <b>다양한 그룹·상황에 따른 다양한 리더십 스타일과 Yumi의 깨달음</b>.<br>
+  <br>
+  ▸ ①②④⑤는 모두 리더십 스타일·그룹·상황 관련 진술.<br>
+  ▸ ③ "축구는 전 세계 청소년에게 가장 인기 있는 스포츠다"는 <b>스포츠 인기</b>에 대한 일반 정보로 리더십·그룹 흐름과 무관.<br>
+  <br>
+  <b>흐름상 어색한 문장 판별:</b><br>
+  ① 글의 주제(리더십)와 무관한 정보 (스포츠 인기)<br>
+  ② 같은 단어(world)가 등장해도 맥락이 다름<br>
+  <br>
+  <b>각 선지 확인:</b><br>
+  ▸ ① 다양한 상황 → 다양한 리더십 (주제 핵심)<br>
+  ▸ ② 그룹의 상황이 리더십 결정 (주제)<br>
+  ▸ ③ 🚨 축구 인기 (리더십과 무관)<br>
+  ▸ ④ 한 사람이 여러 그룹에 소속 (주제)<br>
+  ▸ ⑤ Yumi의 자신감 회복 (Yumi의 변화)</div>
+  <div class="trap"><b>⚠️ 함정:</b> ③이 "world"라는 본문 어휘를 포함해 본문과 연결된 듯 보일 수 있으나, 본문 주제는 <b>리더십 다양성</b>이지 <b>스포츠 인기</b>가 아님.</div></div></details>
+</article>
+<!-- =============== ⓔ 빈칸 CLOZE (7문항) =============== -->
+<div class="section-head" data-section-type="cloze" data-section-marker>
+  <div class="num-line">SECTION E · 빈칸 · CLOZE · 7 ITEMS</div>
+  <h2>빈칸 <span class="kor">단어·구·이중 빈칸 종합</span></h2>
+  <p class="desc">본문 핵심 어휘·구동사·관용 표현·요약문 빈칸 종합.</p>
+</div>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">17</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">동사 — feel + 형용사/p.p. (감정)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>17.</b> 다음 빈칸에 들어갈 단어로 가장 적절한 것은?</div>
+  <div class="q-passage">Green leaders ensure that the team feels <span class="q-blank">______</span>.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>value</span><span class="c"><span class="num">②</span>values</span><span class="c"><span class="num">③</span>valued</span><span class="c"><span class="num">④</span>valuing</span><span class="c"><span class="num">⑤</span>to value</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③  valued  (가치 있는 — 과거분사 형용사)</span></div>
+  <div class="ans-detail"><b>feel + 과거분사(p.p.)/형용사</b> = "~한 느낌이 들다, ~하다고 느끼다." 2형식 동사 feel은 보어로 형용사 또는 감정을 나타내는 과거분사를 받음.<br>
+  ▸ 본문: "the team feels <b>valued</b>(팀이 가치 있다고 느낀다, 인정받는다고 느낀다)"<br>
+  <br>
+  ▸ ① value (명사·동사) — 보어로 명사·동사 원형 부적합<br>
+  ▸ ② values (3인칭 단수 또는 복수 명사) — 보어 자리 부적합<br>
+  ▸ ③ ✓ valued — 과거분사 형용사 ("가치를 인정받은")<br>
+  ▸ ④ valuing — 현재분사 (능동 의미) — 팀이 무언가를 "가치 있게 여기는"이 되어 의미 어색<br>
+  ▸ ⑤ to value — to부정사는 feel과 결합 부적합<br>
+  <br>
+  <b>feel + 감정 형용사 패턴 (반드시 암기):</b><br>
+  ▸ feel <b>happy</b> / <b>sad</b> / <b>tired</b> / <b>angry</b> (형용사)<br>
+  ▸ feel <b>valued</b> (가치 인정받음 — 수동 의미)<br>
+  ▸ feel <b>respected</b> (존중받음 — 수동 의미)<br>
+  ▸ feel <b>loved</b> (사랑받음 — 수동 의미)<br>
+  ▸ feel <b>excited</b> (들뜸 — 수동 의미)<br>
+  → "감정 받는 사람"의 느낌은 -ed 분사 형용사로 표현.</div>
+  <div class="note"><b>🔑 -ed vs -ing 형용사 핵심.</b><br>
+  • <b>-ed</b>: 감정을 받는 쪽 (사람이 주로) — I feel valued.<br>
+  • <b>-ing</b>: 감정을 일으키는 쪽 (사물이 주로) — The job is valuing(?) ✗<br>
+  → "사람이 ~한 감정을 느낀다"는 -ed 형용사 사용.</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">18</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">관용 표현 — easy to talk to</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>18.</b> 다음 빈칸에 들어갈 형용사로 가장 적절한 것은?</div>
+  <div class="q-passage">Green leaders are friendly and <span class="q-blank">______</span> to talk to.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>easy</span><span class="c"><span class="num">②</span>hard</span><span class="c"><span class="num">③</span>cold</span><span class="c"><span class="num">④</span>strict</span><span class="c"><span class="num">⑤</span>angry</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">①  easy  (쉬운, 편한)</span></div>
+  <div class="ans-detail"><b>be + easy + to V</b> = "~하기 쉽다, ~하기 편한." 사람의 성격 묘사에서 "다가가기 편한, 대화하기 쉬운"의 의미로 자주 사용.<br>
+  ▸ 본문: "friendly and <b>easy to talk to</b>(친절하고 대화하기 쉬운)"<br>
+  <br>
+  ▸ ① ✓ easy = 쉬운, 편한 (Green Leader의 친절·접근 가능한 성격)<br>
+  ▸ ② hard = 어려운 (정반대 — 다가가기 어려운 성격)<br>
+  ▸ ③ cold = 차가운 (정반대 — 친근하지 않음)<br>
+  ▸ ④ strict = 엄격한 (Orange Leader의 특징)<br>
+  ▸ ⑤ angry = 화난 (Green Leader 성격과 정반대)<br>
+  <br>
+  <b>"be 형용사 + to V" 핵심 표현:</b><br>
+  ▸ be <b>easy</b> to talk to = 대화하기 편하다<br>
+  ▸ be <b>hard</b> to please = 만족시키기 어렵다<br>
+  ▸ be <b>quick</b> to learn = 배우는 게 빠르다<br>
+  ▸ be <b>slow</b> to react = 반응이 느리다<br>
+  ▸ be <b>good</b> to listen to = 듣기 좋다<br>
+  → 형용사 + to V는 형용사를 한정하는 to부정사 부사적 용법.<br>
+  <br>
+  <b>특이 구조 — to에 목적어가 없는 이유:</b><br>
+  • talk to + 사람 (사람과 대화하다)<br>
+  • "easy to talk to ___" — 빈칸이 있어야 할 자리지만 주어가 그 대상이므로 생략<br>
+  • 즉 "Green leaders are easy to talk to (them)"에서 them은 주어를 받으므로 생략.</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">19</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">관용 표현 — on time / in time</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>19.</b> 다음 빈칸에 들어갈 전치사로 가장 적절한 것은?</div>
+  <div class="q-passage">Orange leaders make sure everything is finished <span class="q-blank">______</span> time.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>at</span><span class="c"><span class="num">②</span>in</span><span class="c"><span class="num">③</span>on</span><span class="c"><span class="num">④</span>for</span><span class="c"><span class="num">⑤</span>by</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③  on  (= on time, 제때에)</span></div>
+  <div class="ans-detail"><b>on time</b> = "정시에, 제때에 (정해진 시간 안에)." Orange Leader가 시간 엄수를 강조하는 표현.<br>
+  ▸ 본문: "everything is finished <b>on time</b>(모든 일이 제때 끝나도록 한다)"<br>
+  <br>
+  ▸ ① at time ✗ (잘못된 결합)<br>
+  ▸ ② in time = "시간에 맞게 (마감 전에 여유 있게)"<br>
+  ▸ ③ ✓ on time = 정시에, 제때<br>
+  ▸ ④ for time ✗ (잘못된 결합)<br>
+  ▸ ⑤ by time ✗ (단독 사용 안 됨)<br>
+  <br>
+  <b>핵심 차이 (on time vs in time):</b><br>
+  ▸ <b>on time</b> = 정확한 시간에 (정시) — punctual<br>
+  &nbsp;&nbsp;예: The train arrived on time. (기차가 정시에 도착했다)<br>
+  ▸ <b>in time</b> = 시간에 맞춰서 (늦지 않게) — early enough<br>
+  &nbsp;&nbsp;예: I got there in time to catch the train. (기차를 잡을 시간에 맞춰 도착했다)<br>
+  → 본문은 "deadline 안에 끝남"이지 "여유 있게 끝남"이 아니므로 on time.<br>
+  <br>
+  <b>비슷한 시간 표현:</b><br>
+  • on schedule (예정대로)<br>
+  • ahead of time (정해진 시간 전에)<br>
+  • behind schedule (예정보다 늦게)</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">20</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">구동사 — come up with (떠올리다)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>20.</b> 다음 빈칸에 공통으로 들어갈 동사구로 가장 알맞은 것은?</div>
+  <div class="q-passage">
+  • Blue leaders <span class="q-blank">______</span> fresh ideas.<br>
+  • She always tries to <span class="q-blank">______</span> creative solutions.
+  </div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>come up with</span><span class="c"><span class="num">②</span>come over</span><span class="c"><span class="num">③</span>come back</span><span class="c"><span class="num">④</span>come on</span><span class="c"><span class="num">⑤</span>come into</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">①  come up with  (~을 떠올리다, 생각해내다)</span></div>
+  <div class="ans-detail"><b>come up with + 명사</b> = "~을 생각해내다, 떠올리다, 제안하다." 새로운 아이디어·계획·해결책을 창의적으로 만들어낼 때 사용.<br>
+  ▸ 본문: "Blue leaders <b>come up with</b> fresh ideas(블루 리더는 신선한 아이디어를 떠올린다)"<br>
+  <br>
+  ▸ ① ✓ come up with = 떠올리다, 생각해내다<br>
+  ▸ ② come over = (방문하러) 오다, 들르다<br>
+  ▸ ③ come back = 돌아오다<br>
+  ▸ ④ come on = 어서 (감탄사) / (TV 등이) 시작되다<br>
+  ▸ ⑤ come into = ~에 들어가다 / 받게 되다 (유산 등)<br>
+  <br>
+  <b>come 구동사 정리 (반드시 암기):</b><br>
+  • come up = 다가오다, 떠오르다 (생각이)<br>
+  • come up with = 떠올리다, 생각해내다 (creative)<br>
+  • come over = 오다, 들르다<br>
+  • come back = 돌아오다<br>
+  • come across = 우연히 마주치다<br>
+  • come in = 들어오다<br>
+  • come from = ~에서 오다, 출신이다<br>
+  → 같은 come이라도 부사·전치사에 따라 의미 완전히 다름.<br>
+  <br>
+  <b>유의 표현:</b><br>
+  • think of ~ = ~을 생각해내다<br>
+  • think up ~ = ~을 고안하다<br>
+  • come up with = 떠올리다 (가장 일반적)<br>
+  → 본문 맥락에서는 모두 사용 가능.</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">21</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">구동사 — call for (~을 요구하다) (4점)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>21.</b> 다음 빈칸에 공통으로 들어갈 표현으로 가장 적절한 것은?</div>
+  <div class="q-passage">
+  • Different situations all <span class="q-blank">______</span> different leadership styles.<br>
+  • This problem <span class="q-blank">______</span> immediate attention.
+  </div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>call for</span><span class="c"><span class="num">②</span>call off</span><span class="c"><span class="num">③</span>call on</span><span class="c"><span class="num">④</span>call up</span><span class="c"><span class="num">⑤</span>call out</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">①  call for  (~을 요구하다, 필요로 하다)</span></div>
+  <div class="ans-detail"><b>call for + 명사</b> = "~을 요구하다, 필요로 하다, 적절히 다루어야 하는 일이다." 어떤 상황·문제가 특정 대응을 필요로 한다는 의미.<br>
+  ▸ 본문: "They all <b>call for</b> different leadership styles(이 모든 것은 서로 다른 리더십 스타일을 요구한다)"<br>
+  <br>
+  ▸ ① ✓ call for = 요구하다, 필요로 하다<br>
+  ▸ ② call off = 취소하다 (예: call off the meeting)<br>
+  ▸ ③ call on = 방문하다, 부탁하다 (예: call on a friend)<br>
+  ▸ ④ call up = 전화하다 (예: call up a friend)<br>
+  ▸ ⑤ call out = 큰 소리로 부르다 (예: call out for help)<br>
+  <br>
+  <b>call 구동사 정리:</b><br>
+  • call for = 요구하다, 필요로 하다 (상황·문제)<br>
+  • call off = 취소하다 (이벤트)<br>
+  • call on = 방문하다 / (~에게 부탁하다)<br>
+  • call up = 전화하다<br>
+  • call out = 큰 소리로 부르다 / 비난하다<br>
+  • call back = 다시 전화하다<br>
+  <br>
+  <b>유사 표현 — call for의 다른 의미:</b><br>
+  • call for help = 도움을 청하다 (이때는 큰 소리로 부르는 의미에 가까움)<br>
+  • The recipe calls for two eggs. = 그 요리법은 달걀 두 개를 필요로 한다.<br>
+  → 본문은 후자 의미에 가까움 ("상황이 ~을 요구한다").</div>
+  <div class="note"><b>🔑 비슷한 "요구·필요" 동사:</b><br>
+  • require = 필요로 하다 (격식)<br>
+  • need = 필요로 하다 (가장 일반)<br>
+  • call for = 요구하다, 적절한 대응을 필요로 하다 (상황·문제)<br>
+  • demand = 강하게 요구하다</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">22</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">구동사 — belong to (~에 속하다)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>22.</b> 다음 빈칸에 들어갈 동사로 가장 적절한 것은?</div>
+  <div class="q-passage">We <span class="q-blank">______</span> to many different groups, and many different situations can come up in our lives.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>belong</span><span class="c"><span class="num">②</span>contain</span><span class="c"><span class="num">③</span>create</span><span class="c"><span class="num">④</span>own</span><span class="c"><span class="num">⑤</span>match</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">①  belong  (= belong to, ~에 속하다)</span></div>
+  <div class="ans-detail"><b>belong to + 명사</b> = "~에 속하다, ~의 소유이다, ~의 일원이다." 그룹·조직·사람의 소속을 나타냄.<br>
+  ▸ 본문: "We <b>belong to</b> many different groups(우리는 많은 다른 그룹에 속해 있다)"<br>
+  <br>
+  ▸ ① ✓ belong (to) = 속하다<br>
+  ▸ ② contain = 포함하다 (반대 방향: 그룹이 사람을 포함)<br>
+  ▸ ③ create = 만들다<br>
+  ▸ ④ own = 소유하다 (행위 주체가 강함)<br>
+  ▸ ⑤ match = 어울리다<br>
+  <br>
+  <b>belong to 활용:</b><br>
+  • This book belongs to me. (이 책은 내 것이다 — 소유)<br>
+  • I belong to this club. (나는 이 클럽 소속이다 — 소속)<br>
+  • Honesty belongs to good leaders. (정직은 좋은 리더에게 속한 자질이다 — 추상적)<br>
+  <br>
+  <b>belong vs own 차이:</b><br>
+  ▸ X belongs to Y = X는 Y의 것이다 (소유의 대상이 주어)<br>
+  ▸ Y owns X = Y는 X를 소유한다 (소유 주체가 주어)<br>
+  → 본문은 "We belong to groups" — 우리가 그룹에 속한다 (소속의 의미).<br>
+  <br>
+  <b>※ belong은 진행형으로 쓰지 않음:</b><br>
+  • I am belonging to ~ ✗<br>
+  • I belong to ~ ✓<br>
+  → 상태 동사로 진행형 불가.</div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">23</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">전체 문맥 빈칸 (요약문) (4점)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>23.</b> 다음은 본문의 요약문이다. 빈칸 (A)·(B)에 들어갈 말로 가장 적절한 것은?</div>
+  <div class="q-passage">Through her online research, Yumi was surprised to find that there are many different leadership styles. Each <span class="q-blank">__(A)__</span> situation calls for a different style. She realized she has the qualities of a "green leader," who builds a positive team environment. This <span class="q-blank">__(B)__</span> made her feel more confident about running for class representative.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span>group's / discovery</span>
+    <span class="c"><span class="num">②</span>school's / mistake</span>
+    <span class="c"><span class="num">③</span>group's / failure</span>
+    <span class="c"><span class="num">④</span>person's / discovery</span>
+    <span class="c"><span class="num">⑤</span>family's / problem</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">①  group's  /  discovery</span></div>
+  <div class="ans-detail"><b>(A)</b> 본문 단서: "<b>Each group's</b> unique situation determines the best leadership style." → group이 핵심 단어.<br>
+  ▸ ✓ group's = 그룹의<br>
+  ▸ school's / family's / person's = 본문에 없는 단어<br>
+  <br>
+  <b>(B)</b> 본문 단서: "I <b>discovered</b> that I have some of the qualities of a 'green leader.'" → discovery(발견)가 자신감을 가져옴.<br>
+  ▸ ✓ discovery = 발견<br>
+  ▸ mistake / failure / problem = 부정적 의미 (자신감 회복과 정반대)<br>
+  <br>
+  → (A) group's + (B) discovery 조합이 정확.<br>
+  <br>
+  <b>본문 → 요약문 변환 패턴:</b><br>
+  • Each group's situation = Each group's unique situation<br>
+  • discovery = "I discovered that ~"의 명사형<br>
+  • feel more confident = "I became more confident"의 paraphrase<br>
+  • running for class representative = run for class representative</div></div></details>
+</article>
+
+
+<!-- =============== ⓕ 어휘·숙어 VOCAB (5문항) =============== -->
+<div class="section-head" data-section-type="vocab" data-section-marker>
+  <div class="num-line">SECTION F · 어휘·숙어 · VOCAB · 5 ITEMS</div>
+  <h2>어휘·숙어 <span class="kor">동의어·반의어·영영풀이·단어 가족·구동사</span></h2>
+  <p class="desc">본문 핵심 어휘·숙어 종합. 6 색깔 리더 특징 어휘·구동사 다룸.</p>
+</div>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">24</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">영영풀이 — analyze (분석하다)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>24.</b> 다음 영영풀이가 가리키는 단어로 가장 알맞은 것은?</div>
+  <div class="q-box">to study or examine something carefully in order to understand it</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>determine</span><span class="c"><span class="num">②</span>analyze</span><span class="c"><span class="num">③</span>achieve</span><span class="c"><span class="num">④</span>approach</span><span class="c"><span class="num">⑤</span>realize</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">②  analyze  (분석하다)</span></div>
+  <div class="ans-detail"><b>영영풀이 분석:</b> "이해하기 위해 무언가를 신중히 연구하거나 검토하다" → <b>analyze(분석하다)</b>의 정확한 정의.<br>
+  ▸ 본문: "Red leaders <b>analyze</b> problems and situations(레드 리더는 문제와 상황을 분석한다)"<br>
+  <br>
+  ▸ ① determine = 결정하다, 판정하다<br>
+  ▸ ② ✓ analyze = 분석하다<br>
+  ▸ ③ achieve = 달성하다, 성취하다<br>
+  ▸ ④ approach = 접근하다, 다가가다<br>
+  ▸ ⑤ realize = 깨닫다<br>
+  <br>
+  <b>analyze 단어 가족:</b><br>
+  • analyze [동] 분석하다 (= analyse 영국식)<br>
+  • analysis [명] 분석<br>
+  • analyst [명] 분석가<br>
+  • analytical [형] 분석적인<br>
+  <br>
+  <b>유사 어휘 (분석·연구):</b><br>
+  • analyze = 부분으로 나누어 분석<br>
+  • examine = 자세히 살펴보다, 검사하다<br>
+  • investigate = 조사하다 (사건·범죄)<br>
+  • study = 연구하다, 공부하다<br>
+  • research = 연구하다, 조사하다 (학문적)<br>
+  → 본문 맥락(문제 분석)에서는 analyze가 가장 정확.</div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">25</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">반의어 — strict ↔ lenient/loose</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>25.</b> 다음 밑줄 친 단어와 의미가 <b>가장 반대</b>인 것은?</div>
+  <div class="q-passage">Orange leaders are <u>strict</u> directors who make sure everything is finished on time.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>severe</span><span class="c"><span class="num">②</span>tough</span><span class="c"><span class="num">③</span>lenient</span><span class="c"><span class="num">④</span>tight</span><span class="c"><span class="num">⑤</span>firm</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">③  lenient  (관대한, 너그러운)</span></div>
+  <div class="ans-detail"><b>strict</b>(엄격한, 규율적인) ↔ <b>lenient</b>(관대한, 너그러운) — 가장 정확한 반의어.<br>
+  <br>
+  ▸ ① severe = 심한, 엄격한 (strict와 동의어)<br>
+  ▸ ② tough = 강한, 엄한 (strict와 비슷)<br>
+  ▸ ③ ✓ lenient = 관대한, 너그러운 (strict의 정반대)<br>
+  ▸ ④ tight = 빡빡한, 엄한 (strict와 비슷)<br>
+  ▸ ⑤ firm = 단호한, 확고한 (strict와 비슷)<br>
+  <br>
+  <b>"엄격한" 동의어 그룹:</b><br>
+  • strict = 엄격한 (가장 일반적)<br>
+  • severe = 심한, 엄격한 (강한 어조)<br>
+  • tough = 강한, 까다로운<br>
+  • tight = 빡빡한, 엄한<br>
+  • firm = 단호한, 확고한<br>
+  • rigorous = 엄밀한, 철저한<br>
+  <br>
+  <b>"관대한" 동의어 그룹 (strict의 반의어):</b><br>
+  • lenient = 관대한 (벌·규율에)<br>
+  • easy-going = 느긋한 (성격)<br>
+  • relaxed = 편안한, 느긋한<br>
+  • loose = 느슨한 (규칙)<br>
+  • permissive = 허용적인<br>
+  → strict의 가장 직접적인 반의어가 lenient.</div>
+  <div class="trap"><b>⚠️ severe 함정:</b><br>
+  ① severe와 strict는 모두 "엄격한"이지만 미세한 차이:<br>
+  • strict = 규율·규칙에 엄격 (예: strict teacher, strict rules)<br>
+  • severe = 정도가 심한 (예: severe pain, severe winter)<br>
+  ② 학생들이 severe를 strict의 반의어로 착각하는 경우 있음 — 둘은 동의어임.</div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">26</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">단어 가족 — confidence / confident / confidently (4점)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>26.</b> 다음 빈칸에 들어갈 단어 가족(word family) 짝짓기가 옳지 <u>않은</u> 것은?</div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>(형용사) <b>confident</b> — feeling sure about your ability</li>
+    <li><span class="num">②</span>(명사) <b>confidence</b> — the feeling of being sure</li>
+    <li><span class="num">③</span>(부사) <b>confidently</b> — in a way that shows you are sure</li>
+    <li><span class="num">④</span>(동사) <b>confide</b> — to tell secrets or feelings to someone</li>
+    <li><span class="num">⑤</span>(과거분사) <b>confided</b> — feeling unable to do something well</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">⑤</span></div>
+  <div class="ans-detail">⑤ <b>confided</b>는 confide 동사의 과거형/과거분사로 "비밀·감정을 털어놓은"의 의미. 영영풀이 "feeling unable to do something well(무언가를 잘할 수 없다고 느끼는)"는 <b>confident의 정반대</b>로 사실상 부정 형용사 형태인 <b>unconfident</b> 또는 <b>insecure</b>의 정의.<br>
+  <br>
+  <b>confident/confidence 단어 가족 정리:</b><br>
+  ▸ <b>confident</b> [형] 자신감 있는 ✓ (본문: "I became more confident")<br>
+  ▸ <b>confidence</b> [명] 자신감, 신뢰 ✓<br>
+  ▸ <b>confidently</b> [부] 자신감 있게 ✓<br>
+  ▸ <b>confide</b> [동] 비밀을 털어놓다 ✓ (예: confide in a friend)<br>
+  ▸ <b>confidant/confidante</b> [명] 절친한 친구 (비밀 털어놓는 상대)<br>
+  ▸ <b>confided</b> [과거분사] 털어놓은 — ⑤번 정의(잘할 수 없다고 느끼는)와 무관 🚨<br>
+  <br>
+  <b>혼동 주의:</b><br>
+  • confident (자신감 있는) — 형용사<br>
+  • confidence (자신감) — 명사<br>
+  • confide (비밀 말하다) — 동사<br>
+  • confidant (비밀 털어놓는 상대) — 명사<br>
+  → 같은 con-fid-(신뢰)에서 갈라진 단어들이지만 의미가 다름.<br>
+  <br>
+  <b>본문 핵심 어휘 가족:</b><br>
+  ▸ confident → confidence → confidently<br>
+  ▸ surprise → surprised → surprising → surprisingly<br>
+  ▸ realize → realization → realistic<br>
+  ▸ analyze → analysis → analyst → analytical</div>
+  <div class="note"><b>🔑 형용사 -ed vs 무관 단어 구별.</b><br>
+  • confident (자신감 있는, 본문) ← -ed 형태 아님<br>
+  • confided (털어놓은) ← confide의 과거분사<br>
+  → confident와 confided는 어원이 같지만 의미가 다른 단어.</div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">27</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">동의어 — discover · find / find out</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>27.</b> 다음 밑줄 친 단어와 의미가 <b>가장 가까운</b> 것은?</div>
+  <div class="q-passage">I <u>discovered</u> that I have some of the qualities of a "green leader."</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>hid</span><span class="c"><span class="num">②</span>found out</span><span class="c"><span class="num">③</span>created</span><span class="c"><span class="num">④</span>forgot</span><span class="c"><span class="num">⑤</span>ignored</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">②  found out  (알아냈다)</span></div>
+  <div class="ans-detail"><b>discover</b> = "발견하다, 알아내다 (몰랐던 사실을)" → <b>find out</b>(알아내다)과 동의어. 둘 다 새로운 정보·사실을 알게 되는 의미.<br>
+  ▸ 본문: "I <b>discovered</b> that I have some of the qualities(자질이 있다는 것을 알아냈다)"<br>
+  <br>
+  ▸ ① hid (hide의 과거형) = 숨겼다 (정반대)<br>
+  ▸ ② ✓ found out = 알아냈다 (discover와 동의)<br>
+  ▸ ③ created = 만들었다, 창조했다 (다른 의미)<br>
+  ▸ ④ forgot (forget의 과거형) = 잊었다 (정반대)<br>
+  ▸ ⑤ ignored = 무시했다 (정반대)<br>
+  <br>
+  <b>"발견·알게 됨" 동의어 그룹:</b><br>
+  • discover = 발견하다 (몰랐던 것을 새로 알게 됨)<br>
+  • find out = 알아내다 (정보·사실)<br>
+  • realize = 깨닫다 (이해하게 됨)<br>
+  • notice = 알아차리다 (감지)<br>
+  • come to know = 알게 되다 (점차)<br>
+  → 본문은 자기 자신의 새로운 측면을 알게 된 것이므로 discover/find out 모두 가능.<br>
+  <br>
+  <b>discover의 다른 의미:</b><br>
+  • 새 땅·과학적 사실 발견 (Columbus discovered America)<br>
+  • 자기 자신을 알게 됨 (self-discovery)<br>
+  • 정보·진실을 알아냄 (= find out)</div>
+  <div class="note"><b>🔑 find vs find out 차이.</b><br>
+  • <b>find</b> + 명사 = 우연히/노력해서 ~을 찾다 (물건)<br>
+  &nbsp;&nbsp;예: I found my keys. (열쇠를 찾았다)<br>
+  • <b>find out</b> + 명사/절 = ~을 알아내다 (정보·사실)<br>
+  &nbsp;&nbsp;예: I found out the truth. (진실을 알아냈다)<br>
+  → 본문은 "사실을 알아냈다"이므로 find out에 더 가까움.</div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">28</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">관용 표현 — meet the needs / on one's own / by example (구동사 종합)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>28.</b> 다음 빈칸에 들어갈 동사 표현이 <b>잘못 짝지어진</b> 것은?</div>
+  <ul class="q-choices">
+    <li><span class="num">①</span>Yellow leaders <b>lead by example</b>. → 솔선수범하다</li>
+    <li><span class="num">②</span>Yellow leaders <b>meet the team members' needs</b>. → 팀원의 필요를 충족시키다</li>
+    <li><span class="num">③</span>Purple leaders allow others to work <b>on their own</b>. → 스스로, 혼자서</li>
+    <li><span class="num">④</span>Blue leaders <b>deal with</b> tasks differently. → 일을 다루다, 처리하다</li>
+    <li><span class="num">⑤</span>Each group's situation <b>determines</b> the best style. → 결정을 부정하다</li>
+  </ul>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">⑤</span></div>
+  <div class="ans-detail">⑤ <b>determine</b> = "결정하다, 판단하다" — "결정을 부정하다"는 잘못된 한글 풀이. 본문은 "그룹의 상황이 최선의 스타일을 <b>결정한다·정한다</b>"가 정확.<br>
+  <br>
+  <b>각 표현 정확한 의미:</b><br>
+  ▸ ① ✓ lead by example = 솔선수범하다 (자신이 모범이 됨)<br>
+  ▸ ② ✓ meet the needs = 필요를 충족시키다, 요구에 부응하다<br>
+  ▸ ③ ✓ on one's own = 스스로, 혼자서, 독립적으로<br>
+  ▸ ④ ✓ deal with = 다루다, 처리하다, 대처하다<br>
+  ▸ ⑤ 🚨 determine = <b>결정하다, 정하다, 좌우하다</b> (≠ 결정을 부정하다)<br>
+  <br>
+  <b>determine 다의어:</b><br>
+  ① 결정하다 (= decide) — Each situation determines the style.<br>
+  ② 알아내다, 밝혀내다 (= find out) — determine the cause<br>
+  ③ ~의 결과를 좌우하다, 결정짓다 (= shape, control)<br>
+  → 본문은 ①·③ 의미.<br>
+  <br>
+  <b>비슷한 의미 동사:</b><br>
+  • decide = 결정하다 (선택)<br>
+  • determine = 결정하다 (좌우, 결과)<br>
+  • shape = 형성하다, 모양 짓다<br>
+  • control = 통제하다<br>
+  <br>
+  <b>determine의 단어 가족:</b><br>
+  • determine [동] 결정하다, 좌우하다<br>
+  • determination [명] 결심, 결단력<br>
+  • determined [형] 결심한, 단호한<br>
+  • determining [형] 결정적인 (= deciding)</div>
+  <div class="note"><b>🔑 부정 접두사 헷갈림 주의:</b><br>
+  • "determine"은 부정 의미가 없음 (긍정 동사)<br>
+  • "정하다·확정하다·결과를 만들다"의 의미<br>
+  → "decision을 부정하다"는 reject/overturn/reverse a decision 등의 표현 사용.</div></div></details>
+</article>
+
+
+<!-- =============== ⓖ 서술형 WRITING (2문항) =============== -->
+<div class="section-head" data-section-type="writing" data-section-marker>
+  <div class="num-line">SECTION G · 서술형 · WRITING · 2 ITEMS</div>
+  <h2>서술형 <span class="kor">단어 배열 영작 (★자리 + 어형 변형)</span></h2>
+  <p class="desc">목운중 시험 단골 영작 패턴. 보기 단어를 정답 어순과 다르게 무작위 배치하여 학생이 어순을 직접 재구성해야 함.</p>
+</div>
+
+<article class="q-card" data-type="writing">
+  <div class="q-meta"><span class="q-num">29</span><span class="type-tag writing">서술형</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">단어 배열 영작 — Each + 단수 + 단수동사 + 최상급 (5점 고배점)</span><span class="q-pts">5점</span></div>
+  <div class="q-prompt"><b>29.</b> 다음 우리말과 같도록 〈보기〉의 단어를 모두 사용하여 영작하시오. <span style="color:var(--muted)">(★ 자리에 들어갈 한 단어를 답안에 명시할 것)</span></div>
+  <div class="q-box"><b>각 그룹의 독특한 상황이 최선의 리더십 스타일을 결정한다.</b></div>
+  <div class="q-passage" style="background:#FFFAF0;padding:12px 14px;border-radius:6px;border-left:3px solid #C9A227">
+  〈보기〉<br>
+  <span class="word-bank-inline">style / situation / determines / Each / unique / leadership / the / group's / best</span><br>
+  <span class="word-bank-note" style="color:var(--muted);font-size:12.5px">※ 정답은 ★ 자리 포함 9단어로 구성됨. 단어 어형 변형 없음.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">Each ★group's unique situation determines the best leadership style.</span><br>★ 자리: <b>group's</b></div>
+  <div class="ans-detail"><b>구문 분석:</b><br>
+  • Each = 각각의 (단수 한정사)<br>
+  • <b>★group's</b> = 그룹의 (소유격) — Each 다음 단수명사<br>
+  • unique situation = 독특한 상황 (수식어 + 명사)<br>
+  • determines = 결정한다 (3인칭 단수 현재 — Each는 단수 취급)<br>
+  • the best leadership style = 최선의 리더십 스타일 (the + 최상급 + 명사)<br>
+  <br>
+  <b>핵심 문법 4가지:</b><br>
+  ① <b>Each + 단수명사 + 단수동사</b>: Each group's situation determines<br>
+  ② <b>소유격 's</b>: group's (그룹의)<br>
+  ③ <b>최상급 + 명사</b>: the best ~ style<br>
+  ④ <b>형용사 어순</b>: the best leadership style (a/the + 형용사 + 명사)<br>
+  <br>
+  <b>★ 자리 함정:</b> Each 다음에는 단수명사가 와야 하므로 group's(소유격)가 자리잡음. 만약 'unique'가 ★자리이면 어색함(Each unique group ✗).<br>
+  <br>
+  <b>단어 보기 어순(섞인 순서):</b><br>
+  style / situation / determines / Each / unique / leadership / the / group's / best<br>
+  → 정답 어순(Each group's unique situation determines the best leadership style)과 다르게 무작위 섞임.</div>
+  <div class="note"><b>🔑 영작 단계별 풀이.</b><br>
+  ① 한정사 Each + 소유격 group's: Each group's<br>
+  ② 형용사 unique + 명사 situation: unique situation<br>
+  ③ 단수동사 determines (Each 단수 취급)<br>
+  ④ 목적어 the best leadership style (최상급 + 명사)</div>
+  <div class="trap"><b>⚠️ Each 단수 취급 함정:</b> 학생들이 Each가 의미상 "여러 그룹"을 가리킨다고 착각해 동사를 determine(원형) 또는 are determining(복수 진행)으로 쓰는 경우 많음. <b>Each는 단수 취급</b>이 절대 원칙.</div></div></details>
+</article>
+
+<article class="q-card" data-type="writing">
+  <div class="q-meta"><span class="q-num">30</span><span class="type-tag writing">서술형</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">단어 배열 영작 — be surprised that + there are (4점)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>30.</b> 다음 우리말과 같도록 〈보기〉의 단어를 모두 사용하여 영작하시오. <span style="color:var(--muted)">(★ 자리에 들어갈 한 단어를 답안에 명시할 것)</span></div>
+  <div class="q-box"><b>나는 사실 많은 다른 리더십 스타일이 있다는 것에 놀랐다.</b></div>
+  <div class="q-passage" style="background:#FFFAF0;padding:12px 14px;border-radius:6px;border-left:3px solid #C9A227">
+  〈보기〉<br>
+  <span class="word-bank-inline">styles / different / actually / there / leadership / surprised / many / I / was / are / that</span><br>
+  <span class="word-bank-note" style="color:var(--muted);font-size:12.5px">※ 정답은 ★ 자리 포함 11단어로 구성됨. ★자리는 that절의 첫 단어. 단어 어형 변형 없음.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <span class="correct">I was surprised that ★there are actually many different leadership styles.</span><br>★ 자리: <b>there</b></div>
+  <div class="ans-detail"><b>구문 분석:</b><br>
+  • I was surprised = 나는 놀랐다 (감정 형용사 수동태)<br>
+  • that = 명사절 접속사 (~라는 것에)<br>
+  • <b>★there are</b> = ~이 있다 (there is/are 구문)<br>
+  • actually = 사실, 실제로 (부사)<br>
+  • many different leadership styles = 많은 다른 리더십 스타일<br>
+  <br>
+  <b>핵심 문법 4가지:</b><br>
+  ① <b>be surprised that ~</b>: ~에 놀라다 (감정 형용사 + that 절)<br>
+  ② <b>that 명사절</b>: 놀라움의 이유·내용을 진술<br>
+  ③ <b>there are + 복수명사</b>: ~이 있다 (존재)<br>
+  ④ <b>actually</b>: "사실, 실제로" — 강조 부사<br>
+  <br>
+  <b>★ 자리 함정:</b> that 다음에 절(주어+동사)이 와야 함. there are 구문에서 there가 형식상 주어 역할이므로 that 다음 첫 단어는 there.<br>
+  <br>
+  <b>단어 보기 어순(섞인 순서):</b><br>
+  styles / different / actually / there / leadership / surprised / many / I / was / are / that<br>
+  → 정답 어순과 다르게 무작위 섞임. 특히 "many different leadership styles"라는 명사구의 어순도 학생이 직접 구성해야 함.<br>
+  <br>
+  <b>형용사 어순 (수량·종류·성격):</b><br>
+  • many (수량) + different (종류) + leadership (분야) + styles (명사)<br>
+  → "many different ~ styles"가 자연스러운 영어 어순.</div>
+  <div class="note"><b>🔑 핵심 표현 3가지 정리.</b><br>
+  • <b>I was surprised that ~</b>: ~에 놀랐다<br>
+  • <b>there are/is + 명사</b>: ~이 있다<br>
+  • <b>actually</b>: 사실, 실제로 (놀라움·정정 강조)<br>
+  → 모두 본문 핵심 어법, 시험 단골.</div>
+  <div class="trap"><b>⚠️ that vs which 함정:</b> "I was surprised <b>that</b> there are ~"의 that은 명사절 접속사이지 관계대명사가 아님. (사물 선행사가 없으므로 which 사용 불가)</div></div></details>
+</article>
+
+
+
+
+<!-- 인쇄 전용 풋터 (화면에서는 숨김) -->
+<div class="print-footer">
+  목동서로영어학원 제작 · MOKDONG SEORO ENGLISH ACADEMY · 0505.co.kr
+</div>
+
+<div class="made-by">
+  <div>목동서로영어학원 — Passage-Based Practice Set</div>
+  <div class="credit">MOKDONG SEORO ENGLISH ACADEMY · 0505.co.kr</div>
+</div>
+
+<script>
+  // 유형 라벨 매핑 (인쇄 헤더용)
+  const TYPE_LABELS = {
+    all: '전체 30문항',
+    grammar: '어법 (8문항)',
+    pronoun: '대명사 (3문항)',
+    reading: '독해 (2문항)',
+    context: '문맥 (3문항)',
+    cloze: '빈칸 (7문항)',
+    vocab: '어휘·숙어 (5문항)',
+    writing: '서술형 (2문항)'
+  };
+
+  // ────────────────────────────────────────────
+  // 1. 네비게이션 탭 — 유형 필터링 (기존 기능)
+  // ────────────────────────────────────────────
+  function applyFilter(type) {
+    document.querySelectorAll('.nav-tab').forEach(t => {
+      t.classList.toggle('active', t.dataset.type === type);
+    });
+    document.querySelectorAll('.q-card').forEach(card => {
+      card.classList.toggle('hidden', !(type === 'all' || card.dataset.type === type));
+    });
+    document.querySelectorAll('.section-head[data-section-type]').forEach(sh => {
+      const sectType = sh.dataset.sectionType;
+      sh.classList.toggle('hidden', !(type === 'all' || sectType === type));
+    });
+    // 인쇄 헤더 라벨 갱신
+    const lbl = document.getElementById('printSectionLabel');
+    if (lbl) lbl.textContent = TYPE_LABELS[type] || '전체';
+  }
+
+  document.querySelectorAll('.nav-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const type = tab.dataset.type;
+      applyFilter(type);
+      const firstVisible = document.querySelector('.q-card:not(.hidden), .section-head:not(.hidden)[data-section-type]');
+      if (firstVisible && type !== 'all') {
+        const navHeight = document.querySelector('.type-nav-wrap').offsetHeight;
+        const top = firstVisible.getBoundingClientRect().top + window.scrollY - navHeight - 20;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // ────────────────────────────────────────────
+  // 2. 인쇄 버튼 — 유형 필터 적용 후 인쇄 호출
+  // ────────────────────────────────────────────
+  document.querySelectorAll('.nav-print').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const type = btn.dataset.printType;
+      // (1) 해당 유형 필터 적용 (인쇄 대상만 보이도록)
+      applyFilter(type);
+      // (2) 짧은 지연 후 인쇄 다이얼로그 호출 (DOM 갱신 시간 확보)
+      setTimeout(() => {
+        window.print();
+      }, 180);
+    });
+  });
+
+  // ────────────────────────────────────────────
+  // 3. 정답 모두 펼치기/접기 토글 (인쇄 옵션)
+  // ────────────────────────────────────────────
+  let answersOpen = false;
+  const answerToggleBtn = document.getElementById('answerToggle');
+  if (answerToggleBtn) {
+    answerToggleBtn.addEventListener('click', () => {
+      answersOpen = !answersOpen;
+      document.querySelectorAll('details.ans').forEach(d => { d.open = answersOpen; });
+      answerToggleBtn.textContent = answersOpen ? '정답 모두 접기' : '정답 모두 펼치기';
+      answerToggleBtn.classList.toggle('active', answersOpen);
+    });
+  }
+
+  // ────────────────────────────────────────────
+  // 4. 지문 펼치기/접기 토글 (인쇄 옵션)
+  // ────────────────────────────────────────────
+  const passageToggleBtn = document.getElementById('passageToggle');
+  if (passageToggleBtn) {
+    passageToggleBtn.addEventListener('click', () => {
+      const box = document.querySelector('.passage-box');
+      if (box) {
+        box.open = !box.open;
+        passageToggleBtn.classList.toggle('active', box.open);
+      }
+    });
+    // 초기 상태 동기화
+    const box = document.querySelector('.passage-box');
+    if (box && box.open) passageToggleBtn.classList.add('active');
+  }
+
+  // ────────────────────────────────────────────
+  // 5. Ctrl/Cmd + P 단축키 → 안내 메시지
+  // ────────────────────────────────────────────
+  // 사용자가 브라우저 기본 인쇄(Ctrl+P)를 사용해도 정상 동작.
+  // 현재 화면(필터링된 상태) + 펼쳐진 정답이 그대로 인쇄됨.
+</script>
+
+</body>
+</html>
