@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>터치 드래그 진단</title>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body { margin: 0; padding: 14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #f5f5f5; }
+h2 { font-size: 16px; color: #1F3864; margin: 0 0 8px; }
+.help { font-size: 12px; color: #666; margin-bottom: 14px; padding: 10px; background: white; border-radius: 6px; }
+.zone {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  min-height: 70px; padding: 14px;
+  background: #f0f4ff; border: 2px dashed #2E75B6; border-radius: 8px;
+  margin-bottom: 10px; align-content: flex-start;
+}
+.zone:empty::before {
+  content: '◆ 정답 영역 (여기에 단어를 끌어다 놓으세요)';
+  color: #2E75B6; font-size: 13px; font-style: italic;
+}
+.zone.over { background: #ddeeff; border-color: #C55A11; }
+.pool {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  min-height: 70px; padding: 14px;
+  background: #f8f8f8; border: 2px dashed #aaa; border-radius: 8px;
+  margin-bottom: 14px;
+}
+.pool.over { background: #fff9e6; border-color: #C55A11; }
+.chip {
+  display: inline-flex; align-items: center;
+  padding: 10px 16px; border-radius: 8px;
+  font-family: Georgia, serif; font-size: 16px; font-weight: 600;
+  background: #e8f0fe; border: 2px solid #2E75B6; color: #1F3864;
+  cursor: grab; user-select: none;
+  touch-action: none;
+  -webkit-touch-callout: none;
+  white-space: nowrap;
+}
+.chip.dragging { opacity: 0.35; transform: scale(0.93); }
+.btn { padding: 8px 14px; background: #1F3864; color: white; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; margin-right: 8px; }
+.btn-clear { background: #993556; }
+.log {
+  margin-top: 14px; padding: 12px;
+  background: #1a1a1a; color: #0f0;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  border-radius: 6px; min-height: 200px; max-height: 400px;
+  overflow-y: auto; line-height: 1.5;
+  white-space: pre-wrap; word-break: break-all;
+}
+.log .err { color: #f55; }
+.log .ok { color: #5f5; }
+.log .info { color: #5cf; }
+.log .warn { color: #fa5; }
+</style>
+</head>
+<body>
+
+<h2>📱 터치 드래그 진단 페이지</h2>
+<div class="help">
+  태블릿에서 이 페이지를 열고, 아래 단어를 정답 영역으로 <strong>드래그</strong>해 보세요.<br>
+  발사되는 모든 이벤트가 화면 하단 검은 로그창에 실시간으로 표시됩니다.<br>
+  <strong>그 로그를 캡처해서 알려주시면 정확한 원인을 파악할 수 있습니다.</strong>
+</div>
+
+<div id="zone" class="zone"></div>
+<div id="pool" class="pool">
+  <div class="chip" data-id="1">apple</div>
+  <div class="chip" data-id="2">banana</div>
+  <div class="chip" data-id="3">cherry</div>
+</div>
+
+<div>
+  <button class="btn" onclick="resetTest()">↺ 초기화</button>
+  <button class="btn btn-clear" onclick="clearLog()">🗑 로그 지우기</button>
+  <button class="btn" onclick="copyLog()">📋 로그 복사</button>
+</div>
+
+<div class="log" id="log"></div>
+
+<script>
+const logEl = document.getElementById('log');
+const zone = document.getElementById('zone');
+const pool = document.getElementById('pool');
+
+// ───── 디바이스 정보 ─────
+function deviceInfo() {
+  const ua = navigator.userAgent;
+  const w = window.innerWidth, h = window.innerHeight;
+  const dpr = window.devicePixelRatio || 1;
+  const touch = ('ontouchstart' in window) ? '✓ Touch' : '✗ NoTouch';
+  const pointer = window.PointerEvent ? '✓ Pointer' : '✗ NoPointer';
+  let browser = 'unknown';
+  if (/Chrome\/(\d+)/.test(ua)) browser = 'Chrome ' + RegExp.$1;
+  else if (/Safari\/(\d+)/.test(ua) && /Version\/([\d.]+)/.test(ua)) browser = 'Safari ' + RegExp.$1;
+  else if (/Firefox\/(\d+)/.test(ua)) browser = 'Firefox ' + RegExp.$1;
+  let os = 'unknown';
+  if (/iPad|iPhone/.test(ua)) os = /OS ([\d_]+)/.test(ua) ? 'iOS ' + RegExp.$1.replace(/_/g, '.') : 'iOS';
+  else if (/Android (\d+\.[\d.]+)/.test(ua)) os = 'Android ' + RegExp.$1;
+  else if (/Windows/.test(ua)) os = 'Windows';
+  else if (/Mac/.test(ua)) os = 'macOS';
+  return `${os} / ${browser} / ${w}x${h}@${dpr}x / ${touch} / ${pointer}`;
+}
+
+function log(msg, cls) {
+  const line = document.createElement('div');
+  if (cls) line.className = cls;
+  const t = new Date();
+  const ts = String(t.getSeconds()).padStart(2,'0') + '.' + String(t.getMilliseconds()).padStart(3,'0');
+  line.textContent = `[${ts}] ${msg}`;
+  logEl.appendChild(line);
+  logEl.scrollTop = logEl.scrollHeight;
+}
+
+function clearLog() { logEl.innerHTML = ''; log('━━━ 로그 초기화 ━━━', 'info'); }
+function copyLog() {
+  const text = Array.from(logEl.children).map(c => c.textContent).join('\n');
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => log('✓ 클립보드 복사됨', 'ok'));
+  } else {
+    log('✗ clipboard API 없음 — 수동으로 캡처해 주세요', 'warn');
+  }
+}
+function resetTest() {
+  Array.from(zone.querySelectorAll('.chip')).forEach(c => pool.appendChild(c));
+  log('━━━ 초기화 완료 ━━━', 'info');
+}
+
+// ───── 디바이스 정보 출력 ─━────
+log('═══ 진단 시작 ═══', 'info');
+log(deviceInfo(), 'info');
+log('단어를 드래그해 보세요. 모든 이벤트가 기록됩니다.', 'info');
+log('', '');
+
+// ───── 터치 드래그 코드 (v4 동일) ─────
+let tChip = null, tClone = null;
+let tStartX = 0, tStartY = 0, tOffX = 0, tOffY = 0;
+let tMoved = false, tDragEnd = 0;
+let moveCount = 0;
+const T_DRAG_THRESHOLD = 10;
+
+function arrTouchStart(e) {
+  const chip = e.target.closest('.chip');
+  if (!chip) { log('  ↳ touchstart 발사됐지만 chip 아님 (target=' + e.target.tagName + ')', 'warn'); return; }
+  tChip = chip;
+  const r = chip.getBoundingClientRect();
+  const t = e.touches[0];
+  tStartX = t.clientX; tStartY = t.clientY;
+  tOffX = t.clientX - r.left; tOffY = t.clientY - r.top;
+  tMoved = false; moveCount = 0;
+  log(`▶ touchstart  chip="${chip.dataset.id}"  (${Math.round(t.clientX)},${Math.round(t.clientY)})  cancelable=${e.cancelable}`, 'ok');
+}
+
+function arrTouchMove(e) {
+  if (!tChip) return;
+  if (e.cancelable) e.preventDefault();
+  moveCount++;
+  const t = e.touches[0];
+  const dx = t.clientX - tStartX, dy = t.clientY - tStartY;
+  
+  if (!tMoved) {
+    if (Math.hypot(dx, dy) < T_DRAG_THRESHOLD) {
+      if (moveCount <= 3) log(`  · touchmove ${moveCount}  dx=${Math.round(dx)} dy=${Math.round(dy)}  (임계값 미만)`, '');
+      return;
+    }
+    tMoved = true;
+    log(`  ★ 드래그 모드 진입 (move ${moveCount}회 만에)  cancelable=${e.cancelable}`, 'ok');
+    
+    const r = tChip.getBoundingClientRect();
+    tClone = tChip.cloneNode(true);
+    Object.assign(tClone.style, {
+      position: 'fixed', left: r.left + 'px', top: r.top + 'px',
+      width: r.width + 'px', zIndex: 9999, pointerEvents: 'none',
+      opacity: '0.9', transform: 'scale(1.08)',
+      boxShadow: '0 8px 24px rgba(0,0,0,0.3)', transition: 'none'
+    });
+    document.body.appendChild(tClone);
+    tChip.classList.add('dragging');
+    log('  ★ clone 생성 + body에 추가됨', 'ok');
+  }
+  
+  tClone.style.left = (t.clientX - tOffX) + 'px';
+  tClone.style.top = (t.clientY - tOffY) + 'px';
+  tClone.style.display = 'none';
+  const tg = document.elementFromPoint(t.clientX, t.clientY);
+  tClone.style.display = '';
+  
+  const z = tg && tg.closest('.zone, .pool');
+  document.querySelectorAll('.zone.over, .pool.over').forEach(el => el.classList.remove('over'));
+  if (z) z.classList.add('over');
+  
+  if (moveCount % 10 === 0) {
+    log(`  · move ${moveCount}  손가락=(${Math.round(t.clientX)},${Math.round(t.clientY)})  hover=${z?.id || 'null'}  elem=${tg?.tagName || 'null'}`, '');
+  }
+}
+
+function arrTouchEnd(e) {
+  if (!tChip) { log('▼ touchend 발사됐지만 tChip 없음', 'warn'); return; }
+  
+  if (!tMoved) {
+    log(`▼ touchend  드래그 안 됨 (단순 탭 — move ${moveCount}회)`, 'warn');
+    tChip = null;
+    return;
+  }
+  
+  const t = e.changedTouches[0];
+  if (tClone) tClone.style.display = 'none';
+  const tg = document.elementFromPoint(t.clientX, t.clientY);
+  const z = tg && tg.closest('.zone, .pool');
+  
+  log(`▼ touchend  손가락=(${Math.round(t.clientX)},${Math.round(t.clientY)})  drop zone=${z?.id || 'null'}  elem=${tg?.tagName || 'null'}`, 'ok');
+  
+  if (z && z !== tChip.parentElement) {
+    z.appendChild(tChip);
+    log(`  ★★ chip이 ${z.id}로 이동됨 ✅`, 'ok');
+  } else if (z === tChip.parentElement) {
+    log(`  ✗ drop zone이 원래 위치와 같음 — 이동 안 함`, 'warn');
+  } else {
+    log(`  ✗ drop zone이 null — chip을 떨어뜨릴 곳을 못 찾음`, 'err');
+  }
+  
+  if (tClone) { tClone.remove(); tClone = null; }
+  tChip.classList.remove('dragging');
+  document.querySelectorAll('.zone.over, .pool.over').forEach(el => el.classList.remove('over'));
+  tChip = null;
+  tDragEnd = Date.now();
+  if (e.cancelable) e.preventDefault();
+  log('  ★ 정리 완료', '');
+  log('', '');
+}
+
+// ───── 이벤트 등록 ─────
+const containers = [pool, zone];
+containers.forEach(c => {
+  c.addEventListener('touchstart', arrTouchStart, { passive: true });
+  c.addEventListener('touchmove', arrTouchMove, { passive: false });
+  c.addEventListener('touchend', arrTouchEnd);
+  c.addEventListener('touchcancel', e => { log('▼ touchcancel 발사 — 시스템이 터치 취소', 'err'); arrTouchEnd(e); });
+});
+
+// 클릭도 추적
+document.addEventListener('click', e => {
+  const chip = e.target.closest('.chip');
+  if (!chip) return;
+  const guarded = (Date.now() - tDragEnd) < 500;
+  log(`★ click 이벤트  chip="${chip.dataset.id}"  guarded=${guarded ? 'YES (가드 작동, 무시됨)' : 'NO (정상 처리)'}`, guarded ? 'warn' : 'ok');
+}, true);
+
+// ───── 폴리필 안내 ─────
+if (!('ontouchstart' in window)) {
+  log('⚠ 이 디바이스는 터치 이벤트를 지원하지 않습니다. 데스크톱일 가능성', 'warn');
+}
+</script>
+
+</body>
+</html>
