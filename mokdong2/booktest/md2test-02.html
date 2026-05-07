@@ -1,0 +1,1941 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>지문 기반 유형별 문제 — Text Better, Communicate Better! (M2 L2)</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+  :root {
+    --bg: #FAF7F2;
+    --paper: #FFFFFF;
+    --ink: #1A1815;
+    --ink2: #4A4642;
+    --muted: #8B8680;
+    --line: #E5DFD5;
+    --accent: #B8763D;
+    --t-grammar: #1F4E79;
+    --t-pronoun: #6B5BA0;
+    --t-reading: #2A8B7F;
+    --t-context: #8B4A6F;
+    --t-cloze:   #B8763D;
+    --t-vocab:   #D97A47;
+    --t-writing: #4A6B85;
+    --green: #4A8B5C;
+    --yellow: #C9A227;
+    --orange: #D97A47;
+    --red: #B53737;
+    --navy-950:#0A1E3A;
+    --navy-800:#1F3557;
+    --cream:#FAF6EE;
+    --gold:#C99B4E;
+    --gold-light:#E4C589;
+    --slate-300:#CBD5E1;
+    --slate-400:#94A3B8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { overflow-x: hidden; max-width: 100vw; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  img, svg, video, iframe { max-width: 100%; height: auto; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 36px 60px; }
+
+  /* HERO */
+  .hero-banner {
+    background:
+      radial-gradient(ellipse at 12% 20%, rgba(201,155,78,0.18), transparent 45%),
+      linear-gradient(135deg, var(--navy-950) 0%, var(--navy-800) 100%);
+    color: var(--cream);
+    padding: 44px 0 36px;
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; padding: 0 36px; font-family: 'Pretendard Variable', sans-serif; }
+  .brand-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 30px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 18px; color: var(--navy-950); }
+  .brand-text { font-size: 12px; letter-spacing: 0.1em; color: var(--cream); font-weight: 500; }
+  .brand-text .sub { color: var(--slate-400); font-size: 10.5px; margin-top: 2px; }
+  .home-btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); color: var(--navy-950); font-family: 'Pretendard Variable', sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 0.1em; border-radius: 999px; text-decoration: none; }
+  .home-btn svg { width: 13px; height: 13px; fill: var(--navy-950); }
+  .kicker { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-light); font-weight: 600; margin-bottom: 12px; }
+  h1.title { font-family: 'Playfair Display', serif; font-weight: 800; font-size: clamp(28px, 4.5vw, 48px); line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 8px; }
+  h1.title em { font-style: italic; color: var(--gold-light); font-weight: 400; }
+  h1.title .kor { font-family: 'Pretendard Variable', sans-serif; font-weight: 800; letter-spacing: -0.02em; display: block; margin-top: 6px; font-size: clamp(16px, 2.4vw, 22px); color: var(--gold-light); }
+  .meta-info { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .meta-tag { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid rgba(228,197,137,0.4); border-radius: 999px; font-size: 11.5px; color: var(--gold-light); font-family: 'Pretendard Variable', sans-serif; font-weight: 500; letter-spacing: 0.04em; }
+
+  /* TYPE NAV — sticky */
+  .type-nav-wrap { background: var(--navy-950); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(228,197,137,0.15); }
+  .type-nav { max-width: 1100px; margin: 0 auto; padding: 0 36px; display: flex; gap: 0; overflow-x: auto; scrollbar-width: thin; -webkit-overflow-scrolling: touch; }
+  .type-nav::-webkit-scrollbar { height: 4px; }
+  .type-nav::-webkit-scrollbar-thumb { background: rgba(228,197,137,0.3); border-radius: 2px; }
+  .nav-tab { background: transparent; border: none; color: var(--slate-400); padding: 14px 16px; cursor: pointer; font-family: 'Pretendard Variable', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; border-bottom: 3px solid transparent; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 7px; }
+  .nav-tab:hover { color: var(--gold-light); }
+  .nav-tab.active { color: var(--gold-light); border-bottom-color: var(--gold); }
+  .nav-tab .nav-count { font-family: 'JetBrains Mono', monospace; font-size: 10px; background: rgba(228,197,137,0.15); color: var(--gold-light); padding: 2px 6px; border-radius: 4px; font-weight: 700; }
+  .nav-tab.active .nav-count { background: var(--gold); color: var(--navy-950); }
+  .nav-color-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* PASSAGE BOX */
+  .passage-box { background: var(--paper); border: 1px solid var(--line); margin-top: 36px; border-radius: 4px; }
+  .passage-box summary { list-style: none; cursor: pointer; padding: 18px 26px; display: flex; align-items: center; justify-content: space-between; font-family: 'Pretendard Variable', sans-serif; font-weight: 800; font-size: 15px; color: var(--ink); background: linear-gradient(180deg, #FAF7F2 0%, #FFFFFF 100%); border-bottom: 1px solid transparent; border-radius: 4px; }
+  .passage-box[open] summary { border-bottom: 1px solid var(--line); border-radius: 4px 4px 0 0; }
+  .passage-box summary::-webkit-details-marker { display: none; }
+  .passage-box summary .toggle-mark { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); letter-spacing: 0.08em; font-weight: 700; }
+  .passage-box summary .toggle-mark::before { content: '＋ 펼치기'; }
+  .passage-box[open] summary .toggle-mark::before { content: '－ 접기'; }
+  .passage-text { padding: 22px 28px; font-family: 'Inter', sans-serif; line-height: 1.85; font-size: 14.5px; color: var(--ink2); }
+  .passage-text p { margin-bottom: 12px; }
+  .passage-text h4 { font-family: 'Pretendard Variable', sans-serif; font-size: 14px; font-weight: 800; color: var(--accent); margin: 14px 0 8px; }
+
+  /* SECTION HEAD */
+  .section-head { margin: 50px 0 22px; padding: 18px 22px; background: white; border: 1px solid var(--line); border-left: 5px solid; }
+  .section-head[data-section-type="grammar"]     { border-left-color: var(--t-grammar); }
+  .section-head[data-section-type="pronoun"]     { border-left-color: var(--t-pronoun); }
+  .section-head[data-section-type="reading"]     { border-left-color: var(--t-reading); }
+  .section-head[data-section-type="context"]     { border-left-color: var(--t-context); }
+  .section-head[data-section-type="cloze"]       { border-left-color: var(--t-cloze); }
+  .section-head[data-section-type="vocab"]       { border-left-color: var(--t-vocab); }
+  .section-head[data-section-type="writing"]     { border-left-color: var(--t-writing); }
+  .section-head .num-line { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.18em; margin-bottom: 6px; font-weight: 700; }
+  .section-head h2 { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 5px; }
+  .section-head h2 .kor { font-family: 'Pretendard Variable', sans-serif; font-weight: 800; font-size: 14px; color: var(--ink2); margin-left: 10px; letter-spacing: -0.01em; }
+  .section-head .desc { font-size: 12.5px; color: var(--muted); line-height: 1.6; margin-top: 4px; }
+  .section-head.hidden { display: none; }
+
+  /* QUESTION CARD */
+  .q-card { background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--t-grammar); margin-bottom: 14px; padding: 18px 22px; transition: opacity 0.2s ease; }
+  .q-card[data-type="pronoun"]  { border-left-color: var(--t-pronoun); }
+  .q-card[data-type="reading"]  { border-left-color: var(--t-reading); }
+  .q-card[data-type="context"]  { border-left-color: var(--t-context); }
+  .q-card[data-type="cloze"]    { border-left-color: var(--t-cloze); }
+  .q-card[data-type="vocab"]    { border-left-color: var(--t-vocab); }
+  .q-card[data-type="writing"]  { border-left-color: var(--t-writing); }
+  .q-card.hidden { display: none; }
+
+  .q-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+  .q-num { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; line-height: 1; margin-right: 4px; }
+  .type-tag { display: inline-block; padding: 4px 10px; border-radius: 3px; font-family: 'Pretendard Variable', sans-serif; font-size: 11px; font-weight: 800; letter-spacing: -0.01em; color: white; }
+  .type-tag.grammar  { background: var(--t-grammar); }
+  .type-tag.pronoun  { background: var(--t-pronoun); }
+  .type-tag.reading  { background: var(--t-reading); }
+  .type-tag.context  { background: var(--t-context); }
+  .type-tag.cloze    { background: var(--t-cloze); }
+  .type-tag.vocab    { background: var(--t-vocab); }
+  .type-tag.writing  { background: var(--t-writing); }
+
+  .var-pill { display: inline-block; padding: 3px 8px; font-size: 10px; font-family: 'JetBrains Mono', monospace; font-weight: 700; letter-spacing: 0.08em; border-radius: 3px; }
+  .var-light { background: #ECF7EE; color: #2D6E3F; border: 1px solid #B8DBC1; }
+  .var-mod   { background: #FFF8E0; color: #7A5F0A; border: 1px solid #E8D9A0; }
+  .var-major { background: #FFEDD8; color: #A04A0E; border: 1px solid #F0CFAA; }
+  .var-new   { background: #FCE0E0; color: #8E1A1A; border: 1px solid #E8B8B8; }
+
+  .q-focus { display: inline-block; padding: 3px 8px; font-size: 10px; font-family: 'Pretendard Variable', sans-serif; font-weight: 700; letter-spacing: -0.01em; background: #F5F2ED; color: var(--ink2); border: 1px solid var(--line); border-radius: 3px; }
+  .q-pts { margin-left: auto; font-family: 'Fraunces', serif; font-size: 16px; font-weight: 800; color: var(--accent); letter-spacing: -0.02em; }
+
+  .q-prompt { font-family: 'Pretendard Variable', sans-serif; font-size: 14.5px; font-weight: 700; color: var(--ink); line-height: 1.55; margin-bottom: 10px; letter-spacing: -0.01em; word-break: break-word; overflow-wrap: anywhere; }
+  .q-passage { background: #FAF7F2; border: 1px solid var(--line); border-left: 3px solid var(--accent); padding: 12px 16px; margin-bottom: 10px; font-size: 13px; line-height: 1.8; color: var(--ink2); font-family: 'Inter', sans-serif; border-radius: 0 3px 3px 0; word-break: break-word; overflow-wrap: anywhere; }
+  .q-passage u { text-decoration: underline; text-underline-offset: 3px; }
+  .q-passage b { color: var(--ink); font-weight: 700; }
+  .q-passage i { font-style: italic; color: var(--accent); }
+  .q-choices { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+  .q-choices .c { display: flex; gap: 7px; padding: 7px 11px; background: #FBFAF7; border: 1px solid var(--line); border-radius: 3px; font-size: 13px; line-height: 1.55; color: var(--ink2); font-family: 'Pretendard Variable', sans-serif; word-break: break-word; overflow-wrap: anywhere; }
+  .q-choices .c .num { font-weight: 800; color: var(--accent); flex-shrink: 0; min-width: 22px; }
+  .q-choices.horz { flex-direction: row; flex-wrap: wrap; }
+  .q-choices.horz .c { flex: 1 0 calc(33% - 6px); }
+  .q-choices.horz5 { flex-direction: row; flex-wrap: wrap; }
+  .q-choices.horz5 .c { flex: 1 0 calc(20% - 6px); justify-content: center; }
+  .q-blank { color: var(--accent); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+  .word-bank { background: #FFFAF0; border: 1px dashed var(--accent); padding: 10px 14px; margin: 10px 0; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.7; color: var(--ink); font-weight: 500; word-break: break-word; overflow-wrap: anywhere; }
+  .answer-line { font-family: 'Inter', sans-serif; font-size: 13.5px; line-height: 2; color: var(--ink); margin: 8px 0; word-break: break-word; }
+  .underline { display: inline-block; min-width: 70px; border-bottom: 1.5px solid var(--ink2); padding: 0 4px; text-align: center; font-weight: 700; color: var(--accent); }
+
+  /* DETAILS - 정답 & 해설 */
+  details.ans { margin-top: 8px; border: 1px solid var(--line); border-radius: 3px; background: #FBFAF7; }
+  details.ans summary { list-style: none; cursor: pointer; padding: 9px 14px; font-family: 'Pretendard Variable', sans-serif; font-size: 12px; font-weight: 700; color: var(--accent); display: flex; align-items: center; justify-content: space-between; border-radius: 3px; }
+  details.ans summary::-webkit-details-marker { display: none; }
+  details.ans summary::after { content: '▼ 펼치기'; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); font-weight: 600; letter-spacing: 0.04em; }
+  details.ans[open] summary::after { content: '▲ 접기'; }
+  details.ans[open] summary { border-bottom: 1px solid var(--line); }
+  .ans-body { padding: 14px 16px; font-size: 13px; line-height: 1.7; color: var(--ink2); font-family: 'Pretendard Variable', sans-serif; word-break: break-word; overflow-wrap: anywhere; }
+  .ans-main { background: #F5EFE6; border-left: 3px solid var(--accent); padding: 10px 12px; margin-bottom: 10px; font-weight: 700; color: var(--ink); border-radius: 0 3px 3px 0; }
+  .ans-detail { color: var(--ink2); line-height: 1.75; }
+  .ans-detail b { color: var(--ink); font-weight: 700; }
+  .ans-detail em { font-style: italic; color: var(--accent); font-weight: 600; }
+
+  /* OPT-ANALYSIS - 보기별 분석 */
+  .opt-analysis { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--line); }
+  .opt-title { font-family: 'Pretendard Variable', sans-serif; font-size: 11.5px; font-weight: 800; color: var(--accent); letter-spacing: -0.01em; margin-bottom: 8px; }
+  .opt-row { padding: 8px 10px; margin-bottom: 6px; border-radius: 3px; border: 1px solid var(--line); background: white; }
+  .opt-row.good { background: #F2FAF4; border-color: #C9E5D0; }
+  .opt-row.bad  { background: #FAF5F5; border-color: #E5CBCB; }
+  .opt-head { font-family: 'Pretendard Variable', sans-serif; font-size: 12.5px; line-height: 1.5; margin-bottom: 4px; }
+  .opt-num { font-weight: 800; color: var(--accent); margin-right: 4px; }
+  .opt-en { font-family: 'Inter', sans-serif; font-weight: 600; color: var(--ink); margin-right: 6px; }
+  .opt-ko { color: var(--ink2); font-size: 12px; }
+  .opt-mark { float: right; font-weight: 800; }
+  .opt-row.good .opt-mark { color: #2D6E3F; }
+  .opt-row.bad .opt-mark { color: #B53737; }
+  .opt-why { font-size: 11.5px; color: var(--ink2); line-height: 1.55; padding-left: 12px; }
+  .opt-why b { color: var(--ink); font-weight: 700; }
+  .opt-why em { font-style: italic; color: var(--accent); font-weight: 600; }
+
+  /* COMPARE TABLE (T/F 5문장) */
+  .compare-table { display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 10px 0; border-collapse: collapse; }
+  .compare-table table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .compare-table th, .compare-table td { padding: 8px 10px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+  .compare-table th { background: #F5EFE6; font-family: 'Pretendard Variable', sans-serif; font-weight: 800; color: var(--ink); font-size: 11.5px; }
+  .compare-table td.tf-cell { text-align: center; font-weight: 800; min-width: 36px; }
+
+  /* MADE BY (footer) */
+  .made-by { max-width: 1100px; margin: 80px auto 0; padding: 22px 36px; border-top: 1px solid var(--line); text-align: center; font-family: 'Pretendard Variable', sans-serif; }
+  .made-by div { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .made-by .credit { font-size: 10.5px; color: var(--muted); letter-spacing: 0.1em; font-weight: 500; }
+
+  /* MOBILE GUARD */
+  @media (max-width: 760px) {
+    .container { padding: 0 18px 50px; }
+    .hero-inner { padding: 0 18px; }
+    .hero-banner { padding: 32px 0 28px; }
+    .nav-tab { padding: 12px 10px; font-size: 12px; gap: 5px; }
+    .nav-tab .nav-count { font-size: 9.5px; padding: 1px 5px; }
+    .q-card { padding: 14px 16px; }
+    .q-num { font-size: 19px; }
+    .q-prompt { font-size: 13.5px; }
+    .q-passage, .q-choices .c { font-size: 12.5px; }
+    .ans-body, .opt-head { font-size: 12px; }
+    .opt-why { font-size: 11px; }
+    .made-by { padding: 22px 18px; margin-top: 60px; }
+  }
+
+
+/* ══ 펜 필기 모드 v1.0 ══ */
+#penToolbar{position:fixed;bottom:20px;right:20px;z-index:10000;display:flex;flex-direction:row;gap:8px;background:rgba(255,255,255,0.96);padding:8px;border-radius:30px;box-shadow:0 4px 20px rgba(0,0,0,0.18);backdrop-filter:blur(10px);align-items:center;}
+#penToolbar .pen-btn{width:42px;height:42px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-btn:hover{background:#e0e0e0;}
+#penToolbar .pen-btn.active{background:#2E75B6;color:white;}
+#penToolbar .pen-main{background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;font-size:20px;}
+#penToolbar .pen-main.active{background:linear-gradient(135deg,#dc2626,#ef4444);transform:scale(1.05);}
+#penToolbar .pen-tools{display:none;flex-direction:row;gap:6px;align-items:center;padding-left:8px;border-left:1px solid #ddd;margin-left:4px;}
+#penToolbar .pen-tools.show{display:flex;}
+#penToolbar .pen-color{width:30px;height:30px;border:2px solid white;border-radius:50%;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.2);transition:transform 0.15s;padding:0;}
+#penToolbar .pen-color:hover{transform:scale(1.1);}
+#penToolbar .pen-color.selected{border:2px solid #333;transform:scale(1.18);box-shadow:0 2px 6px rgba(0,0,0,0.3);}
+#penToolbar .pen-width{width:34px;height:34px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-width:hover{background:#e0e0e0;}
+#penToolbar .pen-width span{background:#333;border-radius:50%;display:inline-block;}
+#penToolbar .pen-width.selected{background:#1F3864;}
+#penToolbar .pen-width.selected span{background:white !important;}
+#penLayer{position:absolute;top:0;left:0;pointer-events:none;z-index:998;overflow:visible;}
+#penLayer.active{pointer-events:auto;touch-action:none;cursor:crosshair;}
+@media print{#penToolbar{display:none !important;}#penLayer{display:none !important;}}
+@media (max-width:600px){
+  #penToolbar{bottom:10px;right:10px;padding:6px;gap:4px;}
+  #penToolbar .pen-btn,#penToolbar .pen-width{width:38px;height:38px;}
+  #penToolbar .pen-color{width:26px;height:26px;}
+}
+</style>
+</head>
+<body>
+
+<section class="hero-banner">
+  <div class="hero-inner">
+    <div class="brand-row">
+      <div class="brand">
+        <div class="brand-mark">목</div>
+        <div class="brand-text">
+          목동중학교 2학년 영어
+          <div class="sub">LESSON 2 · TEXT BETTER, COMMUNICATE BETTER</div>
+        </div>
+      </div>
+      <a href="https://0505.co.kr" target="_blank" rel="noopener" class="home-btn">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2.5L2 11h3v9h5v-6h4v6h5v-9h3z"/>
+        </svg>
+        HOME
+      </a>
+    </div>
+
+    <div class="kicker">PASSAGE-BASED PRACTICE SET · 유형별 변형 문제집</div>
+    <h1 class="title">
+      Text Better, <em>Communicate</em> Better!
+      <span class="kor">L2 본문 — 텍스팅 의사소통 3가지 팁 · 7유형 53문제 · 목동중 시험 패턴 반영</span>
+    </h1>
+
+    <div class="meta-info">
+      <span class="meta-tag">📖 본문 2과 풀세트</span>
+      <span class="meta-tag">🎯 7개 유형 매트릭스</span>
+      <span class="meta-tag">🔧 변형도 4단계 매핑</span>
+      <span class="meta-tag">✏️ 서술형 배열영작 포함</span>
+    </div>
+  </div>
+</section>
+
+<!-- TYPE NAV -->
+<div class="type-nav-wrap">
+  <nav class="type-nav" id="typeNav">
+    <button class="nav-tab active" data-type="all">전체 <span class="nav-count">53</span></button>
+    <button class="nav-tab" data-type="grammar"><span class="nav-color-dot" style="background:var(--t-grammar)"></span>어법 <span class="nav-count">12</span></button>
+    <button class="nav-tab" data-type="pronoun"><span class="nav-color-dot" style="background:var(--t-pronoun)"></span>대명사 <span class="nav-count">5</span></button>
+    <button class="nav-tab" data-type="reading"><span class="nav-color-dot" style="background:var(--t-reading)"></span>독해 <span class="nav-count">5</span></button>
+    <button class="nav-tab" data-type="context"><span class="nav-color-dot" style="background:var(--t-context)"></span>문맥 <span class="nav-count">5</span></button>
+    <button class="nav-tab" data-type="cloze"><span class="nav-color-dot" style="background:var(--t-cloze)"></span>빈칸 <span class="nav-count">13</span></button>
+    <button class="nav-tab" data-type="vocab"><span class="nav-color-dot" style="background:var(--t-vocab)"></span>어휘·숙어 <span class="nav-count">10</span></button>
+    <button class="nav-tab" data-type="writing"><span class="nav-color-dot" style="background:var(--t-writing)"></span>서술형 <span class="nav-count">3</span></button>
+  </nav>
+</div>
+
+<div class="container">
+
+<!-- ORIGINAL PASSAGE -->
+<details class="passage-box" open>
+  <summary>
+    <span>📄 원문 지문 — Text Better, Communicate Better!</span>
+    <span class="toggle-mark"></span>
+  </summary>
+  <div class="passage-text">
+<p><b>Text Better, Communicate Better!</b></p>
+<p>Texting is the main way of communication for many people these days, especially for teenagers. Do you want to know how you can communicate better through texting? Here are some useful tips.</p>
+<h4>1. You need to know who you are talking to.</h4>
+<p>Henry just sent the following text message to his mother.<br>
+<i>— Mom, I want you to wait just a little longer. BRT.</i><br>
+Do you think Henry's mother correctly understood BRT? Probably not.</p>
+<p>You can use expressions like BRT (be right there), JK (just kidding), or LOL (laughing out loud) when you text your friends. However, be careful with such expressions when you text your teachers or parents. You need to understand that some of them may not know the meanings of such expressions.</p>
+<h4>2. You need to understand that people use emojis differently.</h4>
+<p>Yesterday, Jisu gave a birthday gift to her little brother Jihoo. Later, she got the following text message.<br>
+<i>— I loved your gift. Thanks a lot. 😊</i><br>
+"Only one smiling face (😊)? I guess he didn't like my gift," Jisu thought.</p>
+<p>When we talk with someone, we use not only words but also facial expressions and body language. In texting, we use emojis instead. Sometimes, a little emoji like 😊 can speak louder than many words. The problem is that not everybody uses emojis in the same way. Some people like to use them a lot, and some don't. In addition, the same emojis can mean different things to different people.</p>
+<h4>3. Sometimes, you need to pick up the phone.</h4>
+<p>Amy just got the following text message from her best friend Nari.<br>
+<i>— Did you really talk behind my back? I want you to apologize to me.</i><br>
+Amy wanted to text Nari and explain the situation, but she thought again. "Well, this is too much for a text," she said to herself and called Nari.</p>
+<p>Texting is okay for casual situations, but sometimes, you need to pick up the phone. This is because misunderstandings can easily happen when you text. Do you need to talk about sensitive issues with your friends? Then, don't text them. Call them instead.</p>
+  </div>
+</details>
+
+<!-- =============== SECTION A: 어법 GRAMMAR (12문항) =============== -->
+<div class="section-head" data-section-type="grammar" data-section-marker>
+  <div class="num-line">SECTION A · 어법 · GRAMMAR · 12 ITEMS</div>
+  <h2>어법 <span class="kor">want+O+to V · 의문사+to V · 동명사 주어 · 상관접속사 · 명령문 종합</span></h2>
+  <p class="desc">목동중 시험 최대 비중 영역. 본문에 등장하는 핵심 어법 12개 문항으로 분해. 미세 변형(본문 그대로) → 소폭 변형(응용) → 대폭 변형(종합) 순.</p>
+</div>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">1</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">want + O + to부정사 (5형식)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>1.</b> 빈칸에 들어갈 말로 어법상 알맞은 것은?</div>
+  <div class="q-passage">Mom, I want you <span class="q-blank">______</span> just a little longer.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>wait</span><span class="c"><span class="num">②</span>waited</span><span class="c"><span class="num">③</span>waiting</span><span class="c"><span class="num">④</span>to wait</span><span class="c"><span class="num">⑤</span>waits</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ④ to wait — want는 5형식에서 목적격 보어로 <b>to부정사</b>를 취함</div>
+  <div class="ans-detail"><b>want의 두 가지 패턴:</b><br>① <b>3형식</b>: want + to V — "~하기를 원하다" (예: I want to go.)<br>② <b>5형식</b>: want + 목적어 + <b>to V</b> — "(목적어)가 ~하기를 원하다" (예: I want you to wait.)<br>※ 본문은 5형식. 사역동사(make/have/let)와 달리 want는 동사원형이 아닌 <b>to부정사</b>를 보어로 가짐. 같은 패턴: ask/tell/expect/advise + O + to V.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">wait</span> <span class="opt-ko">— 동사원형 "기다리다"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">want는 사역동사가 아니므로 동사원형을 목적격 보어로 못 가짐</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">waited</span> <span class="opt-ko">— 과거형 "기다렸다"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">정형동사(과거형)는 목적격 보어 자리에 못 옴</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">waiting</span> <span class="opt-ko">— 현재분사/동명사 "기다리는"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">want는 현재분사·동명사를 목적격 보어로 가질 수 없음</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">to wait</span> <span class="opt-ko">— to부정사 "기다릴 것을"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why"><b>want + 목적어(you) + to부정사(to wait)</b> ✓ 본문 그대로</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">waits</span> <span class="opt-ko">— 3인칭 단수 현재형</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">정형동사는 목적격 보어 자리 부적합</div>
+  </div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">2</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">의문사 + to부정사 (간접의문문)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>2.</b> 다음 두 문장이 같은 의미가 되도록 빈칸에 들어갈 말로 알맞은 것은?</div>
+  <div class="q-passage">(a) Do you want to know <b>how you can communicate</b> better through texting?<br>(b) Do you want to know <span class="q-blank">______</span> better through texting?</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>how communicate</span><span class="c"><span class="num">②</span>how to communicate</span><span class="c"><span class="num">③</span>how communicating</span><span class="c"><span class="num">④</span>how communicated</span><span class="c"><span class="num">⑤</span>how do communicate</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② how to communicate — "의문사 + 주어 + can/should V" = "의문사 + to V"</div>
+  <div class="ans-detail"><b>의문사 + to부정사 변환 공식:</b><br>how + S + can/should + V → <b>how + to V</b><br>what + S + should + V → what + to V<br>where + S + should + V → where + to V<br>when + S + should + V → when + to V<br>※ "what to do / how to study / where to go / when to leave" 패턴 암기. 본문 <em>"how you can communicate"</em>는 풀어쓴 형태, 같은 의미를 짧게 쓰면 <em>"how to communicate"</em>.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">how communicate</span> <span class="opt-ko">"어떻게 의사소통하다"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">의문사 뒤에 동사원형 단독 ✗ — to가 빠짐</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">how to communicate</span> <span class="opt-ko">"어떻게 의사소통할지"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why"><b>의문사 + to부정사</b> 정형 ✓</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">how communicating</span> <span class="opt-ko">"어떻게 의사소통하는"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">의문사 + 동명사 형태는 이 구문에 부적합</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">how communicated</span> <span class="opt-ko">"어떻게 의사소통된"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">의문사 + 과거분사 단독 형태는 이 구조에 안 맞음</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">how do communicate</span> <span class="opt-ko">"어떻게 의사소통하다"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">간접의문문에는 do/does 조동사 ✗ (직접의문문에서만)</div>
+  </div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">3</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">동명사 주어 + 단수동사</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>3.</b> 빈칸에 들어갈 말로 어법상 알맞은 것은?</div>
+  <div class="q-passage"><b>Texting</b> <span class="q-blank">______</span> the main way of communication for many people these days.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>are</span><span class="c"><span class="num">②</span>is</span><span class="c"><span class="num">③</span>were</span><span class="c"><span class="num">④</span>be</span><span class="c"><span class="num">⑤</span>being</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② is — 동명사 주어는 <b>단수 취급</b></div>
+  <div class="ans-detail"><b>동명사 주어 핵심 규칙:</b><br>① 동명사(V-ing)가 주어로 오면 <b>단수 취급</b> → 단수동사(is/was/has)<br>② 본문에 다수 등장: <em>Texting is the main way…</em> / <em>Texting is okay for casual situations…</em><br>③ 같은 패턴: <em>Pursuing a dream is not easy.</em> / <em>Eating breakfast is important.</em><br>※ "Texting + are/were"는 흔한 함정 — 명사처럼 보여도 -ing 동명사이므로 단수.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">are</span> <span class="opt-ko">— 복수 현재형</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">동명사 주어는 단수 취급 → 복수동사 ✗</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">is</span> <span class="opt-ko">— 단수 현재형</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">동명사 Texting + <b>단수동사 is</b> ✓ 본문 그대로</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">were</span> <span class="opt-ko">— 복수 과거형</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">복수동사 + 과거 시제 모두 부적합 (these days = 현재)</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">be</span> <span class="opt-ko">— 동사원형</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">동사원형은 주절의 정형 자리에 단독으로 못 옴</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">being</span> <span class="opt-ko">— 분사/동명사</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">정형동사(시제 지닌)가 와야 할 자리에 분사 ✗</div>
+  </div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">4</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">명령문 (be동사 + 형용사)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>4.</b> 어법상 옳은 명령문을 모두 고르면? (정답 2개)</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> Be careful with such expressions.</span>
+    <span class="c"><span class="num">②</span> Are careful with such expressions.</span>
+    <span class="c"><span class="num">③</span> Don't text them.</span>
+    <span class="c"><span class="num">④</span> Doesn't text them.</span>
+    <span class="c"><span class="num">⑤</span> Not text them.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ①, ③ — 긍정 명령문은 <b>동사원형</b>으로, 부정 명령문은 <b>Don't + 동사원형</b>으로 시작</div>
+  <div class="ans-detail"><b>명령문 핵심 규칙:</b><br>① <b>긍정</b>: 동사원형 ~ (Be careful! / Call them! / Text me!)<br>② <b>부정</b>: <b>Don't</b> + 동사원형 ~ (Don't text them. / Don't be late.)<br>※ Don'<b>t</b> 통일 (주어 상관없이) → Doesn't ✗ / Aren't ✗<br>※ be동사 명령문도 형식은 동일: <em>Be + 형용사</em> (Be careful / Be quiet / Be bold)</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">Be careful with such expressions.</span> <span class="opt-ko">"그러한 표현에 주의해라"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why"><b>Be(동사원형) + 형용사</b> ✓ 본문 그대로</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">Are careful with such expressions.</span> <span class="opt-ko">"~에 주의한다"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">명령문은 <b>be동사 원형(Be)</b>으로 시작 — 정형 Are ✗</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">Don't text them.</span> <span class="opt-ko">"그들에게 문자를 보내지 마"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why"><b>Don't + 동사원형</b> 부정 명령문 ✓ 본문 그대로</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">Doesn't text them.</span> <span class="opt-ko">— Doesn't 사용</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">명령문은 주어 상관없이 <b>Don't</b> 통일 — Doesn't ✗</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">Not text them.</span> <span class="opt-ko">— Not 단독</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">부정 명령문은 반드시 <b>Don't</b>(조동사) 사용 — Not 단독 ✗</div>
+  </div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">5</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">상관접속사 not only A but also B</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>5.</b> 빈칸 (A), (B)에 들어갈 말이 순서대로 알맞은 것은?</div>
+  <div class="q-passage">When we talk with someone, we use <span class="q-blank">(A)</span> words <span class="q-blank">(B)</span> facial expressions and body language.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> not only — and also</span>
+    <span class="c"><span class="num">②</span> not also — but only</span>
+    <span class="c"><span class="num">③</span> not only — but also</span>
+    <span class="c"><span class="num">④</span> only not — also but</span>
+    <span class="c"><span class="num">⑤</span> not — also but</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ not only — but also — "A 뿐만 아니라 B도"</div>
+  <div class="ans-detail"><b>상관접속사 not only A but also B 규칙:</b><br>① 의미: "A뿐만 아니라 B도" → A와 B 모두 포함<br>② A와 B는 <b>같은 품사·같은 형태</b>(병렬 구조)<br>③ also는 생략 가능: not only A but B<br>④ 본문: <em>not only words(명사) but also facial expressions(명사)</em> — 둘 다 명사 ✓<br>※ 변환: <em>B as well as A</em> = not only A but also B (B 강조)</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">not only — and also</span> <span class="opt-ko">"~ 뿐만 아니라 그리고 ~도"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">두 번째 자리는 <b>but also</b> — and ✗</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">not also — but only</span> <span class="opt-ko">"~ 또한 아니라 ~ 단지"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">어순 뒤바뀜 — only/also 자리 잘못</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">not only — but also</span> <span class="opt-ko">"~ 뿐만 아니라 ~도"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why"><b>not only A but also B</b> 정형 상관접속사 ✓ 본문 그대로</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">only not — also but</span> <span class="opt-ko">— 어순 도치</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">올바른 어순은 not only ~ but also</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">not — also but</span> <span class="opt-ko">— only 누락</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">only가 빠지면 상관접속사 형태 미완성</div>
+  </div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">6</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">동명사 vs 동사원형 (전치사 뒤)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>6.</b> 빈칸에 들어갈 말로 어법상 알맞은 것을 모두 고르면?</div>
+  <div class="q-passage">Some people like <span class="q-blank">______</span> emojis a lot, and some don't.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>use</span><span class="c"><span class="num">②</span>using</span><span class="c"><span class="num">③</span>to use</span><span class="c"><span class="num">④</span>used</span><span class="c"><span class="num">⑤</span>uses</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ②, ③ — like는 동명사·to부정사 둘 다 가능</div>
+  <div class="ans-detail"><b>like + V-ing / to V</b> 둘 다 어법상 옳음. 동사원형(use), 과거형(used), 3인칭 단수(uses)는 동사 like 직후에 올 수 없음.<br>※ 같은 패턴: love, hate, start, begin, continue, prefer 등.<br>※ 본문에는 <em>"Some people like to use them a lot"</em>이 있고, 이를 <em>"like using"</em>으로 바꿔도 의미·문법 동일.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">use</span> <span class="opt-ko">— 동사원형</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">like 동사 직후에 동사원형 ✗</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">using</span> <span class="opt-ko">— 동명사 "쓰기"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">like + 동명사 ✓</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">to use</span> <span class="opt-ko">— to부정사 "쓸 것"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">like + to부정사 ✓ 본문 그대로</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">used</span> <span class="opt-ko">— 과거형</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">정형동사 과거형은 like 뒤에 못 옴</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">uses</span> <span class="opt-ko">— 3인칭 단수</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">정형동사 단수 현재형은 like 뒤에 못 옴</div>
+  </div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">7</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">that절 (목적어) + 인지·생각 동사</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>7.</b> 다음 중 어법상 <b>틀린</b> 문장은?</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> You need to understand that some of them may not know the meanings.</span>
+    <span class="c"><span class="num">②</span> You need to understand that people use emojis differently.</span>
+    <span class="c"><span class="num">③</span> The problem is that not everybody uses emojis in the same way.</span>
+    <span class="c"><span class="num">④</span> This is because misunderstandings can easily happen.</span>
+    <span class="c"><span class="num">⑤</span> "Only one smiling face?" Jisu thought that.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ⑤ — think 다음의 that절은 동사 직후가 아닌 별도 절로 와야 하며, "Jisu thought that." 단독은 의미 미완성</div>
+  <div class="ans-detail"><b>that절(명사절) 핵심 패턴:</b><br>① 인지·생각 동사 + that + 완전한 절: <b>think/know/believe/understand/realize + that S+V</b><br>② be동사 보어로 that절: <b>The problem is that S+V.</b><br>③ This is because + 절 (이유): <b>This is because misunderstandings happen.</b><br>※ ⑤는 thought 뒤에 that절이 아닌 that(대명사)만 와서 미완성. 올바르게 쓰려면 <em>Jisu thought, "..."</em> 또는 <em>Jisu thought that he didn't like her gift.</em></div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">You need to understand that some of them may not know the meanings.</span> <span class="opt-ko">"그들 중 일부는 의미를 모를 수 있다는 것을 이해해야 한다"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">understand + that + 완전한 절 ✓ 본문 그대로</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">You need to understand that people use emojis differently.</span> <span class="opt-ko">"사람들이 이모티콘을 다르게 쓴다는 것을"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">understand + that + 절 ✓ 본문 그대로</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">The problem is that not everybody uses emojis in the same way.</span> <span class="opt-ko">"문제는 모든 사람이 같은 방식으로 ~하지 않는다는 것이다"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">be동사 + that절(주격 보어) ✓ 본문 그대로</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">This is because misunderstandings can easily happen.</span> <span class="opt-ko">"이는 오해가 쉽게 일어날 수 있기 때문이다"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">This is because + 절(이유) ✓ 본문 그대로</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">"Only one smiling face?" Jisu thought that.</span> <span class="opt-ko">— 미완성 구조</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">thought 뒤의 that이 <b>접속사가 아닌 대명사처럼 단독</b>으로 끝나 의미 미완성. 올바르게는 <em>Jisu thought that…</em>(절 이어야 함) 또는 <em>Jisu thought, "…"</em></div>
+  </div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">8</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">5개 동시 검증 (밑줄 ⓐ~ⓔ)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>8.</b> 다음 글의 밑줄 친 ⓐ~ⓔ 중 어법상 <b>옳지 않은</b> 것은?</div>
+  <div class="q-passage">Texting <u>ⓐis</u> the main way of communication for many people these days, especially for teenagers. Do you want <u>ⓑto know</u> how you can communicate better through texting? You can use expressions like BRT or LOL when you text your friends. However, <u>ⓒbe</u> careful with such expressions. You need to understand <u>ⓓthat</u> some of them may not know the meanings. Texting is okay for casual situations, but sometimes, you need <u>ⓔpicking up</u> the phone.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>ⓐ</span><span class="c"><span class="num">②</span>ⓑ</span><span class="c"><span class="num">③</span>ⓒ</span><span class="c"><span class="num">④</span>ⓓ</span><span class="c"><span class="num">⑤</span>ⓔ</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ⑤ ⓔ picking up → <b>to pick up</b> — need는 to부정사를 목적어로 가짐</div>
+  <div class="ans-detail"><b>5개 어법 포인트 검증:</b><br>ⓐ ✓ Texting(동명사 주어) + is(단수동사) ✓<br>ⓑ ✓ want + to V (3형식) ✓<br>ⓒ ✓ Be careful (명령문 + be동사 원형) ✓<br>ⓓ ✓ understand + that + 절 ✓<br>ⓔ ✗ <b>need</b>는 동명사가 아닌 <b>to부정사</b>를 목적어로 → need to pick up<br>※ <b>need + to V</b> 패턴 본문 다수: <em>"you need to know" / "you need to understand" / "you need to pick up"</em></div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">ⓐ is</span> <span class="opt-ko">"~이다"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">동명사 주어 Texting + 단수동사 ✓</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">ⓑ to know</span> <span class="opt-ko">"알기를"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">want + to V ✓</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">ⓒ be</span> <span class="opt-ko">"~해라"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">명령문 + be동사 원형 ✓</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">ⓓ that</span> <span class="opt-ko">"~라는 것을"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">understand + that절 ✓</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">ⓔ picking up</span> <span class="opt-ko">"전화 받기"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why"><b>need</b>는 동명사가 아닌 <b>to부정사</b>를 목적어로 가짐 → need <b>to pick up</b></div>
+  </div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">9</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">5개 동시 검증 (옳은 것 모두)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>9.</b> 다음 중 어법상 옳은 문장을 <b>모두 고르면</b>? (정답 2개)</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> Misunderstandings can easily happen when you text.</span>
+    <span class="c"><span class="num">②</span> A little emoji can speak louder than many words.</span>
+    <span class="c"><span class="num">③</span> Some people likes to use them a lot.</span>
+    <span class="c"><span class="num">④</span> She said for herself and called Nari.</span>
+    <span class="c"><span class="num">⑤</span> I want you apologize to me.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ①, ② — 본문 그대로의 정확한 어법 문장</div>
+  <div class="ans-detail"><b>5개 검증:</b><br>① ✓ 복수 주어 Misunderstandings + 복수동사(can) ✓<br>② ✓ 비교급 louder than + 명사구 ✓ 본문 그대로<br>③ ✗ 복수 주어 people + 단수동사 likes ✗ → like<br>④ ✗ 재귀대명사 herself를 위한 전치사 to → <b>said to herself</b><br>⑤ ✗ want는 5형식에서 목적어 + to V → I want you <b>to apologize</b>.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">Misunderstandings can easily happen when you text.</span> <span class="opt-ko">"문자할 때 오해가 쉽게 발생할 수 있다"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">복수 주어 + can(조동사) + 동사원형 ✓ 본문 그대로</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">A little emoji can speak louder than many words.</span> <span class="opt-ko">"작은 이모티콘이 많은 말보다 더 크게 말할 수 있다"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">비교급 louder + than ✓ 본문 그대로</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">Some people likes to use them a lot.</span> <span class="opt-ko">"몇 사람들이 그들을 많이 쓰는 것을 좋아한다"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">people은 <b>복수 명사</b>이므로 likes(단수형) ✗ → <b>like</b></div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">She said for herself and called Nari.</span> <span class="opt-ko">"그녀가 자기 자신을 위해 말했고…"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">"혼잣말하다"는 <b>say to oneself</b>의 정형 표현 → for ✗</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">I want you apologize to me.</span> <span class="opt-ko">"내가 너에게 사과하길 원해"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">want + 목적어 + <b>to부정사</b> → I want you <b>to apologize</b></div>
+  </div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">10</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">관계대명사 who(목적격)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>10.</b> 빈칸에 들어갈 말로 알맞은 것은?</div>
+  <div class="q-passage">You need to know <span class="q-blank">______</span> you are talking to.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>who</span><span class="c"><span class="num">②</span>which</span><span class="c"><span class="num">③</span>what</span><span class="c"><span class="num">④</span>where</span><span class="c"><span class="num">⑤</span>when</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① who — 사람을 묻는 의문사 (간접의문문)</div>
+  <div class="ans-detail"><b>의문사 핵심 차이:</b><br>① <b>who</b> — 사람 (talk to <b>whom</b> → 누구에게 말하는지) ※ 구어체에서는 who 자주 사용<br>② <b>which</b> — 선택지 중 (사람·사물)<br>③ <b>what</b> — 사물·상황<br>④ <b>where</b> — 장소<br>⑤ <b>when</b> — 시간<br>※ 본문은 <em>"누구에게(to whom) 말하고 있는지"</em>를 묻는 간접의문문이므로 <b>who</b>(또는 격식체로 whom). "you are talking to" → 마지막의 to는 전치사로 사람의 대상을 받음.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">who</span> <span class="opt-ko">"누구"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">사람 대상의 간접의문문 ✓ 본문 그대로</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">which</span> <span class="opt-ko">"어느"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">선택지가 주어진 맥락 아니므로 ✗</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">what</span> <span class="opt-ko">"무엇"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">talk to + 사람이 자연스러우므로 사람을 묻는 who</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">where</span> <span class="opt-ko">"어디"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">장소가 아닌 대상이므로 ✗</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">when</span> <span class="opt-ko">"언제"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">시간 대상 아니므로 ✗</div>
+  </div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">11</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">a little + 비교급 (강조)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>11.</b> 빈칸에 들어갈 말로 어법상 옳지 <b>않은</b> 것은?</div>
+  <div class="q-passage">Mom, I want you to wait just <span class="q-blank">______</span>.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>a little longer</span><span class="c"><span class="num">②</span>a bit longer</span><span class="c"><span class="num">③</span>much longer</span><span class="c"><span class="num">④</span>more longer</span><span class="c"><span class="num">⑤</span>a little more</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ④ more longer — 비교급은 <b>이중으로 만들 수 없음</b> (longer 자체가 비교급)</div>
+  <div class="ans-detail"><b>비교급 강조 표현:</b><br>① <b>a little / a bit</b> + 비교급: 약간 더 ~한 (a little longer = 조금 더 오래)<br>② <b>much / far / a lot / even / still</b> + 비교급: 훨씬 더 ~한<br>③ <b>이중 비교급(more longer / more better) 절대 금지</b> — 형용사 1음절~2음절은 -er만, 3음절 이상은 more만<br>※ 본문 <em>"a little longer"</em> 그대로 출제. ④는 비교급 long의 이중 형성으로 비문.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">a little longer</span> <span class="opt-ko">"조금 더 오래"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">a little + 비교급 ✓ 본문 그대로</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">a bit longer</span> <span class="opt-ko">"조금 더 오래"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">a bit = a little (의미·문법 동일)</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">much longer</span> <span class="opt-ko">"훨씬 더 오래"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">much + 비교급 ✓ (강조 표현)</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">more longer</span> <span class="opt-ko">— 이중 비교급</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">longer 자체가 long의 비교급 → more 추가 ✗ (이중 비교급 금지)</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">a little more</span> <span class="opt-ko">"조금 더"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">a little + more (단독으로 비교급) ✓</div>
+  </div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">12</span><span class="type-tag grammar">어법</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">종합 — 6개 어법 포인트</span><span class="q-pts">5점</span></div>
+  <div class="q-prompt"><b>12.</b> 다음 글의 밑줄 친 부분 중 어법상 <b>옳은</b> 것의 개수는?</div>
+  <div class="q-passage">Texting <u>ⓐare</u> the main way of communication. Do you want <u>ⓑto know</u> how to communicate better? You need <u>ⓒunderstanding</u> that some people may not know the meanings. We use not only words <u>ⓓand also</u> facial expressions. Sometimes you need <u>ⓔto pick up</u> the phone.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>1개</span><span class="c"><span class="num">②</span>2개</span><span class="c"><span class="num">③</span>3개</span><span class="c"><span class="num">④</span>4개</span><span class="c"><span class="num">⑤</span>5개</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② 2개 (ⓑ, ⓔ만 옳음)</div>
+  <div class="ans-detail"><b>5개 검증 종합:</b><br>ⓐ ✗ Texting(동명사 주어) + are(복수동사) → <b>is</b><br>ⓑ ✓ want + to V (3형식) ✓<br>ⓒ ✗ need는 동명사가 아닌 <b>to V</b> 목적어 → <b>to understand</b><br>ⓓ ✗ not only A <b>but also</b> B → and ✗<br>ⓔ ✓ need + to V ✓<br>→ 옳은 것: ⓑ, ⓔ = <b>2개</b><br>※ 5개 동시 검증 종합형은 목동중 시험 최빈출 패턴.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">1개</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">옳은 것은 ⓑ, ⓔ로 <b>2개</b> — 1개는 부족</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">2개</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">ⓑ to know(want+toV) ✓, ⓔ to pick up(need+toV) ✓ — 정확히 2개</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">3개</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">3개로 보려면 ⓐ/ⓒ/ⓓ 중 하나가 옳아야 하나 모두 비문</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">4개</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">실제로는 ⓐ, ⓒ, ⓓ가 비문이므로 4개 안 됨</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">5개</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">3가지 비문 존재 — 모두 옳을 수 없음</div>
+  </div>
+  </div></div></details>
+</article>
+
+
+<!-- =============== SECTION B: 대명사 PRONOUN (5문항) =============== -->
+<div class="section-head" data-section-type="pronoun" data-section-marker>
+  <div class="num-line">SECTION B · 대명사 · PRONOUN · 5 ITEMS</div>
+  <h2>대명사 <span class="kor">them · such expressions · this · 재귀대명사 herself · 가주어/진주어</span></h2>
+  <p class="desc">본문의 주요 대명사·지시어가 가리키는 대상을 정확히 파악하는 영역. 의미 추적 + 문장 간 연결 능력 강화.</p>
+</div>
+
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">13</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">them 지칭</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>13.</b> 밑줄 친 <b>them</b>이 가리키는 것은?</div>
+  <div class="q-passage">You need to understand that some of <u>them</u> may not know the meanings of such expressions.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> friends</span>
+    <span class="c"><span class="num">②</span> teachers or parents</span>
+    <span class="c"><span class="num">③</span> emojis</span>
+    <span class="c"><span class="num">④</span> meanings</span>
+    <span class="c"><span class="num">⑤</span> expressions</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② teachers or parents — 앞 문장의 "your teachers or parents"를 받음</div>
+  <div class="ans-detail"><b>맥락:</b> "However, be careful with such expressions when you text your <b>teachers or parents</b>. You need to understand that some of <b>them</b> may not know..." — 직전 명사구 그대로 받음.<br>※ 본문 핵심: BRT/JK/LOL 같은 줄임 표현은 친구에게는 OK지만 어른들에게는 의미가 안 통할 수 있다는 뜻. 그래서 "그들(어른들) 중 일부는 의미를 모를 수 있다."<br>※ 함정: meanings/expressions는 의미상 가능해 보이나 동사 know의 주어로는 사람이 적절.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">friends</span> <span class="opt-ko">"친구들"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">맥락은 친구가 아닌 어른들이 모르는 상황</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">teachers or parents</span> <span class="opt-ko">"선생님이나 부모님"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">직전 문장의 "your teachers or parents"를 그대로 받음</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">emojis</span> <span class="opt-ko">"이모티콘"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">이 부분은 줄임 표현(BRT 등) 단락 — 이모티콘은 다음 단락</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">meanings</span> <span class="opt-ko">"의미들"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">"의미가 의미를 모른다"는 비문 의미</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">expressions</span> <span class="opt-ko">"표현들"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">"표현이 의미를 모른다"는 비문</div>
+  </div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">14</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">such expressions 지칭</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>14.</b> 밑줄 친 <b>such expressions</b>의 예가 <b>아닌</b> 것은?</div>
+  <div class="q-passage">However, be careful with <u>such expressions</u> when you text your teachers or parents.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> BRT (be right there)</span>
+    <span class="c"><span class="num">②</span> JK (just kidding)</span>
+    <span class="c"><span class="num">③</span> LOL (laughing out loud)</span>
+    <span class="c"><span class="num">④</span> facial expressions</span>
+    <span class="c"><span class="num">⑤</span> 줄임 텍스팅 표현</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ④ facial expressions — 본문에서 "such expressions"는 텍스팅 줄임말 BRT/JK/LOL을 가리킴</div>
+  <div class="ans-detail"><b>같은 expression이지만 의미는 다름:</b><br>① 본문 1번 단락의 expressions = <b>텍스팅 줄임 표현</b>(BRT, JK, LOL)<br>② 본문 2번 단락의 facial expressions = <b>얼굴 표정</b><br>※ such는 "그러한 (방금 언급한)"의 의미로, 직전 문장의 BRT/JK/LOL을 받음. <em>"You can use expressions like BRT, JK, or LOL... However, be careful with such expressions..."</em></div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">BRT (be right there)</span> <span class="opt-ko">"곧 갈게"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">텍스팅 줄임 표현의 대표 예</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">JK (just kidding)</span> <span class="opt-ko">"농담이야"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">텍스팅 줄임 표현의 대표 예</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">LOL (laughing out loud)</span> <span class="opt-ko">"크게 웃음"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">텍스팅 줄임 표현의 대표 예</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">facial expressions</span> <span class="opt-ko">"얼굴 표정"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">2번째 단락에 등장하는 다른 의미의 expression — 텍스팅 줄임 표현 아님 → 답</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">줄임 텍스팅 표현</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">"such expressions"의 정의 자체</div>
+  </div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">15</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">this 지칭 (앞 내용 받기)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>15.</b> 밑줄 친 <b>This</b>가 가리키는 것은?</div>
+  <div class="q-passage">Texting is okay for casual situations, but sometimes, you need to pick up the phone. <u>This</u> is because misunderstandings can easily happen when you text.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> Texting is okay for casual situations.</span>
+    <span class="c"><span class="num">②</span> 전화기를 들어야 할 때가 있다는 사실</span>
+    <span class="c"><span class="num">③</span> Misunderstandings can easily happen.</span>
+    <span class="c"><span class="num">④</span> Casual situations</span>
+    <span class="c"><span class="num">⑤</span> The phone</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② "전화기를 들어야 할 때가 있다는 사실" — 직전 절의 핵심 명제를 받음</div>
+  <div class="ans-detail"><b>This is because + 절 구조 분석:</b><br>① "This is because S+V" = "이것(앞 명제)은 ~ 때문이다"<br>② "This"는 직전에 언급된 <b>주장/사실/현상</b>을 받음<br>③ 본문 흐름:<br>　〔주장〕 sometimes you need to pick up the phone.<br>　〔이유〕 This is because misunderstandings can easily happen.<br>※ 핵심: This = "전화를 받아야 한다는 사실/주장" → "왜냐하면 오해가 쉽게 생기기 때문이다"</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">Texting is okay for casual situations.</span> <span class="opt-ko">"문자가 가벼운 상황에서 괜찮다"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">but으로 대조된 앞 부분 — This가 받는 핵심 주장이 아님</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">전화기를 들어야 할 때가 있다는 사실</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">but 뒤의 핵심 주장 = "you need to pick up the phone" — This가 가리키는 명제</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">Misunderstandings can easily happen.</span> <span class="opt-ko">"오해가 쉽게 일어난다"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">이는 because 뒤의 <b>이유</b> — This가 가리키는 결과 아님</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">Casual situations</span> <span class="opt-ko">"가벼운 상황"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">단순 명사구이고 This가 받기에는 의미 부적절</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">The phone</span> <span class="opt-ko">"전화기"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">단순 명사로는 This is because 구조의 주어로 부적절</div>
+  </div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">16</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">재귀대명사 herself (강조 vs 재귀)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>16.</b> 본문의 밑줄 친 <b>to herself</b>의 쓰임에 대한 설명으로 알맞은 것은?</div>
+  <div class="q-passage">"Well, this is too much for a text," she said <u>to herself</u> and called Nari.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> 강조 용법 — "그녀 스스로"</span>
+    <span class="c"><span class="num">②</span> 재귀 용법 — 주어와 목적어가 같음 (혼잣말하다)</span>
+    <span class="c"><span class="num">③</span> 소유격 대명사</span>
+    <span class="c"><span class="num">④</span> 지시대명사</span>
+    <span class="c"><span class="num">⑤</span> 의문대명사</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② 재귀 용법 — 주어 she와 같은 사람을 to의 목적어로 받음</div>
+  <div class="ans-detail"><b>재귀대명사 두 가지 용법:</b><br>① <b>재귀 용법(필수)</b>: 주어 = 목적어일 때 사용. <em>say to oneself</em>(혼잣말하다), <em>enjoy oneself</em>(즐기다), <em>introduce oneself</em>(자기소개하다). 생략 불가.<br>② <b>강조 용법(생략 가능)</b>: 주어·목적어 강조. <em>I made it myself.</em>(직접 만들었다)<br>※ 본문 <em>"she said to herself"</em>는 "혼잣말하다"의 정형 관용 표현 — 주어 she와 to의 목적어가 같으므로 <b>재귀 용법</b>.<br>※ 같은 패턴: He said to himself / We said to ourselves.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">강조 용법</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">강조 용법은 "직접/스스로" 의미로 생략 가능 — 본문은 to의 목적어로 필수</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">재귀 용법</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">say to oneself = "혼잣말하다" — 주어=목적어 일치하는 재귀 용법 ✓</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">소유격 대명사</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">소유격은 her — herself는 -self로 끝나는 재귀형</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">지시대명사</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">지시대명사는 this/that — herself는 그 종류 아님</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">의문대명사</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">의문대명사는 who/what — herself는 평서문 안 재귀대명사</div>
+  </div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">17</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">it 지칭 (가주어 vs 일반 it)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>17.</b> 다음 두 문장의 밑줄 친 <b>it</b>의 쓰임을 바르게 설명한 것은?</div>
+  <div class="q-passage">(a) <u>It</u> is the main way of communication for many people. ← Texting<br>(b) Now, when I catch a cold, I make chicken soup with my father's recipe. <u>It</u> really helps. ← chicken soup</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> (a)·(b) 모두 가주어</span>
+    <span class="c"><span class="num">②</span> (a)·(b) 모두 비인칭 주어 (날씨·시간)</span>
+    <span class="c"><span class="num">③</span> (a)·(b) 모두 앞에 나온 명사를 받는 인칭대명사</span>
+    <span class="c"><span class="num">④</span> (a)는 가주어, (b)는 인칭대명사</span>
+    <span class="c"><span class="num">⑤</span> (a)는 인칭대명사, (b)는 가주어</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ — 둘 다 앞에 언급된 명사(Texting / chicken soup)를 받는 일반 인칭대명사</div>
+  <div class="ans-detail"><b>it의 4가지 쓰임:</b><br>① <b>인칭대명사</b>: 앞에 나온 단수 사물·동물을 받음 (a, b 모두 해당)<br>② <b>가주어</b>: 진주어가 to부정사·that절일 때 (예: It is hard to study.)<br>③ <b>비인칭 주어</b>: 날씨·시간·거리·날짜 (예: It is sunny.)<br>④ <b>강조 용법</b>: It is X that ~ (예: It was John that called me.)<br>※ 본문은 둘 다 ①번 — 앞 명사를 그대로 받는 인칭대명사.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">모두 가주어</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">가주어 it은 진주어(to V/that절)가 뒤에 와야 함 — 두 문장 모두 그런 구조 아님</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">모두 비인칭 주어</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">날씨·시간·거리 등을 나타내는 it 아님</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">모두 인칭대명사</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">(a) it = Texting (앞 명사), (b) it = chicken soup (앞 명사) ✓</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">(a)는 가주어, (b)는 인칭대명사</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">(a)도 진주어가 없으므로 가주어 ✗</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">(a)는 인칭대명사, (b)는 가주어</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">(b)도 진주어 없으므로 가주어 ✗</div>
+  </div>
+  </div></div></details>
+</article>
+
+
+<!-- =============== SECTION C: 독해 READING (5문항) =============== -->
+<div class="section-head" data-section-type="reading" data-section-marker>
+  <div class="num-line">SECTION C · 독해 · READING · 5 ITEMS</div>
+  <h2>독해 <span class="kor">주제 · 요지 · 일치 T/F · 인물 매칭 · 글의 목적</span></h2>
+  <p class="desc">본문 전체의 흐름과 핵심 메시지 파악 영역. 3가지 팁 구조와 각 사례(Henry/Jisu/Amy)의 교훈 추출.</p>
+</div>
+
+<article class="q-card" data-type="reading">
+  <div class="q-meta"><span class="q-num">18</span><span class="type-tag reading">독해</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">글의 주제</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>18.</b> 윗글의 주제로 가장 알맞은 것은?</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> tips for better communication through texting</span>
+    <span class="c"><span class="num">②</span> the history of text messaging in Korea</span>
+    <span class="c"><span class="num">③</span> how to make new friends online</span>
+    <span class="c"><span class="num">④</span> dangers of using emojis in formal emails</span>
+    <span class="c"><span class="num">⑤</span> the best smartphone apps for teenagers</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① tips for better communication through texting</div>
+  <div class="ans-detail"><b>주제 단서:</b><br>① 도입부: <em>"Do you want to know how you can communicate better through texting? Here are some useful tips."</em><br>② 3가지 팁: who you talk to / how people use emojis / when to call instead<br>③ 결론: 의사소통이 잘 되도록 도움 주는 텍스팅 팁 안내<br>※ 다른 보기들(역사·새 친구 사귀기·앱·포멀 이메일)은 본문에서 다루지 않음.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">tips for better communication through texting</span> <span class="opt-ko">"문자를 통한 더 나은 의사소통 팁"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">본문 도입부와 3가지 팁 구조 모두 일치 ✓</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">the history of text messaging in Korea</span> <span class="opt-ko">"한국 문자메시지의 역사"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">역사적 배경은 본문에 없음</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">how to make new friends online</span> <span class="opt-ko">"온라인에서 새 친구 사귀기"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">친구 사귀기 주제가 아님</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">dangers of using emojis in formal emails</span> <span class="opt-ko">"공식 이메일 이모티콘의 위험"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">이모티콘은 일부 팁이지만 글 전체 주제는 더 광범위 (3가지 팁)</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">the best smartphone apps for teenagers</span> <span class="opt-ko">"청소년용 최고 앱"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">앱 추천 글이 아님</div>
+  </div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="reading">
+  <div class="q-meta"><span class="q-num">19</span><span class="type-tag reading">독해</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">필자의 요지</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>19.</b> 윗글의 필자가 가장 강조하는 메시지는?</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> 텍스팅을 더 자주 사용하라.</span>
+    <span class="c"><span class="num">②</span> 이모티콘은 절대 쓰지 말아야 한다.</span>
+    <span class="c"><span class="num">③</span> 상대·상황을 고려하여 효과적으로 의사소통하라.</span>
+    <span class="c"><span class="num">④</span> 어른들에게도 BRT 같은 줄임말을 가르쳐야 한다.</span>
+    <span class="c"><span class="num">⑤</span> 친구와 갈등 시 항상 문자로 해결해라.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ — 글 전체 메시지: 받는 사람과 상황을 고려해서 텍스팅하라는 조언</div>
+  <div class="ans-detail"><b>3가지 팁의 공통 메시지:</b><br>① 누구에게 — 친구 vs 어른 (상대 고려)<br>② 어떻게 — 이모티콘은 사람마다 다르게 사용 (수단 인식)<br>③ 언제 — 민감한 문제는 통화 (상황 판단)<br>→ 모두 "맞춤·상황별 의사소통"의 메시지로 수렴.<br>※ ②(절대 쓰지 마라)·④(어른에게 가르쳐라) 등은 본문 메시지를 과장·반대로 왜곡한 함정.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">텍스팅을 더 자주 사용하라.</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">사용 횟수 권장 글 아님</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">이모티콘은 절대 쓰지 말아야.</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">사용 자체를 금지하는 글 아님 — 다양성 인식만 강조</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">상대·상황을 고려한 효과적 의사소통</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">3가지 팁 모두 이 메시지로 수렴 ✓</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">어른에게 BRT 가르쳐라.</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">필자의 메시지를 정반대로 왜곡한 함정</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">갈등 시 항상 문자로 해결해라.</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">본문은 정반대 — 민감한 문제는 통화 권장</div>
+  </div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="reading">
+  <div class="q-meta"><span class="q-num">20</span><span class="type-tag reading">독해</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">본문 일치 T/F 5문항 표</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>20.</b> 윗글의 내용과 일치하면 T, 일치하지 않으면 F라고 할 때, 표시가 <b>잘못된</b> 것은?</div>
+  <div class="compare-table">
+  <table>
+    <tr><th width="30">번호</th><th>문장</th><th width="40">T/F</th></tr>
+    <tr><td>①</td><td>Texting is a main way of communication for many teenagers.</td><td class="tf-cell">T</td></tr>
+    <tr><td>②</td><td>BRT, JK, LOL are useful expressions to use with teachers and parents.</td><td class="tf-cell">T</td></tr>
+    <tr><td>③</td><td>Everybody uses emojis in the same way.</td><td class="tf-cell">F</td></tr>
+    <tr><td>④</td><td>Misunderstandings can happen easily when texting.</td><td class="tf-cell">T</td></tr>
+    <tr><td>⑤</td><td>Sometimes calling is better than texting for sensitive issues.</td><td class="tf-cell">T</td></tr>
+  </table>
+  </div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span></span><span class="c"><span class="num">②</span></span><span class="c"><span class="num">③</span></span><span class="c"><span class="num">④</span></span><span class="c"><span class="num">⑤</span></span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② — BRT/JK/LOL은 친구 사이에 사용 권장이며, 어른들에게는 <b>주의</b>가 필요하다고 했음. T가 아니라 F.</div>
+  <div class="ans-detail"><b>5문항 검증:</b><br>① ✓ T — <em>"Texting is the main way of communication for many people, especially for teenagers."</em><br>② ✗ F (T 아님) — <em>"be careful with such expressions when you text your teachers or parents"</em>. 어른들과는 주의해서 써야 함을 강조.<br>③ ✓ F — <em>"not everybody uses emojis in the same way"</em><br>④ ✓ T — <em>"misunderstandings can easily happen when you text"</em><br>⑤ ✓ T — <em>"sometimes, you need to pick up the phone... Do you need to talk about sensitive issues? ... Call them instead."</em></div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="reading">
+  <div class="q-meta"><span class="q-num">21</span><span class="type-tag reading">독해</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">인물별 상황 매칭</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>21.</b> 본문에 등장한 세 인물(Henry, Jisu, Amy)의 사례와 각 팁의 교훈을 바르게 짝지은 것은?</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> Henry — 이모티콘은 사람마다 다르게 해석된다</span>
+    <span class="c"><span class="num">②</span> Jisu — 어른과 텍스팅 시 줄임말을 조심해야 한다</span>
+    <span class="c"><span class="num">③</span> Amy — 민감한 문제는 통화로 풀어야 한다</span>
+    <span class="c"><span class="num">④</span> Henry — 민감한 문제는 통화로 풀어야 한다</span>
+    <span class="c"><span class="num">⑤</span> Jisu — 어른과 텍스팅 시 통화가 더 낫다</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ Amy — 민감한 문제는 통화로</div>
+  <div class="ans-detail"><b>인물별 매칭 정답:</b><br>① <b>Henry</b> — 엄마에게 "BRT" 보냄 → 어른들이 줄임말 의미 모를 수 있음 (팁 1: 누구에게)<br>② <b>Jisu</b> — 동생의 답장 이모티콘 1개로 오해 → 사람마다 이모티콘 사용 다름 (팁 2: 어떻게)<br>③ <b>Amy</b> — 친구 Nari가 화났을 때 텍스팅 대신 전화 (팁 3: 언제)<br>※ 보기 분석:<br>- ① Henry는 줄임말 사례 (이모티콘 ✗) → ✗<br>- ② Jisu는 이모티콘 사례 (어른 텍스팅 ✗) → ✗<br>- ③ Amy = 통화 권장 ✓<br>- ④ Henry → 통화? ✗<br>- ⑤ Jisu → 어른 텍스팅? ✗</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">Henry — 이모티콘 다양성</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">Henry는 줄임말(BRT) 사례 — 이모티콘 ✗</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">Jisu — 줄임말 조심</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">Jisu는 이모티콘(😊) 사례 — 줄임말 ✗</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">Amy — 통화로 풀자</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">Nari가 화난 상황을 보고 "this is too much for a text" → 전화 결정 ✓</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">Henry — 통화 권장</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">Henry는 줄임말 오해 사례 — 통화는 Amy 사례</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">Jisu — 통화가 낫다</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">Jisu는 이모티콘 해석 사례 — 통화 권유 사례 아님</div>
+  </div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="reading">
+  <div class="q-meta"><span class="q-num">22</span><span class="type-tag reading">독해</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">글의 목적</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>22.</b> 윗글의 목적으로 가장 알맞은 것은?</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> 청소년의 문자 사용 시간을 비판하기 위해</span>
+    <span class="c"><span class="num">②</span> 효과적인 텍스팅 의사소통 방법을 안내하기 위해</span>
+    <span class="c"><span class="num">③</span> 이모티콘 제작 회사를 광고하기 위해</span>
+    <span class="c"><span class="num">④</span> 부모가 청소년의 텍스팅을 통제할 것을 권장하기 위해</span>
+    <span class="c"><span class="num">⑤</span> 새로운 줄임말을 소개하기 위해</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② — 텍스팅으로 더 잘 의사소통하는 방법(팁 3가지)을 제시하는 안내·조언 글</div>
+  <div class="ans-detail"><b>목적의 단서:</b><br>① 도입부: <em>"Here are some useful tips."</em> — 팁 안내<br>② 본문 구성: 3가지 팁 + 사례 + 일반 원칙<br>③ 명령문 다수: <em>"Be careful... Call them instead..."</em> — 조언/안내 톤<br>※ 비판(①), 광고(③), 통제 권장(④), 단순 소개(⑤) 모두 글의 톤·내용과 불일치.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">사용 시간 비판</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">비판적 톤이 아닌 조언 톤</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">효과적 텍스팅 안내</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">"Here are some useful tips" 명시 + 3가지 팁 전개 ✓</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">이모티콘 회사 광고</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">광고 글 아님</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">부모의 텍스팅 통제 권장</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">청소년에게 직접 조언하는 톤 — 부모 통제 글 아님</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">새 줄임말 소개</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">기존 줄임말의 사용법·주의점을 다룰 뿐 신규 소개 아님</div>
+  </div>
+  </div></div></details>
+</article>
+
+
+<!-- =============== SECTION D: 문맥 CONTEXT (5문항) =============== -->
+<div class="section-head" data-section-type="context" data-section-marker>
+  <div class="num-line">SECTION D · 문맥 · CONTEXT · 5 ITEMS</div>
+  <h2>문맥 <span class="kor">어색한 단어 · 흐름상 부적절한 문장 · 인과 방향 · 문맥 어휘 선택</span></h2>
+  <p class="desc">단순 어법이 아닌 문장 간 의미·논리 연결성 확인 영역. 정답 2개·역추론 함정 포함.</p>
+</div>
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">23</span><span class="type-tag context">문맥</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">문맥상 어색한 단어</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>23.</b> 다음 글의 밑줄 친 ⓐ~ⓔ 중 문맥상 <b>어색한</b> 것은?</div>
+  <div class="q-passage">When we talk with someone, we use not only words but also <u>ⓐfacial expressions</u> and body language. In texting, we use <u>ⓑemojis</u> instead. Sometimes, a little emoji like 😊 can speak <u>ⓒlouder</u> than many words. The problem is that not everybody uses emojis in the <u>ⓓdifferent</u> way. In addition, the same emojis can mean <u>ⓔdifferent</u> things to different people.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>ⓐ</span><span class="c"><span class="num">②</span>ⓑ</span><span class="c"><span class="num">③</span>ⓒ</span><span class="c"><span class="num">④</span>ⓓ</span><span class="c"><span class="num">⑤</span>ⓔ</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ④ ⓓ different → <b>same</b></div>
+  <div class="ans-detail"><b>문맥 분석:</b><br>① "The problem is that not everybody uses emojis in the <b>same</b> way" = "모든 사람이 <b>같은</b> 방식으로 사용하지 않는다는 게 문제"<br>② "different way"로 쓰면 → "다른 방식으로 사용하지 않는다" → 정반대 의미가 됨<br>③ 본문 그대로: same way ↔ different things 의미 대조 구조<br>※ same vs different는 자주 헷갈리는 함정. 핵심: 사람마다 같지 않다(다양성)을 표현하므로 "not everybody uses ~ in the SAME way".</div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">24</span><span class="type-tag context">문맥</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">흐름상 부적절한 문장</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>24.</b> 다음 글의 흐름상 어울리지 <b>않는</b> 문장은?</div>
+  <div class="q-passage">Texting is okay for casual situations, but sometimes, you need to pick up the phone. ① This is because misunderstandings can easily happen when you text. ② Do you need to talk about sensitive issues with your friends? ③ Then, don't text them. ④ Smartphones today have very high-resolution cameras for taking photos. ⑤ Call them instead.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span></span><span class="c"><span class="num">②</span></span><span class="c"><span class="num">③</span></span><span class="c"><span class="num">④</span></span><span class="c"><span class="num">⑤</span></span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ④ — 스마트폰 카메라 해상도는 텍스팅 vs 통화 흐름과 무관</div>
+  <div class="ans-detail"><b>흐름 분석:</b><br>주제: "민감한 상황에서는 통화가 낫다"<br>① 이유 (오해가 생긴다)<br>② 사례 질문 (민감한 문제?)<br>③ 충고 (그럼 문자 ✗)<br>⑤ 대안 (전화해라)<br>→ 모두 "통화 권장" 흐름의 일관성<br>④ 카메라 해상도는 흐름과 <b>전혀 무관</b> — 끼어든 이질 문장</div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">25</span><span class="type-tag context">문맥</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">문맥 어휘 선택 (호응)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>25.</b> 빈칸 (A), (B)에 들어갈 말이 순서대로 알맞은 것은?</div>
+  <div class="q-passage">Texting is okay for <span class="q-blank">(A)</span> situations, but sometimes you need to pick up the phone. Do you need to talk about <span class="q-blank">(B)</span> issues? Then, don't text them.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> casual — sensitive</span>
+    <span class="c"><span class="num">②</span> sensitive — casual</span>
+    <span class="c"><span class="num">③</span> formal — funny</span>
+    <span class="c"><span class="num">④</span> serious — humorous</span>
+    <span class="c"><span class="num">⑤</span> easy — easy</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① casual — sensitive</div>
+  <div class="ans-detail"><b>문맥 호응 분석:</b><br>① 텍스팅 = OK 영역: 가벼운 상황(<b>casual</b>) — 형식적·심각하지 않은 상황<br>② 통화 권장 = 심각한 영역: 민감한 문제(<b>sensitive</b>) — 감정·갈등 등<br>※ "casual ↔ formal" / "sensitive ↔ unimportant" 의미 대조 쌍 본문 핵심 어휘. ②는 정반대 배열로 함정.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">casual — sensitive</span> <span class="opt-ko">"가벼운 — 민감한"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">본문 그대로 ✓</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">sensitive — casual</span> <span class="opt-ko">"민감한 — 가벼운"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">정반대 배열 — 어휘 자체는 본문에 있으나 자리 함정</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">formal — funny</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">본문 어휘 아님</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">serious — humorous</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">본문 어휘 아님</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">easy — easy</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">동일 단어 반복 — 의미 대조 구조에 부적합</div>
+  </div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">26</span><span class="type-tag context">문맥</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">인과 방향 함정 (정답 2개)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>26.</b> 본문의 흐름과 일치하는 문장을 <b>모두 고르면</b>? (정답 2개)</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> Misunderstandings happen because we pick up the phone for sensitive issues.</span>
+    <span class="c"><span class="num">②</span> We need to pick up the phone because misunderstandings can easily happen when texting.</span>
+    <span class="c"><span class="num">③</span> Texting is okay for casual situations.</span>
+    <span class="c"><span class="num">④</span> The same emojis always mean the same thing to everyone.</span>
+    <span class="c"><span class="num">⑤</span> Henry's mother probably understood BRT correctly.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ②, ③ — 본문 인과·내용과 일치</div>
+  <div class="ans-detail"><b>5개 문장 분석:</b><br>① ✗ <b>인과 방향 정반대</b>: 본문은 "오해가 생기기 때문에 → 통화가 필요"인데, ①은 "통화하기 때문에 → 오해 생긴다"로 뒤집힘<br>② ✓ 본문 인과 그대로: <em>"This is because misunderstandings can easily happen when you text"</em> = "통화 필요 ← 오해 가능"<br>③ ✓ <em>"Texting is okay for casual situations"</em> 그대로<br>④ ✗ 본문은 정반대: <em>"the same emojis can mean different things to different people"</em><br>⑤ ✗ 본문은 정반대: <em>"Probably not."</em><br>※ 인과 방향 함정 + 단어 변형 일치 함정 = 목동중 시험 핵심 패턴.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">Misunderstandings happen because we pick up the phone.</span> <span class="opt-ko">"통화하기 때문에 오해가 생긴다"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why"><b>인과 방향 정반대</b> 함정 — 본문은 오해가 원인, 통화가 결과</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">We need to pick up the phone because misunderstandings can easily happen.</span> <span class="opt-ko">"오해가 쉽게 발생하므로 통화가 필요"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">본문 인과 관계 정확 ✓</div>
+  </div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">Texting is okay for casual situations.</span> <span class="opt-ko">"가벼운 상황에선 문자가 OK"</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">본문 그대로 ✓</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">The same emojis always mean the same thing to everyone.</span> <span class="opt-ko">"같은 이모티콘은 모두에게 같은 의미"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">본문은 정반대 — different things to different people</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">Henry's mother probably understood BRT correctly.</span> <span class="opt-ko">"엄마가 BRT를 정확히 이해했다"</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">본문은 정반대: "Probably not"</div>
+  </div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">27</span><span class="type-tag context">문맥</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">연결어 (However/In addition/Then)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>27.</b> 빈칸 (A), (B), (C)에 들어갈 연결어가 알맞게 짝지어진 것은?</div>
+  <div class="q-passage">You can use expressions like BRT or LOL when you text your friends. <span class="q-blank">(A)</span>, be careful with such expressions when you text your teachers or parents. ... Some people like to use them a lot, and some don't. <span class="q-blank">(B)</span>, the same emojis can mean different things to different people. ... Do you need to talk about sensitive issues? <span class="q-blank">(C)</span>, don't text them.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> However — In addition — Then</span>
+    <span class="c"><span class="num">②</span> In addition — However — But</span>
+    <span class="c"><span class="num">③</span> So — Therefore — Yet</span>
+    <span class="c"><span class="num">④</span> However — But — In addition</span>
+    <span class="c"><span class="num">⑤</span> Then — In addition — However</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① However — In addition — Then</div>
+  <div class="ans-detail"><b>연결어 의미·역할:</b><br>(A) <b>However</b> = "그러나" — 친구한테 OK ↔ 어른한테 주의 (대조)<br>(B) <b>In addition</b> = "게다가" — 사람마다 사용 빈도 다름 + 의미도 다름 (추가)<br>(C) <b>Then</b> = "그러면" — 민감한 문제 있다? → 그러면 텍스트 ✗ (조건·결과)<br>※ 본문 그대로의 연결어. 다른 보기는 의미적으로 부적절.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row good">
+    <div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">However — In addition — Then</span> <span class="opt-mark">✓</span></div>
+    <div class="opt-why">본문 그대로의 연결어 ✓</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">In addition — However — But</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">(A) 자리는 추가가 아닌 대조 — In addition ✗</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">So — Therefore — Yet</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">대조·추가·조건 흐름과 결과 강조어 매칭 안 맞음</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">However — But — In addition</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">(B)/(C) 자리 부적절 — 게다가/그러면 의미 못 살림</div>
+  </div>
+  <div class="opt-row bad">
+    <div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">Then — In addition — However</span> <span class="opt-mark">✗</span></div>
+    <div class="opt-why">(A) 자리에 Then(그러면)은 의미 부적합</div>
+  </div>
+  </div></div></details>
+</article>
+
+
+<!-- ============================================================
+     SECTION E · 빈칸 (CLOZE) · 13 ITEMS · Q28~Q40
+     ============================================================ -->
+<div class="section-head" data-section-type="cloze" data-section-marker>
+  <div class="num-line">SECTION E · 빈칸 · CLOZE · 13 ITEMS</div>
+  <h2>빈칸 <span class="kor">단어·구·구문 보충 · 핵심 표현·문법 포인트 집중</span></h2>
+  <p class="desc">to부정사·동명사·의문사+to부정사·idiom·재귀대명사 등 본문 핵심 표현을 빈칸으로 묻는다. P4(5개 모두 검증), Conclusion Cluster 등 응용 패턴 포함.</p>
+</div>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">28</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">want+O+to부정사</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>28.</b> 빈칸에 들어갈 말로 알맞은 것은?</div>
+  <div class="q-passage">Mom, I want you <span class="q-blank">__________</span> just a little longer.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>wait</span><span class="c"><span class="num">②</span>waited</span><span class="c"><span class="num">③</span>to wait</span><span class="c"><span class="num">④</span>waiting</span><span class="c"><span class="num">⑤</span>to waiting</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ to wait</div>
+  <div class="ans-detail"><b>want + 목적어 + to부정사</b> = "(목적어)가 ~하기를 원하다". 즉, want you 다음 to부정사가 와야 함. ① 동사원형은 want+O+toV 구문이 아닌 다른 구문(let/make 등). ②/④ 시제·분사형은 빈칸 자리에 부적절. ⑤ to+V-ing는 문법적으로 잘못된 형태(to 뒤에는 동사원형).</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">wait</span> <span class="opt-ko">"기다리다"(원형)</span> <span class="opt-mark">✗</span></div><div class="opt-why">want+O+to-V 구문에 동사원형 ✗</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">waited</span> <span class="opt-ko">"기다렸다/기다려진"</span> <span class="opt-mark">✗</span></div><div class="opt-why">과거형/과거분사형 자리 ✗</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">to wait</span> <span class="opt-ko">"기다리기를"</span> <span class="opt-mark">✓</span></div><div class="opt-why">want+O+to-V — 목적격 보어 자리 정답 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">waiting</span> <span class="opt-ko">"기다리는 중"</span> <span class="opt-mark">✗</span></div><div class="opt-why">동명사·분사형 — want는 to부정사 요구 ✗</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">to waiting</span> <span class="opt-ko">잘못된 형태</span> <span class="opt-mark">✗</span></div><div class="opt-why">to 다음 V-ing는 문법 오류 ✗</div></div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">29</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">how + to부정사</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>29.</b> 빈칸 (A)에 들어갈 말로 알맞은 것은?</div>
+  <div class="q-passage">Do you want to know <span class="q-blank">(A)</span> communicate better through texting?</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>how to</span><span class="c"><span class="num">②</span>how can</span><span class="c"><span class="num">③</span>how you</span><span class="c"><span class="num">④</span>how must</span><span class="c"><span class="num">⑤</span>how doing</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① how to</div>
+  <div class="ans-detail"><b>how + to부정사</b> = "어떻게 ~할지" — 명사구로 동사 know의 목적어가 됨. 본문은 "how you can communicate"이지만 같은 의미의 명사구 "how to communicate"로 압축 가능. 빈칸 다음이 동사원형 communicate이므로 ②~④의 절(주어+조동사) 구조 불가.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">how to</span> <span class="opt-mark">✓</span></div><div class="opt-why">how + to + V원형 — 명사구로 know의 목적어 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">how can</span> <span class="opt-mark">✗</span></div><div class="opt-why">절 도입이지만 주어 누락 — how can communicate ✗</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">how you</span> <span class="opt-mark">✗</span></div><div class="opt-why">how you communicate (조동사 없음) — 본문 의미와 다름</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">how must</span> <span class="opt-mark">✗</span></div><div class="opt-why">주어 누락 — 비문</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">how doing</span> <span class="opt-mark">✗</span></div><div class="opt-why">how + V-ing 구문 없음 ✗</div></div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">30</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">be careful with ~</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>30.</b> 빈칸 (A)에 들어갈 말로 가장 적절한 것은?</div>
+  <div class="q-passage">However, be <span class="q-blank">(A)</span> with such expressions when you text your teachers or parents.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>kind</span><span class="c"><span class="num">②</span>quick</span><span class="c"><span class="num">③</span>careful</span><span class="c"><span class="num">④</span>polite</span><span class="c"><span class="num">⑤</span>honest</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ careful</div>
+  <div class="ans-detail">선생님·부모님께 BRT/JK/LOL 같은 약어를 보낼 때 "그분들이 의미를 모를 수 있다"는 다음 문장이 곧 이유. 따라서 빈칸은 <b>주의하라(be careful with)</b>가 자연스럽다. ④ polite도 어울릴 듯하나 본문 흐름은 "사용 자체에 주의" 즉 careful이 정확.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">kind</span> <span class="opt-ko">"친절한"</span> <span class="opt-mark">✗</span></div><div class="opt-why">be kind with는 어색하고 의미 부적합</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">quick</span> <span class="opt-ko">"빠른"</span> <span class="opt-mark">✗</span></div><div class="opt-why">속도 문제가 아님</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">careful</span> <span class="opt-ko">"조심하는"</span> <span class="opt-mark">✓</span></div><div class="opt-why">be careful with — 본문 정답, 다음 문장 "may not know"이 단서 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">polite</span> <span class="opt-ko">"공손한"</span> <span class="opt-mark">✗</span></div><div class="opt-why">유사어이나 본문 단서(meaning을 모를 수 있음)와 직결되지 않음</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">honest</span> <span class="opt-ko">"솔직한"</span> <span class="opt-mark">✗</span></div><div class="opt-why">맥락 무관</div></div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">31</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">may not + 동사원형 / 의미상 know</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>31.</b> 빈칸 (A)에 들어갈 말로 알맞은 것은?</div>
+  <div class="q-passage">You need to understand that some of them may not <span class="q-blank">(A)</span> the meanings of such expressions.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>know</span><span class="c"><span class="num">②</span>knew</span><span class="c"><span class="num">③</span>known</span><span class="c"><span class="num">④</span>knowing</span><span class="c"><span class="num">⑤</span>to know</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① know</div>
+  <div class="ans-detail"><b>조동사 may + 동사원형</b>. may not 다음에는 반드시 동사원형이 와야 한다. 의미상으로도 BRT 같은 약어의 뜻을 모를 수 있다는 뜻이므로 know.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">know</span> <span class="opt-mark">✓</span></div><div class="opt-why">may + 동사원형 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">knew</span> <span class="opt-mark">✗</span></div><div class="opt-why">may + 과거형 ✗</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">known</span> <span class="opt-mark">✗</span></div><div class="opt-why">may + 과거분사 ✗ (have 동반 시만 가능)</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">knowing</span> <span class="opt-mark">✗</span></div><div class="opt-why">may + V-ing ✗</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">to know</span> <span class="opt-mark">✗</span></div><div class="opt-why">may + to V ✗ — 조동사는 to 없이 원형</div></div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">32</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">not only A but also B</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>32.</b> 빈칸 (A), (B)에 들어갈 말이 순서대로 짝지어진 것은?</div>
+  <div class="q-passage">When we talk with someone, we use not <span class="q-blank">(A)</span> words <span class="q-blank">(B)</span> also facial expressions and body language.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>only — but</span><span class="c"><span class="num">②</span>just — and</span><span class="c"><span class="num">③</span>more — than</span><span class="c"><span class="num">④</span>only — and</span><span class="c"><span class="num">⑤</span>even — but</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① only — but</div>
+  <div class="ans-detail"><b>not only A but (also) B</b> = "A뿐 아니라 B도" — 두 단어/구를 동등하게 묶는 상관접속사. 정해진 짝이며 also는 흔히 동반된다.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">only — but</span> <span class="opt-mark">✓</span></div><div class="opt-why">not only A but (also) B의 정형 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">just — and</span> <span class="opt-mark">✗</span></div><div class="opt-why">상관접속사 짝이 아님</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">more — than</span> <span class="opt-mark">✗</span></div><div class="opt-why">비교급 구문</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">only — and</span> <span class="opt-mark">✗</span></div><div class="opt-why">짝 어긋남 — but이어야 함</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">even — but</span> <span class="opt-mark">✗</span></div><div class="opt-why">not even은 다른 구문</div></div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">33</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">비교급 louder than</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>33.</b> 빈칸 (A)에 들어갈 말로 가장 적절한 것은?</div>
+  <div class="q-passage">Sometimes, a little emoji like 😊 can speak <span class="q-blank">(A)</span> than many words.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>loud</span><span class="c"><span class="num">②</span>louder</span><span class="c"><span class="num">③</span>loudest</span><span class="c"><span class="num">④</span>more loud</span><span class="c"><span class="num">⑤</span>most loud</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② louder</div>
+  <div class="ans-detail">뒤에 <b>than</b>이 보이므로 비교급. loud는 1음절 → -er 형태. ④ more loud는 비표준 — loud는 일반적으로 louder.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">loud</span> <span class="opt-mark">✗</span></div><div class="opt-why">than이 비교급 신호 — 원급 ✗</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">louder</span> <span class="opt-mark">✓</span></div><div class="opt-why">1음절 -er 비교급 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">loudest</span> <span class="opt-mark">✗</span></div><div class="opt-why">최상급 — than과 짝이 아님</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">more loud</span> <span class="opt-mark">✗</span></div><div class="opt-why">1음절 형용사는 -er 우선 — 비표준</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">most loud</span> <span class="opt-mark">✗</span></div><div class="opt-why">최상급 형태 + 1음절 부적합</div></div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">34</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">use ~ instead (대체 표현)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>34.</b> 빈칸 (A)에 들어갈 말로 가장 적절한 것은?</div>
+  <div class="q-passage">In texting, we use <span class="q-blank">(A)</span> instead.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>letters</span><span class="c"><span class="num">②</span>emojis</span><span class="c"><span class="num">③</span>numbers</span><span class="c"><span class="num">④</span>silence</span><span class="c"><span class="num">⑤</span>handshakes</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② emojis</div>
+  <div class="ans-detail">앞 문장에서 face-to-face 대화 시 facial expressions/body language를 쓴다고 했고, 이어 "텍스팅에서는 (A) 대신 사용한다" → 본문 그대로 emojis. instead는 "대신에"로 앞에 언급된 것을 대체한다는 의미.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">letters</span> <span class="opt-ko">"문자/편지"</span> <span class="opt-mark">✗</span></div><div class="opt-why">문맥상 facial expression 대체물 ✗</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">emojis</span> <span class="opt-ko">"이모티콘"</span> <span class="opt-mark">✓</span></div><div class="opt-why">표정·몸짓 대체로 본문 정답 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">numbers</span> <span class="opt-ko">"숫자"</span> <span class="opt-mark">✗</span></div><div class="opt-why">맥락 무관</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">silence</span> <span class="opt-ko">"침묵"</span> <span class="opt-mark">✗</span></div><div class="opt-why">의사전달 수단으로 부적합</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">handshakes</span> <span class="opt-ko">"악수"</span> <span class="opt-mark">✗</span></div><div class="opt-why">텍스팅에서 불가능</div></div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">35</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">behind one's back (숙어)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>35.</b> 빈칸 (A)에 들어갈 말로 알맞은 것은?</div>
+  <div class="q-passage">Did you really talk behind my <span class="q-blank">(A)</span>? I want you to apologize to me.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>back</span><span class="c"><span class="num">②</span>face</span><span class="c"><span class="num">③</span>head</span><span class="c"><span class="num">④</span>shadow</span><span class="c"><span class="num">⑤</span>shoulder</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① back</div>
+  <div class="ans-detail"><b>talk behind one's back</b> = "남의 뒤에서(없는 데서) 험담하다" — 정해진 idiom. 다른 신체 부위로 대체 불가.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">back</span> <span class="opt-mark">✓</span></div><div class="opt-why">behind one's back — 정형 idiom ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">face</span> <span class="opt-mark">✗</span></div><div class="opt-why">to one's face는 "면전에서" — 정반대 의미</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">head</span> <span class="opt-mark">✗</span></div><div class="opt-why">관용 표현 아님</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">shadow</span> <span class="opt-mark">✗</span></div><div class="opt-why">관용 표현 아님</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">shoulder</span> <span class="opt-mark">✗</span></div><div class="opt-why">관용 표현 아님</div></div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">36</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">apologize to ~</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>36.</b> 빈칸 (A)에 들어갈 말로 알맞은 것은?</div>
+  <div class="q-passage">I want you to <span class="q-blank">(A)</span> to me.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>say</span><span class="c"><span class="num">②</span>thank</span><span class="c"><span class="num">③</span>apologize</span><span class="c"><span class="num">④</span>explain</span><span class="c"><span class="num">⑤</span>complain</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ apologize</div>
+  <div class="ans-detail">앞 문장은 "내 뒤에서 험담했지?"라는 비난·요구. 따라서 "사과하다(apologize to)"가 적합. apologize는 자동사로 to + 사람 형태. ④ explain은 explain to me로 가능하나 본문 흐름은 사과 요구.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">say</span> <span class="opt-mark">✗</span></div><div class="opt-why">say to me는 가능하나 흐름과 불일치</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">thank</span> <span class="opt-mark">✗</span></div><div class="opt-why">감사할 맥락 아님</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">apologize</span> <span class="opt-mark">✓</span></div><div class="opt-why">behind my back에 대한 사과 요구 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">explain</span> <span class="opt-mark">✗</span></div><div class="opt-why">설명이 아닌 사과 요구</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">complain</span> <span class="opt-mark">✗</span></div><div class="opt-why">불평 아님 — 가해자에게 요구</div></div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">37</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">said to herself (재귀대명사)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>37.</b> 빈칸 (A)에 들어갈 말로 알맞은 것은?</div>
+  <div class="q-passage">"Well, this is too much for a text," she said to <span class="q-blank">(A)</span> and called Nari.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>her</span><span class="c"><span class="num">②</span>she</span><span class="c"><span class="num">③</span>hers</span><span class="c"><span class="num">④</span>herself</span><span class="c"><span class="num">⑤</span>themselves</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ④ herself</div>
+  <div class="ans-detail"><b>say to oneself</b> = "혼잣말하다, 마음속으로 생각하다" — 정형 표현. 주어 she와 동일 인물이므로 재귀대명사 herself.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">her</span> <span class="opt-mark">✗</span></div><div class="opt-why">목적격 — 주어와 같은 사람일 때 재귀형 필요</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">she</span> <span class="opt-mark">✗</span></div><div class="opt-why">전치사 to 다음에 주격 ✗</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">hers</span> <span class="opt-mark">✗</span></div><div class="opt-why">소유대명사 — 자리 부적절</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">herself</span> <span class="opt-mark">✓</span></div><div class="opt-why">say to oneself 정형 — 주어=목적어 재귀 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">themselves</span> <span class="opt-mark">✗</span></div><div class="opt-why">단수 she에 대응 안 됨 — 복수형</div></div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">38</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">pick up the phone (idiom)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>38.</b> 빈칸 (A)에 들어갈 말로 알맞은 것은?</div>
+  <div class="q-passage">Texting is okay for casual situations, but sometimes, you need to pick up the <span class="q-blank">(A)</span>.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>book</span><span class="c"><span class="num">②</span>phone</span><span class="c"><span class="num">③</span>pen</span><span class="c"><span class="num">④</span>note</span><span class="c"><span class="num">⑤</span>letter</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② phone</div>
+  <div class="ans-detail"><b>pick up the phone</b> = "전화기를 들다(전화하다)" — 정형 idiom. 맥락도 "텍스팅 ≠ 전화" 구도이므로 phone.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">book</span> <span class="opt-mark">✗</span></div><div class="opt-why">관용 표현 아님</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">phone</span> <span class="opt-mark">✓</span></div><div class="opt-why">pick up the phone — 본문·idiom 일치 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">pen</span> <span class="opt-mark">✗</span></div><div class="opt-why">pick up the pen은 idiom 아님</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">note</span> <span class="opt-mark">✗</span></div><div class="opt-why">맥락 무관</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">letter</span> <span class="opt-mark">✗</span></div><div class="opt-why">텍스팅과 대비되는 즉각 통신 수단은 phone</div></div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">39</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">5개 빈칸 모두 검증 (P4 패턴)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>39.</b> 다음 문장의 빈칸 ⓐ~ⓔ에 들어갈 말로 <b>적절하지 않은</b> 것은?</div>
+  <div class="q-passage">When we talk with someone, we use <u>ⓐ(not only)</u> words but <u>ⓑ(also)</u> facial expressions and body language. In texting, we use <u>ⓒ(emojis)</u> instead. Sometimes, a little emoji <u>ⓓ(can speak)</u> louder than many words. The problem is <u>ⓔ(what)</u> not everybody uses emojis in the same way.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>ⓐ not only</span><span class="c"><span class="num">②</span>ⓑ also</span><span class="c"><span class="num">③</span>ⓒ emojis</span><span class="c"><span class="num">④</span>ⓓ can speak</span><span class="c"><span class="num">⑤</span>ⓔ what</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ⑤ ⓔ what → <b>that</b></div>
+  <div class="ans-detail"><b>The problem is</b> 다음에는 보어절을 이끄는 접속사 <b>that</b>이 와야 함. what은 선행사 없는 관계대명사로 뒤 절에 명사 자리(주어/목적어)가 비어 있어야 하는데 본문은 완전한 절이므로 that.<br>① not only / ② (but) also / ③ emojis / ④ can speak: 본문 그대로 — 적절.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">not only</span> <span class="opt-mark">✓ 적절</span></div><div class="opt-why">not only A but also B 정형 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">also</span> <span class="opt-mark">✓ 적절</span></div><div class="opt-why">but (also)의 also 위치 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">emojis</span> <span class="opt-mark">✓ 적절</span></div><div class="opt-why">표정·몸짓의 대체 — 본문 그대로</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">can speak</span> <span class="opt-mark">✓ 적절</span></div><div class="opt-why">조동사+동사원형 ✓</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">what</span> <span class="opt-mark">✗ 부적절 (정답)</span></div><div class="opt-why">완전한 절 앞이므로 접속사 that이 옳음 ✗</div></div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">40</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">결론 클러스터 (3 paraphrase × 3 blanks)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>40.</b> 본문의 결론을 다음 세 문장으로 다시 쓸 때, 빈칸 (A), (B), (C)에 들어갈 말로 알맞게 짝지어진 것은?</div>
+  <div class="q-passage"><b>Paraphrase 1.</b> Texting works for casual chats, but for sensitive issues, you should <span class="q-blank">(A)</span> the phone.<br><b>Paraphrase 2.</b> Misunderstandings happen <span class="q-blank">(B)</span> when you text.<br><b>Paraphrase 3.</b> Don't text about sensitive issues. <span class="q-blank">(C)</span> them instead.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> pick up — easily — Call</span>
+    <span class="c"><span class="num">②</span> hang up — slowly — Text</span>
+    <span class="c"><span class="num">③</span> pick up — never — Email</span>
+    <span class="c"><span class="num">④</span> turn off — easily — Call</span>
+    <span class="c"><span class="num">⑤</span> pick up — easily — Ignore</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① pick up — easily — Call</div>
+  <div class="ans-detail">(A) "전화를 들다" → <b>pick up</b><br>(B) 본문 "Misunderstandings can <b>easily</b> happen" → <b>easily</b><br>(C) 본문 "Call them instead" → <b>Call</b><br>② hang up(끊다) ✗, ③ never ✗ (본문은 자주 일어남), ④ turn off ✗, ⑤ Ignore ✗</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">pick up — easily — Call</span> <span class="opt-mark">✓</span></div><div class="opt-why">본문 핵심 표현 3개 모두 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">hang up — slowly — Text</span> <span class="opt-mark">✗</span></div><div class="opt-why">의미 정반대(끊다/문자해라) ✗</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">pick up — never — Email</span> <span class="opt-mark">✗</span></div><div class="opt-why">never가 본문 easily와 반대</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">turn off — easily — Call</span> <span class="opt-mark">✗</span></div><div class="opt-why">turn off the phone(전화 끄기) ✗</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">pick up — easily — Ignore</span> <span class="opt-mark">✗</span></div><div class="opt-why">Ignore는 본문 Call them instead와 정반대</div></div>
+  </div></div></details>
+</article>
+
+
+<!-- ============================================================
+     SECTION F · 어휘·숙어 (VOCAB) · 10 ITEMS · Q41~Q50
+     ============================================================ -->
+<div class="section-head" data-section-type="vocab" data-section-marker>
+  <div class="num-line">SECTION F · 어휘·숙어 · VOCABULARY · 10 ITEMS</div>
+  <h2>어휘·숙어 <span class="kor">파생어 · 접두사 · 영영풀이 · 숙어 · 반의어/유의어 · 역추론</span></h2>
+  <p class="desc">word family(communicate/communication), apologize/apology, mis- prefix, idiom (pick up the phone, behind one's back), 영영풀이 매칭, "안 들어가는 것" 역추론 등 어휘력 종합 평가.</p>
+</div>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">41</span><span class="type-tag vocab">어휘</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">파생어 communicate / communication</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>41.</b> 빈칸 (A), (B)에 들어갈 알맞은 형태가 짝지어진 것은?</div>
+  <div class="q-passage">Texting is the main way of <span class="q-blank">(A)</span> for many people. Do you want to know how to <span class="q-blank">(B)</span> better through texting?</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>communicate — communicate</span><span class="c"><span class="num">②</span>communication — communicate</span><span class="c"><span class="num">③</span>communicative — communication</span><span class="c"><span class="num">④</span>communicating — communicated</span><span class="c"><span class="num">⑤</span>communication — communicating</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② communication — communicate</div>
+  <div class="ans-detail">(A) of 다음 명사 자리 → <b>communication</b><br>(B) to 다음 동사원형 → <b>communicate</b><br>※ communicate(동사) / communication(명사) / communicative(형용사) 구별.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">communicate — communicate</span> <span class="opt-mark">✗</span></div><div class="opt-why">(A) of 다음 동사 ✗</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">communication — communicate</span> <span class="opt-mark">✓</span></div><div class="opt-why">명사+to부정사 정답 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">communicative — communication</span> <span class="opt-mark">✗</span></div><div class="opt-why">(A) 형용사 ✗ (B) to+명사 ✗</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">communicating — communicated</span> <span class="opt-mark">✗</span></div><div class="opt-why">to 다음 분사·과거형 ✗</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">communication — communicating</span> <span class="opt-mark">✗</span></div><div class="opt-why">(B) to+V-ing ✗</div></div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">42</span><span class="type-tag vocab">어휘</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">apology / apologize / apologetic</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>42.</b> 다음 빈칸에 들어갈 단어로 적절하지 <b>않은</b> 것은?</div>
+  <div class="q-passage">Nari said, "I want you to <u>(A)</u> to me." She wanted Amy to give a sincere <u>(B)</u>. Amy felt very <u>(C)</u> about the misunderstanding.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> (A) apologize</span>
+    <span class="c"><span class="num">②</span> (B) apology</span>
+    <span class="c"><span class="num">③</span> (C) apologetic</span>
+    <span class="c"><span class="num">④</span> (A) apology</span>
+    <span class="c"><span class="num">⑤</span> (B) apologies</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ④ (A) apology</div>
+  <div class="ans-detail">(A) 자리는 to부정사 다음 — <b>동사</b>가 와야 하므로 apologize. apology는 명사이므로 부적절.<br>① apologize(동사) ✓ / ② apology(명사) ✓ / ③ apologetic(형용사 "미안해하는") ✓ / ⑤ apologies(복수 명사도 give X형식 가능) ✓</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">(A) apologize</span> <span class="opt-mark">✓ 적절</span></div><div class="opt-why">to 다음 동사원형 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">(B) apology</span> <span class="opt-mark">✓ 적절</span></div><div class="opt-why">give a + 명사 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">(C) apologetic</span> <span class="opt-mark">✓ 적절</span></div><div class="opt-why">felt + 형용사 보어 ✓</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">(A) apology</span> <span class="opt-mark">✗ 부적절 (정답)</span></div><div class="opt-why">to부정사 자리에 명사 ✗</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">(B) apologies</span> <span class="opt-mark">✓ 적절</span></div><div class="opt-why">give apologies (복수형도 가능) ✓</div></div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">43</span><span class="type-tag vocab">어휘</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">접두사 mis- (잘못된)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>43.</b> 다음 중 접두사 <b>mis-</b>의 의미가 본문의 <i>misunderstandings</i>와 가장 가까운 것은?</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>missing</span><span class="c"><span class="num">②</span>mistake</span><span class="c"><span class="num">③</span>mister</span><span class="c"><span class="num">④</span>mission</span><span class="c"><span class="num">⑤</span>misty</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② mistake</div>
+  <div class="ans-detail">접두사 <b>mis-</b> = "잘못/틀린" 의미. misunderstanding(오해), mistake(실수), misuse(오용), misread(잘못 읽다) 모두 같은 어원.<br>① missing은 miss(놓치다)+ing — 별개 어근. ③ mister는 호칭. ④ mission은 라틴어 mittere(보내다). ⑤ misty는 mist(안개) + y.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">missing</span> <span class="opt-ko">"놓친"</span> <span class="opt-mark">✗</span></div><div class="opt-why">miss(놓치다) — mis- 접두사 ✗</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">mistake</span> <span class="opt-ko">"실수"</span> <span class="opt-mark">✓</span></div><div class="opt-why">mis-(잘못)+take — misunderstanding과 동일 접두사 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">mister</span> <span class="opt-ko">"~씨"</span> <span class="opt-mark">✗</span></div><div class="opt-why">호칭 — 접두사 mis-와 무관</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">mission</span> <span class="opt-ko">"임무"</span> <span class="opt-mark">✗</span></div><div class="opt-why">라틴어 어근, 접두사 mis-와 무관</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">misty</span> <span class="opt-ko">"안개 낀"</span> <span class="opt-mark">✗</span></div><div class="opt-why">mist(안개)+y</div></div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">44</span><span class="type-tag vocab">어휘</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">단·복수형</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>44.</b> 본문의 명사 사용을 고려할 때, 어법상 어색한 것은?</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> some useful tip</span>
+    <span class="c"><span class="num">②</span> the meanings of such expressions</span>
+    <span class="c"><span class="num">③</span> not only words but also facial expressions</span>
+    <span class="c"><span class="num">④</span> different things to different people</span>
+    <span class="c"><span class="num">⑤</span> sensitive issues</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① some useful tip</div>
+  <div class="ans-detail">본문은 "some useful <b>tips</b>"로 복수. some + 가산명사일 때는 일반적으로 복수형. some useful tip은 어색.<br>나머지 ②~⑤는 본문 그대로의 자연스러운 명사 형태.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">some useful tip</span> <span class="opt-mark">✗ 어색 (정답)</span></div><div class="opt-why">some + 가산명사 → 복수형 tips가 자연스러움</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">the meanings of such expressions</span> <span class="opt-mark">✓ 적절</span></div><div class="opt-why">의미들 — 복수 자연스러움</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">not only words but also facial expressions</span> <span class="opt-mark">✓ 적절</span></div><div class="opt-why">병렬 + 복수 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">different things to different people</span> <span class="opt-mark">✓ 적절</span></div><div class="opt-why">different + 복수 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">sensitive issues</span> <span class="opt-mark">✓ 적절</span></div><div class="opt-why">본문 그대로 ✓</div></div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">45</span><span class="type-tag vocab">어휘</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">유의어 useful/helpful</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>45.</b> 본문의 <i>useful</i>과 가장 가까운 의미를 가진 단어는?</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>helpful</span><span class="c"><span class="num">②</span>useless</span><span class="c"><span class="num">③</span>terrible</span><span class="c"><span class="num">④</span>boring</span><span class="c"><span class="num">⑤</span>strict</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① helpful</div>
+  <div class="ans-detail">useful = "유용한" → helpful "도움이 되는"이 가장 가까운 유의어. ② useless는 반의어. ③④⑤는 부정·무관 의미.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">helpful</span> <span class="opt-ko">"도움 되는"</span> <span class="opt-mark">✓</span></div><div class="opt-why">유의어 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">useless</span> <span class="opt-ko">"쓸모없는"</span> <span class="opt-mark">✗</span></div><div class="opt-why">반의어</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">terrible</span> <span class="opt-ko">"끔찍한"</span> <span class="opt-mark">✗</span></div><div class="opt-why">부정 의미</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">boring</span> <span class="opt-ko">"지루한"</span> <span class="opt-mark">✗</span></div><div class="opt-why">무관</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">strict</span> <span class="opt-ko">"엄격한"</span> <span class="opt-mark">✗</span></div><div class="opt-why">무관</div></div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">46</span><span class="type-tag vocab">어휘</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">idiom: pick up the phone</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>46.</b> 본문의 <i>pick up the phone</i>의 의미로 가장 적절한 것은?</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> 전화기를 떨어뜨리다</span>
+    <span class="c"><span class="num">②</span> 전화기를 사다</span>
+    <span class="c"><span class="num">③</span> 전화기를 들어 통화하다</span>
+    <span class="c"><span class="num">④</span> 전화기를 끄다</span>
+    <span class="c"><span class="num">⑤</span> 전화기를 던지다</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ 전화기를 들어 통화하다</div>
+  <div class="ans-detail"><b>pick up the phone</b> = (수화기를) 들다 → 직접 전화로 말하다. 본문은 "텍스팅 대신 전화하라"는 결론이므로 정확히 ③.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">drop the phone</span> <span class="opt-mark">✗</span></div><div class="opt-why">drop = 떨어뜨리다</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">buy the phone</span> <span class="opt-mark">✗</span></div><div class="opt-why">buy = 사다</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">answer/use the phone</span> <span class="opt-mark">✓</span></div><div class="opt-why">pick up = 수화기 들기 → 통화 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">turn off the phone</span> <span class="opt-mark">✗</span></div><div class="opt-why">turn off = 끄다</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">throw the phone</span> <span class="opt-mark">✗</span></div><div class="opt-why">throw = 던지다</div></div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">47</span><span class="type-tag vocab">어휘</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">idiom: behind one's back</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>47.</b> 본문의 <i>talk behind my back</i>의 의미로 가장 적절한 것은?</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> 내 뒤를 따라 걸으며 말하다</span>
+    <span class="c"><span class="num">②</span> 내 등 뒤로 손을 돌려 말하다</span>
+    <span class="c"><span class="num">③</span> 나에게 직접 사실을 말하다</span>
+    <span class="c"><span class="num">④</span> 내가 없는 데서 험담하다</span>
+    <span class="c"><span class="num">⑤</span> 등을 돌리고 큰 소리로 말하다</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ④ 내가 없는 데서 험담하다</div>
+  <div class="ans-detail"><b>talk behind one's back</b> = "(당사자가 없는 곳에서) 험담하다" — 영어의 정형 idiom. 본문에서 Nari가 사과를 요구한 정황도 험담을 전제.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">walk and talk behind</span> <span class="opt-mark">✗</span></div><div class="opt-why">물리적 행동 의미 ✗ — 비유적 idiom</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">put hands behind back</span> <span class="opt-mark">✗</span></div><div class="opt-why">자세에 대한 표현 ✗</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">tell directly</span> <span class="opt-mark">✗</span></div><div class="opt-why">정반대 의미</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">gossip when absent</span> <span class="opt-mark">✓</span></div><div class="opt-why">behind one's back 정형 idiom ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">turn back and shout</span> <span class="opt-mark">✗</span></div><div class="opt-why">물리적 의미로 오해</div></div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">48</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">반의어 casual ↔ formal/serious</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>48.</b> 본문의 <i>casual</i>의 의미와 가장 <b>반대되는</b> 단어는?</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>relaxed</span><span class="c"><span class="num">②</span>informal</span><span class="c"><span class="num">③</span>serious</span><span class="c"><span class="num">④</span>simple</span><span class="c"><span class="num">⑤</span>quick</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ serious</div>
+  <div class="ans-detail">casual = "가벼운/일상적인" → 반의어는 serious(진지한) 또는 formal(격식 있는). 본문도 "casual situations vs sensitive issues"의 대비 구조.<br>① relaxed, ② informal은 유의어. ④ simple은 단순한, ⑤ quick은 빠른 — 무관.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">relaxed</span> <span class="opt-ko">"편안한"</span> <span class="opt-mark">✗</span></div><div class="opt-why">유의어</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">informal</span> <span class="opt-ko">"비격식의"</span> <span class="opt-mark">✗</span></div><div class="opt-why">유의어</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">serious</span> <span class="opt-ko">"진지한"</span> <span class="opt-mark">✓</span></div><div class="opt-why">casual의 반의어 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">simple</span> <span class="opt-ko">"단순한"</span> <span class="opt-mark">✗</span></div><div class="opt-why">반의 관계 아님</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">quick</span> <span class="opt-ko">"빠른"</span> <span class="opt-mark">✗</span></div><div class="opt-why">무관</div></div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">49</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">영영풀이 매칭</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>49.</b> 다음 영영풀이가 가리키는 단어로 알맞은 것은?</div>
+  <div class="q-passage"><b>Definition:</b> a small picture or image used in text messages to express a feeling or idea</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>texting</span><span class="c"><span class="num">②</span>emoji</span><span class="c"><span class="num">③</span>apology</span><span class="c"><span class="num">④</span>idiom</span><span class="c"><span class="num">⑤</span>sticker</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② emoji</div>
+  <div class="ans-detail">"텍스트 메시지에서 감정/생각을 표현하는 작은 그림/이미지" → emoji. ① texting은 행위·과정. ⑤ sticker는 큰 그림 스티커로 정확히는 다름. ③ apology, ④ idiom은 그림 의미 없음.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">texting</span> <span class="opt-ko">"문자 보내기"</span> <span class="opt-mark">✗</span></div><div class="opt-why">행위 — picture가 아님</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">emoji</span> <span class="opt-ko">"이모티콘"</span> <span class="opt-mark">✓</span></div><div class="opt-why">정의와 정확히 일치 ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">apology</span> <span class="opt-ko">"사과"</span> <span class="opt-mark">✗</span></div><div class="opt-why">picture 아님</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">idiom</span> <span class="opt-ko">"숙어"</span> <span class="opt-mark">✗</span></div><div class="opt-why">picture 아님</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">sticker</span> <span class="opt-ko">"스티커"</span> <span class="opt-mark">✗</span></div><div class="opt-why">유사하나 정의의 "small picture used in text messages"는 emoji가 더 정확</div></div>
+  </div></div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">50</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">"안 들어가는 것" 역추론</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>50.</b> 본문의 어떤 빈칸에도 자연스럽게 들어가지 <b>않는</b> 단어는?</div>
+  <div class="q-passage">(가) Be <u>(A)</u> with such expressions when you text your teachers.<br>(나) She said to <u>(B)</u> and called Nari.<br>(다) Texting is okay for <u>(C)</u> situations.<br>(라) Misunderstandings can <u>(D)</u> happen when you text.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>careful</span><span class="c"><span class="num">②</span>herself</span><span class="c"><span class="num">③</span>casual</span><span class="c"><span class="num">④</span>easily</span><span class="c"><span class="num">⑤</span>silently</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ⑤ silently</div>
+  <div class="ans-detail">(A) careful → 본문 "be careful with"<br>(B) herself → "she said to herself"<br>(C) casual → "casual situations"<br>(D) easily → "can easily happen"<br>⑤ silently(조용히)는 본문 어디에도 등장하지 않으며, 위 빈칸 어느 자리도 의미적으로 부적합.</div>
+  <div class="opt-analysis">
+  <div class="opt-title">▶ 보기별 한국어 해석 + 정답·오답 이유</div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">①</span> <span class="opt-en">careful</span> <span class="opt-mark">✓ 들어감 (A)</span></div><div class="opt-why">be careful with ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">②</span> <span class="opt-en">herself</span> <span class="opt-mark">✓ 들어감 (B)</span></div><div class="opt-why">said to herself ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">③</span> <span class="opt-en">casual</span> <span class="opt-mark">✓ 들어감 (C)</span></div><div class="opt-why">casual situations ✓</div></div>
+  <div class="opt-row bad"><div class="opt-head"><span class="opt-num">④</span> <span class="opt-en">easily</span> <span class="opt-mark">✓ 들어감 (D)</span></div><div class="opt-why">can easily happen ✓</div></div>
+  <div class="opt-row good"><div class="opt-head"><span class="opt-num">⑤</span> <span class="opt-en">silently</span> <span class="opt-mark">✗ 안 들어감 (정답)</span></div><div class="opt-why">본문 미등장 + 자리 의미 부적합 ✗</div></div>
+  </div></div></details>
+</article>
+
+
+<!-- ============================================================
+     SECTION G · 서술형 (WRITING) · 3 ITEMS · Q51~Q53
+     ※ <보기> 단어 어순 ≠ 정답 어순 (셔플 룰 적용)
+     ============================================================ -->
+<div class="section-head" data-section-type="writing" data-section-marker>
+  <div class="num-line">SECTION G · 서술형 · WRITING · 3 ITEMS</div>
+  <h2>서술형 <span class="kor">조합 영작 · 본문 핵심 구문 응용</span></h2>
+  <p class="desc">want+O+to부정사+비교급, not only A but also B+동명사, pick up the phone+casual situations 구문을 보기 단어로 영작. ※ 보기 단어 배열은 정답 어순과 다르게 셔플되어 있음.</p>
+</div>
+
+<article class="q-card" data-type="writing">
+  <div class="q-meta"><span class="q-num">51</span><span class="type-tag writing">서술형</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">want + O + to부정사 + 비교급</span><span class="q-pts">5점</span></div>
+  <div class="q-prompt"><b>51.</b> &lt;보기&gt;의 단어들을 모두 사용하여 우리말 의미에 맞게 영작하시오. (단, 한 단어를 두 번 이상 쓰지 말 것)</div>
+  <div class="word-bank"><b>&lt;우리말&gt;</b> 나는 네가 좀 더 오래 기다리기를 원한다.<br><br>
+  <b>&lt;보기&gt;</b> ( <b>longer / want / wait / a / I / little / you / to</b> )</div>
+  <div class="answer-line">
+  ⇒ <span class="underline">①</span> <span class="underline">②</span> <span class="underline">③</span> <span class="underline">④</span> <span class="underline">⑤</span> <span class="underline">⑥</span> <span class="underline">⑦</span> <span class="underline">⑧</span>.
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <b>I want you to wait a little longer.</b></div>
+  <div class="ans-detail"><b>핵심 결합 문법 2가지:</b><br>① <b>want + 목적어 + to부정사</b>: I want you <b>to wait</b> (네가 기다리기를 원한다)<br>② <b>a little + 비교급</b>: <b>a little longer</b> (조금 더 오래) — a little은 비교급 강조 부사<br><br><b>각 자리:</b><br>① I / ② want / ③ you / ④ to / ⑤ wait / ⑥ a / ⑦ little / ⑧ longer<br><br><b>※ 보기 어순(셔플):</b> longer / want / wait / a / I / little / you / to<br>→ 정답 어순으로 재배열 필요.<br><br><b>※ 자주 하는 실수:</b><br>- "I want you wait" — to 누락 ✗<br>- "much longer" — 보기에 a / little만 있음<br>- "a little more long" — a little 다음 비교급은 -er형이 자연스러움</div></div></details>
+</article>
+
+<article class="q-card" data-type="writing">
+  <div class="q-meta"><span class="q-num">52</span><span class="type-tag writing">서술형</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">not only A but also B + 명사 병렬</span><span class="q-pts">5점</span></div>
+  <div class="q-prompt"><b>52.</b> &lt;보기&gt;의 단어들을 모두 사용하여 우리말 의미에 맞게 영작하시오. (단어 추가·변형 불가)</div>
+  <div class="word-bank"><b>&lt;우리말&gt;</b> 우리는 단어뿐만 아니라 이모티콘도 사용한다.<br><br>
+  <b>&lt;보기&gt;</b> ( <b>emojis / use / but / words / only / we / also / not</b> )</div>
+  <div class="answer-line">
+  ⇒ <span class="underline" style="min-width:380px"></span>.
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <b>We use not only words but also emojis.</b></div>
+  <div class="ans-detail"><b>핵심 결합 문법 2가지:</b><br>① <b>not only A but also B</b> 상관접속사 — A·B 자리 동등 품사·구조<br>② <b>병렬 명사 — words / emojis</b>: 두 가산 복수 명사가 동격으로 묶임<br><br><b>구조:</b> We use [not only <b>words</b>] [but also <b>emojis</b>].<br><br><b>※ 보기 어순(셔플):</b> emojis / use / but / words / only / we / also / not<br>→ 정답 어순으로 재배열 필요.<br><br><b>※ 자주 하는 실수:</b><br>- "We not only use words but also emojis" → use 위치만 바꾸면 가능하지만 본 문제는 보기 단어 1회 사용 + 본문 흐름이 우선<br>- "not only words and also emojis" — but 누락 ✗<br>- "not only word but also emoji" — 단수형 변형은 단어 변형 금지 위반 ✗</div></div></details>
+</article>
+
+<article class="q-card" data-type="writing">
+  <div class="q-meta"><span class="q-num">53</span><span class="type-tag writing">서술형</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">be okay for + N / pick up the phone</span><span class="q-pts">5점</span></div>
+  <div class="q-prompt"><b>53.</b> &lt;보기&gt;의 단어들을 모두 사용하여 우리말 의미에 맞게 영작하시오. (단, 필요시 단어를 변형하시오.)</div>
+  <div class="word-bank"><b>&lt;우리말&gt;</b> 텍스팅은 가벼운 상황에서는 괜찮지만, 때때로 너는 전화를 걸어야 한다.<br><br>
+  <b>&lt;보기&gt;</b> ( <b>phone / texting / situation / pick / casual / be / for / sometimes / okay / but / up / to / need / you / the</b> )</div>
+  <div class="answer-line">
+  ⇒ <span class="underline" style="min-width:550px"></span>.
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <b>Texting is okay for casual situations, but sometimes you need to pick up the phone.</b></div>
+  <div class="ans-detail"><b>핵심 결합 문법·표현 3가지:</b><br>① <b>be 동사 변형</b>: Texting(주어) → <b>is</b> (보기 be의 변형 필수)<br>② <b>be okay for + N구</b>: 가벼운 상황에 괜찮다 — for casual situations<br>③ <b>need to + V + idiom</b>: need <b>to pick up the phone</b> (전화기를 들다 = 전화하다)<br><br><b>구조:</b><br>[Texting is okay for casual <b>situations</b>] + [<b>but</b> sometimes you need to pick up the phone]<br>※ situation은 복수형 situations로 변형(보기 변형 허용).<br><br><b>※ 보기 어순(셔플):</b> phone / texting / situation / pick / casual / be / for / sometimes / okay / but / up / to / need / you / the<br>→ 정답 어순으로 재배열·필요시 변형(be→is, situation→situations).<br><br><b>※ 자주 하는 실수:</b><br>- "Texting be okay" — be 변형 누락 ✗<br>- "pick the phone up" — pick up the phone이 본문 어순 (분리 가능하지만 idiom으로는 합쳐 쓰는 게 자연스러움)<br>- "situation"(단수) — 가벼운 상황들이 일반적 상황을 가리키므로 복수가 자연스러움</div></div></details>
+</article>
+
+<!-- ===== END OF 53 QUESTIONS ===== -->
+
+
+</div>
+
+<div class="made-by">
+  <div>목동서로영어학원 — 목동중학교 2학년 Lesson 2 Practice Set</div>
+  <div class="credit">MOKDONG SEORO ENGLISH ACADEMY · <a href="https://0505.co.kr" style="color:inherit;">0505.co.kr</a></div>
+</div>
+
+<script>
+  document.querySelectorAll('.nav-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const type = tab.dataset.type;
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelectorAll('.q-card').forEach(card => {
+        card.classList.toggle('hidden', !(type === 'all' || card.dataset.type === type));
+      });
+      document.querySelectorAll('.section-head[data-section-type]').forEach(sh => {
+        const sectType = sh.dataset.sectionType;
+        sh.classList.toggle('hidden', !(type === 'all' || sectType === type));
+      });
+      const firstVisible = document.querySelector('.q-card:not(.hidden), .section-head:not(.hidden)[data-section-type]');
+      if (firstVisible && type !== 'all') {
+        const navHeight = document.querySelector('.type-nav-wrap').offsetHeight;
+        const top = firstVisible.getBoundingClientRect().top + window.scrollY - navHeight - 20;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+
+
+/* ══ 펜 필기 모드 (자유 필기) v1.0 ══ */
+const PEN_COLORS=['#dc2626','#1F3864','#0f9d58','#f59e0b','#000000'];
+const PEN_WIDTHS=[2,4,7];
+let penEnabled=false,penColor='#dc2626',penWidth=4,penEraser=false;
+let penLayer=null,penPath=null,penPts=[];
+
+function buildPenTools(){
+  if(document.getElementById('penLayer'))return;
+  penLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  penLayer.id='penLayer';
+  document.body.appendChild(penLayer);
+  const tb=document.createElement('div');
+  tb.id='penToolbar';
+  let html='<button class="pen-btn pen-main" id="penToggle" title="펜 ON/OFF">✏️</button><div class="pen-tools" id="penTools">';
+  PEN_COLORS.forEach(c=>html+='<button class="pen-color" data-color="'+c+'" style="background:'+c+';" title="색상"></button>');
+  PEN_WIDTHS.forEach(w=>html+='<button class="pen-width" data-width="'+w+'" title="굵기"><span style="width:'+(w*2)+'px;height:'+(w*2)+'px;"></span></button>');
+  html+='<button class="pen-btn pen-eraser" id="penEraserBtn" title="개별 지우개">🧹</button><button class="pen-btn pen-clear" id="penClearBtn" title="전체 지우기">🗑️</button></div>';
+  tb.innerHTML=html;
+  document.body.appendChild(tb);
+  document.querySelector('.pen-color[data-color="'+penColor+'"]').classList.add('selected');
+  document.querySelector('.pen-width[data-width="'+penWidth+'"]').classList.add('selected');
+  document.getElementById('penToggle').addEventListener('click',togglePen);
+  document.querySelectorAll('.pen-color').forEach(b=>b.addEventListener('click',e=>{
+    const c=e.currentTarget.dataset.color;
+    penColor=c;penEraser=false;
+    document.querySelectorAll('.pen-color').forEach(x=>x.classList.toggle('selected',x.dataset.color===c));
+    document.getElementById('penEraserBtn').classList.remove('active');
+  }));
+  document.querySelectorAll('.pen-width').forEach(b=>b.addEventListener('click',e=>{
+    const w=+e.currentTarget.dataset.width;
+    penWidth=w;
+    document.querySelectorAll('.pen-width').forEach(x=>x.classList.toggle('selected',+x.dataset.width===w));
+  }));
+  document.getElementById('penEraserBtn').addEventListener('click',()=>{
+    penEraser=!penEraser;
+    document.getElementById('penEraserBtn').classList.toggle('active',penEraser);
+  });
+  document.getElementById('penClearBtn').addEventListener('click',()=>{
+    if(confirm('모든 필기를 지우시겠습니까?'))penLayer.innerHTML='';
+  });
+  penLayer.addEventListener('pointerdown',penDown);
+  penLayer.addEventListener('pointermove',penMove);
+  penLayer.addEventListener('pointerup',penUp);
+  penLayer.addEventListener('pointercancel',penUp);
+  penLayer.addEventListener('pointerleave',penUp);
+  const sync=()=>{
+    const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
+    const w=Math.max(document.body.scrollWidth,document.documentElement.scrollWidth);
+    penLayer.setAttribute('width',w);
+    penLayer.setAttribute('height',h);
+    penLayer.style.height=h+'px';
+    penLayer.style.width=w+'px';
+  };
+  sync();
+  if(window.ResizeObserver)new ResizeObserver(sync).observe(document.body);
+  window.addEventListener('resize',sync);
+  setInterval(sync,2000);
+}
+function togglePen(){
+  penEnabled=!penEnabled;
+  document.getElementById('penToggle').classList.toggle('active',penEnabled);
+  document.getElementById('penTools').classList.toggle('show',penEnabled);
+  penLayer.classList.toggle('active',penEnabled);
+}
+function getPenPt(e){
+  return {x:e.clientX+window.scrollX,y:e.clientY+window.scrollY};
+}
+function penDown(e){
+  if(!penEnabled)return;
+  e.preventDefault();
+  try{penLayer.setPointerCapture(e.pointerId);}catch(_){}
+  if(penEraser){eraseAt(e);return;}
+  const pt=getPenPt(e);
+  penPath=document.createElementNS('http://www.w3.org/2000/svg','path');
+  penPath.setAttribute('d','M '+pt.x+' '+pt.y);
+  penPath.setAttribute('stroke',penColor);
+  penPath.setAttribute('stroke-width',penWidth);
+  penPath.setAttribute('fill','none');
+  penPath.setAttribute('stroke-linecap','round');
+  penPath.setAttribute('stroke-linejoin','round');
+  penLayer.appendChild(penPath);
+  penPts=[pt];
+}
+function penMove(e){
+  if(!penEnabled)return;
+  if(penEraser&&e.buttons){eraseAt(e);return;}
+  if(!penPath)return;
+  e.preventDefault();
+  const pt=getPenPt(e);
+  const last=penPts[penPts.length-1];
+  if(Math.hypot(pt.x-last.x,pt.y-last.y)<1.5)return;
+  penPts.push(pt);
+  let d='M '+penPts[0].x+' '+penPts[0].y;
+  for(let i=1;i<penPts.length-1;i++){
+    const c=penPts[i],n=penPts[i+1];
+    const mx=(c.x+n.x)/2,my=(c.y+n.y)/2;
+    d+=' Q '+c.x+' '+c.y+' '+mx+' '+my;
+  }
+  if(penPts.length>=2){
+    const lp=penPts[penPts.length-1];
+    d+=' L '+lp.x+' '+lp.y;
+  }
+  penPath.setAttribute('d',d);
+}
+function penUp(e){
+  if(penPath){penPath=null;penPts=[];}
+}
+function eraseAt(e){
+  const pt=getPenPt(e);
+  const r=20;
+  const paths=Array.from(penLayer.querySelectorAll('path'));
+  for(const p of paths){
+    const bb=p.getBBox();
+    if(pt.x>=bb.x-r&&pt.x<=bb.x+bb.width+r&&pt.y>=bb.y-r&&pt.y<=bb.y+bb.height+r){
+      p.remove();
+    }
+  }
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',buildPenTools);
+}else{
+  setTimeout(buildPenTools,100);
+}
+</script>
+
+</body>
+</html>
