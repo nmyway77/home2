@@ -1,0 +1,2467 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>대일고 2학년 영어I — 인식의 힘 지문 7유형 문제집</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+  :root {
+    --bg: #FAF7F2; --paper: #FFFFFF; --ink: #1A1815; --ink2: #4A4642;
+    --muted: #8B8680; --line: #E5DFD5; --accent: #B8763D;
+    --t-vocab:#D97A47; --t-grammar:#1F4E79; --t-cloze:#8B4A6F; --t-summary:#2A8B7F;
+    --t-order:#6B5BA0; --t-irrel:#C1574B; --t-theme:#5A8B3A; --t-app:#5A5A5A;
+    --green:#4A8B5C; --yellow:#C9A227; --orange:#D97A47; --red:#B53737;
+    --navy-950:#0A1E3A; --navy-800:#1F3557; --cream:#FAF6EE; --gold:#C99B4E; --gold-light:#E4C589;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { overflow-x: hidden; max-width: 100vw; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body { font-family: 'Pretendard Variable', 'Inter', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.65; }
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 36px 60px; }
+
+  .hero-banner {
+    background: radial-gradient(ellipse at 12% 20%, rgba(201,155,78,0.18), transparent 45%),
+      radial-gradient(ellipse at 88% 78%, rgba(184,118,61,0.16), transparent 50%),
+      linear-gradient(135deg, var(--navy-950) 0%, var(--navy-800) 100%);
+    color: var(--cream); padding: 48px 0 56px; position: relative; overflow: hidden;
+  }
+  .hero-banner::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(250,246,238,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(250,246,238,0.035) 1px, transparent 1px);
+    background-size: 38px 38px; pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 36px; }
+  .brand-row { display: flex; align-items: center; justify-content: space-between; padding-bottom: 22px; border-bottom: 1px solid rgba(250,246,238,0.15); margin-bottom: 26px; flex-wrap: wrap; gap: 14px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 17px; color: var(--navy-950); }
+  .brand-text { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-light); font-weight: 600; }
+  .brand-school { font-size: 15px; color: var(--cream); font-weight: 700; margin-top: 2px; letter-spacing: -0.01em;}
+  .hero-title { font-family: 'Playfair Display', 'Pretendard Variable', serif; font-weight: 800; font-size: 36px; letter-spacing: -0.02em; line-height: 1.18; color: var(--cream); margin: 14px 0 6px; }
+  .hero-subtitle { font-size: 16px; color: var(--gold-light); font-style: italic; font-weight: 500; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .meta-tag { font-size: 12px; padding: 6px 13px; border-radius: 20px; background: rgba(250,246,238,0.08); border: 1px solid rgba(250,246,238,0.18); color: var(--cream); letter-spacing: -0.01em; }
+
+  .type-nav-wrap { background: var(--paper); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 90; }
+  .type-nav { display: flex; gap: 6px; max-width: 1080px; margin: 0 auto; padding: 12px 36px; flex-wrap: wrap; align-items: center; }
+  .nav-tab { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 22px; background: var(--paper); color: var(--ink2); font-weight: 600; font-size: 13.5px; cursor: pointer; transition: all 0.15s; font-family: inherit; text-decoration: none; user-select: none; }
+  .nav-tab:hover { border-color: var(--accent); color: var(--ink); background: #FFFAF0; }
+  .nav-tab:active { transform: translateY(1px); }
+  .filter-radio { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+  #f-all:checked    ~ .type-nav-wrap label[for="f-all"],
+  #f-vocab:checked   ~ .type-nav-wrap label[for="f-vocab"],
+  #f-grammar:checked ~ .type-nav-wrap label[for="f-grammar"],
+  #f-cloze:checked   ~ .type-nav-wrap label[for="f-cloze"],
+  #f-summary:checked ~ .type-nav-wrap label[for="f-summary"],
+  #f-order:checked   ~ .type-nav-wrap label[for="f-order"],
+  #f-theme:checked   ~ .type-nav-wrap label[for="f-theme"],
+  #f-app:checked     ~ .type-nav-wrap label[for="f-app"] {
+    background: var(--ink); color: var(--paper); border-color: var(--ink);
+  }
+  #f-vocab:checked ~ .container .q-card:not([data-type="vocab"]) { display: none; }
+  #f-vocab:checked ~ .container .section-head:not(#sec-vocab) { display: none; }
+  #f-grammar:checked ~ .container .q-card:not([data-type="grammar"]) { display: none; }
+  #f-grammar:checked ~ .container .section-head:not(#sec-grammar) { display: none; }
+  #f-cloze:checked ~ .container .q-card:not([data-type="cloze"]) { display: none; }
+  #f-cloze:checked ~ .container .section-head:not(#sec-cloze) { display: none; }
+  #f-summary:checked ~ .container .q-card:not([data-type="summary"]) { display: none; }
+  #f-summary:checked ~ .container .section-head:not(#sec-summary) { display: none; }
+  #f-order:checked ~ .container .q-card:not([data-type="order"]) { display: none; }
+  #f-order:checked ~ .container .section-head:not(#sec-order) { display: none; }
+  #f-theme:checked ~ .container .q-card:not([data-type="theme"]) { display: none; }
+  #f-theme:checked ~ .container .section-head:not(#sec-theme) { display: none; }
+  #f-app:checked ~ .container .q-card:not([data-type="app"]) { display: none; }
+  #f-app:checked ~ .container .section-head:not(#sec-app) { display: none; }
+
+  .nav-color-dot { width: 9px; height: 9px; border-radius: 50%; }
+  .nav-count { font-size: 11.5px; color: var(--muted); font-weight: 500; }
+
+  .passage-box { background: var(--paper); border-radius: 14px; border: 1px solid var(--line); padding: 30px 32px; margin: 32px 0 40px; box-shadow: 0 4px 20px rgba(26,24,21,0.05); }
+  .passage-box .label-bar { display: inline-flex; align-items: center; gap: 8px; font-size: 11.5px; letter-spacing: 0.16em; color: var(--accent); text-transform: uppercase; font-weight: 700; margin-bottom: 16px; }
+  .passage-box .label-bar::before { content: ''; width: 24px; height: 2px; background: var(--accent); }
+  .passage-box .pt-title { font-family: 'Fraunces', 'Playfair Display', serif; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 4px; color: var(--ink); }
+  .passage-box .pt-sub { color: var(--muted); font-size: 14px; margin-bottom: 18px; font-style: italic; }
+  .passage-box .pt-body { font-size: 15.5px; line-height: 1.85; color: var(--ink); }
+  .passage-box .pt-body p { margin-bottom: 12px; text-align: justify; }
+  .key-word { color: var(--accent); font-weight: 700; border-bottom: 1.5px dotted var(--accent); cursor: help; }
+  .sent-num { display: inline-block; background: var(--cream); color: var(--accent); border: 1px solid var(--gold); border-radius: 50%; width: 22px; height: 22px; text-align: center; font-size: 11px; font-weight: 700; margin-right: 6px; vertical-align: middle; line-height: 20px; font-family: 'Fraunces', serif; }
+
+  .section-head { margin: 50px 0 24px; padding: 22px 26px; border-radius: 12px; background: linear-gradient(135deg, var(--paper) 0%, #FCFAF5 100%); border-left: 6px solid var(--accent); }
+  .section-head .num-line { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; letter-spacing: 0.16em; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+  .section-head h2 { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 700; letter-spacing: -0.015em; color: var(--ink); margin-bottom: 4px; }
+  .section-head h2 .kor { font-family: 'Pretendard Variable', sans-serif; font-size: 14.5px; font-weight: 500; color: var(--muted); margin-left: 8px; }
+  .section-head .desc { font-size: 13.5px; color: var(--ink2); line-height: 1.6; }
+
+  .q-card { background: var(--paper); border-radius: 12px; padding: 26px 28px; margin: 24px 0; border: 1px solid var(--line); box-shadow: 0 2px 10px rgba(26,24,21,0.03); }
+  .q-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding-bottom: 14px; border-bottom: 1px dashed var(--line); margin-bottom: 14px; }
+  .q-num { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 800; color: var(--ink); background: var(--cream); width: 38px; height: 38px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; border: 1.5px solid var(--gold); }
+  .type-tag { font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 4px; color: white; letter-spacing: 0.05em; }
+  .type-tag.vocab { background: var(--t-vocab); }
+  .type-tag.grammar { background: var(--t-grammar); }
+  .type-tag.cloze { background: var(--t-cloze); }
+  .type-tag.summary { background: var(--t-summary); }
+  .type-tag.order { background: var(--t-order); }
+  .type-tag.irrel { background: var(--t-irrel); }
+  .type-tag.theme { background: var(--t-theme); }
+  .type-tag.app { background: var(--t-app); }
+  .q-focus { font-size: 12.5px; color: var(--ink2); font-weight: 500; }
+  .q-pts { margin-left: auto; font-size: 12px; color: var(--muted); font-weight: 600; }
+
+  .q-prompt { font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 16px; line-height: 1.55; }
+  .q-prompt b { color: var(--accent); margin-right: 4px; }
+
+  .q-passage { background: #FDFCF8; border: 1px solid var(--line); border-radius: 8px; padding: 20px 22px; font-size: 15px; line-height: 1.85; color: var(--ink); margin: 14px 0 18px; }
+  .q-passage u { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; font-weight: 600; }
+  .q-passage .undbox { display: inline-block; padding: 1px 6px; border: 1.5px solid var(--ink); border-radius: 3px; font-weight: 600; }
+  .q-passage .circle-num { display: inline-flex; align-items: center; justify-content: center; width: 17px; height: 17px; border: 1.5px solid var(--ink); border-radius: 50%; font-size: 11px; font-weight: 700; margin-right: 3px; }
+  .q-passage .blank-box { display: inline-block; min-width: 110px; padding: 2px 10px; border-bottom: 2px solid var(--ink2); text-align: center; color: var(--muted); font-style: italic; }
+  .q-passage .label { display: inline-block; background: var(--ink); color: white; padding: 2px 9px; border-radius: 3px; font-size: 12px; font-weight: 700; margin-right: 8px; vertical-align: middle; }
+
+  .q-choices { display: flex; flex-direction: column; gap: 9px; margin-bottom: 14px; }
+  .q-choices.horz5 { flex-direction: row; flex-wrap: wrap; gap: 12px; }
+  .q-choices .c { display: flex; align-items: flex-start; gap: 8px; font-size: 14.5px; line-height: 1.55; color: var(--ink); padding: 4px 0; }
+  .q-choices.horz5 .c { background: #FDFCF8; padding: 7px 13px; border-radius: 6px; border: 1px solid var(--line); }
+  .q-choices .c .num { font-weight: 700; color: var(--accent); flex-shrink: 0; }
+  /* .q-choices .c.correct — removed v2.2 (정답 미리 노출 결함 수정) */
+
+  .matrix-table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+  .matrix-table th, .matrix-table td { padding: 9px 12px; text-align: center; border: 1px solid var(--line); }
+  .matrix-table th { background: var(--cream); font-weight: 700; font-size: 13px; color: var(--ink); }
+  .matrix-table .num-cell { font-weight: 700; color: var(--accent); width: 40px; }
+  /* .matrix-table tr.correct-row — removed v2.2 */
+  /* .matrix-table tr.correct-row .num-cell — removed v2.2 */
+
+  .word-map { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0 16px; }
+  .word-map > div { padding: 12px 14px; border-radius: 8px; font-size: 13px; line-height: 1.6; }
+  .word-map .syn { background: rgba(74,139,92,0.06); border-left: 3px solid var(--green); }
+  .word-map .ant { background: rgba(181,55,55,0.06); border-left: 3px solid var(--red); }
+  .word-map b { display: block; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; color: var(--ink2); }
+  .word-map em { font-style: normal; color: var(--ink); }
+
+  .cond-box { background: var(--cream); border-radius: 8px; padding: 14px 18px; margin: 12px 0; text-align: center; }
+  .cond-title { font-size: 12px; color: var(--muted); font-weight: 700; letter-spacing: 0.1em; margin-bottom: 6px; }
+  .bogi { font-size: 16px; font-weight: 600; color: var(--ink); }
+
+  details.ans { margin-top: 18px; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(180deg, #FDFCF8 0%, #FAF7F2 100%); overflow: hidden; }
+  details.ans summary { padding: 13px 20px; cursor: pointer; font-weight: 700; font-size: 14px; color: var(--accent); letter-spacing: -0.01em; list-style: none; user-select: none; transition: background 0.15s; }
+  details.ans summary::-webkit-details-marker { display: none; }
+  details.ans summary::before { content: '▸ '; margin-right: 6px; transition: transform 0.2s; display: inline-block; }
+  details.ans[open] summary::before { transform: rotate(90deg); }
+  details.ans summary:hover { background: rgba(184,118,61,0.05); }
+  .ans-body { padding: 18px 22px 22px; border-top: 1px solid var(--line); }
+  .ans-label { display: inline-block; font-size: 10.5px; letter-spacing: 0.16em; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+  .ans-main { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 14px; padding: 10px 14px; background: rgba(184,118,61,0.07); border-left: 4px solid var(--accent); border-radius: 4px; }
+  .ans-main .en { font-style: italic; color: var(--accent); }
+  .ans-detail { font-size: 14px; line-height: 1.78; color: var(--ink); }
+  .ans-detail b { color: var(--ink); }
+  .ans-detail .step { padding: 9px 14px; margin: 7px 0; background: rgba(255,255,255,0.6); border-left: 3px solid var(--gold); border-radius: 4px; font-size: 13.8px; }
+  .ans-detail mark.diff { background: #FECACA; padding: 1px 4px; border-radius: 3px; font-weight: 700; }
+  .ko-trans { margin-top: 14px; padding: 13px 16px; background: rgba(42,139,127,0.06); border-left: 3px solid var(--t-summary); border-radius: 4px; font-size: 13.5px; line-height: 1.75; color: var(--ink2); }
+  .ko-trans-label { display: block; font-size: 10.5px; letter-spacing: 0.14em; color: var(--t-summary); font-weight: 700; margin-bottom: 5px; }
+
+  .subj-prompt-box { background: #FFFBF0; border: 1.5px dashed var(--gold); border-radius: 8px; padding: 14px 18px; margin: 12px 0; font-size: 14.5px; }
+  .subj-condition { background: rgba(31,78,121,0.05); border-left: 3px solid var(--t-grammar); padding: 10px 14px; margin: 8px 0; font-size: 13.5px; border-radius: 4px; }
+  .subj-answer-line { border-bottom: 2px solid var(--ink); min-height: 44px; margin: 14px 0; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding: 6px 8px; }
+
+  @media (max-width: 720px) {
+    .container, .hero-inner { padding-left: 20px; padding-right: 20px; }
+    .hero-title { font-size: 28px; }
+    .word-map { grid-template-columns: 1fr; }
+    .q-card { padding: 20px 18px; }
+    .q-passage { padding: 16px 14px; font-size: 14.5px; }
+  }
+
+
+  /* ============================================
+     NAV PRINT BUTTON — 각 유형 옆 작은 인쇄 버튼
+     ============================================ */
+  .nav-print {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    padding: 7px 9px;
+    cursor: pointer;
+    border-radius: 18px;
+    transition: all 0.18s ease;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 4px;
+    font-family: inherit;
+  }
+  .nav-print:hover { color: var(--paper); background: var(--accent); border-color: var(--accent); transform: translateY(-1px); }
+  .nav-print:active { transform: translateY(0); }
+  .nav-print svg { width: 14px; height: 14px; fill: currentColor; }
+
+  /* PRINT TOOLBAR — 정답·지문 펼치기/접기 + 안내 */
+  .print-toolbar { background: linear-gradient(180deg, #FAF7F2 0%, #FFFFFF 100%); border-bottom: 1px solid var(--line); }
+  .print-toolbar-inner { max-width: 1080px; margin: 0 auto; padding: 11px 36px; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+  .pt-label { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.18em; color: var(--accent); font-weight: 800; text-transform: uppercase; }
+  .pt-btn { background: var(--paper); border: 1px solid var(--gold); color: var(--navy-950); padding: 6px 13px; font-family: inherit; font-size: 12px; font-weight: 700; border-radius: 999px; cursor: pointer; transition: all 0.18s ease; }
+  .pt-btn:hover { background: var(--gold); color: white; }
+  .pt-btn.active { background: var(--navy-950); color: var(--gold-light); border-color: var(--navy-950); }
+  .pt-hint { font-size: 11.5px; color: var(--muted); font-weight: 500; line-height: 1.5; flex: 1; min-width: 200px; }
+  .pt-hint b { color: var(--ink); font-weight: 800; }
+  .pt-icon { width: 11px; height: 11px; fill: var(--accent); vertical-align: -1px; margin: 0 2px; }
+  @media (max-width: 760px) {
+    .print-toolbar-inner { padding: 9px 22px; gap: 8px; }
+    .pt-hint { font-size: 11px; min-width: 100%; }
+    .pt-btn { padding: 5px 11px; font-size: 11.5px; }
+  }
+
+  /* JS-driven filter — hidden 클래스로 제어 */
+  .q-card.hidden { display: none !important; }
+  .section-head.hidden { display: none !important; }
+  .nav-tab.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .nav-tab.active .nav-count { background: var(--gold); color: var(--navy-950); padding: 1px 7px; border-radius: 9px; }
+
+  /* 인쇄 전용 헤더/풋터 — 화면에서는 숨김 */
+  .print-header,
+  .print-footer { display: none; }
+
+  /* ============================================
+     @media print — A4 용지 최적화 (종이 낭비 최소)
+     ============================================ */
+  @media print {
+    /* A4 페이지 — 12mm 마진 (종이 낭비 최소화) */
+    @page {
+      size: A4 portrait;
+      margin: 11mm 13mm 13mm 13mm;
+    }
+
+    /* 색상·배경 강제 인쇄 (브라우저 옵션 무관) */
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+
+    /* 전체 리셋 */
+    html, body {
+      background: white !important;
+      color: black !important;
+      font-size: 10pt !important;
+      line-height: 1.42 !important;
+      max-width: 100% !important;
+      overflow: visible !important;
+    }
+
+    /* UI 크롬 숨김 */
+    .hub-back-bar,
+    .hero-banner,
+    .type-nav-wrap,
+    .print-toolbar,
+    .nav-print,
+    footer { display: none !important; }
+
+    /* 필터 hidden 숨김 — 현재 선택된 유형만 인쇄 */
+    .hidden { display: none !important; }
+
+    /* 컨테이너 — 페이지 전체 폭 사용 */
+    .container { padding: 0 !important; max-width: 100% !important; margin: 0 !important; }
+
+    /* 인쇄 헤더 — 학원·자료 정보 */
+    .print-header {
+      display: block !important;
+      text-align: center;
+      font-family: 'Pretendard Variable', sans-serif;
+      font-size: 9pt;
+      color: #444;
+      border-bottom: 0.5pt solid #888;
+      padding-bottom: 1.5mm;
+      margin-bottom: 3mm;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .print-header b { color: #000; font-weight: 800; }
+
+    /* 본문 박스 — 펼쳐진 경우만 */
+    .passage-box { margin: 0 0 4mm 0 !important; border: 0.6pt solid #888 !important; border-radius: 0 !important; background: white !important; box-shadow: none !important; padding: 3mm 4mm !important; }
+    .passage-box .label-bar { font-size: 7.5pt !important; margin-bottom: 1.5mm !important; }
+    .passage-box .pt-title { font-size: 12pt !important; margin-bottom: 0.5mm !important; }
+    .passage-box .pt-sub { font-size: 8.5pt !important; margin-bottom: 2mm !important; }
+    .passage-box .pt-body { font-size: 9.5pt !important; line-height: 1.55 !important; color: #000 !important; }
+    .passage-box .pt-body p { margin-bottom: 1.5mm !important; }
+    .key-word { color: #000 !important; border-bottom: 0.5pt dotted #444 !important; font-weight: 600 !important; }
+    .sent-num { background: white !important; border: 0.5pt solid #444 !important; color: #000 !important; width: 14pt !important; height: 14pt !important; font-size: 8pt !important; line-height: 13pt !important; }
+
+    /* 섹션 헤더 — 컴팩트, 마지막 줄에 홀로 남지 않도록 */
+    .section-head {
+      margin: 0 0 2.5mm 0 !important;
+      padding: 2.5mm 0 1.5mm !important;
+      background: white !important;
+      border: none !important;
+      border-bottom: 1.4pt solid black !important;
+      page-break-after: avoid !important;
+      break-after: avoid !important;
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+      border-radius: 0 !important;
+      border-left: none !important;
+    }
+    .section-head .num-line { font-size: 7.5pt !important; color: #555 !important; margin: 0 0 0.5mm 0 !important; letter-spacing: 0.16em !important; }
+    .section-head h2 { font-size: 12.5pt !important; color: black !important; margin: 0 !important; line-height: 1.18 !important; }
+    .section-head h2 .kor { font-size: 9.5pt !important; color: #333 !important; margin-left: 5px !important; }
+    .section-head .desc { font-size: 8.5pt !important; color: #444 !important; margin: 1mm 0 0 0 !important; line-height: 1.45 !important; }
+    .section-head + .q-card { page-break-before: avoid !important; break-before: avoid !important; }
+
+    /* 문항 카드 — 페이지 중간 끊김 방지, 컴팩트 간격 */
+    .q-card {
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+      margin: 0 0 2.5mm 0 !important;
+      padding: 2.5mm 0 1.5mm !important;
+      border: none !important;
+      border-bottom: 0.4pt dotted #888 !important;
+      background: white !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
+    }
+    .q-card:last-child { border-bottom: none !important; }
+
+    /* 문항 메타 라인 — 한 줄에 컴팩트 */
+    .q-meta {
+      gap: 5px !important;
+      margin-bottom: 1.5mm !important;
+      padding-bottom: 1mm !important;
+      border-bottom: 0.3pt dashed #aaa !important;
+    }
+    .q-num {
+      font-size: 12.5pt !important;
+      font-weight: 800 !important;
+      color: black !important;
+      background: transparent !important;
+      border: 0.5pt solid #444 !important;
+      width: 22pt !important;
+      height: 22pt !important;
+    }
+    .type-tag {
+      font-size: 7.5pt !important;
+      padding: 1pt 5pt !important;
+      border-radius: 2pt !important;
+      font-weight: 700 !important;
+    }
+    .q-focus { font-size: 8.5pt !important; color: #333 !important; font-weight: 600 !important; }
+    .q-pts { font-size: 8.5pt !important; color: black !important; font-weight: 700 !important; }
+
+    /* 문항 본문 */
+    .q-prompt { font-size: 10pt !important; line-height: 1.45 !important; color: black !important; margin-bottom: 1.5mm !important; }
+    .q-prompt b { color: black !important; }
+    .q-passage { padding: 2mm 3mm !important; background: #fafafa !important; border: 0.4pt solid #bbb !important; margin: 1.5mm 0 !important; font-size: 9.5pt !important; line-height: 1.55 !important; border-radius: 0 !important; }
+    .q-passage u { text-decoration-thickness: 1pt !important; }
+    .q-passage .undbox { border: 0.5pt solid black !important; }
+    .q-passage .circle-num { border: 0.5pt solid black !important; width: 13pt !important; height: 13pt !important; font-size: 8pt !important; }
+    .q-passage .blank-box { border-bottom: 1pt solid black !important; min-width: 80pt !important; color: #777 !important; }
+    .q-passage .label { background: black !important; color: white !important; font-size: 8.5pt !important; padding: 1pt 5pt !important; border-radius: 1pt !important; }
+
+    .q-choices { gap: 4pt 12pt !important; margin: 1.5mm 0 !important; }
+    .q-choices .c { font-size: 9.5pt !important; padding: 0.5mm 0 !important; line-height: 1.4 !important; background: white !important; border: none !important; }
+    .q-choices.horz5 .c { background: white !important; padding: 1pt 4pt !important; border: 0.4pt solid #999 !important; border-radius: 1pt !important; }
+    /* .q-choices .c.correct — removed v2.2 */
+    .q-choices .c .num { color: black !important; font-weight: 700 !important; }
+
+    /* 매트릭스 표 */
+    .matrix-table { font-size: 9pt !important; margin: 1.5mm 0 !important; }
+    .matrix-table th, .matrix-table td { padding: 1mm 2mm !important; border: 0.4pt solid #999 !important; }
+    .matrix-table th { background: #f0eee6 !important; color: black !important; }
+    /* .matrix-table tr.correct-row — removed v2.2 */
+    /* .matrix-table tr.correct-row .num-cell — removed v2.2 */
+
+    /* word-map (어휘 동의어/반의어) */
+    .word-map { gap: 2mm !important; margin: 1.5mm 0 !important; }
+    .word-map > div { padding: 1.5mm 2.5mm !important; font-size: 8.5pt !important; line-height: 1.5 !important; border-radius: 0 !important; }
+    .word-map .syn { background: #eef6ee !important; border-left: 1.5pt solid #2E7D32 !important; }
+    .word-map .ant { background: #fceeee !important; border-left: 1.5pt solid #B53737 !important; }
+    .word-map b { font-size: 7.5pt !important; }
+
+    /* 보기 박스 (영작) */
+    .cond-box { background: #f5f3ec !important; padding: 2mm 3mm !important; margin: 1.5mm 0 !important; border-radius: 0 !important; border: 0.5pt dashed #888 !important; }
+    .cond-title { font-size: 7.5pt !important; }
+    .bogi { font-size: 10pt !important; font-weight: 700 !important; }
+    .subj-prompt-box { background: #fffbf0 !important; border: 0.5pt dashed #999 !important; padding: 1.5mm 2.5mm !important; margin: 1.5mm 0 !important; font-size: 9.5pt !important; border-radius: 0 !important; }
+    .subj-condition { background: #eef2f8 !important; border-left: 1pt solid #1F4E79 !important; padding: 1.5mm 2.5mm !important; font-size: 9pt !important; margin: 1mm 0 !important; border-radius: 0 !important; }
+    .subj-answer-line { border-bottom: 1pt solid black !important; min-height: 8mm !important; margin: 2mm 0 !important; padding: 1mm 1.5mm !important; }
+
+    /* 정답 박스 — 펼쳐진 경우만 인쇄 */
+    details.ans:not([open]) { display: none !important; }
+    details.ans { display: block !important; margin-top: 1.5mm !important; background: transparent !important; border: none !important; border-radius: 0 !important; box-shadow: none !important; }
+    details.ans > summary { display: none !important; }
+    details.ans .ans-body {
+      display: block !important;
+      padding: 2mm 3mm !important;
+      background: #f0eee6 !important;
+      border: 0.4pt solid #999 !important;
+      border-radius: 0 !important;
+      color: black !important;
+      font-size: 9pt !important;
+      line-height: 1.45 !important;
+      margin: 0 !important;
+      border-top: 0.4pt solid #999 !important;
+    }
+    .ans-label { font-size: 7pt !important; color: #555 !important; }
+    .ans-main {
+      font-size: 9.5pt !important;
+      font-weight: 800 !important;
+      color: black !important;
+      background: white !important;
+      border-left: 1.5pt solid black !important;
+      padding: 1mm 2mm !important;
+      margin-bottom: 1.5mm !important;
+      border-radius: 0 !important;
+    }
+    .ans-main .en { color: #000 !important; font-style: italic !important; }
+    .ans-detail { font-size: 8.5pt !important; line-height: 1.5 !important; color: black !important; }
+    .ans-detail .step { font-size: 8.5pt !important; padding: 1mm 2mm !important; margin: 0.6mm 0 !important; background: white !important; border-left: 1pt solid #888 !important; border-radius: 0 !important; }
+    .ans-detail b { font-weight: 800 !important; color: black !important; }
+    .ans-detail mark.diff { background: #ffd6d6 !important; padding: 0.5pt 2pt !important; }
+    .ko-trans { background: #f0f8f6 !important; border-left: 1pt solid #2A8B7F !important; padding: 1.5mm 2mm !important; font-size: 8.5pt !important; line-height: 1.5 !important; margin-top: 1.5mm !important; border-radius: 0 !important; }
+    .ko-trans-label { font-size: 7pt !important; color: #2A8B7F !important; }
+
+    /* 색상 보존 — 유형 태그 */
+    .type-tag.vocab { background: var(--t-vocab) !important; color: white !important; }
+    .type-tag.grammar { background: var(--t-grammar) !important; color: white !important; }
+    .type-tag.cloze { background: var(--t-cloze) !important; color: white !important; }
+    .type-tag.summary { background: var(--t-summary) !important; color: white !important; }
+    .type-tag.order { background: var(--t-order) !important; color: white !important; }
+    .type-tag.irrel { background: var(--t-irrel) !important; color: white !important; }
+    .type-tag.theme { background: var(--t-theme) !important; color: white !important; }
+    .type-tag.app { background: var(--t-app) !important; color: white !important; }
+
+    /* 인쇄 풋터 */
+    .print-footer {
+      display: block !important;
+      margin-top: 5mm;
+      padding-top: 1.5mm;
+      border-top: 0.4pt solid #999;
+      text-align: center;
+      font-family: 'Pretendard Variable', sans-serif;
+      font-size: 8pt;
+      color: #555;
+      letter-spacing: 0.04em;
+    }
+
+    /* 첫 페이지 빈공간 방지 */
+    .container > *:first-child { margin-top: 0 !important; }
+    .section-head:first-child { margin-top: 0 !important; }
+  }
+
+</style>
+</head>
+<body>
+
+<input type="radio" id="f-all" name="filter" class="filter-radio" checked>
+<input type="radio" id="f-vocab" name="filter" class="filter-radio">
+<input type="radio" id="f-grammar" name="filter" class="filter-radio">
+<input type="radio" id="f-cloze" name="filter" class="filter-radio">
+<input type="radio" id="f-summary" name="filter" class="filter-radio">
+<input type="radio" id="f-order" name="filter" class="filter-radio">
+<input type="radio" id="f-theme" name="filter" class="filter-radio">
+<input type="radio" id="f-app" name="filter" class="filter-radio">
+
+<div class="hub-back-bar" style="background: linear-gradient(135deg, #0A1E3A 0%, #1F3557 100%); padding: 10px 0; border-bottom: 2px solid #C99B4E; position: sticky; top: 0; z-index: 95;">
+  <div style="max-width: 1180px; margin: 0 auto; padding: 0 36px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+    <a href="index.html" style="display: inline-flex; align-items: center; gap: 8px; color: #E4C589; text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: -0.01em; padding: 6px 14px; background: rgba(250,246,238,0.08); border: 1px solid rgba(228,197,137,0.3); border-radius: 18px; transition: all 0.15s;">
+      ← <span>자료실 메인으로</span>
+    </a>
+    <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+      <a href="daeil_h2_mid_2026_solution.html" style="font-size: 11.5px; color: #CBD5E1; text-decoration: none; padding: 5px 11px; border-radius: 14px; background: rgba(250,246,238,0.05); border: 1px solid rgba(250,246,238,0.12);">📖 기출 해설</a>
+      <a href="daeil_source_analysis.html" style="font-size: 11.5px; color: #CBD5E1; text-decoration: none; padding: 5px 11px; border-radius: 14px; background: rgba(250,246,238,0.05); border: 1px solid rgba(250,246,238,0.12);">🔍 출처 분석</a>
+      <a href="daeil_insect_7type_workbook.html" style="font-size: 11.5px; color: #CBD5E1; text-decoration: none; padding: 5px 11px; border-radius: 14px; background: rgba(250,246,238,0.05); border: 1px solid rgba(250,246,238,0.12);">⚡ 곤충 응용</a>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero-banner" id="top">
+  <div class="hero-inner">
+    <div class="brand-row">
+      <div class="brand">
+        <div class="brand-mark">大</div>
+        <div>
+          <div class="brand-text">DAEIL HIGH SCHOOL · Type Workbook</div>
+          <div class="brand-school">대일고 2학년 영어I — 인식의 변혁적 힘 (7유형 응용)</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-title">The Transformative Power of Perception<br>인식의 변혁적 힘 — Mind Over Matter</div>
+    <div class="hero-subtitle">단일 지문 · 7유형 정밀 출제 · 대일고 시그니처 패턴 적용</div>
+    <div class="hero-meta">
+      <span class="meta-tag">📖 본문 출처: 자기계발 / Milton·Shakespeare 인용</span>
+      <span class="meta-tag">🎯 7유형 × 다문항 = 총 30문항</span>
+      <span class="meta-tag">⭐ 어휘 6 · 어법 4 · 빈칸 5 · 요약 2 · 글구조 4 · 요지·제목 4 · 서답형 5</span>
+      <span class="meta-tag">🔥 5선지 정밀 분석 + 함정 패턴 + 학습 정리표</span>
+    </div>
+  </div>
+</div>
+
+<!-- TYPE NAV -->
+<div class="type-nav-wrap">
+  <nav class="type-nav" id="typeNav">
+    <button class="nav-tab" data-type="all" type="button">전체 <span class="nav-count">30</span></button><button class="nav-print" data-print-type="all" title="전체 인쇄" aria-label="전체 인쇄" type="button"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+    <button class="nav-tab" data-type="vocab" type="button"><span class="nav-color-dot" style="background:var(--t-vocab)"></span>어휘 <span class="nav-count">6</span></button><button class="nav-print" data-print-type="vocab" title="어휘 인쇄" aria-label="어휘 인쇄" type="button"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+    <button class="nav-tab" data-type="grammar" type="button"><span class="nav-color-dot" style="background:var(--t-grammar)"></span>어법 <span class="nav-count">4</span></button><button class="nav-print" data-print-type="grammar" title="어법 인쇄" aria-label="어법 인쇄" type="button"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+    <button class="nav-tab" data-type="cloze" type="button"><span class="nav-color-dot" style="background:var(--t-cloze)"></span>빈칸 <span class="nav-count">5</span></button><button class="nav-print" data-print-type="cloze" title="빈칸 인쇄" aria-label="빈칸 인쇄" type="button"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+    <button class="nav-tab" data-type="summary" type="button"><span class="nav-color-dot" style="background:var(--t-summary)"></span>요약 <span class="nav-count">2</span></button><button class="nav-print" data-print-type="summary" title="요약 인쇄" aria-label="요약 인쇄" type="button"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+    <button class="nav-tab" data-type="order" type="button"><span class="nav-color-dot" style="background:var(--t-order)"></span>글구조 <span class="nav-count">4</span></button><button class="nav-print" data-print-type="order" title="글구조 인쇄" aria-label="글구조 인쇄" type="button"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+    <button class="nav-tab" data-type="theme" type="button"><span class="nav-color-dot" style="background:var(--t-theme)"></span>요지·제목 <span class="nav-count">4</span></button><button class="nav-print" data-print-type="theme" title="요지·제목 인쇄" aria-label="요지·제목 인쇄" type="button"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+    <button class="nav-tab" data-type="app" type="button"><span class="nav-color-dot" style="background:var(--t-app)"></span>서답형 <span class="nav-count">5</span></button><button class="nav-print" data-print-type="app" title="서답형 인쇄" aria-label="서답형 인쇄" type="button"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+  </nav>
+</div>
+
+<!-- PRINT TOOLBAR — 정답·지문 펼치기/접기 + 안내문 -->
+<div class="print-toolbar">
+  <div class="print-toolbar-inner">
+    <span class="pt-label">📄 인쇄 옵션</span>
+    <button class="pt-btn" id="answerToggle" type="button">정답 모두 펼치기</button>
+    <span class="pt-hint">→ 위 인쇄 버튼(<svg viewBox="0 0 24 24" class="pt-icon"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>)을 누르면 <b>현재 화면 그대로</b> A4로 인쇄됩니다. 정답 포함 인쇄는 <b>'정답 모두 펼치기'</b>를 먼저 누르세요.</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- 인쇄 전용 헤더 (화면에서는 숨김) -->
+<div class="print-header">
+  <b>대일고 2학년 영어I</b> · 인식의 변혁적 힘 (The Transformative Power of Perception) · 7유형 응용 문제집 · <span id="printSectionLabel">전체 30문항</span> · NEED TO STUDY
+</div>
+
+
+<!-- ORIGINAL PASSAGE -->
+<div class="passage-box">
+  <div class="label-bar">Original Passage · 원문 본문</div>
+  <div class="pt-title">The Transformative Power of Perception</div>
+  <div class="pt-sub">인식의 변혁적 힘 — 도전을 성장의 기회로 바꾸기</div>
+  <div class="pt-body">
+    <p><span class="sent-num">❶</span>In the complex tapestry of life, challenges and problems are <span class="key-word" title="inevitable = 피할 수 없는">inevitable</span>; <span class="key-word" title="suffering = 고통, 괴로움">suffering</span> due to them is, however, <span class="key-word" title="optional = 선택적인">optional</span>.</p>
+
+    <p><span class="sent-num">❷</span>It is <span class="key-word" title="crucial = 중요한, 결정적인">crucial</span> to <span class="key-word" title="grasp = 파악하다, 이해하다">grasp</span> the wisdom in John Milton's <em>Paradise Lost</em>, where Satan observes, "The mind is its own place, and in itself can make a Heaven of Hell, a Hell of Heaven."</p>
+
+    <p><span class="sent-num">❸</span>My father used to often quote William Shakespeare's <span class="key-word" title="insight = 통찰, 식견">insight</span> in <em>Hamlet</em>: "There is nothing either good or bad, but thinking makes it so."</p>
+
+    <p><span class="sent-num">❹</span>These <span class="key-word" title="timeless = 시대를 초월한">timeless</span> quotes <span class="key-word" title="underscore = 강조하다">underscore</span> the <span class="key-word" title="transformative = 변혁적인">transformative</span> power of our <span class="key-word" title="perception = 인식, 지각">perception</span>.</p>
+
+    <p><span class="sent-num">❺</span>Problems become <span class="key-word" title="opportunities = 기회">opportunities</span> for growth when viewed through a positive lens.</p>
+
+    <p><span class="sent-num">❻</span>By <span class="key-word" title="aligning = 일치시키는">aligning</span> our thoughts with this perspective, we not only navigate challenges with <span class="key-word" title="resilience = 회복력">resilience</span> but also unlock our creative potential, evolving into <span class="key-word" title="empowered = 권능 있는">empowered</span> individuals both personally and professionally.</p>
+
+    <p><span class="sent-num">❼</span>By <span class="key-word" title="adopting = 채택하는">adopting</span> this approach, you will not only progress towards your goals, but also <span class="key-word" title="attain = 도달하다">attain</span> a level of world-class <span class="key-word" title="excellence = 탁월함">excellence</span>.</p>
+
+    <p><span class="sent-num">❽</span>Stay <span class="key-word" title="committed = 헌신하는">committed</span> to the journey, solve the puzzles that come your way, and watch as your purpose <span class="key-word" title="unfolds = 펼쳐지다">unfolds</span> into a meaningful, <span class="key-word" title="impactful = 영향력 있는">impactful</span> life.</p>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SECTION A · 어휘 (4문항) -->
+<!-- ============================================================ -->
+<div class="section-head" id="sec-vocab" data-section-type="vocab" style="border-left-color: var(--t-vocab)">
+  <div class="num-line">SECTION A · VOCABULARY · 6 ITEMS</div>
+  <h2>유형 ① 어휘<span class="kor">동의어 · 반의어 · 부적절 · (A)(B)(C) 짝짓기</span></h2>
+  <div class="desc">대일고 시그니처 — 어원 분해 + 5선지 동의어/반의어 정리. 본문 핵심 어휘 12개 망라.</div>
+</div>
+
+<!-- Q1 동의어 inevitable -->
+<article class="q-card" data-type="vocab">
+  <div class="q-meta">
+    <span class="q-num">1</span>
+    <span class="type-tag vocab">어휘</span>
+    <span class="q-focus">동의어 매칭 — inevitable</span>
+    <span class="q-pts">2.0점</span>
+  </div>
+  <div class="q-prompt"><b>1.</b> 다음 문장에서 밑줄 친 <em>inevitable</em>과 의미가 가장 가까운 것은? [2.0점]</div>
+  <div class="q-passage">
+    In the complex tapestry of life, challenges and problems are <u>inevitable</u>; suffering due to them is, however, optional.
+  </div>
+  <div class="word-map">
+    <div class="syn"><b>SYNONYMS · 동의어</b><em>unavoidable · inescapable · certain · bound to happen · unstoppable</em></div>
+    <div class="ant"><b>ANTONYMS · 반의어</b><em>avoidable · preventable · escapable · optional · uncertain</em></div>
+  </div>
+  <div class="q-choices horz5">
+    <span class="c"><span class="num">①</span>avoidable</span>
+    <span class="c"><span class="num">②</span>unavoidable</span>
+    <span class="c"><span class="num">③</span>preventable</span>
+    <span class="c"><span class="num">④</span>optional</span>
+    <span class="c"><span class="num">⑤</span>negotiable</span>
+  </div>
+  <details class="ans"><summary>1번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">② <span class="en">unavoidable</span> — 피할 수 없는</div>
+      <div class="ans-detail">
+        <b>밑줄 어휘 분석 — inevitable</b><br>
+        어원: in-(부정) + evit(피하다, evitare) + -able(가능한) → '피하는 것이 불가능한' = <b>피할 수 없는, 필연적인</b><br>
+        ※ 핵심 뉘앙스: 막을 수 없이 반드시 일어나는 일.<br><br>
+
+        <b>문맥:</b> "challenges and problems are <b>inevitable</b>; suffering... is, however, <b>optional</b>" — 도전과 문제는 <b>피할 수 없지만</b>, 고통은 <b>선택적</b>이다. inevitable과 optional이 의미상 대비.<br><br>
+
+        <b>선지별 분석:</b><br>
+        <div class="step"><b>① avoidable ✗</b> — '피할 수 있는'으로 정반대.</div>
+        <div class="step"><b>② unavoidable ✓ 정답</b> — un-(부정) + avoid(피하다) + -able = 피할 수 없는. inevitable과 완벽한 동의어.</div>
+        <div class="step"><b>③ preventable ✗</b> — '예방할 수 있는'으로 정반대.</div>
+        <div class="step"><b>④ optional ✗</b> — '선택적인'. 본문에서 이 단어는 inevitable의 <b>대조어</b>로 쓰임(suffering 수식).</div>
+        <div class="step"><b>⑤ negotiable ✗</b> — '협상 가능한'. 무관.</div>
+        <br>
+
+        <b>핵심 함정:</b> ④ optional은 본문 바로 다음에 나오는 단어로, 학생이 무심코 같은 단어로 착각할 수 있는 함정. 실제로는 inevitable의 <b>반의어</b> 역할.<br><br>
+
+        <b>※ 빈출 동의어 묶음:</b><br>
+        <b>inevitable = unavoidable = inescapable = certain = bound to + V = unstoppable</b><br>
+        반의어: <b>avoidable, preventable, escapable, optional, uncertain</b>
+      </div>
+      <div class="ko-trans">
+        <span class="ko-trans-label">해석</span>
+        인생이라는 복잡한 태피스트리에서 도전과 문제는 <b>피할 수 없다(inevitable)</b>; 그러나 그로 인해 고통받는 것은 선택사항이다.
+      </div>
+    </div>
+  </details>
+</article>
+
+
+<!-- Q2 동의어 transformative -->
+<article class="q-card" data-type="vocab">
+  <div class="q-meta">
+    <span class="q-num">2</span>
+    <span class="type-tag vocab">어휘</span>
+    <span class="q-focus">동의어 매칭 — transformative</span>
+    <span class="q-pts">2.0점</span>
+  </div>
+  <div class="q-prompt"><b>2.</b> 다음 문장에서 밑줄 친 <em>transformative</em>와 의미가 가장 가까운 것은? [2.0점]</div>
+  <div class="q-passage">
+    These timeless quotes underscore the <u>transformative</u> power of our perception.
+  </div>
+  <div class="word-map">
+    <div class="syn"><b>SYNONYMS · 동의어</b><em>life-changing · revolutionary · transforming · radical · profound</em></div>
+    <div class="ant"><b>ANTONYMS · 반의어</b><em>trivial · superficial · static · negligible · minor</em></div>
+  </div>
+  <div class="q-choices horz5">
+    <span class="c"><span class="num">①</span>trivial</span>
+    <span class="c"><span class="num">②</span>destructive</span>
+    <span class="c"><span class="num">③</span>life-changing</span>
+    <span class="c"><span class="num">④</span>momentary</span>
+    <span class="c"><span class="num">⑤</span>static</span>
+  </div>
+  <details class="ans"><summary>2번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">③ <span class="en">life-changing</span> — 인생을 바꾸는, 변혁적인</div>
+      <div class="ans-detail">
+        <b>밑줄 어휘 분석 — transformative</b><br>
+        어원: trans-(가로질러, 너머) + form(형태) + -ative(형용사) → '형태를 완전히 바꾸는' = <b>변혁적인, 변화시키는</b><br>
+        ※ 핵심 뉘앙스: 단순 변화가 아닌 <b>근본적·전면적 변화</b>를 일으키는 힘.<br><br>
+
+        <b>문맥:</b> "the <b>transformative</b> power of our perception" — 우리 인식의 <b>변혁적</b>(인생을 송두리째 바꾸는) 힘. Milton·Shakespeare 인용을 통해 인식이 천국과 지옥을 바꿀 수 있음을 강조 → 단순한 변화가 아닌 근본적 변화.<br><br>
+
+        <b>선지별 분석:</b><br>
+        <div class="step"><b>① trivial ✗</b> — 사소한. 정반대.</div>
+        <div class="step"><b>② destructive ✗</b> — 파괴적인. 변혁은 긍정적 변화 의미가 강함.</div>
+        <div class="step"><b>③ life-changing ✓ 정답</b> — 인생을 바꾸는. transformative의 가장 자연스러운 동의어.</div>
+        <div class="step"><b>④ momentary ✗</b> — 순간적인. transformative는 지속적 변화를 의미.</div>
+        <div class="step"><b>⑤ static ✗</b> — 정적인, 변화 없는. 정반대.</div>
+        <br>
+
+        <b>※ 빈출 동의어 묶음:</b><br>
+        <b>transformative = life-changing = revolutionary = transforming = radical = profound</b><br>
+        반의어: <b>trivial, superficial, static, negligible, minor</b>
+      </div>
+      <div class="ko-trans">
+        <span class="ko-trans-label">해석</span>
+        이 시대를 초월한 인용구들은 우리 인식의 <b>변혁적인(transformative)</b> 힘을 강조한다.
+      </div>
+    </div>
+  </details>
+</article>
+
+
+<!-- Q3 어휘 부적절 -->
+<article class="q-card" data-type="vocab">
+  <div class="q-meta">
+    <span class="q-num">3</span>
+    <span class="type-tag vocab">어휘</span>
+    <span class="q-focus">문맥상 부적절한 낱말 (5선지)</span>
+    <span class="q-pts">2.3점</span>
+  </div>
+  <div class="q-prompt"><b>3.</b> 다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 <b>않은</b> 것은? [2.3점]</div>
+  <div class="q-passage">
+    Problems become opportunities for growth when viewed through a <span class="circle-num">①</span><u>positive</u> lens. By aligning our thoughts with this perspective, we not only navigate challenges with <span class="circle-num">②</span><u>resilience</u> but also unlock our <span class="circle-num">③</span><u>creative</u> potential, evolving into <span class="circle-num">④</span><u>empowered</u> individuals both personally and professionally. By adopting this approach, you will not only progress towards your goals, but also attain a level of world-class <span class="circle-num">⑤</span><u>mediocrity</u>.
+  </div>
+  <div class="q-choices horz5">
+    <span class="c"><span class="num">①</span>positive</span>
+    <span class="c"><span class="num">②</span>resilience</span>
+    <span class="c"><span class="num">③</span>creative</span>
+    <span class="c"><span class="num">④</span>empowered</span>
+    <span class="c"><span class="num">⑤</span>mediocrity</span>
+  </div>
+  <details class="ans"><summary>3번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">⑤ <span class="en">mediocrity → excellence</span></div>
+      <div class="ans-detail">
+        <b>핵심 단서:</b> "world-class <b>mediocrity</b>"는 모순. 글 전체가 인식을 통해 도전을 극복하고 <b>탁월함(excellence)</b>에 도달한다는 긍정적 흐름인데, '세계적 수준의 <b>평범함</b>'은 글의 논리와 정면 충돌. 또한 'world-class'(세계적 수준)는 본질적으로 최상위를 의미하므로 mediocrity와 결합 불가능.<br><br>
+
+        <b>본문 정답 표현:</b> "attain a level of world-class <b>excellence</b>" — 세계적 수준의 <b>탁월함</b>에 도달.<br><br>
+
+        <b>선지별 검증:</b><br>
+        <div class="step"><b>① positive ✓</b> — '문제를 긍정적 렌즈로 보면 기회가 된다'는 글 흐름과 일치.</div>
+        <div class="step"><b>② resilience ✓</b> — '회복력으로 도전을 헤쳐 나간다' 자연스러운 collocation.</div>
+        <div class="step"><b>③ creative ✓</b> — '창의적 잠재력을 풀어낸다' 본문 그대로.</div>
+        <div class="step"><b>④ empowered ✓</b> — '권능 있는 개인으로 진화한다' 긍정적 결과.</div>
+        <div class="step"><b>⑤ mediocrity ✗ 정답</b> — '평범함'은 글 흐름의 결론('탁월함에 도달')과 정반대.</div>
+        <br>
+
+        <b>핵심 학습 포인트:</b><br>
+        - <b>world-class</b> + <b>mediocrity</b>는 <b>oxymoron(모순어법)</b> — 출제 함정<br>
+        - 글의 전체 톤(긍정·성장·발전)과 어울리지 않는 단어를 찾는 능력 필요<br>
+        - 빈출 반의어: <b>excellence ↔ mediocrity</b>, <b>mastery ↔ incompetence</b>
+      </div>
+      <div class="ko-trans">
+        <span class="ko-trans-label">해석</span>
+        문제는 ① <b>긍정적</b> 렌즈로 볼 때 성장의 기회가 된다. 이 관점에 생각을 맞춤으로써, 우리는 ② <b>회복력</b>으로 도전을 헤쳐 나갈 뿐만 아니라 ③ <b>창의적</b> 잠재력을 풀어내고, 개인적·전문적으로 ④ <b>권능 있는</b> 개인으로 진화한다. 이 접근법을 채택함으로써, 당신은 목표를 향해 진전할 뿐만 아니라 세계적 수준의 ⑤ <b><mark class="diff">평범함(→ 탁월함, excellence)</mark></b>에 도달할 것이다.
+      </div>
+    </div>
+  </details>
+</article>
+
+
+<!-- Q4 (A)(B)(C) 어휘 짝짓기 -->
+<article class="q-card" data-type="vocab">
+  <div class="q-meta">
+    <span class="q-num">4</span>
+    <span class="type-tag vocab">어휘</span>
+    <span class="q-focus">(A)(B)(C) 어휘 짝짓기 — 반의어 쌍</span>
+    <span class="q-pts">2.3점</span>
+  </div>
+  <div class="q-prompt"><b>4.</b> 다음 글의 (A), (B), (C)에 들어갈 어휘로 가장 적절한 것은? [2.3점]</div>
+  <div class="q-passage">
+    In the complex tapestry of life, challenges and problems are (A) [ avoidable / inevitable ]; suffering due to them is, however, (B) [ mandatory / optional ]. ... Problems become opportunities for growth when viewed through a (C) [ negative / positive ] lens.
+  </div>
+  <table class="matrix-table">
+    <thead><tr><th></th><th>(A)</th><th>(B)</th><th>(C)</th></tr></thead>
+    <tbody>
+      <tr><td class="num-cell">①</td><td>avoidable</td><td>mandatory</td><td>negative</td></tr>
+      <tr><td class="num-cell">②</td><td>avoidable</td><td>optional</td><td>positive</td></tr>
+      <tr><td class="num-cell">③</td><td>inevitable</td><td>optional</td><td>positive</td></tr>
+      <tr><td class="num-cell">④</td><td>inevitable</td><td>mandatory</td><td>positive</td></tr>
+      <tr><td class="num-cell">⑤</td><td>inevitable</td><td>optional</td><td>negative</td></tr>
+    </tbody>
+  </table>
+  <details class="ans"><summary>4번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">③ inevitable / optional / positive</div>
+      <div class="ans-detail">
+        <b>(A) 분석 — 도전과 문제의 본질</b><br>
+        <div class="step">"challenges and problems are (A)" — 글 첫 문장의 명제. 다음에 'however, suffering is optional'이 오므로 <b>대조 구조</b>. 문제는 <b>피할 수 없지만</b>(inevitable), 고통은 선택. → <b>inevitable ✓</b></div>
+        <br>
+
+        <b>(B) 분석 — 고통의 본질</b><br>
+        <div class="step">"suffering... is, <b>however</b>, (B)" — however는 (A)와의 대조 신호. 문제는 inevitable, 고통은 그 <b>반대</b>(optional). 'mandatory(의무적)'는 inevitable의 동의어로 대조 구조에 위배. → <b>optional ✓</b></div>
+        <br>
+
+        <b>(C) 분석 — 어떤 렌즈인가</b><br>
+        <div class="step">"Problems become <b>opportunities for growth</b> when viewed through a (C) lens" — 문제가 성장의 <b>기회</b>가 되려면 어떻게 봐야 하는가? <b>긍정적</b>으로. 'negative lens'로 보면 문제는 더 큰 문제로만 보임. → <b>positive ✓</b></div>
+        <br>
+
+        <b>매트릭스 검증:</b><br>
+        <div class="step">① avoidable / mandatory / negative ✗ — 셋 다 문맥과 반대</div>
+        <div class="step">② avoidable / optional / positive ✗ — (A) 어긋남, however 구조 깨짐</div>
+        <div class="step"><b>③ inevitable / optional / positive ✓ 정답</b></div>
+        <div class="step">④ inevitable / mandatory / positive ✗ — (B) 어긋남, however 대조 구조 깨짐</div>
+        <div class="step">⑤ inevitable / optional / negative ✗ — (C) 어긋남, 'opportunities for growth'와 모순</div>
+        <br>
+
+        <b>핵심 학습 포인트:</b><br>
+        - 첫 문장 'inevitable; however, optional'은 <b>대조 쌍 구조</b>의 시그니처<br>
+        - <b>however / but / yet</b> 등의 대조 접속사는 (A)·(B) 관계 결정의 핵심 단서<br>
+        - 'opportunities for growth' = 긍정 결론 → positive lens (논리 연결)
+      </div>
+    </div>
+  </details>
+</article>
+
+
+
+<!-- Q5 NEW 동의어 grasp -->
+<article class="q-card" data-type="vocab">
+  <div class="q-meta">
+    <span class="q-num">5</span>
+    <span class="type-tag vocab">어휘</span>
+    <span class="q-focus">동의어 매칭 — grasp</span>
+    <span class="q-pts">2.0점</span>
+  </div>
+  <div class="q-prompt"><b>5.</b> 다음 문장에서 밑줄 친 <em>grasp</em>와 의미가 가장 가까운 것은? [2.0점]</div>
+  <div class="q-passage">
+    It is crucial to <u>grasp</u> the wisdom in John Milton's <em>Paradise Lost</em>, where Satan observes, "The mind is its own place..."
+  </div>
+  <div class="word-map">
+    <div class="syn"><b>SYNONYMS · 동의어</b><em>understand · comprehend · seize · perceive · get the meaning of</em></div>
+    <div class="ant"><b>ANTONYMS · 반의어</b><em>misunderstand · miss · overlook · misinterpret</em></div>
+  </div>
+  <div class="q-choices horz5">
+    <span class="c"><span class="num">①</span>ignore</span>
+    <span class="c"><span class="num">②</span>comprehend</span>
+    <span class="c"><span class="num">③</span>misinterpret</span>
+    <span class="c"><span class="num">④</span>reject</span>
+    <span class="c"><span class="num">⑤</span>avoid</span>
+  </div>
+  <details class="ans"><summary>5번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">② <span class="en">comprehend</span> — 이해하다, 파악하다</div>
+      <div class="ans-detail">
+        <b>밑줄 어휘 분석 — grasp</b><br>
+        어원: 고대 영어 graspian(꽉 붙잡다) → 물리적 의미(잡다) + 추상적 의미(이해하다·파악하다)로 확장.<br>
+        ※ 핵심 뉘앙스: 단순히 듣는 것을 넘어, 의미·본질을 <b>꽉 붙잡듯 이해</b>하는 행위.<br><br>
+
+        <b>문맥:</b> "It is crucial to <b>grasp</b> the wisdom" — 지혜를 <b>이해·파악</b>하는 것이 중요. 다음에 Milton 인용이 이어짐 → 인용의 의미를 깊이 이해해야 한다는 강조.<br><br>
+
+        <b>선지별 분석:</b><br>
+        <div class="step"><b>① ignore ✗</b> — 무시하다. 'crucial to grasp'(이해가 중요)와 정반대.</div>
+        <div class="step"><b>② comprehend ✓ 정답</b> — com-(완전히) + prehend(붙잡다, 라틴어 prehendere) = 완전히 붙잡다 → 이해하다. grasp와 어원 구조까지 완벽 일치.</div>
+        <div class="step"><b>③ misinterpret ✗</b> — 잘못 해석하다. 정반대.</div>
+        <div class="step"><b>④ reject ✗</b> — 거부하다. 정반대.</div>
+        <div class="step"><b>⑤ avoid ✗</b> — 피하다. crucial(중요)과 모순.</div>
+        <br>
+        <b>※ 빈출 동의어 묶음:</b><br>
+        <b>grasp = comprehend = understand = perceive = get = seize</b> (의미·본질 이해)<br>
+        반의어: <b>misunderstand, miss, overlook, misinterpret</b>
+      </div>
+      <div class="ko-trans">
+        <span class="ko-trans-label">해석</span>
+        Milton의 <em>Paradise Lost</em>에 담긴 지혜를 <b>파악하는(grasp)</b> 것이 중요하다.
+      </div>
+    </div>
+  </details>
+</article>
+
+<!-- Q6 NEW 동의어 underscore -->
+<article class="q-card" data-type="vocab">
+  <div class="q-meta">
+    <span class="q-num">6</span>
+    <span class="type-tag vocab">어휘</span>
+    <span class="q-focus">동의어 매칭 — underscore</span>
+    <span class="q-pts">2.0점</span>
+  </div>
+  <div class="q-prompt"><b>6.</b> 다음 문장에서 밑줄 친 <em>underscore</em>와 의미가 가장 가까운 것은? [2.0점]</div>
+  <div class="q-passage">
+    These timeless quotes <u>underscore</u> the transformative power of our perception.
+  </div>
+  <div class="word-map">
+    <div class="syn"><b>SYNONYMS · 동의어</b><em>emphasize · highlight · stress · accentuate · underline · spotlight</em></div>
+    <div class="ant"><b>ANTONYMS · 반의어</b><em>downplay · minimize · ignore · overlook · obscure</em></div>
+  </div>
+  <div class="q-choices horz5">
+    <span class="c"><span class="num">①</span>contradict</span>
+    <span class="c"><span class="num">②</span>emphasize</span>
+    <span class="c"><span class="num">③</span>obscure</span>
+    <span class="c"><span class="num">④</span>minimize</span>
+    <span class="c"><span class="num">⑤</span>deny</span>
+  </div>
+  <details class="ans"><summary>6번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">② <span class="en">emphasize</span> — 강조하다</div>
+      <div class="ans-detail">
+        <b>밑줄 어휘 분석 — underscore</b><br>
+        어원: under(아래) + score(선을 긋다) → 글자 아래 밑줄을 긋다 → <b>강조하다</b><br>
+        ※ 핵심 뉘앙스: 어떤 사실·메시지의 <b>중요성을 분명히 드러냄</b>. underline과 동의어.<br><br>
+
+        <b>문맥:</b> "These timeless quotes <b>underscore</b> the transformative power" — 인용구들이 인식의 변혁적 힘을 <b>강조</b>.<br><br>
+
+        <b>선지별 분석:</b><br>
+        <div class="step"><b>① contradict ✗</b> — 모순되다. 정반대.</div>
+        <div class="step"><b>② emphasize ✓ 정답</b> — em-(in, 안에) + phas(보이게 하다) + -ize = 두드러지게 하다 → 강조하다. underscore의 완벽한 동의어.</div>
+        <div class="step"><b>③ obscure ✗</b> — 가리다, 모호하게 하다. 정반대.</div>
+        <div class="step"><b>④ minimize ✗</b> — 최소화하다. 정반대.</div>
+        <div class="step"><b>⑤ deny ✗</b> — 부인하다. 정반대.</div>
+        <br>
+        <b>※ 빈출 동의어 묶음:</b><br>
+        <b>underscore = emphasize = highlight = stress = accentuate = underline = spotlight</b><br>
+        반의어: <b>downplay, minimize, ignore, overlook, obscure</b>
+      </div>
+      <div class="ko-trans">
+        <span class="ko-trans-label">해석</span>
+        이 시대를 초월한 인용구들은 우리 인식의 변혁적 힘을 <b>강조한다(underscore)</b>.
+      </div>
+    </div>
+  </details>
+</article>
+
+
+<!-- ============================================================ -->
+<!-- SECTION B · 어법 (4문항) -->
+<!-- ============================================================ -->
+<div class="section-head" id="sec-grammar" data-section-type="grammar" style="border-left-color: var(--t-grammar)">
+  <div class="num-line">SECTION B · GRAMMAR · 4 ITEMS</div>
+  <h2>유형 ② 어법<span class="kor">분사구문 · 관계부사 where · used to · 가주어 it · 병렬구조</span></h2>
+  <div class="desc">대일고 빈출 — 본문의 분사구문, 관계부사 where, used to + V, by + V-ing 패턴 정밀 검증.</div>
+</div>
+
+<!-- Q5 어법 틀린 부분 -->
+<article class="q-card" data-type="grammar">
+  <div class="q-meta">
+    <span class="q-num">7</span>
+    <span class="type-tag grammar">어법</span>
+    <span class="q-focus">밑줄 ⓐ~ⓔ 중 틀린 것</span>
+    <span class="q-pts">2.6점</span>
+  </div>
+  <div class="q-prompt"><b>7.</b> 다음 글의 밑줄 친 부분 중, 어법상 <b>틀린</b> 것은? [2.6점]</div>
+  <div class="q-passage">
+    It <span class="circle-num">①</span><u>is</u> crucial to grasp the wisdom in John Milton's <em>Paradise Lost</em>, <span class="circle-num">②</span><u>where</u> Satan observes that the mind is its own place. My father used to often <span class="circle-num">③</span><u>quote</u> William Shakespeare's insight in <em>Hamlet</em>. By aligning our thoughts with this perspective, we not only navigate challenges with resilience but also unlock our creative potential, <span class="circle-num">④</span><u>evolved</u> into empowered individuals. Stay committed to the journey, solve the puzzles that come your way, and watch <span class="circle-num">⑤</span><u>as</u> your purpose unfolds.
+  </div>
+  <div class="q-choices horz5">
+    <span class="c"><span class="num">①</span>is</span>
+    <span class="c"><span class="num">②</span>where</span>
+    <span class="c"><span class="num">③</span>quote</span>
+    <span class="c"><span class="num">④</span>evolved</span>
+    <span class="c"><span class="num">⑤</span>as</span>
+  </div>
+  <details class="ans"><summary>7번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">④ <span class="en">evolved → evolving</span> (분사구문 능동형)</div>
+      <div class="ans-detail">
+        <b>분사구문 동시동작 — 능동·수동 판별</b><br>
+        <div class="step">밑줄 ④ 위치: "we... unlock our creative potential, <b>evolved</b> into empowered individuals."<br>
+        ✗ <b>오류 — 'evolving'으로 정정.</b><br>
+        - 의미: 우리(we)가 <b>스스로 진화하는</b> 동작 → <b>능동</b><br>
+        - 분사구문 주어는 주절의 we → we evolve(자동사) → <b>evolving</b>(현재분사·능동) ✓<br>
+        - evolved(과거분사)는 수동 의미 → "진화당하는"이 되어 어색<br>
+        - 또한 evolve는 자동사로 거의 쓰이므로 수동태 자체가 부자연스러움</div>
+        <br>
+
+        <b>다른 선지 검증:</b><br>
+        <div class="step"><b>① is ✓</b> — 'It is + 형용사 + to V' 가주어·진주어 구문. crucial은 형용사. is 사용 적절.</div>
+        <div class="step"><b>② where ✓</b> — 선행사 'Paradise Lost'(작품 = 일종의 장소·맥락) 안에서 사탄이 관찰한다는 의미. <b>관계부사 where</b>가 'in which'와 동등하게 작품·텍스트 내부를 가리킬 때 사용 가능. 또한 본문 표현 그대로.</div>
+        <div class="step"><b>③ quote ✓</b> — 'used to + 동사원형' 구문. quote는 동사원형. 'often'은 부사로 used to와 quote 사이에 위치(분리 가능). 어법 적절.</div>
+        <div class="step"><b>⑤ as ✓</b> — watch + (목적어/명사절) 구문에서 'watch as S+V'는 '~하는 것을 지켜보다'의 자연스러운 구조. 'watch your purpose unfold'(지각동사 watch + O + 원형)도 가능하지만, 'watch as ~'는 시간·동시성을 강조하는 구문으로 어법 적절.</div>
+        <br>
+
+        <b>핵심 학습 포인트:</b><br>
+        - <b>분사구문 능동·수동 판별</b>: 주절 주어가 동작의 주체인가 수동자인가<br>
+        - 능동 → V-ing(현재분사) / 수동 → V-ed(과거분사)<br>
+        - 자동사(evolve, arrive, sleep)는 거의 V-ing 형태로만 사용<br>
+        - <b>used to + 동사원형</b> (~하곤 했다) ↔ <b>be used to V-ing</b> (~에 익숙하다)
+      </div>
+    </div>
+  </details>
+</article>
+
+
+<!-- Q6 (A)(B)(C) 어법 -->
+<article class="q-card" data-type="grammar">
+  <div class="q-meta">
+    <span class="q-num">8</span>
+    <span class="type-tag grammar">어법</span>
+    <span class="q-focus">(A)(B)(C) 어법 짝짓기</span>
+    <span class="q-pts">2.3점</span>
+  </div>
+  <div class="q-prompt"><b>8.</b> 다음 글의 (A), (B), (C)에서 어법에 맞는 표현을 짝지은 것으로 가장 적절한 것은? [2.3점]</div>
+  <div class="q-passage">
+    Problems become opportunities for growth when (A) [ viewing / viewed ] through a positive lens. By aligning our thoughts with this perspective, we not only navigate challenges with resilience but (B) [ also unlock / also unlocking ] our creative potential. By adopting this approach, you will not only progress towards your goals, but also attain (C) [ a / the ] level of world-class excellence.
+  </div>
+  <table class="matrix-table">
+    <thead><tr><th></th><th>(A)</th><th>(B)</th><th>(C)</th></tr></thead>
+    <tbody>
+      <tr><td class="num-cell">①</td><td>viewing</td><td>also unlock</td><td>a</td></tr>
+      <tr><td class="num-cell">②</td><td>viewing</td><td>also unlocking</td><td>the</td></tr>
+      <tr><td class="num-cell">③</td><td>viewed</td><td>also unlock</td><td>a</td></tr>
+      <tr><td class="num-cell">④</td><td>viewed</td><td>also unlocking</td><td>a</td></tr>
+      <tr><td class="num-cell">⑤</td><td>viewed</td><td>also unlock</td><td>the</td></tr>
+    </tbody>
+  </table>
+  <details class="ans"><summary>8번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">③ viewed / also unlock / a</div>
+      <div class="ans-detail">
+        <b>(A) 분석 — when 분사구문 능동·수동</b><br>
+        <div class="step">"Problems become opportunities for growth when (A) through a positive lens."<br>
+        - 의미: 문제가 <b>긍정적 렌즈로 보여질 때</b> → 수동<br>
+        - 주어 Problems는 view의 <b>대상</b>(목적어)<br>
+        - when (Problems are) <b>viewed</b> = when viewed → <b>viewed ✓</b></div>
+        <br>
+
+        <b>(B) 분석 — not only A but (also) B 병렬구조</b><br>
+        <div class="step">"we not only <b>navigate</b>... but (B) our creative potential"<br>
+        - not only A but also B 구조에서 <b>A와 B는 동일한 문법 형태</b><br>
+        - A = navigate(동사원형, 현재시제)<br>
+        - B도 동사원형이어야 → <b>also unlock ✓</b><br>
+        - also unlocking은 분사로 병렬 깨짐 ✗</div>
+        <br>
+
+        <b>(C) 분석 — 부정관사 a vs 정관사 the</b><br>
+        <div class="step">"attain (C) level of world-class excellence"<br>
+        - 'a level of ~'은 '~의 어떤 수준'으로 <b>특정되지 않은 수준</b>을 처음 언급<br>
+        - 처음 도입되는 명사 + 형용사구 수식 시 일반적으로 부정관사 <b>a</b><br>
+        - 본문 그대로 'a level of world-class excellence' → <b>a ✓</b></div>
+        <br>
+
+        <b>매트릭스 검증:</b><br>
+        <div class="step">① viewing / unlock / a ✗ — (A) 능동 어색</div>
+        <div class="step">② viewing / unlocking / the ✗ — 셋 다 부적절</div>
+        <div class="step"><b>③ viewed / unlock / a ✓ 정답</b></div>
+        <div class="step">④ viewed / unlocking / a ✗ — (B) 병렬 깨짐</div>
+        <div class="step">⑤ viewed / unlock / the ✗ — (C) 정관사 어색</div>
+        <br>
+
+        <b>핵심 학습 포인트:</b><br>
+        - <b>when + 분사구문</b>에서 능동·수동은 의미 주체·객체로 판별<br>
+        - <b>not only A but also B</b>: 동사 ↔ 동사 / 명사 ↔ 명사 등 같은 품사·형태<br>
+        - 'a level of N' = 막연한 어떤 수준 / 'the level of N' = 특정 수준 (앞에 언급)
+      </div>
+    </div>
+  </details>
+</article>
+
+
+
+<!-- Q9 NEW 어법 옳은 것의 개수 -->
+<article class="q-card" data-type="grammar">
+  <div class="q-meta">
+    <span class="q-num">9</span>
+    <span class="type-tag grammar">어법</span>
+    <span class="q-focus">밑줄 ⓐ~ⓔ 중 어법상 옳은 것의 개수</span>
+    <span class="q-pts">2.6점</span>
+  </div>
+  <div class="q-prompt"><b>9.</b> 다음 글의 밑줄 친 ⓐ~ⓔ 중에서 어법상 <b>옳은</b> 것의 개수는? [2.6점]</div>
+  <div class="q-passage">
+    It is crucial ⓐ<u>to grasp</u> the wisdom in Milton's <em>Paradise Lost</em>, where Satan observes that the mind itself ⓑ<u>can make</u> a Heaven of Hell. My father used to often ⓒ<u>quoting</u> Shakespeare's insight in <em>Hamlet</em>. These timeless quotes ⓓ<u>underscore</u> the transformative power of our perception. By aligning our thoughts with this perspective, we ⓔ<u>not only</u> navigate challenges with resilience but also unlock our creative potential.
+  </div>
+  <div class="q-choices horz5">
+    <span class="c"><span class="num">①</span>1개</span>
+    <span class="c"><span class="num">②</span>2개</span>
+    <span class="c"><span class="num">③</span>3개</span>
+    <span class="c"><span class="num">④</span>4개</span>
+    <span class="c"><span class="num">⑤</span>5개</span>
+  </div>
+  <details class="ans"><summary>9번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">④ 4개 (ⓐ, ⓑ, ⓓ, ⓔ — 옳음 / ⓒ — 틀림)</div>
+      <div class="ans-detail">
+        <b>밑줄별 정밀 분석:</b><br>
+        <div class="step"><b>ⓐ to grasp ✓ 옳음</b> — 'It is + 형용사(crucial) + to V' 가주어·진주어 구문. to V 어법 적절.</div>
+        <div class="step"><b>ⓑ can make ✓ 옳음</b> — 조동사 can + 동사원형 make. 어법 적절.</div>
+        <div class="step"><b>ⓒ quoting ✗ 틀림 → quote</b> — 'used to + 동사원형' 구문(과거 습관). quoting은 동명사로 used to 다음에 올 수 없음. ※ 'be used to V-ing'(~에 익숙하다)와 혼동 주의.</div>
+        <div class="step"><b>ⓓ underscore ✓ 옳음</b> — 주어 'These timeless quotes'(복수). 동사 underscore(원형/복수형)가 수일치 정확.</div>
+        <div class="step"><b>ⓔ not only ✓ 옳음</b> — 'not only A but also B' 상관접속사. A(navigate) ↔ B(unlock) 동사원형 병렬 정확.</div>
+        <br>
+        <b>옳은 것: ⓐ, ⓑ, ⓓ, ⓔ → 4개</b><br><br>
+
+        <b>핵심 함정 패턴:</b><br>
+        - <b>used to + V vs be used to V-ing</b>: 형태가 비슷해 가장 빈번한 어법 함정<br>
+        - <b>used to quote</b>(인용하곤 했다) ✓ / <b>used to quoting</b> ✗<br>
+        - <b>be used to quoting</b>(인용하는 데 익숙하다) ✓
+      </div>
+    </div>
+  </details>
+</article>
+
+<!-- Q10 NEW 어법 (A)(B)(C) 다른 패턴 -->
+<article class="q-card" data-type="grammar">
+  <div class="q-meta">
+    <span class="q-num">10</span>
+    <span class="type-tag grammar">어법</span>
+    <span class="q-focus">(A)(B)(C) 어법 짝짓기 — 가주어·분사·수일치</span>
+    <span class="q-pts">2.6점</span>
+  </div>
+  <div class="q-prompt"><b>10.</b> 다음 글의 (A), (B), (C)에서 어법에 맞는 표현을 짝지은 것으로 가장 적절한 것은? [2.6점]</div>
+  <div class="q-passage">
+    It is crucial (A) [ grasping / to grasp ] the wisdom in Milton's <em>Paradise Lost</em>. Stay (B) [ committing / committed ] to the journey, solve the puzzles that come your way, and watch as your purpose (C) [ unfold / unfolds ] into a meaningful, impactful life.
+  </div>
+  <table class="matrix-table">
+    <thead><tr><th></th><th>(A)</th><th>(B)</th><th>(C)</th></tr></thead>
+    <tbody>
+      <tr><td class="num-cell">①</td><td>grasping</td><td>committing</td><td>unfold</td></tr>
+      <tr><td class="num-cell">②</td><td>grasping</td><td>committed</td><td>unfolds</td></tr>
+      <tr><td class="num-cell">③</td><td>to grasp</td><td>committed</td><td>unfolds</td></tr>
+      <tr><td class="num-cell">④</td><td>to grasp</td><td>committing</td><td>unfolds</td></tr>
+      <tr><td class="num-cell">⑤</td><td>to grasp</td><td>committed</td><td>unfold</td></tr>
+    </tbody>
+  </table>
+  <details class="ans"><summary>10번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">③ to grasp / committed / unfolds</div>
+      <div class="ans-detail">
+        <b>(A) 분석 — 가주어/진주어 구문</b><br>
+        <div class="step">"It is crucial (A) the wisdom..."<br>
+        - 'It is + 형용사 + to V' 가주어·진주어 구문<br>
+        - 진주어 자리는 to부정사. grasping(동명사)은 부적절<br>
+        → <b>to grasp ✓</b></div>
+        <br>
+
+        <b>(B) 분석 — be committed to N (관용표현)</b><br>
+        <div class="step">"Stay (B) <b>to</b> the journey"<br>
+        - 'be/stay committed <b>to</b> N': ~에 헌신하다, 전념하다 (관용)<br>
+        - 'committed'는 분사형용사로 사용. committing(능동 진행)은 어색<br>
+        - 본문 그대로: <b>committed ✓</b></div>
+        <br>
+
+        <b>(C) 분석 — 주어-동사 수일치</b><br>
+        <div class="step">"watch as your <b>purpose</b> (C) into a meaningful life"<br>
+        - 종속절 주어: your purpose(단수)<br>
+        - 단수 + 현재시제 → 동사 -s 필요<br>
+        → <b>unfolds ✓</b></div>
+        <br>
+
+        <b>매트릭스 검증:</b><br>
+        <div class="step">① grasping / committing / unfold ✗ — 셋 다 부적절</div>
+        <div class="step">② grasping / committed / unfolds ✗ — (A) 가주어 구문 위반</div>
+        <div class="step"><b>③ to grasp / committed / unfolds ✓ 정답</b></div>
+        <div class="step">④ to grasp / committing / unfolds ✗ — (B) committing은 능동 동작, be committed to 관용에 위배</div>
+        <div class="step">⑤ to grasp / committed / unfold ✗ — (C) 단수 주어 수일치 위반</div>
+        <br>
+
+        <b>핵심 학습 포인트:</b><br>
+        - <b>It is + 형용사 + to V</b> = 가주어·진주어. 진주어는 to부정사 (동명사 ✗)<br>
+        - <b>be/stay committed to N</b> = ~에 전념하다 (수동·상태 의미의 분사형용사)<br>
+        - <b>주어-동사 수일치</b>: your purpose(단수) → unfolds<br><br>
+
+        <b>※ 빈출 함정 — committing vs committed:</b><br>
+        - <b>committing a crime</b>(죄를 저지르는, 능동) ↔ <b>committed to a goal</b>(목표에 전념한, 상태)
+      </div>
+    </div>
+  </details>
+</article>
+
+
+<!-- ============================================================ -->
+<!-- SECTION C · 빈칸 추론 (5문항) -->
+<!-- ============================================================ -->
+<div class="section-head" id="sec-cloze" data-section-type="cloze" style="border-left-color: var(--t-cloze)">
+  <div class="num-line">SECTION C · CLOZE · 5 ITEMS</div>
+  <h2>유형 ③ 빈칸 추론<span class="kor">단일 빈칸 · 핵심 명사 · 결론 빈칸</span></h2>
+  <div class="desc">본문 핵심 키워드(perception, opportunities, excellence)를 빈칸 처리해 글의 논리 흐름 추론 능력 측정.</div>
+</div>
+
+<!-- Q7 단일 빈칸 - perception -->
+<article class="q-card" data-type="cloze">
+  <div class="q-meta">
+    <span class="q-num">11</span>
+    <span class="type-tag cloze">빈칸</span>
+    <span class="q-focus">핵심 명사 — perception</span>
+    <span class="q-pts">2.6점</span>
+  </div>
+  <div class="q-prompt"><b>11.</b> 다음 글의 빈칸에 들어갈 말로 가장 적절한 것은? [2.6점]</div>
+  <div class="q-passage">
+    It is crucial to grasp the wisdom in John Milton's <em>Paradise Lost</em>, where Satan observes, "The mind is its own place, and in itself can make a Heaven of Hell, a Hell of Heaven." My father used to often quote William Shakespeare's insight in <em>Hamlet</em>: "There is nothing either good or bad, but thinking makes it so." These timeless quotes underscore the transformative power of our <span class="blank-box">_______</span>.
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span>tradition</span>
+    <span class="c"><span class="num">②</span>memory</span>
+    <span class="c"><span class="num">③</span>perception</span>
+    <span class="c"><span class="num">④</span>physical strength</span>
+    <span class="c"><span class="num">⑤</span>social status</span>
+  </div>
+  <details class="ans"><summary>11번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">③ <span class="en">perception</span> — 인식</div>
+      <div class="ans-detail">
+        <b>핵심 단서 — 두 인용구의 공통점:</b><br>
+        <div class="step">Milton: "The <b>mind</b> is its own place, and in itself can make a Heaven of Hell" — 마음(mind)이 천국과 지옥을 만든다.</div>
+        <div class="step">Shakespeare: "There is nothing either good or bad, but <b>thinking</b> makes it so" — 생각(thinking)이 좋고 나쁨을 만든다.</div>
+        <br>
+        ※ 두 인용구는 모두 <b>마음/생각이 현실을 결정한다</b>는 동일한 명제. 따라서 빈칸은 mind·thinking을 포괄하는 <b>인식</b>(perception)이어야 한다.<br><br>
+
+        <b>선지별 분석:</b><br>
+        <div class="step"><b>① tradition ✗</b> — 전통. Milton은 17세기, Shakespeare는 16세기지만 글의 강조점은 시대적 전통이 아니라 <b>마음의 힘</b>.</div>
+        <div class="step"><b>② memory ✗</b> — 기억. 두 인용구는 기억이 아닌 현재의 사고·인식을 다룸.</div>
+        <div class="step"><b>③ perception ✓ 정답</b> — 인식·지각. mind와 thinking을 포괄. 다음 문장 "Problems become opportunities... when <b>viewed</b> through a positive lens"의 'viewed'(보다·인식)와 직결.</div>
+        <div class="step"><b>④ physical strength ✗</b> — 신체적 힘. 글은 정신적 힘을 다룸. 정반대 영역.</div>
+        <div class="step"><b>⑤ social status ✗</b> — 사회적 지위. 무관.</div>
+        <br>
+
+        <b>※ 글의 논리 사슬:</b><br>
+        Milton·Shakespeare 인용 (mind/thinking이 현실을 결정) → <b>perception의 변혁적 힘</b> → 문제를 긍정적 렌즈로 봄(viewed) → 성장의 기회로 전환<br><br>
+
+        <b>※ 빈출 paraphrase:</b><br>
+        <b>perception = mindset = viewpoint = perspective = outlook = the way we see things</b>
+      </div>
+      <div class="ko-trans">
+        <span class="ko-trans-label">해석</span>
+        Milton의 <em>Paradise Lost</em>에서 사탄이 "마음은 그 자체로 한 장소이며, 지옥을 천국으로, 천국을 지옥으로 만들 수 있다"라고 관찰한 지혜를 파악하는 것이 중요하다. 아버지는 종종 Shakespeare의 <em>Hamlet</em>에 나오는 통찰을 인용하셨다: "본래 좋거나 나쁜 것은 없으며, 다만 생각이 그렇게 만든다." 이 시대를 초월한 인용구들은 우리 <b>인식(perception)</b>의 변혁적 힘을 강조한다.
+      </div>
+    </div>
+  </details>
+</article>
+
+
+<!-- Q8 단일 빈칸 - 결론 -->
+<article class="q-card" data-type="cloze">
+  <div class="q-meta">
+    <span class="q-num">12</span>
+    <span class="type-tag cloze">빈칸</span>
+    <span class="q-focus">결론 빈칸 — opportunities</span>
+    <span class="q-pts">2.6점</span>
+  </div>
+  <div class="q-prompt"><b>12.</b> 다음 글의 빈칸에 들어갈 말로 가장 적절한 것은? [2.6점]</div>
+  <div class="q-passage">
+    In the complex tapestry of life, challenges and problems are inevitable; suffering due to them is, however, optional. ... These timeless quotes underscore the transformative power of our perception. Problems become <span class="blank-box">_______</span> when viewed through a positive lens.
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span>sources of permanent failure</span>
+    <span class="c"><span class="num">②</span>opportunities for growth</span>
+    <span class="c"><span class="num">③</span>signs of impending doom</span>
+    <span class="c"><span class="num">④</span>excuses for inaction</span>
+    <span class="c"><span class="num">⑤</span>obstacles beyond control</span>
+  </div>
+  <details class="ans"><summary>12번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">② <span class="en">opportunities for growth</span> — 성장의 기회</div>
+      <div class="ans-detail">
+        <b>핵심 단서:</b><br>
+        <div class="step">1. 첫 문장: "suffering due to them is, however, <b>optional</b>" — 고통은 선택. 즉 문제 자체를 부정적으로만 보지 않을 수 있음을 암시.</div>
+        <div class="step">2. 빈칸 직전: "<b>transformative power</b> of our <b>perception</b>" — 인식의 변혁적 힘.</div>
+        <div class="step">3. 빈칸 다음 단서: "when viewed through a <b>positive</b> lens" — 긍정적 렌즈로 볼 때.</div>
+        <div class="step">4. 글 후반: "you will... <b>progress towards your goals</b>" — 목표 진전, 성장의 결과.</div>
+        <br>
+        ※ 모든 단서가 <b>긍정적 전환</b>을 가리키므로 빈칸은 <b>성장의 기회</b>여야 한다.<br><br>
+
+        <b>선지별 분석:</b><br>
+        <div class="step"><b>① sources of permanent failure ✗</b> — 영구적 실패의 원천. 글의 정반대.</div>
+        <div class="step"><b>② opportunities for growth ✓ 정답</b> — 성장의 기회. positive lens / progress / world-class excellence와 일관.</div>
+        <div class="step"><b>③ signs of impending doom ✗</b> — 임박한 파멸의 징조. 부정적, 글의 정반대.</div>
+        <div class="step"><b>④ excuses for inaction ✗</b> — 무행동의 변명. "Stay committed... solve the puzzles"와 모순.</div>
+        <div class="step"><b>⑤ obstacles beyond control ✗</b> — 통제할 수 없는 장애물. 'optional'(선택적) 원칙과 모순.</div>
+        <br>
+
+        <b>핵심 학습 포인트:</b><br>
+        - 글의 <b>전체 톤</b>(긍정·성장·발전)에 부합하는 선지 선택<br>
+        - 'positive lens', 'progress', 'excellence', 'meaningful life' 등의 키워드 흐름 추적<br>
+        - 부정적 선지(①③⑤)는 글의 결론과 모순되어 즉시 제거 가능<br><br>
+
+        <b>※ 빈출 collocation:</b><br>
+        <b>opportunities for growth / room for improvement / chances for success</b>
+      </div>
+    </div>
+  </details>
+</article>
+
+
+<!-- Q9 복합 빈칸 (A)(B) -->
+<article class="q-card" data-type="cloze">
+  <div class="q-meta">
+    <span class="q-num">13</span>
+    <span class="type-tag cloze">빈칸</span>
+    <span class="q-focus">복합 빈칸 (A)(B) — 결과 단계</span>
+    <span class="q-pts">2.9점</span>
+  </div>
+  <div class="q-prompt"><b>13.</b> 다음 글의 (A), (B)에 들어갈 말로 가장 적절한 것은? [2.9점]</div>
+  <div class="q-passage">
+    By aligning our thoughts with this perspective, we not only navigate challenges with (A) <span class="blank-box">_______</span> but also unlock our creative potential, evolving into empowered individuals both personally and professionally. By adopting this approach, you will not only progress towards your goals, but also attain a level of world-class (B) <span class="blank-box">_______</span>.
+  </div>
+  <table class="matrix-table">
+    <thead><tr><th></th><th>(A)</th><th>(B)</th></tr></thead>
+    <tbody>
+      <tr><td class="num-cell">①</td><td>fragility</td><td>mediocrity</td></tr>
+      <tr><td class="num-cell">②</td><td>fragility</td><td>excellence</td></tr>
+      <tr><td class="num-cell">③</td><td>resilience</td><td>excellence</td></tr>
+      <tr><td class="num-cell">④</td><td>resilience</td><td>conformity</td></tr>
+      <tr><td class="num-cell">⑤</td><td>indifference</td><td>excellence</td></tr>
+    </tbody>
+  </table>
+  <details class="ans"><summary>13번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">③ resilience / excellence</div>
+      <div class="ans-detail">
+        <b>(A) 분석 — 도전을 헤쳐 나가는 힘</b><br>
+        <div class="step">"navigate <b>challenges</b> with (A)" — 도전을 헤쳐 나가다.<br>
+        - 도전을 극복하기 위해 필요한 것은 <b>회복력·강인함</b><br>
+        - fragility(취약성), indifference(무관심)는 정반대<br>
+        → <b>resilience ✓</b> (회복력)</div>
+        <br>
+
+        <b>(B) 분석 — 도달하는 수준</b><br>
+        <div class="step">"attain a level of <b>world-class</b> (B)" — 세계적 수준의 무엇.<br>
+        - 'world-class'와 자연스러운 collocation은 <b>excellence(탁월함)</b><br>
+        - mediocrity(평범함)는 world-class와 oxymoron<br>
+        - conformity(순응)는 글의 'creative potential' 강조와 모순<br>
+        → <b>excellence ✓</b> (탁월함)</div>
+        <br>
+
+        <b>매트릭스 검증:</b><br>
+        <div class="step">① fragility / mediocrity ✗ — 둘 다 글 전체 톤과 정반대</div>
+        <div class="step">② fragility / excellence ✗ — (A) 어긋남</div>
+        <div class="step"><b>③ resilience / excellence ✓ 정답</b> — 본문 그대로</div>
+        <div class="step">④ resilience / conformity ✗ — (B) creative potential과 모순</div>
+        <div class="step">⑤ indifference / excellence ✗ — (A) 무관심으로 도전 극복 불가</div>
+        <br>
+
+        <b>핵심 학습 포인트:</b><br>
+        - <b>resilience</b>는 도전·역경(challenges, adversity)과 빈출 collocation<br>
+        - <b>world-class excellence</b>는 빈출 표현. world-class + (excellence/expertise/quality)<br>
+        - 'creative potential'(창의적 잠재력) 강조 → conformity(순응)과 양립 불가<br><br>
+
+        <b>※ 빈출 collocation:</b><br>
+        <b>navigate challenges with resilience</b> / <b>face adversity with strength</b> / <b>attain world-class excellence</b>
+      </div>
+    </div>
+  </details>
+</article>
+
+
+
+<!-- Q14 NEW 빈칸 - purpose -->
+<article class="q-card" data-type="cloze">
+  <div class="q-meta">
+    <span class="q-num">14</span>
+    <span class="type-tag cloze">빈칸</span>
+    <span class="q-focus">결론 핵심 명사 — purpose</span>
+    <span class="q-pts">2.6점</span>
+  </div>
+  <div class="q-prompt"><b>14.</b> 다음 글의 빈칸에 들어갈 말로 가장 적절한 것은? [2.6점]</div>
+  <div class="q-passage">
+    By adopting this approach, you will not only progress towards your goals, but also attain a level of world-class excellence. Stay committed to the journey, solve the puzzles that come your way, and watch as your <span class="blank-box">_______</span> unfolds into a meaningful, impactful life.
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span>regret</span>
+    <span class="c"><span class="num">②</span>anger</span>
+    <span class="c"><span class="num">③</span>purpose</span>
+    <span class="c"><span class="num">④</span>fear</span>
+    <span class="c"><span class="num">⑤</span>doubt</span>
+  </div>
+  <details class="ans"><summary>14번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">③ <span class="en">purpose</span> — 목적, 사명</div>
+      <div class="ans-detail">
+        <b>핵심 단서:</b><br>
+        <div class="step">1. 빈칸 직후: "unfolds into a <b>meaningful, impactful life</b>" — 의미 있고 영향력 있는 삶으로 펼쳐짐.</div>
+        <div class="step">2. 글 전체 톤: 긍정·성장·헌신 (committed, progress, world-class excellence).</div>
+        <div class="step">3. 'unfold into' (~로 펼쳐지다)와 자연스럽게 결합되는 긍정적 추상명사가 필요.</div>
+        <br>
+
+        <b>선지별 분석:</b><br>
+        <div class="step"><b>① regret ✗</b> — 후회. meaningful life로 펼쳐지지 않음. 정반대 톤.</div>
+        <div class="step"><b>② anger ✗</b> — 분노. 부정적, 글의 결론과 어긋남.</div>
+        <div class="step"><b>③ purpose ✓ 정답</b> — 목적·사명. 'purpose unfolds into a meaningful life'(목적이 의미 있는 삶으로 펼쳐진다) 빈출 collocation. 자기계발 글의 시그니처 표현.</div>
+        <div class="step"><b>④ fear ✗</b> — 두려움. 부정적.</div>
+        <div class="step"><b>⑤ doubt ✗</b> — 의심. 부정적, committed와 모순.</div>
+        <br>
+
+        <b>※ 빈출 collocation:</b><br>
+        <b>life purpose / sense of purpose / unfold one's purpose</b><br>
+        <b>meaningful life / purposeful life / impactful life</b><br><br>
+
+        <b>핵심 학습 포인트:</b><br>
+        - 글의 결론 빈칸은 <b>전체 톤(긍정/부정)</b>에 부합해야 함<br>
+        - 'meaningful, impactful' 같은 형용사는 긍정 명사를 요구
+      </div>
+      <div class="ko-trans">
+        <span class="ko-trans-label">해석</span>
+        여정에 헌신하고, 길에서 마주치는 퍼즐을 풀고, 당신의 <b>목적(purpose)</b>이 의미 있고 영향력 있는 삶으로 펼쳐지는 것을 지켜보라.
+      </div>
+    </div>
+  </details>
+</article>
+
+<!-- Q15 NEW 빈칸 - suffering (첫 문장) -->
+<article class="q-card" data-type="cloze">
+  <div class="q-meta">
+    <span class="q-num">15</span>
+    <span class="type-tag cloze">빈칸</span>
+    <span class="q-focus">도입 첫 문장 핵심 — suffering</span>
+    <span class="q-pts">2.6점</span>
+  </div>
+  <div class="q-prompt"><b>15.</b> 다음 글의 빈칸에 들어갈 말로 가장 적절한 것은? [2.6점]</div>
+  <div class="q-passage">
+    In the complex tapestry of life, challenges and problems are inevitable; <span class="blank-box">_______</span> due to them is, however, optional. It is crucial to grasp the wisdom in John Milton's <em>Paradise Lost</em>... These timeless quotes underscore the transformative power of our perception. Problems become opportunities for growth when viewed through a positive lens.
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span>success</span>
+    <span class="c"><span class="num">②</span>happiness</span>
+    <span class="c"><span class="num">③</span>suffering</span>
+    <span class="c"><span class="num">④</span>growth</span>
+    <span class="c"><span class="num">⑤</span>creativity</span>
+  </div>
+  <details class="ans"><summary>15번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">③ <span class="en">suffering</span> — 고통, 괴로움</div>
+      <div class="ans-detail">
+        <b>핵심 단서 — 대조 구조 분석:</b><br>
+        <div class="step">"challenges are <b>inevitable</b>; ___ due to them is, <b>however</b>, <b>optional</b>"<br>
+        - <b>however</b>는 강한 대조 신호 — 앞 명제(inevitable)와 정반대 명제 도입<br>
+        - 도전·문제는 피할 수 없지만(inevitable), 그로 인한 <b>부정적 결과</b>는 선택적(optional)임을 주장<br>
+        - 즉, 빈칸은 도전·문제로 인한 <b>부정적·고통스러운 경험</b>이어야 함</div>
+        <br>
+
+        <b>선지별 분석:</b><br>
+        <div class="step"><b>① success ✗</b> — 성공. 도전으로 인한 success는 자연스럽지 않고, 글 흐름 어긋남.</div>
+        <div class="step"><b>② happiness ✗</b> — 행복. 'optional happiness'(선택적 행복)는 글의 메시지(고통은 선택)와 맞지 않음.</div>
+        <div class="step"><b>③ suffering ✓ 정답</b> — 고통. 'Pain is inevitable, suffering is optional'(불교 격언)의 직접 paraphrase. 본문 결정적 명제.</div>
+        <div class="step"><b>④ growth ✗</b> — 성장. 글 후반에 'opportunities for growth'로 등장하지만 첫 문장의 부정적 결과 자리에는 부적합.</div>
+        <div class="step"><b>⑤ creativity ✗</b> — 창의성. 'unlock creative potential'은 후반 결과로 등장. 첫 문장의 부정 자리에 부적합.</div>
+        <br>
+
+        <b>※ 본문의 핵심 명제:</b><br>
+        <b>Pain (외부 도전) is inevitable, but suffering (내적 고통) is optional.</b><br>
+        — 외부 사건은 통제 못 하지만, 내적 반응(인식)은 선택할 수 있다는 자기계발의 시그니처 메시지.<br><br>
+
+        <b>※ 빈출 collocation:</b><br>
+        <b>suffering due to ~ / cause suffering / endure suffering / alleviate suffering</b>
+      </div>
+      <div class="ko-trans">
+        <span class="ko-trans-label">해석</span>
+        인생이라는 복잡한 태피스트리에서 도전과 문제는 피할 수 없다; 그러나 그로 인해 <b>고통받는 것(suffering)</b>은 선택사항이다.
+      </div>
+    </div>
+  </details>
+</article>
+
+
+<!-- ============================================================ -->
+<!-- SECTION D · 빈칸요약 (2문항) -->
+<!-- ============================================================ -->
+<div class="section-head" id="sec-summary" data-section-type="summary" style="border-left-color: var(--t-summary)">
+  <div class="num-line">SECTION D · SUMMARY · 2 ITEMS</div>
+  <h2>유형 ④ 빈칸요약<span class="kor">요약문 (A)(B) 짝짓기 — 본문 핵심 명제 압축</span></h2>
+  <div class="desc">본문의 두 핵심 명제(문제는 피할 수 없음 + 인식이 결정함)를 한 문장으로 압축한 요약문 빈칸 추론.</div>
+</div>
+
+<!-- Q10 빈칸요약 -->
+<article class="q-card" data-type="summary">
+  <div class="q-meta">
+    <span class="q-num">16</span>
+    <span class="type-tag summary">요약</span>
+    <span class="q-focus">요약문 빈칸 (A)(B)</span>
+    <span class="q-pts">2.9점</span>
+  </div>
+  <div class="q-prompt"><b>16.</b> 다음 글의 내용을 한 문장으로 요약하고자 한다. 빈칸 (A), (B)에 들어갈 말로 가장 적절한 것은? [2.9점]</div>
+  <div class="q-passage">
+    In the complex tapestry of life, challenges and problems are inevitable; suffering due to them is, however, optional. The wisdom of Milton and Shakespeare reminds us that "the mind is its own place" and "thinking makes it so." Problems become opportunities for growth when viewed through a positive lens. By aligning our thoughts with this perspective, we navigate challenges with resilience and attain world-class excellence.
+    <hr style="border:none;border-top:1px dashed var(--line);margin:14px 0">
+    <b>↓ 요약문 ↓</b><br>
+    Although life's hardships are (A) <span class="blank-box">_______</span>, our (B) <span class="blank-box">_______</span> determines whether they become sources of suffering or chances for personal growth.
+  </div>
+  <table class="matrix-table">
+    <thead><tr><th></th><th>(A)</th><th>(B)</th></tr></thead>
+    <tbody>
+      <tr><td class="num-cell">①</td><td>preventable</td><td>environment</td></tr>
+      <tr><td class="num-cell">②</td><td>unavoidable</td><td>luck</td></tr>
+      <tr><td class="num-cell">③</td><td>unavoidable</td><td>mindset</td></tr>
+      <tr><td class="num-cell">④</td><td>temporary</td><td>mindset</td></tr>
+      <tr><td class="num-cell">⑤</td><td>unavoidable</td><td>physical condition</td></tr>
+    </tbody>
+  </table>
+  <details class="ans"><summary>16번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">③ unavoidable / mindset</div>
+      <div class="ans-detail">
+        <b>(A) 분석 — life's hardships의 본질</b><br>
+        <div class="step">본문: "challenges and problems are <b>inevitable</b>" → 피할 수 없음<br>
+        - <b>inevitable = unavoidable</b> (paraphrase)<br>
+        - preventable(예방가능), temporary(일시적)은 inevitable과 정반대 또는 부분 일치 함정<br>
+        → <b>unavoidable ✓</b></div>
+        <br>
+
+        <b>(B) 분석 — 무엇이 결과를 결정하는가</b><br>
+        <div class="step">본문: "the <b>transformative power</b> of our <b>perception</b>" / "By <b>aligning our thoughts</b> with this perspective" / Milton의 'mind' / Shakespeare의 'thinking'<br>
+        - 모두 <b>마음·생각·관점</b> = <b>mindset</b> (paraphrase)<br>
+        - environment(환경), luck(운), physical condition(신체조건)은 본문에 언급 없음 + 메시지에 정면 충돌<br>
+        - 본문의 핵심: 외부 상황이 아닌 <b>내면(mindset)</b>이 결과 결정<br>
+        → <b>mindset ✓</b></div>
+        <br>
+
+        <b>매트릭스 검증:</b><br>
+        <div class="step">① preventable / environment ✗ — 둘 다 본문과 정반대</div>
+        <div class="step">② unavoidable / luck ✗ — (B) luck은 글의 핵심(자기 통제)과 정반대</div>
+        <div class="step"><b>③ unavoidable / mindset ✓ 정답</b></div>
+        <div class="step">④ temporary / mindset ✗ — (A) inevitable은 일시적이 아니라 항상 있음을 의미</div>
+        <div class="step">⑤ unavoidable / physical condition ✗ — (B) 신체 조건은 본문 무관</div>
+        <br>
+
+        <b>핵심 학습 포인트:</b><br>
+        - 빈칸요약은 <b>핵심 어휘의 paraphrase</b>가 정답 키<br>
+        - <b>inevitable → unavoidable</b> / <b>perception, thoughts, mind, thinking → mindset</b><br>
+        - 본문에 등장하지 않는 외부 요인(luck, environment, physical) 함정 주의<br><br>
+
+        <b>※ 빈출 paraphrase:</b><br>
+        <b>perception = mindset = perspective = attitude = outlook</b><br>
+        <b>inevitable = unavoidable = inescapable = bound to happen</b>
+      </div>
+      <div class="ko-trans">
+        <span class="ko-trans-label">요약문 해석</span>
+        비록 인생의 어려움은 <b>피할 수 없지만(unavoidable)</b>, 우리의 <b>마음가짐(mindset)</b>이 그것이 고통의 원천이 될지 개인적 성장의 기회가 될지를 결정한다.
+      </div>
+    </div>
+  </details>
+</article>
+
+
+
+<!-- Q17 NEW 요약 - 다른 (A)(B) 관점 -->
+<article class="q-card" data-type="summary">
+  <div class="q-meta">
+    <span class="q-num">17</span>
+    <span class="type-tag summary">요약</span>
+    <span class="q-focus">요약문 빈칸 (A)(B) — 행동 측면</span>
+    <span class="q-pts">2.9점</span>
+  </div>
+  <div class="q-prompt"><b>17.</b> 다음 글의 내용을 한 문장으로 요약하고자 한다. 빈칸 (A), (B)에 들어갈 말로 가장 적절한 것은? [2.9점]</div>
+  <div class="q-passage">
+    The author argues that life's challenges cannot be eliminated, but our perception transforms how we experience them. By aligning our thoughts with a positive perspective, we navigate difficulties with resilience, unlock creative potential, and reach world-class excellence. Stay committed and watch your purpose unfold into a meaningful, impactful life.
+    <hr style="border:none;border-top:1px dashed var(--line);margin:14px 0">
+    <b>↓ 요약문 ↓</b><br>
+    Life's challenges cannot be (A) <span class="blank-box">_______</span>, but adopting a positive (B) <span class="blank-box">_______</span> allows individuals to transform difficulties into pathways toward growth and excellence.
+  </div>
+  <table class="matrix-table">
+    <thead><tr><th></th><th>(A)</th><th>(B)</th></tr></thead>
+    <tbody>
+      <tr><td class="num-cell">①</td><td>chosen</td><td>income</td></tr>
+      <tr><td class="num-cell">②</td><td>prevented</td><td>mindset</td></tr>
+      <tr><td class="num-cell">③</td><td>prevented</td><td>environment</td></tr>
+      <tr><td class="num-cell">④</td><td>celebrated</td><td>mindset</td></tr>
+      <tr><td class="num-cell">⑤</td><td>chosen</td><td>luck</td></tr>
+    </tbody>
+  </table>
+  <details class="ans"><summary>17번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">② prevented / mindset</div>
+      <div class="ans-detail">
+        <b>(A) 분석 — challenges의 본질</b><br>
+        <div class="step">본문: "challenges cannot be eliminated" / 첫 문장: "challenges and problems are inevitable"<br>
+        - inevitable = unavoidable = cannot be <b>prevented</b><br>
+        - 'cannot be chosen'(선택될 수 없다)은 의미 어색 (도전이 우리를 선택하는 게 아님)<br>
+        - 'cannot be celebrated'(축하받을 수 없다)는 본문 메시지 무관<br>
+        → <b>prevented ✓</b></div>
+        <br>
+
+        <b>(B) 분석 — 결과를 결정하는 요인</b><br>
+        <div class="step">본문: "our <b>perception</b>" / "aligning our <b>thoughts</b>" / Milton의 'mind' / Shakespeare의 'thinking'<br>
+        - 모두 내적 마음·관점 = <b>mindset</b><br>
+        - environment(환경), luck(운), income(소득)은 모두 외부 요인 → 본문의 <b>내적 통제</b> 메시지와 정반대<br>
+        → <b>mindset ✓</b></div>
+        <br>
+
+        <b>매트릭스 검증:</b><br>
+        <div class="step">① chosen / income ✗ — 둘 다 본문과 정반대</div>
+        <div class="step"><b>② prevented / mindset ✓ 정답</b></div>
+        <div class="step">③ prevented / environment ✗ — (B) 외부 요인은 글의 <b>내적 인식</b> 강조와 모순</div>
+        <div class="step">④ celebrated / mindset ✗ — (A) celebrate는 본문과 무관</div>
+        <div class="step">⑤ chosen / luck ✗ — luck은 자기 통제 메시지와 정반대</div>
+        <br>
+
+        <b>핵심 학습 포인트:</b><br>
+        - 빈칸요약은 <b>본문의 핵심 명제 두 축</b>을 paraphrase<br>
+        - 첫 축: 도전 자체는 통제 불가 (inevitable → cannot be prevented)<br>
+        - 둘째 축: 결과는 마음가짐이 결정 (perception/thoughts → mindset)<br>
+        - 함정: 외부 요인 단어(environment, luck, income)는 글의 핵심과 정면 충돌<br><br>
+
+        <b>※ Q16 요약 vs Q17 요약 비교:</b><br>
+        - Q16: <b>unavoidable / mindset</b> (피할 수 없음 + 마음가짐)<br>
+        - Q17: <b>prevented / mindset</b> (예방 불가 + 마음가짐)<br>
+        - 핵심은 동일하지만 paraphrase 동사 변형 — paraphrase 능력 측정의 핵심
+      </div>
+      <div class="ko-trans">
+        <span class="ko-trans-label">요약문 해석</span>
+        인생의 도전은 <b>예방될(prevented)</b> 수 없지만, 긍정적 <b>마음가짐(mindset)</b>을 채택하는 것은 사람들이 어려움을 성장과 탁월함으로 가는 길로 변환할 수 있게 해 준다.
+      </div>
+    </div>
+  </details>
+</article>
+
+
+<!-- ============================================================ -->
+<!-- SECTION E · 글의 구조 (4문항) -->
+<!-- ============================================================ -->
+<div class="section-head" id="sec-order" data-section-type="order" style="border-left-color: var(--t-order)">
+  <div class="num-line">SECTION E · STRUCTURE · 4 ITEMS</div>
+  <h2>유형 ⑤ 글 구조<span class="kor">글의 순서 (A)(B)(C) · 문장 삽입 · 무관 문장</span></h2>
+  <div class="desc">대일고 시그니처 — 단락을 (A)(B)(C)로 분할 후 순서 배열 / 핵심 문장 삽입 / 흐름과 무관한 문장 찾기.</div>
+</div>
+
+<!-- Q11 글의 순서 -->
+<article class="q-card" data-type="order">
+  <div class="q-meta">
+    <span class="q-num">18</span>
+    <span class="type-tag order">순서</span>
+    <span class="q-focus">단락 (A)(B)(C) 배열</span>
+    <span class="q-pts">2.9점</span>
+  </div>
+  <div class="q-prompt"><b>18.</b> 주어진 글 다음에 이어질 글의 순서로 가장 적절한 것을 고르시오. [2.9점]</div>
+
+  <div class="q-passage">
+    <span class="label">주어진 글</span>
+    In the complex tapestry of life, challenges and problems are inevitable; suffering due to them is, however, optional.
+  </div>
+
+  <div class="q-passage">
+    <span class="label">(A)</span>
+    My father used to often quote William Shakespeare's insight in <em>Hamlet</em>: "There is nothing either good or bad, but thinking makes it so." These timeless quotes underscore the transformative power of our perception.
+  </div>
+
+  <div class="q-passage">
+    <span class="label">(B)</span>
+    By aligning our thoughts with this perspective, we not only navigate challenges with resilience but also unlock our creative potential. By adopting this approach, you will progress towards your goals and attain a level of world-class excellence.
+  </div>
+
+  <div class="q-passage">
+    <span class="label">(C)</span>
+    It is crucial to grasp the wisdom in John Milton's <em>Paradise Lost</em>, where Satan observes, "The mind is its own place, and in itself can make a Heaven of Hell, a Hell of Heaven." Problems become opportunities for growth when viewed through a positive lens.
+  </div>
+
+  <div class="q-choices horz5">
+    <span class="c"><span class="num">①</span>(A)-(B)-(C)</span>
+    <span class="c"><span class="num">②</span>(A)-(C)-(B)</span>
+    <span class="c"><span class="num">③</span>(B)-(A)-(C)</span>
+    <span class="c"><span class="num">④</span>(C)-(A)-(B)</span>
+    <span class="c"><span class="num">⑤</span>(C)-(B)-(A)</span>
+  </div>
+
+  <details class="ans"><summary>18번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">④ (C) - (A) - (B)</div>
+      <div class="ans-detail">
+        <b>논리 흐름 분석:</b><br>
+        <div class="step"><b>주어진 글</b>: 도전은 inevitable, 고통은 optional → 일반 명제 도입.</div>
+        <div class="step"><b>(C) 첫 인용 — Milton</b>: "It is crucial to grasp the wisdom..." 첫 인용을 도입(Milton). + "Problems become opportunities... positive lens" 핵심 명제 1.</div>
+        <div class="step"><b>(A) 두 번째 인용 — Shakespeare</b>: "My father used to often quote..." 또 다른 권위 인용(Shakespeare). + "These timeless quotes underscore..." <b>두 인용 모두</b>(These) 받아 정리. → (C) 다음에 와야 'These quotes'가 두 개를 받음.</div>
+        <div class="step"><b>(B) 결론·실천 단계</b>: "By aligning our thoughts with this perspective" — perspective는 (A)의 'transformative power of our perception'을 받음. 도전 극복 → 잠재력 → 탁월함 결론.</div>
+        <br>
+
+        <b>5선지 정밀 검증:</b><br>
+        <div class="step">① (A)-(B)-(C) ✗ — Shakespeare(두 번째 인용)부터 시작은 비논리. 'These timeless quotes'(복수)가 받을 첫 인용이 없음.</div>
+        <div class="step">② (A)-(C)-(B) ✗ — (A)에서 'These quotes'(복수)가 인용 두 개를 받아야 하는데 (A) 시점에서는 Shakespeare 하나뿐.</div>
+        <div class="step">③ (B)-(A)-(C) ✗ — 결론 (B)부터 시작 어색. 'this perspective'가 받을 perspective 부재.</div>
+        <div class="step"><b>④ (C)-(A)-(B) ✓ 정답</b> — 도입 → 첫 인용(Milton) → 두 번째 인용 + 통합(These quotes) → 결론(this perspective).</div>
+        <div class="step">⑤ (C)-(B)-(A) ✗ — (C) 다음 (B) 결론으로 점프. (B)의 'this perspective'가 받을 명시적 명제 부재.</div>
+        <br>
+
+        <b>핵심 단서 정리:</b><br>
+        ✓ <b>"These timeless quotes"</b>(A) — <b>복수</b>가 받을 인용 2개 필요 → (C) Milton이 먼저, (A) Shakespeare가 두 번째<br>
+        ✓ <b>"this perspective"</b>(B) — (A)의 'perception/quotes'를 받음 → (A) 다음<br>
+        ✓ <b>구조 패턴</b>: 일반 명제 → 권위 인용 1 → 권위 인용 2 + 통합 → 결론·실천<br><br>
+
+        <b>※ 단락 흐름 핵심 패턴:</b><br>
+        1) 일반 명제 → 구체적 권위 인용 (Milton, Shakespeare 등)<br>
+        2) <b>"These + 복수명사"</b> = 두 개 이상의 선행 항목을 통합 → 통합 위치는 두 항목 다음<br>
+        3) 결론 단락의 'this/that + 추상명사'는 직전 단락의 명제를 받음
+      </div>
+    </div>
+  </details>
+</article>
+
+
+<!-- Q12 문장 삽입 -->
+<article class="q-card" data-type="order">
+  <div class="q-meta">
+    <span class="q-num">19</span>
+    <span class="type-tag order">삽입</span>
+    <span class="q-focus">핵심 문장 삽입 — These timeless quotes</span>
+    <span class="q-pts">2.6점</span>
+  </div>
+  <div class="q-prompt"><b>19.</b> 글의 흐름으로 보아, 주어진 문장이 들어갈 가장 적절한 곳을 고르시오. [2.6점]</div>
+
+  <div class="q-passage" style="background:#FFFBF0;border:1.5px solid var(--gold)">
+    <b>주어진 문장:</b><br>
+    These timeless quotes underscore the transformative power of our perception.
+  </div>
+
+  <div class="q-passage">
+    In the complex tapestry of life, challenges and problems are inevitable; suffering due to them is, however, optional. <span class="circle-num">①</span> It is crucial to grasp the wisdom in John Milton's <em>Paradise Lost</em>, where Satan observes, "The mind is its own place, and in itself can make a Heaven of Hell, a Hell of Heaven." <span class="circle-num">②</span> My father used to often quote William Shakespeare's insight in <em>Hamlet</em>: "There is nothing either good or bad, but thinking makes it so." <span class="circle-num">③</span> Problems become opportunities for growth when viewed through a positive lens. <span class="circle-num">④</span> By aligning our thoughts with this perspective, we not only navigate challenges with resilience but also unlock our creative potential. <span class="circle-num">⑤</span> Stay committed to the journey, solve the puzzles that come your way, and watch as your purpose unfolds.
+  </div>
+
+  <div class="q-choices horz5">
+    <span class="c"><span class="num">①</span></span>
+    <span class="c"><span class="num">②</span></span>
+    <span class="c"><span class="num">③</span></span>
+    <span class="c"><span class="num">④</span></span>
+    <span class="c"><span class="num">⑤</span></span>
+  </div>
+
+  <details class="ans"><summary>19번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">③ — 두 인용구 다음, 일반 명제 직전</div>
+      <div class="ans-detail">
+        <b>주어진 문장 핵심 단서:</b><br>
+        <div class="step"><b>"These timeless quotes"</b> — <b>"These"</b>는 지시형용사 <b>복수</b>. 앞에 인용구 <b>2개 이상</b>이 있어야 함.</div>
+        <div class="step"><b>"transformative power of our perception"</b> — 인식의 변혁적 힘이라는 추상 명제 도입. 다음 문장은 이 명제의 구체적 결과(예: 문제 → 기회)가 와야 자연스러움.</div>
+        <br>
+
+        <b>위치별 검증:</b><br>
+        <div class="step">① ✗ — 인용구가 아직 안 나옴. 'These quotes'가 가리킬 것 없음.</div>
+        <div class="step">② ✗ — Milton 인용 1개만 나옴. 'These'(복수)와 불일치.</div>
+        <div class="step"><b>③ ✓ 정답</b> — Milton + Shakespeare 두 인용 직후. 'These timeless quotes'가 두 인용을 받아 통합. 다음 문장 'Problems become opportunities... positive lens'는 perception 명제의 구체화 → 완벽한 흐름.</div>
+        <div class="step">④ ✗ — 'Problems become opportunities' 다음에 들어가면 '인식의 변혁적 힘' 명제가 결과 다음에 등장 → 논리 역행.</div>
+        <div class="step">⑤ ✗ — 결론·실천 단계 직후. 너무 늦음.</div>
+        <br>
+
+        <b>핵심 학습 포인트:</b><br>
+        - <b>"These + 복수명사"</b> = 앞에 <b>2개 이상</b> 항목이 필수. 위치 결정의 핵심 단서.<br>
+        - 추상 명제 도입 문장(transformative power) → 직후에 구체적 적용·결과 문장 위치<br>
+        - 'Problems become opportunities... positive lens'는 perception의 구체적 작동 방식 → 추상에서 구체로의 흐름<br><br>
+
+        <b>※ 빈출 삽입 단서:</b><br>
+        <b>These / Those + 복수명사</b> → 앞에 복수 항목 필수<br>
+        <b>This / That + 단수명사</b> → 앞에 단수 항목 또는 명제 필수<br>
+        <b>Such / Similarly</b> → 앞에 유사한 사례·진술 필수
+      </div>
+    </div>
+  </details>
+</article>
+
+
+<!-- Q13 무관문장 -->
+<article class="q-card" data-type="order">
+  <div class="q-meta">
+    <span class="q-num">20</span>
+    <span class="type-tag irrel">무관문장</span>
+    <span class="q-focus">전체 흐름과 관계없는 문장</span>
+    <span class="q-pts">2.6점</span>
+  </div>
+  <div class="q-prompt"><b>20.</b> 다음 글에서 전체 흐름과 관계 <b>없는</b> 문장을 고르시오. [2.6점]</div>
+
+  <div class="q-passage">
+    In the complex tapestry of life, challenges and problems are inevitable; suffering due to them is, however, optional. <span class="circle-num">①</span> It is crucial to grasp the wisdom in John Milton's <em>Paradise Lost</em>, where Satan observes that the mind itself can make a Heaven of Hell, a Hell of Heaven. <span class="circle-num">②</span> Shakespeare similarly insisted in <em>Hamlet</em> that "there is nothing either good or bad, but thinking makes it so." <span class="circle-num">③</span> Recent advances in artificial intelligence have dramatically reshaped global labor markets and educational systems. <span class="circle-num">④</span> These timeless quotes underscore the transformative power of our perception, suggesting that problems become opportunities for growth when viewed through a positive lens. <span class="circle-num">⑤</span> By aligning our thoughts with this perspective, we navigate challenges with resilience and attain world-class excellence.
+  </div>
+
+  <div class="q-choices horz5">
+    <span class="c"><span class="num">①</span></span>
+    <span class="c"><span class="num">②</span></span>
+    <span class="c"><span class="num">③</span></span>
+    <span class="c"><span class="num">④</span></span>
+    <span class="c"><span class="num">⑤</span></span>
+  </div>
+
+  <details class="ans"><summary>20번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">③ — AI와 노동시장, 글의 주제(인식의 힘)와 무관</div>
+      <div class="ans-detail">
+        <b>글의 일관 주제:</b> 인식·생각의 변혁적 힘이 도전을 기회로 바꾼다.<br><br>
+
+        <b>문장별 검증:</b><br>
+        <div class="step"><b>① Milton 인용</b> ✓ — 마음(mind)이 천국·지옥을 만든다 → <b>주제(인식의 힘)와 직결</b>.</div>
+        <div class="step"><b>② Shakespeare 인용</b> ✓ — 생각(thinking)이 좋고 나쁨을 만든다 → <b>주제 강화</b> (similarly로 ①과 연결).</div>
+        <div class="step"><b>③ AI와 노동시장 ✗ 정답</b> — 인공지능 발전, 노동시장 변화는 글의 주제(인식·마음의 힘)와 <b>완전 무관</b>. 글에서 한 번도 언급되지 않은 외부 토픽.</div>
+        <div class="step"><b>④ 인식의 변혁적 힘</b> ✓ — 'These timeless quotes'로 ①②를 통합 + 핵심 명제(perception → opportunities) → <b>주제 핵심</b>.</div>
+        <div class="step"><b>⑤ 결론</b> ✓ — 사고 정렬 → 회복력 → 탁월함 → <b>주제의 실천적 결론</b>.</div>
+        <br>
+
+        <b>핵심 학습 포인트:</b><br>
+        - <b>무관문장 시그니처</b>: 글이 인문학·심리학·자기계발인데 갑자기 <b>기술·과학·경제 외부 주제</b> 등장<br>
+        - ③ 'Recent advances in artificial intelligence'는 글의 마음·생각·인용구 주제와 <b>전혀 다른 영역</b><br>
+        - 문장이 문법적으로 맞고 그럴듯해 보여도 <b>주제 일관성</b>이 핵심 검증 기준<br><br>
+
+        <b>※ 빈출 무관문장 함정 패턴:</b><br>
+        - 인문학·심리 주제 글에 <b>기술·AI·경제</b> 통계 끼워 넣기<br>
+        - 환경 주제 글에 <b>건강·다이어트</b> 정보 끼워 넣기<br>
+        - 같은 핵심어(예: 'change')가 들어 있지만 의미는 전혀 다른 영역
+      </div>
+    </div>
+  </details>
+</article>
+
+
+
+<!-- Q21 NEW 글구조 - 다른 문장 삽입 -->
+<article class="q-card" data-type="order">
+  <div class="q-meta">
+    <span class="q-num">21</span>
+    <span class="type-tag order">삽입</span>
+    <span class="q-focus">결론 직전 통찰 문장 삽입</span>
+    <span class="q-pts">2.9점</span>
+  </div>
+  <div class="q-prompt"><b>21.</b> 글의 흐름으로 보아, 주어진 문장이 들어갈 가장 적절한 곳을 고르시오. [2.9점]</div>
+
+  <div class="q-passage" style="background:#FFFBF0;border:1.5px solid var(--gold)">
+    <b>주어진 문장:</b><br>
+    Such a shift in mindset does not happen overnight, but through deliberate, daily practice.
+  </div>
+
+  <div class="q-passage">
+    In the complex tapestry of life, challenges and problems are inevitable; suffering due to them is, however, optional. <span class="circle-num">①</span> These timeless quotes from Milton and Shakespeare underscore the transformative power of our perception. <span class="circle-num">②</span> Problems become opportunities for growth when viewed through a positive lens. <span class="circle-num">③</span> By aligning our thoughts with this perspective, we not only navigate challenges with resilience but also unlock our creative potential. <span class="circle-num">④</span> By adopting this approach, you will progress towards your goals and attain a level of world-class excellence. <span class="circle-num">⑤</span> Stay committed to the journey, solve the puzzles that come your way, and watch as your purpose unfolds into a meaningful, impactful life.
+  </div>
+
+  <div class="q-choices horz5">
+    <span class="c"><span class="num">①</span></span>
+    <span class="c"><span class="num">②</span></span>
+    <span class="c"><span class="num">③</span></span>
+    <span class="c"><span class="num">④</span></span>
+    <span class="c"><span class="num">⑤</span></span>
+  </div>
+
+  <details class="ans"><summary>21번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">⑤ — 결론 실천(Stay committed) 직전</div>
+      <div class="ans-detail">
+        <b>주어진 문장 핵심 단서:</b><br>
+        <div class="step"><b>"Such a shift in mindset"</b> — <b>"Such"</b>는 앞에서 언급된 <b>'마음가짐의 전환'</b>을 받음. 인식·관점 변화 명제 다음에 위치.</div>
+        <div class="step"><b>"deliberate, daily practice"</b> — 의도적·매일의 실천. 다음 문장은 <b>실천·헌신</b> 관련이어야 자연스러움.</div>
+        <br>
+
+        <b>위치별 검증:</b><br>
+        <div class="step">① ✗ — Milton·Shakespeare 인용 직전. 마음 전환 개념이 아직 등장 안 함. 'Such a shift' 받을 대상 부재.</div>
+        <div class="step">② ✗ — perception의 변혁적 힘 직후. 너무 이른 위치, 다음 명제(opportunities) 도입 흐름 끊김.</div>
+        <div class="step">③ ✗ — 'Problems become opportunities' 직후. 추상 명제 사이에 실천 강조 끼워넣으면 흐름 어색.</div>
+        <div class="step">④ ✗ — 'world-class excellence' 직후. excellence 결론 다음에 다시 'practice' 강조하면 후행 결론과 중복.</div>
+        <div class="step"><b>⑤ ✓ 정답</b> — 'Stay committed to the journey' 직전. 'deliberate, daily practice'(매일의 실천)와 'Stay committed... solve the puzzles'(여정 헌신·문제 해결)가 의미적으로 직결. 추상에서 구체적 실천 행동으로 자연스럽게 전이.</div>
+        <br>
+
+        <b>핵심 학습 포인트:</b><br>
+        - <b>"Such + 명사"</b> = 앞에 언급된 <b>같은 종류의 것</b>을 받음. 이전 명제 필수.<br>
+        - 글의 후반부 결론은 <b>추상 → 구체</b>로 흐름 (perception → mindset shift → daily practice → committed action)<br>
+        - <b>'practice' 단서</b>는 'committed', 'solve puzzles' 같은 실천 어휘와 함께 위치<br><br>
+
+        <b>※ 빈출 삽입 단서:</b><br>
+        <b>Such N</b> → 앞에 같은 종류 항목 필수<br>
+        <b>This shift / change / transition</b> → 앞에 변화 명제 필수
+      </div>
+    </div>
+  </details>
+</article>
+
+
+<!-- ============================================================ -->
+<!-- SECTION F · 요지·주제·제목·함의 (4문항) -->
+<!-- ============================================================ -->
+<div class="section-head" id="sec-theme" data-section-type="theme" style="border-left-color: var(--t-theme)">
+  <div class="num-line">SECTION F · THEME · 4 ITEMS</div>
+  <h2>유형 ⑥ 요지·주제·제목·함의<span class="kor">한 지문 4종 동시 출제 — 대일고 단골 패턴</span></h2>
+  <div class="desc">대일고 시그니처 — 같은 본문에 요지(한국어)·주제(영어)·제목(영어)·함의(밑줄 의미) 4문항을 동시 출제. 각 유형별 정답 표현의 미묘한 차이 학습.</div>
+</div>
+
+<!-- Q14 요지 -->
+<article class="q-card" data-type="theme">
+  <div class="q-meta">
+    <span class="q-num">22</span>
+    <span class="type-tag theme">요지</span>
+    <span class="q-focus">한국어 진술문 — 핵심 명제</span>
+    <span class="q-pts">2.3점</span>
+  </div>
+  <div class="q-prompt"><b>22.</b> 다음 글의 요지로 가장 적절한 것은? [2.3점]</div>
+  <div class="q-passage">
+    [본문 전체 — 인식의 변혁적 힘 / The Transformative Power of Perception]
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span>인생의 어려움은 충분한 노력만으로 모두 제거할 수 있다.</span>
+    <span class="c"><span class="num">②</span>고전 문학을 읽는 것은 자기계발의 가장 빠른 길이다.</span>
+    <span class="c"><span class="num">③</span>도전은 피할 수 없지만, 그것을 어떻게 인식하느냐가 고통과 성장 중 무엇이 될지를 결정한다.</span>
+    <span class="c"><span class="num">④</span>세계적 수준의 탁월함은 타고난 재능의 결과이며, 후천적으로 얻기 어렵다.</span>
+    <span class="c"><span class="num">⑤</span>긍정적 사고만 강조하다 보면 현실의 문제를 직시하지 못하게 된다.</span>
+  </div>
+  <details class="ans"><summary>22번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">③ 도전은 피할 수 없지만, 그것을 어떻게 인식하느냐가 고통과 성장 중 무엇이 될지를 결정한다.</div>
+      <div class="ans-detail">
+        <b>본문 결정적 단서:</b><br>
+        <div class="step">1. "challenges and problems are <b>inevitable</b>; suffering... is, however, <b>optional</b>" — 도전은 필연, 고통은 선택.</div>
+        <div class="step">2. Milton + Shakespeare 인용 → "transformative power of our <b>perception</b>" — 인식의 변혁적 힘.</div>
+        <div class="step">3. "Problems become <b>opportunities for growth</b> when viewed through a positive lens" — 긍정적 인식 = 성장 기회.</div>
+        <br>
+
+        <b>5선지 정밀 검증:</b><br>
+        <div class="step">① ✗ — '어려움을 모두 제거'는 본문의 'inevitable'(피할 수 없는)과 정면 모순.</div>
+        <div class="step">② ✗ — 고전 문학(Milton, Shakespeare)은 인식의 힘을 보여주는 <b>예시</b>일 뿐, 글의 주제가 아님. 부분적 사실 함정.</div>
+        <div class="step"><b>③ ✓ 정답</b> — '피할 수 없는 도전 + 인식이 결과 결정 + 고통 vs 성장' 본문 핵심 3요소를 모두 포함.</div>
+        <div class="step">④ ✗ — '타고난 재능의 결과'는 본문의 'By adopting this approach'(접근법 채택)와 정반대(후천적 학습 가능성 강조).</div>
+        <div class="step">⑤ ✗ — 본문은 긍정적 사고를 <b>옹호</b>. 비판적 시각은 글의 톤과 정반대.</div>
+        <br>
+
+        <b>핵심 학습 포인트:</b><br>
+        - 요지는 <b>전체 명제</b>를 포괄해야 함 — '도전 inevitable + 인식 결정 + 결과 분기'<br>
+        - 부분적 사실(②④)이나 정반대 명제(①⑤) 함정 주의<br>
+        - <b>한국어 요지</b>는 본문 핵심을 한 문장으로 압축해야 자연스러움
+      </div>
+    </div>
+  </details>
+</article>
+
+
+<!-- Q15 주제 -->
+<article class="q-card" data-type="theme">
+  <div class="q-meta">
+    <span class="q-num">23</span>
+    <span class="type-tag theme">주제</span>
+    <span class="q-focus">영어 명사구 주제</span>
+    <span class="q-pts">2.6점</span>
+  </div>
+  <div class="q-prompt"><b>23.</b> 다음 글의 주제로 가장 적절한 것은? [2.6점]</div>
+  <div class="q-passage">
+    [본문 전체]
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span>the literary contributions of Milton and Shakespeare to modern philosophy</span>
+    <span class="c"><span class="num">②</span>the dangers of suppressing negative emotions in difficult times</span>
+    <span class="c"><span class="num">③</span>how perception transforms challenges into opportunities for growth</span>
+    <span class="c"><span class="num">④</span>strategies for achieving world-class excellence through hard work alone</span>
+    <span class="c"><span class="num">⑤</span>the inevitability of suffering in the human condition</span>
+  </div>
+  <details class="ans"><summary>23번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">③ <span class="en">how perception transforms challenges into opportunities for growth</span></div>
+      <div class="ans-detail">
+        <b>주제 핵심 키워드:</b> <b>perception</b> + <b>transforms</b> + <b>challenges</b> + <b>opportunities for growth</b>. 본문의 4대 키워드 모두 포함.<br><br>
+
+        <b>5선지 정밀 검증:</b><br>
+        <div class="step">① ✗ — Milton·Shakespeare는 글의 <b>예시·증거</b>일 뿐, 그들의 문학적 기여 자체가 주제 아님. 함정 빈출 패턴.</div>
+        <div class="step">② ✗ — '부정적 감정 억압의 위험'은 본문에 언급 없음. 정반대로 본문은 인식 전환을 옹호.</div>
+        <div class="step"><b>③ ✓ 정답</b> — perception(인식) + transforms(변혁) + challenges → opportunities + growth 본문 4대 키워드 망라.</div>
+        <div class="step">④ ✗ — 'through hard work alone'은 글의 핵심('mindset/perception')과 다름. hard work는 본문에 없음.</div>
+        <div class="step">⑤ ✗ — 부분 사실(suffering 언급)이나 글은 suffering이 'optional'(선택적)이라 강조 → 핵심 메시지 누락.</div>
+        <br>
+
+        <b>요지 vs 주제 차이:</b><br>
+        - <b>요지(③)</b>: 본문이 주장하는 <b>완전한 명제</b> (한국어 문장)<br>
+        - <b>주제(③)</b>: 글이 다루는 <b>핵심 영역</b> (영어 명사구, 'how + S + V' 형태 빈출)<br>
+        - 둘 다 perception의 변혁적 역할을 다루지만, 표현 방식이 다름<br><br>
+
+        <b>※ 주제 빈출 패턴:</b><br>
+        <b>how + S + V</b> (어떻게 ~하는가)<br>
+        <b>the role of A in B</b> (B에서 A의 역할)<br>
+        <b>the importance of N in V-ing</b> (~하는 데 있어 N의 중요성)
+      </div>
+    </div>
+  </details>
+</article>
+
+
+<!-- Q16 제목 -->
+<article class="q-card" data-type="theme">
+  <div class="q-meta">
+    <span class="q-num">24</span>
+    <span class="type-tag theme">제목</span>
+    <span class="q-focus">영어 제목 — 함축적·인상적</span>
+    <span class="q-pts">2.6점</span>
+  </div>
+  <div class="q-prompt"><b>24.</b> 다음 글의 제목으로 가장 적절한 것은? [2.6점]</div>
+  <div class="q-passage">
+    [본문 전체]
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span>The Inescapable Pain of Modern Life</span>
+    <span class="c"><span class="num">②</span>Lessons from Milton: A Literary Biography</span>
+    <span class="c"><span class="num">③</span>Mind Over Matter: Reframing Life's Challenges</span>
+    <span class="c"><span class="num">④</span>The Hidden Costs of Positive Thinking</span>
+    <span class="c"><span class="num">⑤</span>Why Talent Beats Mindset Every Time</span>
+  </div>
+  <details class="ans"><summary>24번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">③ <span class="en">Mind Over Matter: Reframing Life's Challenges</span></div>
+      <div class="ans-detail">
+        <b>제목 핵심 분석:</b><br>
+        - <b>"Mind Over Matter"</b>: 마음이 물질·외부 상황보다 우위에 있다는 영어 관용구 → Milton/Shakespeare의 인용과 본문 핵심 명제(perception이 결과 결정)와 완벽 일치.<br>
+        - <b>"Reframing Life's Challenges"</b>: 인생의 도전을 <b>재구성·재인식</b> → 'Problems become opportunities when viewed through a positive lens'와 직결.<br><br>
+
+        <b>5선지 정밀 검증:</b><br>
+        <div class="step">① ✗ — '피할 수 없는 고통'. suffering이 <b>optional</b>이라는 본문 명제와 정면 모순.</div>
+        <div class="step">② ✗ — 'Milton의 일대기'. Milton은 단지 인용 출처, 글의 주인공 아님. 함정 빈출.</div>
+        <div class="step"><b>③ ✓ 정답</b> — Mind Over Matter(마음 우위) + Reframing(재구성) = 본문 핵심.</div>
+        <div class="step">④ ✗ — '긍정적 사고의 숨은 비용'. 본문은 긍정적 사고를 <b>옹호</b> → 정반대 함정.</div>
+        <div class="step">⑤ ✗ — '재능이 마음가짐을 항상 이긴다'. 본문은 정반대(mindset이 결과 결정).</div>
+        <br>
+
+        <b>제목 작성 시그니처:</b><br>
+        - 영어 제목은 <b>비유·관용구</b>(Mind Over Matter)나 <b>콜론(:) 구조</b>가 빈출<br>
+        - 'Reframing'(재구성)은 인지심리·자기계발 빈출 동사. 'reframe a problem' = 문제를 다르게 보다<br>
+        - 정답 제목은 글의 <b>핵심 메시지를 응축한 인상적 표현</b>이어야 함<br><br>
+
+        <b>※ 함정 패턴:</b><br>
+        - 정답과 정반대 메시지(①④⑤)<br>
+        - 부분적 등장 인물·요소를 전체로 확대(②)
+      </div>
+    </div>
+  </details>
+</article>
+
+
+<!-- Q17 함의 -->
+<article class="q-card" data-type="theme">
+  <div class="q-meta">
+    <span class="q-num">25</span>
+    <span class="type-tag theme">함의</span>
+    <span class="q-focus">밑줄 친 부분이 의미하는 바</span>
+    <span class="q-pts">2.9점</span>
+  </div>
+  <div class="q-prompt"><b>25.</b> 다음 글에서 밑줄 친 부분이 의미하는 바로 가장 적절한 것은? [2.9점]</div>
+  <div class="q-passage">
+    It is crucial to grasp the wisdom in John Milton's <em>Paradise Lost</em>, where Satan observes, <u>"The mind is its own place, and in itself can make a Heaven of Hell, a Hell of Heaven."</u> ... These timeless quotes underscore the transformative power of our perception. Problems become opportunities for growth when viewed through a positive lens.
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span>Heaven and hell are real physical locations that exist beyond human understanding.</span>
+    <span class="c"><span class="num">②</span>Satan's rebellion shows that even fallen beings can find redemption through faith.</span>
+    <span class="c"><span class="num">③</span>Our mental attitude alone determines whether circumstances feel positive or negative.</span>
+    <span class="c"><span class="num">④</span>Religious literature provides the only reliable guide to a meaningful life.</span>
+    <span class="c"><span class="num">⑤</span>External conditions, not internal thoughts, are what truly shape our experience.</span>
+  </div>
+  <details class="ans"><summary>25번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">③ <span class="en">Our mental attitude alone determines whether circumstances feel positive or negative.</span><br>(우리의 정신적 태도만이 상황이 긍정적·부정적으로 느껴질지를 결정한다.)</div>
+      <div class="ans-detail">
+        <b>밑줄 분석 — Milton의 인용:</b><br>
+        "The <b>mind</b> is its own place, and in itself can make a <b>Heaven of Hell, a Hell of Heaven</b>."<br>
+        - 직역: 마음은 그 자체로 한 장소이며, 그 안에서 지옥을 천국으로, 천국을 지옥으로 만들 수 있다.<br>
+        - <b>핵심 함의</b>: 마음이 <b>독립적</b>(its own place) → 외부 상황이 어떻든 <b>마음이 그 의미를 결정</b>한다.<br>
+        - 천국/지옥은 비유 — 외부 환경의 좋고 나쁨을 <b>마음이 뒤집을 수 있음</b>을 강조.<br><br>
+
+        <b>본문 맥락 단서:</b><br>
+        - 다음 문장: "transformative power of our <b>perception</b>" — 인식이 결정.<br>
+        - 그다음: "Problems become opportunities... when <b>viewed</b> through a positive lens" — 보는 방식(인식)에 따라 결과 달라짐.<br>
+        ※ 본문 전체가 <b>마음·인식이 외부 상황의 의미를 결정</b>한다는 명제 → 밑줄도 같은 의미.<br><br>
+
+        <b>5선지 정밀 검증:</b><br>
+        <div class="step">① ✗ — 'real physical locations'(실제 물리적 장소). 인용의 비유적 의미를 문자 그대로 해석한 함정. 인용은 <b>비유</b>.</div>
+        <div class="step">② ✗ — 'Satan's rebellion / redemption through faith'. <em>Paradise Lost</em>의 다른 주제이지만 인용의 함의가 아님. 작품 일반 지식 함정.</div>
+        <div class="step"><b>③ ✓ 정답</b> — 'mental attitude alone determines'(정신적 태도만이 결정) + 'circumstances feel positive or negative'(상황이 긍정·부정으로 느껴질지) = Milton 인용의 함의 정확히 paraphrasing.</div>
+        <div class="step">④ ✗ — '종교 문학이 유일한 길'. 인용은 종교 문학의 우월성을 주장하지 않음. 과대해석 함정.</div>
+        <div class="step">⑤ ✗ — '외부 조건이 경험을 형성'. 인용의 <b>정반대</b>(마음이 결정한다는 메시지).</div>
+        <br>
+
+        <b>핵심 학습 포인트:</b><br>
+        - 인용·비유 문장의 <b>함의</b>는 본문 맥락에서 추론<br>
+        - <b>문자적 해석(①)</b> vs <b>비유적 해석(③)</b> 구분 필수<br>
+        - 작품 일반 지식 함정(②)에 빠지지 말 것 — 본문이 강조하는 메시지에 집중<br><br>
+
+        <b>※ 빈출 paraphrase:</b><br>
+        <b>The mind is its own place</b> = our mental attitude is independent<br>
+        <b>can make a Heaven of Hell</b> = can transform negative into positive<br>
+        <b>= perception determines meaning of circumstances</b>
+      </div>
+    </div>
+  </details>
+</article>
+
+
+<!-- ============================================================ -->
+<!-- SECTION G · 서답형 (3문항) -->
+<!-- ============================================================ -->
+<div class="section-head" id="sec-app" data-section-type="app" style="border-left-color: var(--t-app)">
+  <div class="num-line">SECTION G · APPLICATION · 5 ITEMS</div>
+  <h2>유형 ⑦ 서답형<span class="kor">영작 [조건] · 본문 빈칸 · 영어 속담 매칭</span></h2>
+  <div class="desc">대일고 시그니처 — 보기 단어 영작 / 본문 핵심 어휘 빈칸 채우기 / 신목고 시그니처(속담 매칭) 보강.</div>
+</div>
+
+<!-- Q18 영작 -->
+<article class="q-card" data-type="app">
+  <div class="q-meta">
+    <span class="q-num">26</span>
+    <span class="type-tag app">서답</span>
+    <span class="q-focus">영작 [조건] — 보기 단어 사용</span>
+    <span class="q-pts">5.0점</span>
+  </div>
+  <div class="q-prompt"><b>26.</b> 다음 우리말과 일치하도록 [조건]에 맞게 영작하시오. [5.0점]</div>
+  <div class="subj-prompt-box">
+    <b>우리말:</b> 이 시대를 초월한 인용구들은 우리 인식의 변혁적 힘을 강조한다.
+  </div>
+  <div class="subj-condition">
+    <b>&lt; 조건 &gt;</b><br>
+    1. &lt;보기&gt;에 주어진 단어만 한 번씩 모두 사용하시오.<br>
+    2. 필요시 &lt;보기&gt;에 주어진 단어 중 동사의 형태를 어법에 맞게 변형하시오. (나머지는 형태 변형 없이 그대로 사용)<br>
+    3. 단어를 추가하거나 생략하지 마시오.
+  </div>
+  <div class="cond-box">
+    <div class="cond-title">&lt; 보기 &gt;</div>
+    <div class="bogi">power / our / these / of / underscore / perception / quotes / transformative / the / timeless</div>
+  </div>
+  <div class="subj-answer-line">▸ 답:</div>
+  <details class="ans"><summary>26번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main"><span class="en">These timeless quotes underscore the transformative power of our perception.</span></div>
+      <div class="ans-detail">
+        <b>영작 단계별 분석:</b><br>
+        <div class="step"><b>1단계 — 주어 구성</b>: '이 시대를 초월한 인용구들' = These (지시사) + timeless (형용사) + quotes (복수명사) → <b>These timeless quotes</b></div>
+        <div class="step"><b>2단계 — 동사 결정</b>: '강조한다' = underscore. 주어가 복수(quotes)이므로 동사원형 그대로 <b>underscore</b> (3인칭 단수 -s 불필요)</div>
+        <div class="step"><b>3단계 — 목적어 구성</b>: '우리 인식의 변혁적 힘' = the + transformative (형용사) + power (명사) + of + our + perception → <b>the transformative power of our perception</b></div>
+        <div class="step"><b>4단계 — 통합</b>: These timeless quotes / underscore / the transformative power of our perception.</div>
+        <br>
+
+        <b>채점 기준 (5.0점 만점):</b><br>
+        <div class="step">- 보기 단어 모두 사용 (10개 정확) — <b>2.0점</b><br>
+        - 어순 정확(주어-동사-목적어) — <b>1.0점</b><br>
+        - 동사 형태 어법 정확(underscore, 3인칭 복수형) — <b>1.0점</b><br>
+        - 형용사·명사 위치(timeless quotes, transformative power) — <b>1.0점</b></div>
+        <br>
+
+        <b>핵심 학습 포인트:</b><br>
+        - <b>주어-동사 수일치</b>: 'These timeless quotes'(복수) → 동사 -s 없음<br>
+        - <b>형용사 + 명사</b> 어순: timeless quotes / transformative power<br>
+        - <b>전치사 of 활용</b>: power of N (~의 힘) / our perception (소유격 + 명사)<br><br>
+
+        <b>※ 빈출 collocation:</b><br>
+        <b>underscore the importance / power / value of N</b> — N의 중요성·힘·가치를 강조하다<br>
+        <b>transformative power of N</b> — N의 변혁적 힘<br>
+        <b>timeless wisdom / classic / quote</b> — 시대를 초월한 지혜/고전/인용
+      </div>
+    </div>
+  </details>
+</article>
+
+
+<!-- Q19 본문 빈칸 -->
+<article class="q-card" data-type="app">
+  <div class="q-meta">
+    <span class="q-num">27</span>
+    <span class="type-tag app">서답</span>
+    <span class="q-focus">본문 빈칸 (a)~(e) 한 단어 찾기</span>
+    <span class="q-pts">5.0점</span>
+  </div>
+  <div class="q-prompt"><b>27.</b> 다음 본문의 빈칸 (a)~(e)에 들어갈 알맞은 한 단어를 본문에서 찾아 쓰시오. [각 1.0점, 총 5.0점]</div>
+  <div class="q-passage">
+    In the complex tapestry of life, challenges and problems are (a) <span class="blank-box">_______</span>; suffering due to them is, however, optional. ... These timeless quotes underscore the (b) <span class="blank-box">_______</span> power of our perception. Problems become (c) <span class="blank-box">_______</span> for growth when viewed through a positive lens. By aligning our thoughts with this perspective, we navigate challenges with (d) <span class="blank-box">_______</span> and unlock our creative potential. By adopting this approach, you will attain a level of world-class (e) <span class="blank-box">_______</span>.
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
+    <div class="subj-answer-line">(a) ▸</div>
+    <div class="subj-answer-line">(b) ▸</div>
+    <div class="subj-answer-line">(c) ▸</div>
+    <div class="subj-answer-line">(d) ▸</div>
+    <div class="subj-answer-line" style="grid-column:1/-1">(e) ▸</div>
+  </div>
+  <details class="ans"><summary>27번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">(a) inevitable &nbsp;·&nbsp; (b) transformative &nbsp;·&nbsp; (c) opportunities &nbsp;·&nbsp; (d) resilience &nbsp;·&nbsp; (e) excellence</div>
+      <div class="ans-detail">
+        <b>각 빈칸 분석:</b><br>
+
+        <div class="step"><b>(a) inevitable — 피할 수 없는</b><br>
+        단서: "challenges and problems are ___; suffering is, however, optional"<br>
+        - however 대조 → optional의 반대<br>
+        - 본문 그대로: <b>inevitable</b>. (필연적인, 피할 수 없는)</div>
+
+        <div class="step"><b>(b) transformative — 변혁적인</b><br>
+        단서: "the ___ power of our perception"<br>
+        - 인식이 어떤 힘을 가지는가? 천국/지옥을 뒤집는 = 변혁적<br>
+        - 본문 그대로: <b>transformative</b>.</div>
+
+        <div class="step"><b>(c) opportunities — 기회</b><br>
+        단서: "Problems become ___ for growth when viewed through a positive lens"<br>
+        - 문제 + 긍정적 렌즈 = 무엇? 성장의 기회<br>
+        - 본문 그대로: <b>opportunities</b>.</div>
+
+        <div class="step"><b>(d) resilience — 회복력</b><br>
+        단서: "navigate challenges with ___"<br>
+        - 도전을 헤쳐 나가는 데 필요한 자질 = 회복력<br>
+        - 본문 그대로: <b>resilience</b>.</div>
+
+        <div class="step"><b>(e) excellence — 탁월함</b><br>
+        단서: "attain a level of world-class ___"<br>
+        - world-class와 결합하는 명사 = 탁월함<br>
+        - 본문 그대로: <b>excellence</b>.</div>
+        <br>
+
+        <b>채점 기준 (5.0점 만점):</b><br>
+        - 각 빈칸 정답 1개당 <b>1.0점</b> × 5 = 5.0점<br>
+        - 철자 오류 시 0점 처리 (한 단어 정확 작성 필수)<br>
+        - 본문에서 찾은 형태 그대로 작성 (활용형 변경 불가)<br><br>
+
+        <b>핵심 학습 포인트:</b><br>
+        - 본문 핵심 어휘 5개는 글의 <b>논리 사슬</b>을 구성: inevitable → transformative perception → opportunities → resilience → excellence<br>
+        - 빈칸 채우기는 단어 암기 + 문맥 추론의 결합<br>
+        - 본문 정독 + 핵심 어휘 암기가 5점 확보의 직접 경로
+      </div>
+    </div>
+  </details>
+</article>
+
+
+<!-- Q20 영어 속담 매칭 -->
+<article class="q-card" data-type="app">
+  <div class="q-meta">
+    <span class="q-num">28</span>
+    <span class="type-tag app">서답</span>
+    <span class="q-focus">영어 속담 매칭 — 신목고 시그니처</span>
+    <span class="q-pts">2.6점</span>
+  </div>
+  <div class="q-prompt"><b>28.</b> 다음 글의 주제와 가장 가까운 영어 속담은? [2.6점]</div>
+  <div class="q-passage">
+    [본문 전체 — 인식의 변혁적 힘]
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span>Where there's a will, there's a way.</span>
+    <span class="c"><span class="num">②</span>There's no use crying over spilled milk.</span>
+    <span class="c"><span class="num">③</span>It's not what happens to you, but how you react to it that matters.</span>
+    <span class="c"><span class="num">④</span>Look before you leap.</span>
+    <span class="c"><span class="num">⑤</span>The early bird catches the worm.</span>
+  </div>
+  <details class="ans"><summary>28번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main">③ <span class="en">It's not what happens to you, but how you react to it that matters.</span><br>(중요한 것은 너에게 무슨 일이 일어나는가가 아니라, 그것에 어떻게 반응하는가이다.)</div>
+      <div class="ans-detail">
+        <b>본문 핵심 메시지:</b><br>
+        - 도전·문제(what happens) = inevitable, 피할 수 없음.<br>
+        - 고통 vs 성장(how you react) = optional, 인식·반응 방식이 결정.<br>
+        - Milton/Shakespeare 인용: 마음·생각이 의미를 결정.<br><br>
+
+        <b>속담별 검증:</b><br>
+        <div class="step"><b>① "Where there's a will, there's a way."</b> ✗ — 의지가 있으면 길이 있다. 강한 <b>의지·노력</b>을 강조하는 속담. 본문은 의지가 아닌 <b>인식·관점</b>을 강조 → 부분 유사하나 핵심 다름.</div>
+        <div class="step"><b>② "There's no use crying over spilled milk."</b> ✗ — 엎질러진 우유는 후회해도 소용없다. 과거 후회 무용 → 본문의 미래지향적 성장 메시지와 다름.</div>
+        <div class="step"><b>③ "It's not what happens to you, but how you react to it that matters." ✓ 정답</b> — '무슨 일이 일어나는가(상황)'와 '어떻게 반응하는가(인식·태도)'를 정확히 대비. 본문의 inevitable/optional 구조와 1:1 대응. Milton·Shakespeare 인용의 함의와 완벽 일치.</div>
+        <div class="step"><b>④ "Look before you leap."</b> ✗ — 행동 전에 신중히 살펴라. <b>신중함</b>이 핵심. 본문의 인식 전환 메시지와 무관.</div>
+        <div class="step"><b>⑤ "The early bird catches the worm."</b> ✗ — 일찍 일어난 새가 벌레 잡는다. <b>부지런함·선점</b>이 핵심. 본문 무관.</div>
+        <br>
+
+        <b>핵심 학습 포인트:</b><br>
+        - 속담 매칭은 본문의 <b>핵심 명제 구조</b>를 속담의 구조와 1:1 대응시켜야 함<br>
+        - 본문: <b>외부 사건 vs 내적 반응</b> 대비 → 속담 ③의 <b>"what happens vs how you react"</b> 구조와 동일<br>
+        - 표면적 단어 일치(will, leap)에 속지 말고 <b>의미 구조</b>로 판단<br><br>
+
+        <b>※ 빈출 자기계발·인식 관련 영어 속담·격언:</b><br>
+        <b>It's not what happens to you, but how you react to it that matters.</b> (Epictetus 류)<br>
+        <b>Attitude is everything.</b><br>
+        <b>The mind is everything; what you think you become.</b> (Buddha)<br>
+        <b>Pain is inevitable, suffering is optional.</b> (불교 격언, 본문 첫 문장과 직결!)
+      </div>
+    </div>
+  </details>
+</article>
+
+
+
+<!-- Q29 NEW 영작 - Problems become opportunities -->
+<article class="q-card" data-type="app">
+  <div class="q-meta">
+    <span class="q-num">29</span>
+    <span class="type-tag app">서답</span>
+    <span class="q-focus">영작 [조건] — 핵심 명제 문장</span>
+    <span class="q-pts">5.0점</span>
+  </div>
+  <div class="q-prompt"><b>29.</b> 다음 우리말과 일치하도록 [조건]에 맞게 영작하시오. [5.0점]</div>
+  <div class="subj-prompt-box">
+    <b>우리말:</b> 문제는 긍정적 렌즈로 바라볼 때 성장의 기회가 된다.
+  </div>
+  <div class="subj-condition">
+    <b>&lt; 조건 &gt;</b><br>
+    1. &lt;보기&gt;에 주어진 단어만 한 번씩 모두 사용하시오.<br>
+    2. 필요시 &lt;보기&gt;에 주어진 단어 중 동사의 형태를 어법에 맞게 변형하시오. (나머지는 형태 변형 없이 그대로 사용)<br>
+    3. 단어를 추가하거나 생략하지 마시오.
+  </div>
+  <div class="cond-box">
+    <div class="cond-title">&lt; 보기 &gt;</div>
+    <div class="bogi">through / growth / a / when / problems / lens / for / become / view / positive / opportunities</div>
+  </div>
+  <div class="subj-answer-line">▸ 답:</div>
+  <details class="ans"><summary>29번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main"><span class="en">Problems become opportunities for growth when viewed through a positive lens.</span></div>
+      <div class="ans-detail">
+        <b>영작 단계별 분석:</b><br>
+        <div class="step"><b>1단계 — 주어·동사 구성</b>: '문제는 ~이 된다' = Problems become (주어 복수 + 자동사 become). become은 보어를 취하는 자동사.</div>
+        <div class="step"><b>2단계 — 보어 구성</b>: '성장의 기회' = opportunities for growth (관용 collocation).</div>
+        <div class="step"><b>3단계 — 시간 부사절 (분사구문)</b>: '~ 바라볼 때' = when (they are) viewed through ~<br>
+        - 핵심: <b>view → viewed</b> 어법 변형 필요!<br>
+        - 주어 problems가 view의 <b>대상</b>(목적어) → 수동 분사 viewed.<br>
+        - 'when viewed' = when (they are) viewed (생략)</div>
+        <div class="step"><b>4단계 — 전치사구</b>: '긍정적 렌즈로' = through a positive lens.</div>
+        <div class="step"><b>5단계 — 통합</b>: Problems become / opportunities for growth / when viewed through a positive lens.</div>
+        <br>
+
+        <b>채점 기준 (5.0점 만점):</b><br>
+        <div class="step">- 보기 단어 모두 사용 (11개 정확) — <b>1.5점</b><br>
+        - <b>view → viewed</b> 수동 분사 변형 — <b>1.5점</b><br>
+        - 어순(S V O when V-ed prep N) — <b>1.0점</b><br>
+        - 관사 'a' 위치, 전치사 'for'·'through' 정확 — <b>1.0점</b></div>
+        <br>
+
+        <b>핵심 학습 포인트:</b><br>
+        - <b>when 분사구문</b>: 주어가 동작의 대상이면 V-ed(수동), 주체이면 V-ing(능동)<br>
+        - <b>opportunities for growth</b>: 자기계발 빈출 collocation<br>
+        - <b>through a positive lens</b>: '~의 관점으로 보다' 메타포 표현<br><br>
+
+        <b>※ 흔한 오답 함정:</b><br>
+        - <b>when viewing</b> ✗ → 능동분사 (problems가 view하는 게 아님)<br>
+        - <b>through positive lens</b> ✗ → 관사 'a' 누락
+      </div>
+    </div>
+  </details>
+</article>
+
+<!-- Q30 NEW 영작 - Shakespeare 인용 -->
+<article class="q-card" data-type="app">
+  <div class="q-meta">
+    <span class="q-num">30</span>
+    <span class="type-tag app">서답</span>
+    <span class="q-focus">영작 [조건] — Shakespeare 인용문</span>
+    <span class="q-pts">5.0점</span>
+  </div>
+  <div class="q-prompt"><b>30.</b> 다음 우리말과 일치하도록 [조건]에 맞게 영작하시오. [5.0점]</div>
+  <div class="subj-prompt-box">
+    <b>우리말:</b> 본래 좋거나 나쁜 것은 없으며, 다만 생각이 그렇게 만든다.
+  </div>
+  <div class="subj-condition">
+    <b>&lt; 조건 &gt;</b><br>
+    1. &lt;보기&gt;에 주어진 단어만 한 번씩 모두 사용하시오.<br>
+    2. 필요시 &lt;보기&gt;에 주어진 단어 중 동사의 형태를 어법에 맞게 변형하시오. (나머지는 형태 변형 없이 그대로 사용)<br>
+    3. 단어를 추가하거나 생략하지 마시오.
+  </div>
+  <div class="cond-box">
+    <div class="cond-title">&lt; 보기 &gt;</div>
+    <div class="bogi">thinking / so / either / good / be / bad / it / there / make / nothing / or / but</div>
+  </div>
+  <div class="subj-answer-line">▸ 답:</div>
+  <details class="ans"><summary>30번 정답 &amp; 해설 펼치기</summary>
+    <div class="ans-body">
+      <span class="ans-label">ANSWER · 정답</span>
+      <div class="ans-main"><span class="en">There is nothing either good or bad, but thinking makes it so.</span></div>
+      <div class="ans-detail">
+        <b>영작 단계별 분석:</b><br>
+        <div class="step"><b>1단계 — 유도부사 there 구문</b>: 'There is/are + 명사' = '~이 있다'<br>
+        - 보기 'be'는 주어 nothing(단수) → <b>is</b>로 변형 ✓</div>
+        <div class="step"><b>2단계 — 주어·형용사 구성</b>: 'nothing' (대명사, 단수 취급) + 'either good or bad' (형용사구, 명사 후치 수식)<br>
+        - either A or B: 'A 또는 B' (둘 중 하나) → 'either good or bad' (좋거나 나쁘거나)</div>
+        <div class="step"><b>3단계 — 등위접속사 but</b>: 'but'는 '~이지만, 다만' (역접). 두 절 연결.</div>
+        <div class="step"><b>4단계 — 동명사 주어</b>: 'thinking'(생각하는 것) — 동명사가 주어. 단수 취급.</div>
+        <div class="step"><b>5단계 — 동사 변형</b>: 보기 'make' → 주어 thinking(단수) → <b>makes</b>로 변형 ✓</div>
+        <div class="step"><b>6단계 — 통합</b>: There is nothing / either good or bad, / but thinking makes it so.</div>
+        <br>
+
+        <b>채점 기준 (5.0점 만점):</b><br>
+        <div class="step">- 보기 단어 모두 사용 (12개 정확) — <b>1.5점</b><br>
+        - <b>be → is</b> + <b>make → makes</b> 두 동사 변형 — <b>1.5점</b><br>
+        - 'either A or B' 어순 — <b>1.0점</b><br>
+        - 'but' 위치 + 콤마 + 'so' 위치 — <b>1.0점</b></div>
+        <br>
+
+        <b>핵심 학습 포인트:</b><br>
+        - <b>There is/are + N</b>: 주어가 N에 따라 동사 수일치 (nothing → is)<br>
+        - <b>either A or B</b> = 'A 또는 B' (상관접속사)<br>
+        - <b>동명사 주어</b>: V-ing가 주어이면 항상 단수 취급<br>
+        - <b>so</b>: '그렇게'(부사) — 앞에 언급된 상태를 받음<br><br>
+
+        <b>※ 출처:</b> Shakespeare, <em>Hamlet</em> Act 2, Scene 2 (햄릿이 말하는 인식의 힘에 대한 명대사)
+      </div>
+    </div>
+  </details>
+</article>
+
+
+<!-- 본문 한국어 해석 (학습 보조) -->
+<div class="passage-box" style="margin-top:60px;background:#FBFAF5">
+  <div class="label-bar">Korean Translation · 본문 한국어 해석</div>
+  <div class="pt-title">인식의 변혁적 힘</div>
+  <div class="pt-body" style="font-size:15px">
+    <p><b>❶</b> 인생이라는 복잡한 태피스트리에서 도전과 문제는 <b>피할 수 없다</b>; 그러나 그로 인한 <b>고통은 선택사항</b>이다.</p>
+    <p><b>❷</b> John Milton의 <em>Paradise Lost</em>에서 사탄이 "마음은 그 자체로 한 장소이며, 그 안에서 지옥을 천국으로, 천국을 지옥으로 만들 수 있다"라고 관찰한 지혜를 파악하는 것이 중요하다.</p>
+    <p><b>❸</b> 나의 아버지는 종종 William Shakespeare의 <em>Hamlet</em>에 나오는 통찰을 인용하시곤 했다: "본래 좋거나 나쁜 것은 없으며, 다만 생각이 그렇게 만든다."</p>
+    <p><b>❹</b> 이 시대를 초월한 인용구들은 우리 <b>인식</b>의 <b>변혁적 힘</b>을 강조한다.</p>
+    <p><b>❺</b> 문제는 <b>긍정적 렌즈</b>로 바라볼 때 <b>성장의 기회</b>가 된다.</p>
+    <p><b>❻</b> 우리의 생각을 이 관점에 맞춤으로써, 우리는 <b>회복력</b>으로 도전을 헤쳐 나갈 뿐만 아니라 창의적 잠재력을 풀어내며, 개인적·전문적으로 <b>권능 있는 개인</b>으로 진화한다.</p>
+    <p><b>❼</b> 이러한 접근법을 채택함으로써, 당신은 목표를 향해 진전할 뿐만 아니라 <b>세계적 수준의 탁월함</b>에 도달할 것이다.</p>
+    <p><b>❽</b> 여정에 헌신하고, 길에서 마주치는 퍼즐을 풀고, 당신의 <b>목적</b>이 의미 있고 영향력 있는 삶으로 펼쳐지는 것을 지켜보라.</p>
+  </div>
+</div>
+
+
+<!-- 인쇄 전용 풋터 -->
+<div class="print-footer">
+  대일고 2학년 영어I · NEED TO STUDY · 단일 지문 7유형 응용 문제집 (30문항 확장판)
+</div>
+
+</div><!-- /container -->
+
+<!-- FOOTER -->
+<footer style="background: linear-gradient(135deg, #0A1E3A 0%, #1F3557 100%); color: #FAF6EE; padding: 50px 0 40px; margin-top: 60px;">
+  <div style="max-width: 1080px; margin: 0 auto; padding: 0 36px; text-align: center;">
+    <div style="font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 800; letter-spacing: -0.01em; color: #E4C589; margin-bottom: 8px;">大 · 대일고 영어I 인식의 힘 응용 문제집</div>
+    <div style="font-size: 13.5px; color: #CBD5E1; font-style: italic; margin-bottom: 18px;">The Transformative Power of Perception · 7유형 응용 · 총 30문항</div>
+    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; font-size: 12px; color: #94A3B8; padding-top: 18px; border-top: 1px solid rgba(250,246,238,0.12);">
+      <span>대일고등학교 2학년 공통 영어I</span>
+      <span>·</span>
+      <span>2026학년도 1학기 응용</span>
+      <span>·</span>
+      <span>인식·자기계발 단일 지문 7유형 응용 (30문항 확장판)</span>
+      <span>·</span>
+      <span>NEED TO STUDY</span>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  // ────────────────────────────────────────────
+  // 유형 라벨 매핑 (인쇄 헤더용)
+  // ────────────────────────────────────────────
+  const TYPE_LABELS = {
+    all: '전체 30문항',
+    vocab: '어휘 (6문항)',
+    grammar: '어법 (4문항)',
+    cloze: '빈칸 (5문항)',
+    summary: '요약 (2문항)',
+    order: '글구조 (4문항)',
+    theme: '요지·제목 (4문항)',
+    app: '서답형 (5문항)'
+  };
+
+  // ────────────────────────────────────────────
+  // 1. 유형 필터링 (label 클릭 또는 인쇄 버튼)
+  // ────────────────────────────────────────────
+  function applyFilter(type) {
+    document.querySelectorAll('.nav-tab').forEach(t => {
+      t.classList.toggle('active', t.dataset.type === type);
+    });
+    document.querySelectorAll('.q-card').forEach(card => {
+      card.classList.toggle('hidden', !(type === 'all' || card.dataset.type === type));
+    });
+    document.querySelectorAll('.section-head[data-section-type]').forEach(sh => {
+      sh.classList.toggle('hidden', !(type === 'all' || sh.dataset.sectionType === type));
+    });
+    // 인쇄 헤더 라벨 갱신
+    const lbl = document.getElementById('printSectionLabel');
+    if (lbl) lbl.textContent = TYPE_LABELS[type] || '전체';
+  }
+
+  document.querySelectorAll('.nav-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const type = tab.dataset.type;
+      applyFilter(type);
+      const firstVisible = document.querySelector('.q-card:not(.hidden), .section-head:not(.hidden)[data-section-type]');
+      if (firstVisible && type !== 'all') {
+        const navHeight = document.querySelector('.type-nav-wrap').offsetHeight + (document.querySelector('.hub-back-bar')?.offsetHeight || 0);
+        const top = firstVisible.getBoundingClientRect().top + window.scrollY - navHeight - 20;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // ────────────────────────────────────────────
+  // 2. 인쇄 버튼 — 유형 필터 적용 후 인쇄 호출
+  // ────────────────────────────────────────────
+  document.querySelectorAll('.nav-print').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const type = btn.dataset.printType;
+      applyFilter(type);
+      setTimeout(() => { window.print(); }, 220);
+    });
+  });
+
+  // ────────────────────────────────────────────
+  // 3. 정답 모두 펼치기/접기 토글
+  // ────────────────────────────────────────────
+  let answersOpen = false;
+  const answerToggleBtn = document.getElementById('answerToggle');
+  if (answerToggleBtn) {
+    answerToggleBtn.addEventListener('click', () => {
+      answersOpen = !answersOpen;
+      document.querySelectorAll('details.ans').forEach(d => { d.open = answersOpen; });
+      answerToggleBtn.textContent = answersOpen ? '정답 모두 접기' : '정답 모두 펼치기';
+      answerToggleBtn.classList.toggle('active', answersOpen);
+    });
+  }
+
+  // 초기화 — 라디오 인풋 강제 체크 해제 (CSS 잔재 무력화)
+  document.querySelectorAll('.filter-radio').forEach(r => { r.checked = false; });
+  const allRadio = document.getElementById('f-all');
+  if (allRadio) allRadio.checked = true;
+  applyFilter('all');
+</script>
+
+</body>
+</html>
