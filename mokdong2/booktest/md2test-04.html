@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>지문 기반 유형별 문제 — Be a Smart Shopper (Lesson 4)</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+  :root {
+    --bg: #FAF7F2;
+    --paper: #FFFFFF;
+    --ink: #1A1815;
+    --ink2: #4A4642;
+    --muted: #8B8680;
+    --line: #E5DFD5;
+    --accent: #B8763D;
+    --t-grammar: #1F4E79;
+    --t-pronoun: #6B5BA0;
+    --t-reading: #2A8B7F;
+    --t-context: #8B4A6F;
+    --t-cloze:   #B8763D;
+    --t-vocab:   #D97A47;
+    --t-writing: #4A6B85;
+    --green: #4A8B5C;
+    --yellow: #C9A227;
+    --orange: #D97A47;
+    --red: #B53737;
+    --navy-950:#0A1E3A;
+    --navy-800:#1F3557;
+    --cream:#FAF6EE;
+    --gold:#C99B4E;
+    --gold-light:#E4C589;
+    --slate-300:#CBD5E1;
+    --slate-400:#94A3B8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { overflow-x: hidden; max-width: 100vw; }
+  *, *::before, *::after { box-sizing: border-box; }
+  img, svg, video, iframe { max-width: 100%; height: auto; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 36px 60px; }
+
+  /* HERO */
+  .hero-banner {
+    background:
+      radial-gradient(ellipse at 12% 20%, rgba(201,155,78,0.18), transparent 45%),
+      radial-gradient(ellipse at 88% 78%, rgba(184,118,61,0.16), transparent 50%),
+      linear-gradient(135deg, var(--navy-950) 0%, var(--navy-800) 100%);
+    color: var(--cream);
+    padding: 44px 0 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-banner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(250,246,238,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(250,246,238,0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; padding: 0 36px; font-family: 'Pretendard Variable', sans-serif; position: relative; z-index: 1; }
+  .brand-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 30px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 18px; color: var(--navy-950); }
+  .brand-text { font-size: 12px; letter-spacing: 0.1em; color: var(--cream); font-weight: 500; }
+  .brand-text .sub { color: var(--slate-400); font-size: 10.5px; margin-top: 2px; }
+  .home-btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); color: var(--navy-950); font-family: 'Pretendard Variable', sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 0.1em; border-radius: 999px; text-decoration: none; box-shadow: 0 4px 16px rgba(201,155,78,0.35); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .home-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(201,155,78,0.5); }
+  .home-btn svg { width: 13px; height: 13px; fill: var(--navy-950); }
+  .kicker { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-light); font-weight: 600; margin-bottom: 12px; font-family: 'JetBrains Mono', monospace; }
+  h1.title { font-family: 'Playfair Display', serif; font-weight: 800; font-size: clamp(28px, 4.5vw, 48px); line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 8px; }
+  h1.title em { font-style: italic; color: var(--gold-light); font-weight: 400; }
+  h1.title .kor { font-family: 'Pretendard Variable', sans-serif; font-weight: 800; letter-spacing: -0.02em; display: block; margin-top: 6px; font-size: clamp(16px, 2.4vw, 22px); color: var(--gold-light); }
+  .lede { color: rgba(250,246,238,0.85); font-size: 14px; line-height: 1.65; max-width: 720px; margin-top: 12px; font-family: 'Pretendard Variable', sans-serif; }
+  .meta-info { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .meta-tag { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid rgba(228,197,137,0.4); border-radius: 999px; font-size: 11.5px; color: var(--gold-light); font-family: 'Pretendard Variable', sans-serif; font-weight: 500; letter-spacing: 0.04em; }
+
+  /* TYPE NAV — sticky */
+  .type-nav-wrap { background: var(--navy-950); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(228,197,137,0.15); }
+  .type-nav { max-width: 1100px; margin: 0 auto; padding: 0 36px; display: flex; gap: 0; overflow-x: auto; scrollbar-width: thin; -webkit-overflow-scrolling: touch; }
+  .type-nav::-webkit-scrollbar { height: 4px; }
+  .type-nav::-webkit-scrollbar-thumb { background: rgba(228,197,137,0.3); border-radius: 2px; }
+  .nav-tab { background: transparent; border: none; color: var(--slate-400); padding: 14px 16px; cursor: pointer; font-family: 'Pretendard Variable', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; border-bottom: 3px solid transparent; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 7px; }
+  .nav-tab:hover { color: var(--gold-light); }
+  .nav-tab.active { color: var(--gold-light); border-bottom-color: var(--gold); }
+  .nav-tab .nav-count { font-family: 'JetBrains Mono', monospace; font-size: 10px; background: rgba(228,197,137,0.15); color: var(--gold-light); padding: 2px 6px; border-radius: 4px; font-weight: 700; }
+  .nav-tab.active .nav-count { background: var(--gold); color: var(--navy-950); }
+  .nav-color-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  .nav-print { background: transparent; border: none; color: var(--slate-400); padding: 14px 8px 14px 4px; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.18s ease; display: inline-flex; align-items: center; margin-right: 6px; border-left: 1px dotted rgba(228,197,137,0.18); }
+  .nav-print:hover { color: var(--gold-light); transform: translateY(-1px); }
+  .nav-print svg { width: 15px; height: 15px; fill: currentColor; }
+  .nav-print[data-print-type="all"] { border-left: none; }
+
+  .print-toolbar { background: linear-gradient(180deg, #FAF7F2 0%, #FFFFFF 100%); border-bottom: 1px solid var(--line); }
+  .print-toolbar-inner { max-width: 1100px; margin: 0 auto; padding: 12px 36px; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-family: 'Pretendard Variable', sans-serif; }
+  .pt-label { font-family: 'Playfair Display', serif; font-size: 11px; letter-spacing: 0.18em; color: var(--accent); font-weight: 800; text-transform: uppercase; }
+  .pt-btn { background: white; border: 1px solid var(--gold); color: var(--navy-950); padding: 6px 14px; font-family: 'Pretendard Variable', sans-serif; font-size: 12px; font-weight: 700; border-radius: 999px; cursor: pointer; transition: all 0.18s ease; }
+  .pt-btn:hover { background: var(--gold); color: white; }
+  .pt-btn.active { background: var(--navy-950); color: var(--gold-light); border-color: var(--navy-950); }
+  .pt-hint { font-size: 11.5px; color: var(--muted); font-weight: 500; line-height: 1.5; flex: 1; min-width: 200px; }
+  .pt-hint b { color: var(--ink); font-weight: 800; }
+  .pt-icon { width: 11px; height: 11px; fill: var(--accent); vertical-align: -1px; margin: 0 2px; }
+
+  /* @media print A4 (목동중 표준 인쇄 시스템) */
+  @media print {
+    @page { size: A4 portrait; margin: 11mm 13mm 13mm 13mm; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+    html, body { background: white !important; color: black !important; font-size: 10pt !important; line-height: 1.42 !important; max-width: 100% !important; overflow: visible !important; }
+    .hero-banner, .type-nav-wrap, .print-toolbar, .made-by, .home-btn, .nav-print { display: none !important; }
+    .hidden { display: none !important; }
+    .container { padding: 0 !important; max-width: 100% !important; margin: 0 !important; }
+    .print-header { display: block !important; text-align: center; font-family: 'Pretendard Variable', sans-serif; font-size: 9pt; color: #555; border-bottom: 0.5pt solid #999; padding-bottom: 1.5mm; margin-bottom: 3mm; font-weight: 600; letter-spacing: 0.05em; }
+    .print-header b { color: #000; }
+    .passage-box:not([open]) { display: none !important; }
+    .passage-box { margin: 0 0 4mm 0 !important; border: 0.6pt solid #888 !important; border-radius: 0 !important; background: white !important; }
+    .passage-box summary { display: none !important; }
+    .passage-text { padding: 3mm 4mm !important; font-size: 9.5pt !important; line-height: 1.55 !important; color: #000 !important; }
+    .passage-text p { margin-bottom: 2mm !important; }
+    .section-head { margin: 0 0 3mm 0 !important; padding: 2.5mm 0 1.5mm !important; background: white !important; border: none !important; border-bottom: 1.4pt solid black !important; page-break-after: avoid !important; break-after: avoid !important; page-break-inside: avoid !important; break-inside: avoid !important; }
+    .section-head .num-line { font-size: 7.5pt !important; color: #555 !important; margin: 0 0 0.5mm 0 !important; letter-spacing: 0.18em !important; }
+    .section-head h2 { font-size: 13pt !important; color: black !important; margin: 0 !important; line-height: 1.15 !important; }
+    .section-head h2 .kor { font-size: 10pt !important; color: #333 !important; margin-left: 6px !important; }
+    .section-head .desc { font-size: 8.5pt !important; color: #444 !important; margin: 1mm 0 0 0 !important; line-height: 1.45 !important; }
+    .section-head + .q-card { page-break-before: avoid !important; break-before: avoid !important; }
+    .q-card { page-break-inside: avoid !important; break-inside: avoid !important; margin: 0 0 3mm 0 !important; padding: 2.5mm 0 2mm !important; border: none !important; border-bottom: 0.4pt dotted #999 !important; background: white !important; box-shadow: none !important; }
+    .q-card:last-child { border-bottom: none !important; }
+    .q-meta { display: flex !important; flex-wrap: wrap !important; align-items: center !important; gap: 5px !important; margin-bottom: 2mm !important; font-size: 9pt !important; }
+    .q-num { font-family: 'Fraunces', 'Playfair Display', serif !important; font-size: 14pt !important; font-weight: 800 !important; color: black !important; margin-right: 3px !important; }
+    .type-tag, .var-pill { font-size: 7.5pt !important; padding: 1pt 5pt !important; border-radius: 2pt !important; font-weight: 700 !important; letter-spacing: 0 !important; }
+    .q-focus { font-size: 8.5pt !important; color: #333 !important; font-weight: 600 !important; }
+    .q-pts { font-size: 8.5pt !important; color: black !important; font-weight: 700 !important; margin-left: auto !important; }
+    .q-card p, .q-card div:not(.ans-body):not(.q-meta), .q-card ul, .q-card ol, .q-card li { font-size: 10pt !important; line-height: 1.42 !important; color: black !important; background: white !important; }
+    .q-card .q-passage { padding: 2mm 3mm !important; background: #fafafa !important; border: 0.4pt solid #ccc !important; margin: 1.5mm 0 !important; font-size: 9.5pt !important; line-height: 1.5 !important; }
+    .q-card ul.q-choices li, .q-card ol.q-choices li, .q-card .q-choices .c { padding: 0.5mm 0 !important; font-size: 9.5pt !important; line-height: 1.45 !important; }
+    .q-card table { font-size: 9pt !important; border-collapse: collapse !important; }
+    .q-card table th, .q-card table td { padding: 1mm 2mm !important; border: 0.3pt solid #999 !important; }
+    details.ans:not([open]) { display: none !important; }
+    details.ans { display: block !important; margin-top: 1.5mm !important; background: transparent !important; }
+    details.ans > summary { display: none !important; }
+    details.ans .ans-body { display: block !important; padding: 2mm 3mm !important; background: #f0eee6 !important; border: 0.4pt solid #999 !important; border-radius: 0 !important; color: black !important; font-size: 9pt !important; line-height: 1.45 !important; margin: 0 !important; }
+    details.ans .ans-body * { color: black !important; background: transparent !important; }
+    details.ans .ans-body .ans-main { font-size: 9.5pt !important; font-weight: 800 !important; margin-bottom: 1.5mm !important; }
+    details.ans .ans-body .opt-row { margin: 0.8mm 0 !important; padding: 1mm 2mm !important; border-radius: 0 !important; }
+    details.ans .ans-body .opt-row.good { border-left: 1.5pt solid #4A8B5C !important; background: #f5faf6 !important; }
+    details.ans .ans-body .opt-row.bad { border-left: 1.5pt solid #B53737 !important; background: #fdf6f6 !important; }
+    .type-tag.grammar { background: var(--t-grammar) !important; color: white !important; }
+    .type-tag.pronoun { background: var(--t-pronoun) !important; color: white !important; }
+    .type-tag.reading { background: var(--t-reading) !important; color: white !important; }
+    .type-tag.context { background: var(--t-context) !important; color: white !important; }
+    .type-tag.cloze   { background: var(--t-cloze) !important;   color: white !important; }
+    .type-tag.vocab   { background: var(--t-vocab) !important;   color: white !important; }
+    .type-tag.writing { background: var(--t-writing) !important; color: white !important; }
+    .var-pill { border: 0.3pt solid #999 !important; background: white !important; color: #333 !important; }
+    .print-footer { display: block !important; margin-top: 5mm; padding-top: 1.5mm; border-top: 0.4pt solid #999; text-align: center; font-family: 'Pretendard Variable', sans-serif; font-size: 8pt; color: #666; letter-spacing: 0.05em; }
+    .container > *:first-child { margin-top: 0 !important; }
+    .section-head:first-child { margin-top: 0 !important; }
+  }
+  .print-header, .print-footer { display: none; }
+
+
+  /* PASSAGE BOX (한줄해석) */
+  .passage-box { background: var(--paper); border: 1px solid var(--line); margin-top: 36px; border-radius: 4px; }
+  .passage-box summary { list-style: none; cursor: pointer; padding: 18px 26px; display: flex; align-items: center; justify-content: space-between; font-family: 'Pretendard Variable', sans-serif; font-weight: 800; font-size: 15px; color: var(--ink); background: linear-gradient(180deg, #FAF7F2 0%, #FFFFFF 100%); border-bottom: 1px solid transparent; border-radius: 4px; flex-wrap: wrap; gap: 8px; }
+  .passage-box[open] summary { border-bottom: 1px solid var(--line); border-radius: 4px 4px 0 0; }
+  .passage-box summary::-webkit-details-marker { display: none; }
+  .passage-box summary .toggle-mark { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); letter-spacing: 0.08em; font-weight: 700; }
+  .passage-box summary .toggle-mark::before { content: '＋ 펼치기'; }
+  .passage-box[open] summary .toggle-mark::before { content: '－ 접기'; }
+  .passage-text { padding: 22px 28px; }
+
+  /* 한줄해석 (line-trans) */
+  .pass-section { margin-bottom: 26px; padding-bottom: 18px; border-bottom: 1px dashed var(--line); }
+  .pass-section:last-child { border-bottom: none; padding-bottom: 0; }
+  .pass-section-title { font-family: 'Playfair Display', serif; font-weight: 800; font-size: 17px; color: var(--navy-950); margin-bottom: 12px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 10px; }
+  .pass-section-title .pass-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: var(--navy-950); color: var(--gold-light); padding: 3px 8px; border-radius: 3px; letter-spacing: 0.1em; font-weight: 700; }
+  .line-trans { margin-bottom: 12px; }
+  .line-trans:last-child { margin-bottom: 0; }
+  .line-trans .en { font-family: 'Inter', sans-serif; color: var(--ink); font-size: 14.5px; line-height: 1.65; margin-bottom: 4px; font-weight: 500; word-break: break-word; overflow-wrap: anywhere; }
+  .line-trans .en .sn { display: inline-block; min-width: 22px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); font-weight: 700; margin-right: 6px; vertical-align: middle; }
+  .line-trans .ko { font-family: 'Pretendard Variable', sans-serif; color: var(--ink2); font-size: 13.5px; line-height: 1.7; padding: 4px 0 4px 14px; border-left: 2px solid var(--gold-light); margin-left: 28px; word-break: break-word; overflow-wrap: anywhere; }
+  .line-trans .speaker { font-family: 'Pretendard Variable', sans-serif; font-weight: 800; color: var(--navy-950); }
+
+  /* SECTION HEAD */
+  .section-head { margin: 50px 0 22px; padding: 18px 22px; background: white; border: 1px solid var(--line); border-left: 5px solid; border-radius: 3px; }
+  .section-head[data-section-type="grammar"]     { border-left-color: var(--t-grammar); }
+  .section-head[data-section-type="pronoun"]     { border-left-color: var(--t-pronoun); }
+  .section-head[data-section-type="reading"]     { border-left-color: var(--t-reading); }
+  .section-head[data-section-type="context"]     { border-left-color: var(--t-context); }
+  .section-head[data-section-type="cloze"]       { border-left-color: var(--t-cloze); }
+  .section-head[data-section-type="vocab"]       { border-left-color: var(--t-vocab); }
+  .section-head[data-section-type="writing"]     { border-left-color: var(--t-writing); }
+  .section-head .num-line { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.18em; margin-bottom: 6px; font-weight: 700; }
+  .section-head h2 { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 5px; }
+  .section-head h2 .kor { font-family: 'Pretendard Variable', sans-serif; font-weight: 800; font-size: 14px; color: var(--ink2); margin-left: 10px; letter-spacing: -0.01em; }
+  .section-head .desc { font-size: 12.5px; color: var(--muted); line-height: 1.6; margin-top: 4px; }
+
+  /* QUESTION CARD */
+  .q-card { background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--t-grammar); margin-bottom: 14px; padding: 18px 22px; transition: opacity 0.2s ease; border-radius: 3px; }
+  .q-card[data-type="pronoun"]  { border-left-color: var(--t-pronoun); }
+  .q-card[data-type="reading"]  { border-left-color: var(--t-reading); }
+  .q-card[data-type="context"]  { border-left-color: var(--t-context); }
+  .q-card[data-type="cloze"]    { border-left-color: var(--t-cloze); }
+  .q-card[data-type="vocab"]    { border-left-color: var(--t-vocab); }
+  .q-card[data-type="writing"]  { border-left-color: var(--t-writing); }
+  .q-card.hidden, .section-head.hidden { display: none; }
+  .q-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+  .q-num { font-family: 'Fraunces', serif; font-weight: 900; font-size: 22px; color: var(--navy-950); letter-spacing: -0.02em; min-width: 28px; }
+  .type-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 3px 9px; border-radius: 3px; letter-spacing: 0.1em; font-weight: 700; color: white; }
+  .type-tag.grammar { background: var(--t-grammar); }
+  .type-tag.pronoun { background: var(--t-pronoun); }
+  .type-tag.reading { background: var(--t-reading); }
+  .type-tag.context { background: var(--t-context); }
+  .type-tag.cloze   { background: var(--t-cloze); }
+  .type-tag.vocab   { background: var(--t-vocab); }
+  .type-tag.writing { background: var(--t-writing); }
+  .var-pill { font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; font-weight: 700; }
+  .var-light { background: #ECF7EE; color: #2D6E3F; border: 1px solid #B8DBC1; }
+  .var-mod   { background: #FFF8E0; color: #7A5F0A; border: 1px solid #E8D9A0; }
+  .var-major { background: #FFEDD8; color: #A04A0E; border: 1px solid #F0CFAA; }
+  .var-new   { background: #FCE0E0; color: #8E1A1A; border: 1px solid #E8B8B8; }
+  .q-focus { font-family: 'Pretendard Variable', sans-serif; font-size: 11.5px; color: var(--muted); font-weight: 600; letter-spacing: -0.01em; }
+  .q-pts { margin-left: auto; font-family: 'Fraunces', serif; font-weight: 800; font-size: 13px; color: var(--accent); }
+
+  .q-prompt { font-family: 'Pretendard Variable', sans-serif; font-weight: 700; font-size: 14.5px; color: var(--ink); line-height: 1.55; margin-bottom: 10px; word-break: break-word; overflow-wrap: anywhere; }
+  .q-prompt b { color: var(--navy-950); margin-right: 4px; }
+  .q-passage { background: #FAF7F2; border-left: 3px solid var(--gold-light); padding: 12px 16px; font-family: 'Inter', sans-serif; font-size: 13.5px; line-height: 1.75; color: var(--ink2); margin-bottom: 12px; word-break: break-word; overflow-wrap: anywhere; }
+  .q-passage b { color: var(--navy-950); font-weight: 700; }
+  .q-passage u { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 2px; }
+  .q-blank { display: inline-block; min-width: 60px; padding: 0 8px; border-bottom: 1.5px solid var(--accent); color: var(--accent); font-weight: 700; }
+  .q-choices { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+  .q-choices.horz5 { flex-direction: row; gap: 8px 18px; }
+  .c { font-family: 'Pretendard Variable', sans-serif; font-size: 13px; line-height: 1.6; color: var(--ink2); display: inline-flex; align-items: flex-start; gap: 6px; word-break: break-word; overflow-wrap: anywhere; }
+  .c .num { font-family: 'Fraunces', serif; font-weight: 700; color: var(--navy-950); font-size: 14px; flex-shrink: 0; }
+
+  /* ANS PANEL */
+  details.ans { background: var(--navy-950); color: var(--cream); border-radius: 4px; overflow: hidden; margin-top: 10px; }
+  details.ans summary { list-style: none; cursor: pointer; padding: 12px 18px; font-family: 'Pretendard Variable', sans-serif; font-weight: 700; font-size: 12.5px; color: var(--gold-light); display: flex; align-items: center; justify-content: space-between; word-break: break-word; overflow-wrap: anywhere; }
+  details.ans summary::-webkit-details-marker { display: none; }
+  details.ans summary::after { content: '＋'; font-family: 'JetBrains Mono', monospace; color: var(--gold); font-weight: 700; }
+  details.ans[open] summary::after { content: '－'; }
+  .ans-body { padding: 4px 20px 18px; color: #E1D9C8; font-size: 12.5px; line-height: 1.7; }
+  .ans-body .ans-main { font-size: 13.5px; font-weight: 700; color: var(--gold-light); margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed rgba(228,197,137,0.3); word-break: break-word; overflow-wrap: anywhere; }
+  .ans-body .ans-detail { word-break: break-word; overflow-wrap: anywhere; }
+  .ans-body em { color: var(--gold-light); font-style: italic; font-family: 'Fraunces', serif; }
+  .ans-body b { color: var(--gold-light); font-weight: 700; }
+
+  /* OPT-ANALYSIS */
+  .opt-analysis { margin-top: 12px; padding-top: 10px; border-top: 1px dashed rgba(228,197,137,0.25); }
+  .opt-analysis-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 0.14em; font-weight: 700; margin-bottom: 8px; }
+  .opt-row { padding: 8px 12px; margin-bottom: 5px; border-radius: 3px; background: rgba(255,255,255,0.04); border-left: 3px solid rgba(255,255,255,0.1); display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap; }
+  .opt-row.good { border-left-color: #4A8B5C; background: rgba(74,139,92,0.1); }
+  .opt-row.bad  { border-left-color: #B53737; background: rgba(181,55,55,0.08); }
+  .opt-num { font-family: 'Fraunces', serif; font-weight: 700; color: var(--gold-light); font-size: 13px; min-width: 18px; flex-shrink: 0; }
+  .opt-mid { flex: 1; min-width: 200px; }
+  .opt-en { font-family: 'Inter', sans-serif; color: #E1D9C8; font-size: 12px; display: block; margin-bottom: 2px; word-break: break-word; overflow-wrap: anywhere; }
+  .opt-ko { font-family: 'Pretendard Variable', sans-serif; color: rgba(225,217,200,0.75); font-size: 11.5px; display: block; word-break: break-word; overflow-wrap: anywhere; }
+  .opt-mark { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13px; flex-shrink: 0; }
+  .opt-row.good .opt-mark { color: #7BC891; }
+  .opt-row.bad .opt-mark  { color: #E89595; }
+  .opt-reason { width: 100%; font-family: 'Pretendard Variable', sans-serif; font-size: 11.5px; color: rgba(225,217,200,0.85); padding-top: 4px; padding-left: 28px; border-top: 1px dotted rgba(255,255,255,0.08); margin-top: 4px; line-height: 1.55; }
+
+  /* WRITING (배열영작) — 표준 word-bank 형식 */
+  .word-bank { background: white; border: 1px solid var(--line); border-left: 3px solid var(--accent); padding: 14px 18px; border-radius: 3px; margin-bottom: 10px; font-family: 'Pretendard Variable', sans-serif; font-size: 13.5px; line-height: 1.7; color: var(--ink); }
+  .word-bank b { color: var(--navy-950); font-weight: 700; }
+  .answer-line { font-family: 'Inter', sans-serif; font-size: 14px; padding: 14px 0; margin-bottom: 12px; color: var(--ink); letter-spacing: 0.02em; }
+  .answer-line .underline { display: inline-block; border-bottom: 1.5px solid var(--ink); height: 22px; vertical-align: middle; }
+
+  /* T/F TABLE */
+  .compare-table { display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 12px; border-collapse: collapse; }
+  .compare-table thead, .compare-table tbody { display: table; width: 100%; table-layout: auto; }
+  .compare-table th, .compare-table td { font-family: 'Pretendard Variable', sans-serif; font-size: 12.5px; padding: 9px 12px; border: 1px solid var(--line); text-align: left; line-height: 1.55; word-break: break-word; overflow-wrap: anywhere; }
+  .compare-table th { background: #FAF7F2; font-weight: 700; color: var(--navy-950); letter-spacing: -0.01em; }
+  .compare-table .tf-mark { text-align: center; font-family: 'Fraunces', serif; font-weight: 800; min-width: 38px; }
+  .compare-table .tf-mark.t { color: var(--green); }
+  .compare-table .tf-mark.f { color: var(--red); }
+
+  /* FLOW CHART */
+  .flow-chart { display: flex; flex-direction: column; gap: 10px; padding: 14px 16px; background: #FAF7F2; border: 1px solid var(--line); border-radius: 3px; margin-bottom: 12px; }
+  .flow-step { background: white; border: 1px solid var(--line); padding: 10px 14px; border-radius: 3px; font-family: 'Pretendard Variable', sans-serif; font-size: 12.5px; line-height: 1.55; word-break: break-word; overflow-wrap: anywhere; }
+  .flow-step b { color: var(--navy-950); }
+  .flow-arrow { text-align: center; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; }
+  .flow-blank { display: inline-block; min-width: 70px; padding: 0 6px; border-bottom: 1.5px solid var(--accent); color: var(--accent); font-weight: 700; text-align: center; }
+
+  /* CLOZE CLUSTER */
+  .cluster-block { background: white; border: 1px solid var(--line); border-radius: 3px; padding: 14px 16px; margin-bottom: 10px; }
+  .cluster-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.1em; font-weight: 700; margin-bottom: 6px; }
+  .cluster-text { font-family: 'Inter', sans-serif; font-size: 13.5px; line-height: 1.75; color: var(--ink2); word-break: break-word; overflow-wrap: anywhere; }
+
+  /* FOOTER */
+  .footer { border-top: 1px solid var(--line); margin-top: 60px; padding: 24px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.08em; }
+  .made-by { text-align: center; padding: 28px 0 36px; background: var(--navy-950); margin: 60px -40px 0; color: var(--gold-light); font-family: 'Pretendard Variable', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.1em; }
+  .made-by .brand-line { display: inline-flex; align-items: center; gap: 8px; }
+  .made-by .brand-mini { width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); display: inline-flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 12px; color: var(--navy-950); }
+  .made-by .credit { display: block; margin-top: 8px; font-size: 11px; color: rgba(228,197,137,0.6); letter-spacing: 0.12em; }
+
+  /* KO-TRANS BOX (한줄해석 전용) */
+  .ko-trans-box { margin-top: 14px; border-color: var(--gold-light); }
+  .ko-trans-box summary { background: linear-gradient(180deg, rgba(228,197,137,0.08) 0%, #FFFFFF 100%); }
+  .ko-trans-box summary span:first-child { color: var(--accent); }
+  .ko-trans-prose { font-family: 'Pretendard Variable', sans-serif; line-height: 1.85; font-size: 14.5px; color: var(--ink2); padding: 22px 28px; word-break: break-word; overflow-wrap: anywhere; }
+  .ko-trans-prose p { margin-bottom: 12px; }
+  .ko-trans-prose p:last-child { margin-bottom: 0; }
+  .ko-trans-prose b { color: var(--navy-950); }
+  .ko-trans-prose i { font-style: italic; color: var(--accent); font-weight: 600; }
+
+
+
+  details.ans summary { word-break: break-word; overflow-wrap: anywhere; }
+  .q-head, .q-meta, .q-choices, .brand-row { flex-wrap: wrap; }
+
+  /* PRINT (인쇄) */
+  @media print {
+    body { background: white; font-size: 12px; }
+    .hero-banner { background: white !important; color: var(--navy-950) !important; padding: 18px 0; border-bottom: 3px solid var(--navy-950); }
+    .hero-banner::before { display: none; }
+    .hero-banner .kicker, .hero-banner .lede, .hero-banner .meta-info, .hero-banner .brand-text, .hero-banner .brand-text .sub { color: var(--navy-950) !important; }
+    h1.title { color: var(--navy-950) !important; }
+    h1.title em, h1.title .kor { color: var(--accent) !important; }
+    .meta-tag { color: var(--ink2) !important; border-color: var(--line) !important; }
+    .type-nav-wrap { display: none !important; }
+    .passage-box { break-inside: avoid; }
+    .q-card { box-shadow: none; break-inside: avoid; margin-bottom: 14px; border: 1px solid var(--line); }
+    details.ans { background: white !important; color: var(--navy-950) !important; border: 1px solid var(--line); }
+    details.ans summary { color: var(--navy-950) !important; }
+    details.ans:not([open]) .ans-body { display: block !important; }
+    .ans-body { color: var(--ink2) !important; }
+    .ans-body .ans-main, .ans-body b, .ans-body em { color: var(--navy-950) !important; }
+    .ans-body .ans-detail { color: var(--ink2) !important; }
+    details.ans summary::after { display: none; }
+    .opt-row { background: white !important; }
+    .opt-row.good { background: #F4FBF6 !important; border-left-color: var(--green) !important; }
+    .opt-row.bad { background: #FCF5F5 !important; border-left-color: var(--red) !important; }
+    .opt-en, .opt-ko, .opt-reason { color: var(--ink2) !important; }
+    .opt-row.good .opt-mark { color: var(--green) !important; }
+    .opt-row.bad .opt-mark { color: var(--red) !important; }
+    .opt-num { color: var(--navy-950) !important; }
+    .made-by { background: white !important; color: var(--ink2) !important; border-top: 1px solid var(--line); margin: 30px 0 0 !important; }
+    .made-by .credit { color: var(--muted) !important; }
+  }
+
+  @media (max-width: 760px) {
+    .container { padding: 0 18px 50px; }
+    .hero-inner { padding: 0 18px; }
+    .type-nav { padding: 0 18px; }
+    .passage-text { padding: 16px 16px; }
+    .pass-section-title { font-size: 15px; }
+    .line-trans .en { font-size: 13.5px; }
+    .line-trans .ko { font-size: 12.5px; margin-left: 16px; }
+    .section-head { padding: 14px 16px; }
+    .section-head h2 { font-size: 20px; }
+    .q-card { padding: 14px 14px; }
+    .q-passage { padding: 10px 12px; font-size: 13px; line-height: 1.65; }
+    .q-prompt { font-size: 13.5px; line-height: 1.55; }
+    .c { font-size: 12.5px; line-height: 1.55; }
+    .q-choices.horz5 { gap: 6px 12px; }
+    .made-by { margin: 50px -18px 0; }
+    .home-btn { padding: 7px 12px; font-size: 11px; }
+    .nav-tab { padding: 12px 12px; font-size: 12px; }
+  }
+
+
+/* ══ 펜 필기 모드 v1.0 ══ */
+#penToolbar{position:fixed;bottom:20px;right:20px;z-index:10000;display:flex;flex-direction:row;gap:8px;background:rgba(255,255,255,0.96);padding:8px;border-radius:30px;box-shadow:0 4px 20px rgba(0,0,0,0.18);backdrop-filter:blur(10px);align-items:center;}
+#penToolbar .pen-btn{width:42px;height:42px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-btn:hover{background:#e0e0e0;}
+#penToolbar .pen-btn.active{background:#2E75B6;color:white;}
+#penToolbar .pen-main{background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;font-size:20px;}
+#penToolbar .pen-main.active{background:linear-gradient(135deg,#dc2626,#ef4444);transform:scale(1.05);}
+#penToolbar .pen-tools{display:none;flex-direction:row;gap:6px;align-items:center;padding-left:8px;border-left:1px solid #ddd;margin-left:4px;}
+#penToolbar .pen-tools.show{display:flex;}
+#penToolbar .pen-color{width:30px;height:30px;border:2px solid white;border-radius:50%;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.2);transition:transform 0.15s;padding:0;}
+#penToolbar .pen-color:hover{transform:scale(1.1);}
+#penToolbar .pen-color.selected{border:2px solid #333;transform:scale(1.18);box-shadow:0 2px 6px rgba(0,0,0,0.3);}
+#penToolbar .pen-width{width:34px;height:34px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-width:hover{background:#e0e0e0;}
+#penToolbar .pen-width span{background:#333;border-radius:50%;display:inline-block;}
+#penToolbar .pen-width.selected{background:#1F3864;}
+#penToolbar .pen-width.selected span{background:white !important;}
+#penLayer{position:absolute;top:0;left:0;pointer-events:none;z-index:998;overflow:visible;}
+#penLayer.active{pointer-events:auto;touch-action:none;cursor:crosshair;}
+@media print{#penToolbar{display:none !important;}#penLayer{display:none !important;}}
+@media (max-width:600px){
+  #penToolbar{bottom:10px;right:10px;padding:6px;gap:4px;}
+  #penToolbar .pen-btn,#penToolbar .pen-width{width:38px;height:38px;}
+  #penToolbar .pen-color{width:26px;height:26px;}
+}
+</style>
+</head>
+<body>
+
+<!-- =============== HERO =============== -->
+<section class="hero-banner">
+  <div class="hero-inner">
+    <div class="brand-row">
+      <div class="brand">
+        <div class="brand-mark">목</div>
+        <div class="brand-text">
+          목동중학교 2학년 영어
+          <div class="sub">LESSON 4 · BE A SMART SHOPPER</div>
+        </div>
+      </div>
+      <a href="https://0505.co.kr" target="_blank" rel="noopener" class="home-btn">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2.5L2 11h3v9h5v-6h4v6h5v-9h3z"/>
+        </svg>
+        HOME
+      </a>
+    </div>
+
+    <div class="kicker">PASSAGE-BASED PRACTICE · L4</div>
+    <h1 class="title">
+      Be a <em>Smart</em> Shopper
+      <span class="kor">7유형 40문항 · 132점</span>
+    </h1>
+    <p class="lede">목동중 2학년 4과 본문 「Be a Smart Shopper」 — 마케팅 전략 3가지(Hunger / Viral / Anchoring)를 다룬 지문에서 어법·대명사·독해·문맥·빈칸·어휘·서술형 7유형 40문항을 추출했습니다. 유형별 풀이로 어법·어휘 핵심을 점검하세요.</p>
+
+    <div class="meta-info">
+      <span class="meta-tag">📘 L4 본문 (35문장)</span>
+      <span class="meta-tag">🧮 7유형 · 40문항</span>
+      <span class="meta-tag">🎯 총 132점 (연습용)</span>
+      <span class="meta-tag">🟢 미세 + 🟡 소폭 + 🟠 대폭 변형</span>
+    </div>
+  </div>
+</section>
+
+<!-- =============== STICKY NAV =============== -->
+<div class="type-nav-wrap">
+  <nav class="type-nav" id="typeNav">
+    <button class="nav-tab active" data-type="all">전체 <span class="nav-count">40</span></button>
+    <button class="nav-print" data-print-type="all" title="전체 인쇄" aria-label="전체 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+    <button class="nav-tab" data-type="grammar"><span class="nav-color-dot" style="background:var(--t-grammar)"></span>어법 <span class="nav-count">12</span></button>
+    <button class="nav-print" data-print-type="grammar" title="어법 유형 인쇄" aria-label="어법 유형 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+    <button class="nav-tab" data-type="pronoun"><span class="nav-color-dot" style="background:var(--t-pronoun)"></span>대명사 <span class="nav-count">4</span></button>
+    <button class="nav-print" data-print-type="pronoun" title="대명사 유형 인쇄" aria-label="대명사 유형 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+    <button class="nav-tab" data-type="reading"><span class="nav-color-dot" style="background:var(--t-reading)"></span>독해 <span class="nav-count">3</span></button>
+    <button class="nav-print" data-print-type="reading" title="독해 유형 인쇄" aria-label="독해 유형 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+    <button class="nav-tab" data-type="context"><span class="nav-color-dot" style="background:var(--t-context)"></span>문맥 <span class="nav-count">4</span></button>
+    <button class="nav-print" data-print-type="context" title="문맥 유형 인쇄" aria-label="문맥 유형 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+    <button class="nav-tab" data-type="cloze"><span class="nav-color-dot" style="background:var(--t-cloze)"></span>빈칸 <span class="nav-count">7</span></button>
+    <button class="nav-print" data-print-type="cloze" title="빈칸 유형 인쇄" aria-label="빈칸 유형 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+    <button class="nav-tab" data-type="vocab"><span class="nav-color-dot" style="background:var(--t-vocab)"></span>어휘 <span class="nav-count">8</span></button>
+    <button class="nav-print" data-print-type="vocab" title="어휘 유형 인쇄" aria-label="어휘 유형 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+    <button class="nav-tab" data-type="writing"><span class="nav-color-dot" style="background:var(--t-writing)"></span>서술형 <span class="nav-count">2</span></button>
+    <button class="nav-print" data-print-type="writing" title="서술형 유형 인쇄" aria-label="서술형 유형 인쇄"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></button>
+  </nav>
+</div>
+
+<!-- PRINT TOOLBAR -->
+<div class="print-toolbar">
+  <div class="print-toolbar-inner">
+    <span class="pt-label">📄 인쇄 옵션</span>
+    <button class="pt-btn" id="answerToggle" type="button">정답 모두 펼치기</button>
+    <span class="pt-hint">→ 위 sticky nav의 <svg viewBox="0 0 24 24" class="pt-icon"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg> 인쇄 버튼을 누르면 <b>해당 유형만</b> A4로 인쇄됩니다. 정답을 빼려면 <b>'정답 모두 접기'</b>를 먼저 누르세요.</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- 인쇄 전용 헤더 -->
+<div class="print-header">
+  <b>목동서로영어학원</b> · 목동중 2학년 — Lesson 4 「Be a Smart Shopper」 유형문제집 · <span id="printSectionLabel">전체</span> · 0505.co.kr
+</div>
+
+<!-- =============== ⓐ 어법 GRAMMAR (12문항) =============== -->
+<div class="section-head" data-section-type="grammar">
+  <div class="num-line">SECTION A · 어법 · GRAMMAR · 12 ITEMS</div>
+  <h2>어법 <span class="kor">관계대명사·동명사 주어·5형식·if 직설법·진행형 종합</span></h2>
+  <p class="desc">본문의 핵심 어법을 12개 문항으로 분해. 미세 변형(본문 그대로) → 소폭 변형(응용) → 대폭 변형(5개 보기 동시 검증) 순.</p>
+</div>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">1</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">관계대명사 which (주격)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>1.</b> 다음 빈칸에 들어갈 말로 어법상 알맞은 것을 모두 고르면?</div>
+  <div class="q-passage">There are various marketing strategies <span class="q-blank">______</span> influence your decisions.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>who</span><span class="c"><span class="num">②</span>which</span><span class="c"><span class="num">③</span>that</span><span class="c"><span class="num">④</span>whose</span><span class="c"><span class="num">⑤</span>where</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ②, ③ — 사물 선행사 + 주격 관계대명사: which 또는 that</div>
+  <div class="ans-detail"><b>marketing strategies</b>(사물)가 선행사이고 빈칸 뒤에 동사 <b>influence</b>가 오므로 <b>주격 관계대명사</b>가 필요. 사물 선행사의 주격은 <b>which</b> 또는 <b>that</b> 둘 다 가능. ① who(사람), ④ whose(소유격), ⑤ where(장소 부사)는 부적합.</div>
+  <div class="opt-analysis">
+    <div class="opt-analysis-title">▼ 보기별 분석</div>
+    <div class="opt-row bad"><span class="opt-num">①</span><div class="opt-mid"><span class="opt-en">who</span><span class="opt-ko">사람 선행사 전용</span></div><span class="opt-mark">✗</span><div class="opt-reason">선행사가 사물(strategies)이므로 부적합</div></div>
+    <div class="opt-row good"><span class="opt-num">②</span><div class="opt-mid"><span class="opt-en">which</span><span class="opt-ko">사물 주격 관계대명사</span></div><span class="opt-mark">✓</span><div class="opt-reason">사물 선행사 + 주격 자리 정확히 부합</div></div>
+    <div class="opt-row good"><span class="opt-num">③</span><div class="opt-mid"><span class="opt-en">that</span><span class="opt-ko">사람·사물 공용 주격</span></div><span class="opt-mark">✓</span><div class="opt-reason">that은 which 대신 모든 자리에서 사용 가능</div></div>
+    <div class="opt-row bad"><span class="opt-num">④</span><div class="opt-mid"><span class="opt-en">whose</span><span class="opt-ko">소유격 관계대명사</span></div><span class="opt-mark">✗</span><div class="opt-reason">뒤에 명사가 와야 하지만 동사 influence가 옴</div></div>
+    <div class="opt-row bad"><span class="opt-num">⑤</span><div class="opt-mid"><span class="opt-en">where</span><span class="opt-ko">장소 관계부사</span></div><span class="opt-mark">✗</span><div class="opt-reason">선행사가 장소가 아니고 뒤가 완전한 절도 아님</div></div>
+  </div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">2</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">동명사 주어 (단수 동사)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>2.</b> 어법상 알맞은 것을 고르시오.</div>
+  <div class="q-passage">Learning about them <span class="q-blank">______</span> you a smarter shopper.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>make</span><span class="c"><span class="num">②</span>makes</span><span class="c"><span class="num">③</span>making</span><span class="c"><span class="num">④</span>to make</span><span class="c"><span class="num">⑤</span>will make</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ⑤ will make — 본문 그대로 미래시제</div>
+  <div class="ans-detail"><b>Learning about them</b>이 동명사 주어(단수 취급). 본문은 미래의 결과를 표현하므로 <b>will make</b>. ① make는 복수형이라 단수 주어와 불일치, ② makes는 현재시제라 본문과 다름, ③ making·④ to make는 동사 자리에 올 수 없음.</div>
+  <div class="opt-analysis">
+    <div class="opt-analysis-title">▼ 보기별 분석</div>
+    <div class="opt-row bad"><span class="opt-num">①</span><div class="opt-mid"><span class="opt-en">make</span><span class="opt-ko">동사원형/복수형</span></div><span class="opt-mark">✗</span><div class="opt-reason">동명사 주어는 단수 취급 → make 부적합</div></div>
+    <div class="opt-row bad"><span class="opt-num">②</span><div class="opt-mid"><span class="opt-en">makes</span><span class="opt-ko">3인칭 단수 현재</span></div><span class="opt-mark">✗</span><div class="opt-reason">본문은 미래의 결과를 말하므로 will make</div></div>
+    <div class="opt-row bad"><span class="opt-num">③</span><div class="opt-mid"><span class="opt-en">making</span><span class="opt-ko">동명사/현재분사</span></div><span class="opt-mark">✗</span><div class="opt-reason">문장의 본동사 자리에 단독으로 올 수 없음</div></div>
+    <div class="opt-row bad"><span class="opt-num">④</span><div class="opt-mid"><span class="opt-en">to make</span><span class="opt-ko">to부정사</span></div><span class="opt-mark">✗</span><div class="opt-reason">to부정사는 본동사 역할 불가</div></div>
+    <div class="opt-row good"><span class="opt-num">⑤</span><div class="opt-mid"><span class="opt-en">will make</span><span class="opt-ko">미래시제</span></div><span class="opt-mark">✓</span><div class="opt-reason">본문 그대로. 동명사 주어 + 단수 미래조동사 정확</div></div>
+  </div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">3</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">make + O + 명사 (5형식)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>3.</b> 다음 문장에서 어법상 어색한 부분을 찾아 고르시오.</div>
+  <div class="q-passage">Learning about them will make <u>①you</u> <u>②a</u> <u>③smartly</u> <u>④shopper</u>, so don't <u>⑤skip</u> this lesson.</div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ smartly → smarter (형용사 비교급)</div>
+  <div class="ans-detail">5형식 <b>make + 목적어(you) + 목적격보어(명사구)</b> 구조에서 명사구의 형용사는 <b>형용사 형태</b>로 와야 함. 본문은 <b>a smarter shopper</b>(더 똑똑한 소비자) → <b>smartly</b>(부사)는 명사를 수식할 수 없으므로 <b>smarter</b>(형용사 비교급)로 고쳐야 함.</div>
+  <div class="opt-analysis">
+    <div class="opt-analysis-title">▼ 보기별 분석</div>
+    <div class="opt-row bad"><span class="opt-num">①</span><div class="opt-mid"><span class="opt-en">you</span><span class="opt-ko">목적격 인칭대명사</span></div><span class="opt-mark">✓</span><div class="opt-reason">make의 목적어 자리에 올바름</div></div>
+    <div class="opt-row bad"><span class="opt-num">②</span><div class="opt-mid"><span class="opt-en">a</span><span class="opt-ko">부정관사</span></div><span class="opt-mark">✓</span><div class="opt-reason">자음으로 시작하는 smarter 앞에 a 적합</div></div>
+    <div class="opt-row good"><span class="opt-num">③</span><div class="opt-mid"><span class="opt-en">smartly</span><span class="opt-ko">부사형</span></div><span class="opt-mark">✗</span><div class="opt-reason">명사 shopper를 수식하므로 형용사 smarter 필요</div></div>
+    <div class="opt-row bad"><span class="opt-num">④</span><div class="opt-mid"><span class="opt-en">shopper</span><span class="opt-ko">명사</span></div><span class="opt-mark">✓</span><div class="opt-reason">5형식 목적격보어로 명사 자리</div></div>
+    <div class="opt-row bad"><span class="opt-num">⑤</span><div class="opt-mid"><span class="opt-en">skip</span><span class="opt-ko">동사 (건너뛰다)</span></div><span class="opt-mark">✓</span><div class="opt-reason">don't 뒤 동사원형 자리 올바름</div></div>
+  </div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">4</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">if 직설법 (조건 + 미래)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>4.</b> 다음 빈칸 (A), (B)에 들어갈 말로 알맞게 짝지어진 것은?</div>
+  <div class="q-passage">If I <span class="q-blank">__(A)__</span> the sneakers now, I <span class="q-blank">__(B)__</span> have to buy them at a higher price.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> didn't buy / will</span>
+    <span class="c"><span class="num">②</span> don't buy / will</span>
+    <span class="c"><span class="num">③</span> don't buy / would</span>
+    <span class="c"><span class="num">④</span> won't buy / will</span>
+    <span class="c"><span class="num">⑤</span> wouldn't buy / would</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② don't buy / will — if 직설법 (실제 가능한 조건)</div>
+  <div class="ans-detail"><b>if 직설법 (현재 + 미래)</b>: 조건절(현재시제 don't buy) + 주절(미래시제 will). 가정법 과거(③⑤ would)는 현재 사실 반대 가정에 사용하므로 부적합. ④ if절에 will은 의지·미래 의미가 아닌 한 사용 불가.</div>
+  <div class="opt-analysis">
+    <div class="opt-analysis-title">▼ 보기별 분석</div>
+    <div class="opt-row bad"><span class="opt-num">①</span><div class="opt-mid"><span class="opt-en">didn't buy / will</span><span class="opt-ko">과거 / 미래</span></div><span class="opt-mark">✗</span><div class="opt-reason">시제 충돌 (now와 didn't 부조화)</div></div>
+    <div class="opt-row good"><span class="opt-num">②</span><div class="opt-mid"><span class="opt-en">don't buy / will</span><span class="opt-ko">현재 / 미래</span></div><span class="opt-mark">✓</span><div class="opt-reason">if 직설법 정확. 본문 패턴 그대로</div></div>
+    <div class="opt-row bad"><span class="opt-num">③</span><div class="opt-mid"><span class="opt-en">don't buy / would</span><span class="opt-ko">현재 / 가정법</span></div><span class="opt-mark">✗</span><div class="opt-reason">현재시제 + would는 부조화</div></div>
+    <div class="opt-row bad"><span class="opt-num">④</span><div class="opt-mid"><span class="opt-en">won't buy / will</span><span class="opt-ko">if + will</span></div><span class="opt-mark">✗</span><div class="opt-reason">조건절에 will 사용 불가</div></div>
+    <div class="opt-row bad"><span class="opt-num">⑤</span><div class="opt-mid"><span class="opt-en">wouldn't buy / would</span><span class="opt-ko">가정법 과거</span></div><span class="opt-mark">✗</span><div class="opt-reason">실제 가능한 조건이므로 가정법 부적합</div></div>
+  </div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">5</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">현재진행형 (be + V-ing)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>5.</b> 어법상 옳은 문장을 고르시오.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> You buy the sneakers just because you don't want to miss the sale.</span>
+    <span class="c"><span class="num">②</span> You're buy the sneakers just because you don't want to miss the sale.</span>
+    <span class="c"><span class="num">③</span> You're buying the sneakers just because you don't want to miss the sale.</span>
+    <span class="c"><span class="num">④</span> You buying the sneakers just because you don't want miss the sale.</span>
+    <span class="c"><span class="num">⑤</span> You're buying the sneakers just because you don't to miss the sale.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ — 현재진행형 「be + V-ing」 + want to V</div>
+  <div class="ans-detail">현재 일어나고 있는 행동은 <b>be + V-ing</b> (You're buying). want는 <b>want to V</b>(to부정사 목적어). ① 단순현재라 본문 의미 부족, ② 're + buy는 형태 오류, ④ are가 빠지고 want miss(to 누락), ⑤ to 누락.</div>
+  <div class="opt-analysis">
+    <div class="opt-analysis-title">▼ 보기별 분석</div>
+    <div class="opt-row bad"><span class="opt-num">①</span><div class="opt-mid"><span class="opt-en">You buy ~ don't want to miss</span><span class="opt-ko">단순현재</span></div><span class="opt-mark">✗</span><div class="opt-reason">진행 의미를 표현 못 함 (본문 의도와 불일치)</div></div>
+    <div class="opt-row bad"><span class="opt-num">②</span><div class="opt-mid"><span class="opt-en">You're buy ~</span><span class="opt-ko">be + 동사원형</span></div><span class="opt-mark">✗</span><div class="opt-reason">진행형은 V-ing 형태 필요 (buying)</div></div>
+    <div class="opt-row good"><span class="opt-num">③</span><div class="opt-mid"><span class="opt-en">You're buying ~ want to miss</span><span class="opt-ko">진행형 + want to V</span></div><span class="opt-mark">✓</span><div class="opt-reason">본문 그대로. 모든 어법 정확</div></div>
+    <div class="opt-row bad"><span class="opt-num">④</span><div class="opt-mid"><span class="opt-en">You buying ~ want miss</span><span class="opt-ko">be 누락 + to 누락</span></div><span class="opt-mark">✗</span><div class="opt-reason">be동사 누락, want 다음 to 필수</div></div>
+    <div class="opt-row bad"><span class="opt-num">⑤</span><div class="opt-mid"><span class="opt-en">don't to miss</span><span class="opt-ko">조동사 + to</span></div><span class="opt-mark">✗</span><div class="opt-reason">don't 다음 동사원형 (don't want to miss)</div></div>
+  </div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">6</span><span class="type-tag grammar">어법</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">관계대명사 who (주격)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>6.</b> 빈칸에 들어갈 수 <u>없는</u> 것은?</div>
+  <div class="q-passage">There are a lot of people <span class="q-blank">______</span> fall for a viral marketing strategy.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>who</span><span class="c"><span class="num">②</span>that</span><span class="c"><span class="num">③</span>which</span><span class="c"><span class="num">④</span>who often</span><span class="c"><span class="num">⑤</span>that easily</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ which — 사람 선행사에 which 사용 불가</div>
+  <div class="ans-detail">선행사가 <b>people</b>(사람)이므로 사물 관계대명사 <b>which</b>는 사용 불가. who 또는 that이 정답. ④, ⑤는 관계대명사 + 부사 결합으로 가능.</div>
+  <div class="opt-analysis">
+    <div class="opt-analysis-title">▼ 보기별 분석</div>
+    <div class="opt-row bad"><span class="opt-num">①</span><div class="opt-mid"><span class="opt-en">who</span><span class="opt-ko">사람 주격</span></div><span class="opt-mark">✓</span><div class="opt-reason">people 선행사에 정확</div></div>
+    <div class="opt-row bad"><span class="opt-num">②</span><div class="opt-mid"><span class="opt-en">that</span><span class="opt-ko">사람·사물 공용</span></div><span class="opt-mark">✓</span><div class="opt-reason">사람에도 사용 가능</div></div>
+    <div class="opt-row good"><span class="opt-num">③</span><div class="opt-mid"><span class="opt-en">which</span><span class="opt-ko">사물 전용</span></div><span class="opt-mark">✗</span><div class="opt-reason">사람 선행사에 사용 불가 (정답)</div></div>
+    <div class="opt-row bad"><span class="opt-num">④</span><div class="opt-mid"><span class="opt-en">who often</span><span class="opt-ko">관대 + 빈도부사</span></div><span class="opt-mark">✓</span><div class="opt-reason">관계대명사 뒤 부사 삽입 자연스러움</div></div>
+    <div class="opt-row bad"><span class="opt-num">⑤</span><div class="opt-mid"><span class="opt-en">that easily</span><span class="opt-ko">관대 + 부사</span></div><span class="opt-mark">✓</span><div class="opt-reason">that 뒤 부사 easily 자연스러움</div></div>
+  </div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">7</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">that절 (목적어)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>7.</b> 다음 문장에서 어법상 어색한 부분을 찾아 고르시오.</div>
+  <div class="q-passage">Yuna, just <u>①remember</u> <u>②that</u> a popular product <u>③isn't always</u> <u>④right</u> <u>⑤to</u> you.</div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ⑤ to → for (right for ~: ~에게 맞다)</div>
+  <div class="ans-detail">「<b>be right for ~</b>」 (~에게 맞다, 적합하다)는 전치사 <b>for</b>를 사용. 본문은 <b>right for you</b>. <b>to</b>는 방향·대상을 나타내는 다른 의미라 부적합.</div>
+  <div class="opt-analysis">
+    <div class="opt-analysis-title">▼ 보기별 분석</div>
+    <div class="opt-row bad"><span class="opt-num">①</span><div class="opt-mid"><span class="opt-en">remember</span><span class="opt-ko">기억하라 (명령문 동사원형)</span></div><span class="opt-mark">✓</span><div class="opt-reason">just 뒤 명령문 동사원형 자리</div></div>
+    <div class="opt-row bad"><span class="opt-num">②</span><div class="opt-mid"><span class="opt-en">that</span><span class="opt-ko">접속사 (목적어 절)</span></div><span class="opt-mark">✓</span><div class="opt-reason">remember의 목적어절을 이끄는 that</div></div>
+    <div class="opt-row bad"><span class="opt-num">③</span><div class="opt-mid"><span class="opt-en">isn't always</span><span class="opt-ko">부분부정 (항상 ~한 것은 아니다)</span></div><span class="opt-mark">✓</span><div class="opt-reason">not + always 부분부정 표현 정확</div></div>
+    <div class="opt-row bad"><span class="opt-num">④</span><div class="opt-mid"><span class="opt-en">right</span><span class="opt-ko">맞는, 적합한 (형용사)</span></div><span class="opt-mark">✓</span><div class="opt-reason">be동사 보어 자리에 형용사 적절</div></div>
+    <div class="opt-row good"><span class="opt-num">⑤</span><div class="opt-mid"><span class="opt-en">to</span><span class="opt-ko">방향 전치사</span></div><span class="opt-mark">✗</span><div class="opt-reason">「right + for」 결합 → for로 수정 필요</div></div>
+  </div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">8</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">동명사 (전치사 about + V-ing)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>8.</b> 빈칸에 들어갈 말로 어법상 옳은 것은?</div>
+  <div class="q-passage">About <span class="q-blank">______</span> the sale, don't worry, Junho. You'll soon see a similar sale again.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>miss</span><span class="c"><span class="num">②</span>missed</span><span class="c"><span class="num">③</span>missing</span><span class="c"><span class="num">④</span>to miss</span><span class="c"><span class="num">⑤</span>misses</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ missing — 전치사 about 뒤 동명사</div>
+  <div class="ans-detail">전치사 <b>about</b>의 목적어 자리에는 <b>동명사(V-ing)</b>가 와야 함. 본문 그대로 <b>About missing</b>. ④ to부정사는 전치사 뒤에 올 수 없고, 나머지는 형태 자체가 부적합.</div>
+  <div class="opt-analysis">
+    <div class="opt-analysis-title">▼ 보기별 분석</div>
+    <div class="opt-row bad"><span class="opt-num">①</span><div class="opt-mid"><span class="opt-en">miss</span><span class="opt-ko">동사원형</span></div><span class="opt-mark">✗</span><div class="opt-reason">전치사 뒤에 동사원형 불가</div></div>
+    <div class="opt-row bad"><span class="opt-num">②</span><div class="opt-mid"><span class="opt-en">missed</span><span class="opt-ko">과거형/과거분사</span></div><span class="opt-mark">✗</span><div class="opt-reason">전치사 뒤에 과거형 불가</div></div>
+    <div class="opt-row good"><span class="opt-num">③</span><div class="opt-mid"><span class="opt-en">missing</span><span class="opt-ko">동명사</span></div><span class="opt-mark">✓</span><div class="opt-reason">전치사 about + V-ing (본문 그대로)</div></div>
+    <div class="opt-row bad"><span class="opt-num">④</span><div class="opt-mid"><span class="opt-en">to miss</span><span class="opt-ko">to부정사</span></div><span class="opt-mark">✗</span><div class="opt-reason">전치사 + to부정사 결합 불가</div></div>
+    <div class="opt-row bad"><span class="opt-num">⑤</span><div class="opt-mid"><span class="opt-en">misses</span><span class="opt-ko">3인칭 단수 현재</span></div><span class="opt-mark">✗</span><div class="opt-reason">전치사 뒤에 동사 변화형 불가</div></div>
+  </div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">9</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">show 4형식 (간접목적어 + 직접목적어)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>9.</b> 다음 두 문장이 같은 의미가 되도록 빈칸에 알맞은 것을 고르시오.</div>
+  <div class="q-passage">The salesperson showed <b>you</b> <b>a 50-dollar lipstick</b>.<br>= The salesperson showed a 50-dollar lipstick <span class="q-blank">______</span>.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>you</span><span class="c"><span class="num">②</span>to you</span><span class="c"><span class="num">③</span>for you</span><span class="c"><span class="num">④</span>at you</span><span class="c"><span class="num">⑤</span>of you</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② to you — show 4형식 → 3형식 전환 시 to 사용</div>
+  <div class="ans-detail">「show + 사람 + 사물」(4형식) ↔ 「show + 사물 + <b>to</b> + 사람」(3형식). show, give, send, tell 등은 <b>to</b> 사용. (※ buy, make, cook 등은 <b>for</b> 사용)</div>
+  <div class="opt-analysis">
+    <div class="opt-analysis-title">▼ 보기별 분석</div>
+    <div class="opt-row bad"><span class="opt-num">①</span><div class="opt-mid"><span class="opt-en">you</span><span class="opt-ko">전치사 누락</span></div><span class="opt-mark">✗</span><div class="opt-reason">3형식 전환 시 전치사 필수</div></div>
+    <div class="opt-row good"><span class="opt-num">②</span><div class="opt-mid"><span class="opt-en">to you</span><span class="opt-ko">show + 사물 + to + 사람</span></div><span class="opt-mark">✓</span><div class="opt-reason">show 동사군은 to 사용</div></div>
+    <div class="opt-row bad"><span class="opt-num">③</span><div class="opt-mid"><span class="opt-en">for you</span><span class="opt-ko">buy/make 동사군 전치사</span></div><span class="opt-mark">✗</span><div class="opt-reason">show는 to 사용 (for 동사군 아님)</div></div>
+    <div class="opt-row bad"><span class="opt-num">④</span><div class="opt-mid"><span class="opt-en">at you</span><span class="opt-ko">방향·대상</span></div><span class="opt-mark">✗</span><div class="opt-reason">show 동사와 결합하지 않음</div></div>
+    <div class="opt-row bad"><span class="opt-num">⑤</span><div class="opt-mid"><span class="opt-en">of you</span><span class="opt-ko">소속·기원</span></div><span class="opt-mark">✗</span><div class="opt-reason">show 동사와 결합하지 않음</div></div>
+  </div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">10</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">수동태 (be + p.p.)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>10.</b> 어법상 알맞은 문장을 고르시오.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> Don't just rely on the first piece of information that giving to you.</span>
+    <span class="c"><span class="num">②</span> Don't just rely on the first piece of information that gives to you.</span>
+    <span class="c"><span class="num">③</span> Don't just rely on the first piece of information that is giving to you.</span>
+    <span class="c"><span class="num">④</span> Don't just rely on the first piece of information that is given to you.</span>
+    <span class="c"><span class="num">⑤</span> Don't just rely on the first piece of information that gave to you.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ④ — 수동태 「be + p.p.」: that is given to you</div>
+  <div class="ans-detail">정보가 "주어지는" 수동 의미이므로 <b>is given</b> (be + 과거분사). that은 사물 선행사 the first piece of information을 받는 주격 관계대명사. ① giving은 능동, ② gives는 능동 현재, ③ is giving은 능동 진행, ⑤ gave는 능동 과거.</div>
+  <div class="opt-analysis">
+    <div class="opt-analysis-title">▼ 보기별 분석</div>
+    <div class="opt-row bad"><span class="opt-num">①</span><div class="opt-mid"><span class="opt-en">that giving to you</span><span class="opt-ko">be 누락 + 능동분사</span></div><span class="opt-mark">✗</span><div class="opt-reason">be동사 누락 + 능동 형태로 수동 의미 전달 불가</div></div>
+    <div class="opt-row bad"><span class="opt-num">②</span><div class="opt-mid"><span class="opt-en">that gives to you</span><span class="opt-ko">능동 현재</span></div><span class="opt-mark">✗</span><div class="opt-reason">정보가 주는 게 아니라 주어지는 것</div></div>
+    <div class="opt-row bad"><span class="opt-num">③</span><div class="opt-mid"><span class="opt-en">that is giving to you</span><span class="opt-ko">능동 진행</span></div><span class="opt-mark">✗</span><div class="opt-reason">진행형 능동, 수동 의미 표현 못 함</div></div>
+    <div class="opt-row good"><span class="opt-num">④</span><div class="opt-mid"><span class="opt-en">that is given to you</span><span class="opt-ko">수동태 (be + p.p.)</span></div><span class="opt-mark">✓</span><div class="opt-reason">본문 그대로. 정보가 주어지는 수동 의미 정확</div></div>
+    <div class="opt-row bad"><span class="opt-num">⑤</span><div class="opt-mid"><span class="opt-en">that gave to you</span><span class="opt-ko">능동 과거</span></div><span class="opt-mark">✗</span><div class="opt-reason">능동 과거형, 수동 의미 표현 못 함</div></div>
+  </div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">11</span><span class="type-tag grammar">어법</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">2형식 감각동사 + 형용사</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>11.</b> 어법상 알맞은 것을 고르시오.</div>
+  <div class="q-passage">The 40-dollar lipstick <span class="q-blank">______</span> only because the salesperson showed you a 50-dollar lipstick first.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>sounds cheaply</span><span class="c"><span class="num">②</span>sounds cheap</span><span class="c"><span class="num">③</span>sounds to cheap</span><span class="c"><span class="num">④</span>sound cheap</span><span class="c"><span class="num">⑤</span>sounding cheap</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② sounds cheap — sound + 형용사 (2형식 감각동사)</div>
+  <div class="ans-detail">감각동사 <b>sound</b>는 보어로 <b>형용사</b>를 취함 (look/feel/taste/smell + 형용사 모두 동일). 주어가 단수(The 40-dollar lipstick)이므로 sounds. ① cheaply는 부사라 부적합, ④ sound는 단수 주어와 불일치, ⑤ sounding은 본동사 자리에 단독 불가.</div>
+  <div class="opt-analysis">
+    <div class="opt-analysis-title">▼ 보기별 분석</div>
+    <div class="opt-row bad"><span class="opt-num">①</span><div class="opt-mid"><span class="opt-en">sounds cheaply</span><span class="opt-ko">동사 + 부사</span></div><span class="opt-mark">✗</span><div class="opt-reason">감각동사 보어는 형용사</div></div>
+    <div class="opt-row good"><span class="opt-num">②</span><div class="opt-mid"><span class="opt-en">sounds cheap</span><span class="opt-ko">감각동사 + 형용사</span></div><span class="opt-mark">✓</span><div class="opt-reason">본문 그대로. 단수 주어 + 형용사 보어 정확</div></div>
+    <div class="opt-row bad"><span class="opt-num">③</span><div class="opt-mid"><span class="opt-en">sounds to cheap</span><span class="opt-ko">불필요한 to</span></div><span class="opt-mark">✗</span><div class="opt-reason">to + 형용사 결합 형태 없음</div></div>
+    <div class="opt-row bad"><span class="opt-num">④</span><div class="opt-mid"><span class="opt-en">sound cheap</span><span class="opt-ko">동사 일치 오류</span></div><span class="opt-mark">✗</span><div class="opt-reason">단수 주어에 sound (복수형) 불일치</div></div>
+    <div class="opt-row bad"><span class="opt-num">⑤</span><div class="opt-mid"><span class="opt-en">sounding cheap</span><span class="opt-ko">분사형</span></div><span class="opt-mark">✗</span><div class="opt-reason">본동사 자리에 단독 사용 불가</div></div>
+  </div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="grammar">
+  <div class="q-meta"><span class="q-num">12</span><span class="type-tag grammar">어법</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">5개 보기 동시 검증 (종합 어법)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>12.</b> 다음 중 어법상 옳은 것의 개수는?</div>
+  <div class="q-passage">
+  ⓐ Learning about marketing strategies <u>make</u> you a smarter shopper.<br>
+  ⓑ There are various marketing strategies <u>which</u> influence your decisions.<br>
+  ⓒ <u>If</u> a product becomes hot on social media, people naturally want to have it.<br>
+  ⓓ The 40-dollar lipstick sounds <u>cheaply</u> because of the anchor.<br>
+  ⓔ Don't just rely on the first piece of information <u>that is given</u> to you.
+  </div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>1개</span><span class="c"><span class="num">②</span>2개</span><span class="c"><span class="num">③</span>3개</span><span class="c"><span class="num">④</span>4개</span><span class="c"><span class="num">⑤</span>5개</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ 3개 (옳은 것: ⓑ, ⓒ, ⓔ)</div>
+  <div class="ans-detail"><b>ⓐ</b> make → makes (동명사 주어 단수 취급) <b>틀림</b>. <b>ⓑ</b> 사물 선행사 + 주격 which <b>옳음</b>. <b>ⓒ</b> if 직설법 (현재 + 미래) <b>옳음</b>. <b>ⓓ</b> sounds cheaply → sounds cheap (감각동사 + 형용사) <b>틀림</b>. <b>ⓔ</b> 수동태 is given <b>옳음</b>. 따라서 ⓑⓒⓔ 3개.</div>
+  <div class="opt-analysis">
+    <div class="opt-analysis-title">▼ 보기별 분석</div>
+    <div class="opt-row bad"><span class="opt-num">ⓐ</span><div class="opt-mid"><span class="opt-en">Learning ~ make</span><span class="opt-ko">동명사 주어 + 동사</span></div><span class="opt-mark">✗</span><div class="opt-reason">동명사 주어는 단수 → makes</div></div>
+    <div class="opt-row good"><span class="opt-num">ⓑ</span><div class="opt-mid"><span class="opt-en">strategies which influence</span><span class="opt-ko">사물 + 주격</span></div><span class="opt-mark">✓</span><div class="opt-reason">사물 선행사 + 주격 which 정확</div></div>
+    <div class="opt-row good"><span class="opt-num">ⓒ</span><div class="opt-mid"><span class="opt-en">If a product becomes hot</span><span class="opt-ko">if 직설법</span></div><span class="opt-mark">✓</span><div class="opt-reason">if + 현재 + 주절 미래/현재 직설법 정확</div></div>
+    <div class="opt-row bad"><span class="opt-num">ⓓ</span><div class="opt-mid"><span class="opt-en">sounds cheaply</span><span class="opt-ko">감각동사 + 부사</span></div><span class="opt-mark">✗</span><div class="opt-reason">sound + 형용사 → cheap로 수정</div></div>
+    <div class="opt-row good"><span class="opt-num">ⓔ</span><div class="opt-mid"><span class="opt-en">that is given</span><span class="opt-ko">수동태 관계절</span></div><span class="opt-mark">✓</span><div class="opt-reason">정보가 주어지는 수동 의미 정확</div></div>
+  </div>
+  </div></details>
+</article>
+
+<!-- =============== ⓑ 대명사 PRONOUN (4문항) =============== -->
+<div class="section-head" data-section-type="pronoun">
+  <div class="num-line">SECTION B · 대명사 · PRONOUN · 4 ITEMS</div>
+  <h2>대명사 <span class="kor">it / them / that 지칭 대상 추적</span></h2>
+  <p class="desc">본문에서 빈번히 등장하는 대명사 4개의 지칭 대상을 정확히 파악. 같은 it/them이라도 단락마다 지칭 대상이 다르므로 문맥 추적 필수.</p>
+</div>
+
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">13</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">them = 가까운 명사 회상</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>13.</b> 밑줄 친 <b>them</b>이 가리키는 것은?</div>
+  <div class="q-passage">There are various marketing strategies which influence your decisions. Learning about <b>them</b> will make you a smarter shopper.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>shoppers</span><span class="c"><span class="num">②</span>decisions</span><span class="c"><span class="num">③</span>various marketing strategies</span><span class="c"><span class="num">④</span>products</span><span class="c"><span class="num">⑤</span>sales</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ various marketing strategies</div>
+  <div class="ans-detail">앞 문장의 핵심 명사 <b>various marketing strategies</b>(다양한 마케팅 전략)를 받음. 두 번째 문장은 "그 전략들에 대해 배우는 것이 너를 더 똑똑한 소비자로 만들어 줄 것이다"라는 의미. ② decisions도 복수지만 "결정에 대해 배우면 똑똑한 소비자가 된다"는 흐름이 자연스럽지 않음.</div>
+  <div class="opt-analysis">
+    <div class="opt-analysis-title">▼ 보기별 분석</div>
+    <div class="opt-row bad"><span class="opt-num">①</span><div class="opt-mid"><span class="opt-en">shoppers</span><span class="opt-ko">소비자들</span></div><span class="opt-mark">✗</span><div class="opt-reason">앞 문장에 등장하지 않음</div></div>
+    <div class="opt-row bad"><span class="opt-num">②</span><div class="opt-mid"><span class="opt-en">decisions</span><span class="opt-ko">결정들</span></div><span class="opt-mark">✗</span><div class="opt-reason">소유격 your decisions의 일부, 핵심 명사 아님</div></div>
+    <div class="opt-row good"><span class="opt-num">③</span><div class="opt-mid"><span class="opt-en">various marketing strategies</span><span class="opt-ko">다양한 마케팅 전략들</span></div><span class="opt-mark">✓</span><div class="opt-reason">문장의 주어이자 복수 명사 → them 일치</div></div>
+    <div class="opt-row bad"><span class="opt-num">④</span><div class="opt-mid"><span class="opt-en">products</span><span class="opt-ko">제품들</span></div><span class="opt-mark">✗</span><div class="opt-reason">앞 문장에 없는 단어</div></div>
+    <div class="opt-row bad"><span class="opt-num">⑤</span><div class="opt-mid"><span class="opt-en">sales</span><span class="opt-ko">세일들</span></div><span class="opt-mark">✗</span><div class="opt-reason">앞 문장에 없는 단어</div></div>
+  </div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">14</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">it = 단수 사물 회상</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>14.</b> 밑줄 친 두 개의 <b>it</b>이 공통으로 가리키는 것은?</div>
+  <div class="q-passage">If people can buy a product only for a limited time, they often feel "hungry" for <b>it</b> and want to buy <b>it</b>.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>a limited time</span><span class="c"><span class="num">②</span>a product</span><span class="c"><span class="num">③</span>hunger</span><span class="c"><span class="num">④</span>marketing</span><span class="c"><span class="num">⑤</span>shopper</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② a product</div>
+  <div class="ans-detail">"한정된 시간 동안만 <b>제품</b>을 살 수 있다면, 그것을 갈망하고 그것을 사고 싶어 한다"의 흐름. 두 it 모두 단수 명사 <b>a product</b>를 받음. ① a limited time도 단수지만 "시간을 사고 싶어 한다"는 의미가 부자연스러움.</div>
+  <div class="opt-analysis">
+    <div class="opt-analysis-title">▼ 보기별 분석</div>
+    <div class="opt-row bad"><span class="opt-num">①</span><div class="opt-mid"><span class="opt-en">a limited time</span><span class="opt-ko">한정된 시간</span></div><span class="opt-mark">✗</span><div class="opt-reason">"시간을 갈망/사고 싶어 한다"는 의미 부자연</div></div>
+    <div class="opt-row good"><span class="opt-num">②</span><div class="opt-mid"><span class="opt-en">a product</span><span class="opt-ko">제품</span></div><span class="opt-mark">✓</span><div class="opt-reason">갈망과 구매의 대상으로 자연스러움</div></div>
+    <div class="opt-row bad"><span class="opt-num">③</span><div class="opt-mid"><span class="opt-en">hunger</span><span class="opt-ko">배고픔</span></div><span class="opt-mark">✗</span><div class="opt-reason">앞 문장에 명사로 등장하지 않음</div></div>
+    <div class="opt-row bad"><span class="opt-num">④</span><div class="opt-mid"><span class="opt-en">marketing</span><span class="opt-ko">마케팅</span></div><span class="opt-mark">✗</span><div class="opt-reason">제목에 등장하나 문맥상 부적합</div></div>
+    <div class="opt-row bad"><span class="opt-num">⑤</span><div class="opt-mid"><span class="opt-en">shopper</span><span class="opt-ko">소비자</span></div><span class="opt-mark">✗</span><div class="opt-reason">사람이라 it과 부조화</div></div>
+  </div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">15</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">it = 다중 후보 중 정답 식별</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>15.</b> 밑줄 친 <b>it</b>이 가리키는 것은?</div>
+  <div class="q-passage">If a product becomes hot on social media, people naturally want to have <b>it</b>.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>social media</span><span class="c"><span class="num">②</span>a product</span><span class="c"><span class="num">③</span>information</span><span class="c"><span class="num">④</span>the Internet</span><span class="c"><span class="num">⑤</span>a virus</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② a product</div>
+  <div class="ans-detail">"제품이 소셜 미디어에서 인기를 끌면, 사람들은 자연스럽게 <b>그것</b>을 갖고 싶어 한다"에서 it = 갖고 싶어 하는 대상 = <b>a product</b>. ① social media는 부사구, ④ the Internet은 앞 문장의 다른 명사로 갖고 싶어 하는 대상이 아님.</div>
+  <div class="opt-analysis">
+    <div class="opt-analysis-title">▼ 보기별 분석</div>
+    <div class="opt-row bad"><span class="opt-num">①</span><div class="opt-mid"><span class="opt-en">social media</span><span class="opt-ko">소셜 미디어</span></div><span class="opt-mark">✗</span><div class="opt-reason">전치사구의 일부, 갖고 싶어 하는 대상 아님</div></div>
+    <div class="opt-row good"><span class="opt-num">②</span><div class="opt-mid"><span class="opt-en">a product</span><span class="opt-ko">제품</span></div><span class="opt-mark">✓</span><div class="opt-reason">have의 목적어로 자연스러움</div></div>
+    <div class="opt-row bad"><span class="opt-num">③</span><div class="opt-mid"><span class="opt-en">information</span><span class="opt-ko">정보</span></div><span class="opt-mark">✗</span><div class="opt-reason">앞 문장의 다른 단락 단어, 문맥 불일치</div></div>
+    <div class="opt-row bad"><span class="opt-num">④</span><div class="opt-mid"><span class="opt-en">the Internet</span><span class="opt-ko">인터넷</span></div><span class="opt-mark">✗</span><div class="opt-reason">갖고 싶어 하는 대상으로 부자연</div></div>
+    <div class="opt-row bad"><span class="opt-num">⑤</span><div class="opt-mid"><span class="opt-en">a virus</span><span class="opt-ko">바이러스</span></div><span class="opt-mark">✗</span><div class="opt-reason">비유 표현, 갖고 싶어 하는 대상 아님</div></div>
+  </div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="pronoun">
+  <div class="q-meta"><span class="q-num">16</span><span class="type-tag pronoun">대명사</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">that 대명사 + 관계대명사 구분</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>16.</b> 다음 문장의 밑줄 친 <b>that</b>의 역할이 같은 것은?</div>
+  <div class="q-passage">Don't just rely on the first piece of information <b>that</b> is given to you.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> That's better!</span>
+    <span class="c"><span class="num">②</span> I have to get that dress, too.</span>
+    <span class="c"><span class="num">③</span> Just remember that a popular product isn't always right for you.</span>
+    <span class="c"><span class="num">④</span> There are a lot of people that fall for a viral marketing strategy.</span>
+    <span class="c"><span class="num">⑤</span> That is the hottest dress on social media now.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ④ — 주격 관계대명사 (선행사 수식)</div>
+  <div class="ans-detail">본문의 that은 <b>주격 관계대명사</b> (선행사 the first piece of information을 수식). ④도 주격 관계대명사 (people 수식). ① ⑤ 지시대명사(주어), ② 지시형용사(dress 수식), ③ 접속사 that (목적어절).</div>
+  <div class="opt-analysis">
+    <div class="opt-analysis-title">▼ 보기별 분석</div>
+    <div class="opt-row bad"><span class="opt-num">①</span><div class="opt-mid"><span class="opt-en">That's better!</span><span class="opt-ko">지시대명사 주어</span></div><span class="opt-mark">✗</span><div class="opt-reason">주어로 쓰인 지시대명사</div></div>
+    <div class="opt-row bad"><span class="opt-num">②</span><div class="opt-mid"><span class="opt-en">that dress</span><span class="opt-ko">지시형용사</span></div><span class="opt-mark">✗</span><div class="opt-reason">명사 dress 수식 형용사</div></div>
+    <div class="opt-row bad"><span class="opt-num">③</span><div class="opt-mid"><span class="opt-en">remember that ~</span><span class="opt-ko">접속사 that</span></div><span class="opt-mark">✗</span><div class="opt-reason">목적어절을 이끄는 접속사</div></div>
+    <div class="opt-row good"><span class="opt-num">④</span><div class="opt-mid"><span class="opt-en">people that fall for</span><span class="opt-ko">주격 관계대명사</span></div><span class="opt-mark">✓</span><div class="opt-reason">선행사 people 수식 (본문 that과 동일 역할)</div></div>
+    <div class="opt-row bad"><span class="opt-num">⑤</span><div class="opt-mid"><span class="opt-en">That is the hottest ~</span><span class="opt-ko">지시대명사 주어</span></div><span class="opt-mark">✗</span><div class="opt-reason">주어로 쓰인 지시대명사</div></div>
+  </div>
+  </div></details>
+</article>
+
+<!-- =============== ⓒ 독해 READING (3문항) =============== -->
+<div class="section-head" data-section-type="reading">
+  <div class="num-line">SECTION C · 독해 · READING · 3 ITEMS</div>
+  <h2>독해 <span class="kor">본문 일치 (T/F 표) · 흐름도 · 요지</span></h2>
+  <p class="desc">본문 전체 정보를 정확히 이해했는지 점검. T/F 표 + 흐름도 시각화 + 글의 요지 추론.</p>
+</div>
+
+<article class="q-card" data-type="reading">
+  <div class="q-meta"><span class="q-num">17</span><span class="type-tag reading">독해</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">본문 일치 (T/F 표)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>17.</b> 다음 표는 본문 내용을 정리한 것이다. 진위 (T/F)가 모두 옳게 짝지어진 것은?</div>
+  <table class="compare-table">
+    <thead>
+      <tr><th style="width:42px">번호</th><th>본문에 따른 진술</th><th class="tf-mark" style="width:60px">T/F</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>ⓐ</td><td>Hunger marketing은 한정된 시간 동안만 살 수 있게 하여 소비자가 제품을 갈망하게 만든다.</td><td class="tf-mark t">T</td></tr>
+      <tr><td>ⓑ</td><td>Viral marketing에서 정보는 인터넷에서 천천히 그리고 좁게 퍼진다.</td><td class="tf-mark f">F</td></tr>
+      <tr><td>ⓒ</td><td>인기 있는 제품은 항상 모든 소비자에게 맞는다.</td><td class="tf-mark f">F</td></tr>
+      <tr><td>ⓓ</td><td>Anchoring effect에서 첫 번째 정보가 "닻"이 되어 결정에 영향을 미친다.</td><td class="tf-mark t">T</td></tr>
+      <tr><td>ⓔ</td><td>준호는 운동화 세일이 끝난 후에도 비슷한 세일을 다시 볼 것이다.</td><td class="tf-mark t">T</td></tr>
+    </tbody>
+  </table>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> ⓐ–T  ⓑ–T  ⓒ–F  ⓓ–T  ⓔ–T</span>
+    <span class="c"><span class="num">②</span> ⓐ–T  ⓑ–F  ⓒ–F  ⓓ–T  ⓔ–T</span>
+    <span class="c"><span class="num">③</span> ⓐ–F  ⓑ–F  ⓒ–T  ⓓ–T  ⓔ–F</span>
+    <span class="c"><span class="num">④</span> ⓐ–T  ⓑ–F  ⓒ–T  ⓓ–F  ⓔ–T</span>
+    <span class="c"><span class="num">⑤</span> ⓐ–T  ⓑ–T  ⓒ–F  ⓓ–F  ⓔ–F</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② T-F-F-T-T</div>
+  <div class="ans-detail"><b>ⓐ T</b> — "for a limited time" → "feel hungry for it" 본문 일치. <b>ⓑ F</b> — 본문은 "spread <b>quickly and widely</b>"(빠르고 널리). <b>ⓒ F</b> — "a popular product <b>isn't always</b> right for you"(부분부정). <b>ⓓ T</b> — "the first piece of information becomes an anchor and influences the decision". <b>ⓔ T</b> — "You'll soon see a similar sale again".</div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="reading">
+  <div class="q-meta"><span class="q-num">18</span><span class="type-tag reading">독해</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">흐름도 (소미 단락 → 빈칸 매칭)</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>18.</b> 다음 흐름도는 Anchoring Effect 단락의 사건 순서를 나타낸 것이다. (A)~(D)에 들어갈 말을 본문에서 찾아 알맞게 짝지은 것은?</div>
+  <div class="flow-chart">
+    <div class="flow-step"><b>① </b>소미: 엄마 드릴 립스틱을 찾고 있어요.</div>
+    <div class="flow-arrow">▼</div>
+    <div class="flow-step"><b>② </b>점원: 50달러짜리 립스틱을 <span class="flow-blank">__(A)__</span> 보여준다.</div>
+    <div class="flow-arrow">▼</div>
+    <div class="flow-step"><b>③ </b>소미: "비싸요! 30달러에 살 수 있다고 생각했어요." (예산 = <span class="flow-blank">__(B)__</span>달러)</div>
+    <div class="flow-arrow">▼</div>
+    <div class="flow-step"><b>④ </b>점원: 40달러짜리 립스틱도 인기 있다고 권한다.</div>
+    <div class="flow-arrow">▼</div>
+    <div class="flow-step"><b>⑤ </b>소미: "그게 더 낫네요!" → 결국 <span class="flow-blank">__(C)__</span>달러짜리 립스틱을 산다.</div>
+    <div class="flow-arrow">▼</div>
+    <div class="flow-step"><b>⑥ </b>해설: 첫 번째 정보(50달러)가 "<span class="flow-blank">__(D)__</span>"가 되어 결정에 영향을 미쳤다.</div>
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> first / 30 / 40 / anchor</span>
+    <span class="c"><span class="num">②</span> later / 30 / 50 / virus</span>
+    <span class="c"><span class="num">③</span> first / 40 / 30 / anchor</span>
+    <span class="c"><span class="num">④</span> first / 30 / 50 / hunger</span>
+    <span class="c"><span class="num">⑤</span> later / 40 / 40 / anchor</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① first / 30 / 40 / anchor</div>
+  <div class="ans-detail">(A) "showed you a 50-dollar lipstick <b>first</b>" → first. (B) "I thought I could buy a lipstick for <b>30</b> dollars" → 30 (예산). (C) "you are buying a <b>40</b>-dollar lipstick" → 40 (실제 구매). (D) "the first piece of information becomes an <b>anchor</b>" → anchor (닻). 50달러는 anchor였고 소미는 결국 40달러짜리를 샀음.</div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="reading">
+  <div class="q-meta"><span class="q-num">19</span><span class="type-tag reading">독해</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">글의 요지 (전체 메시지)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>19.</b> 글의 요지로 가장 알맞은 것은?</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> 인기 있는 제품은 대체로 모든 사람에게 잘 맞는다.</span>
+    <span class="c"><span class="num">②</span> 세일 기간을 절대 놓치지 말아야 좋은 가격에 살 수 있다.</span>
+    <span class="c"><span class="num">③</span> 마케팅 전략을 알고 첫 정보에만 의존하지 말아야 똑똑한 소비자가 된다.</span>
+    <span class="c"><span class="num">④</span> 점원이 추천하는 가장 비싼 상품을 사는 것이 합리적이다.</span>
+    <span class="c"><span class="num">⑤</span> 소셜 미디어에서 인기 있는 제품은 반드시 사야 한다.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ 마케팅 전략을 알고 첫 정보에만 의존하지 말아야 똑똑한 소비자가 된다.</div>
+  <div class="ans-detail">도입부 "Learning about them will make you a smarter shopper" + 결론 "Don't just rely on the first piece of information"이 글의 핵심. ①은 "isn't always right for you"의 정반대, ②는 hunger marketing 함정, ④⑤는 본문이 경계하는 행동.</div>
+  <div class="opt-analysis">
+    <div class="opt-analysis-title">▼ 보기별 분석</div>
+    <div class="opt-row bad"><span class="opt-num">①</span><div class="opt-mid"><span class="opt-ko">인기 제품은 모두에게 맞다</span></div><span class="opt-mark">✗</span><div class="opt-reason">"isn't always right for you"의 정반대</div></div>
+    <div class="opt-row bad"><span class="opt-num">②</span><div class="opt-mid"><span class="opt-ko">세일을 놓치지 말라</span></div><span class="opt-mark">✗</span><div class="opt-reason">hunger marketing 전략에 빠진 시각</div></div>
+    <div class="opt-row good"><span class="opt-num">③</span><div class="opt-mid"><span class="opt-ko">전략 학습 + 첫 정보 의존 금지</span></div><span class="opt-mark">✓</span><div class="opt-reason">도입부와 결론을 모두 포괄한 요지</div></div>
+    <div class="opt-row bad"><span class="opt-num">④</span><div class="opt-mid"><span class="opt-ko">점원 추천 비싼 상품 구매</span></div><span class="opt-mark">✗</span><div class="opt-reason">앵커링 효과의 함정 그대로 답습</div></div>
+    <div class="opt-row bad"><span class="opt-num">⑤</span><div class="opt-mid"><span class="opt-ko">SNS 인기 제품 필수 구매</span></div><span class="opt-mark">✗</span><div class="opt-reason">바이럴 마케팅 함정과 일치</div></div>
+  </div>
+  </div></details>
+</article>
+
+<!-- =============== ⓓ 문맥 CONTEXT (4문항) =============== -->
+<div class="section-head" data-section-type="context">
+  <div class="num-line">SECTION D · 문맥 · CONTEXT · 4 ITEMS</div>
+  <h2>문맥 <span class="kor">어색한 문장 · 글의 순서 · 인과 방향 함정 · 주어진 문장 위치</span></h2>
+  <p class="desc">문장 간 논리·인과·대조 흐름을 정확히 파악. 본문 핵심 메시지를 정반대로 표현한 함정 보기 식별 필수.</p>
+</div>
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">20</span><span class="type-tag context">문맥</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">어색한 문장 찾기</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>20.</b> 다음 글의 흐름상 어색한 문장은?</div>
+  <div class="q-passage">If people can buy a product only for a limited time, they often feel "hungry" for it and want to buy it. ① This is called a hunger marketing strategy. ② You might rush to buy the product before the sale ends. ③ However, you'll soon see a similar sale again. ④ Therefore, you should always buy the product immediately when there's a time-limited sale. ⑤ So, don't fall for this strategy too easily.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span></span><span class="c"><span class="num">②</span></span><span class="c"><span class="num">③</span></span><span class="c"><span class="num">④</span></span><span class="c"><span class="num">⑤</span></span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ④ — 본문 메시지의 정반대 (인과 방향 함정)</div>
+  <div class="ans-detail">전체 흐름은 "hunger marketing에 빠지지 말라"인데 ④는 "시간 제한 세일이 있으면 항상 즉시 사야 한다"고 권유 → 글 전체와 정반대 방향. ①②③⑤는 모두 마케팅 전략을 경계하는 흐름.</div>
+  <div class="opt-analysis">
+    <div class="opt-analysis-title">▼ 보기별 분석</div>
+    <div class="opt-row bad"><span class="opt-num">①</span><div class="opt-mid"><span class="opt-ko">이를 hunger marketing이라 한다</span></div><span class="opt-mark">✓</span><div class="opt-reason">개념 정의로 자연스러움</div></div>
+    <div class="opt-row bad"><span class="opt-num">②</span><div class="opt-mid"><span class="opt-ko">세일 끝나기 전 서둘러 살 수 있다</span></div><span class="opt-mark">✓</span><div class="opt-reason">전략의 효과 설명</div></div>
+    <div class="opt-row bad"><span class="opt-num">③</span><div class="opt-mid"><span class="opt-ko">하지만 곧 비슷한 세일을 볼 것이다</span></div><span class="opt-mark">✓</span><div class="opt-reason">본문 그대로 (안심시키는 메시지)</div></div>
+    <div class="opt-row good"><span class="opt-num">④</span><div class="opt-mid"><span class="opt-ko">항상 즉시 사야 한다</span></div><span class="opt-mark">✗</span><div class="opt-reason">전체 메시지와 정반대 (인과 함정)</div></div>
+    <div class="opt-row bad"><span class="opt-num">⑤</span><div class="opt-mid"><span class="opt-ko">전략에 쉽게 빠지지 말라</span></div><span class="opt-mark">✓</span><div class="opt-reason">결론으로 자연스러움</div></div>
+  </div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">21</span><span class="type-tag context">문맥</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">글의 순서 (Anchoring 단락)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>21.</b> 주어진 글 다음에 이어질 순서로 알맞은 것은?</div>
+  <div class="q-passage"><b>주어진 글:</b> Hold on, Somi! Your budget is 30 dollars, but you are buying a 40-dollar lipstick.<br><br>(A) Usually, the first piece of information becomes an "anchor" and influences the shopper's decision.<br>(B) The 40-dollar lipstick sounds cheap only because the salesperson showed you a 50-dollar lipstick first.<br>(C) This is an example of the anchoring effect.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span> (A)–(B)–(C)</span><span class="c"><span class="num">②</span> (B)–(A)–(C)</span><span class="c"><span class="num">③</span> (B)–(C)–(A)</span><span class="c"><span class="num">④</span> (C)–(A)–(B)</span><span class="c"><span class="num">⑤</span> (C)–(B)–(A)</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ (B)–(C)–(A)</div>
+  <div class="ans-detail">주어진 글: "예산 30달러인데 40달러짜리를 사고 있다" → <b>(B)</b> 그 이유 설명: 50달러를 먼저 보여줬기 때문 → <b>(C)</b> 이것이 anchoring effect 사례 → <b>(A)</b> anchoring effect의 일반 원리: 첫 정보가 닻이 됨. 「구체 사례 → 명명 → 일반 원리」 순서.</div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">22</span><span class="type-tag context">문맥</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">인과 방향 + 반의어 함정</span><span class="q-pts">4점</span></div>
+  <div class="q-prompt"><b>22.</b> 다음 글의 결론으로 가장 알맞은 것은?</div>
+  <div class="q-passage">There are various marketing strategies which influence your decisions. Hunger marketing makes you feel "hungry" for a product when it's available only for a limited time. Viral marketing makes you want a product just because it's hot on social media. The anchoring effect makes the first piece of information influence your decision.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> Therefore, marketing strategies always help you make better decisions.</span>
+    <span class="c"><span class="num">②</span> Therefore, you should follow the most popular product on social media.</span>
+    <span class="c"><span class="num">③</span> Therefore, learning about these strategies will make you a smarter shopper.</span>
+    <span class="c"><span class="num">④</span> Therefore, the first information given to you is always the right choice.</span>
+    <span class="c"><span class="num">⑤</span> Therefore, you should never miss a time-limited sale again.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ — 본문 도입부 결론과 정확히 일치</div>
+  <div class="ans-detail">3가지 마케팅 전략을 나열한 후 결론은 본문 도입부의 "<b>Learning about them will make you a smarter shopper</b>"와 일치하는 ③. ① "always help" — 본문은 전략을 경계, ② SNS 인기 제품 권장 (바이럴 함정), ④ 첫 정보가 항상 옳다 (앵커링 함정), ⑤ 세일 놓치지 말라 (헝거 함정). ①②④⑤는 모두 본문 메시지의 <b>정반대</b> 방향 함정.</div>
+  <div class="opt-analysis">
+    <div class="opt-analysis-title">▼ 보기별 분석</div>
+    <div class="opt-row bad"><span class="opt-num">①</span><div class="opt-mid"><span class="opt-ko">전략은 항상 더 나은 결정을 돕는다</span></div><span class="opt-mark">✗</span><div class="opt-reason">전략은 경계 대상 (정반대 방향)</div></div>
+    <div class="opt-row bad"><span class="opt-num">②</span><div class="opt-mid"><span class="opt-ko">SNS 인기 제품을 따라야 한다</span></div><span class="opt-mark">✗</span><div class="opt-reason">바이럴 마케팅 함정 그대로 답습</div></div>
+    <div class="opt-row good"><span class="opt-num">③</span><div class="opt-mid"><span class="opt-ko">전략 학습으로 똑똑한 소비자 되기</span></div><span class="opt-mark">✓</span><div class="opt-reason">본문 도입부 결론과 정확 일치</div></div>
+    <div class="opt-row bad"><span class="opt-num">④</span><div class="opt-mid"><span class="opt-ko">첫 정보가 항상 옳다</span></div><span class="opt-mark">✗</span><div class="opt-reason">앵커링 효과 함정 답습</div></div>
+    <div class="opt-row bad"><span class="opt-num">⑤</span><div class="opt-mid"><span class="opt-ko">시간제한 세일 놓치지 말라</span></div><span class="opt-mark">✗</span><div class="opt-reason">헝거 마케팅 함정 답습</div></div>
+  </div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="context">
+  <div class="q-meta"><span class="q-num">23</span><span class="type-tag context">문맥</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">주어진 문장 위치</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>23.</b> 다음 문장이 들어갈 가장 알맞은 곳은?</div>
+  <div class="q-passage" style="background:#FFF8E0;border-left-color:var(--yellow)"><b>It isn't just you.</b></div>
+  <div class="q-passage">Wait, Yuna! You only want the dress because you saw it again and again on social media. ( ① ) There are a lot of people who fall for a viral marketing strategy. ( ② ) Why? ( ③ ) Information about a product can spread quickly and widely on the Internet, just like a "virus." ( ④ ) If a product becomes hot on social media, people naturally want to have it. ( ⑤ ) Yuna, just remember that a popular product isn't always right for you.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span></span><span class="c"><span class="num">②</span></span><span class="c"><span class="num">③</span></span><span class="c"><span class="num">④</span></span><span class="c"><span class="num">⑤</span></span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① — "너만 그런 게 아니야" + "이런 사람들이 많이 있다"의 자연스러운 연결</div>
+  <div class="ans-detail">"You only want ~" (너만의 일처럼 들리는 묘사) → <b>"It isn't just you" (너만의 일이 아니다)</b> → "There are a lot of people who fall for ~" (이런 사람이 많다)로 흐름이 자연스러움. 본문 위치 그대로.</div>
+  </div></details>
+</article>
+
+<!-- =============== ⓔ 빈칸 CLOZE (10문항) =============== -->
+<div class="section-head" data-section-type="cloze">
+  <div class="num-line">SECTION E · 빈칸 · CLOZE · 10 ITEMS</div>
+  <h2>빈칸 <span class="kor">단어 빈칸 · 표현 빈칸 · 결론문 변형 묶음 (Conclusion Cluster)</span></h2>
+  <p class="desc">단어 단위 빈칸 6개 + 결론문을 다른 표현으로 paraphrase한 묶음 카드 1개(빈칸 4개) = 총 10문항.</p>
+</div>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">24</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">기본 표현 (hold on)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>24.</b> 빈칸에 들어갈 말로 가장 알맞은 것은?</div>
+  <div class="q-passage">Well, you may think you are a smart shopper, but <span class="q-blank">______</span>!</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>go on</span><span class="c"><span class="num">②</span>hold on</span><span class="c"><span class="num">③</span>get up</span><span class="c"><span class="num">④</span>take off</span><span class="c"><span class="num">⑤</span>look at</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② hold on (잠깐만, 멈춰)</div>
+  <div class="ans-detail">"but" 뒤에서 반전을 이끄는 표현. <b>hold on</b>은 "잠깐, 멈추고 들어봐"의 관용표현. ① 계속해, ③ 일어나, ④ (옷을) 벗다/이륙하다, ⑤ ~을 보다 — 모두 문맥 부적합.</div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">25</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">숙어 (fall for)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>25.</b> 빈칸에 들어갈 말로 가장 알맞은 것은?</div>
+  <div class="q-passage">There are a lot of people who <span class="q-blank">______</span> a viral marketing strategy.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>look at</span><span class="c"><span class="num">②</span>belong to</span><span class="c"><span class="num">③</span>fall for</span><span class="c"><span class="num">④</span>stand for</span><span class="c"><span class="num">⑤</span>care of</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ fall for (~에 속아 넘어가다, 빠지다)</div>
+  <div class="ans-detail"><b>fall for</b>는 "(전략·속임수)에 빠지다, 넘어가다". 본문 그대로의 핵심 숙어. ① ~을 보다, ② ~에 속하다, ④ ~을 상징하다, ⑤ care는 take care of (care of 단독 부적합).</div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">26</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">부분부정 (not always)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>26.</b> 빈칸에 들어갈 말로 가장 알맞은 것은?</div>
+  <div class="q-passage">Just remember that a popular product <span class="q-blank">______</span> right for you.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>is always</span><span class="c"><span class="num">②</span>isn't always</span><span class="c"><span class="num">③</span>is never</span><span class="c"><span class="num">④</span>always</span><span class="c"><span class="num">⑤</span>doesn't always</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② isn't always — 부분부정 (항상 ~한 것은 아니다)</div>
+  <div class="ans-detail">「<b>not + always</b>」 = "항상 ~한 것은 아니다"(부분부정). 본문 메시지: 인기 제품이 항상 너에게 맞는 것은 아님. ① 전체 긍정 (정반대), ③ 전체 부정 (절대 ~아니다 — 너무 강함), ④ be동사 누락, ⑤ doesn't는 일반동사 부정 (be동사 자리에 부적합).</div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">27</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">전치사 (only for)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>27.</b> 빈칸에 들어갈 수 <u>없는</u> 것은?</div>
+  <div class="q-passage">If people can buy a product <span class="q-blank">______</span> a limited time, they often feel "hungry" for it.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>only for</span><span class="c"><span class="num">②</span>just for</span><span class="c"><span class="num">③</span>during</span><span class="c"><span class="num">④</span>at</span><span class="c"><span class="num">⑤</span>for</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ④ at — "at + 기간"은 부적합</div>
+  <div class="ans-detail"><b>for + 기간</b>(~동안) 또는 <b>during + 특정 기간</b>이 자연스러움. <b>at</b>은 시점(at 3 o'clock)에 사용하므로 a limited time(기간)에 부적합. ①②⑤는 모두 "기간 동안" 의미 가능.</div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">28</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">대등 부사 결합 (quickly and widely)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>28.</b> 빈칸 (A), (B)에 들어갈 말이 알맞게 짝지어진 것은?</div>
+  <div class="q-passage">Information about a product can spread <span class="q-blank">__(A)__</span> and <span class="q-blank">__(B)__</span> on the Internet, just like a "virus."</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> quick / wide</span>
+    <span class="c"><span class="num">②</span> quickly / widely</span>
+    <span class="c"><span class="num">③</span> quick / widely</span>
+    <span class="c"><span class="num">④</span> quickly / wide</span>
+    <span class="c"><span class="num">⑤</span> slowly / narrowly</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② quickly / widely — 동사 spread 수식 부사</div>
+  <div class="ans-detail">동사 <b>spread</b>를 수식하므로 둘 다 부사 형태. 본문 그대로 <b>quickly and widely</b>. ⑤는 의미가 정반대(천천히, 좁게) — 함정 보기.</div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">29</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">핵심 명사 (anchor)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>29.</b> 빈칸에 들어갈 말로 가장 알맞은 것은?</div>
+  <div class="q-passage">Usually, the first piece of information becomes an "<span class="q-blank">______</span>" and influences the shopper's decision.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>angle</span><span class="c"><span class="num">②</span>anchor</span><span class="c"><span class="num">③</span>answer</span><span class="c"><span class="num">④</span>order</span><span class="c"><span class="num">⑤</span>error</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② anchor (닻)</div>
+  <div class="ans-detail">앵커링 효과의 핵심 비유. 첫 번째 정보가 "<b>닻(anchor)</b>"이 되어 결정을 그 자리에 고정시킴. ① 각도, ③ 답, ④ 순서, ⑤ 오류 — 모두 문맥과 비유 부적합.</div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="cloze">
+  <div class="q-meta"><span class="q-num">30</span><span class="type-tag cloze">빈칸</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">결론문 변형 묶음 (Conclusion Cluster)</span><span class="q-pts">8점</span></div>
+  <div class="q-prompt"><b>30.</b> 다음 세 변형문은 본문의 결론 메시지를 다른 표현으로 paraphrase한 것이다. 빈칸 (A)~(D)에 들어갈 말로 가장 알맞은 것은? <span style="color:var(--accent);font-weight:700">(빈칸 4개 / 8점)</span></div>
+
+  <div class="cluster-block">
+    <div class="cluster-label">변형 1 — 직접 paraphrase</div>
+    <div class="cluster-text">Don't <span class="q-blank">__(A)__</span> only on the first piece of information that is given to you. The first one is just an <b>"anchor"</b>, not the truth.</div>
+  </div>
+  <div class="cluster-block">
+    <div class="cluster-label">변형 2 — 권유형으로 전환</div>
+    <div class="cluster-text">Always check <span class="q-blank">__(B)__</span> options before making a decision. The first information you receive often <b>influences</b> your choice unfairly.</div>
+  </div>
+  <div class="cluster-block">
+    <div class="cluster-label">변형 3 — 똑똑한 소비자의 행동</div>
+    <div class="cluster-text">A smart shopper does not let the first <span class="q-blank">__(C)__</span> become the final answer. <span class="q-blank">__(D)__</span> about marketing strategies helps you make better choices.</div>
+  </div>
+
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> rely / other / information / Learning</span>
+    <span class="c"><span class="num">②</span> depend / first / strategy / Buying</span>
+    <span class="c"><span class="num">③</span> rely / other / strategy / Hiding</span>
+    <span class="c"><span class="num">④</span> count / same / number / Selling</span>
+    <span class="c"><span class="num">⑤</span> rely / few / virus / Following</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① rely / other / information / Learning</div>
+  <div class="ans-detail">
+  <b>(A) rely</b> — 본문 그대로 "Don't <b>rely</b> on the first piece of information"의 paraphrase. depend on도 가능하나 변형문은 본문 단어 사용.<br>
+  <b>(B) other</b> — "다른 옵션을 항상 확인하라" → other options.<br>
+  <b>(C) information</b> — 변형 3은 본문 anchor의 정체를 다시 풀어쓴 것. 첫 번째 <b>정보(information)</b>가 최종 답이 되도록 두지 말라.<br>
+  <b>(D) Learning</b> — 본문 도입부 "<b>Learning</b> about them will make you a smarter shopper"의 paraphrase. 동명사 주어로 단수.<br>
+  세 변형 모두 본문의 결론·도입부와 의미 동일.</div>
+  </div></details>
+</article>
+
+<!-- =============== ⓕ 어휘·숙어 VOCAB (8문항) =============== -->
+<div class="section-head" data-section-type="vocab">
+  <div class="num-line">SECTION F · 어휘·숙어 · VOCAB · 8 ITEMS</div>
+  <h2>어휘·숙어 <span class="kor">영영풀이 · 다의어 · 동의어/반의어 · 숙어 · 단어 가족 변환</span></h2>
+  <p class="desc">본문 핵심 어휘 8개를 영영풀이·다의어·동의어/반의어·숙어·단어 가족 변환으로 점검.</p>
+</div>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">31</span><span class="type-tag vocab">어휘</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">영영풀이 매칭</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>31.</b> 다음 영영풀이에 해당하는 단어로 알맞은 것은?</div>
+  <div class="q-passage"><b>"a plan or method to reach a goal, especially in business or marketing"</b><br>(목표를 달성하기 위한 계획이나 방법, 특히 비즈니스나 마케팅에서)</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>budget</span><span class="c"><span class="num">②</span>strategy</span><span class="c"><span class="num">③</span>decision</span><span class="c"><span class="num">④</span>shopper</span><span class="c"><span class="num">⑤</span>example</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② strategy (전략)</div>
+  <div class="ans-detail">"목표 달성을 위한 계획·방법" = strategy. ① 예산, ③ 결정, ④ 소비자, ⑤ 예시 — 모두 본문 핵심 어휘이지만 풀이와 불일치.</div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">32</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">다의어 spread (정답 2개)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>32.</b> 본문의 <u>spread</u>와 같은 의미로 쓰인 것을 <b>모두</b> 고르면?</div>
+  <div class="q-passage"><b>본문:</b> Information about a product can <u>spread</u> quickly and widely on the Internet.</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> The news <u>spread</u> from city to city in a few days.</span>
+    <span class="c"><span class="num">②</span> She <u>spread</u> butter on the bread.</span>
+    <span class="c"><span class="num">③</span> Rumors about the new game <u>spread</u> across schools.</span>
+    <span class="c"><span class="num">④</span> He <u>spread</u> the map on the table.</span>
+    <span class="c"><span class="num">⑤</span> They <u>spread</u> a blanket on the grass.</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ①, ③ — "(소문·정보가) 퍼지다" 의미</div>
+  <div class="ans-detail">본문의 spread = "<b>정보·소문이 널리 퍼지다</b>"(자동사). ① 뉴스가 퍼지다 ✓ ③ 소문이 퍼지다 ✓. ②④⑤는 모두 "<b>~을 펼치다·바르다</b>"의 타동사 의미 (버터 바르다 / 지도 펼치다 / 담요 펼치다).</div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">33</span><span class="type-tag vocab">어휘</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">동의어 (influence)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>33.</b> 본문의 밑줄 친 단어와 의미가 가장 가까운 것은?</div>
+  <div class="q-passage">There are various marketing strategies which <u>influence</u> your decisions.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>follow</span><span class="c"><span class="num">②</span>affect</span><span class="c"><span class="num">③</span>show</span><span class="c"><span class="num">④</span>buy</span><span class="c"><span class="num">⑤</span>spread</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② affect (영향을 미치다)</div>
+  <div class="ans-detail"><b>influence</b> = <b>affect</b> (~에 영향을 미치다). ① 따르다, ③ 보여주다, ④ 사다, ⑤ 퍼지다 — 모두 본문 단어이나 동의어 아님.</div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">34</span><span class="type-tag vocab">어휘</span><span class="var-pill var-light">미세 변형</span><span class="q-focus">반의어 (cheap ↔ expensive)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>34.</b> 본문의 밑줄 친 단어와 의미가 <u>반대</u>인 것은?</div>
+  <div class="q-passage">The 40-dollar lipstick sounds <u>cheap</u> only because the salesperson showed you a 50-dollar lipstick first.</div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span>popular</span><span class="c"><span class="num">②</span>various</span><span class="c"><span class="num">③</span>expensive</span><span class="c"><span class="num">④</span>limited</span><span class="c"><span class="num">⑤</span>smart</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ③ expensive (비싼) ↔ cheap (싼)</div>
+  <div class="ans-detail"><b>cheap</b>(싼)의 반의어는 <b>expensive</b>(비싼). 본문 소미의 첫 반응 "Expensive!"와도 연결됨. ① 인기 있는, ② 다양한, ④ 한정된, ⑤ 똑똑한 — 모두 본문 어휘이나 반의어 아님.</div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">35</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">숙어 (rely on / look for)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>35.</b> 빈칸 (A), (B)에 공통으로 들어갈 전치사로 알맞은 것은?</div>
+  <div class="q-passage">
+  ⓐ I'm looking <span class="q-blank">__(A)__</span> a lipstick for my mom.<br>
+  ⓑ Don't just rely <span class="q-blank">__(B)__</span> the first piece of information that is given to you.
+  </div>
+  <div class="q-choices horz5"><span class="c"><span class="num">①</span> for / on</span><span class="c"><span class="num">②</span> on / for</span><span class="c"><span class="num">③</span> at / in</span><span class="c"><span class="num">④</span> for / for</span><span class="c"><span class="num">⑤</span> on / on</span></div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① for / on</div>
+  <div class="ans-detail"><b>look for</b> = ~을 찾다 (전치사 for). <b>rely on</b> = ~에 의존하다 (전치사 on). 두 숙어 모두 본문 핵심 표현. 전치사를 헷갈리지 말 것.</div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">36</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">숙어 종합 (정답 2개)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>36.</b> 다음 중 본문에 등장한 숙어·관용표현의 의미가 옳은 것을 <b>모두</b> 고르면?</div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> fall for ~  =  ~에 빠지다, 속아 넘어가다</span>
+    <span class="c"><span class="num">②</span> hold on  =  계속하다, 진행하다</span>
+    <span class="c"><span class="num">③</span> rely on ~  =  ~에 의존하다, 의지하다</span>
+    <span class="c"><span class="num">④</span> miss the sale  =  세일을 만들다</span>
+    <span class="c"><span class="num">⑤</span> a piece of information  =  정보 한 종류 (셀 수 있음)</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ①, ③ — fall for / rely on의 의미 정확</div>
+  <div class="ans-detail">① ✓ fall for = ~에 속아 넘어가다 / 빠지다. ③ ✓ rely on = ~에 의존하다. ② ✗ hold on = 멈춰, 잠깐(계속하다 ≠), ④ ✗ miss the sale = 세일을 <b>놓치다</b>(만들다 ≠), ⑤ ✗ information은 <b>불가산명사</b>이므로 셀 때는 <b>a piece of information</b>(정보 한 조각)으로 표현 — 의미는 "한 가지 정보"이지 "정보 한 종류"가 아님.</div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">37</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">단어 가족 변환 (decide → decision)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>37.</b> 빈칸 (A), (B), (C)에 들어갈 말이 알맞게 짝지어진 것은?</div>
+  <div class="q-passage">
+  ⓐ Marketing strategies <span class="q-blank">__(A)__</span> your decisions. (영향을 미치다)<br>
+  ⓑ The first information becomes an anchor and influences the shopper's <span class="q-blank">__(B)__</span>. (결정)<br>
+  ⓒ Smart shoppers can <span class="q-blank">__(C)__</span> wisely after learning the strategies. (결정하다)
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> influence / decision / decide</span>
+    <span class="c"><span class="num">②</span> influence / decide / decision</span>
+    <span class="c"><span class="num">③</span> influences / decisions / decided</span>
+    <span class="c"><span class="num">④</span> influent / decision / decide</span>
+    <span class="c"><span class="num">⑤</span> influences / decision / decided</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ① influence / decision / decide</div>
+  <div class="ans-detail">(A) 동사 자리 + 복수주어 strategies → <b>influence</b> (3인칭 복수 현재). (B) 명사 자리 (소유격 뒤) → <b>decision</b>. (C) 조동사 can + 동사원형 → <b>decide</b>. <b>decide(동사) → decision(명사)</b>의 단어 가족 변환을 정확히 구분할 것. ④ influent는 거의 사용되지 않는 형용사.</div>
+  </div></details>
+</article>
+
+<article class="q-card" data-type="vocab">
+  <div class="q-meta"><span class="q-num">38</span><span class="type-tag vocab">어휘</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">어미 변화 단어 (popular → popularity)</span><span class="q-pts">3점</span></div>
+  <div class="q-prompt"><b>38.</b> 빈칸 (A), (B)에 들어갈 말이 알맞게 짝지어진 것은?</div>
+  <div class="q-passage">
+  ⓐ That's the <span class="q-blank">__(A)__</span> dress on social media now. (가장 인기 있는)<br>
+  ⓑ The <span class="q-blank">__(B)__</span> of the dress comes from a viral marketing strategy. (인기)
+  </div>
+  <div class="q-choices">
+    <span class="c"><span class="num">①</span> hot / popular</span>
+    <span class="c"><span class="num">②</span> hottest / popularity</span>
+    <span class="c"><span class="num">③</span> hottest / popular</span>
+    <span class="c"><span class="num">④</span> hotter / popularly</span>
+    <span class="c"><span class="num">⑤</span> hot / popularity</span>
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답 ② hottest / popularity</div>
+  <div class="ans-detail">(A) "가장 인기 있는" → 최상급 <b>hottest</b> (the + 최상급). (B) "인기"는 명사 → <b>popularity</b> (popular[형용사] → popularity[명사]). ④ popularly는 부사라 부적합. <b>품사 변환을 정확히 구분</b>: popular(형) → popularity(명) → popularize(동) → popularly(부).</div>
+  </div></details>
+</article>
+
+<!-- =============== ⓖ 서술형 WRITING (2문항) =============== -->
+<div class="section-head" data-section-type="writing">
+  <div class="num-line">SECTION G · 서술형 · WRITING · 2 ITEMS</div>
+  <h2>서술형 <span class="kor">배열영작 — 문법 2가지 이상 결합</span></h2>
+  <p class="desc">본문 주제(소비자 의식)와 어울리고, 핵심 어법 2가지 이상을 결합한 문장 2개. 보기 단어는 무작위 순서로 섞었으며 정답 첫·마지막 단어를 의도적으로 보기의 다른 위치에 배치했습니다.</p>
+</div>
+
+<article class="q-card" data-type="writing">
+  <div class="q-meta"><span class="q-num">39</span><span class="type-tag writing">서술형</span><span class="var-pill var-mod">소폭 변형</span><span class="q-focus">There+be 구문 + 주격 관계대명사 which</span><span class="q-pts">5점</span></div>
+  <div class="q-prompt"><b>39.</b> &lt;보기&gt;의 단어들을 모두 사용하여 우리말 의미에 맞게 영작하시오. (단, 필요시 단어 변형 가능)</div>
+  <div class="word-bank"><b>&lt;우리말&gt;</b> 당신의 결정에 영향을 미치는 다양한 마케팅 전략들이 있다.<br><br>
+  <b>&lt;보기&gt;</b> ( <b>decisions / which / are / your / influence / there / strategies / various / marketing</b> )</div>
+  <div class="answer-line">
+  ⇒ <span class="underline" style="min-width:480px"></span>.
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <b>There are various marketing strategies which influence your decisions.</b></div>
+  <div class="ans-detail"><b>핵심 결합 문법 3가지:</b><br>① <b>There + be 구문 (복수 일치)</b>: There <b>are</b> (단수 is 아님 — strategies가 복수)<br>② <b>주격 관계대명사 which</b>: strategies <b>which influence</b> (사물 선행사 + 주격)<br>③ <b>3인칭 복수 현재 일치</b>: 선행사가 복수 strategies → 동사 <b>influence</b> (influences 아님)<br><br><b>구조:</b> [There are] + [various marketing strategies] + [which influence your decisions]<br>존재구문 — 명사구(선행사) — 관계절(주격 + 동사 + 목적어)<br><br><b>※ 자주 하는 실수:</b><br>- "There <s>is</s> various ~" — 복수 주어에 is 사용 X<br>- "strategies <s>who</s> influence" — 사물 선행사에 who 사용 X<br>- "which <s>influences</s>" — 선행사 strategies 복수에 단수동사 X<br>- "<s>your decisions which influence</s>" — 어순 도치 함정<br><br><b>※ 보기 어순 검증:</b> 보기 첫 단어 decisions ≠ 정답 첫 단어 There / 보기 마지막 marketing ≠ 정답 마지막 decisions / 정답 어순 군집 없음 — 06_가이드 4규칙 통과.</div></div></details>
+</article>
+
+<article class="q-card" data-type="writing">
+  <div class="q-meta"><span class="q-num">40</span><span class="type-tag writing">서술형</span><span class="var-pill var-major">대폭 변형</span><span class="q-focus">명령문 부정 + 관계대명사 that + 수동태</span><span class="q-pts">5점</span></div>
+  <div class="q-prompt"><b>40.</b> &lt;보기&gt;의 단어들을 모두 사용하여 우리말 의미에 맞게 영작하시오. (단, 필요시 단어 변형 가능)</div>
+  <div class="word-bank"><b>&lt;우리말&gt;</b> 너에게 주어진 첫 번째 정보에만 그저 의존하지 마라.<br><br>
+  <b>&lt;보기&gt;</b> ( <b>you / given / first / on / piece / don't / that / information / is / just / rely / the / to / of</b> )</div>
+  <div class="answer-line">
+  ⇒ <span class="underline" style="min-width:560px"></span>.
+  </div>
+  <details class="ans"><summary>정답 &amp; 해설</summary><div class="ans-body">
+  <div class="ans-main">정답: <b>Don't just rely on the first piece of information that is given to you.</b></div>
+  <div class="ans-detail"><b>핵심 결합 문법 3가지 + 핵심 숙어:</b><br>① <b>명령문 부정</b>: <b>Don't</b> + 동사원형 (rely)<br>② <b>주격 관계대명사 that</b>: information <b>that is given</b> (사물 선행사 + 주격)<br>③ <b>수동태 (be + p.p.)</b>: <b>is given</b> (정보가 "주어지는" 수동 의미)<br>+ <b>핵심 숙어 rely on</b>: ~에 의존하다<br><br><b>구조:</b> [Don't just rely on] + [the first piece of information] + [that is given to you]<br>명령문 부정 — 전치사구(목적어 명사구) — 관계절(주격 + 수동태)<br><br><b>※ 자주 하는 실수:</b><br>- "<s>Don't</s> rely <s>at</s> ~" — rely는 전치사 <b>on</b> 사용<br>- "information that <s>gives</s>" — 정보가 주는 게 아니라 주어지므로 수동태 is given<br>- "information <s>which</s> is given" — that도 가능하나 본문은 that 사용<br>- "first <s>information</s>" — information은 불가산명사이므로 <b>a piece of information</b><br><br><b>※ 보기 어순 검증:</b> 보기 첫 단어 you ≠ 정답 첫 단어 Don't / 보기 마지막 of ≠ 정답 마지막 you / 정답 어순 군집 없음 — 06_가이드 4규칙 통과.</div></div></details>
+</article>
+
+</div><!-- /.container -->
+
+<!-- =============== FOOTER =============== -->
+<div class="container">
+  <div class="footer">
+    <span>목동중학교 2학년 영어 · L4 본문 기반 유형별 문제집</span>
+    <span>40문항 · 7유형 정밀 분석</span>
+    <span>2026 · 시험 대비 학습용</span>
+  </div>
+</div>
+
+<!-- 인쇄 전용 풋터 -->
+<div class="print-footer">
+  목동서로영어학원 제작 · MOKDONG SEORO ENGLISH ACADEMY · 0505.co.kr
+</div>
+
+<div class="made-by">
+  <span class="brand-line">
+    <span class="brand-mini">목</span>
+    목동서로영어학원 제작
+  </span>
+  <span class="credit">MOKDONG SEORO ENGLISH ACADEMY · 0505.co.kr</span>
+</div>
+
+<script>
+const TYPE_LABELS = {
+  all: '전체 40문항',
+  grammar: '어법 (12문항)',
+  pronoun: '대명사 (4문항)',
+  reading: '독해 (3문항)',
+  context: '문맥 (4문항)',
+  cloze: '빈칸 (7문항)',
+  vocab: '어휘·숙어 (8문항)',
+  writing: '서술형 (2문항)'
+};
+
+function applyFilter(type) {
+  document.querySelectorAll('.nav-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.type === type);
+  });
+  document.querySelectorAll('.q-card').forEach(card => {
+    card.classList.toggle('hidden', !(type === 'all' || card.dataset.type === type));
+  });
+  document.querySelectorAll('.section-head[data-section-type]').forEach(sh => {
+    const sectType = sh.dataset.sectionType;
+    sh.classList.toggle('hidden', !(type === 'all' || sectType === type));
+  });
+  const lbl = document.getElementById('printSectionLabel');
+  if (lbl) lbl.textContent = TYPE_LABELS[type] || '전체';
+}
+
+document.querySelectorAll('.nav-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const type = tab.dataset.type;
+    applyFilter(type);
+    const firstVisible = document.querySelector('.q-card:not(.hidden), .section-head:not(.hidden)[data-section-type]');
+    if (firstVisible && type !== 'all') {
+      const navHeight = document.querySelector('.type-nav-wrap').offsetHeight;
+      const top = firstVisible.getBoundingClientRect().top + window.scrollY - navHeight - 20;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
+
+document.querySelectorAll('.nav-print').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const type = btn.dataset.printType;
+    applyFilter(type);
+    setTimeout(() => { window.print(); }, 180);
+  });
+});
+
+let answersOpen = false;
+const answerToggleBtn = document.getElementById('answerToggle');
+if (answerToggleBtn) {
+  answerToggleBtn.addEventListener('click', () => {
+    answersOpen = !answersOpen;
+    document.querySelectorAll('details.ans').forEach(d => { d.open = answersOpen; });
+    answerToggleBtn.textContent = answersOpen ? '정답 모두 접기' : '정답 모두 펼치기';
+    answerToggleBtn.classList.toggle('active', answersOpen);
+  });
+}
+
+/* ══ 펜 필기 모드 (자유 필기) v1.0 ══ */
+const PEN_COLORS=['#dc2626','#1F3864','#0f9d58','#f59e0b','#000000'];
+const PEN_WIDTHS=[2,4,7];
+let penEnabled=false,penColor='#dc2626',penWidth=4,penEraser=false;
+let penLayer=null,penPath=null,penPts=[];
+
+function buildPenTools(){
+  if(document.getElementById('penLayer'))return;
+  penLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  penLayer.id='penLayer';
+  document.body.appendChild(penLayer);
+  const tb=document.createElement('div');
+  tb.id='penToolbar';
+  let html='<button class="pen-btn pen-main" id="penToggle" title="펜 ON/OFF">✏️</button><div class="pen-tools" id="penTools">';
+  PEN_COLORS.forEach(c=>html+='<button class="pen-color" data-color="'+c+'" style="background:'+c+';" title="색상"></button>');
+  PEN_WIDTHS.forEach(w=>html+='<button class="pen-width" data-width="'+w+'" title="굵기"><span style="width:'+(w*2)+'px;height:'+(w*2)+'px;"></span></button>');
+  html+='<button class="pen-btn pen-eraser" id="penEraserBtn" title="개별 지우개">🧹</button><button class="pen-btn pen-clear" id="penClearBtn" title="전체 지우기">🗑️</button></div>';
+  tb.innerHTML=html;
+  document.body.appendChild(tb);
+  document.querySelector('.pen-color[data-color="'+penColor+'"]').classList.add('selected');
+  document.querySelector('.pen-width[data-width="'+penWidth+'"]').classList.add('selected');
+  document.getElementById('penToggle').addEventListener('click',togglePen);
+  document.querySelectorAll('.pen-color').forEach(b=>b.addEventListener('click',e=>{
+    const c=e.currentTarget.dataset.color;
+    penColor=c;penEraser=false;
+    document.querySelectorAll('.pen-color').forEach(x=>x.classList.toggle('selected',x.dataset.color===c));
+    document.getElementById('penEraserBtn').classList.remove('active');
+  }));
+  document.querySelectorAll('.pen-width').forEach(b=>b.addEventListener('click',e=>{
+    const w=+e.currentTarget.dataset.width;
+    penWidth=w;
+    document.querySelectorAll('.pen-width').forEach(x=>x.classList.toggle('selected',+x.dataset.width===w));
+  }));
+  document.getElementById('penEraserBtn').addEventListener('click',()=>{
+    penEraser=!penEraser;
+    document.getElementById('penEraserBtn').classList.toggle('active',penEraser);
+  });
+  document.getElementById('penClearBtn').addEventListener('click',()=>{
+    if(confirm('모든 필기를 지우시겠습니까?'))penLayer.innerHTML='';
+  });
+  penLayer.addEventListener('pointerdown',penDown);
+  penLayer.addEventListener('pointermove',penMove);
+  penLayer.addEventListener('pointerup',penUp);
+  penLayer.addEventListener('pointercancel',penUp);
+  penLayer.addEventListener('pointerleave',penUp);
+  const sync=()=>{
+    const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
+    const w=Math.max(document.body.scrollWidth,document.documentElement.scrollWidth);
+    penLayer.setAttribute('width',w);
+    penLayer.setAttribute('height',h);
+    penLayer.style.height=h+'px';
+    penLayer.style.width=w+'px';
+  };
+  sync();
+  if(window.ResizeObserver)new ResizeObserver(sync).observe(document.body);
+  window.addEventListener('resize',sync);
+  setInterval(sync,2000);
+}
+function togglePen(){
+  penEnabled=!penEnabled;
+  document.getElementById('penToggle').classList.toggle('active',penEnabled);
+  document.getElementById('penTools').classList.toggle('show',penEnabled);
+  penLayer.classList.toggle('active',penEnabled);
+}
+function getPenPt(e){
+  return {x:e.clientX+window.scrollX,y:e.clientY+window.scrollY};
+}
+function penDown(e){
+  if(!penEnabled)return;
+  e.preventDefault();
+  try{penLayer.setPointerCapture(e.pointerId);}catch(_){}
+  if(penEraser){eraseAt(e);return;}
+  const pt=getPenPt(e);
+  penPath=document.createElementNS('http://www.w3.org/2000/svg','path');
+  penPath.setAttribute('d','M '+pt.x+' '+pt.y);
+  penPath.setAttribute('stroke',penColor);
+  penPath.setAttribute('stroke-width',penWidth);
+  penPath.setAttribute('fill','none');
+  penPath.setAttribute('stroke-linecap','round');
+  penPath.setAttribute('stroke-linejoin','round');
+  penLayer.appendChild(penPath);
+  penPts=[pt];
+}
+function penMove(e){
+  if(!penEnabled)return;
+  if(penEraser&&e.buttons){eraseAt(e);return;}
+  if(!penPath)return;
+  e.preventDefault();
+  const pt=getPenPt(e);
+  const last=penPts[penPts.length-1];
+  if(Math.hypot(pt.x-last.x,pt.y-last.y)<1.5)return;
+  penPts.push(pt);
+  let d='M '+penPts[0].x+' '+penPts[0].y;
+  for(let i=1;i<penPts.length-1;i++){
+    const c=penPts[i],n=penPts[i+1];
+    const mx=(c.x+n.x)/2,my=(c.y+n.y)/2;
+    d+=' Q '+c.x+' '+c.y+' '+mx+' '+my;
+  }
+  if(penPts.length>=2){
+    const lp=penPts[penPts.length-1];
+    d+=' L '+lp.x+' '+lp.y;
+  }
+  penPath.setAttribute('d',d);
+}
+function penUp(e){
+  if(penPath){penPath=null;penPts=[];}
+}
+function eraseAt(e){
+  const pt=getPenPt(e);
+  const r=20;
+  const paths=Array.from(penLayer.querySelectorAll('path'));
+  for(const p of paths){
+    const bb=p.getBBox();
+    if(pt.x>=bb.x-r&&pt.x<=bb.x+bb.width+r&&pt.y>=bb.y-r&&pt.y<=bb.y+bb.height+r){
+      p.remove();
+    }
+  }
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',buildPenTools);
+}else{
+  setTimeout(buildPenTools,100);
+}
+</script>
+
+</body>
+</html>
