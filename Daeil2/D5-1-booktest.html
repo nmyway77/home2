@@ -1583,7 +1583,12 @@
   /* ============================================================ */
   function buildPenTools(){
     var bar = document.getElementById('penToolbar');
-    if(!bar) return;
+    if(!bar){
+      /* HTML 컨테이너가 없으면 자동 생성 (안전망) */
+      bar = document.createElement('div');
+      bar.id = 'penToolbar';
+      document.body.appendChild(bar);
+    }
     if(bar.getAttribute('data-built') === '1') return;
     bar.setAttribute('data-built', '1');
 
@@ -1780,6 +1785,10 @@
   applyFilter('all');
 })();
 </script>
+
+
+<!-- PEN MODE v4.1 — 펜 필기 toolbar 컨테이너 (JS가 동적으로 채움) -->
+<div id="penToolbar"></div>
 
 </body>
 </html>

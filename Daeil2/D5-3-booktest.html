@@ -529,6 +529,21 @@
     .q-card { padding: 20px 18px; }
     .q-passage { padding: 16px 14px; font-size: 14.5px; }
   }
+
+  /* ============================================================ */
+  /* PEN MODE (v4.1) — 펜 필기 오버레이                          */
+  /* ============================================================ */
+  #penLayer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 80; }
+  #penLayer.active { pointer-events: auto; touch-action: none; }
+  #penToolbar { position: fixed; right: 18px; bottom: 18px; z-index: 100; display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+  #penToolbar .pen-toggle { width: 48px; height: 48px; border-radius: 50%; border: none; cursor: pointer; background: linear-gradient(135deg, #555 0%, #777 100%); color: white; font-size: 22px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+  #penToolbar .pen-toggle.active { background: linear-gradient(135deg, #B53737 0%, #D97A47 100%); transform: scale(1.05); }
+  #penToolbar .pen-tools { display: none; flex-direction: column; gap: 5px; padding: 9px 8px; background: rgba(255,255,255,0.96); border-radius: 22px; border: 1px solid var(--line, #E5DFD3); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+  #penToolbar.active .pen-tools { display: flex; }
+  #penToolbar .pt-row { display: flex; gap: 5px; }
+  #penToolbar .pt-color, #penToolbar .pt-width, #penToolbar .pt-eraser, #penToolbar .pt-clear { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--line, #E5DFD3); cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; font-size: 14px; background: white; }
+  #penToolbar .pt-color.active, #penToolbar .pt-width.active { border-color: var(--ink, #1A1A1A); transform: scale(1.1); }
+  @media print { #penToolbar { display: none !important; } #penLayer { display: none !important; } }
 </style>
 </head>
 <body>
@@ -2142,6 +2157,216 @@
 </div>
 
 </div><!-- /.container -->
+
+
+<!-- PEN MODE v4.1 — 펜 필기 toolbar 컨테이너 (JS가 동적으로 채움) -->
+<div id="penToolbar"></div>
+
+<script>
+  /* ============================================================ */
+  /* PEN MODE v4.1 — pointer-event SVG drawing layer              */
+  /* ============================================================ */
+  function buildPenTools(){
+    var bar = document.getElementById('penToolbar');
+    if(!bar){
+      /* HTML 컨테이너가 없으면 자동 생성 (안전망) */
+      bar = document.createElement('div');
+      bar.id = 'penToolbar';
+      document.body.appendChild(bar);
+    }
+    if(bar.getAttribute('data-built') === '1') return;
+    bar.setAttribute('data-built', '1');
+
+    /* Toggle button */
+    var toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'pen-toggle';
+    toggle.title = '필기 모드 켜기/끄기';
+    toggle.setAttribute('aria-label', '필기 모드');
+    toggle.innerHTML = '✎';
+    bar.appendChild(toggle);
+
+    /* Tool panel */
+    var tools = document.createElement('div');
+    tools.className = 'pen-tools';
+    bar.appendChild(tools);
+
+    /* Color row */
+    var COLORS = ['#1f1f1f', '#B53737', '#1F4E79', '#2A8B7F', '#D97A47'];
+    var rowC = document.createElement('div'); rowC.className = 'pt-row';
+    var currentColor = COLORS[1];
+    var eraserOn = false;
+    var eraseBtn;
+    COLORS.forEach(function(col, idx){
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'pt-color' + (idx===1 ? ' active' : '');
+      b.style.background = col; b.setAttribute('data-color', col);
+      b.addEventListener('click', function(){
+        currentColor = col;
+        var bs = bar.querySelectorAll('.pt-color');
+        for(var i=0;i<bs.length;i++) bs[i].classList.remove('active');
+        b.classList.add('active');
+        eraserOn = false;
+        if(eraseBtn) eraseBtn.classList.remove('active');
+      });
+      rowC.appendChild(b);
+    });
+    tools.appendChild(rowC);
+
+    /* Width row */
+    var WIDTHS = [1.5, 3, 6];
+    var rowW = document.createElement('div'); rowW.className = 'pt-row';
+    var currentWidth = WIDTHS[1];
+    WIDTHS.forEach(function(w, idx){
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'pt-width' + (idx===1 ? ' active' : '');
+      b.textContent = idx===0 ? '·' : (idx===1 ? '•' : '●');
+      b.setAttribute('data-width', w);
+      b.addEventListener('click', function(){
+        currentWidth = w;
+        var bs = bar.querySelectorAll('.pt-width');
+        for(var i=0;i<bs.length;i++) bs[i].classList.remove('active');
+        b.classList.add('active');
+      });
+      rowW.appendChild(b);
+    });
+    tools.appendChild(rowW);
+
+    /* Eraser + Clear row */
+    var rowE = document.createElement('div'); rowE.className = 'pt-row';
+    eraseBtn = document.createElement('button');
+    eraseBtn.type = 'button'; eraseBtn.className = 'pt-eraser';
+    eraseBtn.textContent = '⌫'; eraseBtn.title = '지우개';
+    eraseBtn.addEventListener('click', function(){
+      eraserOn = !eraserOn;
+      eraseBtn.classList.toggle('active', eraserOn);
+    });
+    rowE.appendChild(eraseBtn);
+
+    var clearBtn = document.createElement('button');
+    clearBtn.type = 'button'; clearBtn.className = 'pt-clear';
+    clearBtn.textContent = '✕'; clearBtn.title = '모두 지우기';
+    clearBtn.addEventListener('click', function(){
+      var layer = document.getElementById('penLayer');
+      if(layer) layer.innerHTML = '';
+    });
+    rowE.appendChild(clearBtn);
+    tools.appendChild(rowE);
+
+    /* SVG layer */
+    var layer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    layer.id = 'penLayer';
+    layer.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    document.body.appendChild(layer);
+
+    function syncLayerSize(){
+      var d = document.documentElement;
+      var h = Math.max(d.scrollHeight, d.offsetHeight, document.body.scrollHeight);
+      layer.setAttribute('width',  d.clientWidth);
+      layer.setAttribute('height', h);
+      layer.style.height = h + 'px';
+      layer.style.width  = '100%';
+    }
+    syncLayerSize();
+    window.addEventListener('resize', syncLayerSize);
+    if(window.ResizeObserver){
+      var ro = new ResizeObserver(syncLayerSize);
+      ro.observe(document.body);
+    }
+
+    /* Toggle pen mode */
+    var penOn = false;
+    toggle.addEventListener('click', function(){
+      penOn = !penOn;
+      bar.classList.toggle('active', penOn);
+      toggle.classList.toggle('active', penOn);
+      layer.classList.toggle('active', penOn);
+      syncLayerSize();
+    });
+
+    /* Drawing logic — Pointer Events */
+    var drawing = false;
+    var currentPath = null;
+    var pathPoints = [];
+
+    function getPoint(e){
+      var rect = layer.getBoundingClientRect();
+      return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    }
+
+    layer.addEventListener('pointerdown', function(e){
+      if(!penOn) return;
+      e.preventDefault();
+      layer.setPointerCapture(e.pointerId);
+      var pt = getPoint(e);
+
+      if(eraserOn){
+        var target = e.target;
+        if(target && target !== layer && target.tagName === 'path'){
+          target.parentNode.removeChild(target);
+        }
+        drawing = true;
+        return;
+      }
+      drawing = true;
+      currentPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      currentPath.setAttribute('stroke', currentColor);
+      currentPath.setAttribute('stroke-width', currentWidth);
+      currentPath.setAttribute('fill', 'none');
+      currentPath.setAttribute('stroke-linecap', 'round');
+      currentPath.setAttribute('stroke-linejoin', 'round');
+      pathPoints = [pt];
+      currentPath.setAttribute('d', 'M ' + pt.x + ' ' + pt.y);
+      layer.appendChild(currentPath);
+    });
+
+    layer.addEventListener('pointermove', function(e){
+      if(!penOn || !drawing) return;
+      var pt = getPoint(e);
+      if(eraserOn){
+        var target = e.target;
+        if(target && target !== layer && target.tagName === 'path'){
+          target.parentNode.removeChild(target);
+        }
+        return;
+      }
+      pathPoints.push(pt);
+      var d = 'M ' + pathPoints[0].x + ' ' + pathPoints[0].y;
+      for(var i=1; i<pathPoints.length; i++){
+        d += ' L ' + pathPoints[i].x + ' ' + pathPoints[i].y;
+      }
+      currentPath.setAttribute('d', d);
+    });
+
+    function endStroke(e){
+      if(!drawing) return;
+      drawing = false;
+      currentPath = null;
+      pathPoints = [];
+    }
+    layer.addEventListener('pointerup',     endStroke);
+    layer.addEventListener('pointercancel', endStroke);
+    layer.addEventListener('pointerleave',  endStroke);
+  }
+
+  /* Initialize on DOM ready */
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', buildPenTools);
+  } else {
+    buildPenTools();
+  }
+
+  /* Re-sync on font/image load */
+  window.addEventListener('load', function(){
+    var layer = document.getElementById('penLayer');
+    if(layer){
+      var d = document.documentElement;
+      var h = Math.max(d.scrollHeight, d.offsetHeight, document.body.scrollHeight);
+      layer.setAttribute('height', h);
+      layer.style.height = h + 'px';
+    }
+  });
+</script>
 
 </body>
 </html>
