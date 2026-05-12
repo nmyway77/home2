@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="목동서로영어학원">
+<meta name="copyright" content="© 목동서로영어학원 (0505.co.kr) — 무단 복제·배포 금지">
+<title>문장 배열 영작 — 드래그 연습 (Aimee Mullins - From TED to Fashion (Part 2))</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #EEF4FA 0%, #FFF8E7 100%);
+    min-height: 100vh;
+    color: #1F2937;
+    padding: 20px 12px 60px;
+  }
+  .container { max-width: 980px; margin: 0 auto; }
+
+  /* ============= Score display ============= */
+  .score-pill {
+    background: white;
+    border-radius: 20px;
+    padding: 6px 14px;
+    box-shadow: 0 1px 4px rgba(46,92,138,0.12);
+    font-size: 10pt;
+    color: #6B7280;
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .score-pill .score-num {
+    font-size: 14pt;
+    font-weight: 700;
+    color: #2E5C8A;
+  }
+
+  /* ============= Problem Card ============= */
+  .problem-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px 22px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    margin-bottom: 18px;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .problem-card.correct {
+    background: linear-gradient(135deg, #ECFDF5 0%, #FFFFFF 100%);
+    border: 2px solid #10B981;
+  }
+  .problem-card.incorrect {
+    background: linear-gradient(135deg, #FEF2F2 0%, #FFFFFF 100%);
+    border: 2px solid #EF4444;
+  }
+  .problem-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    gap: 12px;
+  }
+  .problem-num {
+    background: #2E5C8A;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 10pt;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .problem-card.correct .problem-num { background: #10B981; }
+  .problem-card.incorrect .problem-num { background: #EF4444; }
+  .problem-status {
+    font-size: 18pt;
+    line-height: 1;
+  }
+  .problem-ko {
+    font-size: 11pt;
+    font-weight: 600;
+    color: #1F2937;
+    margin: 6px 0 14px 0;
+    line-height: 1.5;
+  }
+
+  /* ============= Drop Areas ============= */
+
+  .answer-area {
+    min-height: 56px;
+    background: #FFF8E7;
+    border: 2px dashed #D97706;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: flex-start;
+    transition: background 0.2s;
+  }
+  .answer-area.drag-over {
+    background: #FFEEC2;
+  }
+  .answer-area:empty::before {
+    content: "여기에 단어를 끌어다 놓으세요";
+    color: #D97706;
+    opacity: 0.5;
+    font-size: 10pt;
+    padding: 8px 4px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .pool-area {
+    min-height: 56px;
+    background: #F3F4F6;
+    border: 2px dashed #B8C5D3;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: flex-start;
+    transition: background 0.2s;
+  }
+  .pool-area.drag-over {
+    background: #E5E7EB;
+  }
+
+  /* ============= Chips ============= */
+  .chip {
+    background: white;
+    border: 2px solid #2E5C8A;
+    color: #1F2937;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 10.5pt;
+    font-weight: 600;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    touch-action: manipulation;
+  }
+  .chip:hover {
+    background: #EEF4FA;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(46,92,138,0.15);
+  }
+  .chip:active { cursor: grabbing; }
+
+  .answer-area .chip {
+    background: #FEF3C7;
+    border-color: #D97706;
+  }
+  .answer-area .chip:hover {
+    background: #FDE68A;
+  }
+
+  /* Highlight wrong chip */
+  .chip.wrong-position {
+    background: #FEE2E2 !important;
+    border-color: #EF4444 !important;
+    animation: shake 0.4s;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+  }
+
+  /* Sortable ghost / drag styles - more pronounced for mobile clarity */
+  .sortable-ghost {
+    opacity: 0.35;
+    background: #D1D5DB !important;
+    border-color: #9CA3AF !important;
+  }
+  .sortable-chosen {
+    box-shadow: 0 6px 14px rgba(46,92,138,0.35) !important;
+  }
+  /* The cloned chip that follows the finger/cursor */
+  .sortable-drag {
+    background: #FEF3C7 !important;
+    border-color: #D97706 !important;
+    box-shadow: 0 12px 24px rgba(217,119,6,0.45) !important;
+    transform: scale(1.1) rotate(-2deg) !important;
+    cursor: grabbing !important;
+    opacity: 0.95 !important;
+    z-index: 9999 !important;
+  }
+
+  /* ============= Controls ============= */
+  .controls {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 6px;
+    font-size: 10pt;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.1s, background 0.2s;
+    font-family: inherit;
+  }
+  .btn:active { transform: scale(0.96); }
+  .btn-check {
+    background: #2E5C8A;
+    color: white;
+  }
+  .btn-check:hover { background: #244A6F; }
+  .btn-reset {
+    background: #F3F4F6;
+    color: #6B7280;
+    border: 1px solid #D1D5DB;
+  }
+  .btn-reset:hover { background: #E5E7EB; }
+  .btn-show {
+    background: white;
+    color: #D97706;
+    border: 1px solid #D97706;
+  }
+  .btn-show:hover { background: #FFF8E7; }
+  .btn-hint {
+    background: white;
+    color: #2E5C8A;
+    border: 1px solid #2E5C8A;
+  }
+  .btn-hint:hover { background: #EEF4FA; }
+
+  /* ============= Feedback ============= */
+  .feedback {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 10pt;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.success {
+    background: #D1FAE5;
+    color: #065F46;
+    border-left: 4px solid #10B981;
+  }
+  .feedback.error {
+    background: #FEE2E2;
+    color: #991B1B;
+    border-left: 4px solid #EF4444;
+  }
+  .feedback.info {
+    background: #FFF8E7;
+    color: #92400E;
+    border-left: 4px solid #D97706;
+  }
+  .feedback .answer-show {
+    margin-top: 6px;
+    font-family: Arial, sans-serif;
+    font-weight: 700;
+    color: #2E5C8A;
+  }
+
+  /* ============= Global controls at top ============= */
+  .global-controls {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+
+  /* ============= Footer ============= */
+  .footer {
+    text-align: center;
+    color: #9CA3AF;
+    font-size: 9pt;
+    padding: 20px 0;
+    margin-top: 20px;
+    line-height: 1.8;
+  }
+  .footer .brand {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 4px 14px;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 1px 4px rgba(46,92,138,0.10);
+    color: #2E5C8A;
+    font-weight: 700;
+    font-size: 9pt;
+  }
+  .footer .brand a {
+    color: #D97706;
+    text-decoration: none;
+    margin-left: 4px;
+  }
+  .footer .brand a:hover { text-decoration: underline; }
+
+  /* ============= Responsive ============= */
+  @media (max-width: 600px) {
+    body { padding: 12px 8px 40px; }
+    .problem-card { padding: 14px 16px; }
+    .problem-ko { font-size: 10.5pt; }
+    .chip { padding: 6px 11px; font-size: 10pt; }
+    .btn { padding: 7px 14px; font-size: 9.5pt; }
+    .score-pill .score-num { font-size: 12pt; }
+  }
+
+  /* ══ 펜 필기 모드 v1.0 ══ */
+  #penToolbar { position:fixed; bottom:20px; right:20px; z-index:10000; display:flex; flex-direction:row; gap:8px; background:rgba(255,255,255,0.96); padding:8px; border-radius:30px; box-shadow:0 4px 20px rgba(0,0,0,0.18); backdrop-filter:blur(10px); align-items:center; }
+  #penToolbar .pen-btn { width:42px; height:42px; border:none; background:#f0f0f0; border-radius:50%; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; transition:all 0.15s; padding:0; font-family:inherit; }
+  #penToolbar .pen-btn:hover { background:#e0e0e0; }
+  #penToolbar .pen-btn.active { background:#2E75B6; color:white; }
+  #penToolbar .pen-main { background:linear-gradient(135deg,#1F3864,#2E75B6); color:white; font-size:20px; }
+  #penToolbar .pen-main.active { background:linear-gradient(135deg,#dc2626,#ef4444); transform:scale(1.05); }
+  #penToolbar .pen-tools { display:none; flex-direction:row; gap:6px; align-items:center; padding-left:8px; border-left:1px solid #ddd; margin-left:4px; }
+  #penToolbar .pen-tools.show { display:flex; }
+  #penToolbar .pen-color { width:30px; height:30px; border:2px solid white; border-radius:50%; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.2); transition:transform 0.15s; padding:0; }
+  #penToolbar .pen-color:hover { transform:scale(1.1); }
+  #penToolbar .pen-color.selected { border:2px solid #333; transform:scale(1.18); box-shadow:0 2px 6px rgba(0,0,0,0.3); }
+  #penToolbar .pen-width { width:34px; height:34px; border:none; background:#f0f0f0; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.15s; padding:0; }
+  #penToolbar .pen-width:hover { background:#e0e0e0; }
+  #penToolbar .pen-width span { background:#333; border-radius:50%; display:inline-block; }
+  #penToolbar .pen-width.selected { background:#1F3864; }
+  #penToolbar .pen-width.selected span { background:white !important; }
+  #penLayer { position:absolute; top:0; left:0; pointer-events:none; z-index:998; overflow:visible; }
+  #penLayer.active { pointer-events:auto; touch-action:none; cursor:crosshair; }
+  @media print { #penToolbar { display:none !important; } #penLayer { display:none !important; } }
+  @media (max-width:600px) {
+    #penToolbar { bottom:10px; right:10px; padding:6px; gap:4px; }
+    #penToolbar .pen-btn, #penToolbar .pen-width { width:38px; height:38px; }
+    #penToolbar .pen-color { width:26px; height:26px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="global-controls">
+    <button class="btn btn-reset" id="resetAllBtn">🔄 전체 초기화</button>
+    <button class="btn btn-check" id="checkAllBtn">✅ 전체 채점</button>
+    <div class="score-pill">정답 <span class="score-num"><span id="score">0</span>/41</span></div>
+  </div>
+
+  <div id="problems"></div>
+
+  <div class="footer">
+    Aimee Mullins - From TED to Fashion (Part 2) · 41문항 드래그 배열영작<br>
+    <span class="brand">목동서로영어제작 · <a href="https://0505.co.kr" target="_blank" rel="noopener">0505.co.kr</a></span>
+  </div>
+
+</div>
+
+<!-- 본 자료는 목동서로영어학원의 제작물입니다. 무단 복제·배포 금지. (0505.co.kr) -->
+<!-- © 목동서로영어학원 · https://0505.co.kr · 학원이메일 -->
+<!-- All content © 목동서로영어학원 -->
+
+<script>
+/*! Sortable 1.15.7 - MIT | git://github.com/SortableJS/Sortable.git */
+!function(t,e){"object"==typeof exports&&"undefined"!=typeof module?module.exports=e():"function"==typeof define&&define.amd?define(e):(t=t||self).Sortable=e()}(this,function(){"use strict";function o(t,e){(null==e||e>t.length)&&(e=t.length);for(var n=0,o=Array(e);n<e;n++)o[n]=t[n];return o}function i(t,e,n){return(e=function(t){t=function(t,e){if("object"!=typeof t||!t)return t;var n=t[Symbol.toPrimitive];if(void 0===n)return("string"===e?String:Number)(t);e=n.call(t,e||"default");if("object"!=typeof e)return e;throw new TypeError("@@toPrimitive must return a primitive value.")}(t,"string");return"symbol"==typeof t?t:t+""}(e))in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}function a(){return(a=Object.assign?Object.assign.bind():function(t){for(var e=1;e<arguments.length;e++){var n,o=arguments[e];for(n in o)!{}.hasOwnProperty.call(o,n)||(t[n]=o[n])}return t}).apply(null,arguments)}function r(e,t){var n,o=Object.keys(e);return Object.getOwnPropertySymbols&&(n=Object.getOwnPropertySymbols(e),t&&(n=n.filter(function(t){return Object.getOwnPropertyDescriptor(e,t).enumerable})),o.push.apply(o,n)),o}function I(e){for(var t=1;t<arguments.length;t++){var n=null!=arguments[t]?arguments[t]:{};t%2?r(Object(n),!0).forEach(function(t){i(e,t,n[t])}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(n)):r(Object(n)).forEach(function(t){Object.defineProperty(e,t,Object.getOwnPropertyDescriptor(n,t))})}return e}function l(t,e){if(null==t)return{};var n,o=function(t,e){if(null==t)return{};var n,o={};for(n in t)if({}.hasOwnProperty.call(t,n)){if(-1!==e.indexOf(n))continue;o[n]=t[n]}return o}(t,e);if(Object.getOwnPropertySymbols)for(var i=Object.getOwnPropertySymbols(t),r=0;r<i.length;r++)n=i[r],-1===e.indexOf(n)&&{}.propertyIsEnumerable.call(t,n)&&(o[n]=t[n]);return o}function e(t){return function(t){if(Array.isArray(t))return o(t)}(t)||function(t){if("undefined"!=typeof Symbol&&null!=t[Symbol.iterator]||null!=t["@@iterator"])return Array.from(t)}(t)||function(t,e){if(t){if("string"==typeof t)return o(t,e);var n={}.toString.call(t).slice(8,-1);return"Map"===(n="Object"===n&&t.constructor?t.constructor.name:n)||"Set"===n?Array.from(t):"Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)?o(t,e):void 0}}(t)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function s(t){return(s="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function t(t){if("undefined"!=typeof window&&window.navigator)return!!navigator.userAgent.match(t)}var y=t(/(?:Trident.*rv[ :]?11\.|msie|iemobile|Windows Phone)/i),w=t(/Edge/i),c=t(/firefox/i),u=t(/safari/i)&&!t(/chrome/i)&&!t(/android/i),d=t(/iP(ad|od|hone)/i),n=t(/chrome/i)&&t(/android/i),h={capture:!1,passive:!1};function f(t,e,n){t.addEventListener(e,n,!y&&h)}function p(t,e,n){t.removeEventListener(e,n,!y&&h)}function g(t,e){if(e&&(">"===e[0]&&(e=e.substring(1)),t))try{if(t.matches)return t.matches(e);if(t.msMatchesSelector)return t.msMatchesSelector(e);if(t.webkitMatchesSelector)return t.webkitMatchesSelector(e)}catch(t){return}}function m(t){return t.host&&t!==document&&t.host.nodeType&&t.host!==t?t.host:t.parentNode}function P(t,e,n,o){if(t){n=n||document;do{if(null!=e&&(">"!==e[0]||t.parentNode===n)&&g(t,e)||o&&t===n)return t}while(t!==n&&(t=m(t)))}return null}var v,b=/\s+/g;function k(t,e,n){var o;t&&e&&(t.classList?t.classList[n?"add":"remove"](e):(o=(" "+t.className+" ").replace(b," ").replace(" "+e+" "," "),t.className=(o+(n?" "+e:"")).replace(b," ")))}function R(t,e,n){var o=t&&t.style;if(o){if(void 0===n)return document.defaultView&&document.defaultView.getComputedStyle?n=document.defaultView.getComputedStyle(t,""):t.currentStyle&&(n=t.currentStyle),void 0===e?n:n[e];o[e=!(e in o||-1!==e.indexOf("webkit"))?"-webkit-"+e:e]=n+("string"==typeof n?"":"px")}}function D(t,e){var n="";if("string"==typeof t)n=t;else do{var o=R(t,"transform")}while(o&&"none"!==o&&(n=o+" "+n),!e&&(t=t.parentNode));var i=window.DOMMatrix||window.WebKitCSSMatrix||window.CSSMatrix||window.MSCSSMatrix;return i&&new i(n)}function E(t,e,n){if(t){var o=t.getElementsByTagName(e),i=0,r=o.length;if(n)for(;i<r;i++)n(o[i],i);return o}return[]}function O(){var t=document.scrollingElement;return t||document.documentElement}function X(t,e,n,o,i){if(t.getBoundingClientRect||t===window){var r,a,l,s,c,u,d=t!==window&&t.parentNode&&t!==O()?(a=(r=t.getBoundingClientRect()).top,l=r.left,s=r.bottom,c=r.right,u=r.height,r.width):(l=a=0,s=window.innerHeight,c=window.innerWidth,u=window.innerHeight,window.innerWidth);if((e||n)&&t!==window&&(i=i||t.parentNode,!y))do{if(i&&i.getBoundingClientRect&&("none"!==R(i,"transform")||n&&"static"!==R(i,"position"))){var h=i.getBoundingClientRect();a-=h.top+parseInt(R(i,"border-top-width")),l-=h.left+parseInt(R(i,"border-left-width")),s=a+r.height,c=l+r.width;break}}while(i=i.parentNode);return o&&t!==window&&(o=(e=D(i||t))&&e.a,t=e&&e.d,e&&(s=(a/=t)+(u/=t),c=(l/=o)+(d/=o))),{top:a,left:l,bottom:s,right:c,width:d,height:u}}}function Y(t,e,n){for(var o=M(t,!0),i=X(t)[e];o;){var r=X(o)[n];if(!("top"===n||"left"===n?r<=i:i<=r))return o;if(o===O())break;o=M(o,!1)}return!1}function B(t,e,n,o){for(var i=0,r=0,a=t.children;r<a.length;){if("none"!==a[r].style.display&&a[r]!==Ht.ghost&&(o||a[r]!==Ht.dragged)&&P(a[r],n.draggable,t,!1)){if(i===e)return a[r];i++}r++}return null}function F(t,e){for(var n=t.lastElementChild;n&&(n===Ht.ghost||"none"===R(n,"display")||e&&!g(n,e));)n=n.previousElementSibling;return n||null}function j(t,e){var n=0;if(!t||!t.parentNode)return-1;for(;t=t.previousElementSibling;)"TEMPLATE"===t.nodeName.toUpperCase()||t===Ht.clone||e&&!g(t,e)||n++;return n}function S(t){var e=0,n=0,o=O();if(t)do{var i=D(t),r=i.a,i=i.d}while(e+=t.scrollLeft*r,n+=t.scrollTop*i,t!==o&&(t=t.parentNode));return[e,n]}function M(t,e){if(!t||!t.getBoundingClientRect)return O();var n=t,o=!1;do{if(n.clientWidth<n.scrollWidth||n.clientHeight<n.scrollHeight){var i=R(n);if(n.clientWidth<n.scrollWidth&&("auto"==i.overflowX||"scroll"==i.overflowX)||n.clientHeight<n.scrollHeight&&("auto"==i.overflowY||"scroll"==i.overflowY)){if(!n.getBoundingClientRect||n===document.body)return O();if(o||e)return n;o=!0}}}while(n=n.parentNode);return O()}function _(t,e){return Math.round(t.top)===Math.round(e.top)&&Math.round(t.left)===Math.round(e.left)&&Math.round(t.height)===Math.round(e.height)&&Math.round(t.width)===Math.round(e.width)}function C(e,n){return function(){var t;v||(1===(t=arguments).length?e.call(this,t[0]):e.apply(this,t),v=setTimeout(function(){v=void 0},n))}}function H(t,e,n){t.scrollLeft+=e,t.scrollTop+=n}function T(t){var e=window.Polymer,n=window.jQuery||window.Zepto;return e&&e.dom?e.dom(t).cloneNode(!0):n?n(t).clone(!0)[0]:t.cloneNode(!0)}function x(t,e){R(t,"position","absolute"),R(t,"top",e.top),R(t,"left",e.left),R(t,"width",e.width),R(t,"height",e.height)}function A(t){R(t,"position",""),R(t,"top",""),R(t,"left",""),R(t,"width",""),R(t,"height","")}function L(n,o,i){var r={};return Array.from(n.children).forEach(function(t){var e;P(t,o.draggable,n,!1)&&!t.animated&&t!==i&&(e=X(t),r.left=Math.min(null!==(t=r.left)&&void 0!==t?t:1/0,e.left),r.top=Math.min(null!==(t=r.top)&&void 0!==t?t:1/0,e.top),r.right=Math.max(null!==(t=r.right)&&void 0!==t?t:-1/0,e.right),r.bottom=Math.max(null!==(t=r.bottom)&&void 0!==t?t:-1/0,e.bottom))}),r.width=r.right-r.left,r.height=r.bottom-r.top,r.x=r.left,r.y=r.top,r}var K="Sortable"+(new Date).getTime();function N(){var e,o=[];return{captureAnimationState:function(){o=[],this.options.animation&&[].slice.call(this.el.children).forEach(function(t){var e,n;"none"!==R(t,"display")&&t!==Ht.ghost&&(o.push({target:t,rect:X(t)}),e=I({},o[o.length-1].rect),!t.thisAnimationDuration||(n=D(t,!0))&&(e.top-=n.f,e.left-=n.e),t.fromRect=e)})},addAnimationState:function(t){o.push(t)},removeAnimationState:function(t){o.splice(function(t,e){for(var n in t)if(t.hasOwnProperty(n))for(var o in e)if(e.hasOwnProperty(o)&&e[o]===t[n][o])return Number(n);return-1}(o,{target:t}),1)},animateAll:function(t){var c=this;if(!this.options.animation)return clearTimeout(e),void("function"==typeof t&&t());var u=!1,d=0;o.forEach(function(t){var e=0,n=t.target,o=n.fromRect,i=X(n),r=n.prevFromRect,a=n.prevToRect,l=t.rect,s=D(n,!0);s&&(i.top-=s.f,i.left-=s.e),n.toRect=i,n.thisAnimationDuration&&_(r,i)&&!_(o,i)&&(l.top-i.top)/(l.left-i.left)==(o.top-i.top)/(o.left-i.left)&&(t=l,s=r,r=a,a=c.options,e=Math.sqrt(Math.pow(s.top-t.top,2)+Math.pow(s.left-t.left,2))/Math.sqrt(Math.pow(s.top-r.top,2)+Math.pow(s.left-r.left,2))*a.animation),_(i,o)||(n.prevFromRect=o,n.prevToRect=i,e=e||c.options.animation,c.animate(n,l,i,e)),e&&(u=!0,d=Math.max(d,e),clearTimeout(n.animationResetTimer),n.animationResetTimer=setTimeout(function(){n.animationTime=0,n.prevFromRect=null,n.fromRect=null,n.prevToRect=null,n.thisAnimationDuration=null},e),n.thisAnimationDuration=e)}),clearTimeout(e),u?e=setTimeout(function(){"function"==typeof t&&t()},d):"function"==typeof t&&t(),o=[]},animate:function(t,e,n,o){var i,r;o&&(R(t,"transition",""),R(t,"transform",""),i=(r=D(this.el))&&r.a,r=r&&r.d,i=(e.left-n.left)/(i||1),r=(e.top-n.top)/(r||1),t.animatingX=!!i,t.animatingY=!!r,R(t,"transform","translate3d("+i+"px,"+r+"px,0)"),this.forRepaintDummy=t.offsetWidth,R(t,"transition","transform "+o+"ms"+(this.options.easing?" "+this.options.easing:"")),R(t,"transform","translate3d(0,0,0)"),"number"==typeof t.animated&&clearTimeout(t.animated),t.animated=setTimeout(function(){R(t,"transition",""),R(t,"transform",""),t.animated=!1,t.animatingX=!1,t.animatingY=!1},o))}}}var W=[],z={initializeByDefault:!0},G={mount:function(e){for(var t in z)!z.hasOwnProperty(t)||t in e||(e[t]=z[t]);W.forEach(function(t){if(t.pluginName===e.pluginName)throw"Sortable: Cannot mount plugin ".concat(e.pluginName," more than once")}),W.push(e)},pluginEvent:function(e,n,o){var t=this;this.eventCanceled=!1,o.cancel=function(){t.eventCanceled=!0};var i=e+"Global";W.forEach(function(t){n[t.pluginName]&&(n[t.pluginName][i]&&n[t.pluginName][i](I({sortable:n},o)),n.options[t.pluginName]&&n[t.pluginName][e]&&n[t.pluginName][e](I({sortable:n},o)))})},initializePlugins:function(n,o,i,t){for(var e in W.forEach(function(t){var e=t.pluginName;(n.options[e]||t.initializeByDefault)&&((t=new t(n,o,n.options)).sortable=n,t.options=n.options,n[e]=t,a(i,t.defaults))}),n.options){var r;n.options.hasOwnProperty(e)&&(void 0!==(r=this.modifyOption(n,e,n.options[e]))&&(n.options[e]=r))}},getEventProperties:function(e,n){var o={};return W.forEach(function(t){"function"==typeof t.eventProperties&&a(o,t.eventProperties.call(n[t.pluginName],e))}),o},modifyOption:function(e,n,o){var i;return W.forEach(function(t){e[t.pluginName]&&t.optionListeners&&"function"==typeof t.optionListeners[n]&&(i=t.optionListeners[n].call(e[t.pluginName],o))}),i}};function U(t){var e=t.sortable,n=t.rootEl,o=t.name,i=t.targetEl,r=t.cloneEl,a=t.toEl,l=t.fromEl,s=t.oldIndex,c=t.newIndex,u=t.oldDraggableIndex,d=t.newDraggableIndex,h=t.originalEvent,f=t.putSortable,p=t.extraEventProperties;if(e=e||n&&n[K]){var g,m=e.options,t="on"+o.charAt(0).toUpperCase()+o.substr(1);!window.CustomEvent||y||w?(g=document.createEvent("Event")).initEvent(o,!0,!0):g=new CustomEvent(o,{bubbles:!0,cancelable:!0}),g.to=a||n,g.from=l||n,g.item=i||n,g.clone=r,g.oldIndex=s,g.newIndex=c,g.oldDraggableIndex=u,g.newDraggableIndex=d,g.originalEvent=h,g.pullMode=f?f.lastPutMode:void 0;var v,b=I(I({},p),G.getEventProperties(o,e));for(v in b)g[v]=b[v];n&&n.dispatchEvent(g),m[t]&&m[t].call(e,g)}}function q(t,e){var n=(o=2<arguments.length&&void 0!==arguments[2]?arguments[2]:{}).evt,o=l(o,V);G.pluginEvent.bind(Ht)(t,e,I({dragEl:$,parentEl:Q,ghostEl:J,rootEl:tt,nextEl:et,lastDownEl:nt,cloneEl:ot,cloneHidden:it,dragStarted:vt,putSortable:ut,activeSortable:Ht.active,originalEvent:n,oldIndex:rt,oldDraggableIndex:lt,newIndex:at,newDraggableIndex:st,hideGhostForTarget:Yt,unhideGhostForTarget:Bt,cloneNowHidden:function(){it=!0},cloneNowShown:function(){it=!1},dispatchSortableEvent:function(t){Z({sortable:e,name:t,originalEvent:n})}},o))}var V=["evt"];function Z(t){U(I({putSortable:ut,cloneEl:ot,targetEl:$,rootEl:tt,oldIndex:rt,oldDraggableIndex:lt,newIndex:at,newDraggableIndex:st},t))}var $,Q,J,tt,et,nt,ot,it,rt,at,lt,st,ct,ut,dt,ht,ft,pt,gt,mt,vt,bt,yt,wt,Dt,Et=!1,St=!1,_t=[],Ct=!1,Tt=!1,xt=[],Ot=!1,Mt=[],At="undefined"!=typeof document,Nt=d,It=w||y?"cssFloat":"float",Pt=At&&!n&&!d&&"draggable"in document.createElement("div"),kt=function(){if(At){if(y)return!1;var t=document.createElement("x");return t.style.cssText="pointer-events:auto","auto"===t.style.pointerEvents}}(),Rt=function(t,e){var n=R(t),o=parseInt(n.width)-parseInt(n.paddingLeft)-parseInt(n.paddingRight)-parseInt(n.borderLeftWidth)-parseInt(n.borderRightWidth),i=B(t,0,e),r=B(t,1,e),a=i&&R(i),l=r&&R(r),s=a&&parseInt(a.marginLeft)+parseInt(a.marginRight)+X(i).width,t=l&&parseInt(l.marginLeft)+parseInt(l.marginRight)+X(r).width;if("flex"===n.display)return"column"===n.flexDirection||"column-reverse"===n.flexDirection?"vertical":"horizontal";if("grid"===n.display)return n.gridTemplateColumns.split(" ").length<=1?"vertical":"horizontal";if(i&&a.float&&"none"!==a.float){e="left"===a.float?"left":"right";return!r||"both"!==l.clear&&l.clear!==e?"horizontal":"vertical"}return i&&("block"===a.display||"flex"===a.display||"table"===a.display||"grid"===a.display||o<=s&&"none"===n[It]||r&&"none"===n[It]&&o<s+t)?"vertical":"horizontal"},Xt=function(t){function l(r,a){return function(t,e,n,o){var i=t.options.group.name&&e.options.group.name&&t.options.group.name===e.options.group.name;if(null==r&&(a||i))return!0;if(null==r||!1===r)return!1;if(a&&"clone"===r)return r;if("function"==typeof r)return l(r(t,e,n,o),a)(t,e,n,o);e=(a?t:e).options.group.name;return!0===r||"string"==typeof r&&r===e||r.join&&-1<r.indexOf(e)}}var e={},n=t.group;n&&"object"==s(n)||(n={name:n}),e.name=n.name,e.checkPull=l(n.pull,!0),e.checkPut=l(n.put),e.revertClone=n.revertClone,t.group=e},Yt=function(){!kt&&J&&R(J,"display","none")},Bt=function(){!kt&&J&&R(J,"display","")};At&&!n&&document.addEventListener("click",function(t){if(St)return t.preventDefault(),t.stopPropagation&&t.stopPropagation(),t.stopImmediatePropagation&&t.stopImmediatePropagation(),St=!1},!0);function Ft(t){if($){t=t.touches?t.touches[0]:t;var e=(i=t.clientX,r=t.clientY,_t.some(function(t){var e=t[K].options.emptyInsertThreshold;if(e&&!F(t)){var n=X(t),o=i>=n.left-e&&i<=n.right+e,e=r>=n.top-e&&r<=n.bottom+e;return o&&e?a=t:void 0}}),a);if(e){var n,o={};for(n in t)t.hasOwnProperty(n)&&(o[n]=t[n]);o.target=o.rootEl=e,o.preventDefault=void 0,o.stopPropagation=void 0,e[K]._onDragOver(o)}}var i,r,a}function jt(t){$&&$.parentNode[K]._isOutsideThisEl(t.target)}function Ht(t,e){if(!t||!t.nodeType||1!==t.nodeType)throw"Sortable: `el` must be an HTMLElement, not ".concat({}.toString.call(t));this.el=t,this.options=e=a({},e),t[K]=this;var n,o,i={group:null,sort:!0,disabled:!1,store:null,handle:null,draggable:/^[uo]l$/i.test(t.nodeName)?">li":">*",swapThreshold:1,invertSwap:!1,invertedSwapThreshold:null,removeCloneOnHide:!0,direction:function(){return Rt(t,this.options)},ghostClass:"sortable-ghost",chosenClass:"sortable-chosen",dragClass:"sortable-drag",ignore:"a, img",filter:null,preventOnFilter:!0,animation:0,easing:null,setData:function(t,e){t.setData("Text",e.textContent)},dropBubble:!1,dragoverBubble:!1,dataIdAttr:"data-id",delay:0,delayOnTouchOnly:!1,touchStartThreshold:(Number.parseInt?Number:window).parseInt(window.devicePixelRatio,10)||1,forceFallback:!1,fallbackClass:"sortable-fallback",fallbackOnBody:!1,fallbackTolerance:0,fallbackOffset:{x:0,y:0},supportPointer:!1!==Ht.supportPointer&&"PointerEvent"in window&&(!u||d),emptyInsertThreshold:5};for(n in G.initializePlugins(this,t,i),i)n in e||(e[n]=i[n]);for(o in Xt(e),this)"_"===o.charAt(0)&&"function"==typeof this[o]&&(this[o]=this[o].bind(this));this.nativeDraggable=!e.forceFallback&&Pt,this.nativeDraggable&&(this.options.touchStartThreshold=1),e.supportPointer?f(t,"pointerdown",this._onTapStart):(f(t,"mousedown",this._onTapStart),f(t,"touchstart",this._onTapStart)),this.nativeDraggable&&(f(t,"dragover",this),f(t,"dragenter",this)),_t.push(this.el),e.store&&e.store.get&&this.sort(e.store.get(this)||[]),a(this,N())}function Lt(t,e,n,o,i,r,a,l){var s,c,u=t[K],d=u.options.onMove;return!window.CustomEvent||y||w?(s=document.createEvent("Event")).initEvent("move",!0,!0):s=new CustomEvent("move",{bubbles:!0,cancelable:!0}),s.to=e,s.from=t,s.dragged=n,s.draggedRect=o,s.related=i||e,s.relatedRect=r||X(e),s.willInsertAfter=l,s.originalEvent=a,t.dispatchEvent(s),c=d?d.call(u,s,a):c}function Kt(t){t.draggable=!1}function Wt(){Ot=!1}function zt(t){return setTimeout(t,0)}function Gt(t){return clearTimeout(t)}Ht.prototype={constructor:Ht,_isOutsideThisEl:function(t){this.el.contains(t)||t===this.el||(bt=null)},_getDirection:function(t,e){return"function"==typeof this.options.direction?this.options.direction.call(this,t,e,$):this.options.direction},_onTapStart:function(e){if(e.cancelable){var n=this,o=this.el,t=this.options,i=t.preventOnFilter,r=e.type,a=e.touches&&e.touches[0]||e.pointerType&&"touch"===e.pointerType&&e,l=(a||e).target,s=e.target.shadowRoot&&(e.path&&e.path[0]||e.composedPath&&e.composedPath()[0])||l,c=t.filter;if(!function(t){Mt.length=0;var e=t.getElementsByTagName("input"),n=e.length;for(;n--;){var o=e[n];o.checked&&Mt.push(o)}}(o),!$&&!(/mousedown|pointerdown/.test(r)&&0!==e.button||t.disabled)&&!s.isContentEditable&&(this.nativeDraggable||!u||!l||"SELECT"!==l.tagName.toUpperCase())&&!((l=P(l,t.draggable,o,!1))&&l.animated||nt===l)){if(rt=j(l),lt=j(l,t.draggable),"function"==typeof c){if(c.call(this,e,l,this))return Z({sortable:n,rootEl:s,name:"filter",targetEl:l,toEl:o,fromEl:o}),q("filter",n,{evt:e}),void(i&&e.preventDefault())}else if(c=c&&c.split(",").some(function(t){if(t=P(s,t.trim(),o,!1))return Z({sortable:n,rootEl:t,name:"filter",targetEl:l,fromEl:o,toEl:o}),q("filter",n,{evt:e}),!0}))return void(i&&e.preventDefault());t.handle&&!P(s,t.handle,o,!1)||this._prepareDragStart(e,a,l)}}},_prepareDragStart:function(t,e,n){var o,i=this,r=i.el,a=i.options,l=r.ownerDocument;n&&!$&&n.parentNode===r&&(o=X(n),tt=r,Q=($=n).parentNode,et=$.nextSibling,nt=n,ct=a.group,dt={target:Ht.dragged=$,clientX:(e||t).clientX,clientY:(e||t).clientY},gt=dt.clientX-o.left,mt=dt.clientY-o.top,this._lastX=(e||t).clientX,this._lastY=(e||t).clientY,$.style["will-change"]="all",o=function(){q("delayEnded",i,{evt:t}),Ht.eventCanceled?i._onDrop():(i._disableDelayedDragEvents(),!c&&i.nativeDraggable&&($.draggable=!0),i._triggerDragStart(t,e),Z({sortable:i,name:"choose",originalEvent:t}),k($,a.chosenClass,!0))},a.ignore.split(",").forEach(function(t){E($,t.trim(),Kt)}),f(l,"dragover",Ft),f(l,"mousemove",Ft),f(l,"touchmove",Ft),a.supportPointer?(f(l,"pointerup",i._onDrop),this.nativeDraggable||f(l,"pointercancel",i._onDrop)):(f(l,"mouseup",i._onDrop),f(l,"touchend",i._onDrop),f(l,"touchcancel",i._onDrop)),c&&this.nativeDraggable&&(this.options.touchStartThreshold=4,$.draggable=!0),q("delayStart",this,{evt:t}),!a.delay||a.delayOnTouchOnly&&!e||this.nativeDraggable&&(w||y)?o():Ht.eventCanceled?this._onDrop():(a.supportPointer?(f(l,"pointerup",i._disableDelayedDrag),f(l,"pointercancel",i._disableDelayedDrag)):(f(l,"mouseup",i._disableDelayedDrag),f(l,"touchend",i._disableDelayedDrag),f(l,"touchcancel",i._disableDelayedDrag)),f(l,"mousemove",i._delayedDragTouchMoveHandler),f(l,"touchmove",i._delayedDragTouchMoveHandler),a.supportPointer&&f(l,"pointermove",i._delayedDragTouchMoveHandler),i._dragStartTimer=setTimeout(o,a.delay)))},_delayedDragTouchMoveHandler:function(t){t=t.touches?t.touches[0]:t;Math.max(Math.abs(t.clientX-this._lastX),Math.abs(t.clientY-this._lastY))>=Math.floor(this.options.touchStartThreshold/(this.nativeDraggable&&window.devicePixelRatio||1))&&this._disableDelayedDrag()},_disableDelayedDrag:function(){$&&Kt($),clearTimeout(this._dragStartTimer),this._disableDelayedDragEvents()},_disableDelayedDragEvents:function(){var t=this.el.ownerDocument;p(t,"mouseup",this._disableDelayedDrag),p(t,"touchend",this._disableDelayedDrag),p(t,"touchcancel",this._disableDelayedDrag),p(t,"pointerup",this._disableDelayedDrag),p(t,"pointercancel",this._disableDelayedDrag),p(t,"mousemove",this._delayedDragTouchMoveHandler),p(t,"touchmove",this._delayedDragTouchMoveHandler),p(t,"pointermove",this._delayedDragTouchMoveHandler)},_triggerDragStart:function(t,e){e=e||"touch"==t.pointerType&&t,!this.nativeDraggable||e?this.options.supportPointer?f(document,"pointermove",this._onTouchMove):f(document,e?"touchmove":"mousemove",this._onTouchMove):(f($,"dragend",this),f(tt,"dragstart",this._onDragStart));try{document.selection?zt(function(){document.selection.empty()}):window.getSelection().removeAllRanges()}catch(t){}},_dragStarted:function(t,e){var n;Et=!1,tt&&$?(q("dragStarted",this,{evt:e}),this.nativeDraggable&&f(document,"dragover",jt),n=this.options,t||k($,n.dragClass,!1),k($,n.ghostClass,!0),Ht.active=this,t&&this._appendGhost(),Z({sortable:this,name:"start",originalEvent:e})):this._nulling()},_emulateDragOver:function(){if(ht){this._lastX=ht.clientX,this._lastY=ht.clientY,Yt();for(var t=document.elementFromPoint(ht.clientX,ht.clientY),e=t;t&&t.shadowRoot&&(t=t.shadowRoot.elementFromPoint(ht.clientX,ht.clientY))!==e;)e=t;if($.parentNode[K]._isOutsideThisEl(t),e)do{if(e[K])if(e[K]._onDragOver({clientX:ht.clientX,clientY:ht.clientY,target:t,rootEl:e})&&!this.options.dragoverBubble)break}while(e=m(t=e));Bt()}},_onTouchMove:function(t){if(dt){var e=this.options,n=e.fallbackTolerance,o=e.fallbackOffset,i=t.touches?t.touches[0]:t,r=J&&D(J,!0),a=J&&r&&r.a,l=J&&r&&r.d,e=Nt&&Dt&&S(Dt),a=(i.clientX-dt.clientX+o.x)/(a||1)+(e?e[0]-xt[0]:0)/(a||1),l=(i.clientY-dt.clientY+o.y)/(l||1)+(e?e[1]-xt[1]:0)/(l||1);if(!Ht.active&&!Et){if(n&&Math.max(Math.abs(i.clientX-this._lastX),Math.abs(i.clientY-this._lastY))<n)return;this._onDragStart(t,!0)}J&&(r?(r.e+=a-(ft||0),r.f+=l-(pt||0)):r={a:1,b:0,c:0,d:1,e:a,f:l},r="matrix(".concat(r.a,",").concat(r.b,",").concat(r.c,",").concat(r.d,",").concat(r.e,",").concat(r.f,")"),R(J,"webkitTransform",r),R(J,"mozTransform",r),R(J,"msTransform",r),R(J,"transform",r),ft=a,pt=l,ht=i),t.cancelable&&t.preventDefault()}},_appendGhost:function(){if(!J){var t=this.options.fallbackOnBody?document.body:tt,e=X($,!0,Nt,!0,t),n=this.options;if(Nt){for(Dt=t;"static"===R(Dt,"position")&&"none"===R(Dt,"transform")&&Dt!==document;)Dt=Dt.parentNode;Dt!==document.body&&Dt!==document.documentElement?(Dt===document&&(Dt=O()),e.top+=Dt.scrollTop,e.left+=Dt.scrollLeft):Dt=O(),xt=S(Dt)}k(J=$.cloneNode(!0),n.ghostClass,!1),k(J,n.fallbackClass,!0),k(J,n.dragClass,!0),R(J,"transition",""),R(J,"transform",""),R(J,"box-sizing","border-box"),R(J,"margin",0),R(J,"top",e.top),R(J,"left",e.left),R(J,"width",e.width),R(J,"height",e.height),R(J,"opacity","0.8"),R(J,"position",Nt?"absolute":"fixed"),R(J,"zIndex","100000"),R(J,"pointerEvents","none"),Ht.ghost=J,t.appendChild(J),R(J,"transform-origin",gt/parseInt(J.style.width)*100+"% "+mt/parseInt(J.style.height)*100+"%")}},_onDragStart:function(t,e){var n=this,o=t.dataTransfer,i=n.options;q("dragStart",this,{evt:t}),Ht.eventCanceled?this._onDrop():(q("setupClone",this),Ht.eventCanceled||((ot=T($)).removeAttribute("id"),ot.draggable=!1,ot.style["will-change"]="",this._hideClone(),k(ot,this.options.chosenClass,!1),Ht.clone=ot),n.cloneId=zt(function(){q("clone",n),Ht.eventCanceled||(n.options.removeCloneOnHide||tt.insertBefore(ot,$),n._hideClone(),Z({sortable:n,name:"clone"}))}),e||k($,i.dragClass,!0),e?(St=!0,n._loopId=setInterval(n._emulateDragOver,50)):(p(document,"mouseup",n._onDrop),p(document,"touchend",n._onDrop),p(document,"touchcancel",n._onDrop),o&&(o.effectAllowed="move",i.setData&&i.setData.call(n,o,$)),f(document,"drop",n),R($,"transform","translateZ(0)")),Et=!0,n._dragStartId=zt(n._dragStarted.bind(n,e,t)),f(document,"selectstart",n),vt=!0,window.getSelection().removeAllRanges(),u&&R(document.body,"user-select","none"))},_onDragOver:function(n){var o,i,r,t,e,a=this.el,l=n.target,s=this.options,c=s.group,u=Ht.active,d=ct===c,h=s.sort,f=ut||u,p=this,g=!1;if(!Ot){if(void 0!==n.preventDefault&&n.cancelable&&n.preventDefault(),l=P(l,s.draggable,a,!0),O("dragOver"),Ht.eventCanceled)return g;if($.contains(n.target)||l.animated&&l.animatingX&&l.animatingY||p._ignoreWhileAnimating===l)return A(!1);if(St=!1,u&&!s.disabled&&(d?h||(i=Q!==tt):ut===this||(this.lastPutMode=ct.checkPull(this,u,$,n))&&c.checkPut(this,u,$,n))){if(r="vertical"===this._getDirection(n,l),o=X($),O("dragOverValid"),Ht.eventCanceled)return g;if(i)return Q=tt,M(),this._hideClone(),O("revert"),Ht.eventCanceled||(et?tt.insertBefore($,et):tt.appendChild($)),A(!0);var m=F(a,s.draggable);if(m&&(S=n,c=r,x=X(F((E=this).el,E.options.draggable)),E=L(E.el,E.options,J),!(c?S.clientX>E.right+10||S.clientY>x.bottom&&S.clientX>x.left:S.clientY>E.bottom+10||S.clientX>x.right&&S.clientY>x.top)||m.animated)){if(m&&(t=n,e=r,C=X(B((_=this).el,0,_.options,!0)),_=L(_.el,_.options,J),e?t.clientX<_.left-10||t.clientY<C.top&&t.clientX<C.right:t.clientY<_.top-10||t.clientY<C.bottom&&t.clientX<C.left)){var v=B(a,0,s,!0);if(v===$)return A(!1);if(D=X(l=v),!1!==Lt(tt,a,$,o,l,D,n,!1))return M(),a.insertBefore($,v),Q=a,N(),A(!0)}else if(l.parentNode===a){var b,y,w,D=X(l),E=$.parentNode!==a,S=(S=$.animated&&$.toRect||o,x=l.animated&&l.toRect||D,_=(e=r)?S.left:S.top,t=e?S.right:S.bottom,C=e?S.width:S.height,v=e?x.left:x.top,S=e?x.right:x.bottom,x=e?x.width:x.height,!(_===v||t===S||_+C/2===v+x/2)),_=r?"top":"left",C=Y(l,"top","top")||Y($,"top","top"),v=C?C.scrollTop:void 0;if(bt!==l&&(y=D[_],Ct=!1,Tt=!S&&s.invertSwap||E),0!==(b=function(t,e,n,o,i,r,a,l){var s=o?t.clientY:t.clientX,c=o?n.height:n.width,t=o?n.top:n.left,o=o?n.bottom:n.right,n=!1;if(!a)if(l&&wt<c*i){if(Ct=!Ct&&(1===yt?t+c*r/2<s:s<o-c*r/2)?!0:Ct)n=!0;else if(1===yt?s<t+wt:o-wt<s)return-yt}else if(t+c*(1-i)/2<s&&s<o-c*(1-i)/2)return function(t){return j($)<j(t)?1:-1}(e);if((n=n||a)&&(s<t+c*r/2||o-c*r/2<s))return t+c/2<s?1:-1;return 0}(n,l,D,r,S?1:s.swapThreshold,null==s.invertedSwapThreshold?s.swapThreshold:s.invertedSwapThreshold,Tt,bt===l)))for(var T=j($);(w=Q.children[T-=b])&&("none"===R(w,"display")||w===J););if(0===b||w===l)return A(!1);yt=b;var x=(bt=l).nextElementSibling,E=!1,S=Lt(tt,a,$,o,l,D,n,E=1===b);if(!1!==S)return 1!==S&&-1!==S||(E=1===S),Ot=!0,setTimeout(Wt,30),M(),E&&!x?a.appendChild($):l.parentNode.insertBefore($,E?x:l),C&&H(C,0,v-C.scrollTop),Q=$.parentNode,void 0===y||Tt||(wt=Math.abs(y-X(l)[_])),N(),A(!0)}}else{if(m===$)return A(!1);if((l=m&&a===n.target?m:l)&&(D=X(l)),!1!==Lt(tt,a,$,o,l,D,n,!!l))return M(),m&&m.nextSibling?a.insertBefore($,m.nextSibling):a.appendChild($),Q=a,N(),A(!0)}if(a.contains($))return A(!1)}return!1}function O(t,e){q(t,p,I({evt:n,isOwner:d,axis:r?"vertical":"horizontal",revert:i,dragRect:o,targetRect:D,canSort:h,fromSortable:f,target:l,completed:A,onMove:function(t,e){return Lt(tt,a,$,o,t,X(t),n,e)},changed:N},e))}function M(){O("dragOverAnimationCapture"),p.captureAnimationState(),p!==f&&f.captureAnimationState()}function A(t){return O("dragOverCompleted",{insertion:t}),t&&(d?u._hideClone():u._showClone(p),p!==f&&(k($,(ut||u).options.ghostClass,!1),k($,s.ghostClass,!0)),ut!==p&&p!==Ht.active?ut=p:p===Ht.active&&ut&&(ut=null),f===p&&(p._ignoreWhileAnimating=l),p.animateAll(function(){O("dragOverAnimationComplete"),p._ignoreWhileAnimating=null}),p!==f&&(f.animateAll(),f._ignoreWhileAnimating=null)),(l===$&&!$.animated||l===a&&!l.animated)&&(bt=null),s.dragoverBubble||n.rootEl||l===document||($.parentNode[K]._isOutsideThisEl(n.target),t||Ft(n)),!s.dragoverBubble&&n.stopPropagation&&n.stopPropagation(),g=!0}function N(){at=j($),st=j($,s.draggable),Z({sortable:p,name:"change",toEl:a,newIndex:at,newDraggableIndex:st,originalEvent:n})}},_ignoreWhileAnimating:null,_offMoveEvents:function(){p(document,"mousemove",this._onTouchMove),p(document,"touchmove",this._onTouchMove),p(document,"pointermove",this._onTouchMove),p(document,"dragover",Ft),p(document,"mousemove",Ft),p(document,"touchmove",Ft)},_offUpEvents:function(){var t=this.el.ownerDocument;p(t,"mouseup",this._onDrop),p(t,"touchend",this._onDrop),p(t,"pointerup",this._onDrop),p(t,"pointercancel",this._onDrop),p(t,"touchcancel",this._onDrop),p(document,"selectstart",this)},_onDrop:function(t){var e=this.el,n=this.options;at=j($),st=j($,n.draggable),q("drop",this,{evt:t}),Q=$&&$.parentNode,at=j($),st=j($,n.draggable),Ht.eventCanceled||(Ct=Tt=Et=!1,clearInterval(this._loopId),clearTimeout(this._dragStartTimer),Gt(this.cloneId),Gt(this._dragStartId),this.nativeDraggable&&(p(document,"drop",this),p(e,"dragstart",this._onDragStart)),this._offMoveEvents(),this._offUpEvents(),u&&R(document.body,"user-select",""),R($,"transform",""),t&&(vt&&(t.cancelable&&t.preventDefault(),n.dropBubble||t.stopPropagation()),J&&J.parentNode&&J.parentNode.removeChild(J),(tt===Q||ut&&"clone"!==ut.lastPutMode)&&ot&&ot.parentNode&&ot.parentNode.removeChild(ot),$&&(this.nativeDraggable&&p($,"dragend",this),Kt($),$.style["will-change"]="",vt&&!Et&&k($,(ut||this).options.ghostClass,!1),k($,this.options.chosenClass,!1),Z({sortable:this,name:"unchoose",toEl:Q,newIndex:null,newDraggableIndex:null,originalEvent:t}),tt!==Q?(0<=at&&(Z({rootEl:Q,name:"add",toEl:Q,fromEl:tt,originalEvent:t}),Z({sortable:this,name:"remove",toEl:Q,originalEvent:t}),Z({rootEl:Q,name:"sort",toEl:Q,fromEl:tt,originalEvent:t}),Z({sortable:this,name:"sort",toEl:Q,originalEvent:t})),ut&&ut.save()):at!==rt&&0<=at&&(Z({sortable:this,name:"update",toEl:Q,originalEvent:t}),Z({sortable:this,name:"sort",toEl:Q,originalEvent:t})),Ht.active&&(null!=at&&-1!==at||(at=rt,st=lt),Z({sortable:this,name:"end",toEl:Q,originalEvent:t}),this.save())))),this._nulling()},_nulling:function(){q("nulling",this),tt=$=Q=J=et=ot=nt=it=dt=ht=vt=at=st=rt=lt=bt=yt=ut=ct=Ht.dragged=Ht.ghost=Ht.clone=Ht.active=null;var e=this.el;Mt.forEach(function(t){e.contains(t)&&(t.checked=!0)}),Mt.length=ft=pt=0},handleEvent:function(t){switch(t.type){case"drop":case"dragend":this._onDrop(t);break;case"dragenter":case"dragover":$&&(this._onDragOver(t),function(t){t.dataTransfer&&(t.dataTransfer.dropEffect="move");t.cancelable&&t.preventDefault()}(t));break;case"selectstart":t.preventDefault()}},toArray:function(){for(var t,e=[],n=this.el.children,o=0,i=n.length,r=this.options;o<i;o++)P(t=n[o],r.draggable,this.el,!1)&&e.push(t.getAttribute(r.dataIdAttr)||function(t){var e=t.tagName+t.className+t.src+t.href+t.textContent,n=e.length,o=0;for(;n--;)o+=e.charCodeAt(n);return o.toString(36)}(t));return e},sort:function(t,e){var n={},o=this.el;this.toArray().forEach(function(t,e){e=o.children[e];P(e,this.options.draggable,o,!1)&&(n[t]=e)},this),e&&this.captureAnimationState(),t.forEach(function(t){n[t]&&(o.removeChild(n[t]),o.appendChild(n[t]))}),e&&this.animateAll()},save:function(){var t=this.options.store;t&&t.set&&t.set(this)},closest:function(t,e){return P(t,e||this.options.draggable,this.el,!1)},option:function(t,e){var n=this.options;if(void 0===e)return n[t];var o=G.modifyOption(this,t,e);n[t]=void 0!==o?o:e,"group"===t&&Xt(n)},destroy:function(){q("destroy",this);var t=this.el;t[K]=null,p(t,"mousedown",this._onTapStart),p(t,"touchstart",this._onTapStart),p(t,"pointerdown",this._onTapStart),this.nativeDraggable&&(p(t,"dragover",this),p(t,"dragenter",this)),Array.prototype.forEach.call(t.querySelectorAll("[draggable]"),function(t){t.removeAttribute("draggable")}),this._onDrop(),this._disableDelayedDragEvents(),_t.splice(_t.indexOf(this.el),1),this.el=t=null},_hideClone:function(){it||(q("hideClone",this),Ht.eventCanceled||(R(ot,"display","none"),this.options.removeCloneOnHide&&ot.parentNode&&ot.parentNode.removeChild(ot),it=!0))},_showClone:function(t){"clone"===t.lastPutMode?it&&(q("showClone",this),Ht.eventCanceled||($.parentNode!=tt||this.options.group.revertClone?et?tt.insertBefore(ot,et):tt.appendChild(ot):tt.insertBefore(ot,$),this.options.group.revertClone&&this.animate($,ot),R(ot,"display",""),it=!1)):this._hideClone()}},At&&f(document,"touchmove",function(t){(Ht.active||Et)&&t.cancelable&&t.preventDefault()}),Ht.utils={on:f,off:p,css:R,find:E,is:function(t,e){return!!P(t,e,t,!1)},extend:function(t,e){if(t&&e)for(var n in e)e.hasOwnProperty(n)&&(t[n]=e[n]);return t},throttle:C,closest:P,toggleClass:k,clone:T,index:j,nextTick:zt,cancelNextTick:Gt,detectDirection:Rt,getChild:B,expando:K},Ht.get=function(t){return t[K]},Ht.mount=function(){for(var t=arguments.length,e=new Array(t),n=0;n<t;n++)e[n]=arguments[n];(e=e[0].constructor===Array?e[0]:e).forEach(function(t){if(!t.prototype||!t.prototype.constructor)throw"Sortable: Mounted plugin must be a constructor function, not ".concat({}.toString.call(t));t.utils&&(Ht.utils=I(I({},Ht.utils),t.utils)),G.mount(t)})},Ht.create=function(t,e){return new Ht(t,e)};var Ut,qt,Vt,Zt,$t,Qt,Jt=[],te=!(Ht.version="1.15.7");function ee(){Jt.forEach(function(t){clearInterval(t.pid)}),Jt=[]}function ne(){clearInterval(Qt)}var oe,ie=C(function(n,t,e,o){if(t.scroll){var i,r=(n.touches?n.touches[0]:n).clientX,a=(n.touches?n.touches[0]:n).clientY,l=t.scrollSensitivity,s=t.scrollSpeed,c=O(),u=!1;qt!==e&&(qt=e,ee(),Ut=t.scroll,i=t.scrollFn,!0===Ut&&(Ut=M(e,!0)));var d=0,h=Ut;do{var f=h,p=X(f),g=p.top,m=p.bottom,v=p.left,b=p.right,y=p.width,w=p.height,D=void 0,E=void 0,S=f.scrollWidth,_=f.scrollHeight,C=R(f),T=f.scrollLeft,p=f.scrollTop,E=f===c?(D=y<S&&("auto"===C.overflowX||"scroll"===C.overflowX||"visible"===C.overflowX),w<_&&("auto"===C.overflowY||"scroll"===C.overflowY||"visible"===C.overflowY)):(D=y<S&&("auto"===C.overflowX||"scroll"===C.overflowX),w<_&&("auto"===C.overflowY||"scroll"===C.overflowY)),T=D&&(Math.abs(b-r)<=l&&T+y<S)-(Math.abs(v-r)<=l&&!!T),p=E&&(Math.abs(m-a)<=l&&p+w<_)-(Math.abs(g-a)<=l&&!!p);if(!Jt[d])for(var x=0;x<=d;x++)Jt[x]||(Jt[x]={});Jt[d].vx==T&&Jt[d].vy==p&&Jt[d].el===f||(Jt[d].el=f,Jt[d].vx=T,Jt[d].vy=p,clearInterval(Jt[d].pid),0==T&&0==p||(u=!0,Jt[d].pid=setInterval(function(){o&&0===this.layer&&Ht.active._onTouchMove($t);var t=Jt[this.layer].vy?Jt[this.layer].vy*s:0,e=Jt[this.layer].vx?Jt[this.layer].vx*s:0;"function"==typeof i&&"continue"!==i.call(Ht.dragged.parentNode[K],e,t,n,$t,Jt[this.layer].el)||H(Jt[this.layer].el,e,t)}.bind({layer:d}),24))),d++}while(t.bubbleScroll&&h!==c&&(h=M(h,!1)));te=u}},30),n=function(t){var e=t.originalEvent,n=t.putSortable,o=t.dragEl,i=t.activeSortable,r=t.dispatchSortableEvent,a=t.hideGhostForTarget,t=t.unhideGhostForTarget;e&&(i=n||i,a(),e=e.changedTouches&&e.changedTouches.length?e.changedTouches[0]:e,e=document.elementFromPoint(e.clientX,e.clientY),t(),i&&!i.el.contains(e)&&(r("spill"),this.onSpill({dragEl:o,putSortable:n})))};function re(){}function ae(){}re.prototype={startIndex:null,dragStart:function(t){t=t.oldDraggableIndex;this.startIndex=t},onSpill:function(t){var e=t.dragEl,n=t.putSortable;this.sortable.captureAnimationState(),n&&n.captureAnimationState();t=B(this.sortable.el,this.startIndex,this.options);t?this.sortable.el.insertBefore(e,t):this.sortable.el.appendChild(e),this.sortable.animateAll(),n&&n.animateAll()},drop:n},a(re,{pluginName:"revertOnSpill"}),ae.prototype={onSpill:function(t){var e=t.dragEl,t=t.putSortable||this.sortable;t.captureAnimationState(),e.parentNode&&e.parentNode.removeChild(e),t.animateAll()},drop:n},a(ae,{pluginName:"removeOnSpill"});var le,se,ce,ue,de,he=[],fe=[],pe=!1,ge=!1,me=!1;function ve(n,o){fe.forEach(function(t,e){e=o.children[t.sortableIndex+(n?Number(e):0)];e?o.insertBefore(t,e):o.appendChild(t)})}function be(){he.forEach(function(t){t!==ce&&t.parentNode&&t.parentNode.removeChild(t)})}return Ht.mount(new function(){function t(){for(var t in this.defaults={scroll:!0,forceAutoScrollFallback:!1,scrollSensitivity:30,scrollSpeed:10,bubbleScroll:!0},this)"_"===t.charAt(0)&&"function"==typeof this[t]&&(this[t]=this[t].bind(this))}return t.prototype={dragStarted:function(t){t=t.originalEvent;this.sortable.nativeDraggable?f(document,"dragover",this._handleAutoScroll):this.options.supportPointer?f(document,"pointermove",this._handleFallbackAutoScroll):t.touches?f(document,"touchmove",this._handleFallbackAutoScroll):f(document,"mousemove",this._handleFallbackAutoScroll)},dragOverCompleted:function(t){t=t.originalEvent;this.options.dragOverBubble||t.rootEl||this._handleAutoScroll(t)},drop:function(){this.sortable.nativeDraggable?p(document,"dragover",this._handleAutoScroll):(p(document,"pointermove",this._handleFallbackAutoScroll),p(document,"touchmove",this._handleFallbackAutoScroll),p(document,"mousemove",this._handleFallbackAutoScroll)),ne(),ee(),clearTimeout(v),v=void 0},nulling:function(){$t=qt=Ut=te=Qt=Vt=Zt=null,Jt.length=0},_handleFallbackAutoScroll:function(t){this._handleAutoScroll(t,!0)},_handleAutoScroll:function(e,n){var o,i=this,r=(e.touches?e.touches[0]:e).clientX,a=(e.touches?e.touches[0]:e).clientY,t=document.elementFromPoint(r,a);$t=e,n||this.options.forceAutoScrollFallback||w||y||u?(ie(e,this.options,t,n),o=M(t,!0),!te||Qt&&r===Vt&&a===Zt||(Qt&&ne(),Qt=setInterval(function(){var t=M(document.elementFromPoint(r,a),!0);t!==o&&(o=t,ee()),ie(e,i.options,t,n)},10),Vt=r,Zt=a)):this.options.bubbleScroll&&M(t,!0)!==O()?ie(e,this.options,M(t,!1),!1):ee()}},a(t,{pluginName:"scroll",initializeByDefault:!0})}),Ht.mount(ae,re),Ht.mount(new function(){function t(){this.defaults={swapClass:"sortable-swap-highlight"}}return t.prototype={dragStart:function(t){t=t.dragEl;oe=t},dragOverValid:function(t){var e=t.completed,n=t.target,o=t.onMove,i=t.activeSortable,r=t.changed,a=t.cancel;i.options.swap&&(t=this.sortable.el,i=this.options,n&&n!==t&&(t=oe,oe=!1!==o(n)?(k(n,i.swapClass,!0),n):null,t&&t!==oe&&k(t,i.swapClass,!1)),r(),e(!0),a())},drop:function(t){var e,n,o=t.activeSortable,i=t.putSortable,r=t.dragEl,a=i||this.sortable,l=this.options;oe&&k(oe,l.swapClass,!1),oe&&(l.swap||i&&i.options.swap)&&r!==oe&&(a.captureAnimationState(),a!==o&&o.captureAnimationState(),n=oe,t=(e=r).parentNode,l=n.parentNode,t&&l&&!t.isEqualNode(n)&&!l.isEqualNode(e)&&(i=j(e),r=j(n),t.isEqualNode(l)&&i<r&&r++,t.insertBefore(n,t.children[i]),l.insertBefore(e,l.children[r])),a.animateAll(),a!==o&&o.animateAll())},nulling:function(){oe=null}},a(t,{pluginName:"swap",eventProperties:function(){return{swapItem:oe}}})}),Ht.mount(new function(){function t(o){for(var t in this)"_"===t.charAt(0)&&"function"==typeof this[t]&&(this[t]=this[t].bind(this));o.options.avoidImplicitDeselect||(o.options.supportPointer?f(document,"pointerup",this._deselectMultiDrag):(f(document,"mouseup",this._deselectMultiDrag),f(document,"touchend",this._deselectMultiDrag))),f(document,"keydown",this._checkKeyDown),f(document,"keyup",this._checkKeyUp),this.defaults={selectedClass:"sortable-selected",multiDragKey:null,avoidImplicitDeselect:!1,setData:function(t,e){var n="";he.length&&se===o?he.forEach(function(t,e){n+=(e?", ":"")+t.textContent}):n=e.textContent,t.setData("Text",n)}}}return t.prototype={multiDragKeyDown:!1,isMultiDrag:!1,delayStartGlobal:function(t){t=t.dragEl;ce=t},delayEnded:function(){this.isMultiDrag=~he.indexOf(ce)},setupClone:function(t){var e=t.sortable,t=t.cancel;if(this.isMultiDrag){for(var n=0;n<he.length;n++)fe.push(T(he[n])),fe[n].sortableIndex=he[n].sortableIndex,fe[n].draggable=!1,fe[n].style["will-change"]="",k(fe[n],this.options.selectedClass,!1),he[n]===ce&&k(fe[n],this.options.chosenClass,!1);e._hideClone(),t()}},clone:function(t){var e=t.sortable,n=t.rootEl,o=t.dispatchSortableEvent,t=t.cancel;this.isMultiDrag&&(this.options.removeCloneOnHide||he.length&&se===e&&(ve(!0,n),o("clone"),t()))},showClone:function(t){var e=t.cloneNowShown,n=t.rootEl,t=t.cancel;this.isMultiDrag&&(ve(!1,n),fe.forEach(function(t){R(t,"display","")}),e(),de=!1,t())},hideClone:function(t){var e=this,n=(t.sortable,t.cloneNowHidden),t=t.cancel;this.isMultiDrag&&(fe.forEach(function(t){R(t,"display","none"),e.options.removeCloneOnHide&&t.parentNode&&t.parentNode.removeChild(t)}),n(),de=!0,t())},dragStartGlobal:function(t){t.sortable;!this.isMultiDrag&&se&&se.multiDrag._deselectMultiDrag(),he.forEach(function(t){t.sortableIndex=j(t)}),he=he.sort(function(t,e){return t.sortableIndex-e.sortableIndex}),me=!0},dragStarted:function(t){var e,n=this,t=t.sortable;this.isMultiDrag&&(this.options.sort&&(t.captureAnimationState(),this.options.animation&&(he.forEach(function(t){t!==ce&&R(t,"position","absolute")}),e=X(ce,!1,!0,!0),he.forEach(function(t){t!==ce&&x(t,e)}),pe=ge=!0)),t.animateAll(function(){pe=ge=!1,n.options.animation&&he.forEach(function(t){A(t)}),n.options.sort&&be()}))},dragOver:function(t){var e=t.target,n=t.completed,t=t.cancel;ge&&~he.indexOf(e)&&(n(!1),t())},revert:function(t){var n,o,e=t.fromSortable,i=t.rootEl,r=t.sortable,a=t.dragRect;1<he.length&&(he.forEach(function(t){r.addAnimationState({target:t,rect:ge?X(t):a}),A(t),t.fromRect=a,e.removeAnimationState(t)}),ge=!1,n=!this.options.removeCloneOnHide,o=i,he.forEach(function(t,e){e=o.children[t.sortableIndex+(n?Number(e):0)];e?o.insertBefore(t,e):o.appendChild(t)}))},dragOverCompleted:function(t){var e,n=t.sortable,o=t.isOwner,i=t.insertion,r=t.activeSortable,a=t.parentEl,l=t.putSortable,t=this.options;i&&(o&&r._hideClone(),pe=!1,t.animation&&1<he.length&&(ge||!o&&!r.options.sort&&!l)&&(e=X(ce,!1,!0,!0),he.forEach(function(t){t!==ce&&(x(t,e),a.appendChild(t))}),ge=!0),o||(ge||be(),1<he.length?(o=de,r._showClone(n),r.options.animation&&!de&&o&&fe.forEach(function(t){r.addAnimationState({target:t,rect:ue}),t.fromRect=ue,t.thisAnimationDuration=null})):r._showClone(n)))},dragOverAnimationCapture:function(t){var e=t.dragRect,n=t.isOwner,t=t.activeSortable;he.forEach(function(t){t.thisAnimationDuration=null}),t.options.animation&&!n&&t.multiDrag.isMultiDrag&&(ue=a({},e),e=D(ce,!0),ue.top-=e.f,ue.left-=e.e)},dragOverAnimationComplete:function(){ge&&(ge=!1,be())},drop:function(t){var o,i,r,a,n,e,l,s=t.originalEvent,c=t.rootEl,u=t.parentEl,d=t.sortable,h=t.dispatchSortableEvent,f=t.oldIndex,t=t.putSortable,p=t||this.sortable;s&&(o=this.options,i=u.children,me||(o.multiDragKey&&!this.multiDragKeyDown&&this._deselectMultiDrag(),k(ce,o.selectedClass,!~he.indexOf(ce)),~he.indexOf(ce)?(he.splice(he.indexOf(ce),1),le=null,U({sortable:d,rootEl:c,name:"deselect",targetEl:ce,originalEvent:s})):(he.push(ce),U({sortable:d,rootEl:c,name:"select",targetEl:ce,originalEvent:s}),s.shiftKey&&le&&d.el.contains(le)?(r=j(le),a=j(ce),~r&&~a&&r!==a&&function(){for(var e,t=r<a?(e=r,a):(e=a,r+1),n=o.filter;e<t;e++)~he.indexOf(i[e])||P(i[e],o.draggable,u,!1)&&(n&&("function"==typeof n?n.call(d,s,i[e],d):n.split(",").some(function(t){return P(i[e],t.trim(),u,!1)}))||(k(i[e],o.selectedClass,!0),he.push(i[e]),U({sortable:d,rootEl:c,name:"select",targetEl:i[e],originalEvent:s})))}()):le=ce,se=p)),me&&this.isMultiDrag&&(ge=!1,(u[K].options.sort||u!==c)&&1<he.length&&(n=X(ce),e=j(ce,":not(."+this.options.selectedClass+")"),!pe&&o.animation&&(ce.thisAnimationDuration=null),p.captureAnimationState(),pe||(o.animation&&(ce.fromRect=n,he.forEach(function(t){var e;t.thisAnimationDuration=null,t!==ce&&(e=ge?X(t):n,t.fromRect=e,p.addAnimationState({target:t,rect:e}))})),be(),he.forEach(function(t){i[e]?u.insertBefore(t,i[e]):u.appendChild(t),e++}),f===j(ce)&&(l=!1,he.forEach(function(t){t.sortableIndex!==j(t)&&(l=!0)}),l&&(h("update"),h("sort")))),he.forEach(function(t){A(t)}),p.animateAll()),se=p),(c===u||t&&"clone"!==t.lastPutMode)&&fe.forEach(function(t){t.parentNode&&t.parentNode.removeChild(t)}))},nullingGlobal:function(){this.isMultiDrag=me=!1,fe.length=0},destroyGlobal:function(){this._deselectMultiDrag(),p(document,"pointerup",this._deselectMultiDrag),p(document,"mouseup",this._deselectMultiDrag),p(document,"touchend",this._deselectMultiDrag),p(document,"keydown",this._checkKeyDown),p(document,"keyup",this._checkKeyUp)},_deselectMultiDrag:function(t){if(!(void 0!==me&&me||se!==this.sortable||t&&P(t.target,this.options.draggable,this.sortable.el,!1)||t&&0!==t.button))for(;he.length;){var e=he[0];k(e,this.options.selectedClass,!1),he.shift(),U({sortable:this.sortable,rootEl:this.sortable.el,name:"deselect",targetEl:e,originalEvent:t})}},_checkKeyDown:function(t){t.key===this.options.multiDragKey&&(this.multiDragKeyDown=!0)},_checkKeyUp:function(t){t.key===this.options.multiDragKey&&(this.multiDragKeyDown=!1)}},a(t,{pluginName:"multiDrag",utils:{select:function(t){var e=t.parentNode[K];e&&e.options.multiDrag&&!~he.indexOf(t)&&(se&&se!==e&&(se.multiDrag._deselectMultiDrag(),se=e),k(t,e.options.selectedClass,!0),he.push(t))},deselect:function(t){var e=t.parentNode[K],n=he.indexOf(t);e&&e.options.multiDrag&&~n&&(k(t,e.options.selectedClass,!1),he.splice(n,1))}},eventProperties:function(){var n=this,o=[],i=[];return he.forEach(function(t){var e;o.push({multiDragElement:t,index:t.sortableIndex}),e=ge&&t!==ce?-1:ge?j(t,":not(."+n.options.selectedClass+")"):j(t),i.push({multiDragElement:t,index:e})}),{items:e(he),clones:[].concat(fe),oldIndicies:o,newIndicies:i}},optionListeners:{multiDragKey:function(t){return"ctrl"===(t=t.toLowerCase())?t="Control":1<t.length&&(t=t.charAt(0).toUpperCase()+t.substr(1)),t}}})}),Ht});
+</script>
+<script>
+const PROBLEMS = [{"ko": "그러니까 여러분 중 일부는 11년 전 TED에서 실제로 저를 보셨을 겁니다.", "chips": ["TED", "ago", "at", "me", ".", "years", "saw", "of", ",", "you", "actually", "So", "some", "11"], "correct": ["So", "some", "of", "you", "actually", "saw", "me", "at", "TED", ",", "11", "years", "ago", "."], "en": "So some of you actually saw me at TED, 11 years ago."}, {"ko": "그리고 이 컨퍼런스가 강연자와 참석자 모두에게 얼마나 인생을 바꾸는지에 대한 이야기가 많이 있어 왔는데,", "chips": ["life", "this", "of", ",", "for", "and", "lot", "both", "conference", "speakers", "is", "-", "changing", "a", "how", "attendees", "about", "talk", "been", "And", "there's"], "correct": ["And", "there's", "been", "a", "lot", "of", "talk", "about", "how", "life", "-", "changing", "this", "conference", "is", "for", "both", "speakers", "and", "attendees", ","], "en": "And there's been a lot of talk about how life-changing this conference is for both speakers and attendees,"}, {"ko": "저도 예외는 아닙니다.", "chips": ["exception", "no", "and", "I", ".", "am"], "correct": ["and", "I", "am", "no", "exception", "."], "en": "and I am no exception."}, {"ko": "TED는 말 그대로 제 인생의 다음 10년간 탐험의 발사대였습니다.", "chips": ["was", "life's", "my", "the", "next", "the", "decade", "TED", "launch", "of", "pad", "exploration", "to", ".", "literally"], "correct": ["TED", "literally", "was", "the", "launch", "pad", "to", "the", "next", "decade", "of", "my", "life's", "exploration", "."], "en": "TED literally was the launch pad to the next decade of my life's exploration."}, {"ko": "당시 제가 선보였던 다리들은 의족 분야에서 획기적인 것이었습니다.", "chips": ["time", "prosthetics", "presented", "the", "I", "At", ".", ",", "legs", "groundbreaking", "in", "the", "were"], "correct": ["At", "the", "time", ",", "the", "legs", "I", "presented", "were", "groundbreaking", "in", "prosthetics", "."], "en": "At the time, the legs I presented were groundbreaking in prosthetics."}, {"ko": "저는 치타의 뒷다리를 본떠 만든 카본 섬유 단거리용 다리를 가지고 있었는데, 어제 무대에서 보셨을지도 모릅니다.", "chips": [",", "I", "a", "on", "may", ".", "the", "yesterday", "woven", "had", "stage", "seen", "which", "fiber", "hind", "legs", "you", "have", "sprinting", "leg", "cheetah", "after", "of", "carbon", "modeled"], "correct": ["I", "had", "woven", "carbon", "fiber", "sprinting", "legs", "modeled", "after", "the", "hind", "leg", "of", "a", "cheetah", ",", "which", "you", "may", "have", "seen", "on", "stage", "yesterday", "."], "en": "I had woven carbon fiber sprinting legs modeled after the hind leg of a cheetah, which you may have seen on stage yesterday."}, {"ko": "그리고 또한 매우 실물 같고, 내재적으로 채색된 이 실리콘 다리들도 있었습니다.", "chips": ["life", "like", ",", "also", "intrinsically", "these", "painted", "legs", ".", "very", "And", "-", "silicone"], "correct": ["And", "also", "these", "very", "life", "-", "like", ",", "intrinsically", "painted", "silicone", "legs", "."], "en": "And also these very life-like, intrinsically painted silicone legs."}, {"ko": "그래서 당시 저에게는 혁신가들에게 부름을 내보낼 기회였습니다,", "chips": ["So", "call", "time", "a", "opportunity", "it", "at", "to", ",", "the", "out", "to", "innovators", "my", "put", "was"], "correct": ["So", "at", "the", "time", ",", "it", "was", "my", "opportunity", "to", "put", "a", "call", "out", "to", "innovators"], "en": "So at the time, it was my opportunity to put a call out to innovators"}, {"ko": "전통적인 의료 의족 분야 바깥에 있는 (혁신가들에게),", "chips": ["the", "community", "outside", "traditional", "medical", "prosthetic"], "correct": ["outside", "the", "traditional", "medical", "prosthetic", "community"], "en": "outside the traditional medical prosthetic community"}, {"ko": "다리를 만드는 과학과 예술 양쪽에 그들의 재능을 가져와 달라고 말이죠.", "chips": ["building", "science", "to", "to", "talent", "and", "their", "art", "the", "the", "bring", "legs", "to", "of", "come", "."], "correct": ["to", "come", "bring", "their", "talent", "to", "the", "science", "and", "to", "the", "art", "of", "building", "legs", "."], "en": "to come bring their talent to the science and to the art of building legs."}, {"ko": "그래서 우리가 형태와 기능과 미학을 따로 구분하고, 거기에 서로 다른 가치를 부여하는 것을 멈출 수 있도록요.", "chips": [",", "and", "we", "values", "form", "assigning", "different", ",", "that", "compartmentalizing", "them", "stop", "and", "function", "aesthetic", "can", "So", "."], "correct": ["So", "that", "we", "can", "stop", "compartmentalizing", "form", ",", "function", "and", "aesthetic", ",", "and", "assigning", "them", "different", "values", "."], "en": "So that we can stop compartmentalizing form, function and aesthetic, and assigning them different values."}, {"ko": "다행히도 저에게는 많은 사람들이 그 부름에 응답해 주었습니다.", "chips": ["lot", "answered", ",", "Well", "a", "that", "people", "for", "me", ",", ".", "lucky", "call", "of"], "correct": ["Well", ",", "lucky", "for", "me", ",", "a", "lot", "of", "people", "answered", "that", "call", "."], "en": "Well, lucky for me, a lot of people answered that call."}, {"ko": "그리고 그 여정은, 재미있게도, 한 TED 컨퍼런스 참석자와 함께 시작되었습니다 —", "chips": ["with", "enough", "journey", "TED", "--", "a", "conference", "attendee", "started", ",", "funny", "the", "And", ","], "correct": ["And", "the", "journey", "started", ",", "funny", "enough", ",", "with", "a", "TED", "conference", "attendee", "--"], "en": "And the journey started, funny enough, with a TED conference attendee --"}, {"ko": "Chee Pearlman인데, 오늘 객석 어딘가에 계셨으면 좋겠네요.", "chips": ["is", "in", "Chee", "who", "today", ".", "hopefully", "the", "somewhere", ",", "audience", "Pearlman"], "correct": ["Chee", "Pearlman", ",", "who", "hopefully", "is", "in", "the", "audience", "somewhere", "today", "."], "en": "Chee Pearlman, who hopefully is in the audience somewhere today."}, {"ko": "그녀는 당시 ID라는 잡지의 편집장이었고, 저에게 표지 기사를 실어 주었습니다.", "chips": [".", "a", "the", "gave", "story", "then", "She", "of", "cover", ",", "editor", "was", "magazine", "called", "a", "me", "and", "she", "ID"], "correct": ["She", "was", "the", "editor", "then", "of", "a", "magazine", "called", "ID", ",", "and", "she", "gave", "me", "a", "cover", "story", "."], "en": "She was the editor then of a magazine called ID, and she gave me a cover story."}, {"ko": "이것이 놀라운 여정을 시작하게 했습니다.", "chips": ["started", "an", "incredible", "journey", ".", "This"], "correct": ["This", "started", "an", "incredible", "journey", "."], "en": "This started an incredible journey."}, {"ko": "그 당시 저에게는 흥미로운 만남들이 일어나고 있었습니다;", "chips": ["time", "at", ";", "happening", "were", "the", "to", "encounters", "me", "Curious"], "correct": ["Curious", "encounters", "were", "happening", "to", "me", "at", "the", "time", ";"], "en": "Curious encounters were happening to me at the time;"}, {"ko": "저는 세계 곳곳에서 치타 다리 디자인에 대해 강연해 달라는 수많은 초청을 수락하고 있었습니다.", "chips": ["accepting", "of", "the", "invitations", "I'd", "world", "around", "design", "to", "legs", "the", "been", "numerous", "speak", "cheetah", ".", "on", "the"], "correct": ["I'd", "been", "accepting", "numerous", "invitations", "to", "speak", "on", "the", "design", "of", "the", "cheetah", "legs", "around", "the", "world", "."], "en": "I'd been accepting numerous invitations to speak on the design of the cheetah legs around the world."}, {"ko": "그리고 사람들이 컨퍼런스가 끝난 뒤, 제 강연이 끝난 뒤, 남녀 가릴 것 없이 저에게 다가왔습니다.", "chips": [".", "conference", "talk", "to", ",", "And", "people", "my", "up", "after", "men", "would", "and", "the", "women", "me", "after", "come", ","], "correct": ["And", "people", "would", "come", "up", "to", "me", "after", "the", "conference", ",", "after", "my", "talk", ",", "men", "and", "women", "."], "en": "And people would come up to me after the conference, after my talk, men and women."}, {"ko": "그리고 대화는 대략 이런 식으로 흘러갔습니다,", "chips": ["conversation", "like", "And", "go", "something", "this", ",", "would", "the"], "correct": ["And", "the", "conversation", "would", "go", "something", "like", "this", ","], "en": "And the conversation would go something like this,"}, {"ko": "\"있잖아요 Aimee, 당신은 정말 매력적이에요. 장애가 있는 것처럼 보이지 않아요.\"", "chips": ["You", "You", "don't", "you're", ".", "Aimee", "disabled", "attractive", ",", "look", ".", "very", "know", "\"", "\""], "correct": ["\"", "You", "know", "Aimee", ",", "you're", "very", "attractive", ".", "You", "don't", "look", "disabled", ".", "\""], "en": "\"You know Aimee, you're very attractive. You don't look disabled.\""}, {"ko": "저는 생각했죠, \"음, 그건 놀랍네요, 왜냐하면 저는 장애가 있다고 느끼지 않거든요.\"", "chips": ["I", ",", "that's", "thought", ".", "Well", "amazing", "feel", ",", "disabled", ",", "don't", "\"", "I", "\"", "because"], "correct": ["I", "thought", ",", "\"", "Well", ",", "that's", "amazing", ",", "because", "I", "don't", "feel", "disabled", ".", "\""], "en": "I thought, \"Well, that's amazing, because I don't feel disabled.\""}, {"ko": "그리고 그것은 아름다움에 관해 탐구해 볼 만한 이 대화에 정말로 제 눈을 뜨게 해주었습니다.", "chips": ["explored", ".", "about", "beauty", "conversation", "this", "my", "And", "be", ",", "to", "opened", "could", "it", "that", "really", "eyes"], "correct": ["And", "it", "really", "opened", "my", "eyes", "to", "this", "conversation", "that", "could", "be", "explored", ",", "about", "beauty", "."], "en": "And it really opened my eyes to this conversation that could be explored, about beauty."}, {"ko": "아름다운 여성은 어떻게 생겨야 할까요?", "chips": ["look", "What", "?", "to", "a", "does", "like", "woman", "beautiful", "have"], "correct": ["What", "does", "a", "beautiful", "woman", "have", "to", "look", "like", "?"], "en": "What does a beautiful woman have to look like?"}, {"ko": "섹시한 몸이란 무엇일까요?", "chips": ["is", "a", "body", "?", "sexy", "What"], "correct": ["What", "is", "a", "sexy", "body", "?"], "en": "What is a sexy body?"}, {"ko": "그리고 흥미롭게도, 정체성의 관점에서, 장애를 가진다는 것은 무슨 의미일까요?", "chips": ["mean", "to", "it", "And", "disability", "does", "standpoint", ",", "a", "an", "have", "from", "interestingly", "identity", ",", "what", "?"], "correct": ["And", "interestingly", ",", "from", "an", "identity", "standpoint", ",", "what", "does", "it", "mean", "to", "have", "a", "disability", "?"], "en": "And interestingly, from an identity standpoint, what does it mean to have a disability?"}, {"ko": "제 말은, 사람들 — Pamela Anderson은 저보다 더 많은 인공물을 몸 안에 가지고 있습니다.", "chips": ["I", ".", "Anderson", "Pamela", "prosthetic", "body", "has", "in", "I", ",", "more", "her", "than", "mean", "do", "--", "people"], "correct": ["I", "mean", ",", "people", "--", "Pamela", "Anderson", "has", "more", "prosthetic", "in", "her", "body", "than", "I", "do", "."], "en": "I mean, people -- Pamela Anderson has more prosthetic in her body than I do."}, {"ko": "아무도 그녀를 장애인이라고 부르지 않죠.", "chips": ["her", "Nobody", "calls", "disabled", "."], "correct": ["Nobody", "calls", "her", "disabled", "."], "en": "Nobody calls her disabled."}, {"ko": "그래서 이 잡지는, 그래픽 디자이너 Peter Saville의 손을 거쳐,", "chips": ["of", ",", "designer", "the", "Saville", ",", "magazine", "graphic", "So", "through", "hands", "Peter", "this"], "correct": ["So", "this", "magazine", ",", "through", "the", "hands", "of", "graphic", "designer", "Peter", "Saville", ","], "en": "So this magazine, through the hands of graphic designer Peter Saville,"}, {"ko": "패션 디자이너 Alexander McQueen과 사진작가 Nick Knight에게로 갔는데,", "chips": ["fashion", "designer", "Alexander", "Knight", "and", "McQueen", "Nick", "to", "went", ",", ",", "photographer"], "correct": ["went", "to", "fashion", "designer", "Alexander", "McQueen", ",", "and", "photographer", "Nick", "Knight", ","], "en": "went to fashion designer Alexander McQueen, and photographer Nick Knight,"}, {"ko": "그들도 역시 그 대화를 탐구하는 데 관심이 있었습니다.", "chips": ["in", "interested", "were", ".", "exploring", "conversation", "who", "also", "that"], "correct": ["who", "were", "also", "interested", "in", "exploring", "that", "conversation", "."], "en": "who were also interested in exploring that conversation."}, {"ko": "그래서 TED 이후 3개월 후, 저는 런던행 비행기에 올라타 있었고,", "chips": ["after", "found", "So", "London", "to", "on", "plane", "three", "I", "myself", "TED", ",", ",", "months", "a"], "correct": ["So", ",", "three", "months", "after", "TED", "I", "found", "myself", "on", "a", "plane", "to", "London", ","], "en": "So, three months after TED I found myself on a plane to London,"}, {"ko": "첫 패션 화보 촬영을 하고 있었는데, 그 결과로 이 표지가 만들어졌습니다 — \"Fashion-able\"?", "chips": ["-", "in", ",", "\"", "fashion", "this", "?", "able", "doing", "which", "my", "--", "\"", "first", "shoot", "resulted", "Fashion", "cover"], "correct": ["doing", "my", "first", "fashion", "shoot", ",", "which", "resulted", "in", "this", "cover", "--", "\"", "Fashion", "-", "able", "\"", "?"], "en": "doing my first fashion shoot, which resulted in this cover -- \"Fashion-able\"?"}, {"ko": "그로부터 3개월 후, 저는 Alexander McQueen을 위해 첫 런웨이 쇼를 했습니다,", "chips": ["first", "months", "for", "my", "after", "Alexander", "runway", ",", "I", "did", "McQueen", "show", "Three", "that"], "correct": ["Three", "months", "after", "that", ",", "I", "did", "my", "first", "runway", "show", "for", "Alexander", "McQueen"], "en": "Three months after that, I did my first runway show for Alexander McQueen"}, {"ko": "단단한 물푸레나무로 만들어 손으로 깎은 한 쌍의 나무 다리를 신고서요.", "chips": ["of", "made", "solid", "carved", ".", "wooden", "ash", "pair", "hand", "a", "on", "-", "legs", "from"], "correct": ["on", "a", "pair", "of", "hand", "-", "carved", "wooden", "legs", "made", "from", "solid", "ash", "."], "en": "on a pair of hand-carved wooden legs made from solid ash."}, {"ko": "아무도 몰랐어요 — 모두가 그것이 나무 부츠인 줄로 알았습니다.", "chips": ["knew", "boots", "--", "everyone", "Nobody", "wooden", "thought", "were", ".", "they"], "correct": ["Nobody", "knew", "--", "everyone", "thought", "they", "were", "wooden", "boots", "."], "en": "Nobody knew -- everyone thought they were wooden boots."}, {"ko": "사실, 저는 그것들을 여기 무대에 가져왔습니다: 포도 덩굴, 목련 — 정말 멋집니다.", "chips": ["stunning", "with", ":", "them", "I", "grapevines", "magnolias", "--", "on", "have", "truly", ".", "Actually", "stage", ",", ",", "me"], "correct": ["Actually", ",", "I", "have", "them", "on", "stage", "with", "me", ":", "grapevines", ",", "magnolias", "--", "truly", "stunning", "."], "en": "Actually, I have them on stage with me: grapevines, magnolias -- truly stunning."}, {"ko": "시(詩)는 중요합니다.", "chips": ["Poetry", "matters", "."], "correct": ["Poetry", "matters", "."], "en": "Poetry matters."}, {"ko": "시는 평범하고 무시되던 사물을 예술의 영역으로 끌어올리는 것입니다.", "chips": ["Poetry", ".", "neglected", "to", "of", "elevates", "is", "what", "art", "realm", "banal", "and", "a", "the", "object"], "correct": ["Poetry", "is", "what", "elevates", "the", "banal", "and", "neglected", "object", "to", "a", "realm", "of", "art", "."], "en": "Poetry is what elevates the banal and neglected object to a realm of art."}, {"ko": "시는 사람들을 두렵게 만들었을 법한 어떤 것을, 그들이 바라보고 싶게 만드는 무언가로 변모시킬 수 있습니다,", "chips": ["invites", "to", "transform", ",", "can", "fearful", "that", "made", "have", "that", "into", "them", "might", "the", "thing", "people", "It", "look", "something"], "correct": ["It", "can", "transform", "the", "thing", "that", "might", "have", "made", "people", "fearful", "into", "something", "that", "invites", "them", "to", "look", ","], "en": "It can transform the thing that might have made people fearful into something that invites them to look,"}, {"ko": "그리고 조금 더 오래 바라보고, 어쩌면 이해하게까지 만듭니다.", "chips": ["little", "even", "and", "maybe", "a", "understand", "and", ",", "longer", "look", "."], "correct": ["and", "look", "a", "little", "longer", ",", "and", "maybe", "even", "understand", "."], "en": "and look a little longer, and maybe even understand."}];
+
+// Utility: shuffle array (Fisher-Yates)
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// Track which problems are solved (for scoring)
+const solved = new Set();
+
+// Render a chip
+function createChip(text, idx) {
+  const chip = document.createElement('div');
+  chip.className = 'chip';
+  chip.textContent = text;
+  chip.dataset.token = text;
+  // Click/tap to move between pool and answer
+  chip.addEventListener('click', (e) => {
+    // If we just finished dragging, skip the click
+    if (chip._justDragged) {
+      chip._justDragged = false;
+      return;
+    }
+    const parent = chip.parentElement;
+    const card = chip.closest('.problem-card');
+    if (!card) return;
+    const pool = card.querySelector('.pool-area');
+    const answer = card.querySelector('.answer-area');
+    if (parent === pool) {
+      answer.appendChild(chip);
+    } else if (parent === answer) {
+      pool.appendChild(chip);
+    }
+    // Clear any previous feedback styling
+    clearFeedback(card);
+  });
+  return chip;
+}
+
+function clearFeedback(card) {
+  card.classList.remove('correct', 'incorrect');
+  const fb = card.querySelector('.feedback');
+  if (fb) fb.classList.remove('show', 'success', 'error', 'info');
+  card.querySelectorAll('.chip.wrong-position').forEach(c => c.classList.remove('wrong-position'));
+}
+
+function renderProblem(p, index) {
+  const card = document.createElement('div');
+  card.className = 'problem-card';
+  card.dataset.idx = index;
+
+  // Header
+  const header = document.createElement('div');
+  header.className = 'problem-header';
+  header.innerHTML = `
+    <div class="problem-num">문제 ${String(index + 1).padStart(2, '0')}</div>
+    <div class="problem-status"></div>
+  `;
+  card.appendChild(header);
+
+  // Korean sentence
+  const ko = document.createElement('div');
+  ko.className = 'problem-ko';
+  ko.textContent = p.ko;
+  card.appendChild(ko);
+
+  // Answer area (no label)
+  const answerArea = document.createElement('div');
+  answerArea.className = 'answer-area';
+  card.appendChild(answerArea);
+
+  // Pool area (no label) — scrambled chips
+  const poolArea = document.createElement('div');
+  poolArea.className = 'pool-area';
+  const initial = shuffle(p.chips);
+  initial.forEach((tok) => {
+    poolArea.appendChild(createChip(tok));
+  });
+  card.appendChild(poolArea);
+
+  // Controls
+  const controls = document.createElement('div');
+  controls.className = 'controls';
+  controls.innerHTML = `
+    <button class="btn btn-check" data-action="check">✅ 확인</button>
+    <button class="btn btn-reset" data-action="reset">🔄 초기화</button>
+    <button class="btn btn-hint" data-action="hint">💡 힌트</button>
+    <button class="btn btn-show" data-action="show">👁 정답보기</button>
+  `;
+  card.appendChild(controls);
+
+  // Feedback
+  const feedback = document.createElement('div');
+  feedback.className = 'feedback';
+  card.appendChild(feedback);
+
+  // Wire Sortable on both areas (shared group so you can drag between them)
+  // CRITICAL settings for mobile/touch reliability:
+  //   forceFallback: true   → use Sortable's own pointer-based drag (works everywhere)
+  //   supportPointer: true  → listen to pointer events (covers iOS, Android, desktop)
+  //   delay: 120 + delayOnTouchOnly → require 120ms hold on touch (allows page scrolling)
+  const groupName = 'g' + index;
+  const sortableOpts = {
+    group: groupName,
+    animation: 180,
+    ghostClass: 'sortable-ghost',
+    chosenClass: 'sortable-chosen',
+    dragClass: 'sortable-drag',
+    forceFallback: true,
+    fallbackOnBody: true,
+    fallbackTolerance: 4,
+    supportPointer: true,
+    delay: 120,
+    delayOnTouchOnly: true,
+    touchStartThreshold: 5,
+    scroll: true,
+    scrollSensitivity: 80,
+    scrollSpeed: 12,
+    bubbleScroll: true,
+    onStart: function(evt) {
+      evt.item._justDragged = true;
+    },
+    onEnd: function(evt) {
+      const item = evt.item;
+      setTimeout(() => { item._justDragged = false; }, 500);
+      clearFeedback(card);
+    }
+  };
+  new Sortable(answerArea, sortableOpts);
+  new Sortable(poolArea, sortableOpts);
+
+  // Wire button actions
+  controls.addEventListener('click', (e) => {
+    const action = e.target.dataset.action;
+    if (!action) return;
+    if (action === 'check') checkProblem(card, p, index);
+    else if (action === 'reset') resetProblem(card, p, index);
+    else if (action === 'hint') showHint(card, p);
+    else if (action === 'show') showAnswer(card, p, index);
+  });
+
+  return card;
+}
+
+function getCurrentAnswer(card) {
+  const answerArea = card.querySelector('.answer-area');
+  return Array.from(answerArea.children).map(c => c.dataset.token);
+}
+
+function checkProblem(card, p, index) {
+  const current = getCurrentAnswer(card);
+  const correct = p.correct;
+  const fb = card.querySelector('.feedback');
+  const statusEl = card.querySelector('.problem-status');
+  // Clear previous wrong-position highlights
+  card.querySelectorAll('.chip.wrong-position').forEach(c => c.classList.remove('wrong-position'));
+
+  if (current.length === 0) {
+    fb.className = 'feedback show info';
+    fb.innerHTML = '⚠️ 답안 영역이 비어 있어요. 단어를 옮겨주세요!';
+    return;
+  }
+
+  // Compare element by element
+  const isMatch = current.length === correct.length &&
+                  current.every((t, i) => t === correct[i]);
+
+  if (isMatch) {
+    card.classList.remove('incorrect');
+    card.classList.add('correct');
+    statusEl.textContent = '✅';
+    fb.className = 'feedback show success';
+    fb.innerHTML = '🎉 정답입니다! 완벽해요.';
+    if (!solved.has(index)) {
+      solved.add(index);
+      updateScore();
+    }
+  } else {
+    card.classList.remove('correct');
+    card.classList.add('incorrect');
+    statusEl.textContent = '❌';
+    fb.className = 'feedback show error';
+    // Find first wrong position
+    let firstWrong = -1;
+    for (let i = 0; i < current.length; i++) {
+      if (current[i] !== correct[i]) { firstWrong = i; break; }
+    }
+    if (firstWrong < 0 && current.length !== correct.length) {
+      firstWrong = Math.min(current.length, correct.length);
+    }
+    // Highlight wrong chip
+    const answerArea = card.querySelector('.answer-area');
+    if (firstWrong >= 0 && firstWrong < answerArea.children.length) {
+      answerArea.children[firstWrong].classList.add('wrong-position');
+    }
+    let msg = `❌ 아직 정답이 아니에요. (현재 ${current.length}개 / 정답 ${correct.length}개)`;
+    if (firstWrong >= 0) {
+      msg += `<br><small>${firstWrong + 1}번째 위치부터 다시 확인해 보세요.</small>`;
+    }
+    fb.innerHTML = msg;
+    if (solved.has(index)) {
+      solved.delete(index);
+      updateScore();
+    }
+  }
+}
+
+function resetProblem(card, p, index) {
+  const answerArea = card.querySelector('.answer-area');
+  const poolArea = card.querySelector('.pool-area');
+  // Move all chips back to pool, in shuffled order
+  const allChips = [
+    ...Array.from(answerArea.children),
+    ...Array.from(poolArea.children)
+  ];
+  // Clear both
+  answerArea.innerHTML = '';
+  poolArea.innerHTML = '';
+  // Shuffle and put back into pool
+  shuffle(allChips).forEach(c => poolArea.appendChild(c));
+  clearFeedback(card);
+  card.querySelector('.problem-status').textContent = '';
+  if (solved.has(index)) {
+    solved.delete(index);
+    updateScore();
+  }
+}
+
+function showHint(card, p) {
+  const fb = card.querySelector('.feedback');
+  fb.className = 'feedback show info';
+  const firstWord = p.correct[0];
+  const lastWord = p.correct[p.correct.length - 1];
+  fb.innerHTML = `💡 힌트: 첫 단어는 <strong>"${firstWord}"</strong>, 마지막은 <strong>"${lastWord}"</strong> 입니다. (총 ${p.correct.length}개 토큰)`;
+}
+
+function showAnswer(card, p, index) {
+  const fb = card.querySelector('.feedback');
+  fb.className = 'feedback show info';
+  fb.innerHTML = `👁 정답:<div class="answer-show">${p.en}</div>`;
+  card.querySelector('.problem-status').textContent = '👁';
+}
+
+function updateScore() {
+  document.getElementById('score').textContent = solved.size;
+}
+
+// Initialize all problems
+const container = document.getElementById('problems');
+PROBLEMS.forEach((p, i) => {
+  container.appendChild(renderProblem(p, i));
+});
+
+// Global controls
+document.getElementById('resetAllBtn').addEventListener('click', () => {
+  if (!confirm('모든 문제를 초기화하시겠습니까?')) return;
+  document.querySelectorAll('.problem-card').forEach((card, i) => {
+    resetProblem(card, PROBLEMS[i], i);
+  });
+  solved.clear();
+  updateScore();
+});
+
+document.getElementById('checkAllBtn').addEventListener('click', () => {
+  document.querySelectorAll('.problem-card').forEach((card, i) => {
+    checkProblem(card, PROBLEMS[i], i);
+  });
+  // Scroll to first incorrect (if any)
+  const firstIncorrect = document.querySelector('.problem-card.incorrect');
+  if (firstIncorrect) {
+    firstIncorrect.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+});
+
+/* ══ 펜 필기 모드 (자유 필기) v1.0 ══ */
+const PEN_COLORS = ['#dc2626', '#1F3864', '#0f9d58', '#f59e0b', '#000000'];
+const PEN_WIDTHS = [2, 4, 7];
+let penEnabled = false, penColor = '#dc2626', penWidth = 4, penEraser = false;
+let penLayer = null, penPath = null, penPts = [];
+
+function buildPenTools() {
+  if (document.getElementById('penLayer')) return;
+  penLayer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  penLayer.id = 'penLayer';
+  document.body.appendChild(penLayer);
+  const tb = document.createElement('div');
+  tb.id = 'penToolbar';
+  let html = '<button class="pen-btn pen-main" id="penToggle" title="펜 ON/OFF">✏️</button><div class="pen-tools" id="penTools">';
+  PEN_COLORS.forEach(c => html += '<button class="pen-color" data-color="' + c + '" style="background:' + c + ';" title="색상"></button>');
+  PEN_WIDTHS.forEach(w => html += '<button class="pen-width" data-width="' + w + '" title="굵기"><span style="width:' + (w*2) + 'px;height:' + (w*2) + 'px;"></span></button>');
+  html += '<button class="pen-btn pen-eraser" id="penEraserBtn" title="개별 지우개">🧹</button><button class="pen-btn pen-clear" id="penClearBtn" title="전체 지우기">🗑️</button></div>';
+  tb.innerHTML = html;
+  document.body.appendChild(tb);
+  document.querySelector('.pen-color[data-color="' + penColor + '"]').classList.add('selected');
+  document.querySelector('.pen-width[data-width="' + penWidth + '"]').classList.add('selected');
+  document.getElementById('penToggle').addEventListener('click', togglePen);
+  document.querySelectorAll('.pen-color').forEach(b => b.addEventListener('click', e => {
+    const c = e.currentTarget.dataset.color;
+    penColor = c; penEraser = false;
+    document.querySelectorAll('.pen-color').forEach(x => x.classList.toggle('selected', x.dataset.color === c));
+    document.getElementById('penEraserBtn').classList.remove('active');
+  }));
+  document.querySelectorAll('.pen-width').forEach(b => b.addEventListener('click', e => {
+    const w = +e.currentTarget.dataset.width;
+    penWidth = w;
+    document.querySelectorAll('.pen-width').forEach(x => x.classList.toggle('selected', +x.dataset.width === w));
+  }));
+  document.getElementById('penEraserBtn').addEventListener('click', () => {
+    penEraser = !penEraser;
+    document.getElementById('penEraserBtn').classList.toggle('active', penEraser);
+  });
+  document.getElementById('penClearBtn').addEventListener('click', () => {
+    if (confirm('모든 필기를 지우시겠습니까?')) penLayer.innerHTML = '';
+  });
+  penLayer.addEventListener('pointerdown', penDown);
+  penLayer.addEventListener('pointermove', penMove);
+  penLayer.addEventListener('pointerup', penUp);
+  penLayer.addEventListener('pointercancel', penUp);
+  penLayer.addEventListener('pointerleave', penUp);
+  const sync = () => {
+    const h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    const w = Math.max(document.body.scrollWidth, document.documentElement.scrollWidth);
+    penLayer.setAttribute('width', w);
+    penLayer.setAttribute('height', h);
+    penLayer.style.height = h + 'px';
+    penLayer.style.width = w + 'px';
+  };
+  sync();
+  if (window.ResizeObserver) new ResizeObserver(sync).observe(document.body);
+  window.addEventListener('resize', sync);
+  setInterval(sync, 2000);
+}
+function togglePen() {
+  penEnabled = !penEnabled;
+  document.getElementById('penToggle').classList.toggle('active', penEnabled);
+  document.getElementById('penTools').classList.toggle('show', penEnabled);
+  penLayer.classList.toggle('active', penEnabled);
+}
+function getPenPt(e) {
+  return { x: e.clientX + window.scrollX, y: e.clientY + window.scrollY };
+}
+function penDown(e) {
+  if (!penEnabled) return;
+  e.preventDefault();
+  try { penLayer.setPointerCapture(e.pointerId); } catch (_) {}
+  if (penEraser) { eraseAt(e); return; }
+  const pt = getPenPt(e);
+  penPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  penPath.setAttribute('d', 'M ' + pt.x + ' ' + pt.y);
+  penPath.setAttribute('stroke', penColor);
+  penPath.setAttribute('stroke-width', penWidth);
+  penPath.setAttribute('fill', 'none');
+  penPath.setAttribute('stroke-linecap', 'round');
+  penPath.setAttribute('stroke-linejoin', 'round');
+  penLayer.appendChild(penPath);
+  penPts = [pt];
+}
+function penMove(e) {
+  if (!penEnabled) return;
+  if (penEraser && e.buttons) { eraseAt(e); return; }
+  if (!penPath) return;
+  e.preventDefault();
+  const pt = getPenPt(e);
+  const last = penPts[penPts.length - 1];
+  if (Math.hypot(pt.x - last.x, pt.y - last.y) < 1.5) return;
+  penPts.push(pt);
+  let d = 'M ' + penPts[0].x + ' ' + penPts[0].y;
+  for (let i = 1; i < penPts.length - 1; i++) {
+    const c = penPts[i], n = penPts[i + 1];
+    const mx = (c.x + n.x) / 2, my = (c.y + n.y) / 2;
+    d += ' Q ' + c.x + ' ' + c.y + ' ' + mx + ' ' + my;
+  }
+  if (penPts.length >= 2) {
+    const lp = penPts[penPts.length - 1];
+    d += ' L ' + lp.x + ' ' + lp.y;
+  }
+  penPath.setAttribute('d', d);
+}
+function penUp(e) {
+  if (penPath) { penPath = null; penPts = []; }
+}
+function eraseAt(e) {
+  const pt = getPenPt(e);
+  const r = 20;
+  const paths = Array.from(penLayer.querySelectorAll('path'));
+  for (const p of paths) {
+    const bb = p.getBBox();
+    if (pt.x >= bb.x - r && pt.x <= bb.x + bb.width + r && pt.y >= bb.y - r && pt.y <= bb.y + bb.height + r) {
+      p.remove();
+    }
+  }
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', buildPenTools);
+} else {
+  setTimeout(buildPenTools, 100);
+}
+</script>
+
+<!-- ══ 자료 보호 시스템 [A] ══ -->
+<script>
+(function(){'use strict';
+var _z9=[47785,46041,49436,47196,50689,50612,54617,50896];
+var _z8=[48,53,48,53,46,99,111,46,107,114];
+var _zX=[54617,50896,51060,47700,51068];
+function _dc(a){return String.fromCharCode.apply(null,a);}
+window.__zV0=false;
+window.__zChk=function(){
+  if(window.__zV0)return;
+  try{
+    var s=document.documentElement.outerHTML;
+    var k1=_dc(_z9),k2=_dc(_z8);
+    if(s.indexOf(k1)<0||s.indexOf(k2)<0){window.__zK(1);return;}
+    var n1=0,n2=0,p=0;
+    while((p=s.indexOf(k1,p))!==-1){n1++;p+=k1.length;}
+    p=0;while((p=s.indexOf(k2,p))!==-1){n2++;p+=k2.length;}
+    if(n1<3||n2<2){window.__zK(2);return;}
+  }catch(e){}
+};
+window.__zK=function(c){
+  if(window.__zV0)return;
+  window.__zV0=true;
+  var k1=_dc(_z9),k2=_dc(_z8);
+  try{document.title='⚠ 무단복제 감지';}catch(e){}
+  var html='<div style="font-family:-apple-system,sans-serif;padding:60px 24px;text-align:center;background:#fff;min-height:100vh;box-sizing:border-box;">'
+    +'<div style="font-size:64px;margin-bottom:24px;">⚠️</div>'
+    +'<h1 style="color:#c0392b;font-size:26px;margin:0 0 20px;">자료 보호 알림</h1>'
+    +'<p style="font-size:17px;color:#222;line-height:1.7;margin:0 auto 28px;max-width:520px;">'
+    +'이 학습자료는 <strong>'+k1+'</strong>에서 제작한 콘텐츠입니다.<br>'
+    +'원본 출처: <a href="https://'+k2+'" style="color:#0066cc;font-weight:600;">'+k2+'</a></p>'
+    +'<p style="font-size:14px;color:#888;max-width:520px;margin:0 auto;">무단 복제·배포가 감지되어 페이지 표시가 중지되었습니다. (코드: '+c+')</p>'
+    +'</div>';
+  try{if(document.body)document.body.innerHTML=html;}catch(e){}
+};
+function _sch(){
+  setTimeout(window.__zChk,800);
+  setTimeout(window.__zChk,3500);
+  setTimeout(window.__zChk,9000);
+  setTimeout(window.__zChk,25000);
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',_sch);}else{_sch();}
+setTimeout(window.__zChk,1500);
+})();
+</script>
+
+<!-- ══ 자료 보호 시스템 [B] - 크로스체크 ══ -->
+<script>
+(function(){'use strict';
+function _q(){
+  try{
+    if(typeof window.__zChk!=='function'||typeof window.__zK!=='function'){
+      var b1=[47785,46041,49436,47196,50689,50612,54617,50896];
+      var b2=[48,53,48,53,46,99,111,46,107,114];
+      var k1=String.fromCharCode.apply(null,b1);
+      var k2=String.fromCharCode.apply(null,b2);
+      try{document.title='⚠';}catch(e){}
+      if(document.body){
+        document.body.innerHTML='<div style="font-family:sans-serif;padding:60px 24px;text-align:center;"><div style="font-size:64px;">⚠️</div><h1 style="color:#c0392b;">자료 보호 알림</h1><p>이 자료는 <strong>'+k1+'</strong>(<a href="https://'+k2+'">'+k2+'</a>) 제작물입니다.</p></div>';
+      }
+      return;
+    }
+    window.__zChk();
+  }catch(e){}
+}
+setTimeout(_q,1200);
+setTimeout(_q,7000);
+setTimeout(_q,20000);
+})();
+</script>
+
+</body>
+</html>
