@@ -416,6 +416,33 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   body.psd .sd-vocab-chip{font-size:10px!important;padding:2px 7px!important;}
 }
 
+
+
+/* ══ 펜 필기 모드 v1.0 ══ */
+#penToolbar{position:fixed;bottom:20px;right:20px;z-index:10000;display:flex;flex-direction:row;gap:8px;background:rgba(255,255,255,0.96);padding:8px;border-radius:30px;box-shadow:0 4px 20px rgba(0,0,0,0.18);backdrop-filter:blur(10px);align-items:center;}
+#penToolbar .pen-btn{width:42px;height:42px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-btn:hover{background:#e0e0e0;}
+#penToolbar .pen-btn.active{background:#2E75B6;color:white;}
+#penToolbar .pen-main{background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;font-size:20px;}
+#penToolbar .pen-main.active{background:linear-gradient(135deg,#dc2626,#ef4444);transform:scale(1.05);}
+#penToolbar .pen-tools{display:none;flex-direction:row;gap:6px;align-items:center;padding-left:8px;border-left:1px solid #ddd;margin-left:4px;}
+#penToolbar .pen-tools.show{display:flex;}
+#penToolbar .pen-color{width:30px;height:30px;border:2px solid white;border-radius:50%;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.2);transition:transform 0.15s;padding:0;}
+#penToolbar .pen-color:hover{transform:scale(1.1);}
+#penToolbar .pen-color.selected{border:2px solid #333;transform:scale(1.18);box-shadow:0 2px 6px rgba(0,0,0,0.3);}
+#penToolbar .pen-width{width:34px;height:34px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-width:hover{background:#e0e0e0;}
+#penToolbar .pen-width span{background:#333;border-radius:50%;display:inline-block;}
+#penToolbar .pen-width.selected{background:#1F3864;}
+#penToolbar .pen-width.selected span{background:white !important;}
+#penLayer{position:absolute;top:0;left:0;pointer-events:none;z-index:998;overflow:visible;}
+#penLayer.active{pointer-events:auto;touch-action:none;cursor:crosshair;}
+@media print{#penToolbar{display:none !important;}#penLayer{display:none !important;}}
+@media (max-width:600px){
+  #penToolbar{bottom:10px;right:10px;padding:6px;gap:4px;}
+  #penToolbar .pen-btn,#penToolbar .pen-width{width:38px;height:38px;}
+  #penToolbar .pen-color{width:26px;height:26px;}
+}
 </style>
 </head>
 <body>
@@ -1370,6 +1397,131 @@ function buildMeaningQuiz(box){
 }
 function checkMeaning(i,btn){const card=btn.closest('.quiz-card');const correct=card.dataset.answer;const isOk=btn.dataset.val===correct;card.querySelectorAll('.choice-btn').forEach(b=>{b.onclick=null;if(b.dataset.val===correct)b.classList.add('ok');else if(b===btn&&!isOk)b.classList.add('ng');});const fb=document.getElementById('mc-fb-'+i);fb.className='quiz-fb show '+(isOk?'ok':'ng');fb.innerHTML=isOk?'🎉 정답!':'❌ 정답: <strong>'+correct+'</strong>';vocabScores.meaning[i]=isOk?1:0;const done=Object.keys(vocabScores.meaning).length;const ok=Object.values(vocabScores.meaning).filter(v=>v===1).length;const sc=document.getElementById('meaning-score');if(sc)sc.textContent=`${ok} / ${done} 정답`;}
 function resetMeaning(){vocabScores.meaning={};buildVocab(2);}
+
+
+/* ══ 펜 필기 모드 (자유 필기) v1.0 ══ */
+const PEN_COLORS=['#dc2626','#1F3864','#0f9d58','#f59e0b','#000000'];
+const PEN_WIDTHS=[2,4,7];
+let penEnabled=false,penColor='#dc2626',penWidth=4,penEraser=false;
+let penLayer=null,penPath=null,penPts=[];
+
+function buildPenTools(){
+  if(document.getElementById('penLayer'))return;
+  penLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  penLayer.id='penLayer';
+  document.body.appendChild(penLayer);
+  const tb=document.createElement('div');
+  tb.id='penToolbar';
+  let html='<button class="pen-btn pen-main" id="penToggle" title="펜 ON/OFF">✏️</button><div class="pen-tools" id="penTools">';
+  PEN_COLORS.forEach(c=>html+='<button class="pen-color" data-color="'+c+'" style="background:'+c+';" title="색상"></button>');
+  PEN_WIDTHS.forEach(w=>html+='<button class="pen-width" data-width="'+w+'" title="굵기"><span style="width:'+(w*2)+'px;height:'+(w*2)+'px;"></span></button>');
+  html+='<button class="pen-btn pen-eraser" id="penEraserBtn" title="개별 지우개">🧹</button><button class="pen-btn pen-clear" id="penClearBtn" title="전체 지우기">🗑️</button></div>';
+  tb.innerHTML=html;
+  document.body.appendChild(tb);
+  document.querySelector('.pen-color[data-color="'+penColor+'"]').classList.add('selected');
+  document.querySelector('.pen-width[data-width="'+penWidth+'"]').classList.add('selected');
+  document.getElementById('penToggle').addEventListener('click',togglePen);
+  document.querySelectorAll('.pen-color').forEach(b=>b.addEventListener('click',e=>{
+    const c=e.currentTarget.dataset.color;
+    penColor=c;penEraser=false;
+    document.querySelectorAll('.pen-color').forEach(x=>x.classList.toggle('selected',x.dataset.color===c));
+    document.getElementById('penEraserBtn').classList.remove('active');
+  }));
+  document.querySelectorAll('.pen-width').forEach(b=>b.addEventListener('click',e=>{
+    const w=+e.currentTarget.dataset.width;
+    penWidth=w;
+    document.querySelectorAll('.pen-width').forEach(x=>x.classList.toggle('selected',+x.dataset.width===w));
+  }));
+  document.getElementById('penEraserBtn').addEventListener('click',()=>{
+    penEraser=!penEraser;
+    document.getElementById('penEraserBtn').classList.toggle('active',penEraser);
+  });
+  document.getElementById('penClearBtn').addEventListener('click',()=>{
+    if(confirm('모든 필기를 지우시겠습니까?'))penLayer.innerHTML='';
+  });
+  penLayer.addEventListener('pointerdown',penDown);
+  penLayer.addEventListener('pointermove',penMove);
+  penLayer.addEventListener('pointerup',penUp);
+  penLayer.addEventListener('pointercancel',penUp);
+  penLayer.addEventListener('pointerleave',penUp);
+  const sync=()=>{
+    const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
+    const w=Math.max(document.body.scrollWidth,document.documentElement.scrollWidth);
+    penLayer.setAttribute('width',w);
+    penLayer.setAttribute('height',h);
+    penLayer.style.height=h+'px';
+    penLayer.style.width=w+'px';
+  };
+  sync();
+  if(window.ResizeObserver)new ResizeObserver(sync).observe(document.body);
+  window.addEventListener('resize',sync);
+  setInterval(sync,2000);
+}
+function togglePen(){
+  penEnabled=!penEnabled;
+  document.getElementById('penToggle').classList.toggle('active',penEnabled);
+  document.getElementById('penTools').classList.toggle('show',penEnabled);
+  penLayer.classList.toggle('active',penEnabled);
+}
+function getPenPt(e){
+  return {x:e.clientX+window.scrollX,y:e.clientY+window.scrollY};
+}
+function penDown(e){
+  if(!penEnabled)return;
+  e.preventDefault();
+  try{penLayer.setPointerCapture(e.pointerId);}catch(_){}
+  if(penEraser){eraseAt(e);return;}
+  const pt=getPenPt(e);
+  penPath=document.createElementNS('http://www.w3.org/2000/svg','path');
+  penPath.setAttribute('d','M '+pt.x+' '+pt.y);
+  penPath.setAttribute('stroke',penColor);
+  penPath.setAttribute('stroke-width',penWidth);
+  penPath.setAttribute('fill','none');
+  penPath.setAttribute('stroke-linecap','round');
+  penPath.setAttribute('stroke-linejoin','round');
+  penLayer.appendChild(penPath);
+  penPts=[pt];
+}
+function penMove(e){
+  if(!penEnabled)return;
+  if(penEraser&&e.buttons){eraseAt(e);return;}
+  if(!penPath)return;
+  e.preventDefault();
+  const pt=getPenPt(e);
+  const last=penPts[penPts.length-1];
+  if(Math.hypot(pt.x-last.x,pt.y-last.y)<1.5)return;
+  penPts.push(pt);
+  let d='M '+penPts[0].x+' '+penPts[0].y;
+  for(let i=1;i<penPts.length-1;i++){
+    const c=penPts[i],n=penPts[i+1];
+    const mx=(c.x+n.x)/2,my=(c.y+n.y)/2;
+    d+=' Q '+c.x+' '+c.y+' '+mx+' '+my;
+  }
+  if(penPts.length>=2){
+    const lp=penPts[penPts.length-1];
+    d+=' L '+lp.x+' '+lp.y;
+  }
+  penPath.setAttribute('d',d);
+}
+function penUp(e){
+  if(penPath){penPath=null;penPts=[];}
+}
+function eraseAt(e){
+  const pt=getPenPt(e);
+  const r=20;
+  const paths=Array.from(penLayer.querySelectorAll('path'));
+  for(const p of paths){
+    const bb=p.getBBox();
+    if(pt.x>=bb.x-r&&pt.x<=bb.x+bb.width+r&&pt.y>=bb.y-r&&pt.y<=bb.y+bb.height+r){
+      p.remove();
+    }
+  }
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',buildPenTools);
+}else{
+  setTimeout(buildPenTools,100);
+}
 </script>
 <script>
 // ── 문장구조도 탭 전환 ──
