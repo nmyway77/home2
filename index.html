@@ -68,7 +68,10 @@
 <style>
 :root{
   --ink:#0d1520;--navy:#1B2E4A;--gold:#C9A84C;--gold2:#f0d070;
-  --cream:#F5F0E8;--rule:rgba(255,255,255,0.08);
+  --cream:#FAF8F4;--cream-dark:#F4EFE5;--warm-white:#FCFAF6;
+  --hero-deep:#0A1E3A;--hero-mid:#142a4e;
+  --text-dark:#1a1a2e;--text-mid:#4a4a6a;--text-soft:#6b7280;
+  --rule:rgba(255,255,255,0.08);--rule-dark:rgba(13,21,32,0.10);
   --g1:#1a3a6e;--g1b:#2E75B6;  /* 고1 블루 */
   --g2:#3d1a5e;--g2b:#7B2D8E;  /* 고2 퍼플 */
   --g3:#1a4a2a;--g3b:#2E8B4A;  /* 고3 그린 */
@@ -79,8 +82,8 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{
-  background:var(--ink);
-  color:var(--cream);
+  background:var(--cream);
+  color:var(--text-dark);
   font-family:'Noto Sans KR',sans-serif;
   min-height:100vh;
   overflow-x:hidden;
@@ -90,93 +93,106 @@ body{
 body::before{
   content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   background:
-    radial-gradient(ellipse at 15% 20%, rgba(46,117,182,0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 85% 80%, rgba(123,45,142,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 15% 20%, rgba(46,117,182,0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 80%, rgba(123,45,142,0.04) 0%, transparent 50%),
     radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.04) 0%, transparent 70%);
 }
 
-/* ── NAV ── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  background:rgba(13,21,32,0.95);
-  backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--rule);
-  display:flex;align-items:center;
-  padding:0 24px;height:54px;gap:16px;
-}
-.nav-logo{
-  font-family:'JetBrains Mono',monospace;
-  font-size:13px;font-weight:700;letter-spacing:2px;
-  color:var(--gold);flex-shrink:0;
-}
-.nav-logo span{color:rgba(201,168,76,0.4);}
-.nav-brand-group{
-  display:flex;align-items:center;gap:6px;
-  font-family:'Noto Sans KR',sans-serif;
-  position:absolute;left:50%;transform:translateX(-50%);
-}
-.nav-slogan{
-  font-size:10px;font-weight:300;
-  color:rgba(255,255,255,0.85);
-  letter-spacing:0.5px;white-space:nowrap;
-}
-.nav-divider{
-  color:rgba(255,255,255,0.25);font-size:11px;
-}
-.nav-academy{
-  font-size:13px;font-weight:700;
-  color:white;letter-spacing:1px;white-space:nowrap;
-}
-.nav-right-area{display:flex;align-items:center;gap:12px;margin-left:auto;}
-.nav-school-select{
-  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.12);
-  color:rgba(255,255,255,0.6);border-radius:5px;
-  padding:5px 12px;cursor:pointer;outline:none;
-  transition:background 0.2s;
-}
-.nav-school-select:hover{background:rgba(255,255,255,0.1);color:white;}
-.nav-school-select option{background:#1B2E4A;color:white;}
-#dictSelect option{background:#1B2E4A;color:white;padding:4px 8px;}
-.nav-site{
-  font-family:'JetBrains Mono',monospace;font-size:9px;
-  letter-spacing:2px;color:rgba(255,255,255,0.2);
-}
-
-/* ── HERO ── */
+/* ── NEW HERO HEADER (상단) ── */
 .hero{
   position:relative;z-index:1;
-  padding:90px 20px 32px;
+  background:
+    radial-gradient(ellipse at 12% 20%, rgba(201,168,76,0.18), transparent 45%),
+    radial-gradient(ellipse at 88% 78%, rgba(46,117,182,0.14), transparent 50%),
+    linear-gradient(135deg, var(--hero-deep) 0%, var(--hero-mid) 100%);
+  color:var(--cream);
+  padding:42px 24px 44px;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(245,240,232,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,240,232,0.035) 1px, transparent 1px);
+  background-size:44px 44px;
+}
+.hero-inner{
+  position:relative;z-index:1;
+  max-width:1060px;margin:0 auto;
+}
+.brand-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-bottom:22px;
+  border-bottom:1px solid rgba(245,240,232,0.15);
+  margin-bottom:24px;
+  flex-wrap:wrap;gap:14px;
+}
+.brand-left{display:flex;align-items:center;gap:14px;}
+.brand-mark{
+  width:48px;height:48px;border-radius:50%;
+  background:linear-gradient(135deg, var(--gold), #e4c589);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;
+  font-weight:700;font-size:24px;color:var(--hero-deep);
+  box-shadow:0 4px 20px rgba(201,168,76,0.35);
+  flex-shrink:0;
+}
+.brand-academy{
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:18px;font-weight:700;
+  color:var(--cream);letter-spacing:1px;
+  line-height:1.25;
+}
+.brand-academy .en{
+  display:block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;font-weight:400;
+  color:rgba(245,240,232,0.5);
+  letter-spacing:1.5px;margin-top:3px;
+}
+.brand-meta{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:7px 14px;
+  border:1px solid rgba(201,168,76,0.35);
+  border-radius:999px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;color:var(--gold2);letter-spacing:1px;
+}
+.brand-meta .dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--gold2);
+  box-shadow:0 0 8px var(--gold2);
+}
+.hero-tagline{
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:13px;font-weight:300;
+  color:rgba(245,240,232,0.7);
+  letter-spacing:0.5px;margin-bottom:18px;
   text-align:center;
 }
-.hero-top{
-  display:flex;align-items:center;justify-content:center;
-  gap:10px;margin-bottom:12px;
-}
-.hero-badge{
-  font-family:'JetBrains Mono',monospace;
-  font-size:9px;letter-spacing:3px;text-transform:uppercase;
-  color:var(--gold);border:1px solid rgba(201,168,76,0.3);
-  padding:4px 14px;border-radius:2px;background:rgba(201,168,76,0.05);
-}
-.hero-sub{
-  font-size:13px;font-weight:300;color:rgba(245,240,232,0.45);
-  letter-spacing:1px;margin-top:6px;
+.hero-tagline strong{color:var(--gold2);font-weight:500;}
+.hero-search-wrap{max-width:520px;margin:0 auto;padding:0 4px;}
+
+@media(max-width:560px){
+  .hero{padding:30px 16px 34px;}
+  .brand-academy{font-size:15px;letter-spacing:0.5px;}
+  .brand-mark{width:40px;height:40px;font-size:20px;}
+  .brand-meta{font-size:10px;padding:6px 11px;}
+  .hero-tagline{font-size:11.5px;}
 }
 
 /* ── SECTION LABEL ── */
 .section-label{
   position:relative;z-index:1;
-  max-width:1060px;margin:0 auto;
+  max-width:1060px;margin:32px auto 0;
   padding:0 20px 14px;
   display:flex;align-items:center;gap:14px;
 }
-.sl-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);}
+.sl-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(13,21,32,0.18),transparent);}
 .sl-text{
   font-family:'JetBrains Mono',monospace;
   font-size:10px;letter-spacing:3px;text-transform:uppercase;
-  color:rgba(255,255,255,0.25);white-space:nowrap;margin:0;padding:0 14px;font-weight:400;
+  color:rgba(13,21,32,0.45);white-space:nowrap;margin:0;padding:0 14px;font-weight:500;
 }
 
 /* ── GRADE GRID ── */
@@ -347,13 +363,28 @@ nav{
   background:rgba(255,255,255,0.04);
 }
 
-/* ── SCHOOL SECTION ── */
+/* ── SCHOOL SECTION (하단 바 · hero 미러) ── */
 .school-section{
   position:relative;z-index:1;
-  padding:32px 20px 48px;
+  background:
+    radial-gradient(ellipse at 88% 30%, rgba(201,168,76,0.18), transparent 45%),
+    radial-gradient(ellipse at 12% 70%, rgba(46,117,182,0.14), transparent 50%),
+    linear-gradient(135deg, var(--hero-deep) 0%, var(--hero-mid) 100%);
+  color:var(--cream);
+  padding:40px 20px 36px;
+  margin-top:48px;
   text-align:center;
-  border-top:1px solid rgba(255,255,255,0.06);
+  overflow:hidden;
+  border-top:none;
 }
+.school-section::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(245,240,232,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,240,232,0.035) 1px, transparent 1px);
+  background-size:44px 44px;
+}
+.school-section > *{position:relative;z-index:1;}
 .school-chips{
   display:flex;flex-wrap:wrap;justify-content:center;gap:10px;
   max-width:600px;margin:16px auto 0;
@@ -361,18 +392,18 @@ nav{
 .school-chip{
   padding:7px 18px;border-radius:20px;
   font-size:12px;font-weight:500;
-  border:1px solid rgba(255,255,255,0.1);
-  color:rgba(255,255,255,0.5);
-  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(245,240,232,0.15);
+  color:rgba(245,240,232,0.55);
+  background:rgba(245,240,232,0.04);
   transition:all 0.2s;
 }
 .school-chip.hi{
-  border-color:rgba(201,168,76,0.3);
+  border-color:rgba(201,168,76,0.35);
   color:var(--gold2);
-  background:rgba(201,168,76,0.06);
+  background:rgba(201,168,76,0.08);
   font-family:'Noto Sans KR',sans-serif;font-size:13px;
 }
-.school-chip:hover{background:rgba(255,255,255,0.06);}
+.school-chip:hover{background:rgba(245,240,232,0.09);}
 
 /* 모의고사 년도/월 선택 */
 .mock-select-wrap{
@@ -495,10 +526,12 @@ nav{
 .s-modal-arrow{color:var(--gold);font-size:12px;}
 
 footer{
-  text-align:center;padding:28px 20px;
+  text-align:center;padding:22px 20px 26px;
   font-family:'JetBrains Mono',monospace;
-  font-size:10px;color:rgba(255,255,255,0.15);
-  letter-spacing:1px;border-top:1px solid rgba(255,255,255,0.05);
+  font-size:11.5px;color:rgba(245,240,232,0.65);
+  letter-spacing:1px;line-height:1.7;
+  background:var(--hero-deep);
+  border-top:1px solid rgba(245,240,232,0.08);
   position:relative;z-index:1;
 }
 
@@ -589,73 +622,82 @@ footer{
 </head>
 <body>
 
-<nav>
-  <div class="nav-brand-group">
-    <span class="nav-slogan">최고를 향한 끊임없는 열정</span>
-    <span class="nav-divider">·</span>
-    <span class="nav-academy">목동서로영어학원</span>
-    <span class="nav-divider">·</span>
-    <span class="nav-slogan">학생 개개인을 위한 1:1 과외식 훈련 시스템</span>
-  </div>
-  <div class="nav-right-area"></div>
-</nav>
+<nav style="display:none"></nav>
 
-<!-- HERO -->
-<div class="hero">
-  <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">모의고사 한줄해석 · 분석자료 무료 — 목동서로영어학원</h1>
-  <div style="max-width:520px;margin:18px auto 0;padding:0 16px;">
-    <div id="dictSearchBox" style="
-      display:flex;align-items:center;
-      background:rgba(255,255,255,0.06);
-      border:1px solid rgba(255,255,255,0.12);
-      border-radius:50px;overflow:hidden;
-      transition:border-color 0.2s,box-shadow 0.2s;
-    ">
-      <select id="dictSelect" style="
-        font-family:'Noto Sans KR',sans-serif;font-size:11px;font-weight:600;
-        background:rgba(255,255,255,0.08);border:none;
-        border-right:1px solid rgba(255,255,255,0.1);
-        color:var(--gold2);padding:12px 8px 12px 16px;
-        cursor:pointer;outline:none;letter-spacing:0.3px;
-        -webkit-appearance:none;appearance:none;
-        background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%226%22><path d=%22M0 0l5 6 5-6z%22 fill=%22%23C9A84C%22/></svg>');
-        background-repeat:no-repeat;background-position:right 8px center;
-        padding-right:22px;flex-shrink:0;
+<!-- HERO HEADER -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="brand-row">
+      <div class="brand-left">
+        <div class="brand-mark">서</div>
+        <div class="brand-academy">
+          목동서로영어학원
+          <span class="en">MOKDONG SEORO ENGLISH ACADEMY · 0505.co.kr</span>
+        </div>
+      </div>
+      <div class="brand-meta">
+        <span class="dot"></span>
+        신목고 · 목운중 · 목동중 · 대일고
+      </div>
+    </div>
+    <p class="hero-tagline">
+      <strong>최고를 향한 끊임없는 열정</strong> · 학생 개개인을 위한 1:1 과외식 훈련 시스템
+    </p>
+    <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">모의고사 한줄해석 · 분석자료 무료 — 목동서로영어학원</h1>
+    <div class="hero-search-wrap">
+      <div id="dictSearchBox" style="
+        display:flex;align-items:center;
+        background:rgba(255,255,255,0.06);
+        border:1px solid rgba(255,255,255,0.12);
+        border-radius:50px;overflow:hidden;
+        transition:border-color 0.2s,box-shadow 0.2s;
       ">
-        <option value="thesaurus">동의어·반의어</option>
-        <option value="naver">네이버사전</option>
-        <option value="daum">다음사전</option>
-        <option value="cambridge">Cambridge</option>
-        <option value="oxford">Oxford</option>
-        <option value="merriam">Merriam-Webster</option>
-        <option value="longman">Longman</option>
-        <option value="collins">Collins</option>
-      </select>
-      <input id="dictInput" type="text" placeholder="영어 단어 검색..."
-        autocomplete="off"
-        style="
-          flex:1;border:none;outline:none;background:transparent;
-          padding:12px 12px;
-          font-family:'Source Serif 4','Noto Sans KR',sans-serif;
-          font-size:15px;color:var(--cream);letter-spacing:0.3px;
-          min-width:0;
-        "
-        onfocus="document.getElementById('dictSearchBox').style.borderColor='rgba(201,168,76,0.5)';document.getElementById('dictSearchBox').style.boxShadow='0 0 20px rgba(201,168,76,0.1)'"
-        onblur="document.getElementById('dictSearchBox').style.borderColor='rgba(255,255,255,0.12)';document.getElementById('dictSearchBox').style.boxShadow='none'"
-        onkeydown="if(event.key==='Enter')goDictSearch()"
-      >
-      <button onclick="goDictSearch()" style="
-        background:linear-gradient(135deg,var(--navy),#2a3f6e);
-        color:var(--gold);border:none;
-        padding:12px 22px;
-        font-family:'Noto Sans KR',sans-serif;
-        font-size:13px;font-weight:700;
-        cursor:pointer;border-radius:0 50px 50px 0;
-        letter-spacing:1px;transition:filter 0.15s;flex-shrink:0;
-      " onmouseover="this.style.filter='brightness(1.2)'" onmouseout="this.style.filter='none'">검색</button>
+        <select id="dictSelect" style="
+          font-family:'Noto Sans KR',sans-serif;font-size:11px;font-weight:600;
+          background:rgba(255,255,255,0.08);border:none;
+          border-right:1px solid rgba(255,255,255,0.1);
+          color:var(--gold2);padding:12px 8px 12px 16px;
+          cursor:pointer;outline:none;letter-spacing:0.3px;
+          -webkit-appearance:none;appearance:none;
+          background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%226%22><path d=%22M0 0l5 6 5-6z%22 fill=%22%23C9A84C%22/></svg>');
+          background-repeat:no-repeat;background-position:right 8px center;
+          padding-right:22px;flex-shrink:0;
+        ">
+          <option value="thesaurus">동의어·반의어</option>
+          <option value="naver">네이버사전</option>
+          <option value="daum">다음사전</option>
+          <option value="cambridge">Cambridge</option>
+          <option value="oxford">Oxford</option>
+          <option value="merriam">Merriam-Webster</option>
+          <option value="longman">Longman</option>
+          <option value="collins">Collins</option>
+        </select>
+        <input id="dictInput" type="text" placeholder="영어 단어 검색..."
+          autocomplete="off"
+          style="
+            flex:1;border:none;outline:none;background:transparent;
+            padding:12px 12px;
+            font-family:'Source Serif 4','Noto Sans KR',sans-serif;
+            font-size:15px;color:var(--cream);letter-spacing:0.3px;
+            min-width:0;
+          "
+          onfocus="document.getElementById('dictSearchBox').style.borderColor='rgba(201,168,76,0.5)';document.getElementById('dictSearchBox').style.boxShadow='0 0 20px rgba(201,168,76,0.1)'"
+          onblur="document.getElementById('dictSearchBox').style.borderColor='rgba(255,255,255,0.12)';document.getElementById('dictSearchBox').style.boxShadow='none'"
+          onkeydown="if(event.key==='Enter')goDictSearch()"
+        >
+        <button onclick="goDictSearch()" style="
+          background:linear-gradient(135deg,var(--navy),#2a3f6e);
+          color:var(--gold);border:none;
+          padding:12px 22px;
+          font-family:'Noto Sans KR',sans-serif;
+          font-size:13px;font-weight:700;
+          cursor:pointer;border-radius:0 50px 50px 0;
+          letter-spacing:1px;transition:filter 0.15s;flex-shrink:0;
+        " onmouseover="this.style.filter='brightness(1.2)'" onmouseout="this.style.filter='none'">검색</button>
+      </div>
     </div>
   </div>
-</div>
+</header>
 
 <!-- 전국모의고사 한줄해석/문장구조도 배너 -->
 <a href="mock_hub.html" class="mock-banner" style="text-decoration:none;">
@@ -723,6 +765,7 @@ footer{
 
 <style>
 .mock-banner{display:block;max-width:900px;margin:14px auto 20px;padding:0 8px;cursor:pointer;}
+.mock-banner:first-of-type{margin-top:28px;}
 .mock-banner-inner{position:relative;overflow:hidden;background:linear-gradient(135deg,#0d1b2a,#1b2d4f,#2a1a3e);border-radius:16px;padding:22px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;border:1px solid rgba(74,222,128,0.15);box-shadow:0 6px 30px rgba(0,0,0,0.3);transition:all 0.3s;}
 .mock-banner:hover .mock-banner-inner{border-color:rgba(74,222,128,0.4);box-shadow:0 8px 40px rgba(74,222,128,0.15);transform:translateY(-2px);}
 .mock-banner-glow{position:absolute;top:-50%;right:-10%;width:200px;height:200px;background:radial-gradient(circle,rgba(74,222,128,0.12),transparent 70%);pointer-events:none;}
@@ -949,7 +992,7 @@ footer{
 
 <!-- 학교 안내 -->
 <div class="school-section">
-  <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.25);margin-bottom:8px;">SPECIALIZED SCHOOLS</div>
+  <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(245,240,232,0.4);margin-bottom:8px;">SPECIALIZED SCHOOLS</div>
   <div class="school-chips">
     <span class="school-chip hi">🏫 신목고등학교</span>
     <span class="school-chip hi">🏫 목운중학교</span>
@@ -984,11 +1027,11 @@ footer{
       📋 학원 레벨테스트
     </a>
     <a href="tel:02-2648-1020"
-       style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,0.55);
-              border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:7px 18px;
-              text-decoration:none;background:rgba(255,255,255,0.03);transition:all 0.2s;"
-       onmouseover="this.style.background='rgba(255,255,255,0.08)'"
-       onmouseout="this.style.background='rgba(255,255,255,0.03)'">
+       style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(245,240,232,0.6);
+              border:1px solid rgba(245,240,232,0.15);border-radius:20px;padding:7px 18px;
+              text-decoration:none;background:rgba(245,240,232,0.04);transition:all 0.2s;"
+       onmouseover="this.style.background='rgba(245,240,232,0.1)'"
+       onmouseout="this.style.background='rgba(245,240,232,0.04)'">
       📞 02-2648-1020
     </a>
     <a href="https://0505.co.kr/mail2.html" target="_blank"
@@ -1036,7 +1079,7 @@ footer{
   </div>
 </div>
 
-<div style="max-width:900px;margin:0 auto;padding:0 20px 20px;font-size:11px;color:rgba(255,255,255,0.12);line-height:1.8;">
+<div style="max-width:900px;margin:0 auto;padding:0 20px 20px;font-size:11px;color:rgba(13,21,32,0.45);line-height:1.8;">
   모의고사 자료 | 모의고사 무료자료 | 모의고사 분석자료 | 고1 모의고사 한줄해석 | 고2 모의고사 한줄해석 | 고3 모의고사 한줄해석 | 2026 모의고사 | 2025 모의고사 | 수능 기출 분석 | 모의고사 배열영작 | 모의고사 어법문제 | 모의고사 단어장 | 모의고사 문장구조도 | 영어 모의고사 무료 | 목동서로영어학원 | 목동영어학원 | 신목고 내신자료 | 신목고 영어 | 목운중 영어 | 목동중 영어
 </div>
 <footer>목동서로영어학원 · 0505.co.kr · 모의고사 한줄해석 · 모의고사 분석자료 무료 · 고1 고2 고3 모의고사 · 수능 기출 분석 · 배열영작 · 어법문제 · 단어장 · 신목고 · 목운중 · 목동중 전담</footer>
