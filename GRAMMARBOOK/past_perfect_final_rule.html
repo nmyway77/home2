@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Past Perfect — The Final Rule</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F0F12;
+    --bg-elev: #18181D;
+    --bg-card: #1E1E25;
+    --border: #2A2A33;
+    --border-hover: #3A3A45;
+    --text: #F0F0F2;
+    --text-dim: #9999A3;
+    --text-muted: #65656F;
+    --accent-pp: #7B9CFF;
+    --accent-pp-dim: rgba(123, 156, 255, 0.12);
+    --accent-sp: #FFB16E;
+    --accent-sp-dim: rgba(255, 177, 110, 0.12);
+    --accent-good: #6FE5A8;
+    --accent-good-dim: rgba(111, 229, 168, 0.12);
+    --accent-warn: #FFD978;
+    --accent-bad: #FF7676;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at top left, rgba(123, 156, 255, 0.08), transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(255, 177, 110, 0.06), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 80px 28px 100px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero {
+    margin-bottom: 100px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 60px;
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--text-muted);
+  }
+
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: clamp(44px, 6.5vw, 76px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+
+  h1 .em {
+    color: var(--accent-pp);
+    font-style: italic;
+  }
+
+  h1 .small {
+    color: var(--text-muted);
+    font-size: 0.5em;
+    font-style: italic;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .lead {
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 640px;
+    line-height: 1.6;
+  }
+
+  .lead strong { color: var(--text); }
+  .lead em { color: var(--accent-pp); font-style: normal; }
+
+  section { margin-bottom: 80px; }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent-pp);
+    margin-bottom: 12px;
+    letter-spacing: 0.1em;
+  }
+
+  h2 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 38px;
+    line-height: 1.2;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  h2 em { color: var(--accent-pp); font-style: italic; }
+  h2 em.sp { color: var(--accent-sp); }
+  h2 em.good { color: var(--accent-good); }
+
+  p {
+    color: var(--text-dim);
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  p strong { color: var(--text); font-weight: 600; }
+
+  /* ===== HERO RULE BOX ===== */
+  .hero-rule {
+    background: linear-gradient(135deg, var(--accent-pp-dim), var(--accent-sp-dim));
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 50px 44px;
+    margin: 50px 0;
+    position: relative;
+  }
+
+  .hero-rule::before {
+    content: 'THE FINAL RULE';
+    position: absolute;
+    top: -12px;
+    left: 36px;
+    background: var(--bg);
+    padding: 4px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent-pp);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+
+  .rule-item {
+    display: flex;
+    gap: 20px;
+    padding: 16px 0;
+  }
+
+  .rule-item + .rule-item {
+    border-top: 1px solid rgba(123, 156, 255, 0.15);
+  }
+
+  .rule-number {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 32px;
+    color: var(--accent-pp);
+    flex-shrink: 0;
+    line-height: 1;
+    padding-top: 4px;
+  }
+
+  .rule-content {
+    flex: 1;
+  }
+
+  .rule-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+    color: var(--text);
+    margin-bottom: 6px;
+    font-weight: 400;
+  }
+
+  .rule-desc {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .rule-desc strong {
+    color: var(--accent-pp);
+    font-weight: 600;
+  }
+
+  .rule-desc strong.sp {
+    color: var(--accent-sp);
+  }
+
+  /* ===== CASE BLOCK ===== */
+  .case-block {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px 36px;
+    margin: 32px 0;
+    position: relative;
+  }
+
+  .case-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid;
+    margin-bottom: 16px;
+  }
+
+  .case-tag.basic {
+    color: var(--accent-pp);
+    background: var(--accent-pp-dim);
+    border-color: var(--accent-pp);
+  }
+
+  .case-tag.exception {
+    color: var(--accent-sp);
+    background: var(--accent-sp-dim);
+    border-color: var(--accent-sp);
+  }
+
+  .case-tag.special {
+    color: var(--accent-good);
+    background: var(--accent-good-dim);
+    border-color: var(--accent-good);
+  }
+
+  .case-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 30px;
+    line-height: 1.3;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+
+  .case-title em.pp { color: var(--accent-pp); font-style: italic; }
+  .case-title em.sp { color: var(--accent-sp); font-style: italic; }
+  .case-title em.good { color: var(--accent-good); font-style: italic; }
+
+  .case-intro {
+    color: var(--text-dim);
+    font-size: 15px;
+    margin-bottom: 28px;
+    line-height: 1.7;
+  }
+
+  /* ===== EXAMPLE ===== */
+  .example {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 2px solid;
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin: 14px 0;
+  }
+
+  .example.pp { border-left-color: var(--accent-pp); }
+  .example.sp { border-left-color: var(--accent-sp); }
+  .example.both { border-left-color: var(--accent-good); }
+
+  .ex-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .example.pp .ex-label { color: var(--accent-pp); }
+  .example.sp .ex-label { color: var(--accent-sp); }
+  .example.both .ex-label { color: var(--accent-good); }
+
+  .ex-label::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .sentence {
+    font-family: 'Instrument Serif', serif;
+    font-size: 21px;
+    line-height: 1.5;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .sentence .pp { color: var(--accent-pp); font-weight: 500; }
+  .sentence .sp { color: var(--accent-sp); font-weight: 500; }
+  .sentence .conn { color: var(--accent-good); font-style: italic; font-weight: 500; }
+  .sentence .adv { color: var(--accent-warn); font-weight: 500; }
+
+  .translate {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .note {
+    font-size: 13px;
+    color: var(--text-dim);
+    padding-top: 12px;
+    margin-top: 10px;
+    border-top: 1px solid var(--border);
+    line-height: 1.6;
+  }
+
+  .note strong { color: var(--text); }
+
+  /* ===== ANALYZE TABLE ===== */
+  .analyze {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin: 20px 0;
+  }
+
+  .analyze-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .analyze-row {
+    display: flex;
+    gap: 16px;
+    padding: 8px 0;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .analyze-row + .analyze-row {
+    border-top: 1px solid var(--border);
+    margin-top: 4px;
+    padding-top: 12px;
+  }
+
+  .analyze-key {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    min-width: 120px;
+    letter-spacing: 0.05em;
+  }
+
+  .analyze-val {
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  .analyze-val .yes { color: var(--accent-good); font-weight: 600; }
+  .analyze-val .no { color: var(--accent-bad); font-weight: 600; }
+  .analyze-val .arrow {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-muted);
+    margin: 0 6px;
+  }
+
+  /* ===== FLOWCHART ===== */
+  .flow {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px 30px;
+    margin: 40px 0;
+  }
+
+  .flow-step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    margin: 16px 0;
+  }
+
+  .flow-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--accent-pp);
+    color: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .flow-content {
+    flex: 1;
+    padding-top: 4px;
+  }
+
+  .flow-q {
+    font-family: 'Instrument Serif', serif;
+    font-size: 19px;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .flow-branch {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 640px) {
+    .flow-branch { grid-template-columns: 1fr; }
+  }
+
+  .flow-branch-item {
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    border: 1px solid;
+  }
+
+  .flow-branch-item.yes {
+    background: var(--accent-good-dim);
+    border-color: var(--accent-good);
+    color: var(--text);
+  }
+
+  .flow-branch-item.no {
+    background: var(--accent-pp-dim);
+    border-color: var(--accent-pp);
+    color: var(--text);
+  }
+
+  .flow-branch-item strong {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .flow-branch-item.yes strong { color: var(--accent-good); }
+  .flow-branch-item.no strong { color: var(--accent-pp); }
+
+  /* ===== TAKEAWAY ===== */
+  .takeaway {
+    margin: 80px 0 0;
+    padding: 60px 50px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .takeaway::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-pp), var(--accent-sp), var(--accent-good));
+  }
+
+  .takeaway .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    margin-bottom: 20px;
+  }
+
+  .takeaway h2 { font-size: 32px; margin-bottom: 28px; }
+
+  .key-line {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    line-height: 1.7;
+    color: var(--text);
+    font-style: italic;
+    margin-bottom: 18px;
+  }
+
+  .key-line .pp { color: var(--accent-pp); font-style: normal; font-weight: 500; }
+  .key-line .sp { color: var(--accent-sp); font-style: normal; font-weight: 500; }
+  .key-line .good { color: var(--accent-good); font-style: normal; font-weight: 500; }
+  .key-line .warn { color: var(--accent-warn); font-style: normal; font-weight: 500; }
+
+  .takeaway p:last-child {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="hero">
+    <div class="eyebrow">English Grammar / Past Perfect — Final Edition</div>
+    <h1>
+      <span class="small">대화로 다듬은 최종 규칙</span>
+      과거완료,<br>
+      <span class="em">단 3개 규칙</span>으로 끝낸다
+    </h1>
+    <p class="lead">
+      교과서는 케이스별로 외우라고 한다. 하지만 본질은 단순하다.
+      <em>"과거 이전의 행위는 과거완료"</em>라는 한 원칙 + 두 가지 예외.
+      이게 전부다.
+    </p>
+  </header>
+
+  <!-- ===== THE FINAL RULE BOX ===== -->
+  <div class="hero-rule">
+    <div class="rule-item">
+      <div class="rule-number">1</div>
+      <div class="rule-content">
+        <div class="rule-title">기본 원칙</div>
+        <div class="rule-desc">
+          과거의 어느 행위보다 <strong>더 이전에 일어난 행위</strong>는 → <strong>과거완료(had + p.p.)</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-item">
+      <div class="rule-number">2</div>
+      <div class="rule-content">
+        <div class="rule-title">예외 ① &mdash; 순서 접속사</div>
+        <div class="rule-desc">
+          <strong class="sp">before / after / as soon as</strong>가 있으면 → <strong class="sp">단순과거</strong>와 <strong>과거완료</strong> 모두 가능
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-item">
+      <div class="rule-number">3</div>
+      <div class="rule-content">
+        <div class="rule-title">예외 ② &mdash; when의 특수성</div>
+        <div class="rule-desc">
+          <strong class="sp">동시 동작</strong>이면 → 단순과거 &nbsp;·&nbsp; <strong>동시가 아니거나 already/yet/just 부사</strong>가 있으면 → 과거완료
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== RULE 1: BASIC ===== -->
+  <section>
+    <div class="section-num">RULE 01</div>
+    <div class="case-block">
+      <span class="case-tag basic">Basic Principle</span>
+      <h2 class="case-title">기본 원칙 &mdash; <em class="pp">과거 이전의 행위</em>는 과거완료</h2>
+      <p class="case-intro">
+        두 개의 과거 사건이 있을 때, 더 먼저 일어난 사건을 표시하려면 <strong>had + 과거분사</strong>를 쓴다.
+        이때 보통 어순상 뒤에 위치한 사건이 시간상 앞선 경우가 많다.
+      </p>
+
+      <div class="example pp">
+        <div class="ex-label">Past Perfect Required</div>
+        <p class="sentence">She <span class="sp">realized</span> that she <span class="pp">had left</span> her keys at home.</p>
+        <p class="translate">그녀는 열쇠를 집에 두고 왔다는 걸 깨달았다.</p>
+        <div class="note">두고 온 게 먼저, 깨달은 게 나중. 어순은 거꾸로지만 과거완료가 시간 관계를 명확히 한다.</div>
+      </div>
+
+      <div class="example pp">
+        <div class="ex-label">Past Perfect Required</div>
+        <p class="sentence">He <span class="sp">was</span> exhausted because he <span class="pp">had run</span> a marathon.</p>
+        <p class="translate">그는 마라톤을 뛰었기 때문에 지쳐있었다.</p>
+        <div class="note">지친 것보다 마라톤을 뛴 것이 먼저. 원인이 결과보다 앞선다.</div>
+      </div>
+
+      <div class="example pp">
+        <div class="ex-label">Past Perfect Required</div>
+        <p class="sentence">The room <span class="sp">was</span> a mess. Someone <span class="pp">had been</span> there.</p>
+        <p class="translate">방이 엉망이었다. 누군가 (그곳에) 있었던 것이다.</p>
+        <div class="note">방이 엉망인 상태 이전에 누군가 있었음. 과거의 발견 + 그 이전의 원인.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RULE 2: EXCEPTION 1 ===== -->
+  <section>
+    <div class="section-num">RULE 02</div>
+    <div class="case-block">
+      <span class="case-tag exception">Exception 1 &mdash; Order Conjunctions</span>
+      <h2 class="case-title">예외 ① &mdash; <em class="sp">before / after / as soon as</em></h2>
+      <p class="case-intro">
+        이 접속사들은 그 자체로 어느 사건이 먼저인지 알려준다. 그래서 굳이 과거완료로 또 표시할 필요가 없다.
+        <strong>단순과거든 과거완료든 둘 다 자연스럽다.</strong> 회화에서는 단순과거가 더 흔하고, 격식체에서는 과거완료가 선호된다.
+      </p>
+
+      <div class="example both">
+        <div class="ex-label">Both Forms OK &mdash; before</div>
+        <p class="sentence">I <span class="sp">brushed</span> my teeth <span class="conn">before</span> I <span class="sp">went</span> to bed.</p>
+        <p class="sentence">I <span class="pp">had brushed</span> my teeth <span class="conn">before</span> I <span class="sp">went</span> to bed.</p>
+        <p class="translate">자기 전에 양치를 했다.</p>
+        <div class="note">"before"가 이미 양치가 먼저임을 알려준다. 단순과거가 더 자연스럽지만, 과거완료도 틀린 게 아니다.</div>
+      </div>
+
+      <div class="example both">
+        <div class="ex-label">Both Forms OK &mdash; after</div>
+        <p class="sentence"><span class="conn">After</span> he <span class="sp">finished</span> dinner, he <span class="sp">watched</span> TV.</p>
+        <p class="sentence"><span class="conn">After</span> he <span class="pp">had finished</span> dinner, he <span class="sp">watched</span> TV.</p>
+        <p class="translate">저녁을 다 먹은 후에 TV를 봤다.</p>
+        <div class="note">"after"가 순서를 명시하므로 두 형태 모두 자연스럽다.</div>
+      </div>
+
+      <div class="example both">
+        <div class="ex-label">Both Forms OK &mdash; as soon as</div>
+        <p class="sentence"><span class="conn">As soon as</span> he <span class="sp">heard</span> the news, he <span class="sp">called</span> me.</p>
+        <p class="sentence"><span class="conn">As soon as</span> he <span class="pp">had heard</span> the news, he <span class="sp">called</span> me.</p>
+        <p class="translate">소식을 듣자마자, 그는 나에게 전화했다.</p>
+        <div class="note">"as soon as"가 즉시성과 순서를 모두 알려준다.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RULE 3: EXCEPTION 2 ===== -->
+  <section>
+    <div class="section-num">RULE 03</div>
+    <div class="case-block">
+      <span class="case-tag special">Exception 2 &mdash; The "when" Rule</span>
+      <h2 class="case-title">예외 ② &mdash; <em class="good">when</em>은 동시성으로 갈린다</h2>
+      <p class="case-intro">
+        when은 before/after와 달리 순서를 알려주지 않고 <strong>"시간 좌표"만 제공</strong>한다. 그래서 두 사건이 동시인지 아닌지에 따라 시제가 달라진다.
+        또한 <strong>already, yet, just</strong> 같은 완료 부사가 함께 등장하면 무조건 과거완료가 필요하다.
+      </p>
+
+      <h3 style="font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--accent-sp); margin: 28px 0 16px; font-weight: 400;">
+        ▸ 동시 동작 → 단순과거
+      </h3>
+
+      <div class="example sp">
+        <div class="ex-label">Simultaneous → Simple Past</div>
+        <p class="sentence"><span class="conn">When</span> she <span class="sp">saw</span> me, she <span class="sp">smiled</span>.</p>
+        <p class="translate">그녀가 나를 보자, 웃었다.</p>
+        <div class="note">보는 것과 웃는 것이 거의 동시에 일어남. 시간차가 거의 없는 즉각 반응.</div>
+      </div>
+
+      <div class="example sp">
+        <div class="ex-label">Simultaneous → Simple Past</div>
+        <p class="sentence"><span class="conn">When</span> the bell <span class="sp">rang</span>, the students <span class="sp">stood up</span>.</p>
+        <p class="translate">벨이 울리자, 학생들이 일어섰다.</p>
+        <div class="note">벨 울림과 일어남이 동시. 즉각적 반응이므로 단순과거.</div>
+      </div>
+
+      <h3 style="font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--accent-pp); margin: 36px 0 16px; font-weight: 400;">
+        ▸ 동시가 아닐 때 → 과거완료 (기본 원칙 적용)
+      </h3>
+
+      <div class="example pp">
+        <div class="ex-label">Not Simultaneous → Past Perfect</div>
+        <p class="sentence"><span class="conn">When</span> I <span class="sp">arrived</span>, the train <span class="pp">had left</span>.</p>
+        <p class="translate">내가 도착했을 때, 기차는 (이미) 떠난 상태였다.</p>
+        <div class="note">기차가 떠난 게 먼저, 내가 도착한 게 나중. 동시가 아니므로 기본 원칙(과거완료) 적용.</div>
+      </div>
+
+      <div class="example pp">
+        <div class="ex-label">Not Simultaneous → Past Perfect</div>
+        <p class="sentence"><span class="conn">When</span> I <span class="sp">got</span> home, someone <span class="pp">had broken</span> the window.</p>
+        <p class="translate">내가 집에 도착했을 때, 누군가 창문을 깨놓은 상태였다.</p>
+        <div class="note">창문이 깨진 게 먼저, 도착이 나중. 두 사건이 동시가 아니다.</div>
+      </div>
+
+      <h3 style="font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--accent-warn); margin: 36px 0 16px; font-weight: 400;">
+        ▸ already / yet / just가 있으면 → 과거완료 (강력한 신호)
+      </h3>
+
+      <div class="example pp">
+        <div class="ex-label">+ Already → Past Perfect</div>
+        <p class="sentence"><span class="conn">When</span> I <span class="sp">arrived</span>, he <span class="pp">had</span> <span class="adv">already</span> <span class="pp">left</span>.</p>
+        <p class="translate">내가 도착했을 때, 그는 이미 떠난 상태였다.</p>
+        <div class="note">"already"가 완료 상태를 강조 → 과거완료 필수.</div>
+      </div>
+
+      <div class="example pp">
+        <div class="ex-label">+ Just → Past Perfect</div>
+        <p class="sentence"><span class="conn">When</span> she <span class="sp">called</span>, I <span class="pp">had</span> <span class="adv">just</span> <span class="pp">finished</span> dinner.</p>
+        <p class="translate">그녀가 전화했을 때, 나는 막 저녁을 끝낸 참이었다.</p>
+        <div class="note">"just"가 방금 막 완료된 상태를 표현 → 과거완료.</div>
+      </div>
+
+      <div class="example pp">
+        <div class="ex-label">+ Yet → Past Perfect (의문/부정)</div>
+        <p class="sentence">She <span class="sp">asked</span> if I <span class="pp">had</span> finished my homework <span class="adv">yet</span>.</p>
+        <p class="translate">그녀는 내가 숙제를 다 했는지 물어봤다.</p>
+        <div class="note">"yet"이 완료 여부를 묻는 의미 → 완료시제 필수.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DECISION FLOW ===== -->
+  <section>
+    <div class="section-num">FLOWCHART</div>
+    <h2>판별 흐름도 &mdash; <em>3초 안에 결정</em>하기</h2>
+    <p>새로운 문장을 만났을 때 이 순서대로 체크하면 된다.</p>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-content">
+          <div class="flow-q">before / after / as soon as 가 있나?</div>
+          <div class="flow-branch">
+            <div class="flow-branch-item yes">
+              <strong>YES</strong>
+              단순과거 OK (과거완료도 가능)
+            </div>
+            <div class="flow-branch-item no">
+              <strong>NO</strong>
+              다음 단계로 ↓
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-content">
+          <div class="flow-q">already / yet / just 부사가 있나?</div>
+          <div class="flow-branch">
+            <div class="flow-branch-item yes">
+              <strong>YES</strong>
+              과거완료 (had + p.p.)
+            </div>
+            <div class="flow-branch-item no">
+              <strong>NO</strong>
+              다음 단계로 ↓
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-content">
+          <div class="flow-q">두 사건이 동시에 일어났나? (when 절의 경우)</div>
+          <div class="flow-branch">
+            <div class="flow-branch-item yes">
+              <strong>YES</strong>
+              단순과거
+            </div>
+            <div class="flow-branch-item no">
+              <strong>NO</strong>
+              과거완료 (기본 원칙 적용)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRACTICE ===== -->
+  <section>
+    <div class="section-num">PRACTICE</div>
+    <h2>실전 분석 &mdash; <em class="good">규칙을 적용해보자</em></h2>
+    <p>다음 문장들을 규칙대로 분석해보면 모든 게 명확해진다.</p>
+
+    <div class="example pp">
+      <div class="ex-label">Test 1</div>
+      <p class="sentence">When the teacher <span class="sp">came in</span>, the students <span class="pp">had</span> <span class="adv">already</span> <span class="pp">started</span> the test.</p>
+      <p class="translate">선생님이 들어왔을 때, 학생들은 이미 시험을 시작한 상태였다.</p>
+      <div class="analyze">
+        <div class="analyze-title">분석</div>
+        <div class="analyze-row">
+          <span class="analyze-key">Step 1 &mdash; 순서 접속사?</span>
+          <span class="analyze-val"><span class="no">NO</span></span>
+        </div>
+        <div class="analyze-row">
+          <span class="analyze-key">Step 2 &mdash; already 있음?</span>
+          <span class="analyze-val"><span class="yes">YES</span> <span class="arrow">→</span> 과거완료</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="example sp">
+      <div class="ex-label">Test 2</div>
+      <p class="sentence"><span class="conn">After</span> she <span class="sp">finished</span> her homework, she <span class="sp">went</span> to bed.</p>
+      <p class="translate">숙제를 끝낸 후에, 그녀는 잠자리에 들었다.</p>
+      <div class="analyze">
+        <div class="analyze-title">분석</div>
+        <div class="analyze-row">
+          <span class="analyze-key">Step 1 &mdash; 순서 접속사?</span>
+          <span class="analyze-val"><span class="yes">YES (after)</span> <span class="arrow">→</span> 단순과거 OK</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="example pp">
+      <div class="ex-label">Test 3</div>
+      <p class="sentence">I <span class="sp">noticed</span> that someone <span class="pp">had moved</span> my chair.</p>
+      <p class="translate">누군가 내 의자를 옮겼다는 걸 알아챘다.</p>
+      <div class="analyze">
+        <div class="analyze-title">분석</div>
+        <div class="analyze-row">
+          <span class="analyze-key">Step 1 &mdash; 순서 접속사?</span>
+          <span class="analyze-val"><span class="no">NO</span></span>
+        </div>
+        <div class="analyze-row">
+          <span class="analyze-key">Step 2 &mdash; 완료 부사?</span>
+          <span class="analyze-val"><span class="no">NO</span></span>
+        </div>
+        <div class="analyze-row">
+          <span class="analyze-key">Step 3 &mdash; 동시?</span>
+          <span class="analyze-val"><span class="no">NO</span> <span class="arrow">→</span> 과거완료 (기본 원칙)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="example sp">
+      <div class="ex-label">Test 4</div>
+      <p class="sentence"><span class="conn">When</span> the phone <span class="sp">rang</span>, I <span class="sp">jumped</span>.</p>
+      <p class="translate">전화벨이 울리자, 나는 깜짝 놀랐다.</p>
+      <div class="analyze">
+        <div class="analyze-title">분석</div>
+        <div class="analyze-row">
+          <span class="analyze-key">Step 1 &mdash; 순서 접속사?</span>
+          <span class="analyze-val"><span class="no">NO (when은 제외)</span></span>
+        </div>
+        <div class="analyze-row">
+          <span class="analyze-key">Step 2 &mdash; 완료 부사?</span>
+          <span class="analyze-val"><span class="no">NO</span></span>
+        </div>
+        <div class="analyze-row">
+          <span class="analyze-key">Step 3 &mdash; 동시?</span>
+          <span class="analyze-val"><span class="yes">YES</span> <span class="arrow">→</span> 단순과거</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAKEAWAY ===== -->
+  <div class="takeaway">
+    <div class="num">/ KEY TAKEAWAY</div>
+    <h2>모든 게 한 줄로 정리된다</h2>
+    <p class="key-line">
+      과거의 <span class="pp">이전 행위</span>는 과거완료가 기본.<br>
+      <span class="sp">before/after/as soon as</span>가 있으면 단순과거도 OK.<br>
+      <span class="good">when</span>은 동시면 단순과거, 아니면 과거완료.<br>
+      <span class="warn">already / yet / just</span>가 보이면 무조건 과거완료.
+    </p>
+    <p>이 네 줄이 영문법 책 한 챕터를 대체한다. 케이스별 암기가 아니라 원리 이해로 푸는 것 &mdash; 이게 진짜 영어 실력이다.</p>
+  </div>
+
+</div>
+</body>
+</html>

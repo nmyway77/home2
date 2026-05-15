@@ -1,0 +1,2587 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>수동태 완전정복 — Passive Voice Master Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F0F12;
+    --bg-elev: #18181D;
+    --bg-card: #1E1E25;
+    --bg-deep: #0A0A0D;
+    --border: #2A2A33;
+    --border-hover: #3A3A45;
+    --text: #F0F0F2;
+    --text-dim: #9999A3;
+    --text-muted: #65656F;
+    --accent-active: #FFB16E;     /* 능동 - 앰버 */
+    --accent-active-dim: rgba(255, 177, 110, 0.12);
+    --accent-passive: #7B9CFF;    /* 수동 - 블루 */
+    --accent-passive-dim: rgba(123, 156, 255, 0.12);
+    --accent-good: #6FE5A8;
+    --accent-good-dim: rgba(111, 229, 168, 0.12);
+    --accent-warn: #FFD978;
+    --accent-warn-dim: rgba(255, 217, 120, 0.10);
+    --accent-bad: #FF7676;
+    --accent-bad-dim: rgba(255, 118, 118, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at top left, rgba(123, 156, 255, 0.08), transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(255, 177, 110, 0.06), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 80px 28px 100px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero {
+    margin-bottom: 80px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 60px;
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--text-muted);
+  }
+
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: clamp(44px, 6.5vw, 76px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+
+  h1 .em { color: var(--accent-passive); font-style: italic; }
+  h1 .small {
+    color: var(--text-muted);
+    font-size: 0.5em;
+    font-style: italic;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .lead {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 700px;
+    line-height: 1.7;
+  }
+
+  .lead strong { color: var(--text); }
+  .lead em { color: var(--accent-passive); font-style: normal; font-weight: 500; }
+
+  /* ===== TOC ===== */
+  .toc {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin: 40px 0;
+  }
+
+  .toc-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .toc-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    list-style: none;
+  }
+
+  @media (max-width: 640px) { .toc-list { grid-template-columns: 1fr; } }
+
+  .toc-list a {
+    display: block;
+    padding: 8px 12px;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+
+  .toc-list a:hover {
+    background: var(--bg-card);
+    color: var(--accent-passive);
+  }
+
+  .toc-list .num {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-passive);
+    margin-right: 8px;
+    font-size: 12px;
+  }
+
+  /* ===== SECTION ===== */
+  section { margin-bottom: 80px; scroll-margin-top: 40px; }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent-passive);
+    margin-bottom: 12px;
+    letter-spacing: 0.1em;
+  }
+
+  h2 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 1.2;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  h2 em { color: var(--accent-passive); font-style: italic; }
+  h2 em.active { color: var(--accent-active); }
+  h2 em.warn { color: var(--accent-warn); }
+
+  p {
+    color: var(--text-dim);
+    font-size: 15px;
+    margin-bottom: 16px;
+  }
+
+  p strong { color: var(--text); font-weight: 600; }
+
+  /* ===== THEORY BOX ===== */
+  .theory {
+    background: linear-gradient(135deg, var(--accent-passive-dim), var(--accent-active-dim));
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin: 24px 0;
+    position: relative;
+  }
+
+  .theory::before {
+    content: 'THEORY';
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    background: var(--bg);
+    padding: 3px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent-passive);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+  }
+
+  .theory h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    color: var(--text);
+    margin: 6px 0 10px;
+    font-weight: 400;
+  }
+
+  .theory p {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+  }
+
+  .formula {
+    background: var(--bg);
+    padding: 14px 20px;
+    border-radius: 8px;
+    margin: 14px 0;
+    border: 1px dashed var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--text);
+    text-align: center;
+  }
+
+  .formula .active-part { color: var(--accent-active); font-weight: 600; }
+  .formula .passive-part { color: var(--accent-passive); font-weight: 600; }
+
+  /* ===== QUESTION CARD ===== */
+  .q-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin: 12px 0;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .q-card:hover { border-color: var(--border-hover); }
+
+  .q-header {
+    padding: 18px 22px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .q-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent-active);
+    background: var(--accent-active-dim);
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--accent-active);
+    flex-shrink: 0;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .q-content {
+    flex: 1;
+  }
+
+  .q-text {
+    font-family: 'Instrument Serif', serif;
+    font-size: 18px;
+    color: var(--text);
+    line-height: 1.5;
+    margin-bottom: 6px;
+  }
+
+  .q-text .blank {
+    display: inline-block;
+    min-width: 120px;
+    border-bottom: 2px dashed var(--accent-warn);
+    margin: 0 4px;
+    color: var(--accent-warn);
+    text-align: center;
+    font-style: italic;
+    font-size: 14px;
+  }
+
+  .q-trans {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* ===== TOGGLE BUTTON ===== */
+  .toggle-btn {
+    width: 100%;
+    background: var(--bg-card);
+    border: none;
+    border-top: 1px solid var(--border);
+    padding: 12px 22px;
+    color: var(--accent-passive);
+    cursor: pointer;
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.2s;
+  }
+
+  .toggle-btn:hover {
+    background: var(--bg-deep);
+    color: var(--accent-good);
+  }
+
+  .toggle-btn::after {
+    content: '▼ 해설 보기';
+    font-size: 11px;
+    transition: transform 0.2s;
+  }
+
+  .toggle-btn.active::after {
+    content: '▲ 해설 닫기';
+    color: var(--accent-good);
+  }
+
+  /* ===== ANSWER BLOCK ===== */
+  .answer {
+    background: var(--bg-deep);
+    border-top: 1px solid var(--border);
+    padding: 0 22px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s;
+  }
+
+  .answer.show {
+    max-height: 2000px;
+    padding: 20px 22px;
+    transition: max-height 0.5s ease-in, padding 0.3s;
+  }
+
+  .answer-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent-good);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .answer-sentence {
+    font-family: 'Instrument Serif', serif;
+    font-size: 17px;
+    color: var(--text);
+    line-height: 1.5;
+    margin-bottom: 6px;
+  }
+
+  .answer-sentence .passive {
+    color: var(--accent-passive);
+    font-weight: 500;
+  }
+
+  .answer-sentence .active-word {
+    color: var(--accent-active);
+    font-weight: 500;
+  }
+
+  .answer-explain {
+    background: var(--bg);
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    border-left: 2px solid var(--accent-good);
+  }
+
+  .answer-explain strong { color: var(--text); }
+  .answer-explain .highlight {
+    background: var(--accent-warn-dim);
+    color: var(--accent-warn);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  /* ===== INFO BOX ===== */
+  .info-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  .info-box strong { color: var(--text); }
+  .info-box .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--accent-warn);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  /* ===== PREP LIST ===== */
+  .prep-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin: 16px 0;
+  }
+
+  @media (max-width: 640px) { .prep-list { grid-template-columns: 1fr; } }
+
+  .prep-item {
+    padding: 10px 14px;
+    background: var(--bg-card);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  .prep-item strong {
+    color: var(--accent-passive);
+    font-weight: 600;
+    margin-right: 8px;
+  }
+
+  /* ===== MCQ ===== */
+  .mcq {
+    margin: 16px 0;
+  }
+
+  .mcq-option {
+    padding: 10px 14px;
+    margin: 6px 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .mcq-option .opt-num {
+    color: var(--accent-active);
+    font-weight: 700;
+    margin-right: 8px;
+  }
+
+  .mcq-option.wrong {
+    border-color: var(--accent-bad);
+    background: var(--accent-bad-dim);
+  }
+
+  .mcq-option.wrong .opt-num {
+    color: var(--accent-bad);
+  }
+
+  .mcq-option .strike {
+    text-decoration: line-through;
+    color: var(--accent-bad);
+  }
+
+  .mcq-option .correction {
+    color: var(--accent-good);
+    font-weight: 600;
+    margin-left: 4px;
+  }
+
+  /* ===== HEADER STYLE ===== */
+  .sub-header {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    color: var(--accent-passive);
+    margin: 30px 0 16px;
+    font-weight: 400;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ===== TAKEAWAY ===== */
+  .takeaway {
+    margin: 80px 0 0;
+    padding: 50px 40px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .takeaway::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-active), var(--accent-passive), var(--accent-good));
+  }
+
+  .takeaway h2 { font-size: 28px; margin-bottom: 20px; }
+
+  .takeaway p { font-size: 15px; color: var(--text-dim); }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="hero">
+    <div class="eyebrow">English Grammar / Passive Voice</div>
+    <h1>
+      <span class="small">능동을 수동으로, 수동을 능동으로</span>
+      수동태<br>
+      <span class="em">완전정복</span>
+    </h1>
+    <p class="lead">
+      수동태는 단순히 "be + 과거분사"가 아니다. 시제, 부정문, 의문문, 조동사, 진행형, 완료형, 4형식, 5형식, 사역동사, 지각동사,
+      that절, by 외의 전치사 등 <em>모든 영문법이 교차하는 핵심 챕터</em>다. 각 문제마다 해설을 펼쳐서 원리를 확인해보자.
+    </p>
+  </header>
+
+  <!-- ===== TOC ===== -->
+  <nav class="toc">
+    <div class="toc-title">목차 · TABLE OF CONTENTS</div>
+    <ul class="toc-list">
+      <li><a href="#part1"><span class="num">01</span>기본 시제별 수동태</a></li>
+      <li><a href="#part2"><span class="num">02</span>부정문 · 조동사 수동태</a></li>
+      <li><a href="#part3"><span class="num">03</span>의문문 수동태</a></li>
+      <li><a href="#part4"><span class="num">04</span>진행형 · 완료형 수동태</a></li>
+      <li><a href="#part5"><span class="num">05</span>4형식 문장의 수동태</a></li>
+      <li><a href="#part6"><span class="num">06</span>5형식 문장의 수동태</a></li>
+      <li><a href="#part7"><span class="num">07</span>지각동사 · 사역동사 수동태</a></li>
+      <li><a href="#part8"><span class="num">08</span>that절 · 부정주어 수동태</a></li>
+      <li><a href="#part9"><span class="num">09</span>명령문 수동태</a></li>
+      <li><a href="#part10"><span class="num">10</span>능동태로 바꾸기</a></li>
+      <li><a href="#part11"><span class="num">11</span>능동/수동 선택 (현재시제)</a></li>
+      <li><a href="#part12"><span class="num">12</span>by 외 전치사 수동태</a></li>
+      <li><a href="#part13"><span class="num">13</span>수동태 불가 동사</a></li>
+      <li><a href="#part14"><span class="num">14</span>객관식 문제</a></li>
+    </ul>
+  </nav>
+
+  <!-- ===== PART 1: BASIC TENSES ===== -->
+  <section id="part1">
+    <div class="section-num">01 / BASIC TENSES</div>
+    <h2>기본 시제별 <em>수동태</em></h2>
+
+    <div class="theory">
+      <h3>수동태의 기본 공식</h3>
+      <p>수동태는 행위의 <strong>대상(목적어)을 주어로</strong> 끌어와서, 행위자를 <strong>by + 명사</strong>로 뒤에 붙인다.</p>
+      <div class="formula">
+        <span class="active-part">주어 + 동사 + 목적어</span> &nbsp;→&nbsp; <span class="passive-part">목적어 + be + p.p. + by 주어</span>
+      </div>
+      <p style="margin-bottom: 0;"><strong>시제는 be동사에 반영된다:</strong> 현재(am/is/are) · 과거(was/were) · 미래(will be) · 진행(be being) · 완료(have been)</p>
+    </div>
+
+    <!-- Q1 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q1</span>
+        <div class="q-content">
+          <p class="q-text">Min-ho took the pictures at the party.</p>
+          <p class="q-trans">민호가 파티에서 사진들을 찍었다. → 수동태로 바꾸시오.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence">The pictures <span class="passive">were taken</span> by Min-ho at the party.</p>
+        <p style="font-size: 13px; color: var(--text-muted);">파티에서 사진들은 민호에 의해 찍혔다.</p>
+        <div class="answer-explain">
+          <strong>분석:</strong> 동사가 <strong>took</strong>(과거) → 과거 수동태 <span class="highlight">were taken</span> (목적어가 복수 pictures이므로 were)<br>
+          <strong>공식:</strong> 목적어(pictures) + were + taken(take의 p.p.) + by + 주어(Min-ho)
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q2</span>
+        <div class="q-content">
+          <p class="q-text">He ate all the bananas.</p>
+          <p class="q-trans">그는 바나나를 모두 먹었다. → 수동태로 바꾸시오.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence">All the bananas <span class="passive">were eaten</span> by him.</p>
+        <p style="font-size: 13px; color: var(--text-muted);">모든 바나나가 그에 의해 먹혔다.</p>
+        <div class="answer-explain">
+          <strong>분석:</strong> ate(과거, 불규칙) → eat의 p.p.는 <strong>eaten</strong><br>
+          목적어 bananas(복수) → were + eaten
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PART 2: NEGATIVE & MODAL ===== -->
+  <section id="part2">
+    <div class="section-num">02 / NEGATIVE & MODAL</div>
+    <h2>부정문 · <em>조동사</em>가 있는 문장의 수동태</h2>
+
+    <div class="theory">
+      <h3>부정문과 조동사 수동태</h3>
+      <p><strong>부정문:</strong> 일반동사 부정 → be동사 부정으로 바뀜 (don't / doesn't / didn't → isn't / aren't / wasn't / weren't)</p>
+      <p style="margin-bottom: 0;"><strong>조동사:</strong> 조동사는 그대로 두고, 뒤에 <strong>be + p.p.</strong>로 연결</p>
+      <div class="formula">
+        조동사(will/can/must) + <span class="passive-part">be + p.p.</span>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q3</span>
+        <div class="q-content">
+          <p class="q-text">They don't break the windows.</p>
+          <p class="q-trans">그들은 창문들을 깨지 않는다. → 수동태로 바꾸시오.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence">The windows <span class="passive">aren't broken</span> by them.</p>
+        <div class="answer-explain">
+          <strong>분석:</strong> "don't break"(현재 부정) → "aren't broken" (be동사 부정 + p.p.)<br>
+          주어가 복수(windows)이므로 <span class="highlight">aren't</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q4</span>
+        <div class="q-content">
+          <p class="q-text">He doesn't do the work.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence">The work <span class="passive">isn't done</span> by him.</p>
+        <div class="answer-explain">
+          <strong>분석:</strong> "doesn't do"(현재 부정, 3인칭 단수) → "isn't done"<br>
+          주어가 단수(work) → isn't
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q5</span>
+        <div class="q-content">
+          <p class="q-text">She didn't like the dog.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence">The dog <span class="passive">was not liked</span> by her.</p>
+        <div class="answer-explain">
+          <strong>분석:</strong> "didn't like"(과거 부정) → "was not liked" (또는 wasn't liked)<br>
+          주어 dog(단수) + 과거시제 → was not
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q6</span>
+        <div class="q-content">
+          <p class="q-text">He will build a house.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence">A house <span class="passive">will be built</span> by him.</p>
+        <div class="answer-explain">
+          <strong>분석:</strong> 조동사 will 뒤에 <span class="highlight">be + p.p.</span> 형태로 연결<br>
+          build의 p.p. = built
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PART 3: QUESTIONS ===== -->
+  <section id="part3">
+    <div class="section-num">03 / QUESTIONS</div>
+    <h2>의문문의 <em>수동태</em></h2>
+
+    <div class="theory">
+      <h3>의문문 수동태의 핵심</h3>
+      <p><strong>일반 의문문</strong>(Do/Does/Did + 주어 + 동사): be동사를 문두로 보내고 p.p.를 그 뒤에 연결</p>
+      <p><strong>의문사 의문문</strong>(When/Who/Where + did + 주어 + 동사): 의문사 + be동사 + 주어 + p.p. 순서</p>
+      <p style="margin-bottom: 0;"><strong>Who 의문문</strong>: 주어를 묻는 의문사 Who는 행위자 → 수동태에서는 <strong>By whom</strong>으로 시작</p>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q7</span>
+        <div class="q-content">
+          <p class="q-text">Do people speak Spanish in Peru?</p>
+          <p class="q-trans">사람들이 페루에서 스페인어를 사용하나요?</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence"><span class="passive">Is Spanish spoken</span> by people in Peru?</p>
+        <div class="answer-explain">
+          <strong>분석:</strong> 목적어 Spanish가 주어 자리로 → <span class="highlight">Is</span> + Spanish + <span class="highlight">spoken</span><br>
+          Spanish가 단수 → Is
+        </div>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q8</span>
+        <div class="q-content">
+          <p class="q-text">Did Cathy take the pictures?</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence"><span class="passive">Were the pictures taken</span> by Cathy?</p>
+        <div class="answer-explain">
+          <strong>분석:</strong> Did(과거) + 복수 목적어(pictures) → Were the pictures + taken<br>
+          행위자 Cathy → by Cathy
+        </div>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q9</span>
+        <div class="q-content">
+          <p class="q-text">Did they wear uniforms at school?</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence"><span class="passive">Were uniforms worn</span> at school (by them)?</p>
+        <div class="answer-explain">
+          <strong>분석:</strong> wear의 p.p. = <strong>worn</strong> (불규칙)<br>
+          they(일반 사람들) → by them 생략 가능
+        </div>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q10</span>
+        <div class="q-content">
+          <p class="q-text">Did the Beatles sing Yesterday?</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence"><span class="passive">Was Yesterday sung by</span> the Beatles?</p>
+        <div class="answer-explain">
+          <strong>분석:</strong> 목적어 Yesterday(곡명, 단수) → Was + Yesterday + sung<br>
+          sing의 p.p. = sung
+        </div>
+      </div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q11</span>
+        <div class="q-content">
+          <p class="q-text">Did the police catch the man?</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence"><span class="passive">Was the man caught</span> by the police?</p>
+        <div class="answer-explain">
+          <strong>분석:</strong> catch의 p.p. = <strong>caught</strong> (불규칙)<br>
+          단수 the man → Was
+        </div>
+      </div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q12</span>
+        <div class="q-content">
+          <p class="q-text">When did Bell invent the first telephone?</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence">When <span class="passive">was the first telephone invented</span> by Bell?</p>
+        <div class="answer-explain">
+          <strong>분석:</strong> 의문사(When) + be동사(was) + 주어(the first telephone) + p.p.(invented)<br>
+          의문사는 그대로 문두에 유지
+        </div>
+      </div>
+    </div>
+
+    <!-- Q13 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q13</span>
+        <div class="q-content">
+          <p class="q-text">When did the Wright Brothers invent an airplane?</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence">When <span class="passive">was an airplane invented</span> by the Wright Brothers?</p>
+      </div>
+    </div>
+
+    <!-- Q14 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q14</span>
+        <div class="q-content">
+          <p class="q-text">Who invented the telephone?</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence">By whom <span class="passive">was the telephone invented</span>?</p>
+        <div class="answer-explain">
+          <strong>핵심:</strong> Who(주어 의문사)는 행위자를 묻는 것 → 수동태에서 <span class="highlight">By whom</span>으로 변환<br>
+          By whom + was + the telephone + invented?
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PART 4: PROGRESSIVE & PERFECT ===== -->
+  <section id="part4">
+    <div class="section-num">04 / PROGRESSIVE & PERFECT</div>
+    <h2>진행형 · <em>완료형</em> 수동태</h2>
+
+    <div class="theory">
+      <h3>특수 시제의 수동태 공식</h3>
+      <div class="formula">
+        진행형: <span class="active-part">be + -ing</span> + 목적어 &nbsp;→&nbsp; <span class="passive-part">be + being + p.p.</span>
+      </div>
+      <div class="formula">
+        완료형: <span class="active-part">have + p.p.</span> + 목적어 &nbsp;→&nbsp; <span class="passive-part">have + been + p.p.</span>
+      </div>
+      <p style="margin-bottom: 0;"><strong>주의:</strong> 진행형 수동태에서 be동사 부분이 두 번 들어간다 (be being)</p>
+    </div>
+
+    <!-- Q15 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q15</span>
+        <div class="q-content">
+          <p class="q-text">She is drawing the picture.</p>
+          <p class="q-trans">그녀는 그림을 그리고 있다. → 진행형 수동태로</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence">The picture <span class="passive">is being drawn</span> by her.</p>
+        <div class="answer-explain">
+          <strong>분석:</strong> is drawing → <span class="highlight">is being drawn</span> (be + being + p.p.)<br>
+          진행형 수동태의 핵심: <strong>be + being + p.p.</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q16 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q16</span>
+        <div class="q-content">
+          <p class="q-text">Min-su has written these letters.</p>
+          <p class="q-trans">민수는 이 편지들을 썼다 (현재완료). → 완료형 수동태로</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence">These letters <span class="passive">have been written</span> by Min-su.</p>
+        <div class="answer-explain">
+          <strong>분석:</strong> has written → <span class="highlight">have been written</span> (have + been + p.p.)<br>
+          주어가 복수(letters) → have been (has가 아님!)
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PART 5: FOURTH PATTERN ===== -->
+  <section id="part5">
+    <div class="section-num">05 / FOURTH PATTERN</div>
+    <h2>4형식 문장의 <em>수동태</em></h2>
+
+    <div class="theory">
+      <h3>4형식 수동태의 두 가지 방법</h3>
+      <p>4형식 (S + V + IO + DO)은 목적어가 두 개라 두 가지 수동태가 가능하다.</p>
+      <div class="formula">
+        ① <span class="passive-part">간접목적어(사람) 주어</span>: He gave <strong>me</strong> a book. → <strong>I</strong> was given a book.<br>
+        ② <span class="passive-part">직접목적어(사물) 주어</span>: → <strong>A book</strong> was given to me.
+      </div>
+      <p style="margin-bottom: 12px;"><strong>주의 — 사람을 주어로 쓰지 않는 동사들:</strong></p>
+      <div class="prep-list">
+        <div class="prep-item"><strong>make</strong> 만들다</div>
+        <div class="prep-item"><strong>buy</strong> 사다</div>
+        <div class="prep-item"><strong>cook</strong> 요리하다</div>
+        <div class="prep-item"><strong>get</strong> 얻다</div>
+        <div class="prep-item"><strong>find</strong> 찾다</div>
+        <div class="prep-item"><strong>sell</strong> 팔다</div>
+        <div class="prep-item"><strong>bring</strong> 가져오다</div>
+        <div class="prep-item"><strong>write</strong> 쓰다</div>
+      </div>
+      <p style="margin-top: 12px; margin-bottom: 0;"><strong>전치사 선택:</strong> 일반동사 → to / make·buy·get·cook → for / ask → of</p>
+    </div>
+
+    <!-- Q17 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q17</span>
+        <div class="q-content">
+          <p class="q-text">Ms. Shelly teaches us math.</p>
+          <p class="q-trans">Shelly 선생님은 우리에게 수학을 가르치신다. → 두 가지 수동태로</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설 — 두 가지</div>
+        <p class="answer-sentence">① We <span class="passive">are taught</span> math by Ms. Shelly.</p>
+        <p class="answer-sentence">② Math <span class="passive">is taught to us</span> by Ms. Shelly.</p>
+        <div class="answer-explain">
+          <strong>분석:</strong> 4형식 (teach us math) → IO(us)와 DO(math) 둘 다 주어 가능<br>
+          DO가 주어가 되면 IO 앞에 전치사 <span class="highlight">to</span>가 붙음 (teach는 to를 씀)
+        </div>
+      </div>
+    </div>
+
+    <!-- Q18 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q18</span>
+        <div class="q-content">
+          <p class="q-text">His mother made him a delicious cake.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence">A delicious cake <span class="passive">was made for him</span> by his mother.</p>
+        <div class="answer-explain">
+          <strong>핵심:</strong> <span class="highlight">make</span>는 사람을 주어로 쓸 수 없는 동사!<br>
+          ✗ He was made a cake (틀림 - "그가 케이크가 됐다"는 5형식 의미로 오해될 수 있음)<br>
+          ✓ DO(cake)를 주어로, IO 앞에 <strong>for</strong> 사용 (make는 for를 씀)
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PART 6: FIFTH PATTERN ===== -->
+  <section id="part6">
+    <div class="section-num">06 / FIFTH PATTERN</div>
+    <h2>5형식 문장의 <em>수동태</em></h2>
+
+    <div class="theory">
+      <h3>5형식 수동태 공식</h3>
+      <p>5형식 (S + V + O + OC)은 목적격 보어(OC)가 그대로 뒤에 따라온다.</p>
+      <div class="formula">
+        <span class="active-part">S + V + O + OC</span> &nbsp;→&nbsp; <span class="passive-part">O + be + p.p. + OC</span>
+      </div>
+      <p style="margin-bottom: 0;"><strong>4형식 vs 5형식 구별법:</strong> 목적어 = 보어 관계면 5형식 (call him a genius = "him은 genius"이므로 5형식)</p>
+    </div>
+
+    <!-- Q19 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q19</span>
+        <div class="q-content">
+          <p class="q-text">They elected him the president.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence">He <span class="passive">was elected</span> the president by them.</p>
+        <div class="answer-explain">
+          <strong>분석:</strong> 5형식 (elect him president) → him을 주어로, president는 그대로 뒤에 유지<br>
+          him → He / elected → was elected / president 그대로
+        </div>
+      </div>
+    </div>
+
+    <!-- Q20 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q20</span>
+        <div class="q-content">
+          <p class="q-text">We call him a genius.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence">He <span class="passive">is called</span> a genius by us.</p>
+      </div>
+    </div>
+
+    <!-- Q21 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q21</span>
+        <div class="q-content">
+          <p class="q-text">We can call the machine a computer.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence">The machine <span class="passive">can be called</span> a computer (by us).</p>
+        <div class="answer-explain">
+          <strong>분석:</strong> 조동사 can + 5형식 → can + be + called<br>
+          일반 주어(we) → by us 생략 가능
+        </div>
+      </div>
+    </div>
+
+    <!-- Q22 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q22</span>
+        <div class="q-content">
+          <p class="q-text">We must give penguins food by hand.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence">Penguins <span class="passive">must be given</span> food by hand.</p>
+        <div class="answer-explain">
+          <strong>분석:</strong> 4형식 (give penguins food) + 조동사 must<br>
+          must + be + given (give의 p.p.)
+        </div>
+      </div>
+    </div>
+
+    <!-- Q23 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q23</span>
+        <div class="q-content">
+          <p class="q-text">Mother made me a white dress.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence">A white dress <span class="passive">was made for me</span> by mother.</p>
+        <div class="answer-explain">
+          <strong>분석:</strong> 4형식! "엄마가 나에게 흰 드레스를 만들어줬다" (= a dress for me)<br>
+          make는 사람 주어 불가 → DO(dress)를 주어로, for me 사용
+        </div>
+      </div>
+    </div>
+
+    <!-- Q24 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q24</span>
+        <div class="q-content">
+          <p class="q-text">She made my life unhappy.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence">My life <span class="passive">was made unhappy</span> by her.</p>
+        <div class="answer-explain">
+          <strong>핵심:</strong> 5형식! "그녀가 내 삶을 불행하게 만들었다" (life = unhappy)<br>
+          5형식이므로 my life를 주어로, unhappy는 그대로 뒤에 유지
+        </div>
+      </div>
+    </div>
+
+    <!-- Q25 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q25</span>
+        <div class="q-content">
+          <p class="q-text">They found a soldier dead in the forest.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence">A soldier <span class="passive">was found dead</span> in the forest (by them).</p>
+        <div class="answer-explain">
+          <strong>분석:</strong> 5형식 (found a soldier dead = 군인이 죽어있는 채로 발견됨)<br>
+          a soldier 주어 + was found + dead(보어 유지)
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PART 7: PERCEPTION & CAUSATIVE VERBS ===== -->
+  <section id="part7">
+    <div class="section-num">07 / PERCEPTION & CAUSATIVE</div>
+    <h2>지각동사 · <em>사역동사</em> 수동태</h2>
+
+    <div class="theory">
+      <h3>지각동사/사역동사 수동태의 핵심</h3>
+      <p><strong>능동에서는 동사원형(원형부정사)</strong>을 쓰지만, <strong>수동에서는 to부정사로 바뀐다!</strong></p>
+      <div class="formula">
+        능동: I made him <strong style="color: var(--accent-active);">clean</strong> the room. (동사원형)<br>
+        수동: He <span class="passive-part">was made to clean</span> the room. (to + 동사원형)
+      </div>
+      <p><strong>예외: let과 have는 수동태 불가</strong></p>
+      <div class="info-box">
+        <span class="label">대체 표현</span>
+        let → <strong>be allowed to</strong> / have → <strong>be asked to</strong> 또는 <strong>get + p.p.</strong>
+      </div>
+      <p style="margin-bottom: 0;">지각동사 + 현재분사(-ing) → 수동태에서 <strong>그대로 -ing 유지</strong></p>
+    </div>
+
+    <!-- Q26 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q26</span>
+        <div class="q-content">
+          <p class="q-text">The babysitter took care of two children.</p>
+          <p class="q-trans">베이비시터가 두 아이를 돌봤다. → 동사구 수동태</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence">Two children <span class="passive">were taken care of</span> by the babysitter.</p>
+        <div class="answer-explain">
+          <strong>핵심:</strong> 동사구(phrasal verb)는 <span class="highlight">하나의 단어처럼</span> 통째로 다룸<br>
+          take care of → be taken care of (of 빼먹지 않도록 주의!)
+        </div>
+      </div>
+    </div>
+
+    <!-- Sample examples for perception/causative -->
+    <h3 class="sub-header">▸ 지각동사 수동태 예시</h3>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">예①</span>
+        <div class="q-content">
+          <p class="q-text">She makes Matt clean the room. → 수동태</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">Matt <span class="passive">is made to clean</span> the room by her.</p>
+        <div class="answer-explain">
+          사역동사 make → 수동태에서 동사원형이 <span class="highlight">to부정사(to clean)</span>로 바뀜
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">예②</span>
+        <div class="q-content">
+          <p class="q-text">I watched him playing. → 수동태</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">He <span class="passive">was watched playing</span> by me.</p>
+        <div class="answer-explain">
+          지각동사 + 현재분사(playing) → 수동태에서도 <strong>playing 그대로</strong> 유지
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">예③</span>
+        <div class="q-content">
+          <p class="q-text">I saw him enter the building. → 수동태</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">He <span class="passive">was seen to enter</span> the building by me.</p>
+        <div class="answer-explain">
+          지각동사 + 동사원형(enter) → 수동태에서 <span class="highlight">to enter</span>로 바뀜
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">예④</span>
+        <div class="q-content">
+          <p class="q-text">I let my son play computer games. → 수동태</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">My son <span class="passive">was allowed to play</span> computer games by me.</p>
+        <div class="answer-explain">
+          <strong>let은 수동태 불가!</strong> → <span class="highlight">be allowed to</span>로 대체
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">예⑤</span>
+        <div class="q-content">
+          <p class="q-text">I had the man clean my office. → 두 가지 수동태로</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설 — have는 두 가지 방법</div>
+        <p class="answer-sentence">① The man <span class="passive">was asked to clean</span> my office by me.</p>
+        <p class="answer-sentence">② I <span class="passive">had my office cleaned</span> by the man.</p>
+        <div class="answer-explain">
+          <strong>have의 특수성:</strong> have + 사람 + 동사원형 → 사람 주어 수동태 불가<br>
+          ① be asked to로 대체 / ② get + p.p. 패턴 사용 (have my office cleaned)
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PART 8: THAT CLAUSE & NEGATIVE SUBJECT ===== -->
+  <section id="part8">
+    <div class="section-num">08 / THAT CLAUSE</div>
+    <h2>that절 · <em>부정 주어</em> 수동태</h2>
+
+    <div class="theory">
+      <h3>that절 수동태의 두 가지 형태</h3>
+      <p>주어 + 동사(believe/say/think/expect 등) + that절 구조의 수동태는 두 가지로 가능하다.</p>
+      <div class="formula">
+        ① <span class="passive-part">It is + p.p. + that절</span> (가주어 it)<br>
+        ② <span class="passive-part">that절 주어 + is + p.p. + to부정사</span> (진주어 끌어올리기)
+      </div>
+      <p><strong>주의:</strong> ②번에서 주절과 that절의 시제가 다를 때는 <strong>to have + p.p.</strong>(완료부정사) 사용</p>
+      <p style="margin-bottom: 0;"><strong>부정 주어 수동태:</strong> Nobody/No one 주어 → by 뒤로 보내면서 부정문 만들기</p>
+    </div>
+
+    <!-- Q27 - Negative subject -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q27</span>
+        <div class="q-content">
+          <p class="q-text">Nobody loves him. → 수동태</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence">He <span class="passive">is not loved</span> by anybody.</p>
+        <p class="answer-sentence">또는: He <span class="passive">is loved</span> by nobody.</p>
+        <div class="answer-explain">
+          <strong>부정 주어 수동태:</strong> Nobody → by anybody + 부정문 / 또는 by nobody (그대로)
+        </div>
+      </div>
+    </div>
+
+    <!-- Q28 - that clause -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q28</span>
+        <div class="q-content">
+          <p class="q-text">I believe that he stole my wallet. → 두 가지 수동태로</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence">① <span class="passive">It is believed</span> that he stole my wallet.</p>
+        <p class="answer-sentence">② He <span class="passive">is believed to have stolen</span> my wallet.</p>
+        <div class="answer-explain">
+          <strong>핵심:</strong> ②에서 주절(believe-현재)과 that절(stole-과거)의 시제가 <strong>다름</strong><br>
+          → <span class="highlight">to have + p.p.</span> (완료부정사) 사용
+        </div>
+      </div>
+    </div>
+
+    <!-- Q29 - that clause same tense -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q29</span>
+        <div class="q-content">
+          <p class="q-text">I believe that he plays the piano. → 두 가지 수동태로</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답 & 해설</div>
+        <p class="answer-sentence">① <span class="passive">It is believed</span> that he plays the piano.</p>
+        <p class="answer-sentence">② He <span class="passive">is believed to play</span> the piano.</p>
+        <div class="answer-explain">
+          <strong>분석:</strong> 두 시제가 <strong>같음</strong>(현재-현재) → 단순 부정사 <span class="highlight">to play</span> 사용
+        </div>
+      </div>
+    </div>
+
+    <h3 class="sub-header">▸ It is ~ that 수동태 패턴 모음</h3>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">예①</span>
+        <div class="q-content">
+          <p class="q-text">People say that Paul is very honest and diligent.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설 — 두 가지 패턴</div>
+        <p class="answer-sentence">① <span class="passive">It is said</span> that Paul is very honest and diligent.</p>
+        <p class="answer-sentence">② Paul <span class="passive">is said to be</span> very honest and diligent.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">예②</span>
+        <div class="q-content">
+          <p class="q-text">Everyone expects that the novel will become a best-seller.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">① <span class="passive">It is expected</span> that the novel will become a best-seller.</p>
+        <p class="answer-sentence">② The novel <span class="passive">is expected to become</span> a best-seller.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">예③</span>
+        <div class="q-content">
+          <p class="q-text">They believed that their math teacher graduated from Seoul National University.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설 — 시제 다른 케이스!</div>
+        <p class="answer-sentence">① <span class="passive">It was believed</span> that their math teacher graduated from Seoul National University.</p>
+        <p class="answer-sentence">② Their math teacher <span class="passive">was believed to have graduated</span> from Seoul National University.</p>
+        <div class="answer-explain">
+          <strong>주의:</strong> 주절 believed(과거) vs that절 graduated(과거) → 의미상 that절 시점이 더 앞섬 → <span class="highlight">to have graduated</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">예④</span>
+        <div class="q-content">
+          <p class="q-text">We supposed that he caught the flu.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">① <span class="passive">It was supposed</span> that he caught the flu.</p>
+        <p class="answer-sentence">② He <span class="passive">was supposed to have caught</span> the flu.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">예⑤</span>
+        <div class="q-content">
+          <p class="q-text">They reported that the girl won a gold medal in the Olympics.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">① <span class="passive">It was reported</span> that the girl won a gold medal in the Olympics.</p>
+        <p class="answer-sentence">② The girl <span class="passive">was reported to have won</span> a gold medal in the Olympics.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">예⑥</span>
+        <div class="q-content">
+          <p class="q-text">People consider that Bill Clinton is Hillary Clinton's life partner.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">① <span class="passive">It is considered</span> that Bill Clinton is Hillary Clinton's life partner.</p>
+        <p class="answer-sentence">② Bill Clinton <span class="passive">is considered to be</span> Hillary Clinton's life partner.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PART 9: IMPERATIVE ===== -->
+  <section id="part9">
+    <div class="section-num">09 / IMPERATIVE</div>
+    <h2>명령문의 <em>수동태</em></h2>
+
+    <div class="theory">
+      <h3>명령문 수동태 공식</h3>
+      <p>명령문은 주어가 생략된 형태 → 수동태에서는 <strong>Let + 목적어 + be + p.p.</strong> 형태로 변환</p>
+      <div class="formula">
+        긍정: <span class="passive-part">Let + 목적어 + be + p.p.</span><br>
+        부정: <span class="passive-part">Don't let + 목적어 + be + p.p.</span> 또는 <span class="passive-part">Let + 목적어 + not + be + p.p.</span>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">예①</span>
+        <div class="q-content">
+          <p class="q-text">Open the door. → 수동태</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence"><span class="passive">Let the door be opened.</span></p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">예②</span>
+        <div class="q-content">
+          <p class="q-text">Don't open the door. → 수동태</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence"><span class="passive">Don't let the door be opened.</span></p>
+        <p class="answer-sentence">또는: <span class="passive">Let the door not be opened.</span></p>
+      </div>
+    </div>
+
+    <h3 class="sub-header">▸ refer to ~ as (~로 부르다/언급하다) 수동태</h3>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">예③</span>
+        <div class="q-content">
+          <p class="q-text">People refer to him as a genius. → 수동태</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">He <span class="passive">is referred to as</span> a genius.</p>
+        <div class="answer-explain">
+          <strong>핵심:</strong> "refer to A as B" = "A를 B라고 부르다" → 수동태에서 <span class="highlight">be referred to as</span> 통째로 유지<br>
+          to와 as 모두 빼먹지 말 것!
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">예④</span>
+        <div class="q-content">
+          <p class="q-text">They referred to the plan as a failure.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">The plan <span class="passive">was referred to as</span> a failure.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PART 10: PASSIVE TO ACTIVE ===== -->
+  <section id="part10">
+    <div class="section-num">10 / PASSIVE → ACTIVE</div>
+    <h2>수동태를 <em class="active">능동태</em>로 바꾸기</h2>
+
+    <p>역방향 변환도 자주 출제된다. <strong>by + 행위자</strong>를 주어로 끌어올리고, <strong>be + p.p.</strong>를 일반 동사로 되돌리면 된다.</p>
+
+    <!-- Q27-39 condensed -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q30</span>
+        <div class="q-content">
+          <p class="q-text">This letter can be delivered to him by me. → 능동태</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">I <span class="active-word">can deliver</span> this letter to him.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q31</span>
+        <div class="q-content">
+          <p class="q-text">The CD may be bought online by him.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">He <span class="active-word">may buy</span> the CD online.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q32</span>
+        <div class="q-content">
+          <p class="q-text">By whom were you taught French?</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">Who <span class="active-word">taught</span> you French?</p>
+        <div class="answer-explain">
+          By whom → Who (주어 의문사)로 변환
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q33</span>
+        <div class="q-content">
+          <p class="q-text">People are invited to the party by Jack.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">Jack <span class="active-word">invites people</span> to the party.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q34</span>
+        <div class="q-content">
+          <p class="q-text">The first telephone was invented by Bell.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">Bell <span class="active-word">invented the first telephone</span>.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q35</span>
+        <div class="q-content">
+          <p class="q-text">Many trees will be planted by people in April.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">People <span class="active-word">will plant many trees</span> in April.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q36</span>
+        <div class="q-content">
+          <p class="q-text">Trees can be seen in the mountain.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">We/They/People <span class="active-word">can see</span> trees in the mountain.</p>
+        <div class="answer-explain">
+          by + 행위자가 생략된 경우 → <strong>일반 주어(We, They, People)</strong>로 복원
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q37</span>
+        <div class="q-content">
+          <p class="q-text">The crab isn't caught by Kate.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">Kate <span class="active-word">doesn't catch</span> the crab.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q38</span>
+        <div class="q-content">
+          <p class="q-text">Hanguel was created by King Sejong.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">King Sejong <span class="active-word">created Hanguel</span>.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q39</span>
+        <div class="q-content">
+          <p class="q-text">The boy was run after by the dog.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">The dog <span class="active-word">ran after</span> the boy.</p>
+        <div class="answer-explain">
+          <strong>동사구 run after</strong>(쫓다) → 능동태에서도 통째로 사용
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q40</span>
+        <div class="q-content">
+          <p class="q-text">The dog will be walked by him.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">He <span class="active-word">will walk</span> the dog.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q41</span>
+        <div class="q-content">
+          <p class="q-text">This book was written by Hemingway.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">Hemingway <span class="active-word">wrote this book</span>.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q42</span>
+        <div class="q-content">
+          <p class="q-text">The teacher was pleased with the boy's work.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">The boy's work <span class="active-word">pleased the teacher</span>.</p>
+        <div class="answer-explain">
+          <strong>주의:</strong> "be pleased with" → 능동태에서는 "please"(기쁘게 하다)가 타동사로 사용됨
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PART 11: ACTIVE OR PASSIVE ===== -->
+  <section id="part11">
+    <div class="section-num">11 / ACTIVE OR PASSIVE</div>
+    <h2><em class="active">능동</em>으로 쓸지 <em>수동</em>으로 쓸지 판단하기</h2>
+
+    <div class="theory">
+      <h3>판별 핵심</h3>
+      <p>괄호 안의 동사를 능동/수동 중 어떤 형태로 쓸지 결정. 핵심은 <strong>주어와 동사의 관계</strong>!</p>
+      <div class="formula">
+        주어가 행위의 <span class="active-part">주체</span>(직접 함) → <span class="active-part">능동</span><br>
+        주어가 행위의 <span class="passive-part">대상</span>(받는 쪽) → <span class="passive-part">수동(be + p.p.)</span>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q43</span>
+        <div class="q-content">
+          <p class="q-text">A lot of roses (bring) to her.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">A lot of roses <span class="passive">are brought</span> to her.</p>
+        <div class="answer-explain">
+          장미는 "가져와지는" 대상 → 수동태. bring의 p.p. = brought
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q44</span>
+        <div class="q-content">
+          <p class="q-text">A new building (will build) next year.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">A new building <span class="passive">will be built</span> next year.</p>
+        <div class="answer-explain">
+          건물은 "지어지는" 대상 → 미래 수동태 will be built
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q45</span>
+        <div class="q-content">
+          <p class="q-text">She (open) the door.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설 — 문맥 따라 다름</div>
+        <p class="answer-sentence">능동: She <span class="active-word">opens</span> the door. (그녀가 문을 연다)</p>
+        <p class="answer-sentence">수동: 주어가 She이고 목적어가 the door이므로 능동이 자연스러움</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q46</span>
+        <div class="q-content">
+          <p class="q-text">English (speak) all over the world.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">English <span class="passive">is spoken</span> all over the world.</p>
+        <div class="answer-explain">
+          영어는 "말해지는" 대상 → 수동태. speak의 p.p. = spoken
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q47</span>
+        <div class="q-content">
+          <p class="q-text">The book won't (find) in the library.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">The book won't <span class="passive">be found</span> in the library.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q48</span>
+        <div class="q-content">
+          <p class="q-text">The old man (keep) a white dog.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">The old man <span class="active-word">keeps</span> a white dog.</p>
+        <div class="answer-explain">
+          노인이 개를 "기르는" 주체 → 능동
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q49</span>
+        <div class="q-content">
+          <p class="q-text">The letter (write) yesterday.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">The letter <span class="passive">was written</span> yesterday.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q50</span>
+        <div class="q-content">
+          <p class="q-text">A police officer (stop) the car.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">A police officer <span class="active-word">stopped</span> the car.</p>
+        <div class="answer-explain">
+          경찰관이 차를 "멈추는" 주체 → 능동
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q51</span>
+        <div class="q-content">
+          <p class="q-text">The old newspapers (throw) away yesterday.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">The old newspapers <span class="passive">were thrown</span> away yesterday.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q52</span>
+        <div class="q-content">
+          <p class="q-text">My father (paint) the picture.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">My father <span class="active-word">painted</span> the picture.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q53</span>
+        <div class="q-content">
+          <p class="q-text">The work (will do) by him soon.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">The work <span class="passive">will be done</span> by him soon.</p>
+        <div class="answer-explain">
+          by him이 있으니 명백히 수동태!
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q54</span>
+        <div class="q-content">
+          <p class="q-text">The Han River (can, see) from every room in my house.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">The Han River <span class="passive">can be seen</span> from every room in my house.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q55</span>
+        <div class="q-content">
+          <p class="q-text">The boy (kick) the ball.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">능동 (소년이 공을 차는 행위): The boy <span class="active-word">kicked</span> the ball.</p>
+        <p class="answer-sentence">또는 수동 의미 가능: The ball <span class="passive">was kicked</span> by the boy.</p>
+        <div class="answer-explain">
+          빈칸 채우기로는 보통 <strong>was kicked</strong>(수동)으로 출제됨 (정답 참고)
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q56</span>
+        <div class="q-content">
+          <p class="q-text">The room (clean) every day.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">The room <span class="passive">is cleaned</span> every day.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q57</span>
+        <div class="q-content">
+          <p class="q-text">Somebody (clean) the room yesterday.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">Somebody <span class="active-word">cleaned</span> the room yesterday.</p>
+        <div class="answer-explain">
+          Somebody가 주어(행위자) → 능동
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q58</span>
+        <div class="q-content">
+          <p class="q-text">Butter (make) from milk.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">Butter <span class="passive">is made</span> from milk.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q59</span>
+        <div class="q-content">
+          <p class="q-text">Everybody (like) her.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">Everybody <span class="active-word">likes</span> her.</p>
+        <div class="answer-explain">
+          또는 수동: She <span class="passive">is liked</span> by everybody.
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q60</span>
+        <div class="q-content">
+          <p class="q-text">These houses (build) 100 years ago.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">These houses <span class="passive">were built</span> 100 years ago.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q61</span>
+        <div class="q-content">
+          <p class="q-text">Oranges (import) into Canada.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">Oranges <span class="passive">are imported</span> into Canada.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q62</span>
+        <div class="q-content">
+          <p class="q-text">Six people (injure) in the accident yesterday.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">Six people <span class="passive">were injured</span> in the accident yesterday.</p>
+        <div class="answer-explain">
+          사람이 사고에서 "다친" 것은 외부 원인 → 수동
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PART 12: PREPOSITIONS (BY 외) ===== -->
+  <section id="part12">
+    <div class="section-num">12 / NON-BY PREPOSITIONS</div>
+    <h2>by 외의 <em>전치사</em>가 붙는 수동태</h2>
+
+    <div class="theory">
+      <h3>by가 아닌 다른 전치사를 쓰는 수동태 — 통째로 외우기!</h3>
+      <p>특정 감정·상태를 표현하는 수동태는 by 대신 <strong>at, with, in, of, to, on, from, about</strong> 등을 쓴다. 동사마다 정해진 전치사가 있으니 외워야 한다.</p>
+
+      <div class="prep-list">
+        <div class="prep-item"><strong>in</strong> be interested in (관심)</div>
+        <div class="prep-item"><strong>in</strong> be dressed in (입다)</div>
+        <div class="prep-item"><strong>with</strong> be satisfied with (만족)</div>
+        <div class="prep-item"><strong>with</strong> be pleased with (기쁨)</div>
+        <div class="prep-item"><strong>with</strong> be covered with (덮임)</div>
+        <div class="prep-item"><strong>with</strong> be crowded with (붐빔)</div>
+        <div class="prep-item"><strong>with</strong> be filled with (가득참)</div>
+        <div class="prep-item"><strong>with</strong> be concerned with (관련)</div>
+        <div class="prep-item"><strong>with</strong> be bored with (싫증)</div>
+        <div class="prep-item"><strong>about</strong> be worried about (걱정)</div>
+        <div class="prep-item"><strong>about</strong> be concerned about (염려)</div>
+        <div class="prep-item"><strong>at</strong> be surprised at (놀람)</div>
+        <div class="prep-item"><strong>at</strong> be delighted at (기쁨)</div>
+        <div class="prep-item"><strong>as</strong> be known as (~로 알려짐, 신분)</div>
+        <div class="prep-item"><strong>for</strong> be known for (~로 유명, 이유)</div>
+        <div class="prep-item"><strong>to</strong> be known to (~에게 알려짐)</div>
+        <div class="prep-item"><strong>on</strong> be based on (근거)</div>
+        <div class="prep-item"><strong>of</strong> be made of (물리적 재료)</div>
+        <div class="prep-item"><strong>from</strong> be made from (화학적 재료)</div>
+        <div class="prep-item"><strong>to</strong> be supposed to V (~하기로 됨)</div>
+        <div class="prep-item"><strong>in</strong> be disappointed in (실망)</div>
+        <div class="prep-item"><strong>of</strong> be scared of (겁먹음)</div>
+        <div class="prep-item"><strong>of</strong> be tired of (싫증)</div>
+      </div>
+    </div>
+
+    <!-- Q for prepositions -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q63</span>
+        <div class="q-content">
+          <p class="q-text">Indian art interests me. → 수동태로</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">I <span class="passive">am interested in</span> Indian art.</p>
+        <div class="answer-explain">
+          interest는 "관심을 갖게 하다"라는 타동사 → 수동태 <span class="highlight">be interested in</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q64</span>
+        <div class="q-content">
+          <p class="q-text">Snow covered the top of the mountain. → 수동태</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">해설</div>
+        <p class="answer-sentence">The top of the mountain <span class="passive">was covered with</span> snow.</p>
+        <div class="answer-explain">
+          cover의 수동태는 보통 <span class="highlight">be covered with</span> (눈/먼지 등으로 덮임)<br>
+          단, 사람 행위자일 때는 by 사용 가능
+        </div>
+      </div>
+    </div>
+
+    <h3 class="sub-header">▸ 전치사 빈칸 채우기</h3>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q65</span>
+        <div class="q-content">
+          <p class="q-text">She was surprised <span class="blank">?</span> the news.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답</div>
+        <p class="answer-sentence">She was surprised <span class="passive">at</span> the news.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q66</span>
+        <div class="q-content">
+          <p class="q-text">The wine is made <span class="blank">?</span> French grapes.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답</div>
+        <p class="answer-sentence">The wine is made <span class="passive">from</span> French grapes.</p>
+        <div class="answer-explain">
+          <strong>화학적 변화</strong>(포도 → 와인) → from<br>
+          <strong>물리적 변화</strong>(나무 → 책상) → of
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q67</span>
+        <div class="q-content">
+          <p class="q-text">I am interested <span class="blank">?</span> making a robot.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답</div>
+        <p class="answer-sentence">I am interested <span class="passive">in</span> making a robot.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q68</span>
+        <div class="q-content">
+          <p class="q-text">The cake is covered <span class="blank">?</span> fresh cream.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답</div>
+        <p class="answer-sentence">The cake is covered <span class="passive">with</span> fresh cream.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q69</span>
+        <div class="q-content">
+          <p class="q-text">I'm tired <span class="blank">?</span> this rainy weather.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답</div>
+        <p class="answer-sentence">I'm tired <span class="passive">of</span> this rainy weather.</p>
+        <div class="answer-explain">
+          be tired of = ~에 싫증나다 (피곤하다는 의미는 be tired)
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q70</span>
+        <div class="q-content">
+          <p class="q-text">This box is filled <span class="blank">?</span> books.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답</div>
+        <p class="answer-sentence">This box is filled <span class="passive">with</span> books.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q71</span>
+        <div class="q-content">
+          <p class="q-text">Emily is excited <span class="blank">?</span> going on this trip.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답</div>
+        <p class="answer-sentence">Emily is excited <span class="passive">about</span> going on this trip.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q72</span>
+        <div class="q-content">
+          <p class="q-text">Psy was known <span class="blank">?</span> people around the world.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답</div>
+        <p class="answer-sentence">Psy was known <span class="passive">to</span> people around the world.</p>
+        <div class="answer-explain">
+          <strong>구별 핵심:</strong><br>
+          ① be known <strong>to</strong> 사람 → "~에게 알려져 있다"<br>
+          ② be known <strong>as</strong> 신분 → "~로 알려져 있다 (별명/직책)"<br>
+          ③ be known <strong>for</strong> 이유 → "~로 유명하다"
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q73</span>
+        <div class="q-content">
+          <p class="q-text">This bag is made <span class="blank">?</span> leather.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답</div>
+        <p class="answer-sentence">This bag is made <span class="passive">of</span> leather.</p>
+        <div class="answer-explain">
+          가죽 → 가방: <strong>물리적</strong> 변화 (재료 모양만 바뀜) → of
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PART 13: NON-PASSIVE VERBS ===== -->
+  <section id="part13">
+    <div class="section-num">13 / NON-PASSIVE VERBS</div>
+    <h2>수동태로 <em class="warn">쓸 수 없는</em> 동사들</h2>
+
+    <div class="theory">
+      <h3>수동태로 만들 수 없는 자동사들</h3>
+      <p>이 동사들은 <strong>목적어를 갖지 않는 자동사</strong>라서, 수동태(be + p.p.) 자체가 불가능하다. "be + 과거형"은 비문법적!</p>
+
+      <div class="prep-list">
+        <div class="prep-item"><strong>last</strong> 지속되다</div>
+        <div class="prep-item"><strong>expire</strong> 만료되다</div>
+        <div class="prep-item"><strong>break out</strong> 발생/발발하다</div>
+        <div class="prep-item"><strong>die</strong> 죽다</div>
+        <div class="prep-item"><strong>lie</strong> 눕다</div>
+        <div class="prep-item"><strong>arrive</strong> 도착하다</div>
+        <div class="prep-item"><strong>result in</strong> ~결과를 낳다</div>
+        <div class="prep-item"><strong>lead to</strong> ~로 이어지다</div>
+        <div class="prep-item"><strong>consist of</strong> ~로 구성되다</div>
+        <div class="prep-item"><strong>exist</strong> 존재하다</div>
+        <div class="prep-item"><strong>fit / suit / become</strong> 어울리다</div>
+        <div class="prep-item"><strong>resemble</strong> 닮다</div>
+        <div class="prep-item"><strong>lack</strong> 부족하다</div>
+        <div class="prep-item"><strong>cost</strong> 비용이 들다</div>
+        <div class="prep-item"><strong>belong to</strong> ~에 속하다</div>
+        <div class="prep-item"><strong>happen</strong> 발생하다</div>
+        <div class="prep-item"><strong>rise</strong> 오르다</div>
+        <div class="prep-item"><strong>disappear</strong> 사라지다</div>
+        <div class="prep-item"><strong>seem</strong> ~로 보이다</div>
+        <div class="prep-item"><strong>appear</strong> 나타나다</div>
+      </div>
+
+      <div class="info-box" style="margin-top: 16px;">
+        <span class="label">왜 안 될까?</span>
+        수동태는 "행위의 대상(목적어)"을 주어로 끌어오는 변환인데, 이 동사들은 <strong>목적어 자체가 없는 자동사</strong>예요.
+        예) She <span style="color: var(--accent-bad);">was resembled by</span> her mother (✗) → She <span style="color: var(--accent-good);">resembles</span> her mother (✓ "resemble"은 타동사처럼 보이지만 수동 불가)
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PART 14: MULTIPLE CHOICE ===== -->
+  <section id="part14">
+    <div class="section-num">14 / MULTIPLE CHOICE</div>
+    <h2>객관식 <em>실전 문제</em></h2>
+
+    <!-- MCQ 1 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">1번</span>
+        <div class="q-content">
+          <p class="q-text">다음 능동태 문장을 수동태로 전환했을 때 <strong>어색한 것</strong>은?</p>
+        </div>
+      </div>
+      <div style="padding: 0 22px 16px;">
+        <div class="mcq">
+          <div class="mcq-option">
+            <span class="opt-num">①</span> Jessica took these photos. → These photos were taken by Jessica.
+          </div>
+          <div class="mcq-option">
+            <span class="opt-num">②</span> They didn't break the windows. → The windows were not broken by them.
+          </div>
+          <div class="mcq-option">
+            <span class="opt-num">③</span> The secretary writes all the letters. → All the letters are written by the secretary.
+          </div>
+          <div class="mcq-option">
+            <span class="opt-num">④</span> Judy will play the piano. → The piano will be played by Judy.
+          </div>
+          <div class="mcq-option wrong">
+            <span class="opt-num">⑤</span> A French family found the missing child. → The missing child was <span class="strike">founded</span> <span class="correction">found</span> by a French family.
+          </div>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답: ⑤</div>
+        <div class="answer-explain">
+          <strong>핵심:</strong> find의 p.p.는 <span class="highlight">found</span><br>
+          ⑤번의 "founded"는 "설립하다(found-founded-founded)"의 과거분사로 의미가 완전히 다름!<br>
+          <strong>find</strong> (찾다): find - found - <strong>found</strong><br>
+          <strong>found</strong> (설립하다): found - founded - founded
+        </div>
+      </div>
+    </div>
+
+    <!-- MCQ 2 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">2번</span>
+        <div class="q-content">
+          <p class="q-text">Which of the following does <strong>NOT</strong> have the same meaning to each other?</p>
+        </div>
+      </div>
+      <div style="padding: 0 22px 16px;">
+        <div class="mcq">
+          <div class="mcq-option">
+            <span class="opt-num">①</span> He delivered the box. = The box was delivered by him.
+          </div>
+          <div class="mcq-option">
+            <span class="opt-num">②</span> Did Junsu finish the work? = Was the work finished by Junsu?
+          </div>
+          <div class="mcq-option">
+            <span class="opt-num">③</span> They built a beautiful house last year. = A beautiful house was built by them last year.
+          </div>
+          <div class="mcq-option">
+            <span class="opt-num">④</span> He will bring the cart tomorrow. = The cart will be brought by him tomorrow.
+          </div>
+          <div class="mcq-option wrong">
+            <span class="opt-num">⑤</span> He may forget her name. = Her name may be <span class="strike">forgot</span> <span class="correction">forgotten</span> by him.
+          </div>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답: ⑤</div>
+        <div class="answer-explain">
+          forget의 p.p.는 <span class="highlight">forgotten</span> (forgot은 과거형!)<br>
+          forget - forgot - <strong>forgotten</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- MCQ 3 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">3번</span>
+        <div class="q-content">
+          <p class="q-text">능동태에서 수동태로의 전환이 <strong>옳지 않은</strong> 것은?</p>
+        </div>
+      </div>
+      <div style="padding: 0 22px 16px;">
+        <div class="mcq">
+          <div class="mcq-option">
+            <span class="opt-num">①</span> David accepted his proposal. = His proposal was accepted by David.
+          </div>
+          <div class="mcq-option">
+            <span class="opt-num">②</span> Minho moved his chair. = His chair was moved by Minho.
+          </div>
+          <div class="mcq-option">
+            <span class="opt-num">③</span> Did she check the e-mail? = Was the e-mail checked by her?
+          </div>
+          <div class="mcq-option wrong">
+            <span class="opt-num">④</span> My uncle doesn't grow trees. = Trees <span class="strike">weren't grew</span> <span class="correction">aren't grown</span> by my uncle.
+          </div>
+          <div class="mcq-option">
+            <span class="opt-num">⑤</span> He will bring the book tomorrow. = The book will be brought by him tomorrow.
+          </div>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답: ④</div>
+        <div class="answer-explain">
+          <strong>두 가지 오류:</strong><br>
+          ① "weren't" → 현재시제 "doesn't"의 수동이므로 <span class="highlight">aren't</span><br>
+          ② "grew" → grow의 p.p.는 <span class="highlight">grown</span> (grew는 과거형)<br>
+          정답: <strong>Trees aren't grown by my uncle.</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- MCQ 4 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">4번</span>
+        <div class="q-content">
+          <p class="q-text">다음 중 수동태의 전환이 <strong>어색한 것</strong>은?</p>
+        </div>
+      </div>
+      <div style="padding: 0 22px 16px;">
+        <div class="mcq">
+          <div class="mcq-option">
+            <span class="opt-num">①</span> They don't like him. → He is not liked by them.
+          </div>
+          <div class="mcq-option">
+            <span class="opt-num">②</span> I saw her dance in the room. → She was seen to dance in the room by me.
+          </div>
+          <div class="mcq-option">
+            <span class="opt-num">③</span> I have finished the homework. → The homework has been finished by me.
+          </div>
+          <div class="mcq-option">
+            <span class="opt-num">④</span> We are making a big kite. → A big kite is being made by us.
+          </div>
+          <div class="mcq-option wrong">
+            <span class="opt-num">⑤</span> We called him Jack. → <span class="strike">Jack was called him by us</span> <span class="correction">He was called Jack by us</span>.
+          </div>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답: ⑤</div>
+        <div class="answer-explain">
+          <strong>5형식 수동태!</strong> "We called him Jack" = call + 목적어(him) + 보어(Jack)<br>
+          목적어(him)를 주어로 끌어오고, 보어(Jack)는 그대로 뒤에 둠<br>
+          → <strong>He was called Jack by us.</strong> ✓
+        </div>
+      </div>
+    </div>
+
+    <!-- MCQ 5 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">5번</span>
+        <div class="q-content">
+          <p class="q-text">다음 중 능동태를 수동태로 <strong>바르게</strong> 바꾼 것끼리 짝지어진 것은?</p>
+        </div>
+      </div>
+      <div style="padding: 0 22px 16px;">
+        <div class="mcq">
+          <div class="mcq-option wrong">
+            <span class="opt-num">ⓐ</span> She takes care of the children. → The children <span class="strike">is</span> <span class="correction">are</span> taken care of by her.
+          </div>
+          <div class="mcq-option">
+            <span class="opt-num">ⓑ</span> People speak English in New Zealand. → English is spoken in New Zealand. ✓
+          </div>
+          <div class="mcq-option wrong">
+            <span class="opt-num">ⓒ</span> We elected him our president. → <span class="strike">Our president was elected him</span> <span class="correction">He was elected our president</span> by us.
+          </div>
+          <div class="mcq-option wrong">
+            <span class="opt-num">ⓓ</span> She teaches us English. → English is taught <span class="strike">for</span> <span class="correction">to</span> us by her.
+          </div>
+          <div class="mcq-option">
+            <span class="opt-num">ⓔ</span> My little brother broke the window. → The window was broken by my little brother. ✓
+          </div>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답: ⓑ, ⓔ</div>
+        <div class="answer-explain">
+          <strong>오답 분석:</strong><br>
+          ⓐ children은 복수 → are taken care of<br>
+          ⓒ 5형식 수동태 오류 (him을 주어로 끌어와야 함)<br>
+          ⓓ teach는 전치사 <span class="highlight">to</span>를 씀 (for ✗)
+        </div>
+      </div>
+    </div>
+
+    <!-- MCQ 6 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">6번</span>
+        <div class="q-content">
+          <p class="q-text">다음 중 능동태를 수동태로 바르게 바꾼 문장의 <strong>총 개수</strong>는?</p>
+        </div>
+      </div>
+      <div style="padding: 0 22px 16px;">
+        <div class="mcq">
+          <div class="mcq-option wrong">
+            <span class="opt-num">(A)</span> We felt the ground shake. → The ground was felt <span class="strike">shake</span> <span class="correction">to shake</span> by us.
+          </div>
+          <div class="mcq-option wrong">
+            <span class="opt-num">(B)</span> My dad is cooking breakfast. → Breakfast <span class="strike">is been cooking</span> <span class="correction">is being cooked</span> by my dad.
+          </div>
+          <div class="mcq-option">
+            <span class="opt-num">(C)</span> He told me not to read the book. → I was told not to read the book by him. ✓
+          </div>
+          <div class="mcq-option">
+            <span class="opt-num">(D)</span> I made him carry the bag. → He was made to carry the bag by me. ✓
+          </div>
+          <div class="mcq-option wrong">
+            <span class="opt-num">(E)</span> I bought my mom a scarf. → <span class="strike">My mom was bought a scarf</span> by me. (buy는 사람 주어 불가)
+          </div>
+          <div class="mcq-option wrong">
+            <span class="opt-num">(F)</span> All the teachers speak well of Bob. → Bob is spoken <span class="strike">well by</span> <span class="correction">well of by</span> all the teachers.
+          </div>
+          <div class="mcq-option wrong">
+            <span class="opt-num">(G)</span> I have found a cat under the wall. → A cat <span class="strike">have</span> <span class="correction">has</span> been found under the wall by me.
+          </div>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="answer-tag">정답: 2개 (C, D)</div>
+        <div class="answer-explain">
+          <strong>오답 분석:</strong><br>
+          (A) 지각동사(feel) 수동태 → 동사원형이 <span class="highlight">to shake</span>로 바뀜<br>
+          (B) 진행형 수동태는 <span class="highlight">be + being + p.p.</span> (is being cooked)<br>
+          (E) buy는 사람을 주어로 쓰지 못함 → A scarf was bought for my mom<br>
+          (F) 동사구는 통째로 → speak well of → be spoken <span class="highlight">well of</span> by<br>
+          (G) 주어 a cat(단수) → has been found
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAKEAWAY ===== -->
+  <div class="takeaway">
+    <h2>핵심 요약</h2>
+    <p style="margin-bottom: 12px;">
+      수동태는 <strong>be + p.p. + by 행위자</strong>가 기본이지만, 실제로는 <strong>시제 / 부정문 / 조동사 / 진행형 / 완료형 / 4형식 / 5형식 / 지각동사 / 사역동사 / that절 / 동사구 / 전치사</strong> 등 모든 문법 요소가 교차하는 챕터다.
+    </p>
+    <p style="margin-bottom: 0;">
+      가장 중요한 건 <strong>주어와 동사의 관계 파악</strong>이다. 주어가 행위를 "하는" 쪽인지 "받는" 쪽인지만 정확히 구분하면 능동/수동 선택은 자동으로 결정된다. 그리고 동사마다 정해진 <strong>전치사·p.p. 형태·특수 변환 규칙</strong>은 외워둬야 한다.
+    </p>
+  </div>
+
+</div>
+
+<script>
+function toggleAnswer(btn) {
+  const answer = btn.nextElementSibling;
+  btn.classList.toggle('active');
+  answer.classList.toggle('show');
+}
+</script>
+
+</body>
+</html>

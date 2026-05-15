@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>If vs Whether — The Complete Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F0F12;
+    --bg-elev: #18181D;
+    --bg-card: #1E1E25;
+    --border: #2A2A33;
+    --border-hover: #3A3A45;
+    --text: #F0F0F2;
+    --text-dim: #9999A3;
+    --text-muted: #65656F;
+    --accent-whether: #7B9CFF;      /* whether - 블루 */
+    --accent-whether-dim: rgba(123, 156, 255, 0.12);
+    --accent-if: #FFB16E;            /* if - 앰버 */
+    --accent-if-dim: rgba(255, 177, 110, 0.12);
+    --accent-good: #6FE5A8;
+    --accent-good-dim: rgba(111, 229, 168, 0.12);
+    --accent-bad: #FF7676;
+    --accent-bad-dim: rgba(255, 118, 118, 0.08);
+    --accent-warn: #FFD978;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at top left, rgba(123, 156, 255, 0.08), transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(255, 177, 110, 0.06), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 80px 28px 100px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero {
+    margin-bottom: 100px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 60px;
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--text-muted);
+  }
+
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: clamp(48px, 7vw, 84px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+
+  h1 .whether { color: var(--accent-whether); font-style: italic; }
+  h1 .if-em { color: var(--accent-if); font-style: italic; }
+  h1 .vs {
+    color: var(--text-muted);
+    font-size: 0.5em;
+    font-style: italic;
+    margin: 0 8px;
+  }
+  h1 .small {
+    color: var(--text-muted);
+    font-size: 0.5em;
+    font-style: italic;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .lead {
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 640px;
+    line-height: 1.6;
+  }
+
+  .lead strong { color: var(--text); }
+  .lead em.whether { color: var(--accent-whether); font-style: normal; font-weight: 500; }
+  .lead em.if-em { color: var(--accent-if); font-style: normal; font-weight: 500; }
+
+  section { margin-bottom: 80px; }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent-whether);
+    margin-bottom: 12px;
+    letter-spacing: 0.1em;
+  }
+
+  h2 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 38px;
+    line-height: 1.2;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  h2 em.whether { color: var(--accent-whether); font-style: italic; }
+  h2 em.if-em { color: var(--accent-if); font-style: italic; }
+  h2 em.good { color: var(--accent-good); font-style: italic; }
+
+  p {
+    color: var(--text-dim);
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  p strong { color: var(--text); font-weight: 600; }
+
+  /* ===== CORE BOX ===== */
+  .core-box {
+    background: linear-gradient(135deg, var(--accent-whether-dim), var(--accent-if-dim));
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 44px 40px;
+    margin: 40px 0;
+    position: relative;
+  }
+
+  .core-box::before {
+    content: 'THE BIG IDEA';
+    position: absolute;
+    top: -12px;
+    left: 36px;
+    background: var(--bg);
+    padding: 4px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent-whether);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+
+  .core-text {
+    font-family: 'Instrument Serif', serif;
+    font-size: 24px;
+    line-height: 1.5;
+    color: var(--text);
+    font-style: italic;
+    margin: 12px 0;
+  }
+
+  .core-text .whether { color: var(--accent-whether); font-style: normal; font-weight: 500; }
+  .core-text .if-em { color: var(--accent-if); font-style: normal; font-weight: 500; }
+
+  .core-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 24px 0;
+  }
+
+  /* ===== STRUCTURE ===== */
+  .structure {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px;
+    margin: 32px 0;
+  }
+
+  .formula {
+    background: var(--bg);
+    padding: 20px 24px;
+    border-radius: 10px;
+    margin: 16px 0;
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .formula-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    color: var(--text);
+    letter-spacing: 0.05em;
+  }
+
+  .formula-text .conn { color: var(--accent-whether); font-weight: 600; }
+  .formula-text .clause { color: var(--accent-if); font-weight: 600; }
+
+  /* ===== RULE BLOCK ===== */
+  .rule-block {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px 36px;
+    margin: 32px 0;
+  }
+
+  .rule-num {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--accent-whether);
+    margin-bottom: 8px;
+  }
+
+  .rule-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 30px;
+    color: var(--text);
+    margin-bottom: 8px;
+    font-weight: 400;
+    line-height: 1.3;
+  }
+
+  .rule-title em { color: var(--accent-whether); font-style: italic; }
+  .rule-title em.warn { color: var(--accent-warn); font-style: italic; }
+
+  .rule-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 24px;
+  }
+
+  /* ===== CASE ===== */
+  .case {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 14px 0;
+    border-left: 3px solid var(--accent-whether);
+  }
+
+  .case-tag {
+    font-family: 'Instrument Serif', serif;
+    font-size: 17px;
+    color: var(--accent-whether);
+    margin-bottom: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .case-tag .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    background: var(--accent-whether-dim);
+    color: var(--accent-whether);
+    padding: 3px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--accent-whether);
+    font-weight: 600;
+  }
+
+  /* ===== EXAMPLES ===== */
+  .ex-pair {
+    margin: 12px 0;
+  }
+
+  .sentence {
+    font-family: 'Instrument Serif', serif;
+    font-size: 19px;
+    line-height: 1.5;
+    color: var(--text);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .sentence-content { flex: 1; }
+
+  .sentence .whether { color: var(--accent-whether); font-weight: 500; font-style: italic; }
+  .sentence .if-em { color: var(--accent-if); font-weight: 500; font-style: italic; }
+  .sentence .strike { text-decoration: line-through; opacity: 0.5; color: var(--accent-bad); }
+  .sentence .emphasis { color: var(--accent-good); font-weight: 500; }
+
+  .check {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 5px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .check.ok {
+    background: var(--accent-good-dim);
+    color: var(--accent-good);
+    border: 1px solid var(--accent-good);
+  }
+
+  .check.no {
+    background: var(--accent-bad-dim);
+    color: var(--accent-bad);
+    border: 1px solid var(--accent-bad);
+  }
+
+  .translate {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-left: 28px;
+    margin-bottom: 4px;
+  }
+
+  .note {
+    font-size: 13px;
+    color: var(--text-dim);
+    padding: 12px 14px;
+    background: var(--bg);
+    border-radius: 8px;
+    margin-top: 12px;
+    line-height: 1.6;
+    border-left: 2px solid var(--accent-warn);
+  }
+
+  .note strong { color: var(--text); }
+
+  /* ===== COMPARE TABLE ===== */
+  .compare-table {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin: 24px 0;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  @media (max-width: 640px) {
+    .compare-table { grid-template-columns: 1fr; }
+    .compare-table .col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+  }
+
+  .col {
+    padding: 28px;
+  }
+
+  .col:first-child {
+    border-right: 1px solid var(--border);
+  }
+
+  .col-header {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .col.noun .col-header { color: var(--accent-whether); }
+  .col.cond .col-header { color: var(--accent-if); }
+
+  .col-header::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .col-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+
+  .col-meaning {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+
+  .col-example {
+    font-family: 'Instrument Serif', serif;
+    font-size: 16px;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+
+  .col-trans {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+
+  .col-test {
+    font-size: 13px;
+    padding: 10px 12px;
+    background: var(--bg);
+    border-radius: 8px;
+    margin-top: 12px;
+  }
+
+  .col.noun .col-test { color: var(--accent-whether); border: 1px solid rgba(123, 156, 255, 0.3); }
+  .col.cond .col-test { color: var(--accent-if); border: 1px solid rgba(255, 177, 110, 0.3); }
+
+  /* ===== WARNING BOX ===== */
+  .warning {
+    background: linear-gradient(135deg, rgba(255, 217, 120, 0.08), rgba(255, 177, 110, 0.08));
+    border: 1px solid rgba(255, 217, 120, 0.3);
+    border-radius: 16px;
+    padding: 32px 36px;
+    margin: 32px 0;
+    position: relative;
+  }
+
+  .warning::before {
+    content: '⚡ IMPORTANT';
+    position: absolute;
+    top: -12px;
+    left: 30px;
+    background: var(--bg);
+    padding: 4px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent-warn);
+    border: 1px solid rgba(255, 217, 120, 0.3);
+    border-radius: 6px;
+  }
+
+  .warning h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    color: var(--text);
+    margin: 8px 0 12px;
+    font-weight: 400;
+  }
+
+  .warning p {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+  }
+
+  /* ===== MNEMONIC BOX ===== */
+  .mnemonic {
+    background: var(--accent-good-dim);
+    border: 1px solid var(--accent-good);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 24px 0;
+  }
+
+  .mnemonic-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--accent-good);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .mnemonic-content {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    color: var(--text);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  .mnemonic-content strong {
+    color: var(--accent-good);
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  .mnemonic-detail {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 12px;
+    line-height: 1.6;
+  }
+
+  /* ===== TAKEAWAY ===== */
+  .takeaway {
+    margin: 80px 0 0;
+    padding: 60px 50px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .takeaway::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-whether), var(--accent-if));
+  }
+
+  .takeaway .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    margin-bottom: 20px;
+  }
+
+  .takeaway h2 { font-size: 32px; margin-bottom: 28px; }
+
+  .key-line {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    line-height: 1.7;
+    color: var(--text);
+    font-style: italic;
+    margin-bottom: 18px;
+  }
+
+  .key-line .whether { color: var(--accent-whether); font-style: normal; font-weight: 500; }
+  .key-line .if-em { color: var(--accent-if); font-style: normal; font-weight: 500; }
+
+  .takeaway p:last-child {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="hero">
+    <div class="eyebrow">English Grammar / Noun Clauses</div>
+    <h1>
+      <span class="small">~인지 아닌지를 묻는 두 단어</span>
+      <span class="if-em">if</span> <span class="vs">vs.</span> <span class="whether">whether</span>
+    </h1>
+    <p class="lead">
+      둘 다 <em class="whether">"~인지 아닌지"</em>로 해석되어 서로 바꿔 쓸 수 있다고 배운다. 하지만 실제로는 <em class="whether">whether만 쓸 수 있는 자리</em>가 있고,
+      반대로 <em class="if-em">if는 조건의 의미("만약 ~한다면")</em>로도 쓰여서 헷갈린다. 모든 차이를 한 번에 정리한다.
+    </p>
+  </header>
+
+  <!-- ===== THE BIG IDEA ===== -->
+  <div class="core-box">
+    <p class="core-text">
+      <span class="whether">whether</span>는 명사절 어디든 가능 &mdash; 만능.<br>
+      <span class="if-em">if</span>는 <strong style="color: var(--text); font-style: normal;">동사의 목적어</strong> 자리에서만 명사절로 쓸 수 있다.
+    </p>
+    <div class="core-divider"></div>
+    <p style="font-size: 15px; color: var(--text-dim); margin: 0;">
+      그리고 if는 같은 자리에 와도 <strong style="color: var(--text);">"만약 ~한다면"(조건)</strong>이라는 전혀 다른 의미로 쓰일 수 있어서 더 까다롭다.
+    </p>
+  </div>
+
+  <!-- ===== BASIC STRUCTURE ===== -->
+  <section>
+    <div class="section-num">01 / STRUCTURE</div>
+    <h2>기본 구조 &mdash; <em class="whether">간접의문문</em>의 어순</h2>
+    <p>
+      whether/if가 이끄는 명사절은 <strong>간접의문문</strong>이다. 일반 의문문과 어순이 다르다는 점을 꼭 기억해야 한다.
+      의문문은 동사가 주어 앞에 오지만, 명사절은 평서문 어순(주어 + 동사)을 따른다.
+    </p>
+
+    <div class="structure">
+      <div class="formula">
+        <div class="formula-text">
+          S + V + <span class="conn">whether/if</span> + <span class="clause">S' + V'</span>
+        </div>
+      </div>
+
+      <div class="case">
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">I don't know <span class="whether">whether</span> he will come.</span>
+        </p>
+        <p class="translate">그가 올지 안 올지 모르겠다.</p>
+      </div>
+
+      <div class="case">
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">She asked me <span class="if-em">if</span> I was free on Saturday.</span>
+        </p>
+        <p class="translate">그녀는 내가 토요일에 한가한지 물었다.</p>
+      </div>
+
+      <div class="case" style="border-left-color: var(--accent-bad); background: var(--accent-bad-dim);">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-bad); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 12px;">
+          ✕ 자주 하는 실수
+        </div>
+        <p class="sentence">
+          <span class="check no">✗</span>
+          <span class="sentence-content">I don't know whether <span class="strike">will he come</span>.</span>
+        </p>
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">I don't know whether <span class="emphasis">he will come</span>.</span>
+        </p>
+        <div class="note">
+          간접의문문이므로 <strong>평서문 어순</strong>(주어+동사)을 따라야 한다. 일반 의문문 어순(will he come)은 틀린 표현이다.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WHETHER ONLY ===== -->
+  <section>
+    <div class="section-num">02 / WHETHER ONLY</div>
+    <div class="rule-block">
+      <div class="rule-num">규칙 ②</div>
+      <h2 class="rule-title"><em>whether만 쓸 수 있는 5가지 자리</em></h2>
+      <div class="rule-subtitle">IF CANNOT BE USED HERE — 시험 1순위!</div>
+
+      <p>
+        다음 다섯 자리에서는 <strong>반드시 whether</strong>만 써야 한다. <strong>if는 절대 사용 불가</strong>이다.
+        시험에 정말 자주 출제되는 함정이니 꼭 외워둬야 한다.
+      </p>
+
+      <!-- Case 1 -->
+      <div class="case">
+        <div class="case-tag">
+          <span class="num">❶</span>
+          주어 자리에 올 때
+        </div>
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content"><span class="whether">Whether</span> he agrees or not <strong style="color: var(--accent-good);">is</strong> not important.</span>
+        </p>
+        <p class="sentence">
+          <span class="check no">✗</span>
+          <span class="sentence-content"><span class="strike">If</span> he agrees or not is not important.</span>
+        </p>
+        <p class="translate">그가 동의하든 안 하든 중요하지 않다.</p>
+        <div class="note">
+          <strong>이유:</strong> if가 주어 자리에 오면 조건절("만약 ~한다면")로 잘못 해석될 수 있어서 헷갈림을 피하기 위해 whether만 허용.
+        </div>
+      </div>
+
+      <!-- Case 2 -->
+      <div class="case">
+        <div class="case-tag">
+          <span class="num">❷</span>
+          보어 자리에 올 때
+        </div>
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">The question is <span class="whether">whether</span> we can finish on time.</span>
+        </p>
+        <p class="sentence">
+          <span class="check no">✗</span>
+          <span class="sentence-content">The question is <span class="strike">if</span> we can finish on time.</span>
+        </p>
+        <p class="translate">문제는 우리가 제시간에 끝낼 수 있느냐다.</p>
+        <div class="note">
+          <strong>이유:</strong> be동사 뒤 보어 자리에 오는 명사절은 if 사용 불가. 주로 The question is ~, The issue is ~, My concern is ~ 같은 패턴.
+        </div>
+      </div>
+
+      <!-- Case 3 -->
+      <div class="case">
+        <div class="case-tag">
+          <span class="num">❸</span>
+          전치사 뒤에 올 때
+        </div>
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">It depends <strong>on</strong> <span class="whether">whether</span> you study hard.</span>
+        </p>
+        <p class="sentence">
+          <span class="check no">✗</span>
+          <span class="sentence-content">It depends on <span class="strike">if</span> you study hard.</span>
+        </p>
+        <p class="translate">네가 열심히 공부하느냐에 달려 있다.</p>
+
+        <p class="sentence" style="margin-top: 16px;">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">We talked <strong>about</strong> <span class="whether">whether</span> to cancel the trip.</span>
+        </p>
+        <p class="translate">우리는 여행을 취소할지에 대해 이야기했다.</p>
+
+        <p class="sentence" style="margin-top: 16px;">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">I'm not sure <strong>of</strong> <span class="whether">whether</span> it is true.</span>
+        </p>
+        <p class="translate">그게 사실인지 확신할 수 없다.</p>
+
+        <div class="note">
+          <strong>주요 전치사:</strong> on, about, of, over, as to 등. <strong>전치사 + if 조합은 절대 안 됨</strong> &mdash; 무조건 whether.
+        </div>
+      </div>
+
+      <!-- Case 4 -->
+      <div class="case">
+        <div class="case-tag">
+          <span class="num">❹</span>
+          whether or not (바로 붙여서) 쓸 때
+        </div>
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">I wonder <span class="whether">whether or not</span> she likes me.</span>
+        </p>
+        <p class="sentence">
+          <span class="check no">✗</span>
+          <span class="sentence-content">I wonder <span class="strike">if or not</span> she likes me.</span>
+        </p>
+        <p class="translate">그녀가 나를 좋아하는지 안 좋아하는지 궁금하다.</p>
+        <div class="note">
+          <strong>주의:</strong> "or not"이 바로 뒤에 붙으면 whether만 가능. 단, 떨어져 있으면 OK → <em>"I wonder if she likes me or not"</em>는 자연스러움.
+        </div>
+      </div>
+
+      <!-- Case 5 -->
+      <div class="case">
+        <div class="case-tag">
+          <span class="num">❺</span>
+          뒤에 to부정사가 올 때
+        </div>
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">I can't decide <span class="whether">whether to go</span> or not.</span>
+        </p>
+        <p class="sentence">
+          <span class="check no">✗</span>
+          <span class="sentence-content">I can't decide <span class="strike">if to go</span> or not.</span>
+        </p>
+        <p class="translate">갈지 말지 결정을 못 하겠다.</p>
+
+        <p class="sentence" style="margin-top: 16px;">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">We discussed <span class="whether">whether to accept</span> the offer.</span>
+        </p>
+        <p class="translate">우리는 그 제안을 받아들일지에 대해 논의했다.</p>
+
+        <div class="note">
+          <strong>참고:</strong> "whether to V"는 "whether + 주어 + should + V"로 풀어 쓸 수 있다. (whether to go = whether I should go)
+        </div>
+      </div>
+
+      <!-- Mnemonic -->
+      <div class="mnemonic">
+        <div class="mnemonic-title">기억법 — 「주·보·전·or not·to V」</div>
+        <p class="mnemonic-content">
+          <strong>주</strong>어 / <strong>보</strong>어 / <strong>전</strong>치사 뒤 / <strong>or not</strong> 바로 뒤 / <strong>to</strong>부정사 앞 &mdash; 다섯 자리는 무조건 whether
+        </p>
+        <p class="mnemonic-detail">
+          이 다섯 자리만 외워두면 if/whether 시험 문제는 99% 잡힌다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== IF: TWO MEANINGS ===== -->
+  <section>
+    <div class="section-num">03 / IF'S TWO FACES</div>
+    <div class="rule-block">
+      <div class="rule-num">규칙 ③</div>
+      <h2 class="rule-title">if의 <em>두 얼굴</em> &mdash; 명사절 vs 조건 부사절</h2>
+      <div class="rule-subtitle">SAME WORD, DIFFERENT MEANING</div>
+
+      <p>
+        if는 두 가지로 쓰인다: <strong>"~인지 아닌지"(명사절)</strong>와 <strong>"만약 ~한다면"(조건 부사절)</strong>.
+        한국어 해석과 문장 구조를 보면 구분할 수 있다.
+      </p>
+
+      <div class="compare-table">
+        <div class="col noun">
+          <div class="col-header">Noun Clause</div>
+          <div class="col-title">명사절 if</div>
+          <div class="col-meaning">"~인지 아닌지"</div>
+          <p class="col-example">I don't know <strong style="color: var(--accent-whether);">if</strong> it will rain.</p>
+          <p class="col-trans">비가 올지 안 올지 모르겠다.</p>
+          <div class="col-test">
+            ✓ <strong>whether로 대체 가능</strong>
+          </div>
+        </div>
+        <div class="col cond">
+          <div class="col-header">Adverbial Clause</div>
+          <div class="col-title">조건 부사절 if</div>
+          <div class="col-meaning">"만약 ~한다면"</div>
+          <p class="col-example"><strong style="color: var(--accent-if);">If</strong> it rains, I will stay home.</p>
+          <p class="col-trans">비가 오면, 집에 있을 거다.</p>
+          <div class="col-test">
+            ✗ <strong>whether로 대체 불가</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="mnemonic">
+        <div class="mnemonic-title">빠른 판별법</div>
+        <p class="mnemonic-content">
+          <strong>whether</strong>로 바꿔서 말이 되면 → <strong>명사절</strong> ("~인지 아닌지")<br>
+          <strong>whether</strong>로 바꿔서 말이 안 되면 → <strong>조건 부사절</strong> ("만약 ~한다면")
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WILL RULE ===== -->
+  <section>
+    <div class="section-num">04 / FUTURE TENSE</div>
+    <div class="warning">
+      <h3>부사절 if/whether에서는 will 사용 불가!</h3>
+      <p>
+        if / whether가 <strong>조건 부사절</strong>("만약 ~한다면")이나 <strong>양보 부사절</strong>("~이든 아니든")로 쓰일 때,
+        미래의 일이라도 <strong style="color: var(--text);">will 대신 현재 시제</strong>를 써야 한다.
+      </p>
+
+      <div class="case" style="border-left-color: var(--accent-if); background: var(--bg-card); margin-top: 20px;">
+        <div class="case-tag" style="color: var(--accent-if);">
+          <span class="num" style="background: var(--accent-if-dim); color: var(--accent-if); border-color: var(--accent-if);">A</span>
+          조건 if (만약 ~한다면)
+        </div>
+        <p class="sentence">
+          <span class="check no">✗</span>
+          <span class="sentence-content"><strong>If</strong> it <span class="strike">will rain</span> tomorrow, I will stay home.</span>
+        </p>
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content"><strong>If</strong> it <span class="emphasis">rains</span> tomorrow, I will stay home.</span>
+        </p>
+        <p class="translate">내일 비가 오면, 집에 있을 거다.</p>
+      </div>
+
+      <div class="case" style="border-left-color: var(--accent-whether); background: var(--bg-card); margin-top: 14px;">
+        <div class="case-tag">
+          <span class="num">B</span>
+          양보 whether (~이든 아니든)
+        </div>
+        <p class="sentence">
+          <span class="check no">✗</span>
+          <span class="sentence-content"><strong>Whether</strong> it <span class="strike">will rain</span> or not, we will go camping.</span>
+        </p>
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content"><strong>Whether</strong> it <span class="emphasis">rains</span> or not, we will go camping.</span>
+        </p>
+        <p class="translate">비가 오든 안 오든, 우리는 캠핑을 갈 것이다.</p>
+      </div>
+
+      <!-- Critical comparison -->
+      <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 24px 28px; margin-top: 24px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: var(--accent-warn); text-transform: uppercase; margin-bottom: 14px;">
+          ⚡ 가장 헷갈리는 비교
+        </div>
+        <p class="sentence" style="font-size: 17px;">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">I don't know <strong style="color: var(--accent-whether);">if</strong> it <span class="emphasis">will rain</span> tomorrow.</span>
+        </p>
+        <p style="font-size: 13px; color: var(--text-muted); margin-left: 28px; margin-bottom: 12px;">
+          (명사절 → will 사용 가능)
+        </p>
+
+        <p class="sentence" style="font-size: 17px;">
+          <span class="check no">✗</span>
+          <span class="sentence-content"><strong style="color: var(--accent-if);">If</strong> it <span class="strike">will rain</span> tomorrow, I will stay home.</span>
+        </p>
+        <p style="font-size: 13px; color: var(--text-muted); margin-left: 28px; margin-bottom: 14px;">
+          (부사절 → will 사용 불가)
+        </p>
+
+        <p style="font-family: 'Instrument Serif', serif; font-size: 18px; color: var(--text); font-style: italic; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
+          같은 if라도 <strong style="color: var(--accent-whether); font-style: normal;">명사절이면 will 가능</strong>,
+          <strong style="color: var(--accent-if); font-style: normal;">부사절이면 will 불가!</strong>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRACTICE ===== -->
+  <section>
+    <div class="section-num">PRACTICE</div>
+    <h2>실전 분석 &mdash; <em class="good">규칙을 적용해보자</em></h2>
+
+    <div class="case">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 10px;">
+        Test 1
+      </div>
+      <p class="sentence">
+        <span class="check ok">✓</span>
+        <span class="sentence-content">___ he is honest is the most important thing. (If / Whether)</span>
+      </p>
+      <div class="note">
+        <strong>분석:</strong> 빈칸이 <strong>주어 자리</strong>! → 정답: <strong style="color: var(--accent-whether);">Whether</strong>
+      </div>
+    </div>
+
+    <div class="case">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 10px;">
+        Test 2
+      </div>
+      <p class="sentence">
+        <span class="check ok">✓</span>
+        <span class="sentence-content">I'm worried about ___ I'll pass the exam. (if / whether)</span>
+      </p>
+      <div class="note">
+        <strong>분석:</strong> 빈칸 앞이 <strong>전치사 about</strong>! → 정답: <strong style="color: var(--accent-whether);">whether</strong>
+      </div>
+    </div>
+
+    <div class="case">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 10px;">
+        Test 3
+      </div>
+      <p class="sentence">
+        <span class="check ok">✓</span>
+        <span class="sentence-content">She asked ___ I had finished the work. (if / whether)</span>
+      </p>
+      <div class="note">
+        <strong>분석:</strong> asked의 <strong>목적어</strong> 자리 (5가지 자리 아님) → <strong style="color: var(--accent-good);">if / whether 둘 다 가능</strong>
+      </div>
+    </div>
+
+    <div class="case">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 10px;">
+        Test 4
+      </div>
+      <p class="sentence">
+        <span class="check ok">✓</span>
+        <span class="sentence-content">If she ___ tomorrow, I will be happy. (comes / will come)</span>
+      </p>
+      <div class="note">
+        <strong>분석:</strong> "내일 그녀가 오면 행복할 거다" → <strong>조건 부사절</strong> → will 불가 → 정답: <strong style="color: var(--accent-if);">comes</strong>
+      </div>
+    </div>
+
+    <div class="case">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 10px;">
+        Test 5
+      </div>
+      <p class="sentence">
+        <span class="check ok">✓</span>
+        <span class="sentence-content">I don't know if she ___ tomorrow. (comes / will come)</span>
+      </p>
+      <div class="note">
+        <strong>분석:</strong> "그녀가 내일 올지 모르겠다" → <strong>명사절</strong>(know의 목적어) → will 가능 → 정답: <strong style="color: var(--accent-whether);">will come</strong>
+      </div>
+    </div>
+
+    <div class="case">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 10px;">
+        Test 6
+      </div>
+      <p class="sentence">
+        <span class="check ok">✓</span>
+        <span class="sentence-content">We're still deciding ___ to leave now. (if / whether)</span>
+      </p>
+      <div class="note">
+        <strong>분석:</strong> 뒤에 <strong>to부정사</strong>가 옴! → 정답: <strong style="color: var(--accent-whether);">whether</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAKEAWAY ===== -->
+  <div class="takeaway">
+    <div class="num">/ KEY TAKEAWAY</div>
+    <h2>모든 게 두 줄로 정리된다</h2>
+    <p class="key-line">
+      <span class="whether">whether</span>는 명사절에서 만능 &mdash;<br>
+      <strong style="color: var(--text);">주어, 보어, 전치사 뒤, or not 직전, to부정사 앞</strong>에서는 무조건 whether.<br><br>
+      <span class="if-em">if</span>는 동사의 <strong style="color: var(--text);">목적어 자리</strong>에서만 명사절 OK &mdash;<br>
+      그 외 자리에서는 <strong style="color: var(--text);">조건의 if</strong>("만약 ~한다면")로 해석된다.
+    </p>
+    <p>그리고 부사절의 if/whether에서는 절대 will을 쓰지 않는다. 명사절의 if/whether에서는 will을 써도 OK. 같은 단어, 다른 역할 &mdash; 영문법의 묘미다.</p>
+  </div>
+
+</div>
+</body>
+</html>

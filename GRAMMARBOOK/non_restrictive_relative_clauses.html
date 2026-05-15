@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Non-restrictive Relative Clauses — 계속적 용법 완전정복</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F0F12;
+    --bg-elev: #18181D;
+    --bg-card: #1E1E25;
+    --border: #2A2A33;
+    --text: #F0F0F2;
+    --text-dim: #9999A3;
+    --text-muted: #65656F;
+    --accent-cont: #6FE5A8;
+    --accent-cont-dim: rgba(111, 229, 168, 0.12);
+    --accent-rest: #FFB16E;
+    --accent-rest-dim: rgba(255, 177, 110, 0.12);
+    --accent-info: #7B9CFF;
+    --accent-info-dim: rgba(123, 156, 255, 0.12);
+    --accent-warn: #FFD978;
+    --accent-warn-dim: rgba(255, 217, 120, 0.10);
+    --accent-bad: #FF7676;
+    --accent-bad-dim: rgba(255, 118, 118, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at top left, rgba(111, 229, 168, 0.06), transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(255, 177, 110, 0.06), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { max-width: 880px; margin: 0 auto; padding: 80px 28px 100px; position: relative; z-index: 1; }
+
+  .hero { margin-bottom: 100px; border-bottom: 1px solid var(--border); padding-bottom: 60px; }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--text-muted); }
+
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: clamp(44px, 6.5vw, 76px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+
+  h1 .em { color: var(--accent-cont); font-style: italic; }
+  h1 .small {
+    color: var(--text-muted);
+    font-size: 0.5em;
+    font-style: italic;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .lead { font-size: 18px; color: var(--text-dim); max-width: 640px; line-height: 1.6; }
+  .lead strong { color: var(--text); }
+  .lead em { color: var(--accent-cont); font-style: normal; font-weight: 500; }
+
+  section { margin-bottom: 80px; }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent-cont);
+    margin-bottom: 12px;
+    letter-spacing: 0.1em;
+  }
+
+  h2 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 38px;
+    line-height: 1.2;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  h2 em { color: var(--accent-cont); font-style: italic; }
+  h2 em.rest { color: var(--accent-rest); font-style: italic; }
+  h2 em.warn { color: var(--accent-warn); font-style: italic; }
+  h2 em.bad { color: var(--accent-bad); font-style: italic; }
+
+  p { color: var(--text-dim); font-size: 16px; margin-bottom: 20px; }
+  p strong { color: var(--text); font-weight: 600; }
+
+  .core-box {
+    background: linear-gradient(135deg, var(--accent-cont-dim), var(--accent-info-dim));
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 44px 40px;
+    margin: 40px 0;
+    position: relative;
+  }
+
+  .core-box::before {
+    content: 'THE BIG IDEA';
+    position: absolute;
+    top: -12px;
+    left: 36px;
+    background: var(--bg);
+    padding: 4px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent-cont);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+
+  .core-text {
+    font-family: 'Instrument Serif', serif;
+    font-size: 24px;
+    line-height: 1.5;
+    color: var(--text);
+    font-style: italic;
+    margin: 12px 0;
+  }
+
+  .core-text .comma { color: var(--accent-cont); font-weight: 700; font-style: normal; font-size: 1.3em; }
+  .core-text strong {
+    color: var(--accent-cont);
+    font-style: normal;
+    font-weight: 600;
+    font-family: 'Pretendard', sans-serif;
+    font-size: 0.85em;
+  }
+
+  .compare-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin: 24px 0;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  @media (max-width: 640px) {
+    .compare-card { grid-template-columns: 1fr; }
+    .compare-card .col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+  }
+
+  .col { padding: 28px; }
+  .col:first-child { border-right: 1px solid var(--border); }
+
+  .col-header {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .col.cont .col-header { color: var(--accent-cont); }
+  .col.rest .col-header { color: var(--accent-rest); }
+  .col.sing .col-header { color: var(--accent-cont); }
+  .col.plur .col-header { color: var(--accent-info); }
+
+  .col-header::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+  .col-title { font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--text); margin-bottom: 6px; }
+  .col-meaning { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; font-style: italic; }
+
+  .col-example {
+    font-family: 'Instrument Serif', serif;
+    font-size: 17px;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  .col-trans { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
+
+  .col-test { font-size: 12px; padding: 10px 12px; background: var(--bg); border-radius: 8px; margin-top: 12px; line-height: 1.6; }
+
+  .col.cont .col-test { color: var(--accent-cont); border: 1px solid rgba(111, 229, 168, 0.3); }
+  .col.rest .col-test { color: var(--accent-rest); border: 1px solid rgba(255, 177, 110, 0.3); }
+  .col.sing .col-test { color: var(--accent-cont); border: 1px solid rgba(111, 229, 168, 0.3); }
+  .col.plur .col-test { color: var(--accent-info); border: 1px solid rgba(123, 156, 255, 0.3); }
+
+  .rule-block {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px 36px;
+    margin: 32px 0;
+  }
+
+  .rule-num { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 18px; color: var(--accent-cont); margin-bottom: 8px; }
+
+  .rule-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 30px;
+    color: var(--text);
+    margin-bottom: 8px;
+    font-weight: 400;
+    line-height: 1.3;
+  }
+
+  .rule-title em { color: var(--accent-cont); font-style: italic; }
+  .rule-title em.bad { color: var(--accent-bad); font-style: italic; }
+  .rule-title em.warn { color: var(--accent-warn); font-style: italic; }
+
+  .rule-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 24px;
+  }
+
+  .forbidden-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  @media (max-width: 640px) { .forbidden-box { grid-template-columns: 1fr; } }
+
+  .forbidden-item {
+    background: var(--accent-bad-dim);
+    border: 1px solid rgba(255, 118, 118, 0.3);
+    border-radius: 14px;
+    padding: 24px 26px;
+    text-align: center;
+  }
+
+  .forbidden-word {
+    font-family: 'Instrument Serif', serif;
+    font-size: 36px;
+    color: var(--accent-bad);
+    font-style: italic;
+    margin-bottom: 8px;
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+  }
+
+  .forbidden-desc { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+
+  .forbidden-desc strong {
+    color: var(--text);
+    display: block;
+    margin-bottom: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .example {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin: 14px 0;
+    border-left: 2px solid var(--accent-cont);
+  }
+
+  .example.bad { border-left-color: var(--accent-bad); background: var(--accent-bad-dim); }
+  .example.warn { border-left-color: var(--accent-warn); background: var(--accent-warn-dim); }
+  .example.rest { border-left-color: var(--accent-rest); }
+  .example.info { border-left-color: var(--accent-info); }
+
+  .ex-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent-cont);
+  }
+
+  .example.bad .ex-label { color: var(--accent-bad); }
+  .example.warn .ex-label { color: var(--accent-warn); }
+  .example.rest .ex-label { color: var(--accent-rest); }
+  .example.info .ex-label { color: var(--accent-info); }
+
+  .ex-label::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+  .sentence {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+    line-height: 1.5;
+    color: var(--text);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .sentence-content { flex: 1; }
+
+  .sentence .cont { color: var(--accent-cont); font-weight: 500; font-style: italic; }
+  .sentence .rest { color: var(--accent-rest); font-weight: 500; font-style: italic; }
+  .sentence .strike { text-decoration: line-through; opacity: 0.5; color: var(--accent-bad); }
+  .sentence .ant { color: var(--accent-info); font-weight: 500; }
+  .sentence .verb-s { color: var(--accent-cont); font-weight: 600; }
+  .sentence .verb-p { color: var(--accent-info); font-weight: 600; }
+  .sentence .comma-mark { color: var(--accent-cont); font-weight: 700; font-size: 1.3em; margin: 0 2px; }
+  .sentence .num-hl {
+    background: var(--accent-warn-dim);
+    color: var(--accent-warn);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+
+  .check {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 5px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .check.ok { background: var(--accent-cont-dim); color: var(--accent-cont); border: 1px solid var(--accent-cont); }
+  .check.no { background: var(--accent-bad-dim); color: var(--accent-bad); border: 1px solid var(--accent-bad); }
+
+  .translate { font-size: 13px; color: var(--text-muted); margin-left: 28px; margin-bottom: 4px; }
+
+  .note {
+    font-size: 13px;
+    color: var(--text-dim);
+    padding: 12px 14px;
+    background: var(--bg);
+    border-radius: 8px;
+    margin-top: 12px;
+    line-height: 1.6;
+    border-left: 2px solid var(--accent-warn);
+  }
+
+  .note strong { color: var(--text); }
+
+  .equation {
+    background: var(--bg);
+    padding: 18px 22px;
+    border-radius: 10px;
+    margin: 14px 0;
+    border: 1px dashed var(--border);
+  }
+
+  .equation .sentence { margin-bottom: 0; font-size: 17px; }
+
+  .equation .equals {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-cont);
+    font-size: 16px;
+    font-weight: 700;
+    margin: 4px 0;
+    padding-left: 28px;
+  }
+
+  .case-box {
+    background: var(--accent-cont-dim);
+    border: 1px solid var(--accent-cont);
+    border-radius: 14px;
+    padding: 26px 28px;
+    margin: 16px 0;
+  }
+
+  .case-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: var(--accent-cont);
+    color: var(--bg);
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-weight: 700;
+    display: inline-block;
+    margin-bottom: 14px;
+  }
+
+  .case-title { font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--text); margin-bottom: 10px; font-weight: 400; }
+  .case-desc { font-size: 14px; color: var(--text-dim); margin-bottom: 16px; line-height: 1.6; }
+
+  .comparison-set {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin: 18px 0;
+  }
+
+  .comparison-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent-warn);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .comparison-title::before { content: '🔎'; }
+
+  .comp-item { padding: 14px 16px; background: var(--bg); border-radius: 8px; margin: 10px 0; border-left: 2px solid; }
+  .comp-item.singular { border-left-color: var(--accent-cont); }
+  .comp-item.plural { border-left-color: var(--accent-info); }
+
+  .comp-analysis { font-size: 13px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); line-height: 1.6; }
+  .comp-item.singular .comp-analysis { color: var(--accent-cont); }
+  .comp-item.plural .comp-analysis { color: var(--accent-info); }
+
+  .warning {
+    background: linear-gradient(135deg, var(--accent-warn-dim), var(--accent-cont-dim));
+    border: 1px solid rgba(255, 217, 120, 0.3);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin: 32px 0;
+    position: relative;
+  }
+
+  .warning::before {
+    content: '⚡ KEY POINT';
+    position: absolute;
+    top: -12px;
+    left: 30px;
+    background: var(--bg);
+    padding: 4px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent-warn);
+    border: 1px solid rgba(255, 217, 120, 0.3);
+    border-radius: 6px;
+  }
+
+  .warning h3 { font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--text); margin: 8px 0 14px; font-weight: 400; }
+
+  .takeaway {
+    margin: 80px 0 0;
+    padding: 60px 50px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .takeaway::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-cont), var(--accent-info), var(--accent-warn));
+  }
+
+  .takeaway .num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); letter-spacing: 0.2em; margin-bottom: 20px; }
+  .takeaway h2 { font-size: 32px; margin-bottom: 28px; }
+
+  .key-line {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    line-height: 1.7;
+    color: var(--text);
+    font-style: italic;
+    margin-bottom: 18px;
+  }
+
+  .key-line .cont { color: var(--accent-cont); font-style: normal; font-weight: 500; }
+  .key-line .rest { color: var(--accent-rest); font-style: normal; font-weight: 500; }
+  .key-line .info { color: var(--accent-info); font-style: normal; font-weight: 500; }
+
+  .takeaway p:last-child { font-size: 15px; color: var(--text-muted); margin: 0; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="hero">
+    <div class="eyebrow">English Grammar / Relative Clauses</div>
+    <h1>
+      <span class="small">콤마(,) 하나가 의미를 바꾼다</span>
+      관계대명사의<br>
+      <span class="em">계속적 용법</span>
+    </h1>
+    <p class="lead">
+      <strong>I have two sisters who live in Paris</strong>와 <strong>I have two sisters, who live in Paris</strong>는 <em>완전히 다른 의미</em>다.
+      콤마 하나의 차이로 한 명이 두 명이 되고, 두 명이 네 명이 될 수도 있다. 영문법에서 가장 디테일한 차이를 만드는 부분이다.
+    </p>
+  </header>
+
+  <div class="core-box">
+    <p class="core-text">
+      관계대명사 앞에 <span class="comma">,</span>(콤마)가 있으면 <strong>계속적 용법</strong>.<br>
+      선행사를 <strong>제한</strong>하는 게 아니라 <strong>부가 정보</strong>를 주는 것.<br>
+      그리고 <strong>접속사 + 대명사</strong>(and/but he/she/it/they)로 풀어쓸 수 있다.
+    </p>
+  </div>
+
+  <section>
+    <div class="section-num">00 / OVERVIEW</div>
+    <h2>제한적 vs <em>계속적</em> &mdash; 콤마의 의미</h2>
+    <p>먼저 두 용법의 차이부터 정확히 짚고 가자. 같은 단어를 써도 콤마 유무로 의미가 완전히 달라진다.</p>
+
+    <div class="compare-card">
+      <div class="col rest">
+        <div class="col-header">Restrictive (콤마 X)</div>
+        <div class="col-title">제한적 용법</div>
+        <div class="col-meaning">선행사를 "제한"한다</div>
+        <p class="col-example">I have two sisters <strong style="color: var(--accent-rest);">who</strong> live in Paris.</p>
+        <p class="col-trans">파리에 사는 자매가 두 명 있다.<br>(다른 자매가 더 있을 수도 있음)</p>
+        <div class="col-test">
+          ▸ 어느 자매인지 <strong>구별</strong>하는 정보<br>
+          ▸ 빼면 의미가 바뀌거나 불분명해짐
+        </div>
+      </div>
+      <div class="col cont">
+        <div class="col-header">Non-restrictive (콤마 O)</div>
+        <div class="col-title">계속적 용법</div>
+        <div class="col-meaning">선행사에 "부가 정보"를 더한다</div>
+        <p class="col-example">I have two sisters<span style="color: var(--accent-cont); font-weight: 700;">,</span> <strong style="color: var(--accent-cont);">who</strong> live in Paris.</p>
+        <p class="col-trans">나에게는 자매가 두 명 있는데, 둘 다 파리에 산다.<br>(자매는 정확히 두 명)</p>
+        <div class="col-test">
+          ▸ <strong>이미 특정된</strong> 대상에 추가 설명<br>
+          ▸ 빼도 핵심 의미는 유지됨
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RULE 1: FORBIDDEN WORDS (that, what) ===== -->
+  <section>
+    <div class="section-num">RULE 01</div>
+    <div class="rule-block">
+      <div class="rule-num">규칙 ①</div>
+      <h2 class="rule-title">계속적 용법에 <em class="bad">쓸 수 없는 두 단어</em></h2>
+      <div class="rule-subtitle">THAT AND WHAT — STRICTLY FORBIDDEN AFTER COMMA</div>
+
+      <p>
+        콤마 뒤에는 반드시 <strong>who</strong>(사람) 또는 <strong>which</strong>(사물)만 올 수 있다.
+        <strong>that</strong>과 <strong>what</strong>은 절대 사용 불가다. 시험에 자주 출제되는 함정이니 반드시 알아둬야 한다.
+      </p>
+
+      <div class="forbidden-box">
+        <div class="forbidden-item">
+          <div class="forbidden-word">that</div>
+          <div class="forbidden-desc">
+            <strong>제한적 전용</strong>
+            지시 의미("그 ~")가 있어<br>선행사를 좁히는 역할만 가능
+          </div>
+        </div>
+        <div class="forbidden-item">
+          <div class="forbidden-word">what</div>
+          <div class="forbidden-desc">
+            <strong>선행사 자체</strong>
+            "the thing(s) which"의 의미라<br>이미 선행사를 포함하고 있음
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--text); margin: 32px 0 14px; font-weight: 400;">
+        ▸ that을 쓸 수 없는 이유와 예
+      </h3>
+
+      <div class="example bad">
+        <div class="ex-label">Incorrect — that 사용</div>
+        <p class="sentence">
+          <span class="check no">✗</span>
+          <span class="sentence-content">My sister<span class="comma-mark">,</span> <span class="strike">that</span> lives in Paris, is a doctor.</span>
+        </p>
+      </div>
+
+      <div class="example">
+        <div class="ex-label">Correct — who 사용</div>
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">My sister<span class="comma-mark">,</span> <span class="cont">who</span> lives in Paris, is a doctor.</span>
+        </p>
+        <p class="translate">파리에 사는 내 여동생은 의사이다.</p>
+      </div>
+
+      <div class="example bad">
+        <div class="ex-label">Incorrect / Correct 비교</div>
+        <p class="sentence">
+          <span class="check no">✗</span>
+          <span class="sentence-content">The report<span class="comma-mark">,</span> <span class="strike">that</span> was published yesterday, surprised everyone.</span>
+        </p>
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">The report<span class="comma-mark">,</span> <span class="cont">which</span> was published yesterday, surprised everyone.</span>
+        </p>
+        <p class="translate">어제 발표된 그 보고서는 모두를 놀라게 했다.</p>
+      </div>
+
+      <h3 style="font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--text); margin: 32px 0 14px; font-weight: 400;">
+        ▸ what을 쓸 수 없는 이유와 예
+      </h3>
+
+      <div class="note" style="margin-top: 0; margin-bottom: 20px; padding: 16px 20px;">
+        <strong>what의 본질:</strong> what = "the thing(s) which" (선행사 + 관계대명사 합쳐진 형태)<br>
+        그래서 what은 <strong>선행사 자체를 포함</strong>하는 단어. 앞에 또 다른 선행사가 올 수 없다.<br>
+        계속적 용법은 <strong>선행사 + 콤마 + 관계대명사</strong> 구조인데, what을 쓰면 선행사가 두 개가 되어 비문법적이 된다.
+      </div>
+
+      <div class="example bad">
+        <div class="ex-label">Incorrect — what 사용</div>
+        <p class="sentence">
+          <span class="check no">✗</span>
+          <span class="sentence-content">I bought a new phone<span class="comma-mark">,</span> <span class="strike">what</span> is very expensive.</span>
+        </p>
+        <p style="font-size: 13px; color: var(--accent-bad); margin-left: 28px;">→ phone(선행사) 뒤에 what(또 다른 선행사)이 와서 충돌</p>
+      </div>
+
+      <div class="example">
+        <div class="ex-label">Correct — which 사용</div>
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">I bought a new phone<span class="comma-mark">,</span> <span class="cont">which</span> is very expensive.</span>
+        </p>
+        <p class="translate">나는 새 휴대폰을 샀는데, 그것은 매우 비싸다.</p>
+      </div>
+
+      <div class="example bad">
+        <div class="ex-label">또 다른 예 — what 사용</div>
+        <p class="sentence">
+          <span class="check no">✗</span>
+          <span class="sentence-content">She showed me her painting<span class="comma-mark">,</span> <span class="strike">what</span> was amazing.</span>
+        </p>
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">She showed me her painting<span class="comma-mark">,</span> <span class="cont">which</span> was amazing.</span>
+        </p>
+        <p class="translate">그녀는 자신의 그림을 보여주었는데, 그것은 놀라웠다.</p>
+      </div>
+
+      <div class="warning">
+        <h3>한눈 정리 &mdash; 콤마 뒤 사용 가능 여부</h3>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 14px 0;">
+          <div style="padding: 14px; background: var(--accent-cont-dim); border: 1px solid var(--accent-cont); border-radius: 10px; text-align: center;">
+            <div style="font-family: 'Instrument Serif', serif; font-size: 24px; color: var(--accent-cont); font-style: italic; margin-bottom: 6px;">who</div>
+            <div style="font-size: 12px; color: var(--text-dim);">✓ 가능 (사람)</div>
+          </div>
+          <div style="padding: 14px; background: var(--accent-cont-dim); border: 1px solid var(--accent-cont); border-radius: 10px; text-align: center;">
+            <div style="font-family: 'Instrument Serif', serif; font-size: 24px; color: var(--accent-cont); font-style: italic; margin-bottom: 6px;">which</div>
+            <div style="font-size: 12px; color: var(--text-dim);">✓ 가능 (사물)</div>
+          </div>
+          <div style="padding: 14px; background: var(--accent-bad-dim); border: 1px solid rgba(255, 118, 118, 0.3); border-radius: 10px; text-align: center;">
+            <div style="font-family: 'Instrument Serif', serif; font-size: 24px; color: var(--accent-bad); font-style: italic; margin-bottom: 6px; text-decoration: line-through;">that</div>
+            <div style="font-size: 12px; color: var(--text-dim);">✗ 불가</div>
+          </div>
+          <div style="padding: 14px; background: var(--accent-bad-dim); border: 1px solid rgba(255, 118, 118, 0.3); border-radius: 10px; text-align: center;">
+            <div style="font-family: 'Instrument Serif', serif; font-size: 24px; color: var(--accent-bad); font-style: italic; margin-bottom: 6px; text-decoration: line-through;">what</div>
+            <div style="font-size: 12px; color: var(--text-dim);">✗ 불가</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RULE 2: CONVERSION ===== -->
+  <section>
+    <div class="section-num">RULE 02</div>
+    <div class="rule-block">
+      <div class="rule-num">규칙 ②</div>
+      <h2 class="rule-title"><em>접속사 + 대명사</em>로 풀어쓰기</h2>
+      <div class="rule-subtitle">CONVERT TO "AND/BUT + HE/SHE/IT/THEY"</div>
+
+      <p>
+        계속적 용법의 핵심 특징이다. <strong>", who/which"</strong>는 <strong>"and/but he/she/it/they"</strong>로 풀어쓸 수 있다.
+        문맥에 따라 and(그리고), but(그러나), so(그래서)가 다 가능하다. 시험 출제 1순위!
+      </p>
+
+      <div class="equation">
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">The owner<span class="comma-mark">,</span> <span class="cont">who</span> is a scary person, will be angry at you.</span>
+        </p>
+        <p class="equals">= The owner is a scary person, <span style="color: var(--accent-cont);">and he/she</span> will be angry at you.</p>
+        <p class="translate">그 주인은 무서운 사람인데, 너에게 화를 낼 것이다.</p>
+      </div>
+
+      <div class="equation">
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">I called Tom<span class="comma-mark">,</span> <span class="cont">who</span> didn't answer the phone.</span>
+        </p>
+        <p class="equals">= I called Tom, <span style="color: var(--accent-cont);">but he</span> didn't answer the phone.</p>
+        <p class="translate">나는 Tom에게 전화했는데, 그는 전화를 받지 않았다.</p>
+      </div>
+
+      <div class="equation">
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">She bought a new car<span class="comma-mark">,</span> <span class="cont">which</span> was very expensive.</span>
+        </p>
+        <p class="equals">= She bought a new car, <span style="color: var(--accent-cont);">and it</span> was very expensive.</p>
+        <p class="translate">그녀는 새 차를 샀는데, 그 차는 매우 비쌌다.</p>
+      </div>
+
+      <div class="equation">
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">My parents<span class="comma-mark">,</span> <span class="cont">who</span> love traveling, visited Europe last year.</span>
+        </p>
+        <p class="equals">= My parents love traveling, <span style="color: var(--accent-cont);">and they</span> visited Europe last year.</p>
+        <p class="translate">우리 부모님은 여행을 좋아하셔서, 작년에 유럽을 방문하셨다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RULE 3: SINGULAR vs PLURAL ===== -->
+  <section>
+    <div class="section-num">RULE 03</div>
+    <div class="rule-block">
+      <div class="rule-num">규칙 ③</div>
+      <h2 class="rule-title">관계대명사를 <em>단수</em>로 받느냐 <em class="warn">복수</em>로 받느냐</h2>
+      <div class="rule-subtitle">SINGULAR vs PLURAL — 동사 -s가 붙느냐 안 붙느냐</div>
+
+      <p>
+        계속적 용법에서 가장 헷갈리는 부분이다. <strong>관계대명사가 받는 선행사가 무엇이냐</strong>에 따라 뒤에 오는 동사가 단수가 되기도 하고 복수가 되기도 한다.
+        선행사의 정체를 정확히 파악하는 게 핵심.
+      </p>
+
+      <div class="compare-card">
+        <div class="col sing">
+          <div class="col-header">Singular Verb (-s 붙음)</div>
+          <div class="col-title">단수 동사로 받는 경우</div>
+          <div class="col-meaning">선행사가 단수이거나, "사실/사건 전체"</div>
+          <p style="font-size: 14px; color: var(--text-dim); margin-top: 14px; line-height: 1.7;">
+            <strong style="color: var(--text);">① 단수 명사가 선행사</strong><br>
+            <strong style="color: var(--text);">② 앞 절 전체가 선행사</strong> (it으로 받음)<br>
+            <strong style="color: var(--text);">③ 셀 수 없는 명사가 선행사</strong>
+          </p>
+        </div>
+        <div class="col plur">
+          <div class="col-header">Plural Verb (-s 안 붙음)</div>
+          <div class="col-title">복수 동사로 받는 경우</div>
+          <div class="col-meaning">선행사가 복수 명사일 때</div>
+          <p style="font-size: 14px; color: var(--text-dim); margin-top: 14px; line-height: 1.7;">
+            <strong style="color: var(--text);">① 복수 명사가 선행사</strong><br>
+            <strong style="color: var(--text);">② 복수 사람/사물</strong> (they로 받음)
+          </p>
+        </div>
+      </div>
+
+      <!-- 단수로 받는 경우 -->
+      <h3 style="font-family: 'Instrument Serif', serif; font-size: 24px; color: var(--accent-cont); margin: 36px 0 14px; font-weight: 400;">
+        ▸ 단수로 받는 경우 (동사에 -s 붙음)
+      </h3>
+
+      <div class="example">
+        <div class="ex-label">CASE A — 단수 명사가 선행사</div>
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">My brother<span class="comma-mark">,</span> <span class="cont">who</span> <span class="verb-s">lives</span> in Tokyo, is an engineer.</span>
+        </p>
+        <p class="translate">도쿄에 사는 우리 형은 엔지니어이다.</p>
+        <div class="note">
+          <strong>분석:</strong> who = brother (단수 명사) → he로 받음 → 단수 동사 <strong>lives</strong>
+        </div>
+      </div>
+
+      <div class="example">
+        <div class="ex-label">CASE A — 단수 명사가 선행사</div>
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">The book<span class="comma-mark">,</span> <span class="cont">which</span> <span class="verb-s">was</span> written in 1990, is now a classic.</span>
+        </p>
+        <p class="translate">1990년에 쓰여진 그 책은 이제 고전이 되었다.</p>
+        <div class="note">
+          <strong>분석:</strong> which = book (단수) → it으로 받음 → 단수 동사 <strong>was</strong>
+        </div>
+      </div>
+
+      <div class="example">
+        <div class="ex-label">CASE B — 앞 절 전체가 선행사 (가장 헷갈림!)</div>
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">He passed the exam<span class="comma-mark">,</span> <span class="cont">which</span> <span class="verb-s">made</span> his parents happy.</span>
+        </p>
+        <p class="equation" style="margin: 8px 0 0; padding-left: 28px;">= He passed the exam, and <span style="color: var(--accent-cont);">it</span> made his parents happy.</p>
+        <p class="translate">그는 시험에 합격했고, 그것이 부모님을 기쁘게 했다.</p>
+        <div class="note">
+          <strong>분석:</strong> which = "그가 시험에 합격한 것" (앞 절 전체) → it으로 받음 → 단수 동사 <strong>made</strong>
+        </div>
+      </div>
+
+      <div class="example">
+        <div class="ex-label">CASE B — 앞 절 전체가 선행사</div>
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">She exercises every morning<span class="comma-mark">,</span> <span class="cont">which</span> <span class="verb-s">keeps</span> her healthy.</span>
+        </p>
+        <p class="translate">그녀는 매일 아침 운동을 하는데, 그것이 그녀를 건강하게 유지시켜 준다.</p>
+        <div class="note">
+          <strong>분석:</strong> which = "매일 아침 운동하는 것" → it → 단수 동사 <strong>keeps</strong> (keep<strong>s</strong>에 주목!)
+        </div>
+      </div>
+
+      <div class="example">
+        <div class="ex-label">CASE C — 셀 수 없는 명사가 선행사</div>
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">She gave me some advice<span class="comma-mark">,</span> <span class="cont">which</span> <span class="verb-s">was</span> very helpful.</span>
+        </p>
+        <p class="translate">그녀는 나에게 조언을 해줬는데, 그것은 매우 도움이 되었다.</p>
+        <div class="note">
+          <strong>분석:</strong> advice는 셀 수 없는 명사 → 단수 취급 → 단수 동사 <strong>was</strong>
+        </div>
+      </div>
+
+      <div class="example">
+        <div class="ex-label">CASE C — 셀 수 없는 명사가 선행사</div>
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">He drank some water<span class="comma-mark">,</span> <span class="cont">which</span> <span class="verb-s">tastes</span> sweet.</span>
+        </p>
+        <p class="translate">그는 물을 마셨는데, 그것은 단맛이 났다.</p>
+        <div class="note">
+          <strong>분석:</strong> water는 셀 수 없는 명사 → 단수 취급 → 단수 동사 <strong>tastes</strong>
+        </div>
+      </div>
+
+      <!-- 복수로 받는 경우 -->
+      <h3 style="font-family: 'Instrument Serif', serif; font-size: 24px; color: var(--accent-info); margin: 40px 0 14px; font-weight: 400;">
+        ▸ 복수로 받는 경우 (동사에 -s 안 붙음)
+      </h3>
+
+      <div class="example info">
+        <div class="ex-label">CASE D — 복수 명사가 선행사</div>
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">My parents<span class="comma-mark">,</span> <span class="cont">who</span> <span class="verb-p">live</span> in Busan, are retired teachers.</span>
+        </p>
+        <p class="translate">부산에 사시는 우리 부모님은 은퇴한 선생님이다.</p>
+        <div class="note">
+          <strong>분석:</strong> who = parents (복수) → they로 받음 → 복수 동사 <strong>live</strong> (lives ✗)
+        </div>
+      </div>
+
+      <div class="example info">
+        <div class="ex-label">CASE D — 복수 명사가 선행사</div>
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">The books<span class="comma-mark">,</span> <span class="cont">which</span> <span class="verb-p">were</span> published last year, became bestsellers.</span>
+        </p>
+        <p class="translate">작년에 출판된 그 책들은 베스트셀러가 되었다.</p>
+        <div class="note">
+          <strong>분석:</strong> which = books (복수) → they로 받음 → 복수 동사 <strong>were</strong> (was ✗)
+        </div>
+      </div>
+
+      <div class="example info">
+        <div class="ex-label">CASE D — 복수 명사가 선행사</div>
+        <p class="sentence">
+          <span class="check ok">✓</span>
+          <span class="sentence-content">She has three cats<span class="comma-mark">,</span> <span class="cont">which</span> <span class="verb-p">sleep</span> all day long.</span>
+        </p>
+        <p class="translate">그녀는 고양이 세 마리를 키우는데, 그들은 하루 종일 잠을 잔다.</p>
+        <div class="note">
+          <strong>분석:</strong> which = cats (복수) → they로 받음 → 복수 동사 <strong>sleep</strong> (sleeps ✗)
+        </div>
+      </div>
+
+      <h3 style="font-family: 'Instrument Serif', serif; font-size: 24px; color: var(--text); margin: 40px 0 14px; font-weight: 400;">
+        ▸ 가장 헷갈리는 경우 &mdash; <em style="color: var(--accent-warn); font-style: italic;">복수 명사 + which</em>의 갈림길
+      </h3>
+      <p style="font-size: 14px; color: var(--text-dim);">
+        콤마 앞에 복수 명사가 있어도, which의 진짜 선행사가 무엇이냐에 따라 동사가 달라진다. <strong>it</strong>으로 받으면 단수, <strong>they</strong>로 받으면 복수.
+      </p>
+
+      <div class="comparison-set">
+        <div class="comparison-title">비교 세트 ① &mdash; vitamins</div>
+        <div class="comp-item singular">
+          <p class="sentence" style="font-size: 17px;">
+            <span class="sentence-content">He takes <span class="ant">vitamins</span> every day<span class="comma-mark">,</span> which <span class="verb-s">helps</span> him stay healthy.</span>
+          </p>
+          <p style="font-size: 13px; color: var(--text-muted); margin: 6px 0;">그는 매일 비타민을 먹는데, <strong>그것이</strong> 그가 건강을 유지하는 데 도움이 된다.</p>
+          <div class="comp-analysis">
+            ▸ which = <strong>"그가 매일 비타민을 먹는 것"</strong> (앞 절 전체) → it → 단수 → <strong>helps</strong> ✓
+          </div>
+        </div>
+        <div class="comp-item plural">
+          <p class="sentence" style="font-size: 17px;">
+            <span class="sentence-content">He takes <span class="ant">vitamins</span><span class="comma-mark">,</span> which <span class="verb-p">are</span> good for health.</span>
+          </p>
+          <p style="font-size: 13px; color: var(--text-muted); margin: 6px 0;">그는 비타민을 먹는데, <strong>그것들은</strong> 건강에 좋다.</p>
+          <div class="comp-analysis">
+            ▸ which = <strong>"vitamins"</strong> (바로 앞 복수명사) → they → 복수 → <strong>are</strong> ✓ (is ✗)
+          </div>
+        </div>
+      </div>
+
+      <div class="comparison-set">
+        <div class="comparison-title">비교 세트 ② &mdash; extra classes</div>
+        <div class="comp-item singular">
+          <p class="sentence" style="font-size: 17px;">
+            <span class="sentence-content">She takes extra <span class="ant">classes</span><span class="comma-mark">,</span> which <span class="verb-s">keeps</span> her busy.</span>
+          </p>
+          <p style="font-size: 13px; color: var(--text-muted); margin: 6px 0;">그녀는 추가 수업을 듣는데, <strong>그것이</strong> 그녀를 바쁘게 한다.</p>
+          <div class="comp-analysis">
+            ▸ which = <strong>"그녀가 추가 수업을 듣는 것"</strong> (앞 절 전체) → it → 단수 → <strong>keeps</strong> ✓
+          </div>
+        </div>
+        <div class="comp-item plural">
+          <p class="sentence" style="font-size: 17px;">
+            <span class="sentence-content">She takes extra <span class="ant">classes</span><span class="comma-mark">,</span> which <span class="verb-p">are</span> very useful.</span>
+          </p>
+          <p style="font-size: 13px; color: var(--text-muted); margin: 6px 0;">그녀는 추가 수업을 듣는데, <strong>그 수업들은</strong> 매우 유용하다.</p>
+          <div class="comp-analysis">
+            ▸ which = <strong>"extra classes"</strong> (바로 앞 복수명사) → they → 복수 → <strong>are</strong> ✓ (is ✗)
+          </div>
+        </div>
+      </div>
+
+      <div class="comparison-set">
+        <div class="comparison-title">비교 세트 ③ &mdash; strict rules</div>
+        <div class="comp-item singular">
+          <p class="sentence" style="font-size: 17px;">
+            <span class="sentence-content">She follows strict <span class="ant">rules</span><span class="comma-mark">,</span> which <span class="verb-s">makes</span> her reliable.</span>
+          </p>
+          <p style="font-size: 13px; color: var(--text-muted); margin: 6px 0;">그녀는 엄격한 규칙을 따르는데, <strong>그것이</strong> 그녀를 신뢰할 수 있게 한다.</p>
+          <div class="comp-analysis">
+            ▸ which = <strong>"그녀가 엄격한 규칙을 따르는 것"</strong> (앞 절 전체) → it → 단수 → <strong>makes</strong> ✓
+          </div>
+        </div>
+        <div class="comp-item plural">
+          <p class="sentence" style="font-size: 17px;">
+            <span class="sentence-content">She follows strict <span class="ant">rules</span><span class="comma-mark">,</span> which <span class="verb-p">are</span> hard to remember.</span>
+          </p>
+          <p style="font-size: 13px; color: var(--text-muted); margin: 6px 0;">그녀는 엄격한 규칙을 따르는데, <strong>그 규칙들은</strong> 기억하기 어렵다.</p>
+          <div class="comp-analysis">
+            ▸ which = <strong>"strict rules"</strong> (바로 앞 복수명사) → they → 복수 → <strong>are</strong> ✓ (is ✗)
+          </div>
+        </div>
+      </div>
+
+      <div class="warning">
+        <h3>⚡ 3초 판별법 &mdash; which 자리에 it / they 넣어보기</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0;">
+          <div style="padding: 16px; background: var(--accent-cont-dim); border: 1px solid var(--accent-cont); border-radius: 10px;">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-cont); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px;">
+              ① it (그것이)로 자연스러우면
+            </div>
+            <p style="margin: 0; font-size: 14px; color: var(--text);">
+              앞 절 전체 / 단수 명사 / 셀 수 없는 명사<br>→ <strong style="color: var(--accent-cont);">단수 동사</strong> (-s 붙음)
+            </p>
+          </div>
+          <div style="padding: 16px; background: var(--accent-info-dim); border: 1px solid var(--accent-info); border-radius: 10px;">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-info); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px;">
+              ② they (그것들이)로 자연스러우면
+            </div>
+            <p style="margin: 0; font-size: 14px; color: var(--text);">
+              복수 명사가 선행사<br>→ <strong style="color: var(--accent-info);">복수 동사</strong> (-s 안 붙음)
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RULE 4: COMMA REQUIRED ===== -->
+  <section>
+    <div class="section-num">RULE 04</div>
+    <div class="rule-block">
+      <div class="rule-num">규칙 ④</div>
+      <h2 class="rule-title">콤마(,)를 <em>반드시</em> 써야 하는 4가지 경우</h2>
+      <div class="rule-subtitle">WHEN THE COMMA IS MANDATORY</div>
+
+      <p>
+        다음 네 가지 경우에는 무조건 <strong>콤마 + who/which</strong>(계속적 용법)를 써야 한다.
+        콤마 없이 쓰면 의미가 완전히 달라지거나, 비논리적인 문장이 된다.
+      </p>
+
+      <!-- Case 1 -->
+      <div class="case-box">
+        <span class="case-num">CASE ❶</span>
+        <h3 class="case-title">선행사가 <em style="color: var(--accent-cont); font-style: italic;">고유명사 · 유일한 대상</em>일 때</h3>
+        <p class="case-desc">
+          이미 특정되어 있으므로 "여러 개 중에서 골라내는" 제한이 <strong>논리적으로 불가능</strong>하다.
+          아인슈타인은 한 명, 서울은 하나, 우리 엄마도 한 분이다.
+        </p>
+
+        <div class="example">
+          <div class="ex-label">고유명사 (사람)</div>
+          <p class="sentence">
+            <span class="check ok">✓</span>
+            <span class="sentence-content"><span class="cont">Einstein</span><span class="comma-mark">,</span> <span class="cont">who</span> developed the theory of relativity, was born in Germany.</span>
+          </p>
+          <p class="translate">상대성이론을 발전시킨 아인슈타인은 독일에서 태어났다.</p>
+          <div class="note">
+            <strong style="color: var(--accent-bad);">✗ Einstein who developed...</strong> → 아인슈타인은 세상에 한 명뿐인데 다른 아인슈타인과 구분할 일이 없으므로 제한 불가!
+          </div>
+        </div>
+
+        <div class="example">
+          <div class="ex-label">고유명사 (장소)</div>
+          <p class="sentence">
+            <span class="check ok">✓</span>
+            <span class="sentence-content"><span class="cont">Seoul</span><span class="comma-mark">,</span> <span class="cont">which</span> is the capital of Korea, has a population of about 10 million.</span>
+          </p>
+          <p class="translate">한국의 수도인 서울은 약 1000만 명의 인구를 가지고 있다.</p>
+        </div>
+
+        <div class="example">
+          <div class="ex-label">유일한 존재</div>
+          <p class="sentence">
+            <span class="check ok">✓</span>
+            <span class="sentence-content"><span class="cont">My mother</span><span class="comma-mark">,</span> <span class="cont">who</span> is a nurse, always takes care of me.</span>
+          </p>
+          <p class="translate">간호사인 우리 엄마는 항상 나를 돌봐 주신다.</p>
+        </div>
+      </div>
+
+      <!-- Case 2 - NEW! -->
+      <div class="case-box">
+        <span class="case-num">CASE ❷</span>
+        <h3 class="case-title">선행사의 <em style="color: var(--accent-cont); font-style: italic;">숫자(전체)만큼</em> 해당될 때</h3>
+        <p class="case-desc">
+          선행사로 제시된 <strong>전체 대상 모두</strong>가 관계대명사절의 내용에 해당하는 경우, 콤마 필수.
+          콤마 없이 쓰면 "여러 명 중 일부만 그러하다"는 의미로 변질된다. 한국 영문법에서 가장 까다로운 부분!
+        </p>
+
+        <div class="example">
+          <div class="ex-label">계속적 (콤마 O) — 두 명 전부 의사</div>
+          <p class="sentence">
+            <span class="check ok">✓</span>
+            <span class="sentence-content">I have <span class="num-hl">two sons</span><span class="comma-mark">,</span> <span class="cont">who</span> are <strong>both</strong> doctors.</span>
+          </p>
+          <p class="translate"><strong>나에게 아들이 두 명 있는데, 둘 다 의사이다.</strong> (아들 = 정확히 2명)</p>
+          <div class="note">
+            <strong>분석:</strong> 아들은 총 2명이고, <strong>그 2명 전부가 의사</strong>. 숫자와 해당자가 일치 → 콤마 필수.
+          </div>
+        </div>
+
+        <div class="example rest">
+          <div class="ex-label">제한적 (콤마 X) — 다른 아들도 있을 수 있음</div>
+          <p class="sentence">
+            <span class="check ok">✓</span>
+            <span class="sentence-content">I have <span class="num-hl">two sons</span> <span class="rest">who</span> are doctors.</span>
+          </p>
+          <p class="translate" style="color: var(--accent-rest);">→ "<strong>의사인 아들이 두 명 있다</strong>" (다른 아들이 더 있을 수도 있음!)</p>
+          <div class="note">
+            <strong>분석:</strong> 아들 중에서 <strong>"의사인" 아들이 2명</strong>으로 제한. 아들이 3명, 4명일 수도 있고, 그중 의사인 아들이 2명이라는 뜻.
+          </div>
+        </div>
+
+        <div style="height: 16px;"></div>
+
+        <div class="example">
+          <div class="ex-label">또 다른 예 — 세 형제 전부</div>
+          <p class="sentence">
+            <span class="check ok">✓</span>
+            <span class="sentence-content">He has <span class="num-hl">three brothers</span><span class="comma-mark">,</span> <span class="cont">who</span> all live in America.</span>
+          </p>
+          <p class="translate">그는 형제가 세 명 있는데, 셋 다 미국에 산다. (형제 = 정확히 3명)</p>
+        </div>
+
+        <div class="example rest">
+          <div class="ex-label">제한적 (콤마 X) — 다른 형제도 있을 수 있음</div>
+          <p class="sentence">
+            <span class="check ok">✓</span>
+            <span class="sentence-content">He has <span class="num-hl">three brothers</span> <span class="rest">who</span> live in America.</span>
+          </p>
+          <p class="translate" style="color: var(--accent-rest);">→ "미국에 사는 형제가 세 명 있다" (다른 곳에 사는 형제도 있을 수 있음)</p>
+        </div>
+
+        <div style="height: 16px;"></div>
+
+        <div class="example">
+          <div class="ex-label">단수 명사도 동일 — 유일한 딸</div>
+          <p class="sentence">
+            <span class="check ok">✓</span>
+            <span class="sentence-content">She has <span class="num-hl">one daughter</span><span class="comma-mark">,</span> <span class="cont">who</span> is a famous singer.</span>
+          </p>
+          <p class="translate">그녀는 딸이 한 명 있는데, 유명한 가수다. (딸 = 1명뿐)</p>
+          <div class="note">
+            <strong>분석:</strong> 딸이 한 명뿐 → 제한할 필요 없음 → 콤마 필수.
+          </div>
+        </div>
+
+        <div class="warning" style="margin-top: 20px;">
+          <h3>핵심 판별법 &mdash; 숫자가 단서!</h3>
+          <p style="font-size: 14px; color: var(--text-dim);">
+            <strong style="color: var(--text);">"two sons / three brothers / one daughter"</strong> 처럼 숫자를 동반한 명사가 선행사일 때:
+          </p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0;">
+            <div style="padding: 14px; background: var(--accent-cont-dim); border: 1px solid var(--accent-cont); border-radius: 10px;">
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-cont); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px;">
+                전체 = 해당 (콤마 O)
+              </div>
+              <p style="margin: 0; font-size: 14px; color: var(--text);">
+                숫자만큼 모두 해당<br>→ <strong style="color: var(--accent-cont);">계속적 용법</strong>
+              </p>
+            </div>
+            <div style="padding: 14px; background: var(--accent-rest-dim); border: 1px solid var(--accent-rest); border-radius: 10px;">
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-rest); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px;">
+                일부만 해당 (콤마 X)
+              </div>
+              <p style="margin: 0; font-size: 14px; color: var(--text);">
+                "그중에서" 특정한 일부<br>→ <strong style="color: var(--accent-rest);">제한적 용법</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case 3 -->
+      <div class="case-box">
+        <span class="case-num">CASE ❸</span>
+        <h3 class="case-title">선행사가 <em style="color: var(--accent-cont); font-style: italic;">앞 문장(절) 전체</em>일 때</h3>
+        <p class="case-desc">
+          which가 앞 절 전체를 받으려면 <strong>반드시 콤마가 있어야</strong> 한다.
+          콤마 없이 which를 쓰면 바로 앞 명사만 수식해서 <strong>의미가 완전히 달라진다.</strong>
+        </p>
+
+        <div class="example">
+          <div class="ex-label">앞 절 전체 (콤마 O)</div>
+          <p class="sentence">
+            <span class="check ok">✓</span>
+            <span class="sentence-content">He ate only vegetables<span class="comma-mark">,</span> <span class="cont">which</span> <span class="verb-s">made</span> him lose weight.</span>
+          </p>
+          <p class="translate">그는 채소만 먹었는데, <strong>그것이</strong>(= 채소만 먹은 것이) 그를 살빠지게 했다.</p>
+          <div class="note">
+            which = 앞 절 전체 → 콤마 필수 + 단수 동사 (made)
+          </div>
+        </div>
+
+        <div class="example bad">
+          <div class="ex-label">콤마 빠지면 의미 변질</div>
+          <p class="sentence">
+            <span class="check no">✗</span>
+            <span class="sentence-content">He ate only vegetables <span style="color: var(--accent-bad); font-weight: 600;">which</span> made him lose weight.</span>
+          </p>
+          <p class="translate" style="color: var(--accent-bad);">→ "그를 살빠지게 한 <strong>채소만</strong> 먹었다" (의미가 완전히 달라짐!)</p>
+          <div class="note">
+            콤마가 없으면 which가 vegetables만 수식 → "그를 살빠지게 한 채소들"이라는 좁은 의미로 변함.
+          </div>
+        </div>
+
+        <div class="example">
+          <div class="ex-label">또 다른 예</div>
+          <p class="sentence">
+            <span class="check ok">✓</span>
+            <span class="sentence-content">She got perfect scores on all the tests<span class="comma-mark">,</span> <span class="cont">which</span> <span class="verb-s">surprised</span> everyone.</span>
+          </p>
+          <p class="translate">그녀는 모든 시험에서 만점을 받았는데, <strong>그것이</strong> 모두를 놀라게 했다.</p>
+          <p class="sentence" style="margin-top: 12px;">
+            <span class="check no">✗</span>
+            <span class="sentence-content">She got perfect scores on all the tests <span style="color: var(--accent-bad); font-weight: 600;">which</span> surprised everyone.</span>
+          </p>
+          <p class="translate" style="color: var(--accent-bad);">→ "모두를 놀라게 한 <strong>그 시험들에서만</strong> 만점을 받았다" (의미 변질!)</p>
+        </div>
+      </div>
+
+      <!-- Case 4 -->
+      <div class="case-box">
+        <span class="case-num">CASE ❹</span>
+        <h3 class="case-title"><em style="color: var(--accent-cont); font-style: italic;">부가 설명</em>(삽입 정보)을 줄 때</h3>
+        <p class="case-desc">
+          선행사를 제한하는 것이 아니라, 이미 특정된 대상에 <strong>추가 정보를 덧붙이는</strong> 경우다.
+          빼도 핵심 의미는 유지되는 부수적 정보를 표시할 때 콤마 필수.
+        </p>
+
+        <div class="example">
+          <div class="ex-label">부가 정보 — 빼도 의미 유지</div>
+          <p class="sentence">
+            <span class="check ok">✓</span>
+            <span class="sentence-content">My English teacher<span class="comma-mark">,</span> <span class="cont">who</span> is from Canada, gave us extra homework.</span>
+          </p>
+          <p class="translate">캐나다 출신의 우리 영어 선생님은 우리에게 추가 숙제를 내주셨다.</p>
+          <div class="note">
+            영어 선생님이 한 분이고, "캐나다 출신"이라는 정보는 부수적임 → 빼도 "우리 영어 선생님이 추가 숙제를 내주셨다"는 의미 유지.
+          </div>
+        </div>
+
+        <div class="example">
+          <div class="ex-label">부가 정보</div>
+          <p class="sentence">
+            <span class="check ok">✓</span>
+            <span class="sentence-content">This book<span class="comma-mark">,</span> <span class="cont">which</span> I bought yesterday, is really interesting.</span>
+          </p>
+          <p class="translate">내가 어제 산 이 책은 정말 재미있다.</p>
+          <div class="note">
+            "this book"이 이미 특정됨 → "어제 샀다"는 정보는 부수적 → 콤마 필수.
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="warning">
+        <h3>콤마 필수 4대 조건 &mdash; 한눈 요약</h3>
+        <div style="font-size: 15px; color: var(--text-dim); line-height: 1.9;">
+          <p style="margin-bottom: 8px;"><strong style="color: var(--accent-cont);">❶ 고유명사 · 유일한 대상</strong>이 선행사 → 제한할 필요 없음</p>
+          <p style="margin-bottom: 8px;"><strong style="color: var(--accent-cont);">❷ 선행사 숫자만큼 전부 해당</strong> → "two sons, who are both..." 패턴</p>
+          <p style="margin-bottom: 8px;"><strong style="color: var(--accent-cont);">❸ 앞 절 전체</strong>가 선행사 → 콤마 없으면 앞 명사만 수식</p>
+          <p style="margin-bottom: 14px;"><strong style="color: var(--accent-cont);">❹ 부가 설명</strong> → 빼도 의미 유지되는 부수 정보</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAKEAWAY ===== -->
+  <div class="takeaway">
+    <div class="num">/ KEY TAKEAWAY</div>
+    <h2>핵심은 네 가지로 정리된다</h2>
+    <p class="key-line">
+      <span class="cont">①</span> 콤마 뒤에는 <strong style="color: var(--text);">that과 what 절대 사용 불가</strong>. who, which만.<br>
+      <span class="cont">②</span> 계속적 용법 = <strong style="color: var(--text);">and/but + 대명사</strong>로 풀어쓸 수 있다.<br>
+      <span class="cont">③</span> 동사 수일치: <span class="info">it</span>으로 받으면 단수, <span class="info">they</span>로 받으면 복수.<br>
+      <span class="cont">④</span> 콤마 필수 4대: <strong style="color: var(--text);">고유명사 · 숫자 전체 · 앞 절 전체 · 부가 설명</strong>.
+    </p>
+    <p>콤마(,) 하나가 의미를 좌우한다. "I have two sons who are doctors"(아들이 더 있을 수 있음)와 "I have two sons, who are doctors"(아들은 정확히 둘) &mdash; 이런 미묘한 차이를 정확히 읽어내는 게 영어 독해와 영작의 진짜 실력이다.</p>
+  </div>
+
+</div>
+</body>
+</html>

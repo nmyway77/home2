@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preposition vs Conjunction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F0F12;
+    --bg-elev: #18181D;
+    --bg-card: #1E1E25;
+    --border: #2A2A33;
+    --border-hover: #3A3A45;
+    --text: #F0F0F2;
+    --text-dim: #9999A3;
+    --text-muted: #65656F;
+    --accent-prep: #7B9CFF;       /* 전치사 - 블루 */
+    --accent-prep-dim: rgba(123, 156, 255, 0.12);
+    --accent-conj: #FFB16E;       /* 접속사 - 앰버 */
+    --accent-conj-dim: rgba(255, 177, 110, 0.12);
+    --accent-good: #6FE5A8;
+    --accent-good-dim: rgba(111, 229, 168, 0.12);
+    --accent-bad: #FF7676;
+    --accent-bad-dim: rgba(255, 118, 118, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at top left, rgba(123, 156, 255, 0.08), transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(255, 177, 110, 0.06), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 80px 28px 100px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero {
+    margin-bottom: 100px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 60px;
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--text-muted);
+  }
+
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: clamp(44px, 6.5vw, 76px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+
+  h1 .prep { color: var(--accent-prep); font-style: italic; }
+  h1 .conj { color: var(--accent-conj); font-style: italic; }
+  h1 .vs {
+    color: var(--text-muted);
+    font-size: 0.5em;
+    font-style: italic;
+    margin: 0 8px;
+  }
+  h1 .small {
+    color: var(--text-muted);
+    font-size: 0.5em;
+    font-style: italic;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .lead {
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 640px;
+    line-height: 1.6;
+  }
+
+  .lead strong { color: var(--text); }
+  .lead em.prep { color: var(--accent-prep); font-style: normal; font-weight: 500; }
+  .lead em.conj { color: var(--accent-conj); font-style: normal; font-weight: 500; }
+
+  section { margin-bottom: 80px; }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent-prep);
+    margin-bottom: 12px;
+    letter-spacing: 0.1em;
+  }
+
+  h2 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 38px;
+    line-height: 1.2;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  h2 em.prep { color: var(--accent-prep); font-style: italic; }
+  h2 em.conj { color: var(--accent-conj); font-style: italic; }
+  h2 em.good { color: var(--accent-good); font-style: italic; }
+
+  p {
+    color: var(--text-dim);
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  p strong { color: var(--text); font-weight: 600; }
+
+  /* ===== CORE RULE ===== */
+  .core-rule {
+    background: linear-gradient(135deg, var(--accent-prep-dim), var(--accent-conj-dim));
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 50px 44px;
+    margin: 50px 0;
+    position: relative;
+  }
+
+  .core-rule::before {
+    content: 'THE ONE RULE';
+    position: absolute;
+    top: -12px;
+    left: 36px;
+    background: var(--bg);
+    padding: 4px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent-prep);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+
+  .core-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-top: 8px;
+  }
+
+  @media (max-width: 640px) {
+    .core-content { grid-template-columns: 1fr; }
+  }
+
+  .core-side {
+    padding: 24px;
+    background: var(--bg-card);
+    border-radius: 14px;
+    border: 1px solid var(--border);
+  }
+
+  .core-side.prep { border-top: 2px solid var(--accent-prep); }
+  .core-side.conj { border-top: 2px solid var(--accent-conj); }
+
+  .core-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .core-side.prep .core-tag { color: var(--accent-prep); }
+  .core-side.conj .core-tag { color: var(--accent-conj); }
+
+  .core-formula {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    background: var(--bg);
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin: 12px 0;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .core-side h3 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+
+  .core-side.prep h3 { color: var(--accent-prep); }
+  .core-side.conj h3 { color: var(--accent-conj); }
+
+  .core-side p {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin: 0;
+  }
+
+  /* ===== CATEGORY ===== */
+  .category {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px 36px;
+    margin: 32px 0;
+  }
+
+  .cat-num {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--accent-prep);
+    margin-bottom: 8px;
+  }
+
+  .cat-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 30px;
+    color: var(--text);
+    margin-bottom: 8px;
+    font-weight: 400;
+  }
+
+  .cat-title em { color: var(--accent-good); font-style: italic; }
+
+  .cat-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 28px;
+  }
+
+  /* ===== DUO TABLE ===== */
+  .duo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  @media (max-width: 640px) {
+    .duo { grid-template-columns: 1fr; }
+  }
+
+  .duo-side {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+
+  .duo-side.prep { border-top: 2px solid var(--accent-prep); }
+  .duo-side.conj { border-top: 2px solid var(--accent-conj); }
+
+  .duo-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .duo-side.prep .duo-label { color: var(--accent-prep); }
+  .duo-side.conj .duo-label { color: var(--accent-conj); }
+
+  .duo-label::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .duo-words {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .word-chip {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    border: 1px solid;
+  }
+
+  .duo-side.prep .word-chip {
+    color: var(--accent-prep);
+    background: var(--accent-prep-dim);
+    border-color: var(--accent-prep);
+  }
+
+  .duo-side.conj .word-chip {
+    color: var(--accent-conj);
+    background: var(--accent-conj-dim);
+    border-color: var(--accent-conj);
+  }
+
+  .word-chip.formal {
+    opacity: 0.7;
+    font-size: 13px;
+  }
+
+  /* ===== EXAMPLE ===== */
+  .examples {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 26px;
+    margin: 20px 0;
+  }
+
+  .ex-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .ex-row {
+    padding: 10px 0;
+  }
+
+  .ex-row + .ex-row {
+    border-top: 1px solid var(--border);
+    margin-top: 4px;
+  }
+
+  .sentence {
+    font-family: 'Instrument Serif', serif;
+    font-size: 19px;
+    line-height: 1.5;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .sentence .prep { color: var(--accent-prep); font-weight: 500; font-style: italic; }
+  .sentence .conj { color: var(--accent-conj); font-weight: 500; font-style: italic; }
+  .sentence .noun { color: var(--accent-prep); text-decoration: underline; text-decoration-color: rgba(123, 156, 255, 0.3); text-underline-offset: 4px; }
+  .sentence .clause { color: var(--accent-conj); text-decoration: underline; text-decoration-color: rgba(255, 177, 110, 0.3); text-underline-offset: 4px; }
+  .sentence .strike { text-decoration: line-through; opacity: 0.5; color: var(--accent-bad); }
+
+  .translate {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* ===== PITFALL ===== */
+  .pitfall {
+    background: var(--accent-bad-dim);
+    border: 1px solid rgba(255, 118, 118, 0.2);
+    border-left: 2px solid var(--accent-bad);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 16px 0;
+  }
+
+  .pitfall-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent-bad);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .pitfall-label::before {
+    content: '✕';
+    font-family: monospace;
+    font-size: 14px;
+  }
+
+  .pitfall .sentence { font-size: 17px; }
+
+  /* ===== MASTER TABLE ===== */
+  .master-table-wrap {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 8px;
+    margin: 32px 0;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    min-width: 600px;
+  }
+
+  th {
+    text-align: left;
+    padding: 18px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    font-weight: 500;
+    background: var(--bg-card);
+  }
+
+  th:first-child { border-radius: 12px 0 0 0; }
+  th:last-child { border-radius: 0 12px 0 0; }
+
+  th.t-prep { color: var(--accent-prep); }
+  th.t-conj { color: var(--accent-conj); }
+
+  td {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+    vertical-align: middle;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  td strong { color: var(--text); font-weight: 600; }
+
+  td.meaning { color: var(--text); font-weight: 500; }
+
+  td .word {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 16px;
+    padding: 2px 0;
+  }
+
+  td.prep-col .word { color: var(--accent-prep); }
+  td.conj-col .word { color: var(--accent-conj); }
+
+  /* ===== FLOWCHART ===== */
+  .flow {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px 30px;
+    margin: 40px 0;
+  }
+
+  .flow-step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    margin: 16px 0;
+  }
+
+  .flow-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--accent-prep);
+    color: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .flow-content { flex: 1; padding-top: 4px; }
+
+  .flow-q {
+    font-family: 'Instrument Serif', serif;
+    font-size: 19px;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .flow-branch {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 640px) {
+    .flow-branch { grid-template-columns: 1fr; }
+  }
+
+  .flow-branch-item {
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    border: 1px solid;
+  }
+
+  .flow-branch-item.prep {
+    background: var(--accent-prep-dim);
+    border-color: var(--accent-prep);
+    color: var(--text);
+  }
+
+  .flow-branch-item.conj {
+    background: var(--accent-conj-dim);
+    border-color: var(--accent-conj);
+    color: var(--text);
+  }
+
+  .flow-branch-item strong {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .flow-branch-item.prep strong { color: var(--accent-prep); }
+  .flow-branch-item.conj strong { color: var(--accent-conj); }
+
+  /* ===== TAKEAWAY ===== */
+  .takeaway {
+    margin: 80px 0 0;
+    padding: 60px 50px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .takeaway::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-prep), var(--accent-conj));
+  }
+
+  .takeaway .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    margin-bottom: 20px;
+  }
+
+  .takeaway h2 { font-size: 32px; margin-bottom: 28px; }
+
+  .key-line {
+    font-family: 'Instrument Serif', serif;
+    font-size: 24px;
+    line-height: 1.7;
+    color: var(--text);
+    font-style: italic;
+    margin-bottom: 18px;
+  }
+
+  .key-line .prep { color: var(--accent-prep); font-style: normal; font-weight: 500; }
+  .key-line .conj { color: var(--accent-conj); font-style: normal; font-weight: 500; }
+
+  .takeaway p:last-child {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="hero">
+    <div class="eyebrow">English Grammar / Word Class</div>
+    <h1>
+      <span class="small">같은 뜻, 다른 형태</span>
+      <span class="prep">Prepositions</span> <span class="vs">vs.</span> <span class="conj">Conjunctions</span>
+    </h1>
+    <p class="lead">
+      "despite the rain"과 "although it was raining"은 같은 뜻이다. 하지만 형태가 다르다.
+      뒤에 <em class="prep">명사</em>가 오면 전치사, <em class="conj">절(주어+동사)</em>이 오면 접속사 &mdash; 규칙은 단 하나다.
+    </p>
+  </header>
+
+  <!-- ===== THE ONE RULE ===== -->
+  <div class="core-rule">
+    <h3 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 26px; margin-bottom: 12px; color: var(--text);">
+      형태로만 구분하면 끝난다
+    </h3>
+    <p style="font-size: 15px; color: var(--text-dim); margin-bottom: 8px;">
+      의미는 같아도 형태가 다르다. 뒤에 무엇이 오는지 보면 즉시 판별된다.
+    </p>
+
+    <div class="core-content">
+      <div class="core-side prep">
+        <div class="core-tag">Preposition</div>
+        <h3>전치사</h3>
+        <div class="core-formula">전치사 + 명사(구)</div>
+        <p>despite the rain<br>because of the noise</p>
+      </div>
+      <div class="core-side conj">
+        <div class="core-tag">Conjunction</div>
+        <h3>접속사</h3>
+        <div class="core-formula">접속사 + 주어 + 동사</div>
+        <p>although it was raining<br>because it was noisy</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CATEGORY 1: CONTRAST ===== -->
+  <section>
+    <div class="section-num">CATEGORY 01 / CONTRAST</div>
+    <div class="category">
+      <div class="cat-num">①</div>
+      <h2 class="cat-title">양보 / 대조 &mdash; <em>"~에도 불구하고"</em></h2>
+      <div class="cat-subtitle">DESPITE THE FACT / ALTHOUGH THE STRUGGLE</div>
+
+      <div class="duo">
+        <div class="duo-side prep">
+          <div class="duo-label">Preposition + 명사</div>
+          <div class="duo-words">
+            <span class="word-chip">despite</span>
+            <span class="word-chip">in spite of</span>
+            <span class="word-chip formal">notwithstanding</span>
+          </div>
+        </div>
+        <div class="duo-side conj">
+          <div class="duo-label">Conjunction + 절</div>
+          <div class="duo-words">
+            <span class="word-chip">although</span>
+            <span class="word-chip">though</span>
+            <span class="word-chip">even though</span>
+            <span class="word-chip">while</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="examples">
+        <div class="ex-title">같은 의미, 다른 형태</div>
+        <div class="ex-row">
+          <p class="sentence"><span class="prep">Despite</span> <span class="noun">the rain</span>, we went out.</p>
+          <p class="translate">비에도 불구하고, 우리는 외출했다.</p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence"><span class="prep">In spite of</span> <span class="noun">the rain</span>, we went out.</p>
+          <p class="translate">비에도 불구하고, 우리는 외출했다.</p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence"><span class="conj">Although</span> <span class="clause">it was raining</span>, we went out.</p>
+          <p class="translate">비가 오고 있었지만, 우리는 외출했다.</p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence"><span class="conj">Even though</span> <span class="clause">it was raining</span>, we went out.</p>
+          <p class="translate">비가 오고 있었음에도, 우리는 외출했다.</p>
+        </div>
+      </div>
+
+      <div class="pitfall">
+        <div class="pitfall-label">자주 하는 실수</div>
+        <p class="sentence"><span class="strike">Despite it was raining</span>, we went out. <span style="color: var(--text-muted); font-size: 14px; font-style: normal;">(despite + 절 ✗)</span></p>
+        <p class="sentence"><span class="strike">Although the rain</span>, we went out. <span style="color: var(--text-muted); font-size: 14px; font-style: normal;">(although + 명사 ✗)</span></p>
+        <p style="font-size: 13px; color: var(--text-dim); margin-top: 12px;">트릭: <strong style="color: var(--text);">despite the fact that</strong> + 절 → 가능 (격식체)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CATEGORY 2: REASON ===== -->
+  <section>
+    <div class="section-num">CATEGORY 02 / REASON</div>
+    <div class="category">
+      <div class="cat-num">②</div>
+      <h2 class="cat-title">이유 &mdash; <em>"~ 때문에"</em></h2>
+      <div class="cat-subtitle">BECAUSE OF THE WEATHER / SINCE IT WAS LATE</div>
+
+      <div class="duo">
+        <div class="duo-side prep">
+          <div class="duo-label">Preposition + 명사</div>
+          <div class="duo-words">
+            <span class="word-chip">because of</span>
+            <span class="word-chip">due to</span>
+            <span class="word-chip">owing to</span>
+            <span class="word-chip">on account of</span>
+            <span class="word-chip">thanks to</span>
+          </div>
+        </div>
+        <div class="duo-side conj">
+          <div class="duo-label">Conjunction + 절</div>
+          <div class="duo-words">
+            <span class="word-chip">because</span>
+            <span class="word-chip">since</span>
+            <span class="word-chip">as</span>
+            <span class="word-chip">now that</span>
+            <span class="word-chip formal">for</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="examples">
+        <div class="ex-title">같은 의미, 다른 형태</div>
+        <div class="ex-row">
+          <p class="sentence">The game was canceled <span class="prep">because of</span> <span class="noun">the rain</span>.</p>
+          <p class="translate">비 때문에 경기가 취소되었다.</p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence">The game was canceled <span class="prep">due to</span> <span class="noun">heavy rain</span>.</p>
+          <p class="translate">폭우로 인해 경기가 취소되었다.</p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence">The game was canceled <span class="conj">because</span> <span class="clause">it was raining</span>.</p>
+          <p class="translate">비가 오고 있었기 때문에 경기가 취소되었다.</p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence">The game was canceled <span class="conj">since</span> <span class="clause">it was raining</span>.</p>
+          <p class="translate">비가 오고 있어서 경기가 취소되었다.</p>
+        </div>
+      </div>
+
+      <div class="pitfall">
+        <div class="pitfall-label">자주 하는 실수</div>
+        <p class="sentence"><span class="strike">Because of it was raining</span>, the game was canceled. <span style="color: var(--text-muted); font-size: 14px; font-style: normal;">(because of + 절 ✗)</span></p>
+        <p class="sentence"><span class="strike">Because the rain</span>, the game was canceled. <span style="color: var(--text-muted); font-size: 14px; font-style: normal;">(because + 명사 ✗)</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CATEGORY 3: TIME ===== -->
+  <section>
+    <div class="section-num">CATEGORY 03 / TIME</div>
+    <div class="category">
+      <div class="cat-num">③</div>
+      <h2 class="cat-title">시간 &mdash; <em>"~ 동안 / ~ 전에 / ~ 후에"</em></h2>
+      <div class="cat-subtitle">DURING vs WHILE &mdash; THE TRICKIEST PAIR</div>
+
+      <p style="font-size: 15px; color: var(--text-dim); margin-bottom: 24px;">
+        시간 표현은 좀 특별하다. <strong>before, after, until, since</strong>는 전치사와 접속사 <strong>둘 다로 쓸 수 있다</strong>.
+        하지만 <strong>during / while</strong>은 명확히 구분된다.
+      </p>
+
+      <h3 style="font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--text); margin: 20px 0 14px; font-weight: 400;">
+        ▸ During vs While (가장 헷갈리는 짝)
+      </h3>
+
+      <div class="duo">
+        <div class="duo-side prep">
+          <div class="duo-label">Preposition + 명사</div>
+          <div class="duo-words">
+            <span class="word-chip">during</span>
+          </div>
+        </div>
+        <div class="duo-side conj">
+          <div class="duo-label">Conjunction + 절</div>
+          <div class="duo-words">
+            <span class="word-chip">while</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="examples">
+        <div class="ex-title">같은 의미, 다른 형태</div>
+        <div class="ex-row">
+          <p class="sentence"><span class="prep">During</span> <span class="noun">the meeting</span>, my phone rang.</p>
+          <p class="translate">회의 동안, 내 전화가 울렸다.</p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence"><span class="conj">While</span> <span class="clause">the meeting was going on</span>, my phone rang.</p>
+          <p class="translate">회의가 진행되는 동안, 내 전화가 울렸다.</p>
+        </div>
+      </div>
+
+      <div class="pitfall">
+        <div class="pitfall-label">자주 하는 실수</div>
+        <p class="sentence"><span class="strike">During I was sleeping</span>, the phone rang. <span style="color: var(--text-muted); font-size: 14px; font-style: normal;">(during + 절 ✗)</span></p>
+        <p class="sentence"><span class="strike">While my sleep</span>, the phone rang. <span style="color: var(--text-muted); font-size: 14px; font-style: normal;">(while + 명사 ✗)</span></p>
+      </div>
+
+      <h3 style="font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--text); margin: 36px 0 14px; font-weight: 400;">
+        ▸ before / after / until / since (양쪽 모두 가능)
+      </h3>
+
+      <p style="font-size: 14px; color: var(--text-dim); margin-bottom: 16px;">
+        이 단어들은 형태는 같지만 뒤에 오는 것에 따라 역할이 바뀐다.
+      </p>
+
+      <div class="examples">
+        <div class="ex-title">하나의 단어, 두 가지 역할</div>
+        <div class="ex-row">
+          <p class="sentence">They left <span class="prep">after</span> <span class="noun">lunch</span>. <span style="color: var(--text-muted); font-size: 14px; font-style: normal;">→ 전치사</span></p>
+          <p class="sentence">They left <span class="conj">after</span> <span class="clause">they had lunch</span>. <span style="color: var(--text-muted); font-size: 14px; font-style: normal;">→ 접속사</span></p>
+          <p class="translate">그들은 점심 후에 떠났다.</p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence">I waited <span class="prep">until</span> <span class="noun">midnight</span>. <span style="color: var(--text-muted); font-size: 14px; font-style: normal;">→ 전치사</span></p>
+          <p class="sentence">I waited <span class="conj">until</span> <span class="clause">the clock struck twelve</span>. <span style="color: var(--text-muted); font-size: 14px; font-style: normal;">→ 접속사</span></p>
+          <p class="translate">나는 자정까지 기다렸다.</p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence">He has lived here <span class="prep">since</span> <span class="noun">2010</span>. <span style="color: var(--text-muted); font-size: 14px; font-style: normal;">→ 전치사</span></p>
+          <p class="sentence">He has lived here <span class="conj">since</span> <span class="clause">he graduated</span>. <span style="color: var(--text-muted); font-size: 14px; font-style: normal;">→ 접속사</span></p>
+          <p class="translate">그는 2010년 이후로 여기 살고 있다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CATEGORY 4: CONDITION ===== -->
+  <section>
+    <div class="section-num">CATEGORY 04 / CONDITION</div>
+    <div class="category">
+      <div class="cat-num">④</div>
+      <h2 class="cat-title">조건 &mdash; <em>"~의 경우에 / ~없이"</em></h2>
+      <div class="cat-subtitle">IN CASE OF EMERGENCY / WITHOUT YOUR HELP</div>
+
+      <div class="duo">
+        <div class="duo-side prep">
+          <div class="duo-label">Preposition + 명사</div>
+          <div class="duo-words">
+            <span class="word-chip">in case of</span>
+            <span class="word-chip">in the event of</span>
+            <span class="word-chip">without</span>
+          </div>
+        </div>
+        <div class="duo-side conj">
+          <div class="duo-label">Conjunction + 절</div>
+          <div class="duo-words">
+            <span class="word-chip">in case</span>
+            <span class="word-chip">if</span>
+            <span class="word-chip">unless</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="examples">
+        <div class="ex-title">같은 의미, 다른 형태</div>
+        <div class="ex-row">
+          <p class="sentence"><span class="prep">In case of</span> <span class="noun">fire</span>, break the glass.</p>
+          <p class="translate">화재 시, 유리를 깨시오.</p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence"><span class="conj">In case</span> <span class="clause">there is a fire</span>, break the glass.</p>
+          <p class="translate">불이 날 경우에, 유리를 깨시오.</p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence"><span class="prep">Without</span> <span class="noun">your help</span>, I couldn't do it.</p>
+          <p class="translate">너의 도움 없이는, 나는 그것을 할 수 없었다.</p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence"><span class="conj">Unless</span> <span class="clause">you help me</span>, I can't do it.</p>
+          <p class="translate">네가 나를 돕지 않으면, 나는 그것을 할 수 없다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CATEGORY 5: PURPOSE ===== -->
+  <section>
+    <div class="section-num">CATEGORY 05 / PURPOSE</div>
+    <div class="category">
+      <div class="cat-num">⑤</div>
+      <h2 class="cat-title">목적 &mdash; <em>"~을 위해"</em></h2>
+      <div class="cat-subtitle">FOR THE MEETING / SO THAT WE CAN MEET</div>
+
+      <div class="duo">
+        <div class="duo-side prep">
+          <div class="duo-label">Preposition + 명사</div>
+          <div class="duo-words">
+            <span class="word-chip">for</span>
+          </div>
+        </div>
+        <div class="duo-side conj">
+          <div class="duo-label">Conjunction + 절</div>
+          <div class="duo-words">
+            <span class="word-chip">so that</span>
+            <span class="word-chip formal">in order that</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="examples">
+        <div class="ex-title">같은 의미, 다른 형태</div>
+        <div class="ex-row">
+          <p class="sentence">I came <span class="prep">for</span> <span class="noun">the meeting</span>.</p>
+          <p class="translate">나는 회의를 위해 왔다.</p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence">I came <span class="conj">so that</span> <span class="clause">I could see you</span>.</p>
+          <p class="translate">나는 당신을 보기 위해 왔다.</p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence">I came <strong style="color: var(--accent-good); font-style: italic;">in order to</strong> see you. <span style="color: var(--text-muted); font-size: 14px; font-style: normal;">→ to부정사가 가장 자연스러움</span></p>
+          <p class="translate">나는 당신을 보기 위해 왔다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BONUS: FUTURE TENSE RULE ===== -->
+  <section>
+    <div class="section-num">BONUS / FUTURE TENSE</div>
+    <div class="category" style="border-top: 2px solid var(--accent-good);">
+      <div class="cat-num" style="color: var(--accent-good);">★</div>
+      <h2 class="cat-title">보너스 규칙 &mdash; <em>같은 when, 다른 시제</em></h2>
+      <div class="cat-subtitle">ADVERBIAL CLAUSE vs NOUN CLAUSE — THE FUTURE TENSE RULE</div>
+
+      <p style="font-size: 16px; color: var(--text-dim); margin-bottom: 24px;">
+        같은 <strong>when, if, before, after</strong>를 써도, 그게 <strong>부사절</strong>이냐 <strong>명사절</strong>이냐에 따라 시제가 완전히 달라진다.
+        이건 시험에 정말 자주 나오는 함정이니 꼭 기억해야 한다.
+      </p>
+
+      <!-- Core Rule -->
+      <div style="background: linear-gradient(135deg, var(--accent-prep-dim), var(--accent-good-dim)); border: 1px solid var(--border); border-radius: 16px; padding: 32px 36px; margin: 28px 0; position: relative;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 16px;">
+          The Rule
+        </div>
+        <p style="font-family: 'Instrument Serif', serif; font-size: 24px; line-height: 1.5; color: var(--text); font-style: italic; margin: 0;">
+          <span style="color: var(--accent-prep); font-style: normal; font-weight: 500;">부사절</span>에서 미래를 말할 때 &mdash; <span style="color: var(--accent-bad); font-weight: 500; font-style: normal;">will 쓰지 않음</span> (현재시제로!)<br>
+          <span style="color: var(--accent-conj); font-style: normal; font-weight: 500;">명사절</span>에서 미래를 말할 때 &mdash; <span style="color: var(--accent-good); font-weight: 500; font-style: normal;">will 사용 OK</span>
+        </p>
+      </div>
+
+      <!-- WHAT'S THE DIFFERENCE -->
+      <h3 style="font-family: 'Instrument Serif', serif; font-size: 24px; color: var(--text); margin: 36px 0 16px; font-weight: 400;">
+        ▸ 부사절 vs 명사절 &mdash; 어떻게 구분?
+      </h3>
+
+      <div class="duo">
+        <div class="duo-side prep">
+          <div class="duo-label">Adverbial Clause (부사절)</div>
+          <div style="font-size: 14px; color: var(--text-dim); line-height: 1.7; margin-top: 8px;">
+            <p style="margin: 0 0 10px 0;"><strong style="color: var(--text);">"언제?"</strong> 질문에 답함</p>
+            <p style="margin: 0 0 10px 0;">동사의 시간을 수식</p>
+            <p style="margin: 0;">→ <strong style="color: var(--accent-prep);">현재시제</strong> 사용 (미래 의미라도)</p>
+          </div>
+        </div>
+        <div class="duo-side conj">
+          <div class="duo-label">Noun Clause (명사절)</div>
+          <div style="font-size: 14px; color: var(--text-dim); line-height: 1.7; margin-top: 8px;">
+            <p style="margin: 0 0 10px 0;"><strong style="color: var(--text);">"무엇을?"</strong> 질문에 답함</p>
+            <p style="margin: 0 0 10px 0;">동사의 목적어/주어 역할</p>
+            <p style="margin: 0;">→ <strong style="color: var(--accent-conj);">미래시제(will)</strong> 사용 가능</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXAMPLE 1: when -->
+      <h3 style="font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--text); margin: 36px 0 14px; font-weight: 400;">
+        ▸ 비교 ① &mdash; when의 두 얼굴
+      </h3>
+
+      <div class="examples">
+        <div class="ex-title">같은 when, 다른 시제</div>
+        <div class="ex-row">
+          <p class="sentence">I'll phone you <span class="prep">when</span> I <strong style="color: var(--accent-prep);">get</strong> home.</p>
+          <p class="translate">집에 도착하면 너에게 전화할게. <span style="color: var(--accent-prep);">[부사절 → 현재시제]</span></p>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 8px; font-style: italic;">"언제 전화할 거야?" → "집에 도착했을 때" (시간 수식)</p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence">I don't know <span class="conj">when</span> he <strong style="color: var(--accent-conj);">will arrive</strong>.</p>
+          <p class="translate">나는 그가 언제 도착할지 모른다. <span style="color: var(--accent-conj);">[명사절 → will 사용]</span></p>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 8px; font-style: italic;">"무엇을 모르니?" → "그가 언제 도착할지" (know의 목적어)</p>
+        </div>
+      </div>
+
+      <div class="pitfall">
+        <div class="pitfall-label">절대 하면 안 되는 실수</div>
+        <p class="sentence"><span class="strike">I'll phone you when I will get home.</span> <span style="color: var(--text-muted); font-size: 14px; font-style: normal;">(부사절에 will ✗)</span></p>
+      </div>
+
+      <!-- EXAMPLE 2: if -->
+      <h3 style="font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--text); margin: 36px 0 14px; font-weight: 400;">
+        ▸ 비교 ② &mdash; if의 두 얼굴
+      </h3>
+
+      <div class="examples">
+        <div class="ex-title">같은 if, 다른 시제</div>
+        <div class="ex-row">
+          <p class="sentence"><span class="prep">If</span> it <strong style="color: var(--accent-prep);">rains</strong> tomorrow, I'll stay home.</p>
+          <p class="translate">내일 비가 오면, 집에 있을게. <span style="color: var(--accent-prep);">[부사절 → 현재시제]</span></p>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 8px; font-style: italic;">"어떤 조건에서?" → "비가 오면" (조건 수식)</p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence">I wonder <span class="conj">if</span> it <strong style="color: var(--accent-conj);">will rain</strong> tomorrow.</p>
+          <p class="translate">내일 비가 올지 궁금하다. <span style="color: var(--accent-conj);">[명사절 → will 사용]</span></p>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 8px; font-style: italic;">"무엇이 궁금해?" → "비가 올지 안 올지" (wonder의 목적어)</p>
+        </div>
+      </div>
+
+      <!-- More Examples -->
+      <h3 style="font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--text); margin: 36px 0 14px; font-weight: 400;">
+        ▸ 더 많은 예시
+      </h3>
+
+      <div class="examples">
+        <div class="ex-title">부사절 (현재시제 사용)</div>
+        <div class="ex-row">
+          <p class="sentence">I'll call you <span class="prep">as soon as</span> I <strong style="color: var(--accent-prep);">arrive</strong>.</p>
+          <p class="translate">도착하자마자 너에게 전화할게.</p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence">Wait here <span class="prep">until</span> she <strong style="color: var(--accent-prep);">comes</strong> back.</p>
+          <p class="translate">그녀가 돌아올 때까지 여기서 기다려.</p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence">We'll finish the project <span class="prep">before</span> the deadline <strong style="color: var(--accent-prep);">arrives</strong>.</p>
+          <p class="translate">마감일이 오기 전에 프로젝트를 끝낼 거다.</p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence"><span class="prep">By the time</span> you <strong style="color: var(--accent-prep);">get</strong> there, the meeting will have started.</p>
+          <p class="translate">네가 도착할 때쯤이면, 회의가 이미 시작했을 거다.</p>
+        </div>
+      </div>
+
+      <div class="examples">
+        <div class="ex-title">명사절 (will 사용 OK)</div>
+        <div class="ex-row">
+          <p class="sentence">Tell me <span class="conj">when</span> you <strong style="color: var(--accent-conj);">will be</strong> ready.</p>
+          <p class="translate">언제 준비될지 나에게 말해줘. <span style="color: var(--text-muted); font-size: 13px; font-style: italic;">(tell의 목적어)</span></p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence">Do you know <span class="conj">if</span> she <strong style="color: var(--accent-conj);">will come</strong> to the party?</p>
+          <p class="translate">그녀가 파티에 올지 아는 사람? <span style="color: var(--text-muted); font-size: 13px; font-style: italic;">(know의 목적어)</span></p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence">The question is <span class="conj">whether</span> he <strong style="color: var(--accent-conj);">will accept</strong> the offer.</p>
+          <p class="translate">문제는 그가 제안을 받아들일지이다. <span style="color: var(--text-muted); font-size: 13px; font-style: italic;">(is의 보어)</span></p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence">I'm not sure <span class="conj">when</span> the package <strong style="color: var(--accent-conj);">will arrive</strong>.</p>
+          <p class="translate">소포가 언제 도착할지 확실하지 않다. <span style="color: var(--text-muted); font-size: 13px; font-style: italic;">(sure의 목적어)</span></p>
+        </div>
+      </div>
+
+      <!-- Trick to remember -->
+      <h3 style="font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--text); margin: 36px 0 14px; font-weight: 400;">
+        ▸ 빠른 판별 트릭
+      </h3>
+
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px 28px;">
+        <p style="margin-bottom: 16px; color: var(--text-dim); font-size: 15px;">
+          접속사 앞의 동사에 주목한다. 그 동사가 어떤 질문을 던지는지를 본다:
+        </p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0;">
+          <div style="padding: 16px 20px; background: var(--accent-prep-dim); border: 1px solid var(--accent-prep); border-radius: 10px;">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-prep); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 10px;">
+              "언제?" "어떤 조건에서?"
+            </div>
+            <p style="margin: 0; font-size: 14px; color: var(--text);">
+              → 부사절 → <strong style="color: var(--accent-prep);">현재시제</strong>
+            </p>
+          </div>
+          <div style="padding: 16px 20px; background: var(--accent-conj-dim); border: 1px solid var(--accent-conj); border-radius: 10px;">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-conj); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 10px;">
+              "무엇을?" "무엇이?"
+            </div>
+            <p style="margin: 0; font-size: 14px; color: var(--text);">
+              → 명사절 → <strong style="color: var(--accent-conj);">will 사용</strong>
+            </p>
+          </div>
+        </div>
+
+        <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border);">
+          <p style="font-family: 'Instrument Serif', serif; font-size: 17px; color: var(--text); font-style: italic; line-height: 1.6; margin: 0;">
+            <strong style="color: var(--accent-good); font-style: normal;">예시 적용:</strong><br>
+            "I'll call you when I ___ home." → "언제 전화해?" 답함 → 부사절 → <strong style="color: var(--accent-prep); font-style: normal;">get</strong><br>
+            "I don't know when he ___ come." → "뭘 모르니?" 답함 → 명사절 → <strong style="color: var(--accent-conj); font-style: normal;">will come</strong>
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick test -->
+      <h3 style="font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--text); margin: 36px 0 14px; font-weight: 400;">
+        ▸ 실전 테스트 &mdash; 직접 분석해보기
+      </h3>
+
+      <div class="examples">
+        <div class="ex-title">다음 문장의 빈칸 시제는?</div>
+        <div class="ex-row">
+          <p class="sentence">I'll be happy if she ___ (come / will come) to my party.</p>
+          <p style="font-size: 14px; color: var(--text-dim); margin-top: 8px;">
+            분석: "어떤 조건에서 행복?" → 부사절 → 정답: <strong style="color: var(--accent-prep); font-style: italic;">comes</strong>
+          </p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence">I wonder if she ___ (comes / will come) to my party.</p>
+          <p style="font-size: 14px; color: var(--text-dim); margin-top: 8px;">
+            분석: "뭘 궁금해?" → 명사절 → 정답: <strong style="color: var(--accent-conj); font-style: italic;">will come</strong>
+          </p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence">Let me know when the bus ___ (arrives / will arrive).</p>
+          <p style="font-size: 14px; color: var(--text-dim); margin-top: 8px;">
+            분석: "뭘 알려달라?" → 명사절(let me know의 목적어) → 정답: <strong style="color: var(--accent-conj); font-style: italic;">will arrive</strong>
+          </p>
+        </div>
+        <div class="ex-row">
+          <p class="sentence">Call me when the bus ___ (arrives / will arrive).</p>
+          <p style="font-size: 14px; color: var(--text-dim); margin-top: 8px;">
+            분석: "언제 전화?" → 부사절 → 정답: <strong style="color: var(--accent-prep); font-style: italic;">arrives</strong>
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick Summary Box -->
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px 28px; margin-top: 28px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 14px;">
+          핵심 정리
+        </div>
+        <p style="font-size: 15px; color: var(--text-dim); line-height: 1.7; margin: 0;">
+          <strong style="color: var(--text);">when, if, before, after, until, as soon as, by the time</strong> 같은 시간/조건 접속사가 부사절을 이끌 때는
+          미래 의미라도 <strong style="color: var(--accent-prep);">현재시제</strong>를 쓴다.<br><br>
+          하지만 같은 단어가 <strong style="color: var(--text);">know, wonder, ask, tell, decide, be sure</strong> 같은 동사의 목적어로 명사절을 이끌 때는
+          <strong style="color: var(--accent-conj);">will</strong>을 쓸 수 있다.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== MASTER TABLE ===== -->
+  <section>
+    <div class="section-num">MASTER TABLE</div>
+    <h2>한눈에 보는 <em class="good">전체 정리표</em></h2>
+    <p>외울 필요 없다. 한 번 보고 패턴을 익히면 평생 헷갈리지 않는다.</p>
+
+    <div class="master-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="color: var(--text);">의미</th>
+            <th class="t-prep">전치사 (+ 명사)</th>
+            <th class="t-conj">접속사 (+ 절)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="meaning">~에도 불구하고</td>
+            <td class="prep-col"><span class="word">despite, in spite of</span></td>
+            <td class="conj-col"><span class="word">although, though, even though</span></td>
+          </tr>
+          <tr>
+            <td class="meaning">~ 때문에</td>
+            <td class="prep-col"><span class="word">because of, due to, owing to</span></td>
+            <td class="conj-col"><span class="word">because, since, as</span></td>
+          </tr>
+          <tr>
+            <td class="meaning">~ 동안</td>
+            <td class="prep-col"><span class="word">during</span></td>
+            <td class="conj-col"><span class="word">while</span></td>
+          </tr>
+          <tr>
+            <td class="meaning">~ 전에 / 후에</td>
+            <td class="prep-col"><span class="word">before, after</span> (+ 명사)</td>
+            <td class="conj-col"><span class="word">before, after</span> (+ 절)</td>
+          </tr>
+          <tr>
+            <td class="meaning">~까지</td>
+            <td class="prep-col"><span class="word">until</span> (+ 명사)</td>
+            <td class="conj-col"><span class="word">until</span> (+ 절)</td>
+          </tr>
+          <tr>
+            <td class="meaning">~ 이후로</td>
+            <td class="prep-col"><span class="word">since</span> (+ 명사)</td>
+            <td class="conj-col"><span class="word">since</span> (+ 절)</td>
+          </tr>
+          <tr>
+            <td class="meaning">~의 경우에</td>
+            <td class="prep-col"><span class="word">in case of, in the event of</span></td>
+            <td class="conj-col"><span class="word">in case, if</span></td>
+          </tr>
+          <tr>
+            <td class="meaning">~없이 / ~않으면</td>
+            <td class="prep-col"><span class="word">without</span></td>
+            <td class="conj-col"><span class="word">unless</span></td>
+          </tr>
+          <tr>
+            <td class="meaning">~을 위해</td>
+            <td class="prep-col"><span class="word">for</span></td>
+            <td class="conj-col"><span class="word">so that, in order that</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== FLOWCHART ===== -->
+  <section>
+    <div class="section-num">DECISION FLOW</div>
+    <h2>판별 흐름도 &mdash; <em class="good">3초 안에 결정</em>하기</h2>
+    <p>문장에서 헷갈릴 때 이 순서대로 체크한다.</p>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-content">
+          <div class="flow-q">내가 쓰려는 뒷부분이 무엇인가?</div>
+          <div class="flow-branch">
+            <div class="flow-branch-item prep">
+              <strong>명사 / 명사구</strong>
+              the rain, his help, the meeting
+              <br>→ 전치사 사용
+            </div>
+            <div class="flow-branch-item conj">
+              <strong>주어 + 동사 (절)</strong>
+              it was raining, he helped me
+              <br>→ 접속사 사용
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-content">
+          <div class="flow-q">의미 카테고리를 확인한다</div>
+          <div style="font-size: 14px; color: var(--text-dim); padding: 12px 16px; background: var(--bg-card); border-radius: 8px; border: 1px solid var(--border); margin-top: 10px;">
+            양보 · 이유 · 시간 · 조건 · 목적 &mdash; 어느 카테고리인가?
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-content">
+          <div class="flow-q">해당 카테고리에서 형태에 맞는 단어를 선택한다</div>
+          <div style="font-size: 14px; color: var(--text-dim); padding: 12px 16px; background: var(--bg-card); border-radius: 8px; border: 1px solid var(--border); margin-top: 10px;">
+            전치사 박스에서 고르거나 / 접속사 박스에서 고르거나 &mdash; 형태에 맞게.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAKEAWAY ===== -->
+  <div class="takeaway">
+    <div class="num">/ KEY TAKEAWAY</div>
+    <h2>결론은 단 하나</h2>
+    <p class="key-line">
+      뒤에 <span class="prep">명사</span>가 오면 → <span class="prep">전치사</span><br>
+      뒤에 <span class="conj">절(주어+동사)</span>이 오면 → <span class="conj">접속사</span>
+    </p>
+    <p>의미는 같아도 형태가 다르다는 것 &mdash; 이것이 영어가 한국어와 가장 다른 지점이다. 한국어는 "~때문에"로 끝나지만, 영어는 뒤에 무엇이 오느냐에 따라 because of와 because를 구분한다. 형태로 구분하는 감각만 잡으면 평생 안 헷갈린다.</p>
+  </div>
+
+</div>
+</body>
+</html>

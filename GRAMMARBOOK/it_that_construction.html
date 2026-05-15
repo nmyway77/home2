@@ -1,0 +1,1927 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>It ~ that 구문 완전정복 — 강조구문 vs 가주어진주어</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F0F12;
+    --bg-elev: #18181D;
+    --bg-card: #1E1E25;
+    --bg-deep: #0A0A0D;
+    --border: #2A2A33;
+    --border-hover: #3A3A45;
+    --text: #F0F0F2;
+    --text-dim: #9999A3;
+    --text-muted: #65656F;
+    --accent-emp: #FFB16E;        /* 강조구문 - 앰버 */
+    --accent-emp-dim: rgba(255, 177, 110, 0.12);
+    --accent-fake: #7B9CFF;       /* 가주어진주어 - 블루 */
+    --accent-fake-dim: rgba(123, 156, 255, 0.12);
+    --accent-good: #6FE5A8;
+    --accent-good-dim: rgba(111, 229, 168, 0.12);
+    --accent-warn: #FFD978;
+    --accent-warn-dim: rgba(255, 217, 120, 0.10);
+    --accent-bad: #FF7676;
+    --accent-bad-dim: rgba(255, 118, 118, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at top left, rgba(255, 177, 110, 0.07), transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(123, 156, 255, 0.06), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 80px 28px 100px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero {
+    margin-bottom: 80px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 60px;
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--text-muted);
+  }
+
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: clamp(44px, 6.5vw, 76px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+
+  h1 .emp { color: var(--accent-emp); font-style: italic; }
+  h1 .fake { color: var(--accent-fake); font-style: italic; }
+  h1 .vs { color: var(--text-muted); font-size: 0.5em; font-style: italic; margin: 0 8px; }
+  h1 .small {
+    color: var(--text-muted);
+    font-size: 0.5em;
+    font-style: italic;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .lead {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 700px;
+    line-height: 1.7;
+  }
+
+  .lead strong { color: var(--text); }
+  .lead em.emp { color: var(--accent-emp); font-style: normal; font-weight: 500; }
+  .lead em.fake { color: var(--accent-fake); font-style: normal; font-weight: 500; }
+
+  /* ===== TOC ===== */
+  .toc {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin: 40px 0;
+  }
+
+  .toc-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .toc-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    list-style: none;
+  }
+
+  @media (max-width: 640px) { .toc-list { grid-template-columns: 1fr; } }
+
+  .toc-list a {
+    display: block;
+    padding: 8px 12px;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+
+  .toc-list a:hover { background: var(--bg-card); color: var(--accent-emp); }
+
+  .toc-list .num {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-emp);
+    margin-right: 8px;
+    font-size: 12px;
+  }
+
+  /* ===== SECTION ===== */
+  section { margin-bottom: 80px; scroll-margin-top: 40px; }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent-emp);
+    margin-bottom: 12px;
+    letter-spacing: 0.1em;
+  }
+
+  h2 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 1.2;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  h2 em.emp { color: var(--accent-emp); font-style: italic; }
+  h2 em.fake { color: var(--accent-fake); font-style: italic; }
+  h2 em.good { color: var(--accent-good); font-style: italic; }
+  h2 em.warn { color: var(--accent-warn); font-style: italic; }
+
+  p {
+    color: var(--text-dim);
+    font-size: 15px;
+    margin-bottom: 16px;
+  }
+
+  p strong { color: var(--text); font-weight: 600; }
+
+  /* ===== CORE BOX ===== */
+  .core-box {
+    background: linear-gradient(135deg, var(--accent-emp-dim), var(--accent-fake-dim));
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 44px 40px;
+    margin: 40px 0;
+    position: relative;
+  }
+
+  .core-box::before {
+    content: 'THE CORE';
+    position: absolute;
+    top: -12px;
+    left: 36px;
+    background: var(--bg);
+    padding: 4px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent-emp);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+
+  .core-text {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    line-height: 1.6;
+    color: var(--text);
+    font-style: italic;
+    margin: 12px 0;
+  }
+
+  .core-text .emp { color: var(--accent-emp); font-weight: 500; font-style: normal; }
+  .core-text .fake { color: var(--accent-fake); font-weight: 500; font-style: normal; }
+  .core-text strong { color: var(--text); font-style: normal; font-weight: 600; }
+
+  /* ===== COMPARE CARD ===== */
+  .compare-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin: 24px 0;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  @media (max-width: 640px) {
+    .compare-card { grid-template-columns: 1fr; }
+    .compare-card .col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+  }
+
+  .col { padding: 28px; }
+  .col:first-child { border-right: 1px solid var(--border); }
+
+  .col-header {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .col.emp .col-header { color: var(--accent-emp); }
+  .col.fake .col-header { color: var(--accent-fake); }
+
+  .col-header::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .col-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .col-rule {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .col-example {
+    font-family: 'Instrument Serif', serif;
+    font-size: 16px;
+    color: var(--text);
+    background: var(--bg);
+    padding: 12px 14px;
+    border-radius: 8px;
+    margin: 8px 0;
+    line-height: 1.5;
+  }
+
+  .col-example .hl-emp { color: var(--accent-emp); font-weight: 600; }
+  .col-example .hl-fake { color: var(--accent-fake); font-weight: 600; }
+  .col-example .underline {
+    text-decoration: underline;
+    text-decoration-color: var(--accent-warn);
+    text-underline-offset: 3px;
+  }
+
+  .col-trans {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 4px 0 12px;
+  }
+
+  /* ===== THEORY ===== */
+  .theory {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin: 24px 0;
+    position: relative;
+  }
+
+  .theory::before {
+    content: 'THEORY';
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    background: var(--bg);
+    padding: 3px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent-emp);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+  }
+
+  .theory h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    color: var(--text);
+    margin: 8px 0 12px;
+    font-weight: 400;
+  }
+
+  .formula {
+    background: var(--bg);
+    padding: 16px 20px;
+    border-radius: 10px;
+    margin: 14px 0;
+    border: 1px dashed var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    color: var(--text);
+    text-align: center;
+    letter-spacing: 0.03em;
+  }
+
+  .formula .emp { color: var(--accent-emp); font-weight: 700; }
+  .formula .fake { color: var(--accent-fake); font-weight: 700; }
+  .formula .good { color: var(--accent-good); font-weight: 700; }
+
+  /* ===== DECISION FLOW ===== */
+  .flow {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px 32px;
+    margin: 32px 0;
+  }
+
+  .flow-step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    margin: 16px 0;
+  }
+
+  .flow-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--accent-emp);
+    color: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .flow-content { flex: 1; padding-top: 4px; }
+
+  .flow-q {
+    font-family: 'Instrument Serif', serif;
+    font-size: 19px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .flow-branch {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 640px) { .flow-branch { grid-template-columns: 1fr; } }
+
+  .flow-branch-item {
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    border: 1px solid;
+  }
+
+  .flow-branch-item.emp {
+    background: var(--accent-emp-dim);
+    border-color: var(--accent-emp);
+    color: var(--text);
+  }
+
+  .flow-branch-item.fake {
+    background: var(--accent-fake-dim);
+    border-color: var(--accent-fake);
+    color: var(--text);
+  }
+
+  .flow-branch-item strong {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .flow-branch-item.emp strong { color: var(--accent-emp); }
+  .flow-branch-item.fake strong { color: var(--accent-fake); }
+
+  /* ===== TABLE ===== */
+  .table-wrap {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 8px;
+    margin: 24px 0;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  th {
+    text-align: left;
+    padding: 14px 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-card);
+    font-weight: 500;
+  }
+
+  th:first-child { border-radius: 8px 0 0 0; }
+  th:last-child { border-radius: 0 8px 0 0; }
+
+  td {
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+    vertical-align: middle;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  td strong { color: var(--text); font-weight: 600; }
+
+  .badge-emp {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent-emp);
+    background: var(--accent-emp-dim);
+    border: 1px solid var(--accent-emp);
+  }
+
+  .badge-fake {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent-fake);
+    background: var(--accent-fake-dim);
+    border: 1px solid var(--accent-fake);
+  }
+
+  /* ===== QUESTION CARD ===== */
+  .q-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin: 10px 0;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .q-card:hover { border-color: var(--border-hover); }
+
+  .q-header {
+    padding: 16px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .q-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent-emp);
+    background: var(--accent-emp-dim);
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--accent-emp);
+    flex-shrink: 0;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .q-content { flex: 1; }
+
+  .q-text {
+    font-family: 'Instrument Serif', serif;
+    font-size: 17px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .q-text .marked {
+    background: var(--accent-warn-dim);
+    color: var(--accent-warn);
+    padding: 1px 6px;
+    border-radius: 4px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ===== TOGGLE ===== */
+  .toggle-btn {
+    width: 100%;
+    background: var(--bg-card);
+    border: none;
+    border-top: 1px solid var(--border);
+    padding: 11px 20px;
+    color: var(--accent-emp);
+    cursor: pointer;
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.2s;
+  }
+
+  .toggle-btn:hover { background: var(--bg-deep); color: var(--accent-good); }
+
+  .toggle-btn::after {
+    content: '▼ 정답·해설';
+    font-size: 11px;
+  }
+
+  .toggle-btn.active::after {
+    content: '▲ 닫기';
+    color: var(--accent-good);
+  }
+
+  .answer {
+    background: var(--bg-deep);
+    border-top: 1px solid var(--border);
+    padding: 0 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s;
+  }
+
+  .answer.show {
+    max-height: 1500px;
+    padding: 18px 20px;
+    transition: max-height 0.5s ease-in, padding 0.3s;
+  }
+
+  .ans-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent-good);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .ans-answer {
+    font-family: 'Instrument Serif', serif;
+    font-size: 18px;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .ans-answer .badge-inline {
+    font-family: 'Pretendard', sans-serif;
+    font-style: normal;
+  }
+
+  .ans-sentence {
+    font-family: 'Instrument Serif', serif;
+    font-size: 16px;
+    color: var(--text);
+    line-height: 1.5;
+    margin-bottom: 6px;
+  }
+
+  .ans-sentence .emp-hl { color: var(--accent-emp); font-weight: 600; }
+  .ans-sentence .fake-hl { color: var(--accent-fake); font-weight: 600; }
+
+  .ans-explain {
+    background: var(--bg);
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    border-left: 2px solid var(--accent-good);
+  }
+
+  .ans-explain strong { color: var(--text); }
+  .ans-explain .highlight {
+    background: var(--accent-warn-dim);
+    color: var(--accent-warn);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  /* ===== INFO BOX ===== */
+  .info-box {
+    background: linear-gradient(135deg, var(--accent-warn-dim), var(--accent-emp-dim));
+    border: 1px solid rgba(255, 217, 120, 0.3);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin: 24px 0;
+    position: relative;
+  }
+
+  .info-box::before {
+    content: '⚡ KEY POINT';
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    background: var(--bg);
+    padding: 3px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent-warn);
+    border: 1px solid rgba(255, 217, 120, 0.3);
+    border-radius: 5px;
+  }
+
+  .info-box h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+    color: var(--text);
+    margin: 6px 0 10px;
+    font-weight: 400;
+  }
+
+  .info-box p { font-size: 14px; color: var(--text-dim); margin-bottom: 0; }
+
+  /* ===== SUB HEADER ===== */
+  .sub-header {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    color: var(--accent-emp);
+    margin: 30px 0 16px;
+    font-weight: 400;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ===== TAKEAWAY ===== */
+  .takeaway {
+    margin: 80px 0 0;
+    padding: 50px 40px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .takeaway::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-emp), var(--accent-fake), var(--accent-good));
+  }
+
+  .takeaway h2 { font-size: 28px; margin-bottom: 20px; }
+
+  .key-line {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+    line-height: 1.7;
+    color: var(--text);
+    font-style: italic;
+    margin-bottom: 18px;
+  }
+
+  .key-line .emp { color: var(--accent-emp); font-style: normal; font-weight: 500; }
+  .key-line .fake { color: var(--accent-fake); font-style: normal; font-weight: 500; }
+
+  .takeaway p { font-size: 14px; color: var(--text-muted); margin: 0; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="hero">
+    <div class="eyebrow">English Grammar / The "It ~ that" Construction</div>
+    <h1>
+      <span class="small">같은 모양, 다른 뜻 — 한 번에 정리</span>
+      <span class="emp">It ~ that</span> <span class="vs">vs.</span> <span class="fake">It ~ that</span>
+    </h1>
+    <p class="lead">
+      똑같이 <strong>"It is ~ that ..."</strong>로 생겼는데, 어떤 건 <em class="emp">강조구문</em>이고 어떤 건 <em class="fake">가주어·진주어</em>다.
+      구분의 첫 단서는 <strong>It과 that 사이에 무엇이 들어있는가</strong> &mdash; <em class="fake">형용사면 가주어</em>, <em class="emp">부사구면 강조</em>,
+      <strong>명사면 that 뒤의 완전/불완전</strong>으로 판단한다. 단 세 가지만 외우면 모든 문제가 풀린다.
+    </p>
+  </header>
+
+  <!-- TOC -->
+  <nav class="toc">
+    <div class="toc-title">목차 · TABLE OF CONTENTS</div>
+    <ul class="toc-list">
+      <li><a href="#part1"><span class="num">01</span>핵심 원리 — 한눈에 보기</a></li>
+      <li><a href="#part2"><span class="num">02</span>강조구문 깊이 알기</a></li>
+      <li><a href="#part3"><span class="num">03</span>가주어·진주어 깊이 알기</a></li>
+      <li><a href="#part4"><span class="num">04</span>판별 흐름도 (Flowchart)</a></li>
+      <li><a href="#part5"><span class="num">05</span>강조구문 만드는 법</a></li>
+      <li><a href="#part6"><span class="num">06</span>의문사 강조하기</a></li>
+      <li><a href="#part7"><span class="num">07</span>20문제 판별 연습</a></li>
+      <li><a href="#part8"><span class="num">08</span>강조구문 만들기 연습</a></li>
+    </ul>
+  </nav>
+
+  <!-- ===== PART 1: CORE ===== -->
+  <section id="part1">
+    <div class="section-num">01 / CORE PRINCIPLE</div>
+    <h2>핵심 원리 &mdash; <em class="good">It과 that 사이</em>를 먼저 본다</h2>
+
+    <div class="core-box">
+      <p class="core-text">
+        <span class="emp">It ~ that</span> 사이에 무엇이 있는지부터 확인.<br><br>
+        <strong>① 형용사</strong> → 무조건 <span class="fake">가주어·진주어</span><br>
+        <strong>② 부사(구·절)</strong> &mdash; 시간/장소 → 무조건 <span class="emp">강조구문</span><br>
+        <strong>③ 명사</strong> → <strong>that 뒤가 완전한지 불완전한지</strong>로 판단
+      </p>
+    </div>
+
+    <div class="info-box">
+      <h3>왜 이 순서로 판단하는가?</h3>
+      <p style="line-height: 1.8;">
+        <strong style="color: var(--accent-fake);">형용사</strong>는 명사를 꾸미는 말이라 강조의 대상이 될 수 없다 → 가주어·진주어 전용.<br>
+        <strong style="color: var(--accent-emp);">부사(구·절)</strong>는 동사·문장을 꾸미는 말이라 진짜 주어가 될 수 없다 → 강조구문 전용.<br>
+        <strong>명사</strong>만 가주어·진주어와 강조구문 양쪽 다 가능 → 이때만 that 뒤의 완전/불완전을 확인해야 한다.
+      </p>
+    </div>
+
+    <h3 class="sub-header">▸ 케이스별 판별 — 3가지 패턴</h3>
+
+    <!-- Case 1: 형용사 -->
+    <div class="theory" style="border-left: 3px solid var(--accent-fake);">
+      <h3>① It + be + <span style="color: var(--accent-fake);">형용사</span> + that → 무조건 가주어·진주어</h3>
+      <p>형용사는 강조 대상이 될 수 없다. 형용사가 끼어 있으면 100% 가주어·진주어.</p>
+      <div class="formula">
+        It is <span class="fake">true / certain / clear / lucky / important / a pity</span> that ...
+      </div>
+      <div style="background: var(--bg); padding: 14px 16px; border-radius: 8px; margin-top: 12px;">
+        <p style="font-family: 'Instrument Serif', serif; font-size: 17px; color: var(--text); margin: 0;">
+          It is <span style="color: var(--accent-fake); font-weight: 600;">true</span> that she eats like a bird.
+        </p>
+        <p style="font-size: 13px; color: var(--text-muted); margin: 6px 0 0;">그녀가 새처럼 적게 먹는다는 것은 사실이다. → <strong style="color: var(--accent-fake);">가주어·진주어</strong></p>
+      </div>
+    </div>
+
+    <!-- Case 2: 부사 -->
+    <div class="theory" style="border-left: 3px solid var(--accent-emp);">
+      <h3>② It + be + <span style="color: var(--accent-emp);">부사(구·절)</span> + that → 무조건 강조구문</h3>
+      <p>시간·장소·방법을 나타내는 부사(구·절)는 문장의 진짜 주어가 될 수 없다. 부사가 끼어 있으면 100% 강조구문.</p>
+      <div class="formula">
+        It is <span class="emp">yesterday / at the park / in 2010 / when I was young</span> that ...
+      </div>
+      <div style="background: var(--bg); padding: 14px 16px; border-radius: 8px; margin-top: 12px;">
+        <p style="font-family: 'Instrument Serif', serif; font-size: 17px; color: var(--text); margin: 0;">
+          It was <span style="color: var(--accent-emp); font-weight: 600;">at his party</span> that I first met her.
+        </p>
+        <p style="font-size: 13px; color: var(--text-muted); margin: 6px 0 0;">내가 그녀를 처음 만난 곳은 <strong>바로 그의 파티</strong>였다. → <strong style="color: var(--accent-emp);">강조구문</strong></p>
+      </div>
+      <div class="info-box" style="margin-top: 16px; padding: 16px 20px;">
+        <h3 style="font-size: 15px; margin-bottom: 6px;">참고 — 이때 that은 관계부사로 바꿀 수 있다</h3>
+        <p style="font-size: 13px; margin: 0;">
+          시간 강조 → that = <strong>when</strong> / 장소 강조 → that = <strong>where</strong> / 이유 강조 → that = <strong>why</strong> / 방법 강조 → that = <strong>how</strong>
+        </p>
+      </div>
+    </div>
+
+    <!-- Case 3: 명사 - 핵심! -->
+    <div class="theory" style="border-left: 3px solid var(--accent-warn);">
+      <h3>③ It + be + <span style="color: var(--accent-warn);">명사(구)</span> + that → that 뒤를 확인해야 함!</h3>
+      <p>명사는 양쪽 다 가능해서 가장 헷갈리는 케이스. <strong>that 뒤가 완전하면 가주어, 불완전하면 강조구문</strong>이다.</p>
+      <div class="formula">
+        that 뒤 <span class="fake">완전한 문장</span> → 가주어·진주어<br>
+        that 뒤 <span class="emp">불완전한 문장</span> (주어/목적어 빠짐) → 강조구문
+      </div>
+
+      <div class="compare-card" style="margin-top: 16px;">
+        <div class="col fake">
+          <div class="col-header">that 뒤 완전 → 가주어</div>
+          <div class="col-example">
+            It was <span class="hl-fake">a false rumor</span> that the couple broke up.
+          </div>
+          <p class="col-trans">that 뒤: "the couple broke up" → <strong>완전</strong> (주어·동사 모두 있음)</p>
+          <p class="col-trans" style="margin-top: 8px;"><strong>해석:</strong> 그 커플이 헤어졌다는 것은 <strong>잘못된 소문</strong>이었다.</p>
+        </div>
+        <div class="col emp">
+          <div class="col-header">that 뒤 불완전 → 강조</div>
+          <div class="col-example">
+            It was <span class="hl-emp">a false rumor</span> that made the couple feel very bad.
+          </div>
+          <p class="col-trans">that 뒤: "made the couple feel very bad" → <strong>불완전</strong> (주어 없음!)</p>
+          <p class="col-trans" style="margin-top: 8px;"><strong>해석:</strong> 그 커플을 기분 나쁘게 만든 것은 <strong>바로 잘못된 소문</strong>이었다.</p>
+        </div>
+      </div>
+
+      <div class="info-box" style="margin-top: 16px;">
+        <h3>★ 같은 "a false rumor"인데도 답이 다름!</h3>
+        <p>명사가 들어있을 때는 무조건 <strong>that 뒤를 봐서</strong> 결정해야 한다. 첫 단어만 보고 판단하면 절대 안 된다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PART 2: EMPHASIS DEEP DIVE ===== -->
+  <section id="part2">
+    <div class="section-num">02 / EMPHASIS CONSTRUCTION</div>
+    <h2><em class="emp">강조구문</em> 깊이 알기</h2>
+
+    <div class="theory">
+      <h3>강조구문의 기본 공식</h3>
+      <div class="formula">
+        <span class="emp">It + be동사 + 강조하는 말 + that + ★(강조하는 말 빠진 문장)</span>
+      </div>
+      <p>It과 that 사이에 강조하고 싶은 말을 넣고, 원래 문장에서 그 말을 뺀 나머지를 that 뒤에 둔다.</p>
+    </div>
+
+    <div class="info-box">
+      <h3>강조할 수 있는 대상 — 3가지</h3>
+      <p style="line-height: 1.9; margin-bottom: 12px;">
+        강조구문에서 It과 that 사이에 들어갈 수 있는 말은 다음 세 가지다:
+      </p>
+      <div style="display: grid; grid-template-columns: 1fr; gap: 10px;">
+        <div style="padding: 12px 16px; background: var(--accent-emp-dim); border: 1px solid var(--accent-emp); border-radius: 8px;">
+          <strong style="color: var(--accent-emp); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em;">① 명사 (구·절)</strong>
+          <p style="font-size: 13px; color: var(--text-dim); margin: 6px 0 0;">
+            주어, 목적어(직접/간접), 보어 모두 가능<br>
+            예: It was <strong style="color: var(--accent-emp);">Tom</strong> that Jane gave the book to. (Tom = 간접목적어 강조)
+          </p>
+        </div>
+        <div style="padding: 12px 16px; background: var(--accent-emp-dim); border: 1px solid var(--accent-emp); border-radius: 8px;">
+          <strong style="color: var(--accent-emp); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em;">② 부사 (구·절)</strong>
+          <p style="font-size: 13px; color: var(--text-dim); margin: 6px 0 0;">
+            시간, 장소, 방법, 이유의 부사<br>
+            예: It was <strong style="color: var(--accent-emp);">yesterday</strong> that she came. / It was <strong style="color: var(--accent-emp);">in the park</strong> that we met.
+          </p>
+        </div>
+        <div style="padding: 12px 16px; background: var(--accent-emp-dim); border: 1px solid var(--accent-emp); border-radius: 8px;">
+          <strong style="color: var(--accent-emp); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em;">③ 의문사</strong>
+          <p style="font-size: 13px; color: var(--text-dim); margin: 6px 0 0;">
+            who, what, when, where, why, how 등<br>
+            예: <strong style="color: var(--accent-emp);">Why</strong> was it that you came late? (왜 늦었는지 그 이유를 강조해 묻기)
+          </p>
+        </div>
+      </div>
+      <p style="font-size: 13px; color: var(--text-muted); margin-top: 14px; margin-bottom: 0; font-style: italic;">
+        ※ 동사·형용사·부사 중 형용사는 강조할 수 없다. (형용사가 오면 가주어·진주어 구문이 됨)
+      </p>
+    </div>
+
+    <div class="info-box">
+      <h3>that 대신 쓸 수 있는 말 (강조 대상에 따라)</h3>
+      <div class="table-wrap" style="margin-top: 12px;">
+        <table>
+          <thead>
+            <tr>
+              <th>강조되는 말</th>
+              <th>that 뒤에 오는 것</th>
+              <th>that 대신 쓸 수 있는 것</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>명사, 대명사, 명사구, 명사절</td>
+              <td>불완전한 문장</td>
+              <td><strong style="color: var(--accent-emp);">who, whom, which</strong></td>
+            </tr>
+            <tr>
+              <td>부사구, 부사절 (시간/장소/이유/방법)</td>
+              <td>완전한 문장</td>
+              <td><strong style="color: var(--accent-emp);">when, where, why, how</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="info-box" style="background: linear-gradient(135deg, rgba(255, 118, 118, 0.06), var(--accent-emp-dim)); border-color: rgba(255, 118, 118, 0.2);">
+      <h3 style="color: var(--accent-bad);">⚠️ 강조구문의 두 가지 주의사항</h3>
+      <p style="font-size: 14px; line-height: 1.9;">
+        <strong>① that 생략 불가</strong> &mdash; 강조구문의 that은 절대 생략할 수 없다. (가주어·진주어의 that은 생략 가능!)<br>
+        <strong>② 시제 일치</strong> &mdash; 원래 문장이 현재면 "It is", 과거면 "It was". be동사와 that절 시제가 항상 일치해야 한다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== PART 3: FAKE SUBJECT ===== -->
+  <section id="part3">
+    <div class="section-num">03 / IT AS DUMMY SUBJECT</div>
+    <h2><em class="fake">가주어·진주어</em> 깊이 알기</h2>
+
+    <div class="theory">
+      <h3>가주어·진주어 구문이란?</h3>
+      <p>주어가 너무 길어서 문장 뒤로 보내고, 그 자리에 임시로 <strong>It</strong>을 놓는 구조. It은 의미 없는 "자리 채우기" 주어다.</p>
+      <div class="formula">
+        진짜: <span class="fake">That she eats like a bird</span> is true.<br>
+        가짜: <span class="good">It</span> is true <span class="fake">that she eats like a bird</span>.
+      </div>
+      <p>가주어 It은 해석하지 않는다. "~라는 것은 사실이다"처럼 that 이하를 진짜 주어로 해석.</p>
+    </div>
+
+    <div class="info-box">
+      <h3>가주어·진주어의 특징</h3>
+      <p style="font-size: 14px; line-height: 1.9;">
+        <strong>① It ~ that 사이에 형용사가 오면 → 무조건 가주어·진주어</strong><br>
+        <span style="color: var(--text-muted); font-size: 13px;">예: It is <strong>true / certain / clear / obvious / important / pity</strong> that ...</span><br><br>
+        <strong>② that 뒤가 완전한 문장</strong> (주어, 동사, 목적어가 모두 있음)<br><br>
+        <strong>③ that 생략 가능</strong> &mdash; 비격식체에서 자주 생략됨<br>
+        <span style="color: var(--text-muted); font-size: 13px;">예: It is true (that) he is a doctor.</span><br><br>
+        <strong>④ be동사와 that절의 시제가 달라도 됨</strong><br>
+        <span style="color: var(--text-muted); font-size: 13px;">예: It <strong>is</strong> true that he <strong>passed away</strong>. (현재 + 과거 OK)</span>
+      </p>
+    </div>
+
+    <!-- Native usage note -->
+    <div class="info-box" style="background: linear-gradient(135deg, var(--accent-warn-dim), rgba(123, 156, 255, 0.08)); border-color: rgba(255, 217, 120, 0.3); margin-top: 24px;">
+      <h3 style="color: var(--accent-warn);">💡 알아두면 좋은 것 &mdash; 실제 영어에서는 가주어 it을 강하게 선호한다</h3>
+      <p style="font-size: 14px; line-height: 1.8;">
+        문법책에서는 가주어·진주어를 설명할 때 두 형태를 동등하게 보여준다:
+      </p>
+      <div style="background: var(--bg); padding: 14px 18px; border-radius: 8px; margin: 12px 0;">
+        <p style="font-family: 'Instrument Serif', serif; font-size: 16px; color: var(--text); margin: 0 0 6px;">
+          ① <span style="color: var(--accent-fake);">That she eats like a bird</span> is true. <span style="color: var(--text-muted); font-size: 13px; font-style: italic;">(that절 주어)</span>
+        </p>
+        <p style="font-family: 'Instrument Serif', serif; font-size: 16px; color: var(--text); margin: 0;">
+          ② It is true <span style="color: var(--accent-fake);">that she eats like a bird</span>. <span style="color: var(--text-muted); font-size: 13px; font-style: italic;">(가주어 it)</span>
+        </p>
+      </div>
+      <p style="font-size: 14px; line-height: 1.8;">
+        <strong>문법적으로는 둘 다 맞다.</strong> 하지만 <strong style="color: var(--text);">실제 영어에서는 ② 가주어 it 구문이 훨씬 자연스럽고</strong>,
+        ①의 that절 주어 형태는 외국에서 자란 영어 화자들이 "어색하다"고 느낄 정도다.
+      </p>
+      <p style="font-size: 14px; line-height: 1.8; margin-bottom: 0;">
+        <strong>이유:</strong> 영어는 <strong>무거운 정보를 문장 뒤로 보내는 것</strong>을 선호한다. 짧은 it으로 주어 자리를 빠르게 채우고,
+        긴 내용은 뒤에 펼치는 게 듣고 이해하기 편하기 때문이다.<br><br>
+        <strong style="color: var(--accent-bad);">⚠️ 특히 주의:</strong> seem, appear, happen 같은 동사는 <strong>반드시 가주어 it</strong>을 써야 한다.
+      </p>
+      <div style="background: var(--bg); padding: 14px 18px; border-radius: 8px; margin-top: 12px;">
+        <p style="font-family: 'Instrument Serif', serif; font-size: 16px; color: var(--text); margin: 0 0 6px;">
+          ✓ <span style="color: var(--accent-good);">It seems</span> that he is right.
+        </p>
+        <p style="font-family: 'Instrument Serif', serif; font-size: 16px; color: var(--text); margin: 0; opacity: 0.7;">
+          ✗ <span style="text-decoration: line-through; color: var(--accent-bad);">That he is right seems.</span> <span style="color: var(--text-muted); font-size: 13px; font-style: italic;">(완전히 틀린 문장)</span>
+        </p>
+      </div>
+      <p style="font-size: 13px; color: var(--text-muted); margin-top: 12px; margin-bottom: 0; font-style: italic;">
+        ※ 시험에서는 두 형태 모두 정답으로 인정되지만, 영작이나 회화에서는 무조건 가주어 it 구문을 쓰는 것이 안전하다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== PART 4: FLOWCHART ===== -->
+  <section id="part4">
+    <div class="section-num">04 / DECISION FLOW</div>
+    <h2>판별 흐름도 &mdash; <em class="good">3단계로 결정</em></h2>
+    <p>모든 "It is ~ that ..." 문장을 만났을 때 이 순서대로 체크하면 100% 정답이다.</p>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-content">
+          <div class="flow-q">It과 that 사이가 <strong>형용사</strong>인가?</div>
+          <div class="flow-branch">
+            <div class="flow-branch-item fake">
+              <strong>YES — 형용사임</strong>
+              true, certain, lucky, important, a pity 등<br>
+              → <strong>가주어·진주어 확정</strong> (판단 끝)
+            </div>
+            <div class="flow-branch-item emp">
+              <strong>NO — 형용사 아님</strong>
+              다음 단계로 진행 →
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-content">
+          <div class="flow-q">It과 that 사이가 <strong>부사(구·절)</strong>인가? (시간/장소/방법)</div>
+          <div class="flow-branch">
+            <div class="flow-branch-item emp">
+              <strong>YES — 부사(구·절)임</strong>
+              yesterday, at the park, in 2010, when I was young 등<br>
+              → <strong>강조구문 확정</strong> (판단 끝)
+            </div>
+            <div class="flow-branch-item fake">
+              <strong>NO — 부사 아님 (명사임)</strong>
+              다음 단계로 진행 →
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-content">
+          <div class="flow-q">명사일 때 &mdash; <strong>that 뒤 문장이 완전한가?</strong></div>
+          <div class="flow-branch">
+            <div class="flow-branch-item fake">
+              <strong>완전 (주·동·목 다 있음)</strong>
+              → <strong>가주어·진주어</strong><br>
+              that 생략 가능
+            </div>
+            <div class="flow-branch-item emp">
+              <strong>불완전 (주어/목적어 빠짐)</strong>
+              → <strong>강조구문</strong><br>
+              that 생략 불가
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h3>실전 적용 예시 &mdash; 같은 시작, 다른 결과</h3>
+      <p style="line-height: 1.9;">
+        <strong>예 ①:</strong> "It was <strong style="color: var(--accent-warn);">a false rumor</strong> that the couple broke up."<br>
+        → Step 1: 형용사 X / Step 2: 부사 X / Step 3: that 뒤 "the couple broke up" 완전 → <span class="badge-fake">가주어</span><br><br>
+        <strong>예 ②:</strong> "It was <strong style="color: var(--accent-warn);">a false rumor</strong> that made the couple feel bad."<br>
+        → Step 1: 형용사 X / Step 2: 부사 X / Step 3: that 뒤 "made the couple feel bad" 주어 없음 → <span class="badge-emp">강조구문</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== PART 5: MAKING EMPHASIS ===== -->
+  <section id="part5">
+    <div class="section-num">05 / HOW TO MAKE EMPHASIS</div>
+    <h2>강조구문 <em class="emp">만드는 법</em></h2>
+
+    <div class="theory">
+      <h3>3단계 공식</h3>
+      <p>원래 문장에서 강조하고 싶은 말만 골라 It과 that 사이에 넣고, 나머지는 that 뒤에 그대로 둔다.</p>
+      <div class="formula">
+        ① 강조할 부분 골라내기 → ② It + be + 강조부분 + that → ③ that 뒤에 나머지 문장
+      </div>
+    </div>
+
+    <div class="sub-header">예시 — "I used to build sand castles with my friends when I was young."</div>
+
+    <div class="compare-card" style="grid-template-columns: 1fr;">
+      <div class="col" style="border-right: none; border-bottom: 1px solid var(--border);">
+        <div class="col-header" style="color: var(--accent-emp);">① I 강조 (주어)</div>
+        <div class="col-example">
+          <span class="hl-emp">It was I that</span> used to build sand castles with my friends when I was young.
+        </div>
+        <p class="col-trans">어렸을 때 친구들과 모래성을 쌓곤 했던 사람은 <strong>바로 나</strong>였다.</p>
+      </div>
+      <div class="col" style="border-right: none; border-bottom: 1px solid var(--border);">
+        <div class="col-header" style="color: var(--accent-emp);">② sand castles 강조 (목적어)</div>
+        <div class="col-example">
+          <span class="hl-emp">It was sand castles that</span> I used to build with my friends when I was young.
+        </div>
+        <p class="col-trans">어렸을 때 친구들과 만들곤 했던 것은 <strong>바로 모래성</strong>이었다.</p>
+      </div>
+      <div class="col" style="border-right: none; border-bottom: 1px solid var(--border);">
+        <div class="col-header" style="color: var(--accent-emp);">③ with my friends 강조 (전치사구)</div>
+        <div class="col-example">
+          <span class="hl-emp">It was with my friends that</span> I used to build sand castles when I was young.
+        </div>
+        <p class="col-trans">어렸을 때 모래성을 쌓곤 했던 건 <strong>바로 친구들과 함께</strong>였다.</p>
+      </div>
+      <div class="col" style="border-right: none;">
+        <div class="col-header" style="color: var(--accent-emp);">④ when I was young 강조 (부사절)</div>
+        <div class="col-example">
+          <span class="hl-emp">It was when I was young that</span> I used to build sand castles with my friends.
+        </div>
+        <p class="col-trans">친구들과 모래성을 쌓곤 했던 건 <strong>바로 어렸을 때</strong>였다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PART 6: WH-EMPHASIS ===== -->
+  <section id="part6">
+    <div class="section-num">06 / WH-WORD EMPHASIS</div>
+    <h2>의문사를 <em class="emp">강조</em>하는 법</h2>
+
+    <div class="theory">
+      <h3>의문사 강조 공식</h3>
+      <p>의문사를 강조할 때 핵심은 두 가지 어순:</p>
+      <div class="formula">
+        <span class="emp">의문사 + be동사 + it + that</span> + <span class="good">주어 + 동사</span> (간접의문문 어순)
+      </div>
+      <p style="margin-bottom: 0;">
+        ① 의문사 자리: <strong>의문사 + be동사 + it + that</strong> (의문문 어순)<br>
+        ② that 뒤 자리: <strong>주어 + 동사</strong> &mdash; <span style="color: var(--accent-warn);">간접의문문 방식으로 평서문 어순!</span>
+      </p>
+    </div>
+
+    <div class="info-box">
+      <h3>⚡ 가장 중요한 포인트 &mdash; that 뒤는 간접의문문!</h3>
+      <p style="line-height: 1.9;">
+        that이 들어가는 순간 그 뒤는 더 이상 의문문이 아니다. <strong>간접의문문</strong>처럼 <strong>주어 + 동사</strong> 어순을 따라야 한다.<br><br>
+        <strong style="color: var(--accent-bad);">✗ 틀린 어순:</strong> Why was it that <strong style="color: var(--accent-bad);">did you like</strong> to take a shower?<br>
+        <strong style="color: var(--accent-good);">✓ 옳은 어순:</strong> Why was it that <strong style="color: var(--accent-good);">you liked</strong> to take a shower?
+      </p>
+    </div>
+
+    <h3 class="sub-header">▸ 변환 단계별 살펴보기</h3>
+
+    <div class="theory" style="border-left: 3px solid var(--accent-emp);">
+      <h3>예시: "Why did you like to take a shower?"</h3>
+      <div style="background: var(--bg); padding: 16px 20px; border-radius: 10px; margin: 12px 0;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px;">
+          STEP 1 — 의문사 자리에 "의문사 + was/is + it + that" 넣기
+        </div>
+        <p style="font-family: 'Instrument Serif', serif; font-size: 17px; color: var(--text); margin: 0;">
+          <span style="color: var(--accent-emp); font-weight: 600;">Why was it that</span> ...
+        </p>
+      </div>
+
+      <div style="background: var(--bg); padding: 16px 20px; border-radius: 10px; margin: 12px 0;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px;">
+          STEP 2 — that 뒤는 간접의문문 어순으로 (do/did 사라짐, 시제는 본동사에)
+        </div>
+        <p style="font-size: 13px; color: var(--text-dim); margin: 0 0 6px;">did you like → you liked (do/did 조동사는 사라지고 시제는 본동사로)</p>
+        <p style="font-family: 'Instrument Serif', serif; font-size: 17px; color: var(--text); margin: 0;">
+          Why was it that <span style="color: var(--accent-good); font-weight: 600;">you liked</span> to take a shower?
+        </p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h3>do/did 처리 규칙</h3>
+      <p style="font-size: 14px; line-height: 1.8; margin-bottom: 0;">
+        원래 문장이 일반동사 의문문이면 <strong>do/does/did</strong>가 있다. 강조구문으로 바꿀 때는:<br>
+        <strong style="color: var(--text);">① do/does/did는 사라진다</strong> (의문문 표시였으므로)<br>
+        <strong style="color: var(--text);">② 시제는 본동사에 반영</strong> (did like → liked)<br>
+        <strong style="color: var(--text);">③ 어순은 평서문(주어+동사)</strong><br><br>
+        <strong style="color: var(--accent-emp);">예시 변환:</strong><br>
+        • <strong>did you like</strong> → <span style="color: var(--accent-good);">you liked</span><br>
+        • <strong>did Sophia decide</strong> → <span style="color: var(--accent-good);">Sophia decided</span><br>
+        • <strong>are Jason and Ben looking</strong> → <span style="color: var(--accent-good);">Jason and Ben are looking</span> (be동사는 주어 뒤로)
+      </p>
+    </div>
+
+    <div class="info-box" style="background: linear-gradient(135deg, rgba(255, 118, 118, 0.06), var(--accent-emp-dim)); border-color: rgba(255, 118, 118, 0.2);">
+      <h3 style="color: var(--accent-bad);">⚠️ Who 의문문은 특별 — 주어를 묻는 의문사</h3>
+      <p style="font-size: 14px; line-height: 1.8; margin-bottom: 0;">
+        <strong>Who is in charge of ~?</strong> 같은 문장에서 Who는 <strong>주어 의문사</strong>다. 이미 평서문 어순이라 변환할 게 적다.<br><br>
+        <strong style="color: var(--accent-emp);">변환:</strong> Who is in charge of ~? → <strong>Who is it that</strong> is in charge of ~?<br>
+        <span style="font-size: 13px; color: var(--text-muted);">→ that 뒤는 그대로 동사로 시작 (Who가 주어 자리니까!)</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== PART 7: PRACTICE 1 ===== -->
+  <section id="part7">
+    <div class="section-num">07 / PRACTICE 1</div>
+    <h2>20문제 &mdash; <em class="good">가주어·진주어 vs 강조구문</em> 판별</h2>
+    <p>각 문장이 ① 가주어·진주어 구문인지 ② 강조구문인지 판별하세요. <strong>that 뒤가 완전한지 불완전한지</strong>를 보면 답이 나옵니다.</p>
+
+    <!-- Q1 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">01</span>
+        <div class="q-content">
+          <p class="q-text">It was <span class="marked">a false rumor</span> that the couple broke up.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-answer">① <span class="badge-inline badge-fake">가주어·진주어</span></p>
+        <div class="ans-explain">
+          <strong>분석:</strong> that 뒤 "the couple broke up" → 주어(the couple) + 동사(broke up) → <span class="highlight">완전한 문장</span><br>
+          + "a false rumor"는 일반명사구 → 가주어·진주어 패턴<br>
+          <strong>해석:</strong> 그 커플이 헤어졌다는 것은 잘못된 소문이었다.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">02</span>
+        <div class="q-content">
+          <p class="q-text">It was <span class="marked">what he said</span> that made her fall for him.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-answer">② <span class="badge-inline badge-emp">강조구문</span></p>
+        <div class="ans-explain">
+          <strong>분석:</strong> that 뒤 "made her fall for him" → <span class="highlight">주어 없음</span> (made의 주어가 빠짐)<br>
+          강조되는 말이 그 빠진 주어 자리 → 강조구문<br>
+          <strong>해석:</strong> 그녀가 그에게 빠지게 만든 것은 <strong>바로 그가 한 말</strong>이었다.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">03</span>
+        <div class="q-content">
+          <p class="q-text">It was <span class="marked">certain</span> that the serial killer killed himself.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-answer">① <span class="badge-inline badge-fake">가주어·진주어</span></p>
+        <div class="ans-explain">
+          <strong>분석:</strong> "certain"은 <span class="highlight">형용사</span> → 무조건 가주어·진주어<br>
+          + that 뒤도 완전한 문장 (the serial killer killed himself)<br>
+          <strong>해석:</strong> 그 연쇄살인범이 스스로 목숨을 끊었다는 것은 확실했다.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">04</span>
+        <div class="q-content">
+          <p class="q-text">It was <span class="marked">lucky</span> that I caught the first bus for Chicago.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-answer">① <span class="badge-inline badge-fake">가주어·진주어</span></p>
+        <div class="ans-explain">
+          <strong>분석:</strong> "lucky"는 형용사 → 가주어·진주어<br>
+          <strong>해석:</strong> 시카고행 첫 버스를 잡은 것은 운이 좋았다.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">05</span>
+        <div class="q-content">
+          <p class="q-text">It is <span class="marked">my uncle</span> that teaches me English in his house.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-answer">② <span class="badge-inline badge-emp">강조구문</span></p>
+        <div class="ans-explain">
+          <strong>분석:</strong> that 뒤 "teaches me English" → <span class="highlight">주어 없음</span> (teaches의 주어가 빠짐)<br>
+          + my uncle은 사람 명사 → 강조구문<br>
+          <strong>해석:</strong> 그의 집에서 나에게 영어를 가르치는 사람은 <strong>바로 우리 삼촌</strong>이다.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">06</span>
+        <div class="q-content">
+          <p class="q-text">It was <span class="marked">yesterday</span> that she attended the school reunion.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-answer">② <span class="badge-inline badge-emp">강조구문</span></p>
+        <div class="ans-explain">
+          <strong>분석:</strong> "yesterday"는 시간 부사 → 강조구문<br>
+          that 뒤가 완전해도 시간/장소 부사는 강조구문이 됨 (that = when)<br>
+          <strong>해석:</strong> 그녀가 동창회에 참석한 건 <strong>바로 어제</strong>였다.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">07</span>
+        <div class="q-content">
+          <p class="q-text">It is <span class="marked">true</span> that one choice can change your whole life.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-answer">① <span class="badge-inline badge-fake">가주어·진주어</span></p>
+        <div class="ans-explain">
+          <strong>분석:</strong> "true"는 형용사 → 가주어·진주어 확정<br>
+          <strong>해석:</strong> 하나의 선택이 인생 전체를 바꿀 수 있다는 것은 사실이다.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">08</span>
+        <div class="q-content">
+          <p class="q-text">It was <span class="marked">a false rumor</span> that made the couple feel very bad.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-answer">② <span class="badge-inline badge-emp">강조구문</span></p>
+        <div class="ans-explain">
+          <strong>주의 — 01번과 비교!</strong><br>
+          <strong>01번:</strong> "It was a false rumor that the couple broke up." → that 뒤 완전 → 가주어<br>
+          <strong>08번:</strong> "It was a false rumor that made the couple feel very bad." → that 뒤 "made the couple feel very bad"에 <span class="highlight">주어 없음</span> → 강조구문<br>
+          <strong>해석:</strong> 그 커플을 매우 기분 나쁘게 만든 것은 <strong>바로 잘못된 소문</strong>이었다.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">09</span>
+        <div class="q-content">
+          <p class="q-text">It was <span class="marked">him</span> that I met in London the day before yesterday.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-answer">② <span class="badge-inline badge-emp">강조구문</span></p>
+        <div class="ans-explain">
+          <strong>분석:</strong> that 뒤 "I met in London" → met의 <span class="highlight">목적어 빠짐</span> → 강조구문<br>
+          <strong>해석:</strong> 내가 그저께 런던에서 만난 사람은 <strong>바로 그</strong>였다.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">10</span>
+        <div class="q-content">
+          <p class="q-text">It is <span class="marked">her kindness</span> that makes her so beautiful and popular.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-answer">② <span class="badge-inline badge-emp">강조구문</span></p>
+        <div class="ans-explain">
+          <strong>분석:</strong> that 뒤 "makes her so beautiful and popular" → <span class="highlight">주어 없음</span> → 강조구문<br>
+          <strong>해석:</strong> 그녀를 그토록 아름답고 인기있게 만드는 것은 <strong>바로 그녀의 친절함</strong>이다.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">11</span>
+        <div class="q-content">
+          <p class="q-text">It was <span class="marked">my dog</span> that barked loudly from Saturday to Sunday.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-answer">② <span class="badge-inline badge-emp">강조구문</span></p>
+        <div class="ans-explain">
+          <strong>분석:</strong> that 뒤 "barked loudly" → 주어 없음 → 강조구문<br>
+          <strong>해석:</strong> 토요일부터 일요일까지 시끄럽게 짖었던 것은 <strong>바로 내 개</strong>였다.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">12</span>
+        <div class="q-content">
+          <p class="q-text">It is <span class="marked">in the park</span> that Ben practices jumping rope every night.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-answer">② <span class="badge-inline badge-emp">강조구문</span></p>
+        <div class="ans-explain">
+          <strong>분석:</strong> "in the park"는 장소 전치사구 → 강조구문 (that = where)<br>
+          that 뒤는 완전한 문장이지만, 강조되는 부분이 장소 부사구라 강조구문!<br>
+          <strong>해석:</strong> Ben이 매일 밤 줄넘기 연습하는 곳은 <strong>바로 공원</strong>이다.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q13 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">13</span>
+        <div class="q-content">
+          <p class="q-text">It was <span class="marked">my opinion</span> that government should not raise taxes again.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-answer">① <span class="badge-inline badge-fake">가주어·진주어</span></p>
+        <div class="ans-explain">
+          <strong>분석:</strong> that 뒤 "government should not raise taxes again" → 주어(government) + 동사(should raise) + 목적어(taxes) → <span class="highlight">완전한 문장</span><br>
+          "my opinion"은 일반명사구 + that 뒤 완전 → 가주어·진주어<br>
+          <strong>해석:</strong> 정부가 다시 세금을 올려서는 안 된다는 것이 내 의견이었다.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q14 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">14</span>
+        <div class="q-content">
+          <p class="q-text">It is <span class="marked">true</span> that Sophia's waist line was beautiful before her daughter was born.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-answer">① <span class="badge-inline badge-fake">가주어·진주어</span></p>
+        <div class="ans-explain">
+          <strong>분석:</strong> "true"는 형용사 → 가주어·진주어<br>
+          <strong>해석:</strong> Sophia의 허리가 딸이 태어나기 전에 아름다웠던 것은 사실이다.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q15 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">15</span>
+        <div class="q-content">
+          <p class="q-text">It is <span class="marked">a bad habit</span> that your father has a late-night snack everyday.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-answer">① <span class="badge-inline badge-fake">가주어·진주어</span></p>
+        <div class="ans-explain">
+          <strong>분석:</strong> that 뒤 "your father has a late-night snack everyday" → 완전한 문장<br>
+          "a bad habit"은 일반명사구 → 가주어·진주어<br>
+          <strong>해석:</strong> 당신 아버지가 매일 야식을 먹는 것은 나쁜 습관이다.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q16 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">16</span>
+        <div class="q-content">
+          <p class="q-text">It was <span class="marked">in the heavy rain</span> that the young children swam in the nude.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-answer">② <span class="badge-inline badge-emp">강조구문</span></p>
+        <div class="ans-explain">
+          <strong>분석:</strong> "in the heavy rain"은 장소·상황 전치사구 → 강조구문<br>
+          <strong>해석:</strong> 어린 아이들이 알몸으로 헤엄친 것은 <strong>바로 폭우 속</strong>이었다.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q17 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">17</span>
+        <div class="q-content">
+          <p class="q-text">It is <span class="marked">a pity</span> that you lost an opportunity of working as a stockbroker.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-answer">① <span class="badge-inline badge-fake">가주어·진주어</span></p>
+        <div class="ans-explain">
+          <strong>분석:</strong> "a pity"는 일반명사 + that 뒤 완전 → 가주어·진주어<br>
+          (It is a pity that ~ : ~인 것은 안타까운 일이다)<br>
+          <strong>해석:</strong> 네가 증권 중개인으로 일할 기회를 놓친 것은 안타까운 일이다.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q18 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">18</span>
+        <div class="q-content">
+          <p class="q-text">It was <span class="marked">the movie, 'White Night'</span> that the couple watched at their first date.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-answer">② <span class="badge-inline badge-emp">강조구문</span></p>
+        <div class="ans-explain">
+          <strong>분석:</strong> that 뒤 "the couple watched at their first date" → watched의 <span class="highlight">목적어 빠짐</span> → 강조구문<br>
+          <strong>해석:</strong> 그 커플이 첫 데이트에서 본 것은 <strong>바로 영화 'White Night'</strong>였다.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q19 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">19</span>
+        <div class="q-content">
+          <p class="q-text">It will not be <span class="marked">until he comes back home</span> that he will be able to feel at home.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-answer">② <span class="badge-inline badge-emp">강조구문</span></p>
+        <div class="ans-explain">
+          <strong>분석:</strong> "It is not until A that B" 구문 → "A하고 나서야 비로소 B하다" 의미의 <strong>강조구문</strong> 관용 패턴<br>
+          <strong>해석:</strong> 그가 집에 돌아와서야 비로소 편안함을 느낄 수 있을 것이다.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q20 -->
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">20</span>
+        <div class="q-content">
+          <p class="q-text">It is <span class="marked">absolutely certain</span> that what you say to others will influence both them and you.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-answer">① <span class="badge-inline badge-fake">가주어·진주어</span></p>
+        <div class="ans-explain">
+          <strong>분석:</strong> "absolutely certain"은 형용사구 → 가주어·진주어<br>
+          <strong>해석:</strong> 당신이 다른 사람에게 하는 말이 그들과 당신 모두에게 영향을 미칠 것이라는 것은 절대적으로 확실하다.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PART 8: MAKING EMPHASIS ===== -->
+  <section id="part8">
+    <div class="section-num">08 / PRACTICE 2</div>
+    <h2>강조구문 <em class="emp">만들기 연습</em></h2>
+    <p>밑줄 친 부분을 It ~ that 강조구문으로 만들어보세요.</p>
+
+    <h3 class="sub-header">▸ 기본 예문 (1) "I used to build sand castles with my friends when I was young."</h3>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">M01</span>
+        <div class="q-content">
+          <p class="q-text"><span class="marked">I</span> used to build sand castles with my friends when I was young.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence"><span class="emp-hl">It was I that</span> used to build sand castles with my friends when I was young.</p>
+        <div class="ans-explain">
+          주어 I 강조 → It + was + I + that + (주어 빠진 나머지)
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">M02</span>
+        <div class="q-content">
+          <p class="q-text">I used to build <span class="marked">sand castles</span> with my friends when I was young.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence"><span class="emp-hl">It was sand castles that</span> I used to build with my friends when I was young.</p>
+        <div class="ans-explain">
+          목적어 sand castles 강조 → It + was + sand castles + that + (목적어 빠진 나머지)
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">M03</span>
+        <div class="q-content">
+          <p class="q-text">I used to build sand castles <span class="marked">with my friends</span> when I was young.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence"><span class="emp-hl">It was with my friends that</span> I used to build sand castles when I was young.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">M04</span>
+        <div class="q-content">
+          <p class="q-text">I used to build sand castles with my friends <span class="marked">when I was young</span>.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence"><span class="emp-hl">It was when I was young that</span> I used to build sand castles with my friends.</p>
+      </div>
+    </div>
+
+    <h3 class="sub-header">▸ 기본 예문 (2) "Nick found my textbook in his classroom about thirty minutes ago."</h3>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">M05</span>
+        <div class="q-content">
+          <p class="q-text"><span class="marked">Nick</span> found my textbook in his classroom about thirty minutes ago.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence"><span class="emp-hl">It was Nick that</span> found my textbook in his classroom about thirty minutes ago.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">M06</span>
+        <div class="q-content">
+          <p class="q-text">Nick found <span class="marked">my textbook</span> in his classroom about thirty minutes ago.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence"><span class="emp-hl">It was my textbook that</span> Nick found in his classroom about thirty minutes ago.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">M07</span>
+        <div class="q-content">
+          <p class="q-text">Nick found my textbook <span class="marked">in his classroom</span> about thirty minutes ago.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence"><span class="emp-hl">It was in his classroom that</span> Nick found my textbook about thirty minutes ago.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">M08</span>
+        <div class="q-content">
+          <p class="q-text">Nick found my textbook in his classroom <span class="marked">about thirty minutes ago</span>.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence"><span class="emp-hl">It was about thirty minutes ago that</span> Nick found my textbook in his classroom.</p>
+      </div>
+    </div>
+
+    <h3 class="sub-header">▸ 기본 예문 (3) "Paul and Alex left their homeland in 2010."</h3>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">M09</span>
+        <div class="q-content">
+          <p class="q-text"><span class="marked">Paul and Alex</span> left their homeland in 2010.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence"><span class="emp-hl">It was Paul and Alex that</span> left their homeland in 2010.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">M10</span>
+        <div class="q-content">
+          <p class="q-text">Paul and Alex left <span class="marked">their homeland</span> in 2010.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence"><span class="emp-hl">It was their homeland that</span> Paul and Alex left in 2010.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">M11</span>
+        <div class="q-content">
+          <p class="q-text">Paul and Alex left their homeland <span class="marked">in 2010</span>.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence"><span class="emp-hl">It was in 2010 that</span> Paul and Alex left their homeland.</p>
+      </div>
+    </div>
+
+    <h3 class="sub-header">▸ 기본 예문 (4) "Minho received a long letter from his family in the army."</h3>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">M12</span>
+        <div class="q-content">
+          <p class="q-text">Minho received <span class="marked">a long letter</span> from his family in the army.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence"><span class="emp-hl">It was a long letter that</span> Minho received from his family in the army.</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">M13</span>
+        <div class="q-content">
+          <p class="q-text">Minho received a long letter <span class="marked">from his family</span> in the army.</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence"><span class="emp-hl">It was from his family that</span> Minho received a long letter in the army.</p>
+      </div>
+    </div>
+
+    <h3 class="sub-header">▸ 의문사 강조 — Wh-word Emphasis</h3>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">W01</span>
+        <div class="q-content">
+          <p class="q-text"><span class="marked">Why</span> did you like to take a shower?</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence"><span class="emp-hl">Why was it that</span> you liked to take a shower?</p>
+        <div class="ans-explain">
+          <strong>의문사 강조 공식:</strong> 의문사 + was/is + it + that + 평서문 어순<br>
+          주의: that 뒤는 평서문 어순(you liked)이며 시제 일치(was - liked)
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">W02</span>
+        <div class="q-content">
+          <p class="q-text"><span class="marked">Where</span> most rich people prefer to live in?</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence"><span class="emp-hl">Where is it that</span> most rich people prefer to live in?</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">W03</span>
+        <div class="q-content">
+          <p class="q-text"><span class="marked">What</span> are Jason and Ben looking for now?</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence"><span class="emp-hl">What is it that</span> Jason and Ben are looking for now?</p>
+        <div class="ans-explain">
+          평서문 어순 유지: are Jason and Ben → Jason and Ben are
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">W04</span>
+        <div class="q-content">
+          <p class="q-text"><span class="marked">When</span> did Sophia decide to emigrate to America?</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence"><span class="emp-hl">When was it that</span> Sophia decided to emigrate to America?</p>
+        <div class="ans-explain">
+          did decide → decided (do/did 조동사는 사라지고 시제만 본동사에 반영)
+        </div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-num">W05</span>
+        <div class="q-content">
+          <p class="q-text"><span class="marked">Who</span> is in charge of the consumer service department?</p>
+        </div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence"><span class="emp-hl">Who is it that</span> is in charge of the consumer service department?</p>
+        <div class="ans-explain">
+          주의: Who가 주어를 묻는 의문사라 that 뒤에 동사로 바로 시작
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAKEAWAY ===== -->
+  <div class="takeaway">
+    <h2>핵심은 세 단계로 정리된다</h2>
+    <p class="key-line">
+      <strong style="color: var(--text);">It ~ that 사이에 무엇이 있는가?</strong><br>
+      ① <span class="fake">형용사</span> → 무조건 가주어·진주어<br>
+      ② <span class="emp">부사(구·절)</span> &mdash; 시간/장소 → 무조건 강조구문<br>
+      ③ <strong style="color: var(--text);">명사</strong> → that 뒤 <span class="fake">완전</span>이면 가주어, <span class="emp">불완전</span>이면 강조
+    </p>
+    <p>
+      형용사·부사는 그 자체로 판단이 끝난다. 명사일 때만 that 뒤를 확인하면 된다.
+      그리고 강조구문의 that은 절대 생략할 수 없고, 시제도 항상 일치한다 — 이 두 가지만 더 기억하면 끝.
+    </p>
+  </div>
+
+</div>
+
+<script>
+function toggleAnswer(btn) {
+  const answer = btn.nextElementSibling;
+  btn.classList.toggle('active');
+  answer.classList.toggle('show');
+}
+</script>
+
+</body>
+</html>

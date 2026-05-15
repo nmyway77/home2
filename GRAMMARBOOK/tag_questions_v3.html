@@ -1,0 +1,2862 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>부가의문문 완전 정복 v3 — 동사·주어·역방향 + Singular They 출처</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F0F12;
+    --bg-elev: #18181D;
+    --bg-card: #1E1E25;
+    --bg-deep: #0A0A0D;
+    --border: #2A2A33;
+    --border-hover: #3A3A45;
+    --text: #F0F0F2;
+    --text-dim: #9999A3;
+    --text-muted: #65656F;
+    --accent-pos: #7B9CFF;
+    --accent-pos-dim: rgba(123, 156, 255, 0.12);
+    --accent-neg: #FFB16E;
+    --accent-neg-dim: rgba(255, 177, 110, 0.12);
+    --accent-good: #6FE5A8;
+    --accent-good-dim: rgba(111, 229, 168, 0.12);
+    --accent-warn: #FFD978;
+    --accent-warn-dim: rgba(255, 217, 120, 0.10);
+    --accent-bad: #FF7676;
+    --accent-bad-dim: rgba(255, 118, 118, 0.08);
+    --accent-purple: #C49DFF;
+    --accent-purple-dim: rgba(196, 157, 255, 0.12);
+    --accent-cyan: #6FD8E5;
+    --accent-cyan-dim: rgba(111, 216, 229, 0.12);
+    --accent-pink: #FF9EC4;
+    --accent-pink-dim: rgba(255, 158, 196, 0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at top left, rgba(123, 156, 255, 0.07), transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(255, 177, 110, 0.06), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 80px 28px 100px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero {
+    margin-bottom: 80px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 60px;
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--text-muted); }
+
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: clamp(44px, 6.5vw, 76px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+
+  h1 .em { color: var(--accent-pos); font-style: italic; }
+  h1 .neg { color: var(--accent-neg); font-style: italic; }
+  h1 .good { color: var(--accent-good); font-style: italic; }
+  h1 .small {
+    color: var(--text-muted);
+    font-size: 0.5em;
+    font-style: italic;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .lead {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 720px;
+    line-height: 1.7;
+  }
+
+  .lead strong { color: var(--text); }
+  .lead em { color: var(--accent-pos); font-style: normal; font-weight: 500; }
+
+  /* TOC */
+  .toc {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin: 40px 0;
+  }
+
+  .toc-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .toc-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    list-style: none;
+  }
+
+  @media (max-width: 640px) { .toc-list { grid-template-columns: 1fr; } }
+
+  .toc-list a {
+    display: block;
+    padding: 8px 12px;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+
+  .toc-list a:hover { background: var(--bg-card); color: var(--accent-pos); }
+
+  .toc-list a.new {
+    background: var(--accent-pink-dim);
+    color: var(--accent-pink);
+    border: 1px dashed rgba(255, 158, 196, 0.3);
+  }
+
+  .toc-list a.new::after {
+    content: ' NEW';
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    background: var(--accent-pink);
+    color: var(--bg);
+    padding: 1px 5px;
+    border-radius: 3px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  .toc-list .num {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-pos);
+    margin-right: 8px;
+    font-size: 12px;
+  }
+
+  section { margin-bottom: 80px; scroll-margin-top: 40px; }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent-pos);
+    margin-bottom: 12px;
+    letter-spacing: 0.1em;
+  }
+
+  .section-num.be { color: var(--accent-pos); }
+  .section-num.modal { color: var(--accent-purple); }
+  .section-num.general { color: var(--accent-cyan); }
+  .section-num.have { color: var(--accent-neg); }
+  .section-num.perfect { color: var(--accent-good); }
+  .section-num.special { color: var(--accent-warn); }
+  .section-num.subject { color: var(--accent-pink); }
+  .section-num.reverse { color: var(--accent-good); }
+
+  h2 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 1.2;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  h2 em { color: var(--accent-pos); font-style: italic; }
+  h2 em.neg { color: var(--accent-neg); font-style: italic; }
+  h2 em.warn { color: var(--accent-warn); font-style: italic; }
+  h2 em.good { color: var(--accent-good); font-style: italic; }
+  h2 em.purple { color: var(--accent-purple); font-style: italic; }
+  h2 em.cyan { color: var(--accent-cyan); font-style: italic; }
+  h2 em.pink { color: var(--accent-pink); font-style: italic; }
+
+  h3.sub-heading {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    color: var(--text);
+    margin: 32px 0 14px;
+    font-weight: 400;
+  }
+
+  p { color: var(--text-dim); font-size: 15px; margin-bottom: 16px; }
+  p strong { color: var(--text); font-weight: 600; }
+
+  /* NEW BADGE for sections */
+  .new-section-badge {
+    display: inline-block;
+    background: var(--accent-pink);
+    color: var(--bg);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    margin-left: 12px;
+    vertical-align: middle;
+  }
+
+  /* CORE BOX */
+  .core-box {
+    background: linear-gradient(135deg, var(--accent-pos-dim), var(--accent-neg-dim));
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px 36px;
+    margin: 40px 0;
+    position: relative;
+  }
+
+  .core-box::before {
+    content: 'THE BASIC RULE';
+    position: absolute;
+    top: -12px;
+    left: 32px;
+    background: var(--bg);
+    padding: 4px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent-pos);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+
+  .core-text {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    line-height: 1.6;
+    color: var(--text);
+    font-style: italic;
+    margin: 8px 0;
+  }
+
+  .core-text .pos { color: var(--accent-pos); font-style: normal; font-weight: 500; }
+  .core-text .neg { color: var(--accent-neg); font-style: normal; font-weight: 500; }
+
+  /* THEORY */
+  .theory {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin: 24px 0;
+    position: relative;
+  }
+
+  .theory::before {
+    content: 'RULE';
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    background: var(--bg);
+    padding: 3px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent-pos);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+  }
+
+  .theory h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    color: var(--text);
+    margin: 8px 0 12px;
+    font-weight: 400;
+  }
+
+  .formula {
+    background: var(--bg);
+    padding: 16px 20px;
+    border-radius: 10px;
+    margin: 14px 0;
+    border: 1px dashed var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--text);
+    text-align: center;
+    letter-spacing: 0.02em;
+    line-height: 1.6;
+  }
+
+  .formula .pos { color: var(--accent-pos); font-weight: 700; }
+  .formula .neg { color: var(--accent-neg); font-weight: 700; }
+  .formula .good { color: var(--accent-good); font-weight: 700; }
+  .formula .bad { color: var(--accent-bad); font-weight: 700; }
+  .formula .purple { color: var(--accent-purple); font-weight: 700; }
+  .formula .cyan { color: var(--accent-cyan); font-weight: 700; }
+  .formula .warn { color: var(--accent-warn); font-weight: 700; }
+  .formula .pink { color: var(--accent-pink); font-weight: 700; }
+
+  /* EXAMPLE */
+  .example {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin: 12px 0;
+    border-left: 2px solid var(--accent-good);
+  }
+
+  .example.bad {
+    border-left-color: var(--accent-bad);
+    background: var(--accent-bad-dim);
+  }
+
+  .example.warn {
+    border-left-color: var(--accent-warn);
+    background: var(--accent-warn-dim);
+  }
+
+  .example.pink {
+    border-left-color: var(--accent-pink);
+  }
+
+  .ex-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent-good);
+  }
+
+  .example.bad .ex-label { color: var(--accent-bad); }
+  .example.warn .ex-label { color: var(--accent-warn); }
+  .example.pink .ex-label { color: var(--accent-pink); }
+
+  .ex-label::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .sentence {
+    font-family: 'Instrument Serif', serif;
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .sentence .pos { color: var(--accent-pos); font-weight: 500; }
+  .sentence .neg { color: var(--accent-neg); font-weight: 500; }
+  .sentence .tag {
+    background: var(--accent-good-dim);
+    color: var(--accent-good);
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-style: italic;
+    margin-left: 4px;
+  }
+  .sentence .subj-hl {
+    background: var(--accent-pink-dim);
+    color: var(--accent-pink);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  .sentence .pronoun-hl {
+    background: var(--accent-pink-dim);
+    color: var(--accent-pink);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-style: italic;
+  }
+  .sentence .strike { text-decoration: line-through; opacity: 0.5; color: var(--accent-bad); }
+
+  .translate {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .arrow-note {
+    font-size: 12px;
+    color: var(--accent-pos);
+    font-family: 'JetBrains Mono', monospace;
+    margin-top: 6px;
+    letter-spacing: 0.05em;
+  }
+
+  .note {
+    font-size: 13px;
+    color: var(--text-dim);
+    padding: 12px 14px;
+    background: var(--bg);
+    border-radius: 8px;
+    margin-top: 12px;
+    line-height: 1.6;
+    border-left: 2px solid var(--accent-warn);
+  }
+
+  .note strong { color: var(--text); }
+  .note .highlight {
+    background: var(--accent-warn-dim);
+    color: var(--accent-warn);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  /* COMPARE CARD */
+  .compare-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin: 24px 0;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  @media (max-width: 640px) {
+    .compare-card { grid-template-columns: 1fr; }
+    .compare-card .col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+  }
+
+  .col { padding: 24px; }
+  .col:first-child { border-right: 1px solid var(--border); }
+
+  .col-header {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .col.pos .col-header { color: var(--accent-pos); }
+  .col.neg .col-header { color: var(--accent-neg); }
+  .col.have-main .col-header { color: var(--accent-neg); }
+  .col.have-perfect .col-header { color: var(--accent-good); }
+
+  .col-header::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .col-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 18px;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .col p { font-size: 13px; line-height: 1.7; }
+  .col .sentence { font-size: 17px; }
+
+  /* INFO BOX */
+  .info-box {
+    background: linear-gradient(135deg, var(--accent-warn-dim), var(--accent-pos-dim));
+    border: 1px solid rgba(255, 217, 120, 0.3);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin: 24px 0;
+    position: relative;
+  }
+
+  .info-box::before {
+    content: '⚡ KEY POINT';
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    background: var(--bg);
+    padding: 3px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent-warn);
+    border: 1px solid rgba(255, 217, 120, 0.3);
+    border-radius: 5px;
+  }
+
+  .info-box h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+    color: var(--text);
+    margin: 6px 0 12px;
+    font-weight: 400;
+  }
+
+  .info-box p { font-size: 14px; color: var(--text-dim); margin-bottom: 0; line-height: 1.8; }
+
+  /* CAUTION BOX */
+  .caution-box {
+    background: var(--accent-bad-dim);
+    border: 1px solid rgba(255, 118, 118, 0.3);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin: 24px 0;
+    position: relative;
+  }
+
+  .caution-box::before {
+    content: '⚠ CRITICAL DISTINCTION';
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    background: var(--bg);
+    padding: 3px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent-bad);
+    border: 1px solid rgba(255, 118, 118, 0.3);
+    border-radius: 5px;
+  }
+
+  .caution-box h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+    color: var(--text);
+    margin: 6px 0 12px;
+    font-weight: 400;
+  }
+
+  .caution-box p { font-size: 14px; color: var(--text-dim); margin-bottom: 0; line-height: 1.8; }
+
+  /* DECODE BOX - 역방향 추론용 */
+  .decode-box {
+    background: linear-gradient(135deg, var(--accent-good-dim), var(--accent-cyan-dim));
+    border: 1px solid rgba(111, 229, 168, 0.3);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin: 24px 0;
+    position: relative;
+  }
+
+  .decode-box::before {
+    content: '⚙ DECODE';
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    background: var(--bg);
+    padding: 3px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent-good);
+    border: 1px solid rgba(111, 229, 168, 0.3);
+    border-radius: 5px;
+  }
+
+  .decode-box h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+    color: var(--text);
+    margin: 6px 0 12px;
+    font-weight: 400;
+  }
+
+  /* REVERSE CARD - 역방향 추론 */
+  .reverse-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 26px;
+    margin: 16px 0;
+    position: relative;
+  }
+
+  .reverse-card .tag-given {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--accent-good);
+    margin-bottom: 16px;
+    padding: 10px 16px;
+    background: var(--accent-good-dim);
+    border-radius: 8px;
+    display: inline-block;
+  }
+
+  .reverse-card .tag-given::before {
+    content: '주어진 태그: ';
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-style: normal;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-right: 8px;
+  }
+
+  .reverse-card .arrow-deco {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-pos);
+    font-size: 14px;
+    margin: 8px 0;
+  }
+
+  .reverse-card .deduce-list {
+    list-style: none;
+    margin: 12px 0;
+    padding: 0;
+  }
+
+  .reverse-card .deduce-list li {
+    padding: 6px 0 6px 24px;
+    position: relative;
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .reverse-card .deduce-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 8px;
+    color: var(--accent-good);
+  }
+
+  .reverse-card .deduce-list li strong {
+    color: var(--text);
+  }
+
+  .reverse-card .sample-sentences {
+    background: var(--bg);
+    padding: 14px 18px;
+    border-radius: 8px;
+    margin-top: 12px;
+    border-left: 2px solid var(--accent-good);
+  }
+
+  .reverse-card .sample-sentences .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-good);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .reverse-card .sample-sentences p {
+    font-family: 'Instrument Serif', serif;
+    font-size: 17px;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 4px;
+  }
+
+  /* TABLE */
+  .table-wrap {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 8px;
+    margin: 24px 0;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  th {
+    text-align: left;
+    padding: 14px 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-card);
+    font-weight: 500;
+  }
+
+  td {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+    vertical-align: middle;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  td strong { color: var(--text); font-weight: 600; }
+
+  .pos-tag {
+    color: var(--accent-pos);
+    font-weight: 600;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+  }
+
+  .neg-tag {
+    color: var(--accent-neg);
+    font-weight: 600;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+  }
+
+  .good-tag {
+    color: var(--accent-good);
+    font-weight: 600;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+  }
+
+  .purple-tag {
+    color: var(--accent-purple);
+    font-weight: 600;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+  }
+
+  .cyan-tag {
+    color: var(--accent-cyan);
+    font-weight: 600;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+  }
+
+  .pink-tag {
+    color: var(--accent-pink);
+    font-weight: 600;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+  }
+
+  /* TYPE BADGE */
+  .type-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+
+  .type-badge.be { background: var(--accent-pos-dim); color: var(--accent-pos); border: 1px solid var(--accent-pos); }
+  .type-badge.modal { background: var(--accent-purple-dim); color: var(--accent-purple); border: 1px solid var(--accent-purple); }
+  .type-badge.general { background: var(--accent-cyan-dim); color: var(--accent-cyan); border: 1px solid var(--accent-cyan); }
+  .type-badge.have { background: var(--accent-neg-dim); color: var(--accent-neg); border: 1px solid var(--accent-neg); }
+  .type-badge.perfect { background: var(--accent-good-dim); color: var(--accent-good); border: 1px solid var(--accent-good); }
+  .type-badge.subject { background: var(--accent-pink-dim); color: var(--accent-pink); border: 1px solid var(--accent-pink); }
+  .type-badge.reverse { background: var(--accent-good-dim); color: var(--accent-good); border: 1px solid var(--accent-good); }
+
+  /* QUESTION CARD */
+  .q-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin: 10px 0;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .q-card:hover { border-color: var(--border-hover); }
+
+  .q-header {
+    padding: 16px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .q-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent-pos);
+    background: var(--accent-pos-dim);
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--accent-pos);
+    flex-shrink: 0;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .q-num.reverse {
+    color: var(--accent-good);
+    background: var(--accent-good-dim);
+    border-color: var(--accent-good);
+  }
+
+  .q-content { flex: 1; }
+
+  .q-text {
+    font-family: 'Instrument Serif', serif;
+    font-size: 17px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .q-text .blank {
+    display: inline-block;
+    min-width: 80px;
+    border-bottom: 2px dashed var(--accent-warn);
+    margin: 0 4px;
+    color: var(--accent-warn);
+    text-align: center;
+    font-style: italic;
+    font-size: 14px;
+  }
+
+  .q-text .blank-long {
+    display: inline-block;
+    min-width: 180px;
+    border-bottom: 2px dashed var(--accent-warn);
+    margin: 0 4px;
+    color: var(--accent-warn);
+    text-align: center;
+    font-style: italic;
+    font-size: 14px;
+  }
+
+  /* TOGGLE */
+  .toggle-btn {
+    width: 100%;
+    background: var(--bg-card);
+    border: none;
+    border-top: 1px solid var(--border);
+    padding: 11px 20px;
+    color: var(--accent-pos);
+    cursor: pointer;
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.2s;
+  }
+
+  .toggle-btn:hover { background: var(--bg-deep); color: var(--accent-good); }
+  .toggle-btn::after { content: '▼ 정답·해설'; font-size: 11px; }
+  .toggle-btn.active::after { content: '▲ 닫기'; color: var(--accent-good); }
+
+  .answer {
+    background: var(--bg-deep);
+    border-top: 1px solid var(--border);
+    padding: 0 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s;
+  }
+
+  .answer.show {
+    max-height: 1500px;
+    padding: 18px 20px;
+    transition: max-height 0.5s ease-in, padding 0.3s;
+  }
+
+  .ans-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent-good);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .ans-sentence {
+    font-family: 'Instrument Serif', serif;
+    font-size: 17px;
+    color: var(--text);
+    line-height: 1.5;
+    margin-bottom: 6px;
+  }
+
+  .ans-sentence .tag-hl {
+    background: var(--accent-good-dim);
+    color: var(--accent-good);
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-style: italic;
+  }
+
+  .ans-sentence .main-hl {
+    background: var(--accent-pos-dim);
+    color: var(--accent-pos);
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-weight: 600;
+  }
+
+  .ans-explain {
+    background: var(--bg);
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    border-left: 2px solid var(--accent-good);
+  }
+
+  .ans-explain strong { color: var(--text); }
+  .ans-explain .highlight {
+    background: var(--accent-warn-dim);
+    color: var(--accent-warn);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  /* TAKEAWAY */
+  .takeaway {
+    margin: 80px 0 0;
+    padding: 50px 40px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .takeaway::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-pos), var(--accent-purple), var(--accent-cyan), var(--accent-neg), var(--accent-good), var(--accent-pink));
+  }
+
+  .takeaway h2 { font-size: 28px; margin-bottom: 20px; }
+
+  .key-line {
+    font-family: 'Instrument Serif', serif;
+    font-size: 19px;
+    line-height: 1.7;
+    color: var(--text);
+    font-style: italic;
+    margin-bottom: 18px;
+  }
+
+  .key-line .pos { color: var(--accent-pos); font-style: normal; font-weight: 500; }
+  .key-line .neg { color: var(--accent-neg); font-style: normal; font-weight: 500; }
+  .key-line .good { color: var(--accent-good); font-style: normal; font-weight: 500; }
+  .key-line .purple { color: var(--accent-purple); font-style: normal; font-weight: 500; }
+  .key-line .cyan { color: var(--accent-cyan); font-style: normal; font-weight: 500; }
+  .key-line .pink { color: var(--accent-pink); font-style: normal; font-weight: 500; }
+
+  .takeaway p:last-child { font-size: 14px; color: var(--text-muted); margin: 0; }
+
+  /* HIGHLIGHTS in sentences */
+  .verb-be { color: var(--accent-pos); font-weight: 500; }
+  .verb-modal { color: var(--accent-purple); font-weight: 500; }
+  .verb-general { color: var(--accent-cyan); font-weight: 500; }
+  .verb-have { color: var(--accent-neg); font-weight: 500; }
+  .verb-perfect { color: var(--accent-good); font-weight: 500; }
+
+  /* SOURCE CITATION BOX - 출처 인용 박스 */
+  .source-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    position: relative;
+  }
+
+  .source-box::before {
+    content: '📚 SOURCES';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    background: var(--bg);
+    padding: 3px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent-warn);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+  }
+
+  .source-box .source-intro {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+    line-height: 1.7;
+  }
+
+  .source-link {
+    display: block;
+    padding: 12px 16px;
+    margin: 8px 0;
+    background: var(--bg);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text-dim);
+    font-size: 13px;
+    border-left: 2px solid var(--accent-pos);
+    transition: all 0.2s;
+  }
+
+  .source-link:hover {
+    border-left-color: var(--accent-good);
+    color: var(--text);
+    background: var(--bg-elev);
+    transform: translateX(2px);
+  }
+
+  .source-link .source-org {
+    display: block;
+    color: var(--accent-pos);
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .source-link:hover .source-org {
+    color: var(--accent-good);
+  }
+
+  .source-link .source-quote {
+    display: block;
+    font-style: italic;
+    color: var(--text);
+    margin-top: 4px;
+    font-family: 'Instrument Serif', serif;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .source-link .source-url {
+    display: block;
+    margin-top: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    word-break: break-all;
+  }
+
+  .source-link::after {
+    content: ' ↗ 클릭하여 원본 보기';
+    display: block;
+    font-size: 10px;
+    color: var(--accent-pos);
+    margin-top: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.05em;
+    opacity: 0.6;
+  }
+
+  .source-link:hover::after {
+    opacity: 1;
+    color: var(--accent-good);
+  }
+
+  /* PARADOX BOX - 영어 모순 설명용 */
+  .paradox-box {
+    background: linear-gradient(135deg, var(--accent-bad-dim), var(--accent-warn-dim));
+    border: 1px solid rgba(255, 217, 120, 0.4);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin: 24px 0;
+    position: relative;
+  }
+
+  .paradox-box::before {
+    content: '🤔 영어의 모순 (PARADOX)';
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    background: var(--bg);
+    padding: 3px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent-warn);
+    border: 1px solid rgba(255, 217, 120, 0.4);
+    border-radius: 5px;
+  }
+
+  .paradox-box h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+    color: var(--text);
+    margin: 6px 0 12px;
+    font-weight: 400;
+  }
+
+  .paradox-box p { font-size: 14px; color: var(--text-dim); margin-bottom: 12px; line-height: 1.8; }
+  .paradox-box p:last-child { margin-bottom: 0; }
+  .paradox-box strong { color: var(--text); }
+
+  /* SUBSECTION DIVIDER */
+  .sub-divider {
+    margin: 30px 0 20px;
+    padding: 12px 18px;
+    background: var(--bg-elev);
+    border-left: 3px solid var(--accent-pink);
+    border-radius: 0 8px 8px 0;
+  }
+
+  .sub-divider .sub-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent-pink);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .sub-divider .sub-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 19px;
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  .sub-divider .sub-title em {
+    color: var(--accent-pink);
+    font-style: italic;
+  }
+
+  /* TRANSFORM BOX - 명사 → 대명사 변환 시각화 */
+  .transform-box {
+    background: var(--bg-card);
+    border: 1px dashed var(--accent-pink);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .transform-box .from {
+    font-family: 'Instrument Serif', serif;
+    font-size: 17px;
+    color: var(--text-dim);
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .transform-box .arrow {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-pink);
+    font-size: 18px;
+  }
+
+  .transform-box .to {
+    font-family: 'Instrument Serif', serif;
+    font-size: 17px;
+    font-style: italic;
+    color: var(--accent-pink);
+    font-weight: 600;
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .transform-box .to strong {
+    background: var(--accent-pink-dim);
+    padding: 2px 8px;
+    border-radius: 5px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="hero">
+    <div class="eyebrow">English Grammar / Complete Tag Question Guide v3</div>
+    <h1>
+      <span class="small">동사 5형태 + 주어 처리 + 역방향 추론 + Singular They 출처</span>
+      부가의문문<br>
+      <span class="em">완전</span> <span class="good">정복</span> <span class="neg">v3</span>
+    </h1>
+    <p class="lead">
+      v3에서는 가장 헷갈리는 부분 — <strong>"Everyone is here, aren't they?"</strong>처럼 본문은 단수 동사인데 태그는 복수 대명사가 되는 현상 — 을
+      <em>Singular They</em>라는 영문법 개념으로 정확히 설명하고, <strong>Cambridge, British Council, Merriam-Webster</strong> 등 권위 기관의 원문 출처를
+      <em>클릭 가능한 링크</em>로 직접 박아 넣었다. PART 08의 부정대명사 섹션을 집중적으로 보강했다.
+    </p>
+  </header>
+
+  <!-- TOC -->
+  <nav class="toc">
+    <div class="toc-title">목차 · TABLE OF CONTENTS</div>
+    <ul class="toc-list">
+      <li><a href="#part1"><span class="num">01</span>기본 규칙 (THE BASIC RULE)</a></li>
+      <li><a href="#part2"><span class="num">02</span>be 동사 부가의문문</a></li>
+      <li><a href="#part3"><span class="num">03</span>조동사 부가의문문</a></li>
+      <li><a href="#part4"><span class="num">04</span>일반동사 (do/does/did)</a></li>
+      <li><a href="#part5"><span class="num">05</span>have 동사 (본동사)</a></li>
+      <li><a href="#part6"><span class="num">06</span>have + 과거분사 (완료)</a></li>
+      <li><a href="#part7"><span class="num">07</span>have 두 얼굴</a></li>
+      <li><a href="#part8" class="new"><span class="num">08</span>주어 처리 규칙</a></li>
+      <li><a href="#part9" class="new"><span class="num">09</span>역방향 추론 (태그 → 본문)</a></li>
+      <li><a href="#part10"><span class="num">10</span>특수 케이스 4가지</a></li>
+      <li><a href="#part11"><span class="num">11</span>한눈에 보는 정리표</a></li>
+      <li><a href="#part12"><span class="num">12</span>실전 연습 문제</a></li>
+    </ul>
+  </nav>
+
+  <!-- ===== PART 1: BASIC RULE ===== -->
+  <section id="part1">
+    <div class="section-num">01 / THE BASIC RULE</div>
+    <h2>기본 <em>규칙</em></h2>
+
+    <div class="core-box">
+      <p class="core-text">
+        <span class="pos">긍정문</span> → <span class="neg">부정 부가의문문</span><br>
+        <span class="neg">부정문</span> → <span class="pos">긍정 부가의문문</span>
+      </p>
+    </div>
+
+    <p>부가의문문은 평서문 뒤에 짧게 붙여서 <strong>"그렇지?", "안 그래?"</strong>라는 확인의 어감을 더하는 표현이다. 만드는 원리는 단순하지만, <strong>본동사의 종류에 따라 받는 방법이 달라지고, 주어를 대명사로 변환하는 별도의 규칙</strong>이 있다는 점을 반드시 기억해야 한다.</p>
+
+    <div class="info-box">
+      <h3>부가의문문 만들기 4단계 절차</h3>
+      <p>
+        <strong>① 본문의 동사 종류를 파악한다</strong> &mdash; be / 조동사 / 일반동사 / have(본동사) / have+p.p.<br>
+        <strong>② 긍·부정을 뒤집는다</strong> &mdash; 긍정 → 부정, 부정 → 긍정<br>
+        <strong>③ 시제·인칭을 일치시킨다</strong> &mdash; was → wasn't, has → hasn't 등<br>
+        <strong>④ 주어를 주격 대명사로 변환한다</strong> &mdash; Tom → he, this → it, these → they
+      </p>
+    </div>
+
+    <div class="theory">
+      <h3>5가지 동사 형태별 핵심 규칙</h3>
+      <div class="formula">
+        <span class="pos">be 동사</span> &nbsp;→&nbsp; <span class="good">be 동사 그대로 사용</span>
+      </div>
+      <div class="formula">
+        <span class="purple">조동사</span> &nbsp;→&nbsp; <span class="good">조동사 그대로 사용</span>
+      </div>
+      <div class="formula">
+        <span class="cyan">일반동사</span> &nbsp;→&nbsp; <span class="good">do / does / did 로 받기</span>
+      </div>
+      <div class="formula">
+        <span class="neg">have (본동사)</span> &nbsp;→&nbsp; <span class="good">do / does / did 로 받기 (일반동사 취급)</span>
+      </div>
+      <div class="formula">
+        <span class="good">have + 과거분사</span> &nbsp;→&nbsp; <span class="good">have / has / had 그대로 사용 (조동사 취급)</span>
+      </div>
+    </div>
+
+    <p style="margin-top: 20px;">아래에서 각 형태를 하나씩 자세히 살펴본다. 특히 <strong>have의 두 얼굴(본동사 vs 조동사)</strong>과 <strong>주어 처리 규칙</strong>이 가장 헷갈리는 부분이니 PART 7, 8을 집중해서 읽기 바란다.</p>
+  </section>
+
+  <!-- ===== PART 2: BE VERB ===== -->
+  <section id="part2">
+    <div class="section-num be">02 / BE VERB</div>
+    <span class="type-badge be">동사 형태 ①</span>
+    <h2><em>be 동사</em>의 부가의문문</h2>
+
+    <div class="theory">
+      <h3>핵심 규칙 — be 동사를 그대로 사용</h3>
+      <div class="formula">
+        <span class="pos">주어 + be ~,</span> &nbsp;→&nbsp; <span class="neg">be + n't + 주어?</span>
+      </div>
+      <div class="formula">
+        <span class="neg">주어 + be + not ~,</span> &nbsp;→&nbsp; <span class="pos">be + 주어?</span>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h3>be 동사의 종류와 축약형</h3>
+      <p>
+        be 동사는 인칭과 시제에 따라 <strong>am / is / are / was / were</strong>의 5가지 형태로 변한다.
+        부가의문문에서는 본문에 쓰인 be 동사를 그대로 가져와서, 긍·부정만 뒤집으면 된다.
+      </p>
+      <div class="table-wrap" style="margin-top: 14px;">
+        <table>
+          <thead>
+            <tr><th>be 동사</th><th>축약 부정형</th><th>주로 쓰는 주어</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>am</strong></td><td><span class="neg-tag">aren't</span> (특수!)</td><td>I</td></tr>
+            <tr><td><strong>is</strong></td><td><span class="neg-tag">isn't</span></td><td>he, she, it, 단수명사</td></tr>
+            <tr><td><strong>are</strong></td><td><span class="neg-tag">aren't</span></td><td>you, we, they, 복수명사</td></tr>
+            <tr><td><strong>was</strong></td><td><span class="neg-tag">wasn't</span></td><td>I, he, she, it, 단수명사</td></tr>
+            <tr><td><strong>were</strong></td><td><span class="neg-tag">weren't</span></td><td>you, we, they, 복수명사</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h3 class="sub-heading">▸ 긍정문 → 부정 태그</h3>
+
+    <div class="example">
+      <div class="ex-label">현재 — is</div>
+      <p class="sentence">She <span class="verb-be">is</span> a doctor, <span class="tag">isn't she?</span></p>
+      <p class="translate">그녀는 의사야, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">현재 — are</div>
+      <p class="sentence">You <span class="verb-be">are</span> tired, <span class="tag">aren't you?</span></p>
+      <p class="translate">너 피곤하지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">과거 — was</div>
+      <p class="sentence">He <span class="verb-be">was</span> late yesterday, <span class="tag">wasn't he?</span></p>
+      <p class="translate">그는 어제 늦었지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">진행형 — be + V-ing (be 동사가 핵심)</div>
+      <p class="sentence">Tom <span class="verb-be">is</span> studying now, <span class="tag">isn't he?</span></p>
+      <p class="translate">Tom은 지금 공부 중이지, 그렇지?</p>
+      <p class="arrow-note">▸ 진행형에서도 핵심 동사는 be → is로 받는다</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">수동태 — be + p.p. (be 동사가 핵심)</div>
+      <p class="sentence">The book <span class="verb-be">was</span> written by Hemingway, <span class="tag">wasn't it?</span></p>
+      <p class="translate">그 책은 헤밍웨이가 쓴 거지, 그렇지?</p>
+      <p class="arrow-note">▸ 수동태에서도 핵심 동사는 be → was로 받는다</p>
+    </div>
+
+    <h3 class="sub-heading">▸ 부정문 → 긍정 태그</h3>
+
+    <div class="example">
+      <div class="ex-label">현재 부정</div>
+      <p class="sentence">She <span class="verb-be">isn't</span> hungry, <span class="tag">is she?</span></p>
+      <p class="translate">그녀는 배고프지 않지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">과거 부정</div>
+      <p class="sentence">You <span class="verb-be">weren't</span> at home, <span class="tag">were you?</span></p>
+      <p class="translate">너는 집에 없었지, 그렇지?</p>
+    </div>
+  </section>
+
+  <!-- ===== PART 3: MODAL VERBS ===== -->
+  <section id="part3">
+    <div class="section-num modal">03 / MODAL & AUXILIARY VERBS</div>
+    <span class="type-badge modal">동사 형태 ②</span>
+    <h2><em class="purple">조동사</em>의 부가의문문</h2>
+
+    <div class="theory">
+      <h3>핵심 규칙 — 조동사를 그대로 사용</h3>
+      <div class="formula">
+        <span class="pos">주어 + 조동사 ~,</span> &nbsp;→&nbsp; <span class="neg">조동사 + n't + 주어?</span>
+      </div>
+      <div class="formula">
+        <span class="neg">주어 + 조동사 + not ~,</span> &nbsp;→&nbsp; <span class="pos">조동사 + 주어?</span>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h3>조동사 종류와 부정 축약형</h3>
+      <div class="table-wrap" style="margin-top: 14px;">
+        <table>
+          <thead>
+            <tr><th>조동사</th><th>부정 축약형</th><th>의미</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>will</strong></td><td><span class="purple-tag">won't</span></td><td>~할 것이다 (미래·의지)</td></tr>
+            <tr><td><strong>would</strong></td><td><span class="purple-tag">wouldn't</span></td><td>~하곤 했다 / ~할 텐데</td></tr>
+            <tr><td><strong>can</strong></td><td><span class="purple-tag">can't</span></td><td>~할 수 있다</td></tr>
+            <tr><td><strong>could</strong></td><td><span class="purple-tag">couldn't</span></td><td>~할 수 있었다</td></tr>
+            <tr><td><strong>may</strong></td><td><span class="purple-tag">mayn't</span> (드묾)</td><td>~일지도 모른다</td></tr>
+            <tr><td><strong>might</strong></td><td><span class="purple-tag">mightn't</span></td><td>~일지도 모른다 (약한 추측)</td></tr>
+            <tr><td><strong>must</strong></td><td><span class="purple-tag">mustn't</span></td><td>~해야 한다 / ~임에 틀림없다</td></tr>
+            <tr><td><strong>should</strong></td><td><span class="purple-tag">shouldn't</span></td><td>~해야 한다</td></tr>
+            <tr><td><strong>shall</strong></td><td><span class="purple-tag">shan't</span></td><td>~할 것이다 (영국식)</td></tr>
+            <tr><td><strong>ought to</strong></td><td><span class="purple-tag">oughtn't to</span></td><td>~해야 한다</td></tr>
+            <tr><td><strong>used to</strong></td><td><span class="purple-tag">didn't ~ used to</span></td><td>~하곤 했다 (특수!)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h3 class="sub-heading">▸ 긍정문 → 부정 태그</h3>
+
+    <div class="example">
+      <div class="ex-label">will → won't</div>
+      <p class="sentence">He <span class="verb-modal">will</span> arrive soon, <span class="tag">won't he?</span></p>
+      <p class="translate">그는 곧 도착할 거야, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">can → can't</div>
+      <p class="sentence">She <span class="verb-modal">can</span> speak Korean, <span class="tag">can't she?</span></p>
+      <p class="translate">그녀는 한국어 할 수 있지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">should → shouldn't</div>
+      <p class="sentence">We <span class="verb-modal">should</span> leave now, <span class="tag">shouldn't we?</span></p>
+      <p class="translate">우리 지금 떠나야 해, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">must → mustn't</div>
+      <p class="sentence">You <span class="verb-modal">must</span> finish this, <span class="tag">mustn't you?</span></p>
+      <p class="translate">너는 이걸 끝내야 해, 그렇지?</p>
+    </div>
+
+    <h3 class="sub-heading">▸ 부정문 → 긍정 태그</h3>
+
+    <div class="example">
+      <div class="ex-label">won't → will</div>
+      <p class="sentence">He <span class="verb-modal">won't</span> come, <span class="tag">will he?</span></p>
+      <p class="translate">그는 안 올 거야, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">can't → can</div>
+      <p class="sentence">You <span class="verb-modal">can't</span> drive, <span class="tag">can you?</span></p>
+      <p class="translate">너는 운전 못하지, 그렇지?</p>
+    </div>
+
+    <div class="caution-box">
+      <h3>주의 — used to / have to / ought to</h3>
+      <p>
+        <strong>① used to</strong> — 조동사처럼 보이지만 <strong>일반동사로 취급</strong>한다.<br>
+        &nbsp;&nbsp;&nbsp;&nbsp; <em>He used to smoke,</em> <span class="cyan-tag">didn't he?</span> (○)<br><br>
+        <strong>② have to</strong> — 의미는 조동사(~해야 한다)지만 <strong>일반동사로 취급</strong>한다.<br>
+        &nbsp;&nbsp;&nbsp;&nbsp; <em>You have to go,</em> <span class="cyan-tag">don't you?</span> (○)<br><br>
+        <strong>③ ought to</strong> — 일상 회화에서는 <strong>shouldn't</strong>로 받는 경우가 많다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== PART 4: GENERAL VERBS ===== -->
+  <section id="part4">
+    <div class="section-num general">04 / GENERAL VERBS</div>
+    <span class="type-badge general">동사 형태 ③</span>
+    <h2><em class="cyan">일반동사</em>의 부가의문문</h2>
+
+    <div class="theory">
+      <h3>핵심 규칙 — do / does / did 로 받기</h3>
+      <div class="formula">
+        <span class="pos">주어 + 일반동사 ~,</span> &nbsp;→&nbsp; <span class="neg">don't / doesn't / didn't + 주어?</span>
+      </div>
+      <div class="formula">
+        <span class="neg">주어 + don't/doesn't/didn't + 동사 ~,</span> &nbsp;→&nbsp; <span class="pos">do / does / did + 주어?</span>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h3>do / does / did 선택 기준</h3>
+      <div class="table-wrap" style="margin-top: 14px;">
+        <table>
+          <thead>
+            <tr><th>시제·인칭</th><th>긍정문 → 태그</th><th>부정문 → 태그</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>현재 / 3인칭 단수</strong><br>(he, she, it)</td>
+              <td><span class="cyan-tag">doesn't he?</span></td>
+              <td><span class="cyan-tag">does he?</span></td>
+            </tr>
+            <tr>
+              <td><strong>현재 / 그 외</strong><br>(I, you, we, they)</td>
+              <td><span class="cyan-tag">don't you?</span></td>
+              <td><span class="cyan-tag">do you?</span></td>
+            </tr>
+            <tr>
+              <td><strong>과거 / 모든 인칭</strong></td>
+              <td><span class="cyan-tag">didn't he?</span></td>
+              <td><span class="cyan-tag">did he?</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">현재 / 3인칭 단수</div>
+      <p class="sentence">She <span class="verb-general">likes</span> coffee, <span class="tag">doesn't she?</span></p>
+      <p class="translate">그녀는 커피 좋아하지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">현재 / 그 외</div>
+      <p class="sentence">You <span class="verb-general">play</span> the piano, <span class="tag">don't you?</span></p>
+      <p class="translate">너 피아노 치지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">과거</div>
+      <p class="sentence">He <span class="verb-general">came</span> home, <span class="tag">didn't he?</span></p>
+      <p class="translate">그는 집에 왔지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">부정문 → 긍정 태그</div>
+      <p class="sentence">They <span class="verb-general">don't</span> live here, <span class="tag">do they?</span></p>
+      <p class="translate">그들은 여기 안 살지, 그렇지?</p>
+    </div>
+  </section>
+
+  <!-- ===== PART 5: HAVE AS MAIN VERB ===== -->
+  <section id="part5">
+    <div class="section-num have">05 / "HAVE" AS MAIN VERB</div>
+    <span class="type-badge have">동사 형태 ④</span>
+    <h2><em class="neg">have 동사</em> — 본동사로 쓰일 때</h2>
+
+    <div class="theory">
+      <h3>핵심 규칙 — 일반동사처럼 do / does / did 로 받기</h3>
+      <div class="formula">
+        <span class="pos">주어 + have/has/had + 목적어 (소유·경험·먹다 등),</span><br>&nbsp;→&nbsp; <span class="neg">don't / doesn't / didn't + 주어?</span>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h3>have가 본동사일 때 — 의미들</h3>
+      <p>
+        <strong>① 소유</strong> — <em>have a car, have time</em><br>
+        <strong>② 먹다·마시다</strong> — <em>have breakfast, have coffee</em><br>
+        <strong>③ 경험</strong> — <em>have fun, have a problem, have a meeting</em><br>
+        <strong>④ 관계</strong> — <em>have a sister, have a friend</em><br><br>
+        이런 의미일 때는 have가 <strong style="color: var(--accent-cyan);">일반동사</strong>이므로 <strong>do / does / did</strong>로 받는다.
+      </p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">소유</div>
+      <p class="sentence">You <span class="verb-have">have</span> a car, <span class="tag">don't you?</span></p>
+      <p class="translate">너 차 있지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">먹다 (have = eat)</div>
+      <p class="sentence">They <span class="verb-have">have</span> lunch at noon, <span class="tag">don't they?</span></p>
+      <p class="translate">그들은 정오에 점심 먹지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">경험</div>
+      <p class="sentence">We <span class="verb-have">had</span> a great time, <span class="tag">didn't we?</span></p>
+      <p class="translate">우리 정말 좋은 시간 보냈지, 그렇지?</p>
+    </div>
+  </section>
+
+  <!-- ===== PART 6: HAVE + PAST PARTICIPLE ===== -->
+  <section id="part6">
+    <div class="section-num perfect">06 / "HAVE + PAST PARTICIPLE"</div>
+    <span class="type-badge perfect">동사 형태 ⑤</span>
+    <h2><em class="good">have + 과거분사</em> — 완료시제</h2>
+
+    <div class="theory">
+      <h3>핵심 규칙 — have / has / had 를 그대로 사용 (조동사 취급)</h3>
+      <div class="formula">
+        <span class="pos">주어 + have/has/had + p.p. ~,</span> &nbsp;→&nbsp; <span class="neg">haven't / hasn't / hadn't + 주어?</span>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">현재완료 → haven't</div>
+      <p class="sentence">You <span class="verb-perfect">have finished</span> your homework, <span class="tag">haven't you?</span></p>
+      <p class="translate">너 숙제 다 했지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">현재완료 → hasn't</div>
+      <p class="sentence">She <span class="verb-perfect">has been</span> to Paris, <span class="tag">hasn't she?</span></p>
+      <p class="translate">그녀는 파리에 가본 적 있지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">과거완료 → hadn't</div>
+      <p class="sentence">They <span class="verb-perfect">had left</span> by then, <span class="tag">hadn't they?</span></p>
+      <p class="translate">그들은 그때까지는 떠났었지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">부정문 → has</div>
+      <p class="sentence">He <span class="verb-perfect">hasn't called</span>, <span class="tag">has he?</span></p>
+      <p class="translate">그는 전화 안 했지, 그렇지?</p>
+    </div>
+  </section>
+
+  <!-- ===== PART 7: HAVE COMPARISON ===== -->
+  <section id="part7">
+    <div class="section-num have">07 / TWO FACES OF "HAVE"</div>
+    <h2><em class="neg">have</em>의 <em class="good">두 얼굴</em> — 본동사 vs 조동사</h2>
+
+    <div class="caution-box">
+      <h3>핵심 구분법 — have 뒤에 무엇이 오는가?</h3>
+      <p>
+        <strong style="color: var(--accent-neg);">① have + 명사·목적어 → 본동사</strong> &nbsp; → &nbsp; <strong style="color: var(--accent-cyan);">do/does/did</strong>로 받음<br>
+        <strong style="color: var(--accent-good);">② have + 과거분사(p.p.) → 조동사</strong> &nbsp; → &nbsp; <strong style="color: var(--accent-good);">have/has/had</strong>로 받음
+      </p>
+    </div>
+
+    <h3 class="sub-heading">▸ 같은 has, 다른 정체성</h3>
+
+    <div class="compare-card">
+      <div class="col have-main">
+        <div class="col-header">본동사 — 소유</div>
+        <div class="col-title">He <em>has</em> a car.</div>
+        <p style="color: var(--text-dim); font-size: 13px;">→ has가 단독 본동사 ("가지다")<br>→ <strong style="color: var(--accent-cyan);">doesn't</strong>로 받음</p>
+        <p class="sentence" style="margin-top: 14px;">He has a car, <span class="tag">doesn't he?</span></p>
+      </div>
+      <div class="col have-perfect">
+        <div class="col-header">조동사 — 완료</div>
+        <div class="col-title">He <em>has</em> bought a car.</div>
+        <p style="color: var(--text-dim); font-size: 13px;">→ has + bought(p.p.) ("샀다")<br>→ <strong style="color: var(--accent-good);">hasn't</strong>로 받음</p>
+        <p class="sentence" style="margin-top: 14px;">He has bought a car, <span class="tag">hasn't he?</span></p>
+      </div>
+    </div>
+
+    <h3 class="sub-heading">▸ 같은 had, 다른 정체성</h3>
+
+    <div class="compare-card">
+      <div class="col have-main">
+        <div class="col-header">본동사 — 먹다·경험</div>
+        <div class="col-title">She <em>had</em> dinner.</div>
+        <p style="color: var(--text-dim); font-size: 13px;">→ had가 단독 본동사 ("먹었다")<br>→ <strong style="color: var(--accent-cyan);">didn't</strong>로 받음</p>
+        <p class="sentence" style="margin-top: 14px;">She had dinner, <span class="tag">didn't she?</span></p>
+      </div>
+      <div class="col have-perfect">
+        <div class="col-header">조동사 — 과거완료</div>
+        <div class="col-title">She <em>had</em> eaten dinner.</div>
+        <p style="color: var(--text-dim); font-size: 13px;">→ had + eaten(p.p.) (과거완료)<br>→ <strong style="color: var(--accent-good);">hadn't</strong>로 받음</p>
+        <p class="sentence" style="margin-top: 14px;">She had eaten dinner, <span class="tag">hadn't she?</span></p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h3>3초 판별법</h3>
+      <p>
+        <strong>① 뒤에 명사·대명사·형용사가 오면</strong> → 본동사 → <span class="cyan-tag">do/does/did</span><br>
+        <strong>② 뒤에 과거분사(-ed / -en / 불규칙 p.p.)가 오면</strong> → 조동사 → <span class="good-tag">have/has/had</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== PART 8: SUBJECT PRONOUN RULES (NEW!) ===== -->
+  <section id="part8">
+    <div class="section-num subject">08 / SUBJECT PRONOUN RULES <span class="new-section-badge">NEW</span></div>
+    <span class="type-badge subject">주어 처리 규칙</span>
+    <h2><em class="pink">주어</em>는 항상 <em class="pink">주격 대명사</em>로</h2>
+
+    <p>지금까지는 동사 변환에만 집중했지만, 부가의문문에는 또 하나의 핵심 규칙이 있다. <strong>태그의 주어는 반드시 주격 대명사(subjective pronoun)</strong>여야 한다는 것. 본문의 주어가 무엇이든 간에 — 사람 이름이든, 사물이든, 지시대명사든, 부정대명사든 — 태그에서는 항상 he/she/it/they 같은 주격 대명사로 바꿔야 한다.</p>
+
+    <div class="theory">
+      <h3>핵심 규칙 — 본문 주어를 주격 대명사로 변환</h3>
+      <div class="formula">
+        본문 주어 (명사/지시대명사/부정대명사) &nbsp;→&nbsp; <span class="pink">주격 대명사 (he, she, it, they, we, you, I)</span>
+      </div>
+    </div>
+
+    <!-- 8-1: General Nouns → Pronouns -->
+    <h3 class="sub-heading" style="color: var(--accent-pink);">① 일반 명사 → 주격 대명사</h3>
+
+    <p>고유명사(이름), 일반명사 모두 성별·수에 맞는 주격 대명사로 바꾼다.</p>
+
+    <div class="transform-box">
+      <div class="from"><strong>Tom</strong>, my brother, the student (남성 단수)</div>
+      <div class="arrow">→</div>
+      <div class="to"><strong>he</strong></div>
+    </div>
+
+    <div class="transform-box">
+      <div class="from"><strong>Mary</strong>, my sister, the teacher (여성 단수)</div>
+      <div class="arrow">→</div>
+      <div class="to"><strong>she</strong></div>
+    </div>
+
+    <div class="transform-box">
+      <div class="from"><strong>the book</strong>, the dog, the car (사물·동물 단수)</div>
+      <div class="arrow">→</div>
+      <div class="to"><strong>it</strong></div>
+    </div>
+
+    <div class="transform-box">
+      <div class="from"><strong>Tom and Mary</strong>, the students, the books (복수)</div>
+      <div class="arrow">→</div>
+      <div class="to"><strong>they</strong></div>
+    </div>
+
+    <div class="transform-box">
+      <div class="from"><strong>Tom and I</strong>, you and I, my sister and I (나 포함 복수)</div>
+      <div class="arrow">→</div>
+      <div class="to"><strong>we</strong></div>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">고유명사 → he</div>
+      <p class="sentence"><span class="subj-hl">Tom</span> is tall, <span class="tag">isn't <span class="pronoun-hl">he</span>?</span></p>
+      <p class="translate">Tom은 키가 크지, 그렇지?</p>
+      <p class="arrow-note">▸ Tom → he (NOT "isn't Tom?")</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">소유격 명사구 → she</div>
+      <p class="sentence"><span class="subj-hl">My sister</span> can swim, <span class="tag">can't <span class="pronoun-hl">she</span>?</span></p>
+      <p class="translate">내 여동생은 수영할 줄 알지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">사물 단수 → it</div>
+      <p class="sentence"><span class="subj-hl">The book</span> is interesting, <span class="tag">isn't <span class="pronoun-hl">it</span>?</span></p>
+      <p class="translate">그 책 재밌지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">복수명사 → they</div>
+      <p class="sentence"><span class="subj-hl">The students</span> studied hard, <span class="tag">didn't <span class="pronoun-hl">they</span>?</span></p>
+      <p class="translate">학생들은 열심히 공부했지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">A and I → we</div>
+      <p class="sentence"><span class="subj-hl">Tom and I</span> are good friends, <span class="tag">aren't <span class="pronoun-hl">we</span>?</span></p>
+      <p class="translate">Tom과 나는 좋은 친구지, 그렇지?</p>
+    </div>
+
+    <!-- 8-2: this/that → it -->
+    <h3 class="sub-heading" style="color: var(--accent-pink);">② this / that → it (지시대명사 단수)</h3>
+
+    <div class="info-box">
+      <h3>왜 this/that을 it으로 바꾸는가?</h3>
+      <p>
+        this와 that도 엄연한 대명사인데, <strong>부가의문문에서는 사용할 수 없다</strong>. 이는 부가의문문이 <strong>3인칭 인칭대명사(he/she/it/they)</strong>를 사용하는 관습 때문이다.
+        this/that은 가리키는(지시) 기능이 강한 반면, 태그에서는 단순히 주어를 다시 받기만 하면 되므로 <strong>중립적인 it</strong>으로 바꾼다.<br><br>
+        이건 영어의 굳어진 관습이니 그냥 외워야 한다.
+      </p>
+    </div>
+
+    <div class="transform-box">
+      <div class="from"><strong>this</strong>, that (단수 지시대명사)</div>
+      <div class="arrow">→</div>
+      <div class="to"><strong>it</strong></div>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">this → it</div>
+      <p class="sentence"><span class="subj-hl">This</span> is my book, <span class="tag">isn't <span class="pronoun-hl">it</span>?</span></p>
+      <p class="translate">이건 내 책이지, 그렇지?</p>
+      <p class="arrow-note">▸ this → it (NOT "isn't this?")</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">that → it</div>
+      <p class="sentence"><span class="subj-hl">That</span> was funny, <span class="tag">wasn't <span class="pronoun-hl">it</span>?</span></p>
+      <p class="translate">그거 웃겼지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">that → it</div>
+      <p class="sentence"><span class="subj-hl">That</span> doesn't make sense, <span class="tag">does <span class="pronoun-hl">it</span>?</span></p>
+      <p class="translate">그건 말이 안 되지, 그렇지?</p>
+    </div>
+
+    <div class="example bad">
+      <div class="ex-label">자주 하는 실수</div>
+      <p class="sentence"><span class="strike">This is my book, isn't this?</span></p>
+      <p class="sentence"><span class="strike">That was funny, wasn't that?</span></p>
+      <div class="note">
+        <strong>지시대명사(this/that)는 부가의문문에서 그대로 쓸 수 없다.</strong> 반드시 <span class="highlight">it</span>으로 바꿔야 한다.
+      </div>
+    </div>
+
+    <!-- 8-3: these/those → they -->
+    <h3 class="sub-heading" style="color: var(--accent-pink);">③ these / those → they (지시대명사 복수)</h3>
+
+    <div class="transform-box">
+      <div class="from"><strong>these</strong>, those (복수 지시대명사)</div>
+      <div class="arrow">→</div>
+      <div class="to"><strong>they</strong></div>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">these → they</div>
+      <p class="sentence"><span class="subj-hl">These</span> are delicious, <span class="tag">aren't <span class="pronoun-hl">they</span>?</span></p>
+      <p class="translate">이것들 맛있지, 그렇지?</p>
+      <p class="arrow-note">▸ these → they (NOT "aren't these?")</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">those → they</div>
+      <p class="sentence"><span class="subj-hl">Those</span> weren't right, <span class="tag">were <span class="pronoun-hl">they</span>?</span></p>
+      <p class="translate">그것들은 맞지 않았지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">those + 복수명사 → they</div>
+      <p class="sentence"><span class="subj-hl">Those books</span> are heavy, <span class="tag">aren't <span class="pronoun-hl">they</span>?</span></p>
+      <p class="translate">저 책들 무겁지, 그렇지?</p>
+    </div>
+
+    <!-- 8-4: Indefinite pronouns - EXPANDED WITH SOURCES -->
+    <h3 class="sub-heading" style="color: var(--accent-pink);">④ 부정대명사 — every-, some-, no-, any- 시리즈</h3>
+
+    <div class="paradox-box">
+      <h3>한국 학습자가 가장 충격받는 부분 — 단/복수 충돌</h3>
+      <p>
+        다음 문장을 보자: <strong style="font-size: 17px; color: var(--text);">"Everyone is here, aren't they?"</strong><br>
+        본문은 <strong>단수 동사 is</strong>, 태그는 <strong>복수 대명사 they + 복수 동사 aren't</strong>. 한 문장 안에서 단수와 복수가 충돌한다.
+      </p>
+      <p>
+        이게 영어의 <strong>공식 표준</strong>이다. 그런데 한국 영어교육에서 잘 가르치지 않아 많은 학습자가 처음 본다. 아래에서 출처와 함께 자세히 설명한다.
+        결론부터: <strong>everyone/everybody는 의미상 복수처럼 작동</strong>하고, <strong>someone/anyone/nobody는 "singular they"</strong>라는 별도의 영문법 현상이 작동한다.
+      </p>
+    </div>
+
+    <!-- 두 그룹 구분 -->
+    <div class="sub-divider">
+      <span class="sub-num">Group A · 의미상 복수</span>
+      <span class="sub-title"><em>everyone, everybody</em> → they (모두를 가리키는 복수 의미)</span>
+    </div>
+
+    <p>everyone과 everybody는 <strong>"모든 사람들"</strong>이라는 집합 의미를 가진다. 따라서 의미상 복수에 가깝고, 대명사 they가 자연스럽다. 단, 동사 일치는 여전히 단수(is, has, knows)다.</p>
+
+    <div class="example">
+      <div class="ex-label">everybody → they</div>
+      <p class="sentence"><span class="subj-hl">Everybody</span> knows that, <span class="tag">don't <span class="pronoun-hl">they</span>?</span></p>
+      <p class="translate">모두가 그걸 알지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">everyone → they (단수 동사 + 복수 대명사)</div>
+      <p class="sentence"><span class="subj-hl">Everyone</span> is here, <span class="tag">aren't <span class="pronoun-hl">they</span>?</span></p>
+      <p class="translate">모두 여기 있지, 그렇지?</p>
+      <p class="arrow-note">▸ 본문은 is(단수), 태그는 aren't they(복수) — 표준 표현</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">everyone was → weren't they</div>
+      <p class="sentence"><span class="subj-hl">Everyone</span> was delighted, <span class="tag">weren't <span class="pronoun-hl">they</span>?</span></p>
+      <p class="translate">모두 기뻐했지, 그렇지?</p>
+    </div>
+
+    <!-- Group B: 진짜 단수 -->
+    <div class="sub-divider">
+      <span class="sub-num">Group B · 의미상 단수 (★ 진짜 어려운 부분)</span>
+      <span class="sub-title"><em>someone, anyone, nobody, somebody</em> → they (Singular They)</span>
+    </div>
+
+    <p><strong>여기서 사용자의 직관이 맞다.</strong> someone/anyone/nobody는 의미상 "한 명"이다. "모든 사람들"이 아니다. 그런데도 they로 받는다. 그 이유는 <strong>"singular they"</strong>라는 별도의 영문법 현상 때문이다.</p>
+
+    <div class="info-box">
+      <h3>Singular They (단수 they)란?</h3>
+      <p>
+        영어에는 <strong>성별을 모르는 한 사람</strong>을 가리키는 단수 대명사가 없다. 그래서 영어 화자들은 600년 넘게 <strong>they를 단수 의미로</strong>(성중립 단수 대명사로) 사용해왔다. 형태는 복수(they)이지만 의미는 단수(한 명)다.<br><br>
+        <strong>비유 — "you"와 똑같은 메커니즘:</strong> "you"도 원래 복수였다(ye가 단수였음). 지금 한 명에게 말해도 "you <strong>are</strong>"라고 한다(단수 의미 + 복수 동사). singular they도 정확히 같은 패턴이다.
+      </p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">someone → they (한 사람을 가리키는 they)</div>
+      <p class="sentence"><span class="subj-hl">Someone</span> is staring at her, <span class="tag">aren't <span class="pronoun-hl">they</span>?</span></p>
+      <p class="translate">누군가가 그녀를 쳐다보지, 그렇지?</p>
+      <p class="arrow-note">▸ 쳐다보는 사람은 한 명이지만, 성별을 모르므로 they 사용</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">somebody → they</div>
+      <p class="sentence"><span class="subj-hl">Somebody</span> called you, <span class="tag">didn't <span class="pronoun-hl">they</span>?</span></p>
+      <p class="translate">누가 너한테 전화했지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">anyone → they</div>
+      <p class="sentence"><span class="subj-hl">Anyone</span> can do it, <span class="tag">can't <span class="pronoun-hl">they</span>?</span></p>
+      <p class="translate">누구든 할 수 있어, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">nobody (부정문 취급) → they</div>
+      <p class="sentence"><span class="subj-hl">Nobody</span> came, <span class="tag">did <span class="pronoun-hl">they</span>?</span></p>
+      <p class="translate">아무도 안 왔지, 그렇지?</p>
+      <p class="arrow-note">▸ nobody는 그 자체로 부정 의미 → 긍정 태그 did they</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">nobody has → have they</div>
+      <p class="sentence"><span class="subj-hl">Nobody</span> has called for me, <span class="tag">have <span class="pronoun-hl">they</span>?</span></p>
+      <p class="translate">아무도 날 부르지 않았지, 그렇지?</p>
+    </div>
+
+    <!-- 권위 있는 출처들 -->
+    <div class="source-box">
+      <div class="source-intro">
+        ★ 이게 한국 학습자에게 너무 낯설어서 의심스러울 수 있다. 아래는 영어권 최고 권위 기관들이 직접 인정한 출처들이다. 클릭하여 원문을 확인할 수 있다.
+      </div>
+
+      <a href="https://dictionary.cambridge.org/grammar/british-grammar/everyone-everybody-everything-everywhere" target="_blank" rel="noopener" class="source-link">
+        <span class="source-org">① Cambridge Grammar (English Grammar Today)</span>
+        <span class="source-quote">"When we want to refer back to everyone or everybody and we don't know if everyone is male or female, we use him or her and his or her. In informal styles, we use plural pronouns they, their and them."</span>
+        <span class="source-url">dictionary.cambridge.org/grammar/british-grammar/everyone-everybody-everything-everywhere</span>
+      </a>
+
+      <a href="https://learnenglish.britishcouncil.org/grammar/english-grammar-reference/indefinite-pronouns" target="_blank" rel="noopener" class="source-link">
+        <span class="source-org">② British Council LearnEnglish — Indefinite Pronouns</span>
+        <span class="source-quote">"When we refer back to an indefinite pronoun, we normally use a plural pronoun: Everybody enjoyed the concert. They stood up and clapped. I will tell somebody that dinner is ready. They have been waiting a long time."</span>
+        <span class="source-url">learnenglish.britishcouncil.org/grammar/english-grammar-reference/indefinite-pronouns</span>
+      </a>
+
+      <a href="https://learnenglish.britishcouncil.org/grammar/b1-b2-grammar/question-tags" target="_blank" rel="noopener" class="source-link">
+        <span class="source-org">③ British Council — Question Tags 페이지 직접 예문</span>
+        <span class="source-quote">"Nobody has called for me, have they?" — 영국문화원 부가의문문 페이지 본문에 등장하는 표준 예문</span>
+        <span class="source-url">learnenglish.britishcouncil.org/grammar/b1-b2-grammar/question-tags</span>
+      </a>
+
+      <a href="https://dictionary.cambridge.org/grammar/british-grammar/tags" target="_blank" rel="noopener" class="source-link">
+        <span class="source-org">④ Cambridge Dictionary — Tags 항목</span>
+        <span class="source-quote">케임브리지 공식 부가의문문 문법 페이지 (Tags 항목). 부가의문문 전체 규칙 표준</span>
+        <span class="source-url">dictionary.cambridge.org/grammar/british-grammar/tags</span>
+      </a>
+
+      <a href="https://www.merriam-webster.com/wordplay/singular-nonbinary-they" target="_blank" rel="noopener" class="source-link">
+        <span class="source-org">⑤ Merriam-Webster — Singular They (2019년 올해의 단어)</span>
+        <span class="source-quote">"English famously lacks a gender-neutral singular pronoun to correspond neatly with singular pronouns like everyone or someone, and as a consequence they has been used for this purpose for over 600 years."</span>
+        <span class="source-url">merriam-webster.com/wordplay/singular-nonbinary-they</span>
+      </a>
+
+      <a href="https://en.wikipedia.org/wiki/Singular_they" target="_blank" rel="noopener" class="source-link">
+        <span class="source-org">⑥ Wikipedia — Singular They (학술적 정리)</span>
+        <span class="source-quote">"Use of singular they is stated to be 'particularly common', even 'stylistically neutral' with antecedents such as everyone, someone, and no one" (Cambridge Grammar of the English Language 인용)</span>
+        <span class="source-url">en.wikipedia.org/wiki/Singular_they</span>
+      </a>
+
+      <div style="margin-top: 14px; padding: 12px 16px; background: var(--bg); border-radius: 8px; font-size: 12px; color: var(--text-muted); line-height: 1.7;">
+        <strong style="color: var(--accent-warn);">📖 추가 권위 자료 (도서):</strong><br>
+        • Michael Swan, <em>Practical English Usage</em> (Oxford University Press), p.472 — "We use 'they' to refer to nobody, somebody, and everybody"<br>
+        • Raymond Murphy, <em>English Grammar in Use</em> (Cambridge University Press) — B1-B2 표준 EFL 교재<br>
+        • Huddleston &amp; Pullum, <em>The Cambridge Grammar of the English Language</em> — 학계 최고 권위 영문법서<br>
+        • Oxford English Dictionary — singular they 용례 1405년부터 기록됨
+      </div>
+    </div>
+
+    <!-- 사물 부정대명사 -->
+    <div class="sub-divider">
+      <span class="sub-num">Group C · 사물·일</span>
+      <span class="sub-title"><em>everything, something, nothing, anything</em> → it</span>
+    </div>
+
+    <p>everything 시리즈는 <strong>사물·일·상황</strong>을 가리키므로 they가 아니라 <strong>it</strong>으로 받는다. (사물에는 singular they를 쓰지 않는다 — singular they는 사람 전용)</p>
+
+    <div class="example">
+      <div class="ex-label">everything → it</div>
+      <p class="sentence"><span class="subj-hl">Everything</span> is fine, <span class="tag">isn't <span class="pronoun-hl">it</span>?</span></p>
+      <p class="translate">모든 게 괜찮지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">nothing (부정문 취급) → it</div>
+      <p class="sentence"><span class="subj-hl">Nothing</span> happened, <span class="tag">did <span class="pronoun-hl">it</span>?</span></p>
+      <p class="translate">아무 일도 없었지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">something → it</div>
+      <p class="sentence"><span class="subj-hl">Something</span> is wrong, <span class="tag">isn't <span class="pronoun-hl">it</span>?</span></p>
+      <p class="translate">뭔가 잘못됐지, 그렇지?</p>
+    </div>
+
+    <!-- 종합표 -->
+    <div class="info-box">
+      <h3>부정대명사 처리 종합표</h3>
+      <div class="table-wrap" style="margin-top: 14px;">
+        <table>
+          <thead>
+            <tr><th>그룹</th><th>부정대명사</th><th>의미</th><th>태그 주어</th><th>원리</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>A</strong></td>
+              <td>everyone, everybody</td>
+              <td>모든 사람들 (집합)</td>
+              <td><span class="pink-tag">they</span></td>
+              <td>의미상 복수</td>
+            </tr>
+            <tr>
+              <td><strong>B</strong></td>
+              <td>someone, somebody<br>anyone, anybody<br>nobody, no one</td>
+              <td>한 사람 (성별 미상)</td>
+              <td><span class="pink-tag">they</span></td>
+              <td><strong>Singular They</strong><br>(성중립 단수 대명사)</td>
+            </tr>
+            <tr>
+              <td><strong>C</strong></td>
+              <td>everything, something<br>nothing, anything</td>
+              <td>사물·일</td>
+              <td><span class="pink-tag">it</span></td>
+              <td>사물 단수 처리</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 8-5: There -->
+    <h3 class="sub-heading" style="color: var(--accent-pink);">⑤ There is / There are → there (그대로!)</h3>
+
+    <div class="info-box">
+      <h3>특수 케이스 — there는 그대로 사용</h3>
+      <p>
+        "There is/are ~" 구문에서는 <strong>there를 주어처럼 취급</strong>한다. 그래서 태그에서도 <strong>there를 그대로</strong> 사용한다.
+        대명사로 바꾸지 않는다.
+      </p>
+    </div>
+
+    <div class="transform-box">
+      <div class="from"><strong>There is / are / was / were ~</strong></div>
+      <div class="arrow">→</div>
+      <div class="to"><strong>there</strong> (그대로!)</div>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">There is</div>
+      <p class="sentence"><span class="subj-hl">There</span> is a problem, <span class="tag">isn't <span class="pronoun-hl">there</span>?</span></p>
+      <p class="translate">문제가 있지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">There were</div>
+      <p class="sentence"><span class="subj-hl">There</span> were many people, <span class="tag">weren't <span class="pronoun-hl">there</span>?</span></p>
+      <p class="translate">많은 사람들이 있었지, 그렇지?</p>
+    </div>
+
+    <!-- 8-6: Gerund / Phrase -->
+    <h3 class="sub-heading" style="color: var(--accent-pink);">⑥ 동명사·to부정사·that절 → it</h3>
+
+    <p>동사가 명사처럼 쓰인 동명사(-ing)나 to부정사, that절이 주어일 때는 단수 사물로 취급해 <strong>it</strong>으로 받는다.</p>
+
+    <div class="example">
+      <div class="ex-label">동명사 주어 → it</div>
+      <p class="sentence"><span class="subj-hl">Learning English</span> is fun, <span class="tag">isn't <span class="pronoun-hl">it</span>?</span></p>
+      <p class="translate">영어 배우는 거 재밌지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">to부정사 주어 → it</div>
+      <p class="sentence"><span class="subj-hl">To make mistakes</span> is human, <span class="tag">isn't <span class="pronoun-hl">it</span>?</span></p>
+      <p class="translate">실수하는 건 인간적이지, 그렇지?</p>
+    </div>
+
+    <!-- Summary table -->
+    <div class="info-box">
+      <h3>주어 처리 한눈 요약</h3>
+      <div class="table-wrap" style="margin-top: 14px;">
+        <table>
+          <thead>
+            <tr><th>본문 주어</th><th>→ 태그 주어</th><th>예시</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Tom, my brother (남성)</td><td><span class="pink-tag">he</span></td><td>Tom is nice, isn't <strong>he</strong>?</td></tr>
+            <tr><td>Mary, my sister (여성)</td><td><span class="pink-tag">she</span></td><td>Mary is kind, isn't <strong>she</strong>?</td></tr>
+            <tr><td>the book, the dog (사물·동물 단수)</td><td><span class="pink-tag">it</span></td><td>The dog is cute, isn't <strong>it</strong>?</td></tr>
+            <tr><td>the students (복수)</td><td><span class="pink-tag">they</span></td><td>The students study, don't <strong>they</strong>?</td></tr>
+            <tr><td>Tom and I</td><td><span class="pink-tag">we</span></td><td>Tom and I are friends, aren't <strong>we</strong>?</td></tr>
+            <tr><td><strong>this, that</strong></td><td><span class="pink-tag">it</span></td><td>This is good, isn't <strong>it</strong>?</td></tr>
+            <tr><td><strong>these, those</strong></td><td><span class="pink-tag">they</span></td><td>These are nice, aren't <strong>they</strong>?</td></tr>
+            <tr><td>everybody, someone, nobody</td><td><span class="pink-tag">they</span></td><td>Everyone left, didn't <strong>they</strong>?</td></tr>
+            <tr><td>everything, something, nothing</td><td><span class="pink-tag">it</span></td><td>Nothing matters, does <strong>it</strong>?</td></tr>
+            <tr><td><strong>There is/are ~</strong></td><td><span class="pink-tag">there</span></td><td>There is a problem, isn't <strong>there</strong>?</td></tr>
+            <tr><td>동명사·to부정사·that절 주어</td><td><span class="pink-tag">it</span></td><td>Smoking is bad, isn't <strong>it</strong>?</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PART 9: REVERSE - TAG TO MAIN (NEW!) ===== -->
+  <section id="part9">
+    <div class="section-num reverse">09 / REVERSE — TAG TO MAIN CLAUSE <span class="new-section-badge">NEW</span></div>
+    <span class="type-badge reverse">역방향 추론</span>
+    <h2><em class="good">역방향</em> 접근 — 태그로 본문 추론하기</h2>
+
+    <p>지금까지는 <strong>본문을 보고 태그를 만드는</strong> 방향이었다. 이번에는 거꾸로, <strong>태그를 보고 본문의 동사·시제·인칭을 추론하는</strong> 능력을 길러보자. 이 능력은 시험 문제뿐 아니라 영어를 듣고 즉시 이해하는 데에도 중요하다.</p>
+
+    <div class="theory">
+      <h3>핵심 원리 — 태그에는 본문의 정보가 모두 들어있다</h3>
+      <div class="formula">
+        태그의 <span class="good">동사</span> &nbsp;→&nbsp; 본문 동사의 <span class="good">종류와 시제</span>
+      </div>
+      <div class="formula">
+        태그의 <span class="good">긍·부정</span> &nbsp;→&nbsp; 본문의 <span class="good">반대</span> 긍·부정
+      </div>
+      <div class="formula">
+        태그의 <span class="good">주어</span> &nbsp;→&nbsp; 본문 주어의 <span class="good">성별·수·인칭</span>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h3>역방향 추론 3단계</h3>
+      <p>
+        <strong>① 태그의 동사 분석</strong> &mdash; 어떤 동사가 쓰였나? (be / 조동사 / do/does/did / have/has/had)<br>
+        <strong>② 본문의 동사 형태 추론</strong> &mdash; 그 태그 동사가 가능한 본문 형태는?<br>
+        <strong>③ 주어와 시제 일치 확인</strong> &mdash; 태그의 주어·시제로 본문의 주어·시제도 결정됨
+      </p>
+    </div>
+
+    <h3 class="sub-heading">▸ 태그 동사별 본문 추론표</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>태그</th><th>본문 동사 (긍정/부정)</th><th>본문 예시</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="neg-tag">isn't he?</span></td>
+            <td>긍정 · 현재 · be(is) · 3인칭 단수 남성</td>
+            <td>He <strong>is</strong> ~, He <strong>is doing</strong> ~ (진행), He <strong>is loved</strong> ~ (수동)</td>
+          </tr>
+          <tr>
+            <td><span class="neg-tag">aren't they?</span></td>
+            <td>긍정 · 현재 · be(are) · 복수</td>
+            <td>They <strong>are</strong> ~, They <strong>are coming</strong> ~</td>
+          </tr>
+          <tr>
+            <td><span class="neg-tag">wasn't she?</span></td>
+            <td>긍정 · 과거 · be(was) · 3인칭 단수 여성</td>
+            <td>She <strong>was</strong> ~, She <strong>was eating</strong> ~</td>
+          </tr>
+          <tr>
+            <td><span class="pos-tag">is it?</span></td>
+            <td>부정 · 현재 · be(isn't) · 사물/this/that</td>
+            <td>It <strong>isn't</strong> ~, This <strong>isn't</strong> ~</td>
+          </tr>
+          <tr>
+            <td><span class="purple-tag">won't he?</span></td>
+            <td>긍정 · 미래 · will · 3인칭 단수 남성</td>
+            <td>He <strong>will</strong> come, He <strong>will help</strong></td>
+          </tr>
+          <tr>
+            <td><span class="purple-tag">can't you?</span></td>
+            <td>긍정 · can · 2인칭</td>
+            <td>You <strong>can</strong> swim, You <strong>can do</strong> it</td>
+          </tr>
+          <tr>
+            <td><span class="purple-tag">shouldn't we?</span></td>
+            <td>긍정 · should · 1인칭 복수</td>
+            <td>We <strong>should</strong> go, We <strong>should try</strong></td>
+          </tr>
+          <tr>
+            <td><span class="cyan-tag">doesn't he?</span></td>
+            <td>긍정 · 현재 · 일반동사 · 3인칭 단수</td>
+            <td>He <strong>likes</strong>, He <strong>plays</strong>, He <strong>has a car</strong></td>
+          </tr>
+          <tr>
+            <td><span class="cyan-tag">don't they?</span></td>
+            <td>긍정 · 현재 · 일반동사 · 복수</td>
+            <td>They <strong>live</strong>, They <strong>study</strong>, They <strong>have books</strong></td>
+          </tr>
+          <tr>
+            <td><span class="cyan-tag">didn't she?</span></td>
+            <td>긍정 · 과거 · 일반동사 · 3인칭 단수 여성</td>
+            <td>She <strong>came</strong>, She <strong>studied</strong>, She <strong>had dinner</strong></td>
+          </tr>
+          <tr>
+            <td><span class="cyan-tag">did you?</span></td>
+            <td>부정 · 과거 · 일반동사 · 2인칭</td>
+            <td>You <strong>didn't</strong> see, You <strong>didn't go</strong></td>
+          </tr>
+          <tr>
+            <td><span class="good-tag">haven't you?</span></td>
+            <td>긍정 · 현재완료 (have+p.p.) · 2인칭</td>
+            <td>You <strong>have finished</strong>, You <strong>have been</strong></td>
+          </tr>
+          <tr>
+            <td><span class="good-tag">hasn't she?</span></td>
+            <td>긍정 · 현재완료 · 3인칭 단수 여성</td>
+            <td>She <strong>has gone</strong>, She <strong>has eaten</strong></td>
+          </tr>
+          <tr>
+            <td><span class="good-tag">hadn't they?</span></td>
+            <td>긍정 · 과거완료 · 복수</td>
+            <td>They <strong>had left</strong>, They <strong>had finished</strong></td>
+          </tr>
+          <tr>
+            <td><span class="good-tag">has he?</span></td>
+            <td>부정 · 현재완료 · 3인칭 단수 남성</td>
+            <td>He <strong>hasn't</strong> called, He <strong>hasn't seen</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-heading">▸ 핵심 함정 — 태그 동사가 같아도 본문은 여러 형태</h3>
+
+    <div class="caution-box">
+      <h3>특히 주의 — be 동사 태그는 본문 형태가 4가지</h3>
+      <p>
+        <strong>"isn't he?"</strong>라는 태그를 봤다면, 본문 동사는 다음 중 어느 것이든 가능하다:<br><br>
+        <strong>① 일반 be 동사</strong> — <em>He <strong>is</strong> a doctor.</em> (~이다)<br>
+        <strong>② 진행형</strong> — <em>He <strong>is studying</strong>.</em> (be + V-ing)<br>
+        <strong>③ 수동태</strong> — <em>He <strong>is loved</strong>.</em> (be + p.p.)<br>
+        <strong>④ be 형용사 구문</strong> — <em>He <strong>is</strong> tired.</em> (be + 형용사)<br><br>
+        즉, 같은 태그 isn't he? 하나로 본문 동사는 4가지 형태가 가능하다. 문맥으로 판단해야 한다.
+      </p>
+    </div>
+
+    <div class="caution-box">
+      <h3>doesn't he? — 일반동사 OR have(본동사)</h3>
+      <p>
+        <strong>"doesn't he?"</strong> 태그가 보이면 본문 동사는:<br><br>
+        <strong>① 일반동사 (현재 3인칭 단수)</strong> — <em>He <strong>likes</strong> coffee.</em><br>
+        <strong>② have가 본동사 (소유·먹다 등)</strong> — <em>He <strong>has</strong> a car.</em><br><br>
+        둘 다 doesn't로 받기 때문에 태그만으로는 구분 불가. 본문 동사 자체를 봐야 한다.
+      </p>
+    </div>
+
+    <h3 class="sub-heading">▸ 역방향 추론 실전 예시</h3>
+
+    <div class="reverse-card">
+      <div class="tag-given">, doesn't she?</div>
+      <p class="arrow-deco">↓ 분석 ↓</p>
+      <ul class="deduce-list">
+        <li><strong>긍·부정:</strong> 태그가 부정(doesn't) → 본문은 <strong>긍정</strong></li>
+        <li><strong>동사 종류:</strong> does → 본문은 <strong>일반동사</strong> 또는 <strong>have(본동사)</strong></li>
+        <li><strong>시제:</strong> does → 본문은 <strong>현재시제</strong></li>
+        <li><strong>주어:</strong> she → 본문 주어는 <strong>3인칭 단수 여성</strong> (Mary, my mother, she, Mary's daughter 등)</li>
+      </ul>
+      <div class="sample-sentences">
+        <span class="label">가능한 본문 예시</span>
+        <p>She <strong>likes</strong> coffee, doesn't she?</p>
+        <p>Mary <strong>plays</strong> piano, doesn't she?</p>
+        <p>My sister <strong>has</strong> a car, doesn't she? <em>(have 본동사!)</em></p>
+      </div>
+    </div>
+
+    <div class="reverse-card">
+      <div class="tag-given">, haven't they?</div>
+      <p class="arrow-deco">↓ 분석 ↓</p>
+      <ul class="deduce-list">
+        <li><strong>긍·부정:</strong> 태그가 부정(haven't) → 본문은 <strong>긍정</strong></li>
+        <li><strong>동사 종류:</strong> have → 본문은 <strong>현재완료(have + p.p.)</strong>여야 함</li>
+        <li><strong>시제:</strong> have → 현재완료 (과거의 영향이 현재까지)</li>
+        <li><strong>주어:</strong> they → 본문 주어는 <strong>복수</strong> (they, the students, Tom and Mary, these, those 등)</li>
+      </ul>
+      <div class="sample-sentences">
+        <span class="label">가능한 본문 예시</span>
+        <p>They <strong>have arrived</strong>, haven't they?</p>
+        <p>The students <strong>have finished</strong>, haven't they?</p>
+        <p>Those books <strong>have been read</strong>, haven't they? <em>(완료수동)</em></p>
+      </div>
+    </div>
+
+    <div class="reverse-card">
+      <div class="tag-given">, wasn't it?</div>
+      <p class="arrow-deco">↓ 분석 ↓</p>
+      <ul class="deduce-list">
+        <li><strong>긍·부정:</strong> 태그가 부정(wasn't) → 본문은 <strong>긍정</strong></li>
+        <li><strong>동사 종류:</strong> was → 본문은 <strong>be 동사 과거</strong></li>
+        <li><strong>시제:</strong> was → <strong>과거시제</strong></li>
+        <li><strong>주어:</strong> it → 본문 주어는 <strong>사물·동물 단수</strong> 또는 <strong>this/that</strong></li>
+      </ul>
+      <div class="sample-sentences">
+        <span class="label">가능한 본문 예시</span>
+        <p>It <strong>was</strong> nice, wasn't it? <em>(be + 형용사)</em></p>
+        <p>That <strong>was</strong> funny, wasn't it? <em>(that → it)</em></p>
+        <p>The movie <strong>was being filmed</strong>, wasn't it? <em>(과거진행수동)</em></p>
+        <p>This book <strong>was written</strong> by him, wasn't it? <em>(과거수동, this → it)</em></p>
+      </div>
+    </div>
+
+    <div class="reverse-card">
+      <div class="tag-given">, will you?</div>
+      <p class="arrow-deco">↓ 분석 ↓</p>
+      <ul class="deduce-list">
+        <li><strong>긍·부정:</strong> 태그가 긍정(will) → 본문은 <strong>부정 OR 명령문</strong></li>
+        <li><strong>동사 종류:</strong> will → 본문은 <strong>미래(won't)</strong> 또는 <strong>명령문(특수)</strong></li>
+        <li><strong>주어:</strong> you → 본문 주어는 <strong>you</strong> (또는 명령문이라 주어 생략)</li>
+      </ul>
+      <div class="sample-sentences">
+        <span class="label">가능한 본문 예시</span>
+        <p>You <strong>won't</strong> tell anyone, will you? <em>(미래 부정문)</em></p>
+        <p><strong>Don't be late</strong>, will you? <em>(부정 명령문!)</em></p>
+        <p><strong>Open the window</strong>, will you? <em>(긍정 명령문 - 직설적)</em></p>
+      </div>
+    </div>
+
+    <div class="reverse-card">
+      <div class="tag-given">, aren't I?</div>
+      <p class="arrow-deco">↓ 분석 ↓</p>
+      <ul class="deduce-list">
+        <li><strong>긍·부정:</strong> 태그가 부정(aren't) → 본문은 <strong>긍정</strong></li>
+        <li><strong>동사 종류:</strong> aren't이지만 주어가 I → <strong>I am 특수 케이스</strong></li>
+        <li><strong>시제:</strong> 현재</li>
+        <li><strong>주어:</strong> I → 1인칭 단수</li>
+      </ul>
+      <div class="sample-sentences">
+        <span class="label">가능한 본문 예시</span>
+        <p><strong>I am</strong> right, aren't I?</p>
+        <p><strong>I'm</strong> your friend, aren't I?</p>
+        <p><strong>I am</strong> being silly, aren't I? <em>(진행)</em></p>
+      </div>
+    </div>
+
+    <div class="reverse-card">
+      <div class="tag-given">, shall we?</div>
+      <p class="arrow-deco">↓ 분석 ↓</p>
+      <ul class="deduce-list">
+        <li><strong>특수 케이스:</strong> shall we는 <strong>Let's ~ 구문 전용 태그</strong></li>
+        <li><strong>본문 형태:</strong> Let's ~ 또는 Let's not ~</li>
+        <li><strong>의미:</strong> 제안에 대한 동의 요청</li>
+      </ul>
+      <div class="sample-sentences">
+        <span class="label">가능한 본문 예시</span>
+        <p><strong>Let's go</strong>, shall we?</p>
+        <p><strong>Let's not fight</strong>, shall we?</p>
+        <p><strong>Let's have dinner</strong>, shall we?</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h3>역방향 추론의 실전 가치</h3>
+      <p>
+        ① <strong>듣기 능력 향상</strong> — 영어 회화에서 태그가 들리면 본문의 동사 형태를 즉시 추정 가능<br>
+        ② <strong>객관식 시험 대비</strong> — 빈칸 본문 + 주어진 태그 유형 문제에서 빠르게 정답 후보 좁히기<br>
+        ③ <strong>오류 점검 능력</strong> — 자기 글이나 남의 글에서 태그·본문 불일치 즉시 발견<br>
+        ④ <strong>문법 통합 이해</strong> — 동사 시제·형태 전체 체계를 부가의문문이라는 렌즈로 정리하는 효과
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== PART 10: SPECIAL CASES ===== -->
+  <section id="part10">
+    <div class="section-num special">10 / SPECIAL CASES</div>
+    <h2>특수 케이스 <em class="warn">4가지</em></h2>
+
+    <p>위의 5가지 동사 형태 + 주어 처리 규칙으로 해결되지 않는 특수한 경우가 4가지 있다. <strong>I am · Let's · 명령문 · 부정명령문</strong> — 이들은 따로 외워야 한다.</p>
+
+    <!-- 10-1. I AM -->
+    <h3 class="sub-heading" style="margin-top: 40px; color: var(--accent-warn);">① I am 구문 → aren't I?</h3>
+
+    <div class="theory">
+      <div class="formula">
+        <span class="pos">I am ~,</span> &nbsp;→&nbsp; <span class="neg">aren't I?</span>
+      </div>
+      <div class="formula">
+        <span class="neg">I am not ~,</span> &nbsp;→&nbsp; <span class="pos">am I?</span>
+      </div>
+    </div>
+
+    <p style="margin: 12px 0;">am의 부정 축약형 <strong>amn't가 표준이 아니기 때문</strong>에 관용적으로 <strong>aren't I</strong>를 사용한다.</p>
+
+    <div class="example">
+      <div class="ex-label">긍정 → aren't I</div>
+      <p class="sentence">I'm right, <span class="tag">aren't I?</span></p>
+      <p class="translate">내 말이 맞지, 그렇지?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">부정 → am I</div>
+      <p class="sentence">I'm not late, <span class="tag">am I?</span></p>
+      <p class="translate">나 안 늦었지, 그렇지?</p>
+    </div>
+
+    <!-- 10-2. LET'S -->
+    <h3 class="sub-heading" style="margin-top: 40px; color: var(--accent-warn);">② Let's 구문 → shall we?</h3>
+
+    <div class="theory">
+      <div class="formula">
+        <span class="pos">Let's ~,</span> &nbsp;→&nbsp; <span class="good">shall we?</span> &nbsp;(긍정·부정 동일)
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">긍정 Let's</div>
+      <p class="sentence">Let's go swimming, <span class="tag">shall we?</span></p>
+      <p class="translate">수영하러 가자, 그럴까?</p>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">부정 Let's not</div>
+      <p class="sentence">Let's not be late, <span class="tag">shall we?</span></p>
+      <p class="translate">늦지 말자, 그럴까?</p>
+    </div>
+
+    <!-- 10-3. IMPERATIVE -->
+    <h3 class="sub-heading" style="margin-top: 40px; color: var(--accent-warn);">③ 긍정 명령문 → will / won't / can / could you?</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>태그</th><th>어조</th><th>느낌</th></tr></thead>
+        <tbody>
+          <tr><td><span class="good-tag">won't you?</span></td><td>가장 정중함</td><td>부드러운 권유</td></tr>
+          <tr><td><span class="good-tag">could you?</span></td><td>매우 정중함</td><td>예의 바른 부탁</td></tr>
+          <tr><td><span class="good-tag">can you?</span></td><td>보통</td><td>일상적 부탁</td></tr>
+          <tr><td><span class="good-tag">will you?</span></td><td>덜 정중함</td><td>때로 짜증·명령조</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">가장 정중 — won't you</div>
+      <p class="sentence">Sit down, <span class="tag">won't you?</span></p>
+      <p class="translate">앉으시지요. (친절한 권유)</p>
+    </div>
+
+    <!-- 10-4. NEGATIVE IMPERATIVE -->
+    <h3 class="sub-heading" style="margin-top: 40px; color: var(--accent-warn);">④ 부정 명령문 → will you?만</h3>
+
+    <div class="theory">
+      <div class="formula">
+        <span class="neg">Don't ~,</span> &nbsp;→&nbsp; <span class="good">will you?</span> <span style="color: var(--text-muted);">(이것만!)</span>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="ex-label">부정 명령문</div>
+      <p class="sentence">Don't be late, <span class="tag">will you?</span></p>
+      <p class="translate">늦지 마, 알았지?</p>
+    </div>
+  </section>
+
+  <!-- ===== PART 11: SUMMARY TABLE ===== -->
+  <section id="part11">
+    <div class="section-num">11 / SUMMARY</div>
+    <h2>한눈에 보는 <em class="good">정리표</em></h2>
+
+    <h3 class="sub-heading">▸ 5가지 동사 형태별 부가의문문</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>동사 형태</th><th>본문 예시</th><th>받는 방법</th><th>태그 예시</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="type-badge be" style="margin: 0;">① be</span></td><td>She <strong>is</strong> nice.</td><td>be 동사 그대로</td><td><span class="pos-tag">isn't she?</span></td></tr>
+          <tr><td><span class="type-badge modal" style="margin: 0;">② 조동사</span></td><td>He <strong>will</strong> come.</td><td>조동사 그대로</td><td><span class="purple-tag">won't he?</span></td></tr>
+          <tr><td><span class="type-badge general" style="margin: 0;">③ 일반동사</span></td><td>You <strong>like</strong> it.</td><td>do / does / did</td><td><span class="cyan-tag">don't you?</span></td></tr>
+          <tr><td><span class="type-badge have" style="margin: 0;">④ have (본동사)</span></td><td>You <strong>have</strong> a car.</td><td>do / does / did</td><td><span class="neg-tag">don't you?</span></td></tr>
+          <tr><td><span class="type-badge perfect" style="margin: 0;">⑤ have + p.p.</span></td><td>You <strong>have</strong> finished.</td><td>have / has / had</td><td><span class="good-tag">haven't you?</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-heading">▸ 주어 처리 규칙</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>본문 주어</th><th>→ 태그 주어</th></tr></thead>
+        <tbody>
+          <tr><td>고유명사 / 일반명사 (성별·수에 맞춰)</td><td><span class="pink-tag">he / she / it / they</span></td></tr>
+          <tr><td><strong>this / that</strong></td><td><span class="pink-tag">it</span></td></tr>
+          <tr><td><strong>these / those</strong></td><td><span class="pink-tag">they</span></td></tr>
+          <tr><td>everybody, someone, nobody (사람)</td><td><span class="pink-tag">they</span></td></tr>
+          <tr><td>everything, nothing (사물)</td><td><span class="pink-tag">it</span></td></tr>
+          <tr><td>There is / are ~</td><td><span class="pink-tag">there</span> (그대로)</td></tr>
+          <tr><td>동명사 · to부정사 · that절</td><td><span class="pink-tag">it</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-heading">▸ 특수 케이스 4가지</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>본문 형태</th><th>부가의문문</th></tr></thead>
+        <tbody>
+          <tr><td>I am ~ (긍정)</td><td><span class="neg-tag">aren't I?</span></td></tr>
+          <tr><td>I am not ~ (부정)</td><td><span class="pos-tag">am I?</span></td></tr>
+          <tr><td>Let's ~ (긍정·부정 모두)</td><td><span class="good-tag">shall we?</span></td></tr>
+          <tr><td>긍정 명령문</td><td><span class="good-tag">will / won't / can / could you?</span></td></tr>
+          <tr><td>부정 명령문 (Don't ~)</td><td><span class="good-tag">will you?</span> (만!)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="info-box">
+      <h3>핵심 암기 포인트 (확장판)</h3>
+      <p>
+        <strong style="color: var(--text);">① 본동사 정체부터 파악</strong> &mdash; be / 조동사 / 일반동사 / have(본동사) / have+p.p.<br>
+        <strong style="color: var(--text);">② be·조동사·have+p.p.는 그대로</strong> &mdash; 같은 동사를 가져다 부정만 뒤집기<br>
+        <strong style="color: var(--text);">③ 일반동사·have(본동사)는 do로</strong> &mdash; do/does/did 사용<br>
+        <strong style="color: var(--text);">④ have는 두 얼굴</strong> &mdash; 뒤에 명사면 do로, p.p.면 have로<br>
+        <strong style="color: var(--text);">⑤ 주어는 항상 주격 대명사로</strong> &mdash; this/that → it, these/those → they<br>
+        <strong style="color: var(--text);">⑥ 부정대명사 처리</strong> &mdash; 사람은 they, 사물은 it, There는 그대로<br>
+        <strong style="color: var(--text);">⑦ 양방향 학습</strong> &mdash; 본문 → 태그, 태그 → 본문 모두 가능해야 완성<br>
+        <strong style="color: var(--text);">⑧ 특수 4가지는 따로 암기</strong> &mdash; I am→aren't I, Let's→shall we, 명령문→will/won't you, 부정명령문→will you만
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== PART 12: PRACTICE ===== -->
+  <section id="part12">
+    <div class="section-num">12 / PRACTICE</div>
+    <h2>실전 <em class="good">연습 문제</em></h2>
+    <p>1~10번: 본문 → 태그 만들기 / 11~16번: 태그 → 본문 만들기 (역방향)</p>
+
+    <h3 class="sub-heading">▸ Part A — 본문에 알맞은 부가의문문 넣기 (정방향)</h3>
+
+    <!-- Q1 -->
+    <div class="q-card">
+      <div class="q-header"><span class="q-num">Q1</span><div class="q-content">
+        <p class="q-text">Tom is a teacher, <span class="blank">?</span></p>
+      </div></div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence">Tom is a teacher, <span class="tag-hl">isn't he?</span></p>
+        <div class="ans-explain">
+          <strong>동사:</strong> be(is) → isn't 사용<br>
+          <strong>주어:</strong> Tom(고유명사, 남성) → <span class="highlight">he</span>로 변환
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card">
+      <div class="q-header"><span class="q-num">Q2</span><div class="q-content">
+        <p class="q-text">This book is interesting, <span class="blank">?</span></p>
+      </div></div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence">This book is interesting, <span class="tag-hl">isn't it?</span></p>
+        <div class="ans-explain">
+          <strong>동사:</strong> be(is) → isn't<br>
+          <strong>주어:</strong> This book(사물 단수) → <span class="highlight">it</span><br>
+          <strong>함정:</strong> "isn't this?" (×) — this도 it으로 바꿔야!
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card">
+      <div class="q-header"><span class="q-num">Q3</span><div class="q-content">
+        <p class="q-text">These are delicious, <span class="blank">?</span></p>
+      </div></div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence">These are delicious, <span class="tag-hl">aren't they?</span></p>
+        <div class="ans-explain">
+          <strong>동사:</strong> be(are) → aren't<br>
+          <strong>주어:</strong> These(지시대명사 복수) → <span class="highlight">they</span><br>
+          <strong>함정:</strong> "aren't these?" (×) — these도 they로!
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card">
+      <div class="q-header"><span class="q-num">Q4</span><div class="q-content">
+        <p class="q-text">Everyone knows the answer, <span class="blank">?</span></p>
+      </div></div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence">Everyone knows the answer, <span class="tag-hl">don't they?</span></p>
+        <div class="ans-explain">
+          <strong>동사:</strong> 일반동사 knows → don't<br>
+          <strong>주어:</strong> Everyone(부정대명사, 사람) → <span class="highlight">they</span><br>
+          <strong>함정:</strong> Everyone은 단수 동사(knows)를 쓰지만 태그는 they! 또한 "doesn't he?"가 아닌 "don't they?"
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card">
+      <div class="q-header"><span class="q-num">Q5</span><div class="q-content">
+        <p class="q-text">There is a problem, <span class="blank">?</span></p>
+      </div></div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence">There is a problem, <span class="tag-hl">isn't there?</span></p>
+        <div class="ans-explain">
+          <strong>동사:</strong> be(is) → isn't<br>
+          <strong>주어:</strong> There 구문 → <span class="highlight">there</span> 그대로 사용<br>
+          <strong>함정:</strong> "isn't it?" (×) — There 구문은 it이 아닌 there로 받음
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-card">
+      <div class="q-header"><span class="q-num">Q6</span><div class="q-content">
+        <p class="q-text">Nothing happened, <span class="blank">?</span></p>
+      </div></div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence">Nothing happened, <span class="tag-hl">did it?</span></p>
+        <div class="ans-explain">
+          <strong>긍·부정:</strong> Nothing은 이미 부정 의미 → 긍정 태그 did<br>
+          <strong>동사:</strong> 일반동사 과거 → did<br>
+          <strong>주어:</strong> Nothing(부정대명사, 사물) → <span class="highlight">it</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card">
+      <div class="q-header"><span class="q-num">Q7</span><div class="q-content">
+        <p class="q-text">My sister and I are going, <span class="blank">?</span></p>
+      </div></div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence">My sister and I are going, <span class="tag-hl">aren't we?</span></p>
+        <div class="ans-explain">
+          <strong>동사:</strong> 진행형 are → aren't<br>
+          <strong>주어:</strong> My sister and I(나 포함 복수) → <span class="highlight">we</span><br>
+          <strong>함정:</strong> "aren't they?" (×) — 나(I)가 포함되면 we!
+        </div>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card">
+      <div class="q-header"><span class="q-num">Q8</span><div class="q-content">
+        <p class="q-text">Smoking is bad for you, <span class="blank">?</span></p>
+      </div></div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence">Smoking is bad for you, <span class="tag-hl">isn't it?</span></p>
+        <div class="ans-explain">
+          <strong>동사:</strong> be(is) → isn't<br>
+          <strong>주어:</strong> Smoking(동명사 주어) → <span class="highlight">it</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card">
+      <div class="q-header"><span class="q-num">Q9</span><div class="q-content">
+        <p class="q-text">Mary has finished her work, <span class="blank">?</span></p>
+      </div></div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence">Mary has finished her work, <span class="tag-hl">hasn't she?</span></p>
+        <div class="ans-explain">
+          <strong>동사:</strong> has + finished(p.p.) → 현재완료 → hasn't<br>
+          <strong>주어:</strong> Mary(여성) → <span class="highlight">she</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card">
+      <div class="q-header"><span class="q-num">Q10</span><div class="q-content">
+        <p class="q-text">That doesn't sound right, <span class="blank">?</span></p>
+      </div></div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">정답</div>
+        <p class="ans-sentence">That doesn't sound right, <span class="tag-hl">does it?</span></p>
+        <div class="ans-explain">
+          <strong>긍·부정:</strong> 본문 부정(doesn't) → 긍정 태그 does<br>
+          <strong>동사:</strong> 일반동사 → does<br>
+          <strong>주어:</strong> That → <span class="highlight">it</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="sub-heading">▸ Part B — 태그를 보고 본문 만들기 (역방향)</h3>
+
+    <p>다음 태그에 어울리는 본문을 직접 작성해 보세요. 정답은 여러 개 가능합니다.</p>
+
+    <!-- Q11 reverse -->
+    <div class="q-card">
+      <div class="q-header"><span class="q-num reverse">Q11</span><div class="q-content">
+        <p class="q-text"><span class="blank-long">?</span>, doesn't he?</p>
+      </div></div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">분석 & 정답 예시</div>
+        <p class="ans-sentence">→ <span class="main-hl">긍정</span>, <span class="main-hl">현재시제</span>, <span class="main-hl">일반동사 또는 have(본동사)</span>, 주어는 <span class="main-hl">3인칭 단수 남성(he)</span></p>
+        <div class="ans-explain">
+          <strong>가능한 본문 예시:</strong><br>
+          • <em>He <strong>likes</strong> coffee</em>, doesn't he? (일반동사)<br>
+          • <em>Tom <strong>plays</strong> the guitar</em>, doesn't he? (일반동사)<br>
+          • <em>My brother <strong>has</strong> a car</em>, doesn't he? (have 본동사 — 소유)<br>
+          • <em>He <strong>has</strong> lunch at noon</em>, doesn't he? (have 본동사 — 먹다)
+        </div>
+      </div>
+    </div>
+
+    <!-- Q12 reverse -->
+    <div class="q-card">
+      <div class="q-header"><span class="q-num reverse">Q12</span><div class="q-content">
+        <p class="q-text"><span class="blank-long">?</span>, haven't they?</p>
+      </div></div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">분석 & 정답 예시</div>
+        <p class="ans-sentence">→ <span class="main-hl">긍정</span>, <span class="main-hl">현재완료(have+p.p.)</span>, 주어는 <span class="main-hl">복수(they)</span></p>
+        <div class="ans-explain">
+          <strong>가능한 본문 예시:</strong><br>
+          • <em>They <strong>have arrived</strong></em>, haven't they?<br>
+          • <em>The students <strong>have finished</strong> the exam</em>, haven't they?<br>
+          • <em>Tom and Mary <strong>have been</strong> to Japan</em>, haven't they?<br>
+          • <em>Those books <strong>have been read</strong></em>, haven't they? (those → they, 완료수동)
+        </div>
+      </div>
+    </div>
+
+    <!-- Q13 reverse -->
+    <div class="q-card">
+      <div class="q-header"><span class="q-num reverse">Q13</span><div class="q-content">
+        <p class="q-text"><span class="blank-long">?</span>, isn't it?</p>
+      </div></div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">분석 & 정답 예시</div>
+        <p class="ans-sentence">→ <span class="main-hl">긍정</span>, <span class="main-hl">be 동사(is)</span>, 주어는 <span class="main-hl">사물 단수 / this / that / 동명사 / 부정대명사(사물)</span></p>
+        <div class="ans-explain">
+          <strong>가능한 본문 예시 (이렇게 다양!):</strong><br>
+          • <em>It <strong>is</strong> cold</em>, isn't it? (be + 형용사)<br>
+          • <em>This <strong>is</strong> delicious</em>, isn't it? (this → it)<br>
+          • <em>The car <strong>is being repaired</strong></em>, isn't it? (현재진행수동)<br>
+          • <em>Everything <strong>is</strong> ready</em>, isn't it? (부정대명사 사물)<br>
+          • <em>Learning English <strong>is</strong> fun</em>, isn't it? (동명사 주어)
+        </div>
+      </div>
+    </div>
+
+    <!-- Q14 reverse -->
+    <div class="q-card">
+      <div class="q-header"><span class="q-num reverse">Q14</span><div class="q-content">
+        <p class="q-text"><span class="blank-long">?</span>, did you?</p>
+      </div></div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">분석 & 정답 예시</div>
+        <p class="ans-sentence">→ <span class="main-hl">부정</span>(태그가 긍정이므로), <span class="main-hl">과거시제</span>, <span class="main-hl">일반동사 또는 have(본동사)</span>, 주어는 <span class="main-hl">you</span></p>
+        <div class="ans-explain">
+          <strong>가능한 본문 예시:</strong><br>
+          • <em>You <strong>didn't see</strong> him</em>, did you?<br>
+          • <em>You <strong>didn't tell</strong> anyone</em>, did you?<br>
+          • <em>You <strong>didn't have</strong> breakfast</em>, did you? (have 본동사 부정)
+        </div>
+      </div>
+    </div>
+
+    <!-- Q15 reverse -->
+    <div class="q-card">
+      <div class="q-header"><span class="q-num reverse">Q15</span><div class="q-content">
+        <p class="q-text"><span class="blank-long">?</span>, aren't I?</p>
+      </div></div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">분석 & 정답 예시</div>
+        <p class="ans-sentence">→ <span class="main-hl">특수 케이스: I am 긍정</span>, 주어는 <span class="main-hl">I</span></p>
+        <div class="ans-explain">
+          <strong>가능한 본문 예시:</strong><br>
+          • <em><strong>I am</strong> right</em>, aren't I?<br>
+          • <em><strong>I'm</strong> your best friend</em>, aren't I?<br>
+          • <em><strong>I am</strong> being too picky</em>, aren't I? (현재진행)<br>
+          • <em><strong>I am</strong> invited</em>, aren't I? (수동태)
+        </div>
+      </div>
+    </div>
+
+    <!-- Q16 reverse -->
+    <div class="q-card">
+      <div class="q-header"><span class="q-num reverse">Q16</span><div class="q-content">
+        <p class="q-text"><span class="blank-long">?</span>, will you?</p>
+      </div></div>
+      <button class="toggle-btn" onclick="toggleAnswer(this)"></button>
+      <div class="answer">
+        <div class="ans-tag">분석 & 정답 예시</div>
+        <p class="ans-sentence">→ <span class="main-hl">3가지 가능</span>: ① you 주어 부정 미래문 ② 부정 명령문 ③ 긍정 명령문(직설적)</p>
+        <div class="ans-explain">
+          <strong>가능한 본문 예시:</strong><br>
+          • <em>You <strong>won't tell</strong> anyone</em>, will you? (미래 부정문)<br>
+          • <em><strong>Don't be</strong> late</em>, will you? (부정 명령문 — 가장 흔한 경우)<br>
+          • <em><strong>Open</strong> the door</em>, will you? (긍정 명령문 — 직설적)
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- TAKEAWAY -->
+  <div class="takeaway">
+    <h2>최종 정리 — 부가의문문 완성 5계명</h2>
+    <p class="key-line">
+      ① <span class="pos">be</span> · <span class="purple">조동사</span> · <span class="good">have+p.p.</span> → <strong>같은 동사 그대로</strong><br>
+      ② <span class="cyan">일반동사</span> · <span class="neg">have(본동사)</span> → <strong>do / does / did</strong>로<br>
+      ③ <span class="pink">주어는 항상 주격 대명사</span> — this/that→it, these/those→they<br>
+      ④ <strong>부정대명사·There 구문</strong> — 사람은 they, 사물은 it, There는 그대로<br>
+      ⑤ <span class="good">양방향 학습</span> — 본문↔태그 자유롭게 오갈 수 있어야 진짜 완성
+    </p>
+    <p>
+      부가의문문은 영문법의 거의 모든 요소(동사 형태·시제·인칭·주어 변환·긍부정 일치)가 종합되는 미니 시험이다.
+      한 번 제대로 정리하면 영어 문장 구조 전반에 대한 감각이 크게 향상된다. 특히 <strong>역방향 추론</strong>은
+      듣기·읽기·문제풀이 모두에서 무기가 되니, Part 9의 예시들을 여러 번 곱씹어 보길 권한다.
+    </p>
+  </div>
+
+</div>
+
+<script>
+function toggleAnswer(btn) {
+  const answer = btn.nextElementSibling;
+  btn.classList.toggle('active');
+  answer.classList.toggle('show');
+}
+</script>
+
+</body>
+</html>
