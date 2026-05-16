@@ -703,7 +703,7 @@ footer{
 </header>
 
 <!-- 전국모의고사 한줄해석/문장구조도 배너 -->
-<a href="mock_hub.html" class="mock-banner" style="text-decoration:none;">
+<a href="mock_hub.html" class="mock-banner" data-toggle="hub-mock" aria-expanded="false" aria-controls="hub-mock" style="text-decoration:none;">
   <div class="mock-banner-inner">
     <div class="mock-banner-glow"></div>
     <div class="mock-banner-content">
@@ -717,6 +717,46 @@ footer{
     </div>
   </div>
 </a>
+
+<!-- 한줄해석 자료실 펼침 패널 -->
+<div class="hub-panel" id="hub-mock">
+  <div class="hub-panel-inner">
+    <div class="hub-year">
+      <div class="hub-year-title">2026년 3월</div>
+      <div class="hub-grid">
+        <a href="mock_march_2026.html" class="hub-card">
+          <div class="hub-card-grade">고1</div>
+          <div class="hub-card-sub">한줄해석 · 자료실 완성</div>
+        </a>
+        <a href="mock_march_2026_g2.html" class="hub-card">
+          <div class="hub-card-grade">고2</div>
+          <div class="hub-card-sub">한줄해석 · 자료실 완성</div>
+        </a>
+        <a href="H3-2026-03.html" class="hub-card">
+          <div class="hub-card-grade">고3</div>
+          <div class="hub-card-sub">한줄해석 · 자료실 완성</div>
+        </a>
+      </div>
+    </div>
+    <div class="hub-year">
+      <div class="hub-year-title">2025년 3월</div>
+      <div class="hub-grid">
+        <a href="mock_march_2025.html" class="hub-card">
+          <div class="hub-card-grade">고1</div>
+          <div class="hub-card-sub">한줄해석 · 자료실 완성</div>
+        </a>
+        <div class="hub-card disabled">
+          <div class="hub-card-grade">고2</div>
+          <div class="hub-card-sub">준비 중</div>
+        </div>
+        <div class="hub-card disabled">
+          <div class="hub-card-grade">고3</div>
+          <div class="hub-card-sub">준비 중</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- 온라인 모의고사 배너 -->
 <a href="online_test.html" class="mock-banner" style="text-decoration:none;">
@@ -790,6 +830,25 @@ footer{
 
 /* ─── 재원생 전용 섹션 배너 이미지 ─── */
 .member-banner-img{display:block;max-width:900px;width:calc(100% - 16px);margin:14px auto 20px;border-radius:16px;box-shadow:0 6px 30px rgba(0,0,0,0.18);}
+
+/* ─── Hub Panel (배너 클릭 시 펼침) ─── */
+.mock-banner[data-toggle]{cursor:pointer;}
+.mock-banner[data-toggle] .mock-banner-cta span:last-child{display:inline-block;transition:transform .3s;}
+.mock-banner[data-toggle][aria-expanded="true"] .mock-banner-cta span:last-child{transform:rotate(90deg);}
+.hub-panel{max-width:900px;margin:0 auto;padding:0 8px;overflow:hidden;max-height:0;opacity:0;transition:max-height .4s ease,opacity .3s ease,margin-bottom .3s ease;margin-top:-14px;}
+.hub-panel.open{max-height:1200px;opacity:1;margin-bottom:20px;}
+.hub-panel-inner{background:linear-gradient(135deg,#0d1b2a,#1b2d4f,#2a1a3e);border:1px solid rgba(74,222,128,0.2);border-radius:14px;padding:18px 22px;box-shadow:0 4px 20px rgba(0,0,0,0.2);}
+.hub-year{margin-bottom:16px;}
+.hub-year:last-child{margin-bottom:0;}
+.hub-year-title{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:#4ADE80;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid rgba(74,222,128,0.15);}
+.hub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+@media(max-width:560px){.hub-grid{grid-template-columns:1fr;}}
+.hub-card{display:block;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 14px;text-decoration:none;color:white;transition:all .2s;}
+.hub-card:hover{background:rgba(74,222,128,0.08);border-color:rgba(74,222,128,0.4);transform:translateY(-1px);}
+.hub-card-grade{font-size:14px;font-weight:700;color:white;margin-bottom:3px;}
+.hub-card-sub{font-size:11px;color:rgba(255,255,255,0.5);}
+.hub-card.disabled{opacity:0.45;cursor:not-allowed;}
+.hub-card.disabled:hover{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.08);transform:none;}
 
 /* ─── Content Banners — 6개 카드 → 배너 변환 ─── */
 .content-banner-subject .mock-banner-inner{background:linear-gradient(135deg,#0d1b2a,#2e1a1a,#3a2a1a);border-color:rgba(197,90,17,0.2);}
@@ -1384,6 +1443,20 @@ function goMock(grade){
   if(!READY_FILES.includes(file)){ alert(`${year}년 ${month}월 모의고사는 곧 업로드됩니다!`); return; }
   window.location.href = file;
 }
+
+/* ─── Hub Panel Toggle ─── */
+document.querySelectorAll('[data-toggle]').forEach(el=>{
+  el.addEventListener('click', function(e){
+    if(e.ctrlKey || e.metaKey || e.shiftKey || e.button===1) return; // 새 탭 열기 허용
+    const id = this.getAttribute('data-toggle');
+    const panel = document.getElementById(id);
+    if(!panel) return;
+    e.preventDefault();
+    const willOpen = !panel.classList.contains('open');
+    panel.classList.toggle('open');
+    this.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+  });
+});
 
 
 </script>
