@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Why 'History Repeats Itself' Is an Oversimplification — 2025년 6월 고1 모의고사 36번 | 목동서로영어학원</title>
 <meta name="description" content="2025년 6월 고1 모의고사 36번 Why 'History Repeats Itself' Is an Oversimplification ('역사는 반복된다'가 과잉 단순화인 이유) — 한줄해석·문장구조도·배열영작·어법문제·단어장 | 목동서로영어학원 0505.co.kr">
-<meta name="keywords" content="고1 모의고사, 2025년 6월 모의고사, 한줄해석, 배열영작, 어법문제, 단어장, 신목고, 목운중, 목동서로영어학원, 목동 영어학원, 고등영어, 수능영어">
+<meta name="keywords" content="고1 모의고사, 2026년 5월 모의고사, 한줄해석, 배열영작, 어법문제, 단어장, 신목고, 목운중, 목동서로영어학원, 목동 영어학원, 고등영어, 수능영어">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Why 'History Repeats Itself' Is an Oversimplification | 2025년 6월 고1 모의고사 36번">
 <meta property="og:description" content="2025년 6월 고1 모의고사 36번 한줄해석 · 배열영작 · 어법문제 | 목동서로영어학원">
@@ -142,7 +142,7 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 .answer-zone:empty::before{content:'여기에 단어를 놓으세요';color:rgba(46,117,182,0.35);font-size:12px;font-style:italic;display:flex;align-items:center;height:28px;}
 .word-pool{display:flex;flex-wrap:wrap;gap:7px;min-height:44px;padding:10px;background:#f8f8f8;border-radius:8px;border:2px dashed #ddd;margin-bottom:12px;transition:border-color 0.2s,background 0.2s;}
 .word-pool.drag-over{border-color:var(--gold);background:#fff9e6;}
-.word-chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:6px;font-family:Georgia,serif;font-size:13.5px;cursor:grab;user-select:none;transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;background:var(--blue-card);border:1.5px solid var(--blue-border);color:var(--navy);font-weight:600;white-space:nowrap;}
+.word-chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:6px;font-family:Georgia,serif;font-size:13.5px;cursor:grab;user-select:none;transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;background:var(--blue-card);border:1.5px solid var(--blue-border);color:var(--navy);font-weight:600;white-space:nowrap;touch-action:none;}
 .word-chip:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(46,117,182,0.25);}
 .word-chip.dragging{opacity:0.35;transform:scale(0.93);cursor:grabbing;}
 .word-chip.ok-chip{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20;}
@@ -325,9 +325,10 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .s-card.pinned .s-vocab,
 .s-card.tapped .s-vocab{
   order:0;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25)!important;
-  border-radius:20px;padding:3px 12px 3px 8px!important;
-  white-space:nowrap;flex-shrink:0;border-top:none!important;
-  display:inline-flex!important;align-items:center;gap:4px;
+  border-radius:16px;padding:5px 12px 5px 10px!important;
+  white-space:normal;flex-shrink:1;border-top:none!important;
+  display:inline-flex!important;flex-wrap:wrap!important;align-items:center;gap:4px 6px;
+  max-width:100%;overflow-wrap:break-word;word-break:break-word;
 }
 /* 3. 문장구조도 탭·패널 */
 .tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
@@ -443,6 +444,11 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   #penToolbar .pen-btn,#penToolbar .pen-width{width:38px;height:38px;}
   #penToolbar .pen-color{width:26px;height:26px;}
 }
+
+.tab-summary{background:white;color:#00695C;border-color:rgba(0,105,92,0.25);}
+.tab-summary.active{background:#00695C;color:white;border-color:#00695C;}
+.summary-view{display:none;}
+@media print{.summary-view{display:none!important;}}
 </style>
 </head>
 <body>
@@ -466,6 +472,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
   <div class="view-tabs">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
+    <button class="view-tab tab-summary" id="tabSum" onclick="switchSummary()">📄 요약</button>
     <button class="view-tab tab-sd"             id="tabSD" onclick="switchSD()">📐 문장구조도</button>
     <button class="view-tab tab-ga"             id="tabGA" onclick="switchGA()">📊 문법분석</button>
     <button class="view-tab tab-arrange"        id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
@@ -633,124 +640,53 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 </div>
 
 </div><!-- /cards -->
-    <div class="summary-wrap">
-  <div class="summary-header">📖 줄거리 &amp; 핵심 정리</div>
+</div>
+
+<div class="summary-view" id="summaryView">
+<div class="summary-wrap">
+  <div class="summary-header">📖 Why 'History Repeats Itself' Is an Oversimplification — 통합 요약</div>
   <div class="summary-body">
 
-    <!-- ① 핵심 메시지 배너 -->
-    <div style="background:linear-gradient(135deg,#1F3864,#5B2D8E);color:white;padding:22px 24px;border-radius:14px;margin:8px 0 24px;box-shadow:0 4px 18px rgba(31,56,100,0.28);">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.7);margin-bottom:8px;">★ KEY MESSAGE</div>
-      <div style="font-size:16px;font-weight:700;line-height:1.55;">
-        <span style="color:#f0d070;">"history repeats itself"</span>는 — 로마·대영제국 사례에서는 맞아 보이지만 —
-        아즈텍·잉카처럼 <span style="color:#f0d070;">외부 침략으로 갑자기 끝난 문명</span>도 있어,
-        <span style="color:#f0d070;">과잉 단순화(oversimplification)</span>이다.
-      </div>
+    <div style="background:linear-gradient(135deg,#1F3864,#5B2D8E,#C55A11);color:white;padding:20px 24px;border-radius:12px;margin-bottom:18px;box-shadow:0 4px 18px rgba(31,56,100,0.2);">
+      <div style="font-size:13px;font-weight:700;margin-bottom:8px;letter-spacing:1.5px;">🌍 CORE MESSAGE — 글의 요지</div>
+      <div style="font-size:15px;line-height:1.7;">“역사는 반복된다”는 통념이 있다.<br>로마·대영제국처럼 <strong>팽창 → 과확장 → 붕괴</strong> 패턴이 보이긴 한다.<br>하지만 늘 그렇진 않다 — 아즈텍·잉카는 <strong>과확장이 아니라 침략으로 갑자기</strong> 멸망했다.<br>결론은 <strong style="font-size:16px;border-bottom:2px solid #f0d070;padding-bottom:2px;">문명에 관한 한 ‘역사 반복론’은 과도한 단순화</strong>라는 것.</div>
     </div>
 
-    <!-- ② 쉬운 비유 -->
-    <div style="background:#fff8e6;border-left:4px solid #f0d070;padding:18px 22px;border-radius:8px;margin-bottom:24px;">
-      <div style="font-size:12px;font-weight:700;color:#8a6a0d;letter-spacing:1px;margin-bottom:10px;">💡 쉬운 비유 — 두 가지 문명의 결말</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-        <div style="background:white;padding:12px 14px;border-radius:6px;border:1px solid #c0dd97;">
-          <div style="font-size:13px;font-weight:700;color:#2E7D32;margin-bottom:6px;">🏛 자연 붕괴 (로마·대영제국)</div>
-          <div style="font-size:12.5px;color:#333;line-height:1.6;">팽창 → 과도 확장 → 자연 붕괴 / <strong>패턴 반복</strong>으로 보이는 사례</div>
-        </div>
-        <div style="background:white;padding:12px 14px;border-radius:6px;border:1px solid #f4c0d1;">
-          <div style="font-size:13px;font-weight:700;color:#993556;margin-bottom:6px;">⚔ 외부 정복 (아즈텍·잉카)</div>
-          <div style="font-size:12.5px;color:#333;line-height:1.6;">침략자에 갑자기 정복 → 붕괴할 기회조차 없었음 / <strong>패턴 적용 불가</strong></div>
-        </div>
-      </div>
+    <div style="background:#fff8e6;border-left:4px solid #f0d070;padding:14px 18px;border-radius:6px;margin-bottom:18px;">
+      <div style="font-size:13px;font-weight:700;color:#8B6914;margin-bottom:10px;">🔑 핵심 — 반례가 통념을 깬다</div>
+      <div style="font-size:12px;line-height:1.7;color:#444;">✓ <strong>반복처럼 보임</strong>: 로마(476 AD)·대영제국 — 팽창 후 붕괴. &nbsp;✗ <strong>반례</strong>: 아즈텍·잉카(1520년대) — 과확장 전에 정복당함. → 하나의 패턴으로 환원 불가.</div>
     </div>
 
-    <!-- ③ 글의 흐름 — 세로 타임라인 -->
-    <div style="margin-bottom:26px;">
-      <div style="font-size:13px;font-weight:700;color:#1F3864;letter-spacing:1px;margin-bottom:14px;">📐 글의 흐름</div>
-      <div style="position:relative;padding-left:30px;border-left:2px solid #d0d8e8;">
-
-        <div style="position:relative;background:#f0f4fb;padding:12px 16px;border-radius:8px;margin-bottom:12px;">
-          <div style="position:absolute;left:-39px;top:12px;width:18px;height:18px;border-radius:50%;background:#1F3864;color:white;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;">1</div>
-          <div style="font-size:11.5px;color:#1F3864;font-weight:700;margin-bottom:4px;">[도입·격언] S01~S02 · 역사는 반복된다</div>
-          <div style="font-size:12.5px;color:#333;line-height:1.55;">사람들이 자주 말하듯 — 고대 문명 기록을 보면 어떤 일이 정말 반복해서 일어나는 듯 보인다.</div>
+    <div style="background:#f0f4fb;border-radius:8px;padding:16px 20px;margin-bottom:6px;">
+      <div style="font-size:13px;font-weight:700;color:#1F3864;margin-bottom:12px;">📐 글 전체 구조</div>
+      <div style="position:relative;padding-left:32px;">
+        <div style="position:absolute;left:11px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,#1F3864,#00695C,#B8860B);"></div>
+        <div style="position:relative;margin-bottom:14px;">
+          <div style="position:absolute;left:-32px;top:0;width:24px;height:24px;border-radius:50%;background:#1F3864;color:white;font-size:11px;font-weight:700;text-align:center;line-height:24px;">통념</div>
+          <div style="font-size:12px;font-weight:700;color:#1F3864;">S1–3 · 역사는 반복된다?</div>
+          <div style="font-size:12px;color:#555;line-height:1.5;">로마·대영제국처럼 팽창 → 과확장 → 붕괴가 되풀이되는 듯 보인다.</div>
         </div>
-
-        <div style="position:relative;background:#f0f4fb;padding:12px 16px;border-radius:8px;margin-bottom:12px;">
-          <div style="position:absolute;left:-39px;top:12px;width:18px;height:18px;border-radius:50%;background:#2E75B6;color:white;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;">2</div>
-          <div style="font-size:11.5px;color:#2E75B6;font-weight:700;margin-bottom:4px;">[근거] S03 · 로마 + 대영제국</div>
-          <div style="font-size:12.5px;color:#333;line-height:1.55;">팽창 → 과도 확장 → 붕괴. 로마(476 AD)와 대영제국(2차 대전 후) — 천 년 간격의 같은 패턴.</div>
+        <div style="position:relative;margin-bottom:14px;">
+          <div style="position:absolute;left:-32px;top:0;width:24px;height:24px;border-radius:50%;background:#00695C;color:white;font-size:11px;font-weight:700;text-align:center;line-height:24px;">의문</div>
+          <div style="font-size:12px;font-weight:700;color:#00695C;">S4–6 · 늘 그런가?</div>
+          <div style="font-size:12px;color:#555;line-height:1.5;">그렇다면 고고학은 지루할 것 — 그러나 고고학자가 보는 건 다르다.</div>
         </div>
-
-        <div style="position:relative;background:#fff8e6;padding:12px 16px;border-radius:8px;margin-bottom:12px;border:1px solid #f0d070;">
-          <div style="position:absolute;left:-39px;top:12px;width:18px;height:18px;border-radius:50%;background:#8a6a0d;color:white;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;">3</div>
-          <div style="font-size:11.5px;color:#8a6a0d;font-weight:700;margin-bottom:4px;">[전환·의심] S04~S05 · 정말 항상 그럴까?</div>
-          <div style="font-size:12.5px;color:#333;line-height:1.55;">만약 그렇다면 고고학은 꽤 지루할 것 — 한 가지 일이 반복해서 일어날 테니까.</div>
+        <div style="position:relative;margin-bottom:14px;">
+          <div style="position:absolute;left:-32px;top:0;width:24px;height:24px;border-radius:50%;background:#8E6E00;color:white;font-size:11px;font-weight:700;text-align:center;line-height:24px;">반례</div>
+          <div style="font-size:12px;font-weight:700;color:#8E6E00;">S7–8 · 아즈텍·잉카</div>
+          <div style="font-size:12px;color:#555;line-height:1.5;">과확장이 아니라 1520년대 침략자에게 정복당해 갑자기 끝났다.</div>
         </div>
-
-        <div style="position:relative;background:#f0f4fb;padding:12px 16px;border-radius:8px;margin-bottom:12px;">
-          <div style="position:absolute;left:-39px;top:12px;width:18px;height:18px;border-radius:50%;background:#5B2D8E;color:white;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;">4</div>
-          <div style="font-size:11.5px;color:#5B2D8E;font-weight:700;margin-bottom:4px;">[반박 도입] S06 · 그러나 고고학자가 보는 것은 다르다</div>
-          <div style="font-size:12.5px;color:#333;line-height:1.55;">실제 고고학자들은 그런 단순한 패턴만 보는 게 아니다.</div>
-        </div>
-
-        <div style="position:relative;background:#fff5f5;padding:12px 16px;border-radius:8px;margin-bottom:12px;border:1px dashed #C55A11;">
-          <div style="position:absolute;left:-39px;top:12px;width:18px;height:18px;border-radius:50%;background:#C55A11;color:white;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;">5</div>
-          <div style="font-size:11.5px;color:#C55A11;font-weight:700;margin-bottom:4px;">[반례] S07~S08 · 아즈텍·잉카 — 갑작스러운 정복</div>
-          <div style="font-size:12.5px;color:#333;line-height:1.55;">1520년대 침략자에게 정복당해 끝남. 과도 팽창으로 붕괴할 기회조차 없었다.</div>
-        </div>
-
-        <div style="position:relative;background:#f0faf4;padding:12px 16px;border-radius:8px;border:1px solid #9FE1CB;">
-          <div style="position:absolute;left:-39px;top:12px;width:18px;height:18px;border-radius:50%;background:#2E7D32;color:white;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;">6</div>
-          <div style="font-size:11.5px;color:#2E7D32;font-weight:700;margin-bottom:4px;">[결론] S09 · 그래서 — 그건 과잉 단순화</div>
-          <div style="font-size:12.5px;color:#333;line-height:1.55;">문명의 경우 'history repeats itself'는 과잉 단순화(oversimplification)다.</div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- ④ 수능 유형별 핵심 답 -->
-    <div style="background:#f0faf4;border:1px solid #9FE1CB;padding:16px 20px;border-radius:10px;margin-bottom:24px;">
-      <div style="font-size:13px;font-weight:700;color:#085041;letter-spacing:1px;margin-bottom:12px;">🎯 수능 유형별 핵심 답</div>
-      <table style="width:100%;border-collapse:collapse;font-size:12.5px;">
-        <tr style="border-bottom:1px solid #c5e7d6;"><td style="padding:8px 0;width:34%;font-weight:700;color:#085041;">주제 · 요지</td><td style="padding:8px 0;color:#333;line-height:1.5;">'역사는 반복된다'는 격언은 모든 문명에 적용되지 않는 과잉 단순화</td></tr>
-        <tr style="border-bottom:1px solid #c5e7d6;"><td style="padding:8px 0;font-weight:700;color:#085041;">제목</td><td style="padding:8px 0;color:#333;line-height:1.5;">"Why 'History Repeats Itself' Is an Oversimplification" / "'역사는 반복된다'가 단순화인 이유"</td></tr>
-        <tr style="border-bottom:1px solid #c5e7d6;"><td style="padding:8px 0;font-weight:700;color:#085041;">빈칸 키워드</td><td style="padding:8px 0;color:#333;line-height:1.5;">expand / overextended / collapse / conquered by invaders / oversimplification</td></tr>
-        <tr><td style="padding:8px 0;font-weight:700;color:#085041;">흐름 파악</td><td style="padding:8px 0;color:#333;line-height:1.5;">격언 인용(S01~02) → 근거 사례(S03) → 의심·반전(S04~05) → 반례 제시(S06~08) → 결론(S09)</td></tr>
-      </table>
-    </div>
-
-    <!-- ⑤ 핵심 표현 카드 6개 -->
-    <div style="background:#eef3fb;padding:18px 20px;border-radius:10px;">
-      <div style="font-size:13px;font-weight:700;color:#1F3864;letter-spacing:1px;margin-bottom:12px;">📝 핵심 표현</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-        <div style="background:white;padding:12px 14px;border-radius:6px;border-left:4px solid #2E75B6;">
-          <div style="font-size:13px;font-weight:700;color:#1F3864;margin-bottom:4px;">do/does/did + V (강조)</div>
-          <div style="font-size:11.5px;color:#555;">정말로 ~하다 (일반 동사 강조)</div>
-        </div>
-        <div style="background:white;padding:12px 14px;border-radius:6px;border-left:4px solid #2E75B6;">
-          <div style="font-size:13px;font-weight:700;color:#1F3864;margin-bottom:4px;">, which (계속적 용법)</div>
-          <div style="font-size:11.5px;color:#555;">콤마 + which = 부연 설명 (that 불가)</div>
-        </div>
-        <div style="background:white;padding:12px 14px;border-radius:6px;border-left:4px solid #5B2D8E;">
-          <div style="font-size:13px;font-weight:700;color:#1F3864;margin-bottom:4px;">If so, S would V</div>
-          <div style="font-size:11.5px;color:#555;">만약 그렇다면 ~할 텐데 (가정법)</div>
-        </div>
-        <div style="background:white;padding:12px 14px;border-radius:6px;border-left:4px solid #5B2D8E;">
-          <div style="font-size:13px;font-weight:700;color:#1F3864;margin-bottom:4px;">what S V</div>
-          <div style="font-size:11.5px;color:#555;">~하는 것 (선행사 포함 관계대명사)</div>
-        </div>
-        <div style="background:white;padding:12px 14px;border-radius:6px;border-left:4px solid #C55A11;">
-          <div style="font-size:13px;font-weight:700;color:#1F3864;margin-bottom:4px;">N, p.p. by N (분사 후치수식)</div>
-          <div style="font-size:11.5px;color:#555;">~된 N (= which were p.p.)</div>
-        </div>
-        <div style="background:white;padding:12px 14px;border-radius:6px;border-left:4px solid #C55A11;">
-          <div style="font-size:13px;font-weight:700;color:#1F3864;margin-bottom:4px;">have the chance to V</div>
-          <div style="font-size:11.5px;color:#555;">~할 기회를 갖다</div>
+        <div style="position:relative;">
+          <div style="position:absolute;left:-32px;top:0;width:24px;height:24px;border-radius:50%;background:#B8860B;color:white;font-size:11px;font-weight:700;text-align:center;line-height:24px;">결론</div>
+          <div style="font-size:12px;font-weight:700;color:#B8860B;">S9 · 과도한 단순화</div>
+          <div style="font-size:12px;color:#555;line-height:1.5;">문명에 관한 한 “역사는 반복된다”는 지나친 단순화다.</div>
         </div>
       </div>
     </div>
 
   </div>
 </div>
-  </div>
+</div>
   <div class="ga-panel" id="panelGA">
 <div class="ga-legend">
   <div class="ga-leg"><div class="ga-leg-dot" style="background:#C62828;"></div><strong>Tier 1</strong> 어법 핵심</div>
@@ -1718,6 +1654,12 @@ function readNext(){if(!allPlaying||allIdx>=allQueue.length){if(currentCard)curr
 
 /* ══ 배열영작 ══ */
 let scores={},dragSrc=null,clickSelectedChip=null;
+/* ── 터치 드래그 지원 (태블릿/모바일) v1.7 ── */
+let tChip=null,tClone=null,tStartX=0,tStartY=0,tOffX=0,tOffY=0,tMoved=false,tDragEnd=0;
+const T_DRAG_THRESHOLD=10;
+function arrTouchStart(e){const chip=e.target.closest('.word-chip');if(!chip)return;tChip=chip;const r=chip.getBoundingClientRect();const t=e.touches[0];tStartX=t.clientX;tStartY=t.clientY;tOffX=t.clientX-r.left;tOffY=t.clientY-r.top;tMoved=false;}
+function arrTouchMove(e){if(!tChip)return;if(e.cancelable)e.preventDefault();const t=e.touches[0];const dx=t.clientX-tStartX,dy=t.clientY-tStartY;if(!tMoved){if(Math.hypot(dx,dy)<T_DRAG_THRESHOLD)return;tMoved=true;const r=tChip.getBoundingClientRect();tClone=tChip.cloneNode(true);Object.assign(tClone.style,{position:'fixed',left:r.left+'px',top:r.top+'px',width:r.width+'px',zIndex:9999,pointerEvents:'none',opacity:0.9,transform:'scale(1.08)',boxShadow:'0 8px 24px rgba(0,0,0,0.3)',transition:'none'});document.body.appendChild(tClone);tChip.classList.add('dragging');}tClone.style.left=(t.clientX-tOffX)+'px';tClone.style.top=(t.clientY-tOffY)+'px';tClone.style.display='none';const tg=document.elementFromPoint(t.clientX,t.clientY);tClone.style.display='';const z=tg&&tg.closest('.answer-zone, .word-pool');document.querySelectorAll('.answer-zone.drag-over, .word-pool.drag-over').forEach(el=>el.classList.remove('drag-over'));if(z)z.classList.add('drag-over');}
+function arrTouchEnd(e){if(!tChip)return;if(!tMoved){tChip=null;return;}const t=e.changedTouches[0];if(tClone)tClone.style.display='none';const tg=document.elementFromPoint(t.clientX,t.clientY);const z=tg&&tg.closest('.answer-zone, .word-pool');if(z){const chips=Array.from(z.querySelectorAll('.word-chip')).filter(c=>c!==tChip);if(chips.length===0){z.appendChild(tChip);}else{let bestC=null,bestB=true,bestD=Infinity;for(const c of chips){const r=c.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const d=Math.hypot(t.clientX-cx,t.clientY-cy);if(d<bestD){bestD=d;bestC=c;bestB=t.clientX<cx;}}if(bestB)z.insertBefore(tChip,bestC);else z.insertBefore(tChip,bestC.nextSibling);}tChip.classList.remove('ok-chip');const idx=tChip.dataset.idx;const r=document.getElementById('res-'+idx);if(r)r.className='arr-result';}if(tClone){tClone.remove();tClone=null;}tChip.classList.remove('dragging');document.querySelectorAll('.answer-zone.drag-over, .word-pool.drag-over').forEach(el=>el.classList.remove('drag-over'));tChip=null;tDragEnd=Date.now();e.preventDefault();}
 function buildArrangeCards(){
   const box=document.getElementById('arrCards');box.innerHTML='';
   const hint=document.createElement('div');hint.className='touch-hint';hint.innerHTML='💡 단어 클릭 → 즉시 이동 &nbsp;|&nbsp; 드래그도 가능';box.appendChild(hint);
@@ -1726,14 +1668,15 @@ function buildArrangeCards(){
     const card=document.createElement('div');card.className='arr-card';card.style.animationDelay=(idx*60)+'ms';
     card.innerHTML=`<div class="arr-header"><span class="arr-num">${item.num}</span><div class="arr-kr">${item.kr}</div></div><div class="arr-body"><div class="answer-zone" id="zone-${idx}"></div><div class="word-pool" id="pool-${idx}">${shuffled.map(w=>`<div class="word-chip" draggable="true" data-word="${w}" data-idx="${idx}">${w}</div>`).join('')}</div><div class="arr-result" id="res-${idx}"></div><div class="ans-reveal" id="ans-${idx}"><strong>정답:</strong> ${item.ans}.</div><div class="arr-btns"><button class="arr-check" onclick="checkAns(${idx})">✓ 확인</button><button class="arr-reset" onclick="resetCard(${idx})">↺ 초기화</button><button class="arr-show-ans" onclick="toggleAns(${idx})">👁 정답 보기</button></div></div>`;
     box.appendChild(card);
-    ['zone-'+idx,'pool-'+idx].forEach(zid=>{const z=document.getElementById(zid);z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(!dragSrc)return;z.appendChild(dragSrc);dragSrc.classList.remove('dragging','ok-chip');document.getElementById('res-'+idx).className='arr-result';dragSrc=null;});});
+    ['zone-'+idx,'pool-'+idx].forEach(zid=>{const z=document.getElementById(zid);z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(!dragSrc)return;const chips=Array.from(z.querySelectorAll('.word-chip')).filter(c=>c!==dragSrc);if(chips.length===0){z.appendChild(dragSrc);}else{let bestC=null,bestB=true,bestD=Infinity;for(const c of chips){const r=c.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const d=Math.hypot(e.clientX-cx,e.clientY-cy);if(d<bestD){bestD=d;bestC=c;bestB=e.clientX<cx;}}if(bestB)z.insertBefore(dragSrc,bestC);else z.insertBefore(dragSrc,bestC.nextSibling);}dragSrc.classList.remove('dragging','ok-chip');document.getElementById('res-'+idx).className='arr-result';dragSrc=null;});});
     setTimeout(()=>{document.getElementById('pool-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});document.getElementById('zone-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});},0);
   });
   box.addEventListener('dragstart',e=>{if(!e.target.classList.contains('word-chip'))return;dragSrc=e.target;e.target.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
   box.addEventListener('dragend',e=>{if(e.target.classList.contains('word-chip'))e.target.classList.remove('dragging');dragSrc=null;});
+  box.addEventListener('touchstart',arrTouchStart,{passive:true});box.addEventListener('touchmove',arrTouchMove,{passive:false});box.addEventListener('touchend',arrTouchEnd);box.addEventListener('touchcancel',arrTouchEnd);
   updateScore();
 }
-function chipClick(chip,idx){const inZone=chip.parentElement.id==='zone-'+idx;const target=document.getElementById(inZone?'pool-'+idx:'zone-'+idx);chip.classList.remove('ok-chip');target.appendChild(chip);chip.addEventListener('click',()=>chipClick(chip,idx),{once:true});document.getElementById('res-'+idx).className='arr-result';}
+function chipClick(chip,idx){if(Date.now()-tDragEnd<500)return;const inZone=chip.parentElement.id==='zone-'+idx;const target=document.getElementById(inZone?'pool-'+idx:'zone-'+idx);chip.classList.remove('ok-chip');target.appendChild(chip);document.getElementById('res-'+idx).className='arr-result';}
 function checkAns(idx){const zone=document.getElementById('zone-'+idx);const chips=Array.from(zone.querySelectorAll('.word-chip'));const userAns=chips.map(c=>c.dataset.word).join(' ');const correct=ARRANGE[idx].ans;const ok=userAns.trim().toLowerCase()===correct.trim().toLowerCase();const res=document.getElementById('res-'+idx);res.className='arr-result show '+(ok?'ok':'ng');res.innerHTML=ok?'🎉 정답입니다!':'❌ 다시 확인해 보세요. ('+chips.length+'/'+correct.split(' ').length+'개 배치됨)';if(ok)chips.forEach(c=>c.classList.add('ok-chip'));scores[idx]=ok?1:0;updateScore();}
 function resetCard(idx){const zone=document.getElementById('zone-'+idx);const pool=document.getElementById('pool-'+idx);Array.from(zone.querySelectorAll('.word-chip')).forEach(c=>{c.classList.remove('ok-chip');pool.appendChild(c);});document.getElementById('res-'+idx).className='arr-result';document.getElementById('ans-'+idx).className='ans-reveal';delete scores[idx];updateScore();}
 function toggleAns(idx){document.getElementById('ans-'+idx).classList.toggle('show');}
@@ -1877,6 +1820,7 @@ function buildPenTools(){
   penLayer.addEventListener('pointercancel',penUp);
   penLayer.addEventListener('pointerleave',penUp);
   const sync=()=>{
+    penLayer.style.height='0px';penLayer.style.width='0px';
     const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
     const w=Math.max(document.body.scrollWidth,document.documentElement.scrollWidth);
     penLayer.setAttribute('width',w);
@@ -2083,6 +2027,34 @@ document.addEventListener("DOMContentLoaded",function(){
 });
 // 즉시 실행 (DOMContentLoaded 전에도 안전하게)
 (function(){hideQPanels();})();
+</script>
+
+<script>
+/* ══ 요약 전용 탭 v1.0 ══ */
+(function(){
+  function hideSummary(){
+    var sv=document.getElementById('summaryView');if(sv)sv.style.display='none';
+    var ts=document.getElementById('tabSum');if(ts)ts.classList.remove('active');
+  }
+  window.switchSummary=function(){
+    var rv=document.getElementById('readingView');if(rv)rv.style.display='none';
+    ['arrangeView','grammarView','vocabView'].forEach(function(id){
+      var el=document.getElementById(id);if(el)el.classList.remove('active');});
+    if(typeof hideAllExtra==='function')hideAllExtra();
+    document.querySelectorAll('.view-tab').forEach(function(t){t.classList.remove('active');});
+    var sv=document.getElementById('summaryView');if(sv)sv.style.display='block';
+    var ts=document.getElementById('tabSum');if(ts)ts.classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  /* 다른 모든 전환 함수가 요약뷰를 숨기도록 래핑 */
+  ['switchView','switchSD','switchGA','switchQ','switchVocab'].forEach(function(fn){
+    if(typeof window[fn]!=='function')return;
+    var orig=window[fn];
+    window[fn]=function(){hideSummary();return orig.apply(this,arguments);};
+  });
+  document.addEventListener('DOMContentLoaded',hideSummary);
+  hideSummary();
+})();
 </script>
 </body>
 </html>

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Why Scientists Share — Knowledge Grows by Spreading — 2025년 6월 고1 모의고사 34번 | 목동서로영어학원</title>
 <meta name="description" content="2025년 6월 고1 모의고사 34번 Why Scientists Share — Knowledge Grows by Spreading (과학자들이 공유하는 이유 — 지식은 퍼질 때 자란다) — 한줄해석·문장구조도·배열영작·어법문제·단어장 | 목동서로영어학원 0505.co.kr">
-<meta name="keywords" content="고1 모의고사, 2025년 6월 모의고사, 한줄해석, 배열영작, 어법문제, 단어장, 신목고, 목운중, 목동서로영어학원, 목동 영어학원, 고등영어, 수능영어">
+<meta name="keywords" content="고1 모의고사, 2026년 5월 모의고사, 한줄해석, 배열영작, 어법문제, 단어장, 신목고, 목운중, 목동서로영어학원, 목동 영어학원, 고등영어, 수능영어">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Why Scientists Share — Knowledge Grows by Spreading | 2025년 6월 고1 모의고사 34번">
 <meta property="og:description" content="2025년 6월 고1 모의고사 34번 한줄해석 · 배열영작 · 어법문제 | 목동서로영어학원">
@@ -142,7 +142,7 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 .answer-zone:empty::before{content:'여기에 단어를 놓으세요';color:rgba(46,117,182,0.35);font-size:12px;font-style:italic;display:flex;align-items:center;height:28px;}
 .word-pool{display:flex;flex-wrap:wrap;gap:7px;min-height:44px;padding:10px;background:#f8f8f8;border-radius:8px;border:2px dashed #ddd;margin-bottom:12px;transition:border-color 0.2s,background 0.2s;}
 .word-pool.drag-over{border-color:var(--gold);background:#fff9e6;}
-.word-chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:6px;font-family:Georgia,serif;font-size:13.5px;cursor:grab;user-select:none;transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;background:var(--blue-card);border:1.5px solid var(--blue-border);color:var(--navy);font-weight:600;white-space:nowrap;}
+.word-chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:6px;font-family:Georgia,serif;font-size:13.5px;cursor:grab;user-select:none;transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;background:var(--blue-card);border:1.5px solid var(--blue-border);color:var(--navy);font-weight:600;white-space:nowrap;touch-action:none;}
 .word-chip:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(46,117,182,0.25);}
 .word-chip.dragging{opacity:0.35;transform:scale(0.93);cursor:grabbing;}
 .word-chip.ok-chip{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20;}
@@ -325,9 +325,10 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .s-card.pinned .s-vocab,
 .s-card.tapped .s-vocab{
   order:0;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25)!important;
-  border-radius:20px;padding:3px 12px 3px 8px!important;
-  white-space:nowrap;flex-shrink:0;border-top:none!important;
-  display:inline-flex!important;align-items:center;gap:4px;
+  border-radius:16px;padding:5px 12px 5px 10px!important;
+  white-space:normal;flex-shrink:1;border-top:none!important;
+  display:inline-flex!important;flex-wrap:wrap!important;align-items:center;gap:4px 6px;
+  max-width:100%;overflow-wrap:break-word;word-break:break-word;
 }
 /* 3. 문장구조도 탭·패널 */
 .tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
@@ -443,6 +444,11 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   #penToolbar .pen-btn,#penToolbar .pen-width{width:38px;height:38px;}
   #penToolbar .pen-color{width:26px;height:26px;}
 }
+
+.tab-summary{background:white;color:#00695C;border-color:rgba(0,105,92,0.25);}
+.tab-summary.active{background:#00695C;color:white;border-color:#00695C;}
+.summary-view{display:none;}
+@media print{.summary-view{display:none!important;}}
 </style>
 </head>
 <body>
@@ -466,6 +472,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
   <div class="view-tabs">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
+    <button class="view-tab tab-summary" id="tabSum" onclick="switchSummary()">📄 요약</button>
     <button class="view-tab tab-sd"             id="tabSD" onclick="switchSD()">📐 문장구조도</button>
     <button class="view-tab tab-ga"             id="tabGA" onclick="switchGA()">📊 문법분석</button>
     <button class="view-tab tab-arrange"        id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
@@ -613,132 +620,61 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 </div>
 
 </div>
-    <div class="summary-wrap">
-  <div class="summary-header">📖 줄거리 &amp; 핵심 정리 — Why Scientists Share</div>
+</div>
+
+<div class="summary-view" id="summaryView">
+<div class="summary-wrap">
+  <div class="summary-header">📖 Why Scientists Share — Knowledge Grows by Spreading — 통합 요약</div>
   <div class="summary-body">
 
-    <div style="background:linear-gradient(135deg,#1F3864,#2E7D32);color:white;padding:18px 22px;border-radius:12px;margin:12px 0 18px;text-align:center;">
-      <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:6px;">🎯 핵심 명제 (글의 가정)</div>
-      <div style="font-size:14px;line-height:1.7;font-style:italic;">"Society as a whole will end up knowing more if information is spread as widely as possible."</div>
-      <div style="font-size:13px;line-height:1.7;margin-top:6px;">정보가 가능한 한 널리 퍼질 때, 사회 전체가 더 많이 알게 된다 — 공유의 가정.</div>
-    </div>
-
-    <!-- 글의 흐름 -->
-    <div style="background:#F5F5F5;padding:14px 18px;border-radius:10px;border-left:5px solid #1F3864;margin:12px 0;">
-      <div style="font-family:'Playfair Display',serif;font-weight:700;color:#1F3864;font-size:14px;margin-bottom:10px;">📊 논리 전개 (부정 → 전환 → 효과 1·2 → 가정 → 결론)</div>
-      <table style="width:100%;border-collapse:collapse;font-size:12.5px;line-height:1.7;">
-        <tr style="background:#1F3864;color:white;">
-          <th style="padding:8px;text-align:left;width:18%;">단계</th>
-          <th style="padding:8px;text-align:left;width:15%;">문장</th>
-          <th style="padding:8px;text-align:left;width:67%;">내용</th>
-        </tr>
-        <tr style="background:#FFEBEE;border-bottom:1px solid #E0E0E0;">
-          <td style="padding:8px;font-weight:700;color:#C62828;">① 부정</td>
-          <td style="padding:8px;">S01</td>
-          <td style="padding:8px;">과학자들은 발견·증명한 정보를 자기들끼리만 간직하지 <strong>않는다</strong> (★ v1.10 부정 범위!)</td>
-        </tr>
-        <tr style="background:white;border-bottom:1px solid #E0E0E0;">
-          <td style="padding:8px;font-weight:700;color:#1565C0;">② 전환</td>
-          <td style="padding:8px;">S02</td>
-          <td style="padding:8px;"><strong>Instead</strong> — 결과 발표 + 데이터를 검토용으로 공개</td>
-        </tr>
-        <tr style="background:#E8F5E9;border-bottom:1px solid #E0E0E0;">
-          <td style="padding:8px;font-weight:700;color:#2E7D32;">③ 효과 1</td>
-          <td style="padding:8px;">S03</td>
-          <td style="padding:8px;">다른 과학자가 데이터 <strong>재검토 + 결론 반박</strong> 가능 (검증)</td>
-        </tr>
-        <tr style="background:#E0F2F1;border-bottom:1px solid #E0E0E0;">
-          <td style="padding:8px;font-weight:700;color:#00695C;">④ 효과 2 ★</td>
-          <td style="padding:8px;">S04</td>
-          <td style="padding:8px;"><strong>More important</strong> — 데이터로 새 가설 + 새 실험 (지식 누적·발전)</td>
-        </tr>
-        <tr style="background:white;border-bottom:1px solid #E0E0E0;">
-          <td style="padding:8px;font-weight:700;color:#7B1FA2;">⑤ 가정</td>
-          <td style="padding:8px;">S05</td>
-          <td style="padding:8px;">정보가 널리 퍼질수록 사회 전체가 더 많이 알게 됨 (assumption)</td>
-        </tr>
-        <tr style="background:#FFF8E1;">
-          <td style="padding:8px;font-weight:700;color:#E65100;">⑥ 결론</td>
-          <td style="padding:8px;">S06</td>
-          <td style="padding:8px;">엄격한 의미에서, <strong>모든 과학자는 다른 과학자들의 작업에 의존</strong></td>
-        </tr>
-      </table>
-    </div>
-
-    <!-- 핵심 어법 -->
-    <div style="background:#FFF8E1;padding:14px 18px;border-radius:10px;border-left:5px solid #FFA000;margin:12px 0;">
-      <div style="font-family:'Playfair Display',serif;font-weight:700;color:#E65100;font-size:14px;margin-bottom:10px;">🎯 핵심 어법 12대 (수능형)</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px;font-size:12px;line-height:1.6;">
-        <div style="background:white;padding:9px 11px;border-radius:6px;border-top:3px solid #C62828;"><strong>1. ★★★ not ~ so that ~ (v1.10!)</strong><br>부정 범위 명확화 — 부정어 본동사 옆에</div>
-        <div style="background:white;padding:9px 11px;border-radius:6px;border-top:3px solid #C62828;"><strong>2. ★★★ make it possible for N to V</strong><br>5형식 가목적어 + 의미상 주어</div>
-        <div style="background:white;padding:9px 11px;border-radius:6px;border-top:3px solid #C62828;"><strong>3. ★★ keep A to oneself</strong><br>독점 — 재귀대명사 필수</div>
-        <div style="background:white;padding:9px 11px;border-radius:6px;border-top:3px solid #C62828;"><strong>4. ★★ The assumption is that</strong><br>보어 명사절 (that 절)</div>
-        <div style="background:white;padding:9px 11px;border-radius:6px;border-top:3px solid #C62828;"><strong>5. ★★ as ~ as possible</strong><br>as widely as possible — 부사 호응</div>
-        <div style="background:white;padding:9px 11px;border-radius:6px;border-top:3px solid #C62828;"><strong>6. ★★ rather than + V-ing</strong><br>분사 — to V X! (rather than being limited)</div>
-        <div style="background:white;padding:9px 11px;border-radius:6px;border-top:3px solid #C62828;"><strong>7. ★★ end up + V-ing</strong><br>결국 ~하게 — V-ing만! to V X</div>
-        <div style="background:white;padding:9px 11px;border-radius:6px;border-top:3px solid #C62828;"><strong>8. ★★ 5형식 make + O + 형용사</strong><br>make their data available</div>
-        <div style="background:white;padding:9px 11px;border-radius:6px;border-top:3px solid #E65100;"><strong>9. ★ derive A from B</strong><br>~에서 끌어내다·도출하다</div>
-        <div style="background:white;padding:9px 11px;border-radius:6px;border-top:3px solid #E65100;"><strong>10. ★ depend on (자동+전치)</strong><br>★ on 필수 — rely/count on 동족</div>
-        <div style="background:white;padding:9px 11px;border-radius:6px;border-top:3px solid #E65100;"><strong>11. ★ every + 단수 + 단수동사</strong><br>every scientist depends (-s)</div>
-        <div style="background:white;padding:9px 11px;border-radius:6px;border-top:3px solid #E65100;"><strong>12. ★ to V 부사적 (목적)</strong><br>to construct hypotheses</div>
+    <div style="background:linear-gradient(135deg,#1F3864,#2E7D32,#B8860B);color:white;padding:20px 24px;border-radius:12px;margin-bottom:18px;box-shadow:0 4px 18px rgba(31,56,100,0.2);">
+      <div style="font-size:13px;font-weight:700;margin-bottom:8px;letter-spacing:1.5px;">🌍 CORE MESSAGE — 글의 요지</div>
+      <div style="font-size:15px;line-height:1.7;">
+        과학자들은 발견을 <strong style="color:#f0d070;">독점하지 않고 결과·데이터를 공개</strong>한다.<br>
+        그 덕에 다른 과학자들이 검증·반박하고, 더 중요하게는 <strong>새 가설·실험</strong>을 세운다.<br>
+        정보가 소수에 갇히지 않고 널리 퍼질수록 <strong>사회 전체가 더 많이 알게 된다.</strong><br>
+        결론은 <strong style="font-size:16px;border-bottom:2px solid #f0d070;padding-bottom:2px;">모든 과학자는 서로의 작업에 의존한다</strong>는 것.
       </div>
     </div>
 
-    <!-- v1.10 박제 -->
-    <div style="background:#FFEBEE;padding:14px 18px;border-radius:10px;border-left:5px solid #C62828;margin:12px 0;">
-      <div style="font-family:'Playfair Display',serif;font-weight:700;color:#C62828;font-size:14px;margin-bottom:10px;">🚨 v1.10 핵심 — 부정 범위 명확화 (S01 박제 사례!)</div>
-      <table style="width:100%;border-collapse:collapse;font-size:12.5px;line-height:1.7;">
-        <tr style="background:#C62828;color:white;">
-          <th style="padding:8px;text-align:left;width:30%;">처리</th>
-          <th style="padding:8px;text-align:left;width:70%;">한국어 번역</th>
-        </tr>
-        <tr style="background:white;"><td style="padding:8px;font-weight:700;color:#C62828;">❌ 직역 (모호)</td><td style="padding:8px;">"~ 끌어낼 수 있도록 하지 <strong>않는다</strong>" — 부정어가 끝까지 밀려 모호 ❓</td></tr>
-        <tr style="background:#FAFAFA;"><td style="padding:8px;font-weight:700;color:#2E7D32;">✅ 안 1 (대시)</td><td style="padding:8px;">"~ 간직하지는 <strong>않는다</strong> — 끌어내려는 게 <strong>아니다</strong>" (본문 채택)</td></tr>
-        <tr style="background:white;"><td style="padding:8px;font-weight:700;color:#2E7D32;">✅ 안 2 (앞으로)</td><td style="padding:8px;">"[~할 목적으로] ~ 간직하지는 <strong>않는다</strong>"</td></tr>
-        <tr style="background:#FAFAFA;"><td style="padding:8px;font-weight:700;color:#2E7D32;">✅ 안 3 (분리)</td><td style="padding:8px;">"~ 간직하지 <strong>않는다</strong>. 즉, 끌어내려는 게 <strong>아니다</strong>"</td></tr>
-      </table>
-      <div style="margin-top:8px;font-size:11.5px;color:#5D4037;font-style:italic;">★ 부정 범위 = "본동사 + so that 부속절" 전체에 걸림 → 부정어 본동사 옆에!</div>
+    <div style="background:#fff8e6;border-left:4px solid #f0d070;padding:14px 18px;border-radius:6px;margin-bottom:18px;">
+      <div style="font-size:13px;font-weight:700;color:#8B6914;margin-bottom:10px;">🔑 핵심 — 공유가 지식을 키운다</div>
+      <div style="font-size:12px;line-height:1.7;color:#444;">
+        ✗ <strong>독점</strong>: 발견을 자기만 간직 → 의미·이론을 혼자만 도출.<br>
+        ✓ <strong>공유</strong>: 발표·데이터 공개 → ① 타인이 <strong>검증·반박</strong> → ② (더 중요) 타인이 <strong>새 가설·실험</strong> → ③ 정보가 널리 퍼질수록 <strong>사회 전체 지식↑</strong> → ④ 과학자 간 <strong>상호 의존</strong>.
+      </div>
     </div>
 
-    <!-- 페어·혼동 -->
-    <div style="background:#E8F5E9;padding:14px 18px;border-radius:10px;border-left:5px solid #2E7D32;margin:12px 0;">
-      <div style="font-family:'Playfair Display',serif;font-weight:700;color:#2E7D32;font-size:14px;margin-bottom:10px;">🔗 페어·혼동 어법 (시험 단골)</div>
-      <table style="width:100%;border-collapse:collapse;font-size:12.5px;line-height:1.7;">
-        <tr style="background:#2E7D32;color:white;">
-          <th style="padding:8px;text-align:left;width:30%;">유형</th>
-          <th style="padding:8px;text-align:left;width:35%;">A</th>
-          <th style="padding:8px;text-align:left;width:35%;">B (페어)</th>
-        </tr>
-        <tr style="background:white;"><td style="padding:8px;"><strong>★ instead 페어</strong></td><td style="padding:8px;">instead (단독 부사)</td><td style="padding:8px;">instead of + 명사 (전치사)</td></tr>
-        <tr style="background:#FAFAFA;"><td style="padding:8px;"><strong>★ rather than 호응</strong></td><td style="padding:8px;">rather than + V-ing ✓</td><td style="padding:8px;">rather than + to V ✗</td></tr>
-        <tr style="background:white;"><td style="padding:8px;"><strong>★ end up 호응</strong></td><td style="padding:8px;">end up + V-ing ✓</td><td style="padding:8px;">end up + to V ✗</td></tr>
-        <tr style="background:#FAFAFA;"><td style="padding:8px;"><strong>★ that vs what (보어 명사절)</strong></td><td style="padding:8px;">that (접속사)</td><td style="padding:8px;">what (선행사 포함)</td></tr>
-        <tr style="background:white;"><td style="padding:8px;"><strong>★ so that vs so</strong></td><td style="padding:8px;">so that (목적·결과)</td><td style="padding:8px;">so (결과 — 그래서)</td></tr>
-        <tr style="background:#FAFAFA;"><td style="padding:8px;"><strong>★ every + 단수 호응</strong></td><td style="padding:8px;">every scientist (단수)</td><td style="padding:8px;">depends (단수동사) ★</td></tr>
-        <tr style="background:white;"><td style="padding:8px;"><strong>★ depend 페어</strong></td><td style="padding:8px;">depend on / rely on / count on</td><td style="padding:8px;">자동사 + 전치사 (on 필수)</td></tr>
-        <tr style="background:#FAFAFA;"><td style="padding:8px;"><strong>★ to V 부사적 vs 명사적</strong></td><td style="padding:8px;">to construct (목적 — 부사)</td><td style="padding:8px;">to use (진목적어 — 명사)</td></tr>
-      </table>
-    </div>
-
-    <!-- 수능형 적용 -->
-    <div style="background:#FCE4EC;padding:14px 18px;border-radius:10px;border-left:5px solid #C2185B;margin:12px 0;">
-      <div style="font-family:'Playfair Display',serif;font-weight:700;color:#C2185B;font-size:14px;margin-bottom:10px;">📝 수능형 적용 — 34번 (빈칸 추론·요지)</div>
-      <table style="width:100%;border-collapse:collapse;font-size:12.5px;line-height:1.7;">
-        <tr style="background:#C2185B;color:white;">
-          <th style="padding:8px;text-align:left;width:18%;">유형</th>
-          <th style="padding:8px;text-align:left;width:82%;">정답형 진술</th>
-        </tr>
-        <tr style="background:white;"><td style="padding:8px;font-weight:700;">주제</td><td style="padding:8px;">과학자들이 데이터를 <strong>공유</strong>하는 이유와 그 효과</td></tr>
-        <tr style="background:#FAFAFA;"><td style="padding:8px;font-weight:700;">근거 1</td><td style="padding:8px;">검증 가능 — 다른 과학자가 재검토·반박할 수 있음 (S03)</td></tr>
-        <tr style="background:white;"><td style="padding:8px;font-weight:700;">근거 2 (★)</td><td style="padding:8px;">새 가설 + 새 실험 → <strong>지식의 누적·발전</strong> (S04)</td></tr>
-        <tr style="background:#FAFAFA;"><td style="padding:8px;font-weight:700;">핵심 가정</td><td style="padding:8px;">정보가 널리 퍼질수록 사회 전체가 더 많이 알게 됨 (S05)</td></tr>
-        <tr style="background:white;"><td style="padding:8px;font-weight:700;">결론</td><td style="padding:8px;">모든 과학자는 다른 과학자들의 작업에 <strong>의존</strong>한다 (S06)</td></tr>
-      </table>
+    <div style="background:#f0f4fb;border-radius:8px;padding:16px 20px;margin-bottom:6px;">
+      <div style="font-size:13px;font-weight:700;color:#1F3864;margin-bottom:12px;">📐 글 전체 구조</div>
+      <div style="position:relative;padding-left:32px;">
+        <div style="position:absolute;left:11px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,#1F3864,#2E7D32,#B8860B);"></div>
+        <div style="position:relative;margin-bottom:14px;">
+          <div style="position:absolute;left:-32px;top:0;width:24px;height:24px;border-radius:50%;background:#1F3864;color:white;font-size:11px;font-weight:700;text-align:center;line-height:24px;">행동</div>
+          <div style="font-size:12px;font-weight:700;color:#1F3864;">S1–2 · 독점 ✗ → 공개 ✓</div>
+          <div style="font-size:12px;color:#555;line-height:1.5;">과학자는 발견을 자기만 간직하지 않는다. 대신 결과를 발표하고 데이터를 검토에 개방한다.</div>
+        </div>
+        <div style="position:relative;margin-bottom:14px;">
+          <div style="position:absolute;left:-32px;top:0;width:24px;height:24px;border-radius:50%;background:#2E7D32;color:white;font-size:11px;font-weight:700;text-align:center;line-height:24px;">효과</div>
+          <div style="font-size:12px;font-weight:700;color:#2E7D32;">S3–4 · 검증 + 새 창조</div>
+          <div style="font-size:12px;color:#555;line-height:1.5;">공개 덕에 ① 남이 데이터를 재검토·반박할 수 있고, ② <em>더 중요하게는</em> 새 가설을 세우고 새 실험을 수행할 수 있다.</div>
+        </div>
+        <div style="position:relative;margin-bottom:14px;">
+          <div style="position:absolute;left:-32px;top:0;width:24px;height:24px;border-radius:50%;background:#8E6E00;color:white;font-size:11px;font-weight:700;text-align:center;line-height:24px;">가정</div>
+          <div style="font-size:12px;font-weight:700;color:#8E6E00;">S5 · 널리 퍼질수록 더 안다</div>
+          <div style="font-size:12px;color:#555;line-height:1.5;">정보가 소수에 갇히지 않고 <strong>가능한 한 널리</strong> 퍼지면 사회 전체가 결국 더 많이 알게 된다는 전제.</div>
+        </div>
+        <div style="position:relative;">
+          <div style="position:absolute;left:-32px;top:0;width:24px;height:24px;border-radius:50%;background:#B8860B;color:white;font-size:11px;font-weight:700;text-align:center;line-height:24px;">결론</div>
+          <div style="font-size:12px;font-weight:700;color:#B8860B;">S6 · 상호 의존</div>
+          <div style="font-size:12px;color:#555;line-height:1.5;">엄밀히 말해 <strong>모든 과학자는 다른 과학자들의 작업에 의존한다.</strong></div>
+        </div>
+      </div>
     </div>
 
   </div>
 </div>
-  </div>
+</div>
   <div class="ga-panel" id="panelGA">
 <div class="ga-legend">
   <div class="ga-leg"><div class="ga-leg-dot" style="background:#C62828;"></div><strong>Tier 1</strong> 어법 핵심</div>
@@ -1473,6 +1409,12 @@ function readNext(){if(!allPlaying||allIdx>=allQueue.length){if(currentCard)curr
 
 /* ══ 배열영작 ══ */
 let scores={},dragSrc=null,clickSelectedChip=null;
+/* ── 터치 드래그 지원 (태블릿/모바일) v1.7 ── */
+let tChip=null,tClone=null,tStartX=0,tStartY=0,tOffX=0,tOffY=0,tMoved=false,tDragEnd=0;
+const T_DRAG_THRESHOLD=10;
+function arrTouchStart(e){const chip=e.target.closest('.word-chip');if(!chip)return;tChip=chip;const r=chip.getBoundingClientRect();const t=e.touches[0];tStartX=t.clientX;tStartY=t.clientY;tOffX=t.clientX-r.left;tOffY=t.clientY-r.top;tMoved=false;}
+function arrTouchMove(e){if(!tChip)return;if(e.cancelable)e.preventDefault();const t=e.touches[0];const dx=t.clientX-tStartX,dy=t.clientY-tStartY;if(!tMoved){if(Math.hypot(dx,dy)<T_DRAG_THRESHOLD)return;tMoved=true;const r=tChip.getBoundingClientRect();tClone=tChip.cloneNode(true);Object.assign(tClone.style,{position:'fixed',left:r.left+'px',top:r.top+'px',width:r.width+'px',zIndex:9999,pointerEvents:'none',opacity:0.9,transform:'scale(1.08)',boxShadow:'0 8px 24px rgba(0,0,0,0.3)',transition:'none'});document.body.appendChild(tClone);tChip.classList.add('dragging');}tClone.style.left=(t.clientX-tOffX)+'px';tClone.style.top=(t.clientY-tOffY)+'px';tClone.style.display='none';const tg=document.elementFromPoint(t.clientX,t.clientY);tClone.style.display='';const z=tg&&tg.closest('.answer-zone, .word-pool');document.querySelectorAll('.answer-zone.drag-over, .word-pool.drag-over').forEach(el=>el.classList.remove('drag-over'));if(z)z.classList.add('drag-over');}
+function arrTouchEnd(e){if(!tChip)return;if(!tMoved){tChip=null;return;}const t=e.changedTouches[0];if(tClone)tClone.style.display='none';const tg=document.elementFromPoint(t.clientX,t.clientY);const z=tg&&tg.closest('.answer-zone, .word-pool');if(z){const chips=Array.from(z.querySelectorAll('.word-chip')).filter(c=>c!==tChip);if(chips.length===0){z.appendChild(tChip);}else{let bestC=null,bestB=true,bestD=Infinity;for(const c of chips){const r=c.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const d=Math.hypot(t.clientX-cx,t.clientY-cy);if(d<bestD){bestD=d;bestC=c;bestB=t.clientX<cx;}}if(bestB)z.insertBefore(tChip,bestC);else z.insertBefore(tChip,bestC.nextSibling);}tChip.classList.remove('ok-chip');const idx=tChip.dataset.idx;const r=document.getElementById('res-'+idx);if(r)r.className='arr-result';}if(tClone){tClone.remove();tClone=null;}tChip.classList.remove('dragging');document.querySelectorAll('.answer-zone.drag-over, .word-pool.drag-over').forEach(el=>el.classList.remove('drag-over'));tChip=null;tDragEnd=Date.now();e.preventDefault();}
 function buildArrangeCards(){
   const box=document.getElementById('arrCards');box.innerHTML='';
   const hint=document.createElement('div');hint.className='touch-hint';hint.innerHTML='💡 단어 클릭 → 즉시 이동 &nbsp;|&nbsp; 드래그도 가능';box.appendChild(hint);
@@ -1481,14 +1423,15 @@ function buildArrangeCards(){
     const card=document.createElement('div');card.className='arr-card';card.style.animationDelay=(idx*60)+'ms';
     card.innerHTML=`<div class="arr-header"><span class="arr-num">${item.num}</span><div class="arr-kr">${item.kr}</div></div><div class="arr-body"><div class="answer-zone" id="zone-${idx}"></div><div class="word-pool" id="pool-${idx}">${shuffled.map(w=>`<div class="word-chip" draggable="true" data-word="${w}" data-idx="${idx}">${w}</div>`).join('')}</div><div class="arr-result" id="res-${idx}"></div><div class="ans-reveal" id="ans-${idx}"><strong>정답:</strong> ${item.ans}.</div><div class="arr-btns"><button class="arr-check" onclick="checkAns(${idx})">✓ 확인</button><button class="arr-reset" onclick="resetCard(${idx})">↺ 초기화</button><button class="arr-show-ans" onclick="toggleAns(${idx})">👁 정답 보기</button></div></div>`;
     box.appendChild(card);
-    ['zone-'+idx,'pool-'+idx].forEach(zid=>{const z=document.getElementById(zid);z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(!dragSrc)return;z.appendChild(dragSrc);dragSrc.classList.remove('dragging','ok-chip');document.getElementById('res-'+idx).className='arr-result';dragSrc=null;});});
+    ['zone-'+idx,'pool-'+idx].forEach(zid=>{const z=document.getElementById(zid);z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(!dragSrc)return;const chips=Array.from(z.querySelectorAll('.word-chip')).filter(c=>c!==dragSrc);if(chips.length===0){z.appendChild(dragSrc);}else{let bestC=null,bestB=true,bestD=Infinity;for(const c of chips){const r=c.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const d=Math.hypot(e.clientX-cx,e.clientY-cy);if(d<bestD){bestD=d;bestC=c;bestB=e.clientX<cx;}}if(bestB)z.insertBefore(dragSrc,bestC);else z.insertBefore(dragSrc,bestC.nextSibling);}dragSrc.classList.remove('dragging','ok-chip');document.getElementById('res-'+idx).className='arr-result';dragSrc=null;});});
     setTimeout(()=>{document.getElementById('pool-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});document.getElementById('zone-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});},0);
   });
   box.addEventListener('dragstart',e=>{if(!e.target.classList.contains('word-chip'))return;dragSrc=e.target;e.target.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
   box.addEventListener('dragend',e=>{if(e.target.classList.contains('word-chip'))e.target.classList.remove('dragging');dragSrc=null;});
+  box.addEventListener('touchstart',arrTouchStart,{passive:true});box.addEventListener('touchmove',arrTouchMove,{passive:false});box.addEventListener('touchend',arrTouchEnd);box.addEventListener('touchcancel',arrTouchEnd);
   updateScore();
 }
-function chipClick(chip,idx){const inZone=chip.parentElement.id==='zone-'+idx;const target=document.getElementById(inZone?'pool-'+idx:'zone-'+idx);chip.classList.remove('ok-chip');target.appendChild(chip);chip.addEventListener('click',()=>chipClick(chip,idx),{once:true});document.getElementById('res-'+idx).className='arr-result';}
+function chipClick(chip,idx){if(Date.now()-tDragEnd<500)return;const inZone=chip.parentElement.id==='zone-'+idx;const target=document.getElementById(inZone?'pool-'+idx:'zone-'+idx);chip.classList.remove('ok-chip');target.appendChild(chip);document.getElementById('res-'+idx).className='arr-result';}
 function checkAns(idx){const zone=document.getElementById('zone-'+idx);const chips=Array.from(zone.querySelectorAll('.word-chip'));const userAns=chips.map(c=>c.dataset.word).join(' ');const correct=ARRANGE[idx].ans;const ok=userAns.trim().toLowerCase()===correct.trim().toLowerCase();const res=document.getElementById('res-'+idx);res.className='arr-result show '+(ok?'ok':'ng');res.innerHTML=ok?'🎉 정답입니다!':'❌ 다시 확인해 보세요. ('+chips.length+'/'+correct.split(' ').length+'개 배치됨)';if(ok)chips.forEach(c=>c.classList.add('ok-chip'));scores[idx]=ok?1:0;updateScore();}
 function resetCard(idx){const zone=document.getElementById('zone-'+idx);const pool=document.getElementById('pool-'+idx);Array.from(zone.querySelectorAll('.word-chip')).forEach(c=>{c.classList.remove('ok-chip');pool.appendChild(c);});document.getElementById('res-'+idx).className='arr-result';document.getElementById('ans-'+idx).className='ans-reveal';delete scores[idx];updateScore();}
 function toggleAns(idx){document.getElementById('ans-'+idx).classList.toggle('show');}
@@ -1632,6 +1575,7 @@ function buildPenTools(){
   penLayer.addEventListener('pointercancel',penUp);
   penLayer.addEventListener('pointerleave',penUp);
   const sync=()=>{
+    penLayer.style.height='0px';penLayer.style.width='0px';
     const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
     const w=Math.max(document.body.scrollWidth,document.documentElement.scrollWidth);
     penLayer.setAttribute('width',w);
@@ -1838,6 +1782,34 @@ document.addEventListener("DOMContentLoaded",function(){
 });
 // 즉시 실행 (DOMContentLoaded 전에도 안전하게)
 (function(){hideQPanels();})();
+</script>
+
+<script>
+/* ══ 요약 전용 탭 v1.0 ══ */
+(function(){
+  function hideSummary(){
+    var sv=document.getElementById('summaryView');if(sv)sv.style.display='none';
+    var ts=document.getElementById('tabSum');if(ts)ts.classList.remove('active');
+  }
+  window.switchSummary=function(){
+    var rv=document.getElementById('readingView');if(rv)rv.style.display='none';
+    ['arrangeView','grammarView','vocabView'].forEach(function(id){
+      var el=document.getElementById(id);if(el)el.classList.remove('active');});
+    if(typeof hideAllExtra==='function')hideAllExtra();
+    document.querySelectorAll('.view-tab').forEach(function(t){t.classList.remove('active');});
+    var sv=document.getElementById('summaryView');if(sv)sv.style.display='block';
+    var ts=document.getElementById('tabSum');if(ts)ts.classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  /* 다른 모든 전환 함수가 요약뷰를 숨기도록 래핑 */
+  ['switchView','switchSD','switchGA','switchQ','switchVocab'].forEach(function(fn){
+    if(typeof window[fn]!=='function')return;
+    var orig=window[fn];
+    window[fn]=function(){hideSummary();return orig.apply(this,arguments);};
+  });
+  document.addEventListener('DOMContentLoaded',hideSummary);
+  hideSummary();
+})();
 </script>
 </body>
 </html>
