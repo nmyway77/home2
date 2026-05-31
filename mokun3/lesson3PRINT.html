@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NE능률 Lesson 3 · Always Aware, Always Prepared · 학습용 워크시트 완전판 상세풀이</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+<style>
+/* ========== 색상·폰트 변수 (변경 금지) ========== */
+:root{
+  --cream:#FAF6EE;--cream-dark:#F0E9D8;--warm-white:#FEFBF5;
+  --navy-950:#0A1E3A;--navy-900:#112546;--navy-700:#2C3E63;
+  --gold:#C99B4E;--gold-light:#E4C589;
+  --slate-700:#334155;--slate-600:#475569;--slate-500:#64748B;--slate-400:#94A3B8;
+  --slate-300:#CBD5E1;--slate-200:#E2E8F0;--slate-100:#F1F5F9;--slate-50:#F8FAFC;
+  --emerald-700:#047857;--emerald-600:#059669;--emerald-50:#ECFDF5;
+  --rose-600:#DC2626;--rose-50:#FEF2F2;
+  --amber-600:#D97706;--amber-50:#FEF3C7;
+  --indigo-600:#4F46E5;--indigo-50:#EEF2FF;
+  --purple-700:#7E22CE;--purple-50:#FAF5FF;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--slate-700);font-family:'Pretendard Variable',-apple-system,sans-serif;font-size:15px;line-height:1.65;letter-spacing:-0.005em}
+.container{max-width:920px;margin:0 auto;padding:0 32px}
+
+/* ========== Home Button (우상단 고정, 변경 금지) ========== */
+.home-btn{position:fixed;top:20px;right:20px;z-index:999;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;background:var(--gold);color:var(--navy-950);text-decoration:none;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;box-shadow:0 4px 14px rgba(10,30,58,0.25);transition:all 0.2s;border:2px solid var(--navy-950)}
+.home-btn:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 6px 20px rgba(10,30,58,0.35)}
+.home-btn svg{width:14px;height:14px;fill:currentColor}
+@media(max-width:720px){.home-btn{top:12px;right:12px;padding:10px 12px}.home-btn .label{display:none}}
+@media print{.home-btn{display:none}}
+
+/* ========== Header (책 표지) ========== */
+header.top{background:var(--navy-950);color:var(--cream);padding:48px 0 56px;position:relative;overflow:hidden;border-bottom:4px solid var(--gold)}
+header.top::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,var(--gold) 50%,transparent 100%)}
+.brand-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;padding-bottom:22px;border-bottom:1px solid rgba(228,197,137,0.2)}
+.brand{font-family:'Playfair Display',serif;font-style:italic;font-weight:500;font-size:15px;color:var(--gold-light);letter-spacing:0.02em}
+.brand b{font-weight:700;color:var(--gold);margin-left:6px}
+.brand .kor{display:block;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:12px;color:var(--slate-300);letter-spacing:0.14em;margin-top:3px;font-weight:500}
+.vol-tag{font-family:'Playfair Display',serif;font-size:12px;font-weight:700;letter-spacing:0.24em;color:var(--gold);text-transform:uppercase}
+.book-title{font-family:'Playfair Display',serif;font-weight:900;font-style:italic;font-size:clamp(28px,5vw,46px);letter-spacing:-0.02em;color:var(--cream);line-height:1.1;margin-bottom:10px}
+.book-title em{font-style:italic;color:var(--gold);font-weight:700}
+.book-subtitle{font-weight:500;font-size:16px;color:#D3CABA;letter-spacing:-0.01em;margin-bottom:24px;line-height:1.5}
+.meta-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0;padding-top:22px;border-top:1px solid rgba(228,197,137,0.2)}
+.meta-item{padding:0 20px;border-right:1px solid rgba(228,197,137,0.15)}
+.meta-item:first-child{padding-left:0}
+.meta-item:last-child{border-right:none;padding-right:0}
+.meta-lbl{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:6px}
+.meta-val{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--cream);letter-spacing:-0.01em}
+.meta-val .u{font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:13px;color:var(--slate-300);margin-left:4px;font-weight:500}
+
+/* ========== Main Layout ========== */
+main{padding:48px 0 80px}
+.section-divider{text-align:center;margin:56px 0 36px;position:relative}
+.section-divider::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:var(--slate-300)}
+.section-divider span{position:relative;background:var(--cream);padding:0 28px;font-family:'Playfair Display',serif;font-style:italic;font-size:20px;font-weight:700;color:var(--navy-950);letter-spacing:-0.01em}
+.section-divider span .kor{display:block;font-style:normal;font-family:'Pretendard Variable',sans-serif;font-size:11px;letter-spacing:0.14em;color:var(--slate-500);text-transform:uppercase;font-weight:700;margin-top:4px}
+
+/* ========== Question Card ========== */
+.q-card{background:var(--warm-white);border:1px solid var(--slate-200);padding:clamp(24px,3vw,36px);margin-bottom:28px;box-shadow:0 1px 0 rgba(10,30,58,0.03)}
+.q-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--slate-200)}
+.q-num{font-family:'Playfair Display',serif;font-weight:800;font-style:italic;font-size:24px;color:var(--navy-950);letter-spacing:-0.02em;padding-right:14px;border-right:2px solid var(--slate-200)}
+.q-type{font-size:11px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;padding:5px 11px;border-radius:2px}
+/* Type colors per category */
+.q-type.listen{background:var(--indigo-600);color:#E0E7FF}
+.q-type.choice{background:var(--slate-700);color:var(--gold-light)}
+.q-type.gram{background:#7C3AED;color:#EDE9FE}
+.q-type.vocab{background:#0891B2;color:#ECFEFF}
+.q-type.blank{background:var(--navy-950);color:var(--gold-light)}
+.q-type.order{background:#059669;color:#D1FAE5}
+.q-type.insert{background:#D97706;color:#FEF3C7}
+.q-type.long{background:#BE123C;color:#FFE4E6}
+.q-type.theme{background:#BE123C;color:#FFE4E6}
+.q-type.seodap{background:#7C2D12;color:#FED7AA}
+.q-pts{font-size:11px;font-weight:700;color:var(--slate-500);padding:4px 10px;background:var(--slate-50);border:1px solid var(--slate-200);border-radius:999px;margin-left:auto;letter-spacing:0.04em}
+.q-prompt{font-size:15.5px;font-weight:700;color:var(--navy-950);margin-bottom:18px;line-height:1.6;letter-spacing:-0.01em}
+.q-prompt b{color:var(--rose-600);font-weight:800}
+
+/* ========== Passage (영어 지문) ========== */
+.passage{font-family:'Playfair Display',serif;font-size:14.5px;line-height:1.95;color:var(--slate-700);padding:22px 26px;background:var(--cream);border-left:3px solid var(--slate-400);margin-bottom:18px;border-radius:0 3px 3px 0}
+.passage.insert-box{border-left:3px solid var(--gold);background:#FFF8E1;margin-bottom:14px}
+.passage .label{display:block;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:11px;font-weight:800;letter-spacing:0.15em;color:var(--navy-900);margin-bottom:8px;text-transform:uppercase}
+.passage mark{background:#FFF3C4;padding:1px 4px;font-style:normal;font-weight:600;font-family:'Pretendard Variable',sans-serif;font-size:13.5px;color:var(--navy-900)}
+.passage mark.diff{background:#FECACA;border-bottom:2px solid var(--rose-600);color:var(--rose-600)}
+.passage mark.key{background:rgba(201,155,78,0.18);border-bottom:2px solid var(--gold)}
+.passage mark.under{background:transparent;border-bottom:1.5px solid var(--navy-900);color:var(--navy-950);font-weight:600;padding:0 2px}
+.passage mark.undbox{background:transparent;border:1px dashed var(--navy-700);color:var(--navy-950);font-weight:600;padding:1px 6px}
+.passage .blank-inline{display:inline-block;min-width:90px;border-bottom:1.5px solid var(--slate-500);padding:0 10px;margin:0 3px;font-weight:700;color:var(--navy-950)}
+.passage .blank-box{display:inline-block;padding:2px 10px;background:var(--navy-950);color:var(--gold-light);font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:12px;font-weight:800;margin:0 3px;border-radius:2px;letter-spacing:0.08em;vertical-align:baseline}
+.passage .circle-num{display:inline-block;width:18px;height:18px;border-radius:50%;background:var(--navy-950);color:var(--gold-light);font-family:'Pretendard Variable',sans-serif;font-size:11px;font-weight:800;text-align:center;line-height:18px;font-style:normal;margin:0 2px;vertical-align:baseline}
+.passage .label-num{display:inline-block;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-weight:800;color:var(--navy-900);margin-right:4px}
+
+/* ========== Passage Pair (A/B 병렬 지문) ========== */
+.passage-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+@media(max-width:720px){.passage-pair{grid-template-columns:1fr}}
+.passage-pair .passage{margin-bottom:0}
+
+/* ========== Dialogue (듣기 대본) ========== */
+.dialogue{font-family:'Playfair Display',serif;font-size:14px;line-height:1.9;color:var(--slate-700);padding:20px 24px;background:var(--indigo-50);border-left:3px solid var(--indigo-600);margin-bottom:16px;border-radius:0 3px 3px 0}
+.dialogue .label{font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:11px;font-weight:800;letter-spacing:0.15em;color:var(--indigo-600);margin-bottom:10px;display:block;text-transform:uppercase}
+.dialogue .speaker{font-weight:700;font-style:normal;color:var(--indigo-600);font-family:'Pretendard Variable',sans-serif;display:inline-block;min-width:24px}
+.dialogue p{margin:6px 0}
+
+/* ========== Q10용 가격 표 ========== */
+.price-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px;font-family:'Pretendard Variable',sans-serif}
+.price-table caption{font-weight:700;color:var(--navy-950);padding:6px;text-align:center;font-size:13px;background:var(--slate-100);border:1px solid var(--slate-300)}
+.price-table th{background:var(--navy-950);color:var(--gold-light);padding:7px 10px;font-weight:700;letter-spacing:0.06em;text-align:center;font-size:12px}
+.price-table td{padding:6px 10px;text-align:center;border:1px solid var(--slate-300);background:white}
+.price-table td:first-child{text-align:center;font-weight:700;color:var(--navy-950)}
+
+/* ========== 도표 (도표 일치 문제) ========== */
+.chart-box{background:white;border:1px solid var(--slate-300);padding:20px 24px;margin:12px 0}
+.chart-title{font-family:'Pretendard Variable',sans-serif;font-weight:800;font-size:14px;color:var(--navy-950);text-align:center;margin-bottom:6px}
+.chart-subtitle{font-size:11.5px;color:var(--slate-500);text-align:center;margin-bottom:14px;letter-spacing:0.02em}
+.chart-note{font-size:11px;color:var(--slate-500);font-style:italic;text-align:right;margin-top:6px}
+.bar-row{display:grid;grid-template-columns:220px 1fr 50px;gap:10px;align-items:center;margin:7px 0;font-size:12.5px;font-family:'Pretendard Variable',sans-serif}
+.bar-row .bar-label{text-align:right;font-weight:600;color:var(--slate-700)}
+.bar-row .bar-bg{height:18px;background:var(--slate-100);position:relative;border:1px solid var(--slate-200)}
+.bar-row .bar-fill{height:100%;display:inline-block}
+.bar-row .bar-val{font-weight:700;color:var(--navy-950);text-align:left}
+@media(max-width:720px){.bar-row{grid-template-columns:120px 1fr 40px;font-size:11px}}
+
+/* ========== 정보 박스 (실용문/안내문) ========== */
+.info-box{background:white;border:1.5px solid var(--slate-400);padding:20px 24px;margin:12px 0;font-family:'Playfair Display',serif;font-size:14px;line-height:1.8}
+.info-box .info-title{font-family:'Pretendard Variable',sans-serif;font-style:normal;font-weight:800;font-size:17px;color:var(--navy-950);text-align:center;padding-bottom:10px;border-bottom:2px solid var(--navy-950);margin-bottom:14px;letter-spacing:-0.01em}
+.info-box .field{font-family:'Pretendard Variable',sans-serif;font-style:normal;margin:6px 0}
+.info-box .field b{color:var(--navy-900);font-weight:700}
+.info-box ul{margin:6px 0;padding-left:20px;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:13.5px}
+.info-box li{margin:3px 0}
+
+/* ========== Picture Box (그림 일치) ========== */
+.picture-box{background:white;border:1px solid var(--slate-300);padding:18px;margin:12px 0;text-align:center}
+.picture-caption{font-family:'Pretendard Variable',sans-serif;font-size:12px;color:var(--slate-500);text-align:center;margin-top:8px}
+
+/* ========== 신목고용 spec-box (서답형 응용 지문) ========== */
+.spec-box{background:white;border:1.5px solid var(--slate-400);padding:18px 22px;margin:12px 0;font-family:'Playfair Display',serif;font-size:14px;line-height:1.8}
+.spec-box .spec-title{font-family:'Pretendard Variable',sans-serif;font-style:normal;font-weight:800;font-size:17px;color:var(--navy-950);text-align:center;padding-bottom:10px;border-bottom:2px solid var(--navy-950);margin-bottom:14px;letter-spacing:-0.01em}
+.spec-box .field{font-family:'Pretendard Variable',sans-serif;font-style:normal;margin:6px 0;font-size:13.5px}
+.spec-box .field b{color:var(--navy-900);font-weight:700}
+.spec-box ul{margin:6px 0;padding-left:20px;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:13.5px}
+.spec-box li{margin:3px 0}
+
+/* ========== 조건 박스 (서답형 <조건>) ========== */
+.cond-box{background:#FAF5FF;border:1px solid #D8B4FE;padding:14px 18px;margin:10px 0;font-size:13px;font-family:'Pretendard Variable',sans-serif;border-radius:3px}
+.cond-box .cond-title{font-weight:800;color:var(--purple-700);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px}
+.cond-box ol{margin:4px 0 4px 20px;padding:0}
+.cond-box li{margin:2px 0;line-height:1.65}
+.cond-box .bogi{margin-top:10px;padding:8px 12px;background:white;border:1px dashed var(--purple-700);border-radius:2px;font-family:'Playfair Display',serif;font-style:italic;font-size:13.5px;text-align:center}
+.cond-box .bogi b{font-weight:700;color:var(--navy-950)}
+
+/* ========== 비교 표 (Q3 같은 표 정리 문제) ========== */
+.compare-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px;font-family:'Pretendard Variable',sans-serif}
+.compare-table th{background:var(--navy-950);color:var(--gold-light);padding:8px 10px;font-weight:700;text-align:center;font-size:12px;letter-spacing:0.04em}
+.compare-table td{padding:8px 10px;border:1px solid var(--slate-300);background:white;vertical-align:top}
+.compare-table td.num{text-align:center;font-weight:800;color:var(--navy-950);width:40px;background:var(--slate-50)}
+.compare-table td.col-head{font-weight:700;color:var(--navy-950);width:24%;background:var(--slate-50)}
+
+/* ========== Matrix Table (Q4 같은 ABCD 짝짓기) ========== */
+.matrix-table{width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:13.5px;font-family:'Pretendard Variable',sans-serif}
+.matrix-table th{background:var(--slate-100);padding:8px 10px;font-weight:700;color:var(--navy-900);border:1px solid var(--slate-300);text-align:center}
+.matrix-table td{padding:7px 10px;border:1px solid var(--slate-300);text-align:center;background:white}
+.matrix-table td.num-cell{font-weight:800;color:var(--navy-950);background:var(--slate-50);width:44px}
+.matrix-table .correct-row td{background:var(--emerald-50)!important}
+.matrix-table .correct-row td.num-cell{color:var(--emerald-700);background:var(--emerald-50)!important}
+
+/* ========== 선지 ========== */
+.q-choices{display:flex;flex-direction:column;gap:5px;margin-bottom:18px}
+.q-choices .c{display:block;padding:8px 14px;font-size:14px;line-height:1.7;color:var(--slate-700);border-radius:2px}
+.q-choices .c .num{display:inline-block;font-weight:800;margin-right:8px;color:var(--navy-900);font-size:15px}
+.q-choices .c.correct{background:var(--emerald-50);border-left:3px solid var(--emerald-600)}
+.q-choices .c.correct .num{color:var(--emerald-700)}
+.q-choices.horz{flex-direction:row;flex-wrap:wrap;gap:6px 18px}
+
+/* ========== 서답형 헤더 ========== */
+.seodap-header{background:linear-gradient(135deg,#7C2D12,#9A3412);color:#FED7AA;padding:16px 24px;margin-top:8px;margin-bottom:16px;border-radius:3px 3px 0 0}
+.seodap-header h3{margin:0;font-size:16px;font-weight:800;letter-spacing:0.04em}
+.seodap-header .s-info{font-size:12px;color:#FDBA74;margin-top:4px;font-weight:500}
+
+/* ========== 정답표 ========== */
+.answer-sheet{width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;font-family:'Pretendard Variable',sans-serif}
+.answer-sheet th{background:var(--navy-950);color:var(--gold-light);padding:8px 10px;font-weight:700;letter-spacing:0.1em;text-align:center}
+.answer-sheet td{padding:7px 8px;text-align:center;border-bottom:1px solid var(--slate-200);font-weight:600}
+.answer-sheet tr:nth-child(even){background:var(--slate-50)}
+.answer-sheet .ans-row td{color:var(--rose-600);font-weight:800;font-size:15px}
+.answer-sheet .hdr-row td{color:var(--gold);font-weight:800;font-family:'Playfair Display',serif}
+
+/* ========== 펼치기 해설 (details/summary) ========== */
+details.ans{margin-top:18px;background:var(--navy-950);color:var(--cream);border-radius:0;overflow:hidden}
+details.ans summary{cursor:pointer;padding:14px 22px;font-size:12px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold-light);list-style:none;display:flex;align-items:center;justify-content:space-between;user-select:none}
+details.ans summary::-webkit-details-marker{display:none}
+details.ans summary::after{content:'▾';font-size:14px;color:var(--gold);transition:transform 0.2s}
+details.ans[open] summary::after{transform:rotate(180deg)}
+details.ans summary:hover{background:rgba(201,155,78,0.08)}
+.ans-body{padding:20px 24px 24px;font-size:14px;line-height:1.8;color:#D3CABA;border-top:1px solid rgba(228,197,137,0.2)}
+.ans-body .ans-label{display:inline-block;font-family:'Playfair Display',serif;font-style:italic;font-size:12px;font-weight:800;letter-spacing:0.1em;color:var(--gold);margin-bottom:8px}
+.ans-body .ans-main{font-size:16px;font-weight:700;color:var(--cream);margin-bottom:12px;letter-spacing:-0.01em;line-height:1.55}
+.ans-body .ans-main .en{font-family:'Playfair Display',serif;font-style:italic;font-weight:600}
+.ans-body .ans-detail{font-size:13.5px;line-height:1.78;color:#B8B0A2;padding-top:12px;border-top:1px dashed rgba(228,197,137,0.15)}
+.ans-body b{color:var(--gold-light);font-weight:700}
+.ans-body .ko-trans{margin-top:14px;padding:12px 16px;background:rgba(228,197,137,0.06);border-left:2px solid var(--gold);font-size:13px;color:#C9BFAD;line-height:1.75}
+.ans-body .ko-trans-label{display:block;font-weight:800;color:var(--gold);font-size:11px;letter-spacing:0.12em;margin-bottom:6px;text-transform:uppercase}
+.ans-body .note{margin-top:12px;padding:10px 14px;background:rgba(201,155,78,0.08);border-left:2px solid var(--gold);font-size:12.5px;color:#C9BFAD}
+.ans-body .step{margin:8px 0;padding-left:12px;border-left:2px solid rgba(201,155,78,0.3)}
+
+/* ========== Footer ========== */
+footer{background:var(--navy-950);color:#9BA39B;padding:40px 0;margin-top:80px;font-size:13px;line-height:1.7}
+footer .foot-grid{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+footer .foot-brand{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--cream);letter-spacing:-0.01em}
+footer .foot-brand .kor{display:block;font-family:'Pretendard Variable',sans-serif;font-size:13px;font-weight:500;color:var(--gold-light);margin-top:4px;letter-spacing:0.04em}
+footer .foot-meta{text-align:right;font-size:12px;color:var(--slate-500);letter-spacing:0.04em;line-height:1.8}
+footer .foot-meta b{color:var(--gold);font-weight:700}
+
+/* ========== Print 모드 ========== */
+@media print{
+  body{background:white;font-size:12px}
+  header.top{background:white;color:var(--navy-950);border-bottom:3px solid var(--navy-950);padding:20px 0}
+  .q-card{box-shadow:none;break-inside:avoid;margin-bottom:18px}
+  details.ans{background:white!important;color:var(--navy-950)!important;border:1px solid var(--slate-300)}
+  details.ans:not([open]) .ans-body{display:block!important}
+  details.ans summary{color:var(--navy-950)!important}
+  .ans-body{color:var(--slate-700)!important}
+  .ans-body b{color:var(--navy-950)!important}
+  .ans-body .ans-main{color:var(--navy-950)!important}
+  .ans-body .ans-detail{color:var(--slate-600)!important}
+  .ans-body .ko-trans{color:var(--slate-700)!important;background:var(--slate-50)!important}
+  footer{background:white;color:var(--slate-600);border-top:1px solid var(--slate-300);padding:20px 0;margin-top:40px}
+}
+
+/* ========== Mobile 반응형 ========== */
+@media(max-width:720px){
+  .container{padding:0 18px}
+  .meta-strip{grid-template-columns:repeat(2,1fr);gap:16px 0;row-gap:20px}
+  .meta-item{padding:0 12px;border-right:none}
+  .brand-row{flex-direction:column;align-items:flex-start;gap:12px}
+}
+
+/* ══ 펜 필기 모드 v2.0 ══ */
+#penToolbar{position:fixed;bottom:20px;right:20px;z-index:10000;display:flex;flex-direction:row;gap:8px;background:rgba(255,255,255,0.96);padding:8px;border-radius:30px;box-shadow:0 4px 20px rgba(0,0,0,0.18);backdrop-filter:blur(10px);align-items:center;}
+#penToolbar .pen-btn{width:42px;height:42px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-btn:hover{background:#e0e0e0;}
+#penToolbar .pen-btn.active{background:#2E75B6;color:white;}
+#penToolbar .pen-main{background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;font-size:20px;}
+#penToolbar .pen-main.active{background:linear-gradient(135deg,#dc2626,#ef4444);transform:scale(1.05);}
+#penToolbar .pen-tools{display:none;flex-direction:row;gap:6px;align-items:center;padding-left:8px;border-left:1px solid #ddd;margin-left:4px;}
+#penToolbar .pen-tools.show{display:flex;}
+#penToolbar .pen-color{width:30px;height:30px;border:2px solid white;border-radius:50%;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.2);transition:transform 0.15s;padding:0;}
+#penToolbar .pen-color:hover{transform:scale(1.1);}
+#penToolbar .pen-color.selected{border:2px solid #333;transform:scale(1.18);box-shadow:0 2px 6px rgba(0,0,0,0.3);}
+#penToolbar .pen-width{width:34px;height:34px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-width:hover{background:#e0e0e0;}
+#penToolbar .pen-width span{background:#333;border-radius:50%;display:inline-block;}
+#penToolbar .pen-width.selected{background:#1F3864;}
+#penToolbar .pen-width.selected span{background:white !important;}
+#penLayer{position:absolute;top:0;left:0;pointer-events:none;z-index:998;overflow:visible;}
+#penLayer.active{pointer-events:auto;touch-action:none;cursor:crosshair;}
+@media print{#penToolbar{display:none !important;}#penLayer{display:none !important;}}
+@media (max-width:600px){#penToolbar{bottom:10px;right:10px;padding:6px;gap:4px;}#penToolbar .pen-btn,#penToolbar .pen-width{width:38px;height:38px;}#penToolbar .pen-color{width:26px;height:26px;}}
+
+/* ══ 워크시트 보조 클래스 ══ */
+.q-prompt-ko{font-size:13.5px;font-weight:600;color:var(--slate-500);margin:-10px 0 18px;line-height:1.6;letter-spacing:-0.01em}
+.q-prompt-ko::before{content:'\21B3 ';color:var(--gold);font-weight:800}
+.bk{display:inline-block;min-width:60px;border-bottom:1.6px solid var(--rose-600);height:1.05em;vertical-align:bottom;margin:0 2px}
+.dialog{background:white;border:1px solid var(--slate-300);border-left:3px solid var(--navy-700);padding:14px 18px;margin:12px 0;font-size:13.5px;font-family:'Pretendard Variable',sans-serif;border-radius:3px;line-height:1.95}
+.dialog .ln{margin:5px 0}
+.dialog .sp{font-weight:800;color:var(--navy-900);margin-right:6px}
+.dialog .stage{color:var(--slate-500);font-style:italic}
+.pick{font-family:'Pretendard Variable',sans-serif;font-weight:700;color:var(--navy-900);background:#FFF3C4;padding:1px 6px;border-radius:2px;margin:0 1px;font-size:13px}
+.qbox{background:white;border:1.5px solid var(--slate-400);padding:14px 18px;margin:14px 0 4px;font-size:13.5px;font-family:'Pretendard Variable',sans-serif;border-radius:3px}
+.qbox .qb-q{font-weight:800;color:var(--navy-950);margin-bottom:8px;line-height:1.55}
+.qbox .qb-line{margin:6px 0;color:var(--slate-600);line-height:1.7}
+.qbox .opts{font-family:'Playfair Display',serif;font-style:italic;color:var(--slate-700)}
+.ans-body .fill-pass{margin-top:12px;padding:14px 16px;background:rgba(228,197,137,0.06);border-left:2px solid var(--gold);font-size:13px;color:#C9BFAD;line-height:1.95;font-family:'Pretendard Variable',sans-serif}
+.ans-body .fill-pass b{color:var(--gold-light);font-weight:700;background:rgba(201,155,78,0.12);padding:0 3px;border-radius:2px}
+.ans-body .fill-pass .sp{color:#8FA8C8;font-weight:800;margin-right:5px}
+.ans-body .ans-list{margin-top:12px;font-size:13px;color:#C9BFAD;line-height:1.95}
+.ans-body .ans-list .lab{color:var(--gold);font-weight:800;margin-right:6px}
+.ans-body .gram-note{margin-top:12px;padding:10px 14px;background:rgba(46,117,182,0.07);border-left:2px solid var(--navy-600);font-size:12.5px;color:#A9C2DE;line-height:1.8}
+.ans-body .gram-note b{color:#CFE0F0}
+</style>
+</head>
+<body>
+
+<!-- ========== Home Button (절대 변경 금지) ========== -->
+<a href="https://0505.co.kr" class="home-btn" title="목동서로영어학원 홈페이지">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg>
+  <span class="label">Home</span>
+</a>
+
+<!-- ========== Header (책 표지) ========== -->
+<header class="top"><div class="container">
+  <div class="brand-row">
+    <div class="brand">Mokdong Seoro <b>English Academy</b><span class="kor">목동서로영어학원 · 신목고·목운중·목동중 전문</span></div>
+    <div class="vol-tag">중3 · NE능률(김성곤)</div>
+  </div>
+  <h1 class="book-title">Lesson 3 · <em>Always Aware,</em><br>Always Prepared</h1>
+  <div class="book-subtitle">NE능률(김성곤) 중3 Lesson 3 · 학습용 빈칸 워크시트 완전판 상세풀이<br>Listen &amp; Talk · Grammar(과거완료·접속사) · Real-Life · After You Read · Do It Yourself · 정답·해석·구문 해설 전수록</div>
+  <div class="meta-strip">
+    <div class="meta-item"><div class="meta-lbl">교과서</div><div class="meta-val">NE능률<span class="u">김성곤 · 중3</span></div></div>
+    <div class="meta-item"><div class="meta-lbl">문법</div><div class="meta-val">과거완료<span class="u">·접속사</span></div></div>
+    <div class="meta-item"><div class="meta-lbl">대화·지문</div><div class="meta-val">6+<span class="u">Listen&amp;Talk</span></div></div>
+    <div class="meta-item"><div class="meta-lbl">정답</div><div class="meta-val">전수록<span class="u">·해석·구문</span></div></div>
+  </div>
+</div></header>
+
+<main><div class="container">
+
+<!-- ====================================================== -->
+<!-- 정답표 영역: 09_BUILD_PROTOCOL.md Step 2 참고            -->
+<!-- ====================================================== -->
+<article class="q-card" style="background:rgba(201,155,78,0.06);border:1px dashed var(--gold)">
+  <div class="q-prompt" style="margin-bottom:8px;color:var(--navy-950)">📘 이 워크시트 사용법</div>
+  <div style="font-size:13.5px;line-height:1.75;color:var(--slate-600)">
+    빈칸(<span style="border-bottom:1.6px solid var(--rose-600);padding:0 16px"></span>)을 먼저 스스로 채운 뒤, 각 문제 아래 <b style="color:var(--navy-950)">「정답 &amp; 해설 펼치기」</b>를 눌러 완성된 대화·지문·정답·해석·구문 해설과 대조하세요. 우하단 ✏️ 버튼으로 화면에 직접 필기할 수 있습니다.<br>
+    ※ 문법 핵심: <b style="color:var(--navy-900)">과거완료(had + p.p.)</b> · <b style="color:var(--navy-900)">접속사(after / although / since)</b>
+  </div>
+</article>
+
+<div class="section-divider"><span>Study Points<span class="kor">Functions &amp; Forms · 단원 핵심 표현</span></span></div>
+
+<article class="q-card">
+  <div class="q-head"><div class="q-num">◈</div><span class="q-type theme">Functions</span><span class="q-pts">의사소통 기능</span></div>
+  <div class="q-prompt">단원 핵심 의사소통 표현의 빈칸을 채우시오.</div>
+  <div class="qbox">
+    <div class="qb-q">• 궁금증 표현하기</div>
+    <div class="qb-line"><span class="bk" style="min-width:150px"></span> how that happened. <span style="color:var(--slate-500)">(나는 그 일이 어떻게 일어난 건지 궁금해.)</span></div>
+    <div class="qb-q" style="margin-top:10px">• 경고하기 · 주의 주기</div>
+    <div class="qb-line"><span class="bk" style="min-width:110px"></span> you don't take the elevators in a real fire. <span style="color:var(--slate-500)">(실제 화재 시 절대 엘리베이터를 타지 않도록 해.)</span></div>
+  </div>
+  <details class="ans"><summary>Functions 정답 &amp; 해설 펼치기</summary><div class="ans-body">
+    <span class="ans-label">ANSWER · 정답</span>
+    <div class="ans-main">궁금증: <span class="en">I'm curious about</span> · 경고: <span class="en">Make sure</span></div>
+    <div class="ans-detail">
+      <b>I'm curious about + 명사/의문사절:</b> '~이 궁금하다'. 뒤에 간접의문문(how that happened)이 올 때는 <b>의문사 + 주어 + 동사</b> 어순.<br><br>
+      <b>Make sure (that) + 주어 + 동사:</b> '반드시 ~하도록 해라'. 경고·주의를 줄 때 쓰며, 'Make sure you don't ~'는 '반드시 ~하지 않도록 해라'.
+    </div>
+  </div></details>
+</article>
+
+<article class="q-card">
+  <div class="q-head"><div class="q-num">◈</div><span class="q-type gram">Forms</span><span class="q-pts">과거완료·접속사</span></div>
+  <div class="q-prompt">단원 핵심 문법 형태의 빈칸을 채우시오.</div>
+  <div class="qbox">
+    <div class="qb-line">• One night in February, after I <span class="bk"></span> to bed, an earthquake hit.<br><span style="color:var(--slate-500)">(2월의 어느 날 밤, 내가 잠자리에 든 후, 지진이 일어났다.)</span></div>
+    <div class="qb-line" style="margin-top:8px">• <span class="bk"></span> it was my first time <span class="bk"></span> an earthquake, I didn't know how to react.<br><span style="color:var(--slate-500)">(지진을 경험하는 것은 처음이었기 때문에, 나는 어떻게 반응해야 할지 몰랐다.)</span></div>
+  </div>
+  <details class="ans"><summary>Forms 정답 &amp; 해설 펼치기</summary><div class="ans-body">
+    <span class="ans-label">ANSWER · 정답</span>
+    <div class="ans-main"><span class="en">had gone</span> · <span class="en">Since</span> · <span class="en">experiencing</span></div>
+    <div class="ans-detail">
+      <b>had gone (과거완료):</b> 지진이 일어난 과거 시점보다 '먼저' 잠자리에 든 일 → 「had + p.p.」. go-went-gone.<br><br>
+      <b>Since (접속사):</b> '~때문에'(이유). Since it was my first time ~ = 처음이었기 때문에.<br><br>
+      <b>experiencing (동명사):</b> 'my first time + -ing' = '~하는 것이 처음'. 'first time experiencing an earthquake'(지진을 경험하는 것이 처음).
+    </div>
+    <div class="gram-note"><b>이 단원 문법 두 축</b> ① 과거완료 had + p.p.(과거 이전의 일) ② 접속사 after/although/since. 본문·대화·연습문제가 모두 이 둘을 반복 연습한다.</div>
+  </div></details>
+</article>
+
+<article class="q-card">
+  <div class="q-head"><div class="q-num">◆</div><span class="q-type long">Before You Start</span><span class="q-pts">자유 답변</span></div>
+  <div class="q-prompt">각자가 알고 있는 재난 시 대피 요령을 말해 봅시다.</div>
+  <details class="ans"><summary>예시 답안 펼치기</summary><div class="ans-body">
+    <span class="ans-label">EXAMPLE · 예시 답안</span>
+    <div class="ans-list">
+      • 지진 발생 시 재빨리 문을 열어 탈출구를 확보한다.<br>
+      • 화재 시 문을 닫으면서 대피하여 화재와 연기의 확산을 지연시킨다.
+    </div>
+  </div></details>
+</article>
+<div class="section-divider"><span>Listen &amp; Talk 1<span class="kor">의사소통 · 궁금증 표현하기</span></span></div>
+
+<article class="q-card">
+  <div class="q-head"><div class="q-num">L1-A</div><span class="q-type blank">A.2 대화</span><span class="q-pts">빈칸</span></div>
+  <div class="q-prompt">대화의 빈칸을 채우시오. (괄호는 알맞은 것 고르기)</div>
+  <div class="dialog">
+    <div class="ln"><span class="sp">B:</span> <span class="bk"></span> a big flood in Europe. Did you hear about it?</div>
+    <div class="ln"><span class="sp">G:</span> No, I didn't. But floods aren't <span class="bk"></span> common in winter, <span class="bk"></span>? <span class="bk" style="min-width:120px"></span> <span class="bk" style="min-width:140px"></span>.</div>
+    <div class="ln"><span class="sp">B:</span> Me too. Let's do some online research.</div>
+  </div>
+  <details class="ans"><summary>L&amp;T1 A.2 정답 &amp; 해설 펼치기</summary><div class="ans-body">
+    <span class="ans-label">ANSWER · 정답</span>
+    <div class="ans-main">There was · that · are they · I'm curious about · how that happened</div>
+    <div class="fill-pass">
+      <span class="sp">B:</span> <b>There was</b> a big flood in Europe. Did you hear about it?<br>
+      <span class="sp">G:</span> No, I didn't. But floods aren't <b>that</b> common in winter, <b>are they</b>? <b>I'm curious about</b> <b>how that happened</b>.<br>
+      <span class="sp">B:</span> Me too. Let's do some online research.
+    </div>
+    <div class="gram-note">
+      <b>① There + was/were:</b> '~이 있었다' (뒤 주어가 단수 a big flood → was)<br>
+      <b>② that (지시부사):</b> 형용사 common을 수식해 '그렇게'<br>
+      <b>③ 부가의문문 are they?:</b> 주절이 부정문(aren't)이므로 긍정형으로 받음<br>
+      <b>④ I'm curious about ~:</b> '~에 대해 궁금하다'<br>
+      <b>⑤ 간접의문문:</b> 의문사+주어+동사 (how + that + happened)
+    </div>
+    <div class="ko-trans">
+      <span class="ko-trans-label">해석</span>
+      소년: 유럽에서 큰 홍수가 났어. 들었니? / 소녀: 아니. 그런데 홍수는 겨울엔 그렇게 흔하지 않잖아, 그렇지? 그게 어떻게 일어난 건지 궁금하다. / 소년: 나도 그래. 온라인 조사를 해 보자.
+    </div>
+  </div></details>
+</article>
+
+<article class="q-card">
+  <div class="q-head"><div class="q-num">L1-B</div><span class="q-type blank">Listen and Write</span><span class="q-pts">빈칸</span></div>
+  <div class="q-prompt">대화를 듣고 빈칸을 채우시오.</div>
+  <div class="dialog">
+    <div class="ln"><span class="sp">G:</span> <span class="bk" style="min-width:130px"></span> many natural disasters in Korea <span class="bk"></span>.</div>
+    <div class="ln"><span class="sp">B:</span> I agree. <span class="bk"></span> an earthquake in the south last week. Also a storm is coming this week.</div>
+    <div class="ln"><span class="sp">G:</span> <span class="bk" style="min-width:130px"></span> <span class="bk" style="min-width:260px"></span> the most damage in Korea.</div>
+    <div class="ln"><span class="sp">B:</span> Actually I read a report yesterday about the damage from each type of natural disaster. Number one is storms.</div>
+    <div class="ln"><span class="sp">G:</span> I see. I guess earthquakes are second.</div>
+    <div class="ln"><span class="sp">B:</span> No, second is heavy rain, and third is heavy snow.</div>
+    <div class="ln"><span class="sp">G:</span> What about earthquakes?</div>
+    <div class="ln"><span class="sp">B:</span> <span class="bk"></span> the report, earthquakes are fourth. But the damage from earthquakes <span class="bk" style="min-width:150px"></span> recently <span class="bk"></span> they <span class="bk" style="min-width:150px"></span> more often in Korea.</div>
+    <div class="ln"><span class="sp">G:</span> I see. <span class="bk"></span> we <span class="bk"></span> be prepared for <span class="bk"></span> natural disasters in Korea.</div>
+  </div>
+  <details class="ans"><summary>L&amp;T1 B 정답 &amp; 해설 펼치기</summary><div class="ans-body">
+    <span class="ans-label">ANSWER · 정답</span>
+    <div class="fill-pass">
+      <span class="sp">G:</span> <b>There seem to be</b> many natural disasters in Korea <b>these days</b>.<br>
+      <span class="sp">B:</span> I agree. <b>There was</b> an earthquake in the south last week. ...<br>
+      <span class="sp">G:</span> <b>I'm curious about</b> <b>which type of natural disaster causes</b> the most damage in Korea.<br>
+      <span class="sp">B:</span> <b>Based on</b> the report, earthquakes are fourth. But the damage from earthquakes <b>has been increasing</b> recently <b>because</b> they <b>have been happening</b> more often in Korea.<br>
+      <span class="sp">G:</span> <b>It seems like</b> we <b>have to</b> be prepared for <b>a variety of</b> natural disasters in Korea.
+    </div>
+    <div class="gram-note">
+      <b>There seem to be ~:</b> '~이 있는 것 같다'. <b>I'm curious about + 간접의문문:</b> which type ... causes(의문사절). <b>has been increasing / have been happening:</b> 현재완료진행(최근까지 계속). <b>because:</b> 이유 접속사. <b>It seems like + 주어+동사:</b> '~인 것 같다'. <b>a variety of:</b> '여러 가지의'.
+    </div>
+    <div class="ko-trans">
+      <span class="ko-trans-label">해석</span>
+      소녀: 요즘 한국에 자연재해가 많이 일어나는 것 같아. / 소년: 동의해. 지난주 남부에 지진이 있었지. 이번 주엔 폭풍도 와. / 소녀: 한국에서 어떤 종류의 재해가 가장 큰 피해를 주는지 궁금해. / 소년: 보고서에 따르면 지진은 4위야. 하지만 한국에서 지진이 더 자주 일어나고 있어서 지진 피해가 최근 증가해 왔어. / 소녀: 한국에선 여러 자연재해에 대비해야 할 것 같아.
+    </div>
+  </div></details>
+</article>
+
+<article class="q-card">
+  <div class="q-head"><div class="q-num">L1-C</div><span class="q-type blank">Listen and Speak</span><span class="q-pts">빈칸</span></div>
+  <div class="q-prompt">대화를 듣고 빈칸을 채우시오.</div>
+  <div class="dialog">
+    <div class="ln"><span class="sp">B:</span> Hey, did you hear about the big fires in California?</div>
+    <div class="ln"><span class="sp">G:</span> No, I didn't. How serious are they?</div>
+    <div class="ln"><span class="sp">B:</span> <span class="bk"></span>'ve destroyed <span class="bk" style="min-width:150px"></span> houses and other buildings.</div>
+    <div class="ln"><span class="sp">G:</span> Are the fires still going on?</div>
+    <div class="ln"><span class="sp">B:</span> Yes, actually the wind <span class="bk"></span> the fires worse. I hope all the people <span class="bk" style="min-width:90px"></span> are okay.</div>
+    <div class="ln"><span class="sp">G:</span> <span class="bk"></span>. <span class="bk" style="min-width:130px"></span> how many people had to leave their homes.</div>
+    <div class="ln"><span class="sp">B:</span> Actually more than 20,000 people had to leave their homes, and about 400 people are missing in that area.</div>
+    <div class="ln"><span class="sp">G:</span> That's terrible. I hope they're somewhere safe.</div>
+  </div>
+  <details class="ans"><summary>L&amp;T1 C 정답 &amp; 해설 펼치기</summary><div class="ans-body">
+    <span class="ans-label">ANSWER · 정답</span>
+    <div class="fill-pass">
+      <span class="sp">B:</span> <b>They</b>'ve destroyed <b>a large number of</b> houses and other buildings.<br>
+      <span class="sp">B:</span> Yes, actually the wind <b>has made</b> the fires worse. I hope all the people <b>living there</b> are okay.<br>
+      <span class="sp">G:</span> <b>So do I</b>. <b>I'm curious about</b> how many people had to leave their homes.
+    </div>
+    <div class="gram-note">
+      <b>a large number of + 복수명사:</b> '많은 ~'. <b>has made ... worse:</b> 현재완료(악화시켜 왔다), make A 비교급. <b>living there:</b> 현재분사 후치수식(거기 사는 사람들). <b>So do I:</b> '나도 그래'(앞 긍정 동의). <b>I'm curious about + 간접의문문</b>(how many ...).
+    </div>
+    <div class="ko-trans">
+      <span class="ko-trans-label">해석</span>
+      소년: 캘리포니아 대형 화재 들었니? / 소녀: 아니, 얼마나 심각해? / 소년: 그 화재로 많은 집과 건물이 파괴됐대. / 소녀: 아직 진행 중이야? / 소년: 응, 바람이 화재를 악화시켰대. 거기 사는 사람들이 다 무사하길. / 소녀: 나도. 얼마나 많은 사람이 집을 떠나야 했는지 궁금해. / 소년: 2만 명 넘게 집을 떠났고 400명가량 실종됐대. / 소녀: 끔찍해. 안전한 곳에 있길.
+    </div>
+  </div></details>
+</article>
+
+<article class="q-card">
+  <div class="q-head"><div class="q-num">L1-D</div><span class="q-type long">Talk Together</span><span class="q-pts">예시</span></div>
+  <div class="q-prompt">짝과 자연재해에 대해 묻고 답해 봅시다. <span style="color:var(--slate-500);font-weight:600">(e.g.)</span></div>
+  <details class="ans"><summary>예시 대화 펼치기</summary><div class="ans-body">
+    <span class="ans-label">EXAMPLE</span>
+    <div class="fill-pass">
+      <span class="sp">A:</span> I heard that there have been many wildfires in Korea.<br>
+      <span class="sp">B:</span> Yes. There was a big one in Yangyang.<br>
+      <span class="sp">A:</span> I'm curious about when it happened.<br>
+      <span class="sp">B:</span> It happened in 2005.
+    </div>
+    <div class="ko-trans"><span class="ko-trans-label">해석</span> A: 한국에 산불이 여러 번 있었다고 들었어. / B: 응, 양양에 큰 산불이 있었지. / A: 그게 언제 일어났는지 궁금해. / B: 2005년에 일어났어.</div>
+  </div></details>
+</article>
+<div class="section-divider"><span>Listen &amp; Talk 2<span class="kor">의사소통 · 경고하기/주의 주기</span></span></div>
+
+<article class="q-card">
+  <div class="q-head"><div class="q-num">L2-A</div><span class="q-type blank">A.2 대화</span><span class="q-pts">빈칸</span></div>
+  <div class="q-prompt">대화의 빈칸을 채우시오.</div>
+  <div class="dialog">
+    <div class="ln"><span class="sp">B:</span> Mom, <span class="bk"></span> do we need to put in the natural disaster survival kit?</div>
+    <div class="ln"><span class="sp">W:</span> Well, we need water, some food, and a radio.</div>
+    <div class="ln"><span class="sp">B:</span> Anything else, Mom?</div>
+    <div class="ln"><span class="sp">W:</span> Oh, <span class="bk" style="min-width:130px"></span> you include batteries for the radio.</div>
+  </div>
+  <details class="ans"><summary>L&amp;T2 A.2 정답 &amp; 해설 펼치기</summary><div class="ans-body">
+    <span class="ans-label">ANSWER · 정답</span>
+    <div class="ans-main">what else · make sure that</div>
+    <div class="fill-pass">
+      <span class="sp">B:</span> Mom, <b>what else</b> do we need to put in the natural disaster survival kit?<br>
+      <span class="sp">W:</span> Oh, <b>make sure that</b> you include batteries for the radio.
+    </div>
+    <div class="gram-note"><b>① what else:</b> '또 다른 무엇'. <b>② Make sure that ~:</b> 경고·주의 — '반드시 ~하도록 해라, 꼭 ~해라'.</div>
+    <div class="ko-trans"><span class="ko-trans-label">해석</span> 소년: 엄마, 비상 장비에 또 뭘 넣어야 해요? / 여자: 물, 식량, 라디오가 필요해. / 소년: 다른 건요? / 여자: 아, 라디오용 배터리도 꼭 챙기렴.</div>
+  </div></details>
+</article>
+
+<article class="q-card">
+  <div class="q-head"><div class="q-num">L2-B</div><span class="q-type blank">Listen and Order</span><span class="q-pts">CPR 지문</span></div>
+  <div class="q-prompt">올바른 심폐소생술(CPR) 안내 지문의 빈칸을 채우시오.</div>
+  <div class="passage">
+    <span class="label">CPR Guide</span>
+    <span class="bk"></span> CPR properly can save someone's life. <span class="bk"></span> the steps for proper CPR. First, check <span class="bk"></span> the person needs help. Tap the person and shout, "Are you okay?" <span class="bk"></span> there's no reaction, call 119 for help. Second, listen, look, and feel for breathing. <span class="bk"></span> the person's not breathing, begin CPR. <span class="bk"></span> you place your hands <span class="bk" style="min-width:130px"></span> the person's chest. Use your body weight <span class="bk"></span> harder on the chest. After 30 presses, <span class="bk"></span> the person two breaths. <span class="bk"></span> CPR <span class="bk"></span> help arrives.
+  </div>
+  <details class="ans"><summary>L&amp;T2 B 정답 &amp; 해설 펼치기</summary><div class="ans-body">
+    <span class="ans-label">ANSWER · 정답 순서</span>
+    <div class="ans-main">Performing · Here are · that · If · If · Make sure · in the middle of · to press · give · Keep doing · until</div>
+    <div class="fill-pass">
+      <b>Performing</b> CPR properly can save someone's life. <b>Here are</b> the steps for proper CPR. First, check <b>that</b> the person needs help. ... <b>If</b> there's no reaction, call 119 for help. Second, ... <b>If</b> the person's not breathing, begin CPR. <b>Make sure</b> you place your hands <b>in the middle of</b> the person's chest. Use your body weight <b>to press</b> harder on the chest. After 30 presses, <b>give</b> the person two breaths. <b>Keep doing</b> CPR <b>until</b> help arrives.
+    </div>
+    <div class="gram-note">
+      <b>Performing CPR ~ (동명사 주어):</b> '~하는 것은' → 단수 취급. <b>Here are + 복수:</b> '여기 ~이 있다'. <b>check that ~:</b> '~인지 확인하다'. <b>If ~:</b> 조건. <b>Make sure (you) ~:</b> 반드시 ~하라. <b>to press (부사적 to부정사):</b> '압박하기 위해'. <b>Keep doing ~ until ...:</b> '...할 때까지 계속 ~하다'.
+    </div>
+    <div class="ko-trans">
+      <span class="ko-trans-label">해석</span>
+      심폐소생술을 제대로 하면 생명을 구할 수 있습니다. 올바른 CPR 단계를 알려 드릴게요. 먼저 그 사람이 도움이 필요한지 확인하세요—두드리며 "괜찮으세요?"라고 외치세요. 반응이 없으면 119에 신고하세요. 둘째, 호흡을 듣고·보고·느끼세요. 숨을 안 쉬면 CPR을 시작하세요. 반드시 손을 가슴 중앙에 두세요. 체중을 실어 더 세게 압박하세요. 30회 압박 후 숨을 두 번 불어넣으세요. 구조가 올 때까지 CPR을 계속하세요.
+    </div>
+  </div></details>
+</article>
+
+<article class="q-card">
+  <div class="q-head"><div class="q-num">L2-C</div><span class="q-type blank">Listen and Speak</span><span class="q-pts">화재 대피</span></div>
+  <div class="q-prompt">대화를 듣고 빈칸을 채우시오.</div>
+  <div class="dialog">
+    <div class="ln"><span class="sp">B:</span> Susie, this is a fire drill! Let's go!</div>
+    <div class="ln"><span class="sp">G:</span> Okay! The guidelines say <span class="bk"></span> we <span class="bk"></span> get in line quickly.</div>
+    <div class="ln"><span class="sp">B:</span> We're going to the meeting place, right?</div>
+    <div class="ln"><span class="sp">G:</span> Right. <span class="bk" style="min-width:110px"></span> lower your body <span class="bk"></span> you're walking.</div>
+    <div class="ln"><span class="sp">B:</span> I got it. Hey, <span class="bk" style="min-width:110px"></span> take the elevators? They're faster than the stairs.</div>
+    <div class="ln"><span class="sp">G:</span> No. <span class="bk" style="min-width:150px"></span> take the elevators in a real fire. It's very dangerous.</div>
+    <div class="ln"><span class="sp">B:</span> Okay. Wait! I need to get my backpack!</div>
+    <div class="ln"><span class="sp">G:</span> Forget about your backpack. <span class="bk"></span> your belongings <span class="bk"></span> and just go.</div>
+    <div class="ln"><span class="sp">B:</span> You're right. Okay, let's go!</div>
+  </div>
+  <details class="ans"><summary>L&amp;T2 C 정답 &amp; 해설 펼치기</summary><div class="ans-body">
+    <span class="ans-label">ANSWER · 정답</span>
+    <div class="fill-pass">
+      <span class="sp">G:</span> The guidelines say <b>that</b> we <b>have to</b> get in line quickly.<br>
+      <span class="sp">G:</span> Right. <b>Remember to</b> lower your body <b>while</b> you're walking.<br>
+      <span class="sp">B:</span> Hey, <b>why don't we</b> take the elevators?<br>
+      <span class="sp">G:</span> No. <b>Make sure you don't</b> take the elevators in a real fire.<br>
+      <span class="sp">G:</span> <b>Leave</b> your belongings <b>behind</b> and just go.
+    </div>
+    <div class="gram-note">
+      <b>say that ~:</b> '~라고 적혀 있다/말하다'. <b>have to:</b> '~해야 한다'. <b>Remember to + 동사원형:</b> '(앞으로) ~할 것을 기억하다'. <b>while + 주어+동사:</b> '~하는 동안'. <b>why don't we ~?:</b> '~하는 게 어때?'(제안). <b>Make sure you don't ~:</b> '반드시 ~하지 않도록 해라'(경고). <b>leave ~ behind:</b> '~을 두고 가다'.
+    </div>
+    <div class="ko-trans">
+      <span class="ko-trans-label">해석</span>
+      소년: 수지야, 화재 대피 훈련이야! 가자! / 소녀: 응! 지침엔 신속히 줄을 서야 한다고 적혀 있어. / 소년: 집합 장소로 가는 거지? / 소녀: 맞아. 걸어가는 동안 몸을 낮추는 걸 기억해. / 소년: 알았어. 엘리베이터 타는 게 어때? 계단보다 빠르잖아. / 소녀: 안 돼. 실제 화재 땐 절대 엘리베이터 타지 마. 위험해. / 소년: 가방 가져와야 해! / 소녀: 가방은 잊어. 소지품은 두고 그냥 가. / 소년: 맞아, 가자!
+    </div>
+  </div></details>
+</article>
+
+<article class="q-card">
+  <div class="q-head"><div class="q-num">L2-D</div><span class="q-type long">Talk Together</span><span class="q-pts">예시</span></div>
+  <div class="q-prompt">화재 상황 대처를 묻고 답해 봅시다. <span style="color:var(--slate-500);font-weight:600">(e.g.)</span></div>
+  <details class="ans"><summary>예시 대화 펼치기</summary><div class="ans-body">
+    <span class="ans-label">EXAMPLE</span>
+    <div class="fill-pass">
+      <span class="sp">A:</span> In case of a fire, what should I do?<br>
+      <span class="sp">B:</span> Make sure that you cover your mouth with a wet cloth.<br>
+      <span class="sp">A:</span> Anything else?<br>
+      <span class="sp">B:</span> Make sure that you exit the building immediately.
+    </div>
+    <div class="ko-trans"><span class="ko-trans-label">해석</span> A: 화재 시 뭘 해야 하지? / B: 젖은 천으로 입을 가리는 걸 명심해. / A: 다른 건? / B: 반드시 즉시 건물을 빠져나가도록 해.</div>
+  </div></details>
+</article>
+<div class="section-divider"><span>Grammar · Language Focus<span class="kor">과거완료(had + p.p.) · 접속사</span></span></div>
+
+<article class="q-card">
+  <div class="q-head"><div class="q-num">A</div><span class="q-type gram">POINT A · 과거완료</span><span class="q-pts">had + p.p.</span></div>
+  <div class="q-prompt">괄호 안의 단어를 활용하여 문장을 완성하시오. (과거완료)</div>
+  <div class="qbox">
+    <div class="qb-line">1. I <span class="bk"></span> never <span class="bk"></span> pho until I visited Vietnam. <span class="opts">(eat)</span></div>
+    <div class="qb-line">2. Jin told me how hard he <span class="bk" style="min-width:120px"></span> for the match. <span class="opts">(prepare)</span></div>
+    <div class="qb-line">3. The play <span class="bk"></span> already <span class="bk"></span> when we arrived. <span class="opts">(start)</span></div>
+    <div class="qb-line">4. David <span class="bk" style="min-width:110px"></span> his glasses earlier, so he couldn't read anything. <span class="opts">(lose)</span></div>
+  </div>
+  <details class="ans"><summary>POINT A 정답 &amp; 해설 펼치기</summary><div class="ans-body">
+    <span class="ans-label">ANSWER · 정답</span>
+    <div class="ans-list">
+      <span class="lab">1.</span> <b style="color:#E4C589">had, eaten</b> — 베트남 방문(과거)보다 먼저 '먹어 본 적 없던' 경험 → 과거완료. eat-ate-eaten<br>
+      <span class="lab">2.</span> <b style="color:#E4C589">had prepared</b> — 말한 시점(told)보다 먼저 준비해 온 일 → 과거완료<br>
+      <span class="lab">3.</span> <b style="color:#E4C589">had, started</b> — 도착(arrived)했을 때 이미 시작한 뒤 → 과거완료. already는 had와 p.p. 사이<br>
+      <span class="lab">4.</span> <b style="color:#E4C589">had lost</b> — 읽을 수 없던 과거보다 먼저 안경을 잃어버림 → 과거완료. lose-lost-lost
+    </div>
+    <div class="gram-note"><b>과거완료(had + p.p.):</b> 과거의 어느 시점을 기준으로 그 <b>이전에 일어난 일</b>(대과거)이나 그때까지의 경험·완료·계속을 나타낸다. 부정·빈도부사(never/already)는 had와 과거분사 사이에 둔다.</div>
+    <div class="ko-trans"><span class="ko-trans-label">해석</span> 1. 나는 베트남에 가기 전까지 퍼를 먹어 본 적이 없었다. 2. Jin은 자신이 경기를 얼마나 열심히 준비해 왔는지 말해 주었다. 3. 우리가 도착했을 때 연극은 이미 시작한 뒤였다. 4. David는 이전에 안경을 잃어버려서 아무것도 읽을 수 없었다.</div>
+  </div></details>
+</article>
+
+<article class="q-card">
+  <div class="q-head"><div class="q-num">B</div><span class="q-type gram">POINT B · 접속사</span><span class="q-pts">after/although/since</span></div>
+  <div class="q-prompt">주어진 접속사 중 알맞은 것을 골라 문장을 완성하시오.</div>
+  <div class="qbox">
+    <div class="qb-q" style="color:var(--rose-600)">【 after / although / since 】</div>
+    <div class="qb-line">1. <span class="bk" style="min-width:110px"></span> Mina knew the right answer, she didn't let us know.</div>
+    <div class="qb-line">2. <span class="bk" style="min-width:90px"></span> it was snowing heavily, I stayed home all day.</div>
+    <div class="qb-line">3. Our teacher will edit our video <span class="bk"></span> we finish recording it.</div>
+  </div>
+  <details class="ans"><summary>POINT B 정답 &amp; 해설 펼치기</summary><div class="ans-body">
+    <span class="ans-label">ANSWER · 정답</span>
+    <div class="ans-list">
+      <span class="lab">1.</span> <b style="color:#E4C589">Although</b> — '비록 ~지만'(양보). 정답을 알았지만 알려 주지 않음<br>
+      <span class="lab">2.</span> <b style="color:#E4C589">Since</b> — '~때문에'(이유). 눈이 많이 와서 집에 있었음<br>
+      <span class="lab">3.</span> <b style="color:#E4C589">after</b> — '~한 후에'(시간). 녹화를 마친 후 편집함
+    </div>
+    <div class="gram-note">
+      <b>although</b> 비록 ~일지라도(양보) · <b>since</b> ~때문에(이유) / ~한 이래로(시간) · <b>after</b> ~한 후에(시간). 문맥상 양보/이유/시간 중 무엇을 나타내는지로 구별한다.
+    </div>
+    <div class="ko-trans"><span class="ko-trans-label">해석</span> 1. 미나는 비록 정답을 알았지만 우리에게 알려 주지 않았다. 2. 눈이 아주 많이 내렸기 때문에 나는 하루 종일 집에 있었다. 3. 우리가 녹화를 마친 후에 선생님이 그것을 편집할 것이다.</div>
+  </div></details>
+</article>
+<div class="section-divider"><span>Real-Life · Think and Write<span class="kor">과거완료 일기 · 접속사 작문 · 영화 리뷰</span></span></div>
+
+<article class="q-card">
+  <div class="q-head"><div class="q-num">RL-A</div><span class="q-type blank">일기 빈칸</span><span class="q-pts">과거완료</span></div>
+  <div class="q-prompt">일기 주인공의 하루를 상상하며 괄호 안의 단어를 활용하여 문장을 완성하시오.</div>
+  <div class="passage">
+    <span class="label">Diary</span>
+    Today everything went wrong. First, I got up late. When I arrived at school, class 1. <span class="bk"></span> already <span class="bk"></span> <span class="opts">(begin)</span>. I quietly sat down at my desk. Soon I realized that I 2. <span class="bk" style="min-width:100px"></span> <span class="opts">(leave)</span> my report at home. Suddenly my teacher asked me to read my report. I 3. <span class="bk"></span> never <span class="bk"></span> <span class="opts">(be)</span> in such a situation, so my face got really red. I want to forget everything about today!
+  </div>
+  <details class="ans"><summary>RL-A 정답 &amp; 해설 펼치기</summary><div class="ans-body">
+    <span class="ans-label">ANSWER · 정답</span>
+    <div class="ans-main">1. <span class="en">had, begun</span> · 2. <span class="en">had left</span> · 3. <span class="en">had, been</span></div>
+    <div class="ans-detail">
+      모두 과거(arrived/realized/got red)보다 <b>먼저</b> 일어난 일이므로 <b>과거완료(had + p.p.)</b>. begin-began-begun · leave-left-left · be-was-been. 빈도부사 already·never는 had와 p.p. 사이.
+    </div>
+    <div class="ko-trans"><span class="ko-trans-label">해석</span> 오늘은 모든 게 잘 안됐다. 늦게 일어났고, 학교에 도착했을 때 수업은 이미 시작한 뒤였다. 조용히 앉았는데, 곧 보고서를 집에 두고 왔다는 걸 깨달았다. 갑자기 선생님이 보고서를 읽으라 하셨다. 그런 상황은 한 번도 겪어 본 적이 없어서 얼굴이 아주 빨개졌다. 오늘 일을 다 잊고 싶다!</div>
+  </div></details>
+</article>
+
+<article class="q-card">
+  <div class="q-head"><div class="q-num">RL-B</div><span class="q-type long">자유 작문</span><span class="q-pts">접속사</span></div>
+  <div class="q-prompt">뒤에 이어질 내용을 자유롭게 생각하여 문장을 완성하시오. <span style="color:var(--slate-500);font-weight:600">[walk my dog / play soccer / study hard / go to an amusement park / get a discount]</span></div>
+  <div class="qbox">
+    <div class="qb-line">1. After I finish the exam, I <span class="bk" style="min-width:170px"></span>.</div>
+    <div class="qb-line">2. Although it's very hot outside, I <span class="bk" style="min-width:170px"></span>.</div>
+    <div class="qb-line">3. Since I am a student, I <span class="bk" style="min-width:170px"></span>.</div>
+  </div>
+  <details class="ans"><summary>RL-B 예시 답안 펼치기</summary><div class="ans-body">
+    <span class="ans-label">EXAMPLE · 예시 답안</span>
+    <div class="ans-list">
+      <span class="lab">1.</span> After I finish the exam, I <b style="color:#E4C589">will walk my dog</b>.<br>
+      <span class="lab">2.</span> Although it's very hot outside, I <b style="color:#E4C589">will play soccer</b>.<br>
+      <span class="lab">3.</span> Since I am a student, I <b style="color:#E4C589">will study hard</b>.
+    </div>
+    <div class="note">📌 자연스러운 다른 표현도 가능. after(시간)·although(양보)·since(이유)의 의미에 맞게 주절을 쓰면 된다.</div>
+  </div></details>
+</article>
+
+<article class="q-card">
+  <div class="q-head"><div class="q-num">TW</div><span class="q-type long">Think and Write</span><span class="q-pts">영화 리뷰 예시</span></div>
+  <div class="q-prompt">My Disaster Movie Review — 재난 영화 리뷰 쓰기 <span style="color:var(--slate-500);font-weight:600">(e.g. San Andreas)</span></div>
+  <details class="ans"><summary>예시 글 &amp; 해석 펼치기</summary><div class="ans-body">
+    <span class="ans-label">EXAMPLE · San Andreas</span>
+    <div class="fill-pass">
+      I would like to tell you about the movie <i>San Andreas</i>. This movie is set in Los Angeles and San Francisco in 2014. The main character, a search-and-rescue pilot, must search for his missing family during an earthquake. The special effects used in the disaster scenes are very good. The movie is a little sad at times, but the story is very interesting. I give <i>San Andreas</i> four stars. Go and watch it!
+    </div>
+    <div class="ko-trans"><span class="ko-trans-label">해석</span> 나는 영화 〈샌 안드레아스〉를 소개하려 한다. 2014년 LA와 샌프란시스코가 배경이다. 수색 구조 조종사인 주인공은 지진 중 실종된 가족을 찾아야 한다. 재난 장면의 특수 효과는 매우 뛰어나다. 때로 조금 슬프지만 줄거리가 흥미롭다. 별 4개를 준다. 가서 보시길!</div>
+  </div></details>
+</article>
+<div class="section-divider"><span>After You Read · Do It Yourself<span class="kor">본문 이해 · 단원 평가</span></span></div>
+
+<article class="q-card">
+  <div class="q-head"><div class="q-num">AYR-A</div><span class="q-type choice">누가 한 말</span><span class="q-pts">me/Mom/Dad</span></div>
+  <div class="q-prompt">다음 내용을 듣고 누가 한 말인지 알맞은 번호를 쓰시오.</div>
+  <div class="qbox">
+    <div class="qb-line">1. I pulled my children out of their beds and ran to the kitchen.</div>
+    <div class="qb-line">2. I woke up suddenly because my bed was shaking.</div>
+    <div class="qb-line">3. I pulled over and listened to the radio to find out what was going on.</div>
+    <div class="qb-line" style="margin-top:8px">me - <span class="bk" style="min-width:40px"></span> &nbsp;&nbsp; Mom - <span class="bk" style="min-width:40px"></span> &nbsp;&nbsp; Dad - <span class="bk" style="min-width:40px"></span></div>
+  </div>
+  <details class="ans"><summary>AYR-A 정답 &amp; 해설 펼치기</summary><div class="ans-body">
+    <span class="ans-label">ANSWER · 정답</span>
+    <div class="ans-main">me - 2 · Mom - 1 · Dad - 3</div>
+    <div class="ans-detail">
+      <b>me - 2:</b> 침대가 흔들려 잠에서 깬 사람은 필자(나). <b>Mom - 1:</b> 아이들을 침대에서 끌어내 부엌으로 달려간 사람은 엄마. <b>Dad - 3:</b> 차를 길가에 대고 라디오를 들은 사람은 아빠.
+    </div>
+  </div></details>
+</article>
+
+<article class="q-card">
+  <div class="q-head"><div class="q-num">AYR-B</div><span class="q-type choice">인터뷰 질문</span><span class="q-pts">순서 배열</span></div>
+  <div class="q-prompt">본문과 일치하도록 빈칸에 알맞은 질문을 골라 쓰시오. <span style="color:var(--slate-500);font-weight:600">(R: Reporter / W: Writer)</span></div>
+  <div class="qbox" style="margin-bottom:10px">
+    <div class="qb-q">[선택지]</div>
+    <div class="qb-line">a. What did you do next? &nbsp; b. What was happening at that moment?</div>
+    <div class="qb-line">c. How did you feel when the earthquake occurred? &nbsp; d. What did you realize after that night?</div>
+  </div>
+  <div class="dialog">
+    <div class="ln"><span class="sp">R:</span> <span class="bk" style="min-width:80%"></span></div>
+    <div class="ln"><span class="sp">W:</span> I began to panic because the whole room was shaking violently.</div>
+    <div class="ln"><span class="sp">R:</span> How scary! <span class="bk" style="min-width:60%"></span></div>
+    <div class="ln"><span class="sp">W:</span> We all crawled under the table after my mom got us out of bed.</div>
+    <div class="ln"><span class="sp">R:</span> <span class="bk" style="min-width:80%"></span></div>
+    <div class="ln"><span class="sp">W:</span> Lots of things were falling to the floor. I heard many things in the apartment break.</div>
+    <div class="ln"><span class="sp">R:</span> <span class="bk" style="min-width:80%"></span></div>
+    <div class="ln"><span class="sp">W:</span> I realized that I should be prepared for the next earthquake. It can occur at any time!</div>
+  </div>
+  <details class="ans"><summary>AYR-B 정답 &amp; 해설 펼치기</summary><div class="ans-body">
+    <span class="ans-label">ANSWER · 정답 순서</span>
+    <div class="ans-main">c → a → b → d</div>
+    <div class="ans-list">
+      <span class="lab">c.</span> How did you feel when the earthquake occurred? <span style="color:#8FA8C8">→ 답: 공황에 빠졌다(panic)</span><br>
+      <span class="lab">a.</span> What did you do next? <span style="color:#8FA8C8">→ 답: 식탁 밑으로 기어 들어갔다</span><br>
+      <span class="lab">b.</span> What was happening at that moment? <span style="color:#8FA8C8">→ 답: 물건들이 바닥에 떨어졌다</span><br>
+      <span class="lab">d.</span> What did you realize after that night? <span style="color:#8FA8C8">→ 답: 다음 지진에 대비해야 함을 깨달음</span>
+    </div>
+    <div class="ans-detail">각 질문 뒤 W의 답변 내용(감정 → 다음 행동 → 그 순간 상황 → 깨달음)과 호응시키면 순서가 정해진다.</div>
+  </div></details>
+</article>
+
+<article class="q-card">
+  <div class="q-head"><div class="q-num">AYR-C</div><span class="q-type blank">Get the BIG Picture</span><span class="q-pts">흐름 빈칸</span></div>
+  <div class="q-prompt">본문 내용과 일치하도록 빈칸에 알맞은 말을 골라 쓰시오. <span style="color:var(--rose-600);font-weight:600">【 open space / crawled / pulled over / stairs 】</span></div>
+  <div class="passage">
+    <span class="label">Summary Flow</span>
+    One night in February, an earthquake hit.<br>→ My family ran to the kitchen and 1. <span class="bk"></span> under the table.<br>→ My dad 2. <span class="bk" style="min-width:110px"></span> and called us. He told us to get out of the building.<br>→ We took the 3. <span class="bk"></span> and went to a(n) 4. <span class="bk" style="min-width:110px"></span>.
+  </div>
+  <details class="ans"><summary>AYR-C 정답 &amp; 해설 펼치기</summary><div class="ans-body">
+    <span class="ans-label">ANSWER · 정답</span>
+    <div class="ans-main">1. crawled · 2. pulled over · 3. stairs · 4. open space</div>
+    <div class="ans-detail">
+      <b>crawled under the table</b> 식탁 밑으로 기어 들어갔다 · <b>pulled over</b> (차를) 길가에 댔다 · <b>took the stairs</b> 계단을 이용했다 · <b>open space</b> 공터. 지진 대피 흐름(식탁 밑 → 건물 밖 → 계단 → 공터) 순서.
+    </div>
+    <div class="ko-trans"><span class="ko-trans-label">해석</span> 2월 어느 밤 지진이 일어났다. → 가족은 부엌으로 달려가 식탁 밑에 기어 들어갔다. → 아빠는 차를 길가에 대고 전화해 건물에서 나오라 했다. → 우리는 계단을 이용해 공터로 갔다.</div>
+  </div></details>
+</article>
+
+<article class="q-card">
+  <div class="q-head"><div class="q-num">DIY-A</div><span class="q-type choice">할 일 고르기</span><span class="q-pts">듣기</span></div>
+  <div class="q-prompt">대화를 듣고, 대화가 끝난 후 두 사람이 할 일을 고르시오.</div>
+  <div class="qbox">
+    <div class="qb-line"><span class="opts">a. 지진 체험관 방문하기 &nbsp; b. 인터넷 검색하기 &nbsp; c. 과학 선생님 찾아가기</span></div>
+    <div class="qb-line">정답: <span class="bk" style="min-width:50px"></span></div>
+  </div>
+  <details class="ans"><summary>DIY-A 정답 &amp; 해설 펼치기</summary><div class="ans-body">
+    <span class="ans-label">ANSWER · 정답</span>
+    <div class="ans-main">c (과학 선생님 찾아가기)</div>
+    <div class="ans-detail">대화 끝에서 소녀가 <b>"How about asking our science teacher first?"</b>(먼저 과학 선생님께 여쭤보는 게 어때?)라 했고 소년이 동의 <b>"Let's go and find her."</b> → 과학 선생님을 찾아가기로 함.</div>
+  </div></details>
+</article>
+
+<article class="q-card">
+  <div class="q-head"><div class="q-num">DIY-B</div><span class="q-type choice">심경 추론</span><span class="q-pts">읽기</span></div>
+  <div class="q-prompt">다음을 읽고 필자의 심경으로 가장 적절한 것을 고르시오.</div>
+  <div class="passage">
+    <span class="label">Passage</span>
+    One night in February, after I had gone to bed, an earthquake hit. I woke up suddenly because my bed was shaking. I thought my brother was shaking my bed as a joke. But then I heard the mirror on my desk fall to the floor and break into pieces. I knew it wasn't my brother then, but I still didn't know what exactly was happening.
+  </div>
+  <div class="qbox">
+    <div class="qb-line"><span class="opts">a. angry &nbsp; b. excited &nbsp; c. sad &nbsp; d. confused</span></div>
+    <div class="qb-line">정답: <span class="bk" style="min-width:50px"></span></div>
+  </div>
+  <details class="ans"><summary>DIY-B 정답 &amp; 해설 펼치기</summary><div class="ans-body">
+    <span class="ans-label">ANSWER · 정답</span>
+    <div class="ans-main">d (confused / 혼란스러운)</div>
+    <div class="ans-detail">동생 장난인 줄 알았다가 거울이 깨지는 소리에 아니란 걸 알았지만 <b>"still didn't know what exactly was happening"</b>(정확히 무슨 일인지 여전히 몰랐다) → 혼란스러운(confused) 심경.</div>
+    <div class="ko-trans"><span class="ko-trans-label">해석</span> 2월 어느 밤, 잠자리에 든 후 지진이 일어났다. 침대가 흔들려 갑자기 깼고 동생이 장난치는 줄 알았다. 하지만 책상 위 거울이 떨어져 산산조각 나는 소리를 들었다. 그제야 동생이 아닌 걸 알았지만, 정확히 무슨 일인지는 여전히 알지 못했다.</div>
+  </div></details>
+</article>
+
+<article class="q-card">
+  <div class="q-head"><div class="q-num">DIY-C</div><span class="q-type blank">접속사 완성</span><span class="q-pts">SNS 글</span></div>
+  <div class="q-prompt">밑줄 친 부분에 들어갈 접속사를 골라 게시물을 완성하시오. <span style="color:var(--rose-600);font-weight:600">【 although / after / since 】</span></div>
+  <div class="passage">
+    <span class="label">Jina's Post</span>
+    Last weekend, my sister and I had planned to go on a picnic, but we changed our plans <span class="bk" style="min-width:90px"></span> the yellow dust was really bad. <span class="bk" style="min-width:110px"></span> we couldn't go outside, we had a good time. <span class="bk" style="min-width:90px"></span> we finished dinner, we watched a movie together.
+  </div>
+  <details class="ans"><summary>DIY-C 정답 &amp; 해설 펼치기</summary><div class="ans-body">
+    <span class="ans-label">ANSWER · 정답 순서</span>
+    <div class="ans-main">since → Although → After</div>
+    <div class="ans-detail">
+      <b>since</b>(~때문에): 황사가 심해서 계획 변경 · <b>Although</b>(비록 ~지만): 밖에 못 나갔지만 즐거웠다 · <b>After</b>(~한 후에): 저녁을 먹은 후 영화 시청.
+    </div>
+    <div class="ko-trans"><span class="ko-trans-label">해석</span> 지난 주말, 언니와 나는 소풍 계획이었지만 황사가 매우 심해서 계획을 바꿨다. 비록 밖에 못 나갔지만 좋은 시간을 보냈다. 저녁을 먹은 후 함께 영화를 봤다.</div>
+  </div></details>
+</article>
+
+</div></main>
+
+<!-- ========== Footer (학원 표기 절대 변경 금지) ========== -->
+<footer><div class="container"><div class="foot-grid">
+  <div class="foot-brand">Mokdong Seoro English Academy<span class="kor">목동서로영어학원 · 0505.co.kr</span></div>
+  <div class="foot-meta">신목고·목운중·목동중 전문 영어학원<br><b>NE능률(김성곤) 중3 Lesson 3 · Always Aware, Always Prepared · 완전판 상세풀이</b><br>본 자료는 학원 수강생 전용 교육 자료입니다. 무단 배포 금지.<br>교과서 출처: NE능률(김성곤) 중학영어 3 · Lesson 3</div>
+</div></div></footer>
+
+<script>
+/* ══ 펜 필기 모드 (자유 필기) v2.0 ══ */
+const PEN_COLORS=['#dc2626','#1F3864','#0f9d58','#f59e0b','#000000'];
+const PEN_WIDTHS=[2,4,7];
+let penEnabled=false,penColor='#dc2626',penWidth=4,penEraser=false;
+let penLayer=null,penPath=null,penPts=[];
+function buildPenTools(){
+  if(document.getElementById('penLayer'))return;
+  penLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  penLayer.id='penLayer';
+  document.body.appendChild(penLayer);
+  const tb=document.createElement('div');
+  tb.id='penToolbar';
+  let html='<button class="pen-btn pen-main" id="penToggle" title="펜 ON/OFF">✏️</button><div class="pen-tools" id="penTools">';
+  PEN_COLORS.forEach(c=>html+='<button class="pen-color" data-color="'+c+'" style="background:'+c+';" title="색상"></button>');
+  PEN_WIDTHS.forEach(w=>html+='<button class="pen-width" data-width="'+w+'" title="굵기"><span style="width:'+(w*2)+'px;height:'+(w*2)+'px;"></span></button>');
+  html+='<button class="pen-btn pen-eraser" id="penEraserBtn" title="개별 지우개">🧹</button><button class="pen-btn pen-clear" id="penClearBtn" title="전체 지우기">🗑️</button></div>';
+  tb.innerHTML=html;
+  document.body.appendChild(tb);
+  document.querySelector('.pen-color[data-color="'+penColor+'"]').classList.add('selected');
+  document.querySelector('.pen-width[data-width="'+penWidth+'"]').classList.add('selected');
+  document.getElementById('penToggle').addEventListener('click',togglePen);
+  document.querySelectorAll('.pen-color').forEach(b=>b.addEventListener('click',e=>{
+    const c=e.currentTarget.dataset.color;
+    penColor=c;penEraser=false;
+    document.querySelectorAll('.pen-color').forEach(x=>x.classList.toggle('selected',x.dataset.color===c));
+    document.getElementById('penEraserBtn').classList.remove('active');
+  }));
+  document.querySelectorAll('.pen-width').forEach(b=>b.addEventListener('click',e=>{
+    const w=+e.currentTarget.dataset.width;
+    penWidth=w;
+    document.querySelectorAll('.pen-width').forEach(x=>x.classList.toggle('selected',+x.dataset.width===w));
+  }));
+  document.getElementById('penEraserBtn').addEventListener('click',()=>{
+    penEraser=!penEraser;
+    document.getElementById('penEraserBtn').classList.toggle('active',penEraser);
+  });
+  document.getElementById('penClearBtn').addEventListener('click',()=>{
+    if(confirm('모든 필기를 지우시겠습니까?'))penLayer.innerHTML='';
+  });
+  penLayer.addEventListener('pointerdown',penDown);
+  penLayer.addEventListener('pointermove',penMove);
+  penLayer.addEventListener('pointerup',penUp);
+  penLayer.addEventListener('pointercancel',penUp);
+  penLayer.addEventListener('pointerleave',penUp);
+  const sync=()=>{
+    const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
+    const w=Math.max(document.body.scrollWidth,document.documentElement.scrollWidth);
+    penLayer.setAttribute('width',w);
+    penLayer.setAttribute('height',h);
+    penLayer.style.height=h+'px';
+    penLayer.style.width=w+'px';
+  };
+  sync();
+  if(window.ResizeObserver)new ResizeObserver(sync).observe(document.body);
+  window.addEventListener('resize',sync);
+  setInterval(sync,2000);
+}
+function togglePen(){
+  penEnabled=!penEnabled;
+  document.getElementById('penToggle').classList.toggle('active',penEnabled);
+  document.getElementById('penTools').classList.toggle('show',penEnabled);
+  penLayer.classList.toggle('active',penEnabled);
+}
+function getPenPt(e){return {x:e.clientX+window.scrollX,y:e.clientY+window.scrollY};}
+function penDown(e){
+  if(!penEnabled)return;
+  e.preventDefault();
+  try{penLayer.setPointerCapture(e.pointerId);}catch(_){}
+  if(penEraser){eraseAt(e);return;}
+  const pt=getPenPt(e);
+  penPath=document.createElementNS('http://www.w3.org/2000/svg','path');
+  penPath.setAttribute('d','M '+pt.x+' '+pt.y);
+  penPath.setAttribute('stroke',penColor);
+  penPath.setAttribute('stroke-width',penWidth);
+  penPath.setAttribute('fill','none');
+  penPath.setAttribute('stroke-linecap','round');
+  penPath.setAttribute('stroke-linejoin','round');
+  penLayer.appendChild(penPath);
+  penPts=[pt];
+}
+function penMove(e){
+  if(!penEnabled)return;
+  if(penEraser&&e.buttons){eraseAt(e);return;}
+  if(!penPath)return;
+  e.preventDefault();
+  const pt=getPenPt(e);
+  const last=penPts[penPts.length-1];
+  if(Math.hypot(pt.x-last.x,pt.y-last.y)<1.5)return;
+  penPts.push(pt);
+  let d='M '+penPts[0].x+' '+penPts[0].y;
+  for(let i=1;i<penPts.length-1;i++){
+    const c=penPts[i],n=penPts[i+1];
+    const mx=(c.x+n.x)/2,my=(c.y+n.y)/2;
+    d+=' Q '+c.x+' '+c.y+' '+mx+' '+my;
+  }
+  if(penPts.length>=2){
+    const lp=penPts[penPts.length-1];
+    d+=' L '+lp.x+' '+lp.y;
+  }
+  penPath.setAttribute('d',d);
+}
+function penUp(e){if(penPath){penPath=null;penPts=[];}}
+function eraseAt(e){
+  const pt=getPenPt(e);
+  const r=20;
+  const paths=Array.from(penLayer.querySelectorAll('path'));
+  for(const p of paths){
+    const bb=p.getBBox();
+    if(pt.x>=bb.x-r&&pt.x<=bb.x+bb.width+r&&pt.y>=bb.y-r&&pt.y<=bb.y+bb.height+r){p.remove();}
+  }
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',buildPenTools);
+}else{setTimeout(buildPenTools,100);}
+</script>
+</body>
+</html>
