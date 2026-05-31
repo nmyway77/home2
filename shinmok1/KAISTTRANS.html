@@ -46,6 +46,10 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 .tab-grammar.active{background:#1D5C2B;color:white;border-color:#1D5C2B;}
 .tab-vocab{background:white;color:#6A1B9A;border-color:rgba(106,27,154,0.25);}
 .tab-vocab.active{background:#6A1B9A;color:white;border-color:#6A1B9A;}
+.tab-summary{background:white;color:#00695C;border-color:rgba(0,105,92,0.25);}
+.tab-summary.active{background:#00695C;color:white;border-color:#00695C;}
+.summary-view{display:none;}
+@media print{.summary-view{display:none!important;}}
 
 /* HINTS */
 .hints{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
@@ -325,9 +329,10 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .s-card.pinned .s-vocab,
 .s-card.tapped .s-vocab{
   order:0;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25)!important;
-  border-radius:20px;padding:3px 12px 3px 8px!important;
-  white-space:nowrap;flex-shrink:0;border-top:none!important;
-  display:inline-flex!important;align-items:center;gap:4px;
+  border-radius:16px;padding:5px 12px 5px 10px!important;
+  white-space:normal;flex-shrink:1;border-top:none!important;
+  display:inline-flex!important;flex-wrap:wrap!important;align-items:center;gap:4px 6px;
+  max-width:100%;overflow-wrap:break-word;word-break:break-word;
 }
 /* 3. 문장구조도 탭·패널 */
 .tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
@@ -573,6 +578,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
   <div class="view-tabs">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
+    <button class="view-tab tab-summary"      id="tabSum" onclick="switchSummary()">📄 요약</button>
     <button class="view-tab tab-sd"             id="tabSD" onclick="switchSD()">📐 문장구조도</button>
     <button class="view-tab tab-ga"             id="tabGA" onclick="switchGA()">📊 문법분석</button>
     <button class="view-tab tab-arrange"        id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
@@ -880,7 +886,9 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 </div>
 
 </div><!-- /cards -->
-    <div class="summary-wrap">
+  </div>
+  <div class="summary-view" id="summaryView">
+<div class="summary-wrap">
   <div class="summary-header">📖 Early Human Species — 통합 요약·정리</div>
   <div class="summary-body">
 
@@ -2204,6 +2212,7 @@ function buildPenTools(){
   penLayer.addEventListener('pointercancel',penUp);
   penLayer.addEventListener('pointerleave',penUp);
   const sync=()=>{
+    penLayer.style.height='0px';penLayer.style.width='0px';
     const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
     const w=Math.max(document.body.scrollWidth,document.documentElement.scrollWidth);
     penLayer.setAttribute('width',w);
@@ -2458,6 +2467,32 @@ function printQ(n){
     hideAllExtra();
     orig(v);
   };
+})();
+</script>
+<script>
+/* ══ 요약 전용 탭 v1.0 ══ */
+(function(){
+  function hideSummary(){
+    var sv=document.getElementById('summaryView');if(sv)sv.style.display='none';
+    var ts=document.getElementById('tabSum');if(ts)ts.classList.remove('active');
+  }
+  window.switchSummary=function(){
+    var rv=document.getElementById('readingView');if(rv)rv.style.display='none';
+    ['arrangeView','grammarView','vocabView'].forEach(function(id){
+      var el=document.getElementById(id);if(el)el.classList.remove('active');});
+    if(typeof hideAllExtra==='function')hideAllExtra();
+    document.querySelectorAll('.view-tab').forEach(function(t){t.classList.remove('active');});
+    var sv=document.getElementById('summaryView');if(sv)sv.style.display='block';
+    var ts=document.getElementById('tabSum');if(ts)ts.classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  ['switchView','switchSD','switchGA','switchQ','switchVocab'].forEach(function(fn){
+    if(typeof window[fn]!=='function')return;
+    var orig=window[fn];
+    window[fn]=function(){hideSummary();return orig.apply(this,arguments);};
+  });
+  document.addEventListener('DOMContentLoaded',hideSummary);
+  hideSummary();
 })();
 </script>
 </body>
