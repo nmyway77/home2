@@ -3243,7 +3243,7 @@ function buildPenTools(){
     penLayer.style.width=w+'px';
   };
   sync();
-  if(window.ResizeObserver)new ResizeObserver(sync).observe(document.body);
+  if(window.ResizeObserver){let _roPending=false;new ResizeObserver(()=>{if(_roPending)return;_roPending=true;requestAnimationFrame(()=>{_roPending=false;sync();});}).observe(document.body);}
   window.addEventListener('resize',sync);
   setInterval(sync,2000);
 }
