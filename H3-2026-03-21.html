@@ -142,7 +142,7 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 .answer-zone:empty::before{content:'여기에 단어를 놓으세요';color:rgba(46,117,182,0.35);font-size:12px;font-style:italic;display:flex;align-items:center;height:28px;}
 .word-pool{display:flex;flex-wrap:wrap;gap:7px;min-height:44px;padding:10px;background:#f8f8f8;border-radius:8px;border:2px dashed #ddd;margin-bottom:12px;transition:border-color 0.2s,background 0.2s;}
 .word-pool.drag-over{border-color:var(--gold);background:#fff9e6;}
-.word-chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:6px;font-family:Georgia,serif;font-size:13.5px;cursor:grab;user-select:none;transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;background:var(--blue-card);border:1.5px solid var(--blue-border);color:var(--navy);font-weight:600;white-space:nowrap;}
+.word-chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:6px;font-family:Georgia,serif;font-size:13.5px;cursor:grab;user-select:none;transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;background:var(--blue-card);border:1.5px solid var(--blue-border);color:var(--navy);font-weight:600;white-space:nowrap;touch-action:none;}
 .word-chip:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(46,117,182,0.25);}
 .word-chip.dragging{opacity:0.35;transform:scale(0.93);cursor:grabbing;}
 .word-chip.ok-chip{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20;}
@@ -325,9 +325,10 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .s-card.pinned .s-vocab,
 .s-card.tapped .s-vocab{
   order:0;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25)!important;
-  border-radius:20px;padding:3px 12px 3px 8px!important;
-  white-space:nowrap;flex-shrink:0;border-top:none!important;
-  display:inline-flex!important;align-items:center;gap:4px;
+  border-radius:16px;padding:5px 12px 5px 10px!important;
+  white-space:normal;flex-shrink:1;border-top:none!important;
+  display:inline-flex!important;flex-wrap:wrap!important;align-items:center;gap:4px 6px;
+  max-width:100%;overflow-wrap:break-word;word-break:break-word;
 }
 /* 3. 문장구조도 탭·패널 */
 .tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
@@ -416,6 +417,36 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   body.psd .sd-vocab-chip{font-size:10px!important;padding:2px 7px!important;}
 }
 
+/* ══ 펜 필기 모드 v1.0 ══ */
+#penToolbar{position:fixed;bottom:20px;right:20px;z-index:10000;display:flex;flex-direction:row;gap:8px;background:rgba(255,255,255,0.96);padding:8px;border-radius:30px;box-shadow:0 4px 20px rgba(0,0,0,0.18);backdrop-filter:blur(10px);align-items:center;}
+#penToolbar .pen-btn{width:42px;height:42px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-btn:hover{background:#e0e0e0;}
+#penToolbar .pen-btn.active{background:#2E75B6;color:white;}
+#penToolbar .pen-main{background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;font-size:20px;}
+#penToolbar .pen-main.active{background:linear-gradient(135deg,#dc2626,#ef4444);transform:scale(1.05);}
+#penToolbar .pen-tools{display:none;flex-direction:row;gap:6px;align-items:center;padding-left:8px;border-left:1px solid #ddd;margin-left:4px;}
+#penToolbar .pen-tools.show{display:flex;}
+#penToolbar .pen-color{width:30px;height:30px;border:2px solid white;border-radius:50%;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.2);transition:transform 0.15s;padding:0;}
+#penToolbar .pen-color:hover{transform:scale(1.1);}
+#penToolbar .pen-color.selected{border:2px solid #333;transform:scale(1.18);box-shadow:0 2px 6px rgba(0,0,0,0.3);}
+#penToolbar .pen-width{width:34px;height:34px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-width:hover{background:#e0e0e0;}
+#penToolbar .pen-width span{background:#333;border-radius:50%;display:inline-block;}
+#penToolbar .pen-width.selected{background:#1F3864;}
+#penToolbar .pen-width.selected span{background:white !important;}
+#penLayer{position:absolute;top:0;left:0;pointer-events:none;z-index:998;overflow:visible;}
+#penLayer.active{pointer-events:auto;touch-action:none;cursor:crosshair;}
+@media print{#penToolbar{display:none !important;}#penLayer{display:none !important;}}
+@media (max-width:600px){
+  #penToolbar{bottom:10px;right:10px;padding:6px;gap:4px;}
+  #penToolbar .pen-btn,#penToolbar .pen-width{width:38px;height:38px;}
+  #penToolbar .pen-color{width:26px;height:26px;}
+}
+
+.tab-summary{background:white;color:#00695C;border-color:rgba(0,105,92,0.25);}
+.tab-summary.active{background:#00695C;color:white;border-color:#00695C;}
+.summary-view{display:none;}
+@media print{.summary-view{display:none!important;}}
 </style>
 </head>
 <body>
@@ -439,6 +470,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
   <div class="view-tabs">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
+    <button class="view-tab tab-summary" id="tabSum" onclick="switchSummary()">📄 요약</button>
     <button class="view-tab tab-sd"             id="tabSD" onclick="switchSD()">📐 문장구조도</button>
     <button class="view-tab tab-ga"             id="tabGA" onclick="switchGA()">📊 문법분석</button>
     <button class="view-tab tab-arrange"        id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
@@ -484,12 +516,12 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 <div class="s-card grammar" data-text="In such cases, those who expect great discoveries will be disappointed.">
   <div class="card-top">
     <span class="s-num">02</span>
-    <div class="s-en">In such cases, <span class="gm">those who expect</span> &ldquo;great <span class="hl">discoveries</span>&rdquo; <span class="gm">will be disappointed</span>.</div>
+    <div class="s-en">In <span class="ref">such</span> cases, <span class="gm">those who expect</span> &ldquo;great <span class="hl">discoveries</span>&rdquo; <span class="gm">will be disappointed</span>.</div>
     <span class="speak-icon">🔊</span>
     <div class="wave"><span></span><span></span><span></span><span></span><span></span></div>
   </div>
   <div class="s-kr-wrap">
-    <div class="s-kr">그러한 경우, '<strong>위대한 발견'을 기대하는 사람들은 실망하게 될 것이다</strong>.</div>
+    <div class="s-kr">그러한 경우<span class="pr">(= 발명은 안 했지만 혁신한 경우)</span>, '<strong>위대한 발견'을 기대하는 사람들은 실망하게 될 것이다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">discovery</span><span class="vocab-kr">발견</span><span class="vocab-en">disappointed</span><span class="vocab-kr">실망한</span></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>those who + V</strong> = ~하는 사람들 (선행사 those + 주격 관계사). / <strong>will be disappointed</strong> = 미래 수동태. 사람은 <em>실망당하는</em> 대상.</div>
     <div class="s-meaning"><span class="bracket">【연결】</span>쉽게 말하면 <strong>"발명만 기다리는 사람은 실망"</strong>. <span class="star-line">★ S01의 결과 — 혁신을 못 알아보면 실망.</span></div>
@@ -508,7 +540,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="s-kr">의심의 여지없이, <strong>새로움에 대한 간절한 욕구는</strong> — 점점 격해지는 모더니즘 경매에 매우 특징적인 것인데 — <strong>음악적 행위가 하나의 사물이라는 관념을 수반하며</strong>, 그러한 경우, <strong>음악은 단지 기교, 즉 기교 그 자체에 불과하다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">eager</span><span class="vocab-kr">간절한</span><span class="vocab-en">novelty</span><span class="vocab-kr">새로움</span><span class="vocab-en">characteristic of</span><span class="vocab-kr">~의 특징적인</span><span class="vocab-en">escalating</span><span class="vocab-kr">격해지는</span><span class="vocab-en">no more than</span><span class="vocab-kr">단지 ~에 불과한</span></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>Let there be no doubt</strong> = 의심의 여지없이 (let + there + be 가정 명령문). / <strong>so characteristic of N</strong> = <em>which is so characteristic of N</em> 축약 형용사구 (need 후치 수식). / <strong>the idea that 절</strong> = 동격 that (관념의 내용). / <strong>★ in which case</strong> = 그러한 경우 (관계사 + 명사, 앞 절 전체를 받음). / <strong>no more than N</strong> = 단지 N에 불과한 (= only).</div>
-    <div class="s-meaning"><span class="bracket">【비판 ① — 음악의 사물화】</span>쉽게 말하면 <strong>"새로움 욕구 → 음악을 '물건'으로 만듦 → 음악 = 기교만 남음"</strong>. <span class="star-line">★ 모더니즘 비판 시작 — 음악을 사물(thing)로 환원.</span></div>
+    <div class="s-meaning"><span class="bracket">【비판 ① — 음악의 사물화】</span>쉽게 말하면 <strong>"새로움에 대한 집착이 음악을 ‘하나의 사물(thing)’로 만들고, 그 결과 음악이 ‘기교(technique)에 불과한 것’으로 쪼그라든다"</strong>. <u>‘음악적 행위가 하나의 사물’</u> = 음악을 살아 있는 연주·표현 행위가 아니라 <strong>사고팔고 비교하는 ‘제품/물건’처럼 취급</strong>한다는 뜻. <em>no more than technique</em> = 기교 그 이상이 아님(기교만 남음). <span class="star-line">★ 모더니즘 비판 ① — 음악을 사물(thing)·기교로 환원.</span></div>
   </div>
 </div>
 
@@ -524,7 +556,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="s-kr">그리고 <strong>마치 기교가 끝없는 완성 과정의 결과인 것처럼</strong> — 자동차·주방가전 박람회마다 작년 것에 비해 새롭고 개선된 것을 선보이듯 — <strong>끝없는 진보는 음악의 법칙이 되어야 한다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">consequence</span><span class="vocab-kr">결과</span><span class="vocab-en">indefinite</span><span class="vocab-kr">끝없는</span><span class="vocab-en">appliance</span><span class="vocab-kr">가전제품</span><span class="vocab-en">in comparison to</span><span class="vocab-kr">~에 비해</span><span class="vocab-en">never-ending</span><span class="vocab-kr">끝없는</span></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>★★ just as ~, so ~</strong>: 양상 비교 상관 구문 (마치 ~한 것처럼, ~이다). 두 절의 평행 구조. / <strong>with + 명사 + V-ing</strong> = ~한 채로 (with 분사구문, 부대상황). 명사구가 분사의 주어 역할. / <strong>what is new and improved</strong> = 관계사 what 명사절 (introducing의 O). / <strong>last year's</strong> = 소유격 단독 사용 (= last year's show). / <strong>★ shall</strong> = 강한 의무·예언 미래 ('~해야 한다').</div>
-    <div class="s-meaning"><span class="bracket">【비판 ② — 진보 신화】</span>쉽게 말하면 <strong>"음악도 자동차·가전처럼 매년 '신모델' 발표 — 끝없는 진보 강박"</strong>. <span class="star-line">★ 비유 — 산업 기술과 음악의 진보주의 등치.</span></div>
+    <div class="s-meaning"><span class="bracket">【비판 ② — 진보 신화】</span>쉽게 말하면 <strong>"기교란 ‘끝없이 완성을 향해 가는 과정(indefinite process of perfection)’의 산물이라, 자동차·가전이 해마다 ‘신모델’을 내놓듯 음악도 ‘끝없는 진보’를 법칙처럼 따라야 한다"</strong>는 것. <em>just as A … so B</em> = A이듯이 B하다(비유). <u>indefinite process of perfection</u> = 끝이 정해지지 않은, 계속 더 나아지려는 과정. <span class="star-line">★ 비판 ② — 산업의 ‘신모델’ 논리를 음악에 그대로 들이댐.</span></div>
   </div>
 </div>
 
@@ -547,12 +579,12 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 <div class="s-card grammar" data-text="In this arms race, each new music, breaking its predecessor's records, offers itself as the last thing in modernity; and each musician, forcing predecessors into the category of the unfashionable and outmoded, claims the patent on the invention.">
   <div class="card-top">
     <span class="s-num">06</span>
-    <div class="s-en">In this <span class="hl">arms race</span>, each new music, <span class="gm">breaking its predecessor&apos;s records</span>, <span class="gm">offers itself as</span> <span class="gm">the last thing in modernity</span>; and each musician, <span class="gm">forcing predecessors into</span> the category of the <span class="hl">unfashionable</span> and <span class="hl">outmoded</span>, <span class="gm">claims the patent on</span> the invention.</div>
+    <div class="s-en">In <span class="ref">this</span> <span class="hl">arms race</span>, each new music, <span class="gm">breaking its predecessor&apos;s records</span>, <span class="gm">offers itself as</span> <span class="gm">the last thing in modernity</span>; and each musician, <span class="gm">forcing predecessors into</span> the category of the <span class="hl">unfashionable</span> and <span class="hl">outmoded</span>, <span class="gm">claims the patent on</span> the invention.</div>
     <span class="speak-icon">🔊</span>
     <div class="wave"><span></span><span></span><span></span><span></span><span></span></div>
   </div>
   <div class="s-kr-wrap">
-    <div class="s-kr">이 군비 경쟁에서, <strong>새로운 음악마다</strong> — 이전 작품의 기록을 깨뜨리며 — <strong>자신을 모더니티의 최신 작품으로 내세우고</strong>; <strong>음악가마다</strong> — 선배들을 시대에 뒤떨어지고 구식인 범주로 밀어 넣으며 — <strong>발명에 대한 특허권을 주장한다</strong>.</div>
+    <div class="s-kr">이 군비 경쟁<span class="pr">(= 음악의 끝없는 진보·신모델 경쟁)</span>에서, <strong>새로운 음악마다</strong> — 이전 작품의 기록을 깨뜨리며 — <strong>자신을 모더니티의 최신 작품으로 내세우고</strong>; <strong>음악가마다</strong> — 선배들을 시대에 뒤떨어지고 구식인 범주로 밀어 넣으며 — <strong>발명에 대한 특허권을 주장한다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">arms race</span><span class="vocab-kr">군비 경쟁</span><span class="vocab-en">predecessor</span><span class="vocab-kr">선배, 이전 것</span><span class="vocab-en">modernity</span><span class="vocab-kr">모더니티</span><span class="vocab-en">unfashionable</span><span class="vocab-kr">유행 지난</span><span class="vocab-en">outmoded</span><span class="vocab-kr">구식의</span><span class="vocab-en">patent</span><span class="vocab-kr">특허권</span></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>★ 분사구문 2개 병렬</strong>: each new music, <em>breaking ~</em>, offers / each musician, <em>forcing ~</em>, claims. 두 주절이 세미콜론으로 연결되며 각각 분사구문(부수 동작) 동반. / <strong>offer A as B</strong> = A를 B로 내세우다. / <strong>force A into B</strong> = A를 B로 밀어 넣다. / <strong>the last thing in N</strong> = N의 최신·궁극 (= cutting edge of). / <strong>claim the patent on</strong> = ~의 특허권을 주장하다.</div>
     <div class="s-meaning"><span class="bracket">【비판 ③ — 군비 경쟁】</span>쉽게 말하면 <strong>"음악가들 = 무기 경쟁 중 — 선배 부정하며 자기가 '최신'이라 주장"</strong>. <span class="star-line">★ 군사적 비유로 모더니즘 경쟁 풍자.</span></div>
@@ -571,11 +603,13 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="s-kr"><strong>'과학적 탐구'의 모방품이 거의 보편화된 시대에</strong>, <strong>음악가들도 다른 모든 이들처럼 '연구자'가 되어야 할 의무가 있다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">era</span><span class="vocab-kr">시대</span><span class="vocab-en">pastiche</span><span class="vocab-kr">모방품</span><span class="vocab-en">investigation</span><span class="vocab-kr">탐구</span><span class="vocab-en">quasi-universal</span><span class="vocab-kr">거의 보편적인</span><span class="vocab-en">owe it to oneself to V</span><span class="vocab-kr">~할 의무가 있다</span></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>where 관계부사</strong> = 선행사 era(시대) 수식. 뒤에 완전한 절. / <strong>★ owe it to oneself to V</strong> = 관용 (스스로에게 빚지다 → ~할 의무·책임이 있다). 가목적어 it / 진목적어 to-V. / <strong>quasi-universal</strong> = quasi-(준-, 거의) + universal. 하이픈 합성. / <strong>pastiches of "scientific investigation"</strong> = 진짜 탐구가 아닌 <em>모방·흉내</em>를 비꼬는 표현 (인용 부호로 회의적 어조).</div>
-    <div class="s-meaning"><span class="bracket">【결론 — 풍자】</span>쉽게 말하면 <strong>"음악가들도 어쩔 수 없이 '연구자' 행세 — 시대가 그렇게 강요"</strong>. <span class="star-line">★ 글의 결론·아이러니 — 함축 의미 추론 핵심 문장.</span></div>
+    <div class="s-meaning"><span class="bracket">【결론 — 풍자·아이러니】</span>쉽게 말하면 <strong>"‘과학적 탐구’를 겉만 흉내 낸 짝퉁(pastiches)이 거의 어디에나 퍼진 시대라, 음악가마저 남들처럼 ‘연구자’ 행세를 해야 할 처지가 됐다"</strong>는 것. <u>pastiches of ‘scientific investigation’</u> = 과학 탐구를 겉만 모방한 것(짜깁기·모방품) / <em>quasi-universal</em> = 거의 보편화된 / <u>owe it to themselves to V</u> = (시대 분위기상) 스스로 ~해야 할 처지가 되다. <span class="star-line">★ 글의 결론·아이러니 — 음악마저 ‘연구’를 흉내 내야 하는 시대 풍자(함축 추론 핵심).</span></div>
   </div>
 </div>
 
 </div><!-- /cards -->
+  </div>
+<div class="summary-view" id="summaryView">
     <div class="summary-wrap">
   <div class="summary-header">📖 줄거리 &amp; 핵심 정리</div>
   <div class="summary-body">
@@ -708,7 +742,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 
   </div>
 </div>
-  </div>
+</div>
   <div class="ga-panel" id="panelGA">
 <div class="ga-legend">
   <div class="ga-leg"><div class="ga-leg-dot" style="background:#C62828;"></div><strong>Tier 1</strong> 어법 핵심</div>
@@ -1825,6 +1859,12 @@ function readNext(){if(!allPlaying||allIdx>=allQueue.length){if(currentCard)curr
 
 /* ══ 배열영작 ══ */
 let scores={},dragSrc=null,clickSelectedChip=null;
+/* ── 터치 드래그 지원 (태블릿/모바일) v1.7 ── */
+let tChip=null,tClone=null,tStartX=0,tStartY=0,tOffX=0,tOffY=0,tMoved=false,tDragEnd=0;
+const T_DRAG_THRESHOLD=10;
+function arrTouchStart(e){const chip=e.target.closest('.word-chip');if(!chip)return;tChip=chip;const r=chip.getBoundingClientRect();const t=e.touches[0];tStartX=t.clientX;tStartY=t.clientY;tOffX=t.clientX-r.left;tOffY=t.clientY-r.top;tMoved=false;}
+function arrTouchMove(e){if(!tChip)return;if(e.cancelable)e.preventDefault();const t=e.touches[0];const dx=t.clientX-tStartX,dy=t.clientY-tStartY;if(!tMoved){if(Math.hypot(dx,dy)<T_DRAG_THRESHOLD)return;tMoved=true;const r=tChip.getBoundingClientRect();tClone=tChip.cloneNode(true);Object.assign(tClone.style,{position:'fixed',left:r.left+'px',top:r.top+'px',width:r.width+'px',zIndex:9999,pointerEvents:'none',opacity:0.9,transform:'scale(1.08)',boxShadow:'0 8px 24px rgba(0,0,0,0.3)',transition:'none'});document.body.appendChild(tClone);tChip.classList.add('dragging');}tClone.style.left=(t.clientX-tOffX)+'px';tClone.style.top=(t.clientY-tOffY)+'px';tClone.style.display='none';const tg=document.elementFromPoint(t.clientX,t.clientY);tClone.style.display='';const z=tg&&tg.closest('.answer-zone, .word-pool');document.querySelectorAll('.answer-zone.drag-over, .word-pool.drag-over').forEach(el=>el.classList.remove('drag-over'));if(z)z.classList.add('drag-over');}
+function arrTouchEnd(e){if(!tChip)return;if(!tMoved){tChip=null;return;}const t=e.changedTouches[0];if(tClone)tClone.style.display='none';const tg=document.elementFromPoint(t.clientX,t.clientY);const z=tg&&tg.closest('.answer-zone, .word-pool');if(z){const chips=Array.from(z.querySelectorAll('.word-chip')).filter(c=>c!==tChip);if(chips.length===0){z.appendChild(tChip);}else{let bestC=null,bestB=true,bestD=Infinity;for(const c of chips){const r=c.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const d=Math.hypot(t.clientX-cx,t.clientY-cy);if(d<bestD){bestD=d;bestC=c;bestB=t.clientX<cx;}}if(bestB)z.insertBefore(tChip,bestC);else z.insertBefore(tChip,bestC.nextSibling);}tChip.classList.remove('ok-chip');const idx=tChip.dataset.idx;const r=document.getElementById('res-'+idx);if(r)r.className='arr-result';}if(tClone){tClone.remove();tClone=null;}tChip.classList.remove('dragging');document.querySelectorAll('.answer-zone.drag-over, .word-pool.drag-over').forEach(el=>el.classList.remove('drag-over'));tChip=null;tDragEnd=Date.now();e.preventDefault();}
 function buildArrangeCards(){
   const box=document.getElementById('arrCards');box.innerHTML='';
   const hint=document.createElement('div');hint.className='touch-hint';hint.innerHTML='💡 단어 클릭 → 즉시 이동 &nbsp;|&nbsp; 드래그도 가능';box.appendChild(hint);
@@ -1833,14 +1873,15 @@ function buildArrangeCards(){
     const card=document.createElement('div');card.className='arr-card';card.style.animationDelay=(idx*60)+'ms';
     card.innerHTML=`<div class="arr-header"><span class="arr-num">${item.num}</span><div class="arr-kr">${item.kr}</div></div><div class="arr-body"><div class="answer-zone" id="zone-${idx}"></div><div class="word-pool" id="pool-${idx}">${shuffled.map(w=>`<div class="word-chip" draggable="true" data-word="${w}" data-idx="${idx}">${w}</div>`).join('')}</div><div class="arr-result" id="res-${idx}"></div><div class="ans-reveal" id="ans-${idx}"><strong>정답:</strong> ${item.ans}.</div><div class="arr-btns"><button class="arr-check" onclick="checkAns(${idx})">✓ 확인</button><button class="arr-reset" onclick="resetCard(${idx})">↺ 초기화</button><button class="arr-show-ans" onclick="toggleAns(${idx})">👁 정답 보기</button></div></div>`;
     box.appendChild(card);
-    ['zone-'+idx,'pool-'+idx].forEach(zid=>{const z=document.getElementById(zid);z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(!dragSrc)return;z.appendChild(dragSrc);dragSrc.classList.remove('dragging','ok-chip');document.getElementById('res-'+idx).className='arr-result';dragSrc=null;});});
+    ['zone-'+idx,'pool-'+idx].forEach(zid=>{const z=document.getElementById(zid);z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(!dragSrc)return;const chips=Array.from(z.querySelectorAll('.word-chip')).filter(c=>c!==dragSrc);if(chips.length===0){z.appendChild(dragSrc);}else{let bestC=null,bestB=true,bestD=Infinity;for(const c of chips){const r=c.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const d=Math.hypot(e.clientX-cx,e.clientY-cy);if(d<bestD){bestD=d;bestC=c;bestB=e.clientX<cx;}}if(bestB)z.insertBefore(dragSrc,bestC);else z.insertBefore(dragSrc,bestC.nextSibling);}dragSrc.classList.remove('dragging','ok-chip');document.getElementById('res-'+idx).className='arr-result';dragSrc=null;});});
     setTimeout(()=>{document.getElementById('pool-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});document.getElementById('zone-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});},0);
   });
   box.addEventListener('dragstart',e=>{if(!e.target.classList.contains('word-chip'))return;dragSrc=e.target;e.target.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
   box.addEventListener('dragend',e=>{if(e.target.classList.contains('word-chip'))e.target.classList.remove('dragging');dragSrc=null;});
+  box.addEventListener('touchstart',arrTouchStart,{passive:true});box.addEventListener('touchmove',arrTouchMove,{passive:false});box.addEventListener('touchend',arrTouchEnd);box.addEventListener('touchcancel',arrTouchEnd);
   updateScore();
 }
-function chipClick(chip,idx){const inZone=chip.parentElement.id==='zone-'+idx;const target=document.getElementById(inZone?'pool-'+idx:'zone-'+idx);chip.classList.remove('ok-chip');target.appendChild(chip);chip.addEventListener('click',()=>chipClick(chip,idx),{once:true});document.getElementById('res-'+idx).className='arr-result';}
+function chipClick(chip,idx){if(Date.now()-tDragEnd<500)return;const inZone=chip.parentElement.id==='zone-'+idx;const target=document.getElementById(inZone?'pool-'+idx:'zone-'+idx);chip.classList.remove('ok-chip');target.appendChild(chip);document.getElementById('res-'+idx).className='arr-result';}
 function checkAns(idx){const zone=document.getElementById('zone-'+idx);const chips=Array.from(zone.querySelectorAll('.word-chip'));const userAns=chips.map(c=>c.dataset.word).join(' ');const correct=ARRANGE[idx].ans;const ok=userAns.trim().toLowerCase()===correct.trim().toLowerCase();const res=document.getElementById('res-'+idx);res.className='arr-result show '+(ok?'ok':'ng');res.innerHTML=ok?'🎉 정답입니다!':'❌ 다시 확인해 보세요. ('+chips.length+'/'+correct.split(' ').length+'개 배치됨)';if(ok)chips.forEach(c=>c.classList.add('ok-chip'));scores[idx]=ok?1:0;updateScore();}
 function resetCard(idx){const zone=document.getElementById('zone-'+idx);const pool=document.getElementById('pool-'+idx);Array.from(zone.querySelectorAll('.word-chip')).forEach(c=>{c.classList.remove('ok-chip');pool.appendChild(c);});document.getElementById('res-'+idx).className='arr-result';document.getElementById('ans-'+idx).className='ans-reveal';delete scores[idx];updateScore();}
 function toggleAns(idx){document.getElementById('ans-'+idx).classList.toggle('show');}
@@ -2065,6 +2106,159 @@ document.addEventListener("DOMContentLoaded",function(){
 });
 // 즉시 실행 (DOMContentLoaded 전에도 안전하게)
 (function(){hideQPanels();})();
+</script>
+<script>
+/* ══ 펜 필기 모드 (자유 필기) v1.0 ══ */
+const PEN_COLORS=['#dc2626','#1F3864','#0f9d58','#f59e0b','#000000'];
+const PEN_WIDTHS=[2,4,7];
+let penEnabled=false,penColor='#dc2626',penWidth=4,penEraser=false;
+let penLayer=null,penPath=null,penPts=[];
+
+function buildPenTools(){
+  if(document.getElementById('penLayer'))return;
+  penLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  penLayer.id='penLayer';
+  document.body.appendChild(penLayer);
+  const tb=document.createElement('div');
+  tb.id='penToolbar';
+  let html='<button class="pen-btn pen-main" id="penToggle" title="펜 ON/OFF">✏️</button><div class="pen-tools" id="penTools">';
+  PEN_COLORS.forEach(c=>html+='<button class="pen-color" data-color="'+c+'" style="background:'+c+';" title="색상"></button>');
+  PEN_WIDTHS.forEach(w=>html+='<button class="pen-width" data-width="'+w+'" title="굵기"><span style="width:'+(w*2)+'px;height:'+(w*2)+'px;"></span></button>');
+  html+='<button class="pen-btn pen-eraser" id="penEraserBtn" title="개별 지우개">🧹</button><button class="pen-btn pen-clear" id="penClearBtn" title="전체 지우기">🗑️</button></div>';
+  tb.innerHTML=html;
+  document.body.appendChild(tb);
+  document.querySelector('.pen-color[data-color="'+penColor+'"]').classList.add('selected');
+  document.querySelector('.pen-width[data-width="'+penWidth+'"]').classList.add('selected');
+  document.getElementById('penToggle').addEventListener('click',togglePen);
+  document.querySelectorAll('.pen-color').forEach(b=>b.addEventListener('click',e=>{
+    const c=e.currentTarget.dataset.color;
+    penColor=c;penEraser=false;
+    document.querySelectorAll('.pen-color').forEach(x=>x.classList.toggle('selected',x.dataset.color===c));
+    document.getElementById('penEraserBtn').classList.remove('active');
+  }));
+  document.querySelectorAll('.pen-width').forEach(b=>b.addEventListener('click',e=>{
+    const w=+e.currentTarget.dataset.width;
+    penWidth=w;
+    document.querySelectorAll('.pen-width').forEach(x=>x.classList.toggle('selected',+x.dataset.width===w));
+  }));
+  document.getElementById('penEraserBtn').addEventListener('click',()=>{
+    penEraser=!penEraser;
+    document.getElementById('penEraserBtn').classList.toggle('active',penEraser);
+  });
+  document.getElementById('penClearBtn').addEventListener('click',()=>{
+    if(confirm('모든 필기를 지우시겠습니까?'))penLayer.innerHTML='';
+  });
+  penLayer.addEventListener('pointerdown',penDown);
+  penLayer.addEventListener('pointermove',penMove);
+  penLayer.addEventListener('pointerup',penUp);
+  penLayer.addEventListener('pointercancel',penUp);
+  penLayer.addEventListener('pointerleave',penUp);
+  const sync=()=>{
+    penLayer.style.height='0px';penLayer.style.width='0px';
+    const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
+    const w=Math.max(document.body.scrollWidth,document.documentElement.scrollWidth);
+    penLayer.setAttribute('width',w);
+    penLayer.setAttribute('height',h);
+    penLayer.style.height=h+'px';
+    penLayer.style.width=w+'px';
+  };
+  sync();
+  if(window.ResizeObserver){let _roPending=false;new ResizeObserver(()=>{if(_roPending)return;_roPending=true;requestAnimationFrame(()=>{_roPending=false;sync();});}).observe(document.body);}
+  window.addEventListener('resize',sync);
+  setInterval(sync,2000);
+}
+function togglePen(){
+  penEnabled=!penEnabled;
+  document.getElementById('penToggle').classList.toggle('active',penEnabled);
+  document.getElementById('penTools').classList.toggle('show',penEnabled);
+  penLayer.classList.toggle('active',penEnabled);
+}
+function getPenPt(e){
+  return {x:e.clientX+window.scrollX,y:e.clientY+window.scrollY};
+}
+function penDown(e){
+  if(!penEnabled)return;
+  e.preventDefault();
+  try{penLayer.setPointerCapture(e.pointerId);}catch(_){}
+  if(penEraser){eraseAt(e);return;}
+  const pt=getPenPt(e);
+  penPath=document.createElementNS('http://www.w3.org/2000/svg','path');
+  penPath.setAttribute('d','M '+pt.x+' '+pt.y);
+  penPath.setAttribute('stroke',penColor);
+  penPath.setAttribute('stroke-width',penWidth);
+  penPath.setAttribute('fill','none');
+  penPath.setAttribute('stroke-linecap','round');
+  penPath.setAttribute('stroke-linejoin','round');
+  penLayer.appendChild(penPath);
+  penPts=[pt];
+}
+function penMove(e){
+  if(!penEnabled)return;
+  if(penEraser&&e.buttons){eraseAt(e);return;}
+  if(!penPath)return;
+  e.preventDefault();
+  const pt=getPenPt(e);
+  const last=penPts[penPts.length-1];
+  if(Math.hypot(pt.x-last.x,pt.y-last.y)<1.5)return;
+  penPts.push(pt);
+  let d='M '+penPts[0].x+' '+penPts[0].y;
+  for(let i=1;i<penPts.length-1;i++){
+    const c=penPts[i],n=penPts[i+1];
+    const mx=(c.x+n.x)/2,my=(c.y+n.y)/2;
+    d+=' Q '+c.x+' '+c.y+' '+mx+' '+my;
+  }
+  if(penPts.length>=2){
+    const lp=penPts[penPts.length-1];
+    d+=' L '+lp.x+' '+lp.y;
+  }
+  penPath.setAttribute('d',d);
+}
+function penUp(e){
+  if(penPath){penPath=null;penPts=[];}
+}
+function eraseAt(e){
+  const pt=getPenPt(e);
+  const r=20;
+  const paths=Array.from(penLayer.querySelectorAll('path'));
+  for(const p of paths){
+    const bb=p.getBBox();
+    if(pt.x>=bb.x-r&&pt.x<=bb.x+bb.width+r&&pt.y>=bb.y-r&&pt.y<=bb.y+bb.height+r){
+      p.remove();
+    }
+  }
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',buildPenTools);
+}else{
+  setTimeout(buildPenTools,100);
+}
+</script>
+<script>
+/* ══ 요약 전용 탭 v1.0 ══ */
+(function(){
+  function hideSummary(){
+    var sv=document.getElementById('summaryView');if(sv)sv.style.display='none';
+    var ts=document.getElementById('tabSum');if(ts)ts.classList.remove('active');
+  }
+  window.switchSummary=function(){
+    var rv=document.getElementById('readingView');if(rv)rv.style.display='none';
+    ['arrangeView','grammarView','vocabView'].forEach(function(id){
+      var el=document.getElementById(id);if(el)el.classList.remove('active');});
+    if(typeof hideAllExtra==='function')hideAllExtra();
+    document.querySelectorAll('.view-tab').forEach(function(t){t.classList.remove('active');});
+    var sv=document.getElementById('summaryView');if(sv)sv.style.display='block';
+    var ts=document.getElementById('tabSum');if(ts)ts.classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  /* 다른 모든 전환 함수가 요약뷰를 숨기도록 래핑 */
+  ['switchView','switchSD','switchGA','switchQ','switchVocab'].forEach(function(fn){
+    if(typeof window[fn]!=='function')return;
+    var orig=window[fn];
+    window[fn]=function(){hideSummary();return orig.apply(this,arguments);};
+  });
+  document.addEventListener('DOMContentLoaded',hideSummary);
+  hideSummary();
+})();
 </script>
 </body>
 </html>
