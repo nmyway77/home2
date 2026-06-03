@@ -142,7 +142,7 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 .answer-zone:empty::before{content:'여기에 단어를 놓으세요';color:rgba(46,117,182,0.35);font-size:12px;font-style:italic;display:flex;align-items:center;height:28px;}
 .word-pool{display:flex;flex-wrap:wrap;gap:7px;min-height:44px;padding:10px;background:#f8f8f8;border-radius:8px;border:2px dashed #ddd;margin-bottom:12px;transition:border-color 0.2s,background 0.2s;}
 .word-pool.drag-over{border-color:var(--gold);background:#fff9e6;}
-.word-chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:6px;font-family:Georgia,serif;font-size:13.5px;cursor:grab;user-select:none;transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;background:var(--blue-card);border:1.5px solid var(--blue-border);color:var(--navy);font-weight:600;white-space:nowrap;}
+.word-chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:6px;font-family:Georgia,serif;font-size:13.5px;cursor:grab;user-select:none;transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;background:var(--blue-card);border:1.5px solid var(--blue-border);color:var(--navy);font-weight:600;white-space:nowrap;touch-action:none;}
 .word-chip:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(46,117,182,0.25);}
 .word-chip.dragging{opacity:0.35;transform:scale(0.93);cursor:grabbing;}
 .word-chip.ok-chip{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20;}
@@ -325,9 +325,10 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .s-card.pinned .s-vocab,
 .s-card.tapped .s-vocab{
   order:0;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25)!important;
-  border-radius:20px;padding:3px 12px 3px 8px!important;
-  white-space:nowrap;flex-shrink:0;border-top:none!important;
-  display:inline-flex!important;align-items:center;gap:4px;
+  border-radius:16px;padding:5px 12px 5px 10px!important;
+  white-space:normal;flex-shrink:1;border-top:none!important;
+  display:inline-flex!important;flex-wrap:wrap!important;align-items:center;gap:4px 6px;
+  max-width:100%;overflow-wrap:break-word;word-break:break-word;
 }
 /* 3. 문장구조도 탭·패널 */
 .tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
@@ -416,6 +417,36 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   body.psd .sd-vocab-chip{font-size:10px!important;padding:2px 7px!important;}
 }
 
+/* ══ 펜 필기 모드 v1.0 ══ */
+#penToolbar{position:fixed;bottom:20px;right:20px;z-index:10000;display:flex;flex-direction:row;gap:8px;background:rgba(255,255,255,0.96);padding:8px;border-radius:30px;box-shadow:0 4px 20px rgba(0,0,0,0.18);backdrop-filter:blur(10px);align-items:center;}
+#penToolbar .pen-btn{width:42px;height:42px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-btn:hover{background:#e0e0e0;}
+#penToolbar .pen-btn.active{background:#2E75B6;color:white;}
+#penToolbar .pen-main{background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;font-size:20px;}
+#penToolbar .pen-main.active{background:linear-gradient(135deg,#dc2626,#ef4444);transform:scale(1.05);}
+#penToolbar .pen-tools{display:none;flex-direction:row;gap:6px;align-items:center;padding-left:8px;border-left:1px solid #ddd;margin-left:4px;}
+#penToolbar .pen-tools.show{display:flex;}
+#penToolbar .pen-color{width:30px;height:30px;border:2px solid white;border-radius:50%;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.2);transition:transform 0.15s;padding:0;}
+#penToolbar .pen-color:hover{transform:scale(1.1);}
+#penToolbar .pen-color.selected{border:2px solid #333;transform:scale(1.18);box-shadow:0 2px 6px rgba(0,0,0,0.3);}
+#penToolbar .pen-width{width:34px;height:34px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-width:hover{background:#e0e0e0;}
+#penToolbar .pen-width span{background:#333;border-radius:50%;display:inline-block;}
+#penToolbar .pen-width.selected{background:#1F3864;}
+#penToolbar .pen-width.selected span{background:white !important;}
+#penLayer{position:absolute;top:0;left:0;pointer-events:none;z-index:998;overflow:visible;}
+#penLayer.active{pointer-events:auto;touch-action:none;cursor:crosshair;}
+@media print{#penToolbar{display:none !important;}#penLayer{display:none !important;}}
+@media (max-width:600px){
+  #penToolbar{bottom:10px;right:10px;padding:6px;gap:4px;}
+  #penToolbar .pen-btn,#penToolbar .pen-width{width:38px;height:38px;}
+  #penToolbar .pen-color{width:26px;height:26px;}
+}
+
+.tab-summary{background:white;color:#00695C;border-color:rgba(0,105,92,0.25);}
+.tab-summary.active{background:#00695C;color:white;border-color:#00695C;}
+.summary-view{display:none;}
+@media print{.summary-view{display:none!important;}}
 </style>
 </head>
 <body>
@@ -439,6 +470,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
   <div class="view-tabs">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
+    <button class="view-tab tab-summary" id="tabSum" onclick="switchSummary()">📄 요약</button>
     <button class="view-tab tab-sd"             id="tabSD" onclick="switchSD()">📐 문장구조도</button>
     <button class="view-tab tab-ga"             id="tabGA" onclick="switchGA()">📊 문법분석</button>
     <button class="view-tab tab-arrange"        id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
@@ -468,38 +500,40 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap"><div class="s-kr">존중하는 교실 학습 공동체를 확립하기 위한 첫 번째 단계는 명백한 오류에 <strong>상관없이</strong> 모든 아이디어와 답을 수용하는 것이다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">establishing</span><span class="vocab-kr">확립하기</span><span class="vocab-en">respectful</span><span class="vocab-kr">존중하는</span><span class="vocab-en">acceptance</span><span class="vocab-kr">수용</span><span class="vocab-en">regardless of</span><span class="vocab-kr">~에 상관없이</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>toward establishing</strong> = 전치사 + 동명사. <strong>regardless of</strong> = ~에 상관없이 (전치사구). <strong>A is B</strong> = 1단계는 수용이다 (2형식).</div><div class="s-meaning"><span class="bracket">【핵심】</span> 글의 핵심 주장 첫 문장! 존중하는 교실 = 모든 답을 수용. 오류가 있어도 수용해야 → 이것이 풍부한 토론의 전제 조건! <span class="star-line">★ 수용(acceptance) = 안전한 학습 공동체의 첫걸음!</span></div></div>
 </div>
 <div class="s-card grammar" data-text="Rich mathematical discussions cannot occur if this expectation is not in place.">
-  <div class="card-top"><span class="s-num">02</span><div class="s-en">Rich <span class="hl">mathematical</span> discussions cannot <span class="hl">occur</span> if this expectation is not in place.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">이 기대가 갖춰지지 않으면 풍부한 수학적 토론이 일어날 수 없다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">mathematical</span><span class="vocab-kr">수학적인</span><span class="vocab-en">occur</span><span class="vocab-kr">일어나다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>cannot occur</strong> = 일어날 수 없다. occur = 자동사 (수동태 불가). <strong>in place</strong> = 갖춰진, 제자리에.</div></div>
+  <div class="card-top"><span class="s-num">02</span><div class="s-en">Rich <span class="hl">mathematical</span> discussions cannot <span class="hl">occur</span> if <span class="ref">this</span> expectation is not in place.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">이 기대<span class="pr">(= 모든 아이디어와 답을 수용한다는 기대)</span>가 갖춰지지 않으면 풍부한 수학적 토론이 일어날 수 없다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">mathematical</span><span class="vocab-kr">수학적인</span><span class="vocab-en">occur</span><span class="vocab-kr">일어나다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>cannot occur</strong> = 일어날 수 없다. occur = 자동사 (수동태 불가). <strong>in place</strong> = 갖춰진, 제자리에.</div><div class="s-meaning"><span class="bracket">【전제 조건】</span> ‘풍부한 수학 토론’은 저절로 안 생긴다. <strong>이 기대(=모든 답을 수용)가 자리 잡혀(in place) 있지 않으면</strong> 활발한 토론 자체가 불가능하다. 즉 <strong>‘수용 분위기’가 토론의 필요조건</strong>이라는 뜻. <span class="star-line">★ in place = (제도·분위기로) 갖춰진 · 수용 분위기 → 토론의 전제</span></div></div>
 </div>
 <div class="s-card grammar" data-text="We must remember that wrong answers are often rooted in misconceptions, and unless these ideas are allowed to be brought to the forefront, we cannot help students confront their thinking.">
-  <div class="card-top"><span class="s-num">03</span><div class="s-en">We must remember that wrong answers <span class="hl">are</span> often <span class="hl">rooted in</span> <span class="hl">misconceptions</span>, and unless these ideas are allowed to be brought to the <span class="hl">forefront</span>, we cannot help students <span class="hl">confront</span> their thinking.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">오답이 종종 오개념에 뿌리를 두고 있다는 것을 기억해야 하며, 이 아이디어들이 최전면에 드러나도록 허용되지 않는 한, 학생들이 자신의 사고와 <strong>맞서도록</strong> 도울 수 없다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">rooted in</span><span class="vocab-kr">~에 뿌리를 둔</span><span class="vocab-en">misconception</span><span class="vocab-kr">오개념</span><span class="vocab-en">forefront</span><span class="vocab-kr">최전면</span><span class="vocab-en">confront</span><span class="vocab-kr">맞서다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>are rooted in</strong> = ~에 뿌리를 두다 (수동). <strong>unless</strong> = ~하지 않는 한 (= if ~ not). <strong>are allowed to be brought</strong> = 이중 수동 (허용되다 + 드러나다). <strong>help + O + V원형</strong> = O가 V하도록 돕다 (사역).</div></div>
+  <div class="card-top"><span class="s-num">03</span><div class="s-en">We must remember that wrong answers <span class="hl">are</span> often <span class="hl">rooted in</span> <span class="hl">misconceptions</span>, and unless <span class="ref">these</span> ideas are allowed to be brought to the <span class="hl">forefront</span>, we cannot help students <span class="hl">confront</span> their thinking.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">오답이 종종 오개념에 뿌리를 두고 있다는 것을 기억해야 하며, 이 아이디어들<span class="pr">(= 오개념에 뿌리를 둔 오답들)</span>이 최전면에 드러나도록 허용되지 않는 한, 학생들이 자신의 사고와 <strong>맞서도록</strong> 도울 수 없다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">rooted in</span><span class="vocab-kr">~에 뿌리를 둔</span><span class="vocab-en">misconception</span><span class="vocab-kr">오개념</span><span class="vocab-en">forefront</span><span class="vocab-kr">최전면</span><span class="vocab-en">confront</span><span class="vocab-kr">맞서다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>are rooted in</strong> = ~에 뿌리를 두다 (수동). <strong>unless</strong> = ~하지 않는 한 (= if ~ not). <strong>are allowed to be brought</strong> = 이중 수동 (허용되다 + 드러나다). <strong>help + O + V원형</strong> = O가 V하도록 돕다 (사역).</div><div class="s-meaning"><span class="bracket">【왜 오답을 드러내야 하나】</span> 오답은 대개 <strong>오개념(틀린 생각)</strong>에서 나온다. 그 오개념을 <strong>수면 위로 끌어내(brought to the forefront) 드러내지 않으면</strong>, 학생이 자기 생각의 문제점을 <strong>마주 보고(confront) 고칠</strong> 기회를 줄 수 없다. → 그래서 오답을 숨기지 말고 공개해야 한다. <span class="star-line">★ forefront = 맨 앞·수면 위 / confront one’s thinking = 자기 사고와 정면으로 마주하다</span></div></div>
 </div>
 <div class="s-card grammar" data-text="Students who are in safe learning environments are willing to risk sharing an incorrect answer with their peers in order to grow mathematically.">
   <div class="card-top"><span class="s-num">04</span><div class="s-en">Students who are in safe learning environments are willing to <span class="hl">risk</span> sharing an <span class="hl">incorrect</span> answer with their <span class="hl">peers</span> in order to grow mathematically.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">안전한 학습 환경에 있는 학생들은 수학적으로 성장하기 위해 기꺼이 동료들에게 틀린 답을 공유하는 위험을 감수한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">risk</span><span class="vocab-kr">위험을 감수하다</span><span class="vocab-en">incorrect</span><span class="vocab-kr">틀린</span><span class="vocab-en">peer</span><span class="vocab-kr">동료, 또래</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>who are in safe ~</strong> = 관계대명사 who (Students 수식). <strong>be willing to V</strong> = 기꺼이 V하다. <strong>risk V-ing</strong> = V하는 것을 감수하다 (risk + 동명사). <strong>in order to V</strong> = V하기 위해.</div></div>
+  <div class="s-kr-wrap"><div class="s-kr">안전한 학습 환경에 있는 학생들은 수학적으로 성장하기 위해 기꺼이 동료들에게 틀린 답을 공유하는 위험을 감수한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">risk</span><span class="vocab-kr">위험을 감수하다</span><span class="vocab-en">incorrect</span><span class="vocab-kr">틀린</span><span class="vocab-en">peer</span><span class="vocab-kr">동료, 또래</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>who are in safe ~</strong> = 관계대명사 who (Students 수식). <strong>be willing to V</strong> = 기꺼이 V하다. <strong>risk V-ing</strong> = V하는 것을 감수하다 (risk + 동명사). <strong>in order to V</strong> = V하기 위해.</div><div class="s-meaning"><span class="bracket">【안전함의 효과】</span> 교실이 <strong>안전하다고 느낄 때</strong> 학생은 ‘틀리면 창피할 텐데’ 하는 <strong>위험을 무릅쓰고(risk sharing)</strong> 동료 앞에서 오답을 내놓는다 — 수학적으로 성장하려고. <strong>심리적 안전 → 도전(오답 공유) → 성장</strong>의 흐름. <span class="star-line">★ risk sharing = 공유하는 위험을 감수하다 · 비웃음 걱정이 없어야 용기가 난다</span></div></div>
 </div>
 <div class="s-card grammar" data-text="It is important to model and expect the acceptance of all ideas without derogatory comments.">
   <div class="card-top"><span class="s-num">05</span><div class="s-en">It is important to <span class="hl">model</span> and expect the acceptance of all ideas without <span class="hl">derogatory</span> comments.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">경멸적인 댓글 없이 모든 아이디어의 수용을 모범 보이고 기대하는 것이 중요하다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">model</span><span class="vocab-kr">모범을 보이다</span><span class="vocab-en">derogatory</span><span class="vocab-kr">경멸적인</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>It is important to V</strong> = V하는 것이 중요하다 (가주어-진주어). <strong>model and expect</strong> = to부정사 병렬.</div></div>
+  <div class="s-kr-wrap"><div class="s-kr">경멸적인 말 없이 모든 아이디어의 수용을 모범 보이고 기대하는 것이 중요하다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">model</span><span class="vocab-kr">모범을 보이다</span><span class="vocab-en">derogatory</span><span class="vocab-kr">경멸적인</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>It is important to V</strong> = V하는 것이 중요하다 (가주어-진주어). <strong>model and expect</strong> = to부정사 병렬.</div><div class="s-meaning"><span class="bracket">【교사의 역할 1 — 본보기】</span> 교사가 <strong>먼저 시범을 보이고(model)</strong>, <strong>비하하는 말(derogatory comments) 없이</strong> 모든 답을 받아들이는 태도를 (학생에게도) 기대해야 한다. 말로만 “수용하라” 하지 말고 교사가 직접 실천하라는 것. <span class="star-line">★ model = (직접) 본보기를 보이다 / comments = 말·언급(‘댓글’ 아님)</span></div></div>
 </div>
 <div class="s-card grammar" data-text="As educators we can model this by recording all answers to be considered without giving any verbal or physical expressions that indicate agreement or disagreement with any answer.">
-  <div class="card-top"><span class="s-num">06</span><div class="s-en">As <span class="hl">educators</span> we can model this by recording all answers to be considered without giving any <span class="hl">verbal</span> or physical expressions that <span class="hl">indicate</span> <span class="hl">agreement</span> or disagreement with any answer.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">교육자로서 우리는 동의나 불동의를 나타내는 어떤 언어적·신체적 표현도 하지 않고 고려될 모든 답을 기록함으로써 이를 모범 보일 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">educator</span><span class="vocab-kr">교육자</span><span class="vocab-en">verbal</span><span class="vocab-kr">언어적인</span><span class="vocab-en">indicate</span><span class="vocab-kr">나타내다</span><span class="vocab-en">agreement</span><span class="vocab-kr">동의</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>by recording</strong> = ~함으로써 (수단 by + 동명사). <strong>to be considered</strong> = 고려될 (to부정사 수동·형용사적). <strong>that indicate</strong> = 관계대명사 that (expressions 수식).</div></div>
+  <div class="card-top"><span class="s-num">06</span><div class="s-en">As <span class="hl">educators</span> we can model <span class="ref">this</span> by recording all answers to be considered without giving any <span class="hl">verbal</span> or physical expressions that <span class="hl">indicate</span> <span class="hl">agreement</span> or disagreement with any answer.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">교육자로서 우리는 동의나 불동의를 나타내는 어떤 언어적·신체적 표현도 하지 않고 고려될 모든 답을 기록함으로써 이<span class="pr">(= 경멸 없이 모든 아이디어를 수용하는 것)</span>를 모범 보일 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">educator</span><span class="vocab-kr">교육자</span><span class="vocab-en">verbal</span><span class="vocab-kr">언어적인</span><span class="vocab-en">indicate</span><span class="vocab-kr">나타내다</span><span class="vocab-en">agreement</span><span class="vocab-kr">동의</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>by recording</strong> = ~함으로써 (수단 by + 동명사). <strong>to be considered</strong> = 고려될 (to부정사 수동·형용사적). <strong>that indicate</strong> = 관계대명사 that (expressions 수식).</div><div class="s-meaning"><span class="bracket">【교사의 역할 2 — 구체적 방법】</span> 그 시범을 이렇게 보일 수 있다 — 어떤 답에도 <strong>동의/반대를 드러내는 말이나 표정·몸짓 없이</strong>, 고려할 <strong>모든 답을 그냥 기록</strong>해 둔다. 그러면 학생은 ‘어떤 답이든 안전하다’고 느낀다. <span class="star-line">★ 판단(좋다·나쁘다)을 보류하고 중립적으로 다 적기</span></div></div>
 </div>
 <div class="s-card" data-text="The teacher may need to practice having a blank face.">
   <div class="card-top"><span class="s-num">07</span><div class="s-en">The teacher may need to practice having a "<span class="hl">blank face</span>."</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">교사는 "무표정"을 연습할 필요가 있을 수도 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">blank face</span><span class="vocab-kr">무표정</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">교사는 "무표정"을 연습할 필요가 있을 수도 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">blank face</span><span class="vocab-kr">무표정</span></div><div class="s-meaning"><span class="bracket">【무표정의 이유】</span> 그래서 교사는 <strong>‘무표정(blank face)’ 짓기를 연습</strong>해야 할 수도 있다. 답을 듣고 무의식중에 좋고 나쁨이 얼굴에 드러나면, 학생이 곧장 정답·오답을 눈치채기 때문. 일종의 ‘포커페이스’. <span class="star-line">★ blank face = 평가를 드러내지 않는 중립 표정</span></div></div>
 </div>
 <div class="s-card" data-text="Students look to teachers as the source of correct answers.">
   <div class="card-top"><span class="s-num">08</span><div class="s-en">Students look to teachers as the <span class="hl">source</span> of correct answers.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">학생들은 교사를 정답의 원천으로 바라본다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">source</span><span class="vocab-kr">원천, 출처</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">학생들은 교사를 정답의 원천으로 바라본다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">source</span><span class="vocab-kr">원천, 출처</span></div><div class="s-meaning"><span class="bracket">【문제 상황】</span> 학생들은 교사를 <strong>‘정답을 주는 사람(source of correct answers)’으로 여기고 의존</strong>한다(look to A as B = A를 B로 여겨 기대다). 늘 교사에게 정답을 구하면 스스로 사고하지 않는다 → 다음 문장의 ‘해결책’을 위한 깔개. <span class="star-line">★ look to A as B = A를 B로 여겨 의지하다</span></div></div>
 </div>
 <div class="s-card grammar" data-text="Part of building a safe learning community is to shift this source of knowledge to the students, by equipping them to defend the thinking behind their solutions.">
-  <div class="card-top"><span class="s-num">09</span><div class="s-en">Part of building a safe learning community is to shift this source of knowledge to the students, by <span class="hl">equipping</span> them to <span class="hl">defend</span> the thinking behind their <span class="hl">solutions</span>.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">안전한 학습 공동체 구축의 일부는 학생들이 해법 뒤의 사고를 <strong>방어</strong>할 수 있도록 장비를 갖추게 함으로써 지식의 원천을 학생들에게로 전환하는 것이다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">equipping</span><span class="vocab-kr">장비를 갖추게 하기</span><span class="vocab-en">defend</span><span class="vocab-kr">방어하다</span><span class="vocab-en">solution</span><span class="vocab-kr">해법, 풀이</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>Part of V-ing is to V</strong> = V하는 것의 일부는 V하는 것이다. <strong>by equipping them to defend</strong> = 그들이 방어하도록 장비를 갖추게 함으로써. equip + O + to V = O가 V할 수 있도록 갖추게 하다.</div></div>
+  <div class="card-top"><span class="s-num">09</span><div class="s-en">Part of building a safe learning community is to shift <span class="ref">this</span> source of knowledge to the students, by <span class="hl">equipping</span> them to <span class="hl">defend</span> the thinking behind their <span class="hl">solutions</span>.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">안전한 학습 공동체 구축의 일부는 학생들이 해법 뒤의 사고를 <strong>방어</strong>할 수 있도록 장비를 갖추게 함으로써 지식의 원천<span class="pr">(= 그동안 교사가 쥐고 있던 정답의 원천)</span>을 학생들에게로 전환하는 것이다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">equipping</span><span class="vocab-kr">장비를 갖추게 하기</span><span class="vocab-en">defend</span><span class="vocab-kr">방어하다</span><span class="vocab-en">solution</span><span class="vocab-kr">해법, 풀이</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>Part of V-ing is to V</strong> = V하는 것의 일부는 V하는 것이다. <strong>by equipping them to defend</strong> = 그들이 방어하도록 장비를 갖추게 함으로써. equip + O + to V = O가 V할 수 있도록 갖추게 하다.</div><div class="s-meaning"><span class="bracket">【결론 — 주도권 이동】</span> 안전한 교실을 만드는 한 방법은 <strong>‘정답의 출처’를 교사 → 학생으로 옮기는 것</strong>. 방법은, 학생이 <strong>자기 풀이의 근거를 스스로 설명·옹호(defend)할 수 있게(equip to defend) 해 주는</strong> 것. 그러면 학생이 곧 지식의 주체가 된다. <span class="star-line">★ equip A to V = A가 ~할 수 있게 갖춰 주다 / defend = (근거를 들어) 자기 답을 옹호하다</span></div></div>
 </div>
 </div><!-- /cards -->
+  </div>
+<div class="summary-view" id="summaryView">
     <div class="summary-wrap"><div class="summary-header">📖 줄거리 &amp; 핵심 정리</div><div class="summary-body">
 <div style="background:linear-gradient(135deg,#1F3864,#2E75B6);border-radius:12px;padding:18px 22px;margin-bottom:20px;text-align:center;"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.6);margin-bottom:8px;">CORE MESSAGE</div><div style="font-size:15px;font-weight:700;color:white;line-height:1.6;">안전한 교실 = <span style="color:#f0d070;">모든 답을 수용</span> → 학생이 사고를 방어하게!</div><div style="font-size:12px;color:rgba(255,255,255,0.65);margin-top:8px;">= Accept all ideas first, then shift the source of knowledge to students.</div></div>
 <div style="background:#fff8e6;border-left:4px solid #f0d070;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:20px;"><div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:#a07800;margin-bottom:10px;">💡 쉬운 비유로 이해하기</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12.5px;"><div style="background:white;border-radius:8px;padding:12px 14px;border:1px solid #faedb0;"><div style="font-weight:700;color:#C62828;margin-bottom:6px;">❌ 위험한 교실</div><div style="color:#444;line-height:1.8;">틀린 답 → 비웃음/무시<br>교사가 정답 원천<br>→ 학생 침묵 + 사고 정지!</div></div><div style="background:white;border-radius:8px;padding:12px 14px;border:1px solid #faedb0;"><div style="font-weight:700;color:#1D5C2B;margin-bottom:6px;">✅ 안전한 교실</div><div style="color:#444;line-height:1.8;">모든 답 수용 + 무표정<br>학생이 스스로 사고 방어<br>→ 풍부한 토론 + 성장!</div></div></div><div style="margin-top:10px;font-size:12px;color:#7a5c00;text-align:center;font-weight:600;">→ 핵심 전환: 정답의 원천을 <u>교사 → 학생</u>으로 이동!</div></div>
@@ -516,7 +550,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #5B2D8E;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">risk V-ing</div><div style="color:#555;">V하는 것을 감수하다</div></div>
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #C55A11;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">equip O to V</div><div style="color:#555;">O가 V할 수 있도록 갖추게</div></div>
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #C55A11;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">by V-ing (수단)</div><div style="color:#555;">V함으로써</div></div></div></div></div></div>
-  </div>
+</div>
   <div class="ga-panel" id="panelGA">
 
 <div class="ga-legend"><div class="ga-leg"><div class="ga-leg-dot" style="background:#C62828;"></div><strong>Tier 1</strong> 어법 핵심</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#E65100;"></div><strong>Tier 2</strong> 어법</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#1565C0;"></div><strong>Tier 3</strong> 어휘·대명사</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#2E7D32;"></div><strong>Tier 4</strong> 혼동 어휘</div></div>
@@ -986,6 +1020,12 @@ function readNext(){if(!allPlaying||allIdx>=allQueue.length){if(currentCard)curr
 
 /* ══ 배열영작 ══ */
 let scores={},dragSrc=null,clickSelectedChip=null;
+/* ── 터치 드래그 지원 (태블릿/모바일) v1.7 ── */
+let tChip=null,tClone=null,tStartX=0,tStartY=0,tOffX=0,tOffY=0,tMoved=false,tDragEnd=0;
+const T_DRAG_THRESHOLD=10;
+function arrTouchStart(e){const chip=e.target.closest('.word-chip');if(!chip)return;tChip=chip;const r=chip.getBoundingClientRect();const t=e.touches[0];tStartX=t.clientX;tStartY=t.clientY;tOffX=t.clientX-r.left;tOffY=t.clientY-r.top;tMoved=false;}
+function arrTouchMove(e){if(!tChip)return;if(e.cancelable)e.preventDefault();const t=e.touches[0];const dx=t.clientX-tStartX,dy=t.clientY-tStartY;if(!tMoved){if(Math.hypot(dx,dy)<T_DRAG_THRESHOLD)return;tMoved=true;const r=tChip.getBoundingClientRect();tClone=tChip.cloneNode(true);Object.assign(tClone.style,{position:'fixed',left:r.left+'px',top:r.top+'px',width:r.width+'px',zIndex:9999,pointerEvents:'none',opacity:0.9,transform:'scale(1.08)',boxShadow:'0 8px 24px rgba(0,0,0,0.3)',transition:'none'});document.body.appendChild(tClone);tChip.classList.add('dragging');}tClone.style.left=(t.clientX-tOffX)+'px';tClone.style.top=(t.clientY-tOffY)+'px';tClone.style.display='none';const tg=document.elementFromPoint(t.clientX,t.clientY);tClone.style.display='';const z=tg&&tg.closest('.answer-zone, .word-pool');document.querySelectorAll('.answer-zone.drag-over, .word-pool.drag-over').forEach(el=>el.classList.remove('drag-over'));if(z)z.classList.add('drag-over');}
+function arrTouchEnd(e){if(!tChip)return;if(!tMoved){tChip=null;return;}const t=e.changedTouches[0];if(tClone)tClone.style.display='none';const tg=document.elementFromPoint(t.clientX,t.clientY);const z=tg&&tg.closest('.answer-zone, .word-pool');if(z){const chips=Array.from(z.querySelectorAll('.word-chip')).filter(c=>c!==tChip);if(chips.length===0){z.appendChild(tChip);}else{let bestC=null,bestB=true,bestD=Infinity;for(const c of chips){const r=c.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const d=Math.hypot(t.clientX-cx,t.clientY-cy);if(d<bestD){bestD=d;bestC=c;bestB=t.clientX<cx;}}if(bestB)z.insertBefore(tChip,bestC);else z.insertBefore(tChip,bestC.nextSibling);}tChip.classList.remove('ok-chip');const idx=tChip.dataset.idx;const r=document.getElementById('res-'+idx);if(r)r.className='arr-result';}if(tClone){tClone.remove();tClone=null;}tChip.classList.remove('dragging');document.querySelectorAll('.answer-zone.drag-over, .word-pool.drag-over').forEach(el=>el.classList.remove('drag-over'));tChip=null;tDragEnd=Date.now();e.preventDefault();}
 function buildArrangeCards(){
   const box=document.getElementById('arrCards');box.innerHTML='';
   const hint=document.createElement('div');hint.className='touch-hint';hint.innerHTML='💡 단어 클릭 → 즉시 이동 &nbsp;|&nbsp; 드래그도 가능';box.appendChild(hint);
@@ -994,14 +1034,15 @@ function buildArrangeCards(){
     const card=document.createElement('div');card.className='arr-card';card.style.animationDelay=(idx*60)+'ms';
     card.innerHTML=`<div class="arr-header"><span class="arr-num">${item.num}</span><div class="arr-kr">${item.kr}</div></div><div class="arr-body"><div class="answer-zone" id="zone-${idx}"></div><div class="word-pool" id="pool-${idx}">${shuffled.map(w=>`<div class="word-chip" draggable="true" data-word="${w}" data-idx="${idx}">${w}</div>`).join('')}</div><div class="arr-result" id="res-${idx}"></div><div class="ans-reveal" id="ans-${idx}"><strong>정답:</strong> ${item.ans}.</div><div class="arr-btns"><button class="arr-check" onclick="checkAns(${idx})">✓ 확인</button><button class="arr-reset" onclick="resetCard(${idx})">↺ 초기화</button><button class="arr-show-ans" onclick="toggleAns(${idx})">👁 정답 보기</button></div></div>`;
     box.appendChild(card);
-    ['zone-'+idx,'pool-'+idx].forEach(zid=>{const z=document.getElementById(zid);z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(!dragSrc)return;z.appendChild(dragSrc);dragSrc.classList.remove('dragging','ok-chip');document.getElementById('res-'+idx).className='arr-result';dragSrc=null;});});
+    ['zone-'+idx,'pool-'+idx].forEach(zid=>{const z=document.getElementById(zid);z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(!dragSrc)return;const chips=Array.from(z.querySelectorAll('.word-chip')).filter(c=>c!==dragSrc);if(chips.length===0){z.appendChild(dragSrc);}else{let bestC=null,bestB=true,bestD=Infinity;for(const c of chips){const r=c.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const d=Math.hypot(e.clientX-cx,e.clientY-cy);if(d<bestD){bestD=d;bestC=c;bestB=e.clientX<cx;}}if(bestB)z.insertBefore(dragSrc,bestC);else z.insertBefore(dragSrc,bestC.nextSibling);}dragSrc.classList.remove('dragging','ok-chip');document.getElementById('res-'+idx).className='arr-result';dragSrc=null;});});
     setTimeout(()=>{document.getElementById('pool-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});document.getElementById('zone-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});},0);
   });
   box.addEventListener('dragstart',e=>{if(!e.target.classList.contains('word-chip'))return;dragSrc=e.target;e.target.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
   box.addEventListener('dragend',e=>{if(e.target.classList.contains('word-chip'))e.target.classList.remove('dragging');dragSrc=null;});
+  box.addEventListener('touchstart',arrTouchStart,{passive:true});box.addEventListener('touchmove',arrTouchMove,{passive:false});box.addEventListener('touchend',arrTouchEnd);box.addEventListener('touchcancel',arrTouchEnd);
   updateScore();
 }
-function chipClick(chip,idx){const inZone=chip.parentElement.id==='zone-'+idx;const target=document.getElementById(inZone?'pool-'+idx:'zone-'+idx);chip.classList.remove('ok-chip');target.appendChild(chip);chip.addEventListener('click',()=>chipClick(chip,idx),{once:true});document.getElementById('res-'+idx).className='arr-result';}
+function chipClick(chip,idx){if(Date.now()-tDragEnd<500)return;const inZone=chip.parentElement.id==='zone-'+idx;const target=document.getElementById(inZone?'pool-'+idx:'zone-'+idx);chip.classList.remove('ok-chip');target.appendChild(chip);document.getElementById('res-'+idx).className='arr-result';}
 function checkAns(idx){const zone=document.getElementById('zone-'+idx);const chips=Array.from(zone.querySelectorAll('.word-chip'));const userAns=chips.map(c=>c.dataset.word).join(' ');const correct=ARRANGE[idx].ans;const ok=userAns.trim().toLowerCase()===correct.trim().toLowerCase();const res=document.getElementById('res-'+idx);res.className='arr-result show '+(ok?'ok':'ng');res.innerHTML=ok?'🎉 정답입니다!':'❌ 다시 확인해 보세요. ('+chips.length+'/'+correct.split(' ').length+'개 배치됨)';if(ok)chips.forEach(c=>c.classList.add('ok-chip'));scores[idx]=ok?1:0;updateScore();}
 function resetCard(idx){const zone=document.getElementById('zone-'+idx);const pool=document.getElementById('pool-'+idx);Array.from(zone.querySelectorAll('.word-chip')).forEach(c=>{c.classList.remove('ok-chip');pool.appendChild(c);});document.getElementById('res-'+idx).className='arr-result';document.getElementById('ans-'+idx).className='ans-reveal';delete scores[idx];updateScore();}
 function toggleAns(idx){document.getElementById('ans-'+idx).classList.toggle('show');}
@@ -1226,6 +1267,159 @@ document.addEventListener("DOMContentLoaded",function(){
 });
 // 즉시 실행 (DOMContentLoaded 전에도 안전하게)
 (function(){hideQPanels();})();
+</script>
+<script>
+/* ══ 펜 필기 모드 (자유 필기) v1.0 ══ */
+const PEN_COLORS=['#dc2626','#1F3864','#0f9d58','#f59e0b','#000000'];
+const PEN_WIDTHS=[2,4,7];
+let penEnabled=false,penColor='#dc2626',penWidth=4,penEraser=false;
+let penLayer=null,penPath=null,penPts=[];
+
+function buildPenTools(){
+  if(document.getElementById('penLayer'))return;
+  penLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  penLayer.id='penLayer';
+  document.body.appendChild(penLayer);
+  const tb=document.createElement('div');
+  tb.id='penToolbar';
+  let html='<button class="pen-btn pen-main" id="penToggle" title="펜 ON/OFF">✏️</button><div class="pen-tools" id="penTools">';
+  PEN_COLORS.forEach(c=>html+='<button class="pen-color" data-color="'+c+'" style="background:'+c+';" title="색상"></button>');
+  PEN_WIDTHS.forEach(w=>html+='<button class="pen-width" data-width="'+w+'" title="굵기"><span style="width:'+(w*2)+'px;height:'+(w*2)+'px;"></span></button>');
+  html+='<button class="pen-btn pen-eraser" id="penEraserBtn" title="개별 지우개">🧹</button><button class="pen-btn pen-clear" id="penClearBtn" title="전체 지우기">🗑️</button></div>';
+  tb.innerHTML=html;
+  document.body.appendChild(tb);
+  document.querySelector('.pen-color[data-color="'+penColor+'"]').classList.add('selected');
+  document.querySelector('.pen-width[data-width="'+penWidth+'"]').classList.add('selected');
+  document.getElementById('penToggle').addEventListener('click',togglePen);
+  document.querySelectorAll('.pen-color').forEach(b=>b.addEventListener('click',e=>{
+    const c=e.currentTarget.dataset.color;
+    penColor=c;penEraser=false;
+    document.querySelectorAll('.pen-color').forEach(x=>x.classList.toggle('selected',x.dataset.color===c));
+    document.getElementById('penEraserBtn').classList.remove('active');
+  }));
+  document.querySelectorAll('.pen-width').forEach(b=>b.addEventListener('click',e=>{
+    const w=+e.currentTarget.dataset.width;
+    penWidth=w;
+    document.querySelectorAll('.pen-width').forEach(x=>x.classList.toggle('selected',+x.dataset.width===w));
+  }));
+  document.getElementById('penEraserBtn').addEventListener('click',()=>{
+    penEraser=!penEraser;
+    document.getElementById('penEraserBtn').classList.toggle('active',penEraser);
+  });
+  document.getElementById('penClearBtn').addEventListener('click',()=>{
+    if(confirm('모든 필기를 지우시겠습니까?'))penLayer.innerHTML='';
+  });
+  penLayer.addEventListener('pointerdown',penDown);
+  penLayer.addEventListener('pointermove',penMove);
+  penLayer.addEventListener('pointerup',penUp);
+  penLayer.addEventListener('pointercancel',penUp);
+  penLayer.addEventListener('pointerleave',penUp);
+  const sync=()=>{
+    penLayer.style.height='0px';penLayer.style.width='0px';
+    const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
+    const w=Math.max(document.body.scrollWidth,document.documentElement.scrollWidth);
+    penLayer.setAttribute('width',w);
+    penLayer.setAttribute('height',h);
+    penLayer.style.height=h+'px';
+    penLayer.style.width=w+'px';
+  };
+  sync();
+  if(window.ResizeObserver){let _roPending=false;new ResizeObserver(()=>{if(_roPending)return;_roPending=true;requestAnimationFrame(()=>{_roPending=false;sync();});}).observe(document.body);}
+  window.addEventListener('resize',sync);
+  setInterval(sync,2000);
+}
+function togglePen(){
+  penEnabled=!penEnabled;
+  document.getElementById('penToggle').classList.toggle('active',penEnabled);
+  document.getElementById('penTools').classList.toggle('show',penEnabled);
+  penLayer.classList.toggle('active',penEnabled);
+}
+function getPenPt(e){
+  return {x:e.clientX+window.scrollX,y:e.clientY+window.scrollY};
+}
+function penDown(e){
+  if(!penEnabled)return;
+  e.preventDefault();
+  try{penLayer.setPointerCapture(e.pointerId);}catch(_){}
+  if(penEraser){eraseAt(e);return;}
+  const pt=getPenPt(e);
+  penPath=document.createElementNS('http://www.w3.org/2000/svg','path');
+  penPath.setAttribute('d','M '+pt.x+' '+pt.y);
+  penPath.setAttribute('stroke',penColor);
+  penPath.setAttribute('stroke-width',penWidth);
+  penPath.setAttribute('fill','none');
+  penPath.setAttribute('stroke-linecap','round');
+  penPath.setAttribute('stroke-linejoin','round');
+  penLayer.appendChild(penPath);
+  penPts=[pt];
+}
+function penMove(e){
+  if(!penEnabled)return;
+  if(penEraser&&e.buttons){eraseAt(e);return;}
+  if(!penPath)return;
+  e.preventDefault();
+  const pt=getPenPt(e);
+  const last=penPts[penPts.length-1];
+  if(Math.hypot(pt.x-last.x,pt.y-last.y)<1.5)return;
+  penPts.push(pt);
+  let d='M '+penPts[0].x+' '+penPts[0].y;
+  for(let i=1;i<penPts.length-1;i++){
+    const c=penPts[i],n=penPts[i+1];
+    const mx=(c.x+n.x)/2,my=(c.y+n.y)/2;
+    d+=' Q '+c.x+' '+c.y+' '+mx+' '+my;
+  }
+  if(penPts.length>=2){
+    const lp=penPts[penPts.length-1];
+    d+=' L '+lp.x+' '+lp.y;
+  }
+  penPath.setAttribute('d',d);
+}
+function penUp(e){
+  if(penPath){penPath=null;penPts=[];}
+}
+function eraseAt(e){
+  const pt=getPenPt(e);
+  const r=20;
+  const paths=Array.from(penLayer.querySelectorAll('path'));
+  for(const p of paths){
+    const bb=p.getBBox();
+    if(pt.x>=bb.x-r&&pt.x<=bb.x+bb.width+r&&pt.y>=bb.y-r&&pt.y<=bb.y+bb.height+r){
+      p.remove();
+    }
+  }
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',buildPenTools);
+}else{
+  setTimeout(buildPenTools,100);
+}
+</script>
+<script>
+/* ══ 요약 전용 탭 v1.0 ══ */
+(function(){
+  function hideSummary(){
+    var sv=document.getElementById('summaryView');if(sv)sv.style.display='none';
+    var ts=document.getElementById('tabSum');if(ts)ts.classList.remove('active');
+  }
+  window.switchSummary=function(){
+    var rv=document.getElementById('readingView');if(rv)rv.style.display='none';
+    ['arrangeView','grammarView','vocabView'].forEach(function(id){
+      var el=document.getElementById(id);if(el)el.classList.remove('active');});
+    if(typeof hideAllExtra==='function')hideAllExtra();
+    document.querySelectorAll('.view-tab').forEach(function(t){t.classList.remove('active');});
+    var sv=document.getElementById('summaryView');if(sv)sv.style.display='block';
+    var ts=document.getElementById('tabSum');if(ts)ts.classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  /* 다른 모든 전환 함수가 요약뷰를 숨기도록 래핑 */
+  ['switchView','switchSD','switchGA','switchQ','switchVocab'].forEach(function(fn){
+    if(typeof window[fn]!=='function')return;
+    var orig=window[fn];
+    window[fn]=function(){hideSummary();return orig.apply(this,arguments);};
+  });
+  document.addEventListener('DOMContentLoaded',hideSummary);
+  hideSummary();
+})();
 </script>
 </body>
 </html>

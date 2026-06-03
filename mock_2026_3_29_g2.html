@@ -142,7 +142,7 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 .answer-zone:empty::before{content:'여기에 단어를 놓으세요';color:rgba(46,117,182,0.35);font-size:12px;font-style:italic;display:flex;align-items:center;height:28px;}
 .word-pool{display:flex;flex-wrap:wrap;gap:7px;min-height:44px;padding:10px;background:#f8f8f8;border-radius:8px;border:2px dashed #ddd;margin-bottom:12px;transition:border-color 0.2s,background 0.2s;}
 .word-pool.drag-over{border-color:var(--gold);background:#fff9e6;}
-.word-chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:6px;font-family:Georgia,serif;font-size:13.5px;cursor:grab;user-select:none;transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;background:var(--blue-card);border:1.5px solid var(--blue-border);color:var(--navy);font-weight:600;white-space:nowrap;}
+.word-chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:6px;font-family:Georgia,serif;font-size:13.5px;cursor:grab;user-select:none;transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;background:var(--blue-card);border:1.5px solid var(--blue-border);color:var(--navy);font-weight:600;white-space:nowrap;touch-action:none;}
 .word-chip:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(46,117,182,0.25);}
 .word-chip.dragging{opacity:0.35;transform:scale(0.93);cursor:grabbing;}
 .word-chip.ok-chip{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20;}
@@ -325,9 +325,10 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .s-card.pinned .s-vocab,
 .s-card.tapped .s-vocab{
   order:0;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25)!important;
-  border-radius:20px;padding:3px 12px 3px 8px!important;
-  white-space:nowrap;flex-shrink:0;border-top:none!important;
-  display:inline-flex!important;align-items:center;gap:4px;
+  border-radius:16px;padding:5px 12px 5px 10px!important;
+  white-space:normal;flex-shrink:1;border-top:none!important;
+  display:inline-flex!important;flex-wrap:wrap!important;align-items:center;gap:4px 6px;
+  max-width:100%;overflow-wrap:break-word;word-break:break-word;
 }
 /* 3. 문장구조도 탭·패널 */
 .tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
@@ -416,6 +417,36 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   body.psd .sd-vocab-chip{font-size:10px!important;padding:2px 7px!important;}
 }
 
+/* ══ 펜 필기 모드 v1.0 ══ */
+#penToolbar{position:fixed;bottom:20px;right:20px;z-index:10000;display:flex;flex-direction:row;gap:8px;background:rgba(255,255,255,0.96);padding:8px;border-radius:30px;box-shadow:0 4px 20px rgba(0,0,0,0.18);backdrop-filter:blur(10px);align-items:center;}
+#penToolbar .pen-btn{width:42px;height:42px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-btn:hover{background:#e0e0e0;}
+#penToolbar .pen-btn.active{background:#2E75B6;color:white;}
+#penToolbar .pen-main{background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;font-size:20px;}
+#penToolbar .pen-main.active{background:linear-gradient(135deg,#dc2626,#ef4444);transform:scale(1.05);}
+#penToolbar .pen-tools{display:none;flex-direction:row;gap:6px;align-items:center;padding-left:8px;border-left:1px solid #ddd;margin-left:4px;}
+#penToolbar .pen-tools.show{display:flex;}
+#penToolbar .pen-color{width:30px;height:30px;border:2px solid white;border-radius:50%;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.2);transition:transform 0.15s;padding:0;}
+#penToolbar .pen-color:hover{transform:scale(1.1);}
+#penToolbar .pen-color.selected{border:2px solid #333;transform:scale(1.18);box-shadow:0 2px 6px rgba(0,0,0,0.3);}
+#penToolbar .pen-width{width:34px;height:34px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-width:hover{background:#e0e0e0;}
+#penToolbar .pen-width span{background:#333;border-radius:50%;display:inline-block;}
+#penToolbar .pen-width.selected{background:#1F3864;}
+#penToolbar .pen-width.selected span{background:white !important;}
+#penLayer{position:absolute;top:0;left:0;pointer-events:none;z-index:998;overflow:visible;}
+#penLayer.active{pointer-events:auto;touch-action:none;cursor:crosshair;}
+@media print{#penToolbar{display:none !important;}#penLayer{display:none !important;}}
+@media (max-width:600px){
+  #penToolbar{bottom:10px;right:10px;padding:6px;gap:4px;}
+  #penToolbar .pen-btn,#penToolbar .pen-width{width:38px;height:38px;}
+  #penToolbar .pen-color{width:26px;height:26px;}
+}
+
+.tab-summary{background:white;color:#00695C;border-color:rgba(0,105,92,0.25);}
+.tab-summary.active{background:#00695C;color:white;border-color:#00695C;}
+.summary-view{display:none;}
+@media print{.summary-view{display:none!important;}}
 </style>
 </head>
 <body>
@@ -439,6 +470,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
   <div class="view-tabs">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
+    <button class="view-tab tab-summary" id="tabSum" onclick="switchSummary()">📄 요약</button>
     <button class="view-tab tab-sd"             id="tabSD" onclick="switchSD()">📐 문장구조도</button>
     <button class="view-tab tab-ga"             id="tabGA" onclick="switchGA()">📊 문법분석</button>
     <button class="view-tab tab-arrange"        id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
@@ -465,19 +497,19 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="cards" id="cards">
 <div class="s-card grammar" data-text="The Industrial Revolution did more than just invent new materials or machines.">
   <div class="card-top"><span class="s-num">01</span><div class="s-en">The <span class="hl">Industrial Revolution</span> did more than just <span class="hl">invent</span> new materials or machines.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">산업혁명은 단지 새로운 재료나 기계를 발명한 것 이상을 했다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">Industrial Revolution</span><span class="vocab-kr">산업혁명</span><span class="vocab-en">invent</span><span class="vocab-kr">발명하다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>did more than just invent</strong> = 단지 발명한 것 이상을 했다. <strong>more than</strong> = ~이상. did는 과거 강조 아닌 본동사(do의 과거).</div></div>
+  <div class="s-kr-wrap"><div class="s-kr">산업혁명은 단지 새로운 재료나 기계를 발명한 것 이상을 했다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">Industrial Revolution</span><span class="vocab-kr">산업혁명</span><span class="vocab-en">invent</span><span class="vocab-kr">발명하다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>did more than just invent</strong> = 단지 발명한 것 이상을 했다. <strong>more than</strong> = ~이상. did는 과거 강조 아닌 본동사(do의 과거).</div><div class="s-meaning"><span class="bracket">【도입 — 통념 깨기】</span> ‘산업혁명 = 새 기계·재료를 발명한 것’이라고만 생각하기 쉽다. 그런데 산업혁명은 <strong>그 이상(more than just invent)</strong>을 해냈다. 무엇을? → 다음 문장에서 공개. <span class="star-line">★ did more than just invent = 단지 발명한 것 이상을 했다</span></div></div>
 </div>
 <div class="s-card" data-text="It invented a new process for manufacturing: the modern factory.">
-  <div class="card-top"><span class="s-num">02</span><div class="s-en">It invented a new process for <span class="hl">manufacturing</span>: the modern factory.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">그것은 제조를 위한 새로운 과정을 발명했다: 현대 공장.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">manufacturing</span><span class="vocab-kr">제조</span></div></div>
+  <div class="card-top"><span class="s-num">02</span><div class="s-en"><span class="ref">It</span> invented a new process for <span class="hl">manufacturing</span>: the modern factory.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">그것<span class="pr">(= 산업혁명)</span>은 제조를 위한 새로운 과정을 발명했다: 현대 공장.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">manufacturing</span><span class="vocab-kr">제조</span></div><div class="s-meaning"><span class="bracket">【핵심 — 진짜 발명품】</span> 산업혁명이 새로 만든 건 물건이 아니라 <strong>‘제조 방식(process)’ 자체 — 바로 현대식 공장</strong>이다. 콜론(:) 뒤가 그 정체. ‘무엇을 만드느냐’가 아니라 <strong>‘어떻게 만드느냐’를 바꿨다</strong>는 것. <span class="star-line">★ process = (만드는) 방식·공정 / 콜론(:) = 앞말의 정체를 밝힘</span></div></div>
 </div>
 <div class="s-card grammar" data-text="Prior to around 1850, most piano shops used an apprentice system in which a master builder taught younger workers the skills of the trade, usually over the course of many years.">
   <div class="card-top"><span class="s-num">03</span><div class="s-en"><span class="hl">Prior to</span> around 1850, most piano shops used an <span class="hl">apprentice</span> system in which a master builder taught younger workers the skills of the trade, usually over the course of many years.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">1850년경 이전에, 대부분의 피아노 공방은 숙련 제작자가 수년에 걸쳐 젊은 노동자들에게 기술을 가르치는 도제 시스템을 사용했다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">prior to</span><span class="vocab-kr">~이전에</span><span class="vocab-en">apprentice</span><span class="vocab-kr">도제, 견습생</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>Prior to</strong> = ~이전에 (= before, 전치사). <strong>in which</strong> = 관계대명사 (= where). system을 수식. <strong>taught + IO + DO</strong> = 4형식 (가르치다).</div></div>
+  <div class="s-kr-wrap"><div class="s-kr">1850년경 이전에, 대부분의 피아노 공방은 숙련 제작자가 수년에 걸쳐 젊은 노동자들에게 기술을 가르치는 도제 시스템을 사용했다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">prior to</span><span class="vocab-kr">~이전에</span><span class="vocab-en">apprentice</span><span class="vocab-kr">도제, 견습생</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>Prior to</strong> = ~이전에 (= before, 전치사). <strong>in which</strong> = 관계대명사 (= where). system을 수식. <strong>taught + IO + DO</strong> = 4형식 (가르치다).</div><div class="s-meaning"><span class="bracket">【과거 방식 — 도제제】</span> 1850년쯤 이전엔 피아노 공방이 대부분 <strong>‘도제(apprentice) 방식’</strong>이었다 — <strong>숙련 장인이 여러 해에 걸쳐 젊은 일꾼에게 기술을 1:1로 전수</strong>. 즉 소량·느린 수공업. <span class="star-line">★ apprentice system = 도제(견습) 제도 / skills of the trade = 그 일의 기술</span></div></div>
 </div>
 <div class="s-card grammar" data-text="The larger piano shops did have specialists—for example, one person who specialized in soundboards, another who made hammers, and so on.">
   <div class="card-top"><span class="s-num">04</span><div class="s-en">The larger piano shops did have <span class="hl">specialists</span>—for example, one person who <span class="hl">specialized</span> in soundboards, another who made <span class="hl">hammers</span>, <span class="hl">and so on</span>.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">더 큰 피아노 공방에는 전문가가 있었다—공명판 전문가, 해머 제작자, 등등.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">specialist</span><span class="vocab-kr">전문가</span><span class="vocab-en">specialized</span><span class="vocab-kr">전문으로 하는</span><span class="vocab-en">hammer</span><span class="vocab-kr">해머</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>did have</strong> = 강조의 do (정말로 있었다). <strong>who specialized / who made</strong> = 관계대명사 who 반복 (사람 수식).</div></div>
+  <div class="s-kr-wrap"><div class="s-kr">더 큰 피아노 공방에는 전문가가 있었다—공명판 전문가, 해머 제작자, 등등.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">specialist</span><span class="vocab-kr">전문가</span><span class="vocab-en">specialized</span><span class="vocab-kr">전문으로 하는</span><span class="vocab-en">hammer</span><span class="vocab-kr">해머</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>did have</strong> = 강조의 do (정말로 있었다). <strong>who specialized / who made</strong> = 관계대명사 who 반복 (사람 수식).</div><div class="s-meaning"><span class="bracket">【과거 방식의 한계】</span> 큰 공방엔 <strong>분업 전문가가 있긴 했다(did have — 강조)</strong> — 공명판(soundboard) 담당, 해머 담당 식으로. 하지만 그래도… (다음 문장에서 생산량 한계로 이어짐). <span class="star-line">★ did + 동사원형 = 정말 ~하긴 했다(양보·강조)</span></div></div>
 </div>
 <div class="s-card grammar" data-text="But even the largest piano makers of that time produced no more than 5-10 pianos per year per worker, as pianos were still made essentially one at a time.">
   <div class="card-top"><span class="s-num">05</span><div class="s-en">But even the largest piano makers of that time produced no more than 5-10 pianos <span class="hl">per</span> year per worker, as pianos were still made <span class="hl">essentially</span> one at a time.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
@@ -485,17 +517,19 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 </div>
 <div class="s-card grammar" data-text="The development of a true piano factory occurred first in the United States, led by Jonas Chickering in Boston and later the Steinway family in New York City.">
   <div class="card-top"><span class="s-num">06</span><div class="s-en">The development of a true piano factory <span class="hl">occurred</span> first in the United States, led by Jonas Chickering in Boston and later the Steinway family in New York City.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">진정한 피아노 공장의 발전은 미국에서 처음 일어났으며, Chickering과 이후 Steinway 가문이 이끌었다.</div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>occurred</strong> = 일어났다 (자동사→수동 불가). <strong>led by ~</strong> = ~가 이끈 (과거분사 분사구문).</div></div>
+  <div class="s-kr-wrap"><div class="s-kr">진정한 피아노 공장의 발전은 미국에서 처음 일어났으며, Chickering과 이후 Steinway 가문이 이끌었다.</div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>occurred</strong> = 일어났다 (자동사→수동 불가). <strong>led by ~</strong> = ~가 이끈 (과거분사 분사구문).</div><div class="s-meaning"><span class="bracket">【전환 — 공장의 등장】</span> 진짜 <strong>‘피아노 공장’은 미국에서 처음</strong> 생겼다 — 보스턴의 Chickering, 이어 뉴욕의 Steinway 가문이 주도(led by). 도제제 → 공장제로의 전환점. <span class="star-line">★ led by = ~의 주도로</span></div></div>
 </div>
 <div class="s-card" data-text="These factories led to improvements in both efficiency and quality.">
-  <div class="card-top"><span class="s-num">07</span><div class="s-en">These factories led to improvements in both <span class="hl">efficiency</span> and quality.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">이 공장들은 효율성과 품질 모두의 향상으로 이어졌다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">efficiency</span><span class="vocab-kr">효율성</span></div></div>
+  <div class="card-top"><span class="s-num">07</span><div class="s-en"><span class="ref">These</span> factories led to improvements in both <span class="hl">efficiency</span> and quality.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">이 공장들<span class="pr">(= 미국에서 발전한 진정한 피아노 공장들)</span>은 효율성과 품질 모두의 향상으로 이어졌다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">efficiency</span><span class="vocab-kr">효율성</span></div><div class="s-meaning"><span class="bracket">【공장의 효과】</span> 이 공장들 덕에 <strong>‘효율’과 ‘품질’이 둘 다(both A and B) 좋아졌다</strong>. 보통 대량생산하면 품질이 떨어지기 쉬운데, 여기선 둘을 <strong>동시에</strong> 끌어올렸다는 점이 핵심. <span class="star-line">★ lead to = ~을 가져오다/초래하다</span></div></div>
 </div>
 <div class="s-card grammar" data-text="For example, one of the factories of the time had its own iron casting facility where it made its metal plates, which were thought to be the best available.">
-  <div class="card-top"><span class="s-num">08</span><div class="s-en">For example, one of the factories of the time had its own iron <span class="hl">casting</span> <span class="hl">facility</span> where it made its metal <span class="hl">plates</span>, which were thought to be the best <span class="hl">available</span>.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">당시 공장 중 하나는 금속 판을 만드는 자체 철 주조 시설이 있었는데, 이것은 구할 수 있는 최고로 여겨졌다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">casting</span><span class="vocab-kr">주조</span><span class="vocab-en">facility</span><span class="vocab-kr">시설</span><span class="vocab-en">plate</span><span class="vocab-kr">판</span><span class="vocab-en">available</span><span class="vocab-kr">구할 수 있는</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>where it made</strong> = 관계부사 where (facility 수식). <strong>, which were thought to be</strong> = 계속적 관계대명사 + 수동. <strong>the best available</strong> = 구할 수 있는 최고의. available = 후치수식 형용사.</div></div>
+  <div class="card-top"><span class="s-num">08</span><div class="s-en">For example, one of the factories of the time had its own iron <span class="hl">casting</span> <span class="hl">facility</span> where it made its metal <span class="hl">plates</span>, <span class="ref">which</span> were thought to be the best <span class="hl">available</span>.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">당시 공장 중 하나는 금속 판을 만드는 자체 철 주조 시설이 있었는데, 이것<span class="pr">(= 그 금속 판)</span>은 구할 수 있는 최고로 여겨졌다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">casting</span><span class="vocab-kr">주조</span><span class="vocab-en">facility</span><span class="vocab-kr">시설</span><span class="vocab-en">plate</span><span class="vocab-kr">판</span><span class="vocab-en">available</span><span class="vocab-kr">구할 수 있는</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>where it made</strong> = 관계부사 where (facility 수식). <strong>, which were thought to be</strong> = 계속적 관계대명사 + 수동. <strong>the best available</strong> = 구할 수 있는 최고의. available = 후치수식 형용사.</div><div class="s-meaning"><span class="bracket">【효율+품질의 구체적 예】</span> 당시 한 공장은 <strong>자체 ‘쇠 주물 시설(iron casting facility)’</strong>을 갖춰 금속 판(피아노 내부의 철 프레임)을 <strong>직접 만들었고</strong>, 그게 <strong>당시 구할 수 있는 최고(the best available)</strong> 품질로 평가받았다. → 부품까지 자체 생산해 품질을 높인 증거. <span class="star-line">★ casting = 주물(쇳물을 부어 만듦) / available = (현존하는 것 중) 구할 수 있는</span></div></div>
 </div>
 </div><!-- /cards -->
+  </div>
+<div class="summary-view" id="summaryView">
     <div class="summary-wrap"><div class="summary-header">📖 줄거리 &amp; 핵심 정리</div><div class="summary-body">
 <div style="background:linear-gradient(135deg,#1F3864,#C55A11);border-radius:12px;padding:18px 22px;margin-bottom:20px;text-align:center;"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.6);margin-bottom:8px;">CORE MESSAGE</div><div style="font-size:15px;font-weight:700;color:white;line-height:1.6;">산업혁명 = <span style="color:#f0d070;">현대 공장</span>의 발명 → 효율성+품질 향상!</div><div style="font-size:12px;color:rgba(255,255,255,0.65);margin-top:8px;">= The Industrial Revolution invented the modern factory, improving efficiency and quality.</div></div>
 <div style="background:#fff8e6;border-left:4px solid #f0d070;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:20px;"><div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:#a07800;margin-bottom:10px;">💡 쉬운 비유로 이해하기</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12.5px;"><div style="background:white;border-radius:8px;padding:12px 14px;border:1px solid #faedb0;"><div style="font-weight:700;color:#1F3864;margin-bottom:6px;">🔨 산업혁명 이전</div><div style="color:#444;line-height:1.8;">도제 시스템 (수년 교육)<br>전문가가 있지만 소규모<br>연간 5-10대/인 (한 번에 하나)</div></div><div style="background:white;border-radius:8px;padding:12px 14px;border:1px solid #faedb0;"><div style="font-weight:700;color:#C55A11;margin-bottom:6px;">🏭 산업혁명 이후</div><div style="color:#444;line-height:1.8;">현대 공장 (미국 최초)<br>Chickering + Steinway 주도<br>효율성 + 품질 동시 향상!</div></div></div><div style="margin-top:10px;font-size:12px;color:#7a5c00;text-align:center;font-weight:600;">→ 산업혁명의 진짜 발명 = 재료·기계가 아닌 <u>제조 과정(공장)</u>!</div></div>
@@ -511,7 +545,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #5B2D8E;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">led by (p.p.)</div><div style="color:#555;">~가 이끈 (과거분사)</div></div>
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #C55A11;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">, which were thought to be</div><div style="color:#555;">~로 여겨지는 (계속적+수동)</div></div>
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #C55A11;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">one at a time</div><div style="color:#555;">한 번에 하나씩</div></div></div></div></div></div>
-  </div>
+</div>
   <div class="ga-panel" id="panelGA">
 
 <div class="ga-legend"><div class="ga-leg"><div class="ga-leg-dot" style="background:#C62828;"></div><strong>Tier 1</strong> 어법 핵심</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#E65100;"></div><strong>Tier 2</strong> 어법</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#1565C0;"></div><strong>Tier 3</strong> 어휘·대명사</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#2E7D32;"></div><strong>Tier 4</strong> 혼동 어휘</div></div>
@@ -927,6 +961,12 @@ function readNext(){if(!allPlaying||allIdx>=allQueue.length){if(currentCard)curr
 
 /* ══ 배열영작 ══ */
 let scores={},dragSrc=null,clickSelectedChip=null;
+/* ── 터치 드래그 지원 (태블릿/모바일) v1.7 ── */
+let tChip=null,tClone=null,tStartX=0,tStartY=0,tOffX=0,tOffY=0,tMoved=false,tDragEnd=0;
+const T_DRAG_THRESHOLD=10;
+function arrTouchStart(e){const chip=e.target.closest('.word-chip');if(!chip)return;tChip=chip;const r=chip.getBoundingClientRect();const t=e.touches[0];tStartX=t.clientX;tStartY=t.clientY;tOffX=t.clientX-r.left;tOffY=t.clientY-r.top;tMoved=false;}
+function arrTouchMove(e){if(!tChip)return;if(e.cancelable)e.preventDefault();const t=e.touches[0];const dx=t.clientX-tStartX,dy=t.clientY-tStartY;if(!tMoved){if(Math.hypot(dx,dy)<T_DRAG_THRESHOLD)return;tMoved=true;const r=tChip.getBoundingClientRect();tClone=tChip.cloneNode(true);Object.assign(tClone.style,{position:'fixed',left:r.left+'px',top:r.top+'px',width:r.width+'px',zIndex:9999,pointerEvents:'none',opacity:0.9,transform:'scale(1.08)',boxShadow:'0 8px 24px rgba(0,0,0,0.3)',transition:'none'});document.body.appendChild(tClone);tChip.classList.add('dragging');}tClone.style.left=(t.clientX-tOffX)+'px';tClone.style.top=(t.clientY-tOffY)+'px';tClone.style.display='none';const tg=document.elementFromPoint(t.clientX,t.clientY);tClone.style.display='';const z=tg&&tg.closest('.answer-zone, .word-pool');document.querySelectorAll('.answer-zone.drag-over, .word-pool.drag-over').forEach(el=>el.classList.remove('drag-over'));if(z)z.classList.add('drag-over');}
+function arrTouchEnd(e){if(!tChip)return;if(!tMoved){tChip=null;return;}const t=e.changedTouches[0];if(tClone)tClone.style.display='none';const tg=document.elementFromPoint(t.clientX,t.clientY);const z=tg&&tg.closest('.answer-zone, .word-pool');if(z){const chips=Array.from(z.querySelectorAll('.word-chip')).filter(c=>c!==tChip);if(chips.length===0){z.appendChild(tChip);}else{let bestC=null,bestB=true,bestD=Infinity;for(const c of chips){const r=c.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const d=Math.hypot(t.clientX-cx,t.clientY-cy);if(d<bestD){bestD=d;bestC=c;bestB=t.clientX<cx;}}if(bestB)z.insertBefore(tChip,bestC);else z.insertBefore(tChip,bestC.nextSibling);}tChip.classList.remove('ok-chip');const idx=tChip.dataset.idx;const r=document.getElementById('res-'+idx);if(r)r.className='arr-result';}if(tClone){tClone.remove();tClone=null;}tChip.classList.remove('dragging');document.querySelectorAll('.answer-zone.drag-over, .word-pool.drag-over').forEach(el=>el.classList.remove('drag-over'));tChip=null;tDragEnd=Date.now();e.preventDefault();}
 function buildArrangeCards(){
   const box=document.getElementById('arrCards');box.innerHTML='';
   const hint=document.createElement('div');hint.className='touch-hint';hint.innerHTML='💡 단어 클릭 → 즉시 이동 &nbsp;|&nbsp; 드래그도 가능';box.appendChild(hint);
@@ -935,14 +975,15 @@ function buildArrangeCards(){
     const card=document.createElement('div');card.className='arr-card';card.style.animationDelay=(idx*60)+'ms';
     card.innerHTML=`<div class="arr-header"><span class="arr-num">${item.num}</span><div class="arr-kr">${item.kr}</div></div><div class="arr-body"><div class="answer-zone" id="zone-${idx}"></div><div class="word-pool" id="pool-${idx}">${shuffled.map(w=>`<div class="word-chip" draggable="true" data-word="${w}" data-idx="${idx}">${w}</div>`).join('')}</div><div class="arr-result" id="res-${idx}"></div><div class="ans-reveal" id="ans-${idx}"><strong>정답:</strong> ${item.ans}.</div><div class="arr-btns"><button class="arr-check" onclick="checkAns(${idx})">✓ 확인</button><button class="arr-reset" onclick="resetCard(${idx})">↺ 초기화</button><button class="arr-show-ans" onclick="toggleAns(${idx})">👁 정답 보기</button></div></div>`;
     box.appendChild(card);
-    ['zone-'+idx,'pool-'+idx].forEach(zid=>{const z=document.getElementById(zid);z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(!dragSrc)return;z.appendChild(dragSrc);dragSrc.classList.remove('dragging','ok-chip');document.getElementById('res-'+idx).className='arr-result';dragSrc=null;});});
+    ['zone-'+idx,'pool-'+idx].forEach(zid=>{const z=document.getElementById(zid);z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(!dragSrc)return;const chips=Array.from(z.querySelectorAll('.word-chip')).filter(c=>c!==dragSrc);if(chips.length===0){z.appendChild(dragSrc);}else{let bestC=null,bestB=true,bestD=Infinity;for(const c of chips){const r=c.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const d=Math.hypot(e.clientX-cx,e.clientY-cy);if(d<bestD){bestD=d;bestC=c;bestB=e.clientX<cx;}}if(bestB)z.insertBefore(dragSrc,bestC);else z.insertBefore(dragSrc,bestC.nextSibling);}dragSrc.classList.remove('dragging','ok-chip');document.getElementById('res-'+idx).className='arr-result';dragSrc=null;});});
     setTimeout(()=>{document.getElementById('pool-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});document.getElementById('zone-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});},0);
   });
   box.addEventListener('dragstart',e=>{if(!e.target.classList.contains('word-chip'))return;dragSrc=e.target;e.target.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
   box.addEventListener('dragend',e=>{if(e.target.classList.contains('word-chip'))e.target.classList.remove('dragging');dragSrc=null;});
+  box.addEventListener('touchstart',arrTouchStart,{passive:true});box.addEventListener('touchmove',arrTouchMove,{passive:false});box.addEventListener('touchend',arrTouchEnd);box.addEventListener('touchcancel',arrTouchEnd);
   updateScore();
 }
-function chipClick(chip,idx){const inZone=chip.parentElement.id==='zone-'+idx;const target=document.getElementById(inZone?'pool-'+idx:'zone-'+idx);chip.classList.remove('ok-chip');target.appendChild(chip);chip.addEventListener('click',()=>chipClick(chip,idx),{once:true});document.getElementById('res-'+idx).className='arr-result';}
+function chipClick(chip,idx){if(Date.now()-tDragEnd<500)return;const inZone=chip.parentElement.id==='zone-'+idx;const target=document.getElementById(inZone?'pool-'+idx:'zone-'+idx);chip.classList.remove('ok-chip');target.appendChild(chip);document.getElementById('res-'+idx).className='arr-result';}
 function checkAns(idx){const zone=document.getElementById('zone-'+idx);const chips=Array.from(zone.querySelectorAll('.word-chip'));const userAns=chips.map(c=>c.dataset.word).join(' ');const correct=ARRANGE[idx].ans;const ok=userAns.trim().toLowerCase()===correct.trim().toLowerCase();const res=document.getElementById('res-'+idx);res.className='arr-result show '+(ok?'ok':'ng');res.innerHTML=ok?'🎉 정답입니다!':'❌ 다시 확인해 보세요. ('+chips.length+'/'+correct.split(' ').length+'개 배치됨)';if(ok)chips.forEach(c=>c.classList.add('ok-chip'));scores[idx]=ok?1:0;updateScore();}
 function resetCard(idx){const zone=document.getElementById('zone-'+idx);const pool=document.getElementById('pool-'+idx);Array.from(zone.querySelectorAll('.word-chip')).forEach(c=>{c.classList.remove('ok-chip');pool.appendChild(c);});document.getElementById('res-'+idx).className='arr-result';document.getElementById('ans-'+idx).className='ans-reveal';delete scores[idx];updateScore();}
 function toggleAns(idx){document.getElementById('ans-'+idx).classList.toggle('show');}
@@ -1167,6 +1208,159 @@ document.addEventListener("DOMContentLoaded",function(){
 });
 // 즉시 실행 (DOMContentLoaded 전에도 안전하게)
 (function(){hideQPanels();})();
+</script>
+<script>
+/* ══ 펜 필기 모드 (자유 필기) v1.0 ══ */
+const PEN_COLORS=['#dc2626','#1F3864','#0f9d58','#f59e0b','#000000'];
+const PEN_WIDTHS=[2,4,7];
+let penEnabled=false,penColor='#dc2626',penWidth=4,penEraser=false;
+let penLayer=null,penPath=null,penPts=[];
+
+function buildPenTools(){
+  if(document.getElementById('penLayer'))return;
+  penLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  penLayer.id='penLayer';
+  document.body.appendChild(penLayer);
+  const tb=document.createElement('div');
+  tb.id='penToolbar';
+  let html='<button class="pen-btn pen-main" id="penToggle" title="펜 ON/OFF">✏️</button><div class="pen-tools" id="penTools">';
+  PEN_COLORS.forEach(c=>html+='<button class="pen-color" data-color="'+c+'" style="background:'+c+';" title="색상"></button>');
+  PEN_WIDTHS.forEach(w=>html+='<button class="pen-width" data-width="'+w+'" title="굵기"><span style="width:'+(w*2)+'px;height:'+(w*2)+'px;"></span></button>');
+  html+='<button class="pen-btn pen-eraser" id="penEraserBtn" title="개별 지우개">🧹</button><button class="pen-btn pen-clear" id="penClearBtn" title="전체 지우기">🗑️</button></div>';
+  tb.innerHTML=html;
+  document.body.appendChild(tb);
+  document.querySelector('.pen-color[data-color="'+penColor+'"]').classList.add('selected');
+  document.querySelector('.pen-width[data-width="'+penWidth+'"]').classList.add('selected');
+  document.getElementById('penToggle').addEventListener('click',togglePen);
+  document.querySelectorAll('.pen-color').forEach(b=>b.addEventListener('click',e=>{
+    const c=e.currentTarget.dataset.color;
+    penColor=c;penEraser=false;
+    document.querySelectorAll('.pen-color').forEach(x=>x.classList.toggle('selected',x.dataset.color===c));
+    document.getElementById('penEraserBtn').classList.remove('active');
+  }));
+  document.querySelectorAll('.pen-width').forEach(b=>b.addEventListener('click',e=>{
+    const w=+e.currentTarget.dataset.width;
+    penWidth=w;
+    document.querySelectorAll('.pen-width').forEach(x=>x.classList.toggle('selected',+x.dataset.width===w));
+  }));
+  document.getElementById('penEraserBtn').addEventListener('click',()=>{
+    penEraser=!penEraser;
+    document.getElementById('penEraserBtn').classList.toggle('active',penEraser);
+  });
+  document.getElementById('penClearBtn').addEventListener('click',()=>{
+    if(confirm('모든 필기를 지우시겠습니까?'))penLayer.innerHTML='';
+  });
+  penLayer.addEventListener('pointerdown',penDown);
+  penLayer.addEventListener('pointermove',penMove);
+  penLayer.addEventListener('pointerup',penUp);
+  penLayer.addEventListener('pointercancel',penUp);
+  penLayer.addEventListener('pointerleave',penUp);
+  const sync=()=>{
+    penLayer.style.height='0px';penLayer.style.width='0px';
+    const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
+    const w=Math.max(document.body.scrollWidth,document.documentElement.scrollWidth);
+    penLayer.setAttribute('width',w);
+    penLayer.setAttribute('height',h);
+    penLayer.style.height=h+'px';
+    penLayer.style.width=w+'px';
+  };
+  sync();
+  if(window.ResizeObserver){let _roPending=false;new ResizeObserver(()=>{if(_roPending)return;_roPending=true;requestAnimationFrame(()=>{_roPending=false;sync();});}).observe(document.body);}
+  window.addEventListener('resize',sync);
+  setInterval(sync,2000);
+}
+function togglePen(){
+  penEnabled=!penEnabled;
+  document.getElementById('penToggle').classList.toggle('active',penEnabled);
+  document.getElementById('penTools').classList.toggle('show',penEnabled);
+  penLayer.classList.toggle('active',penEnabled);
+}
+function getPenPt(e){
+  return {x:e.clientX+window.scrollX,y:e.clientY+window.scrollY};
+}
+function penDown(e){
+  if(!penEnabled)return;
+  e.preventDefault();
+  try{penLayer.setPointerCapture(e.pointerId);}catch(_){}
+  if(penEraser){eraseAt(e);return;}
+  const pt=getPenPt(e);
+  penPath=document.createElementNS('http://www.w3.org/2000/svg','path');
+  penPath.setAttribute('d','M '+pt.x+' '+pt.y);
+  penPath.setAttribute('stroke',penColor);
+  penPath.setAttribute('stroke-width',penWidth);
+  penPath.setAttribute('fill','none');
+  penPath.setAttribute('stroke-linecap','round');
+  penPath.setAttribute('stroke-linejoin','round');
+  penLayer.appendChild(penPath);
+  penPts=[pt];
+}
+function penMove(e){
+  if(!penEnabled)return;
+  if(penEraser&&e.buttons){eraseAt(e);return;}
+  if(!penPath)return;
+  e.preventDefault();
+  const pt=getPenPt(e);
+  const last=penPts[penPts.length-1];
+  if(Math.hypot(pt.x-last.x,pt.y-last.y)<1.5)return;
+  penPts.push(pt);
+  let d='M '+penPts[0].x+' '+penPts[0].y;
+  for(let i=1;i<penPts.length-1;i++){
+    const c=penPts[i],n=penPts[i+1];
+    const mx=(c.x+n.x)/2,my=(c.y+n.y)/2;
+    d+=' Q '+c.x+' '+c.y+' '+mx+' '+my;
+  }
+  if(penPts.length>=2){
+    const lp=penPts[penPts.length-1];
+    d+=' L '+lp.x+' '+lp.y;
+  }
+  penPath.setAttribute('d',d);
+}
+function penUp(e){
+  if(penPath){penPath=null;penPts=[];}
+}
+function eraseAt(e){
+  const pt=getPenPt(e);
+  const r=20;
+  const paths=Array.from(penLayer.querySelectorAll('path'));
+  for(const p of paths){
+    const bb=p.getBBox();
+    if(pt.x>=bb.x-r&&pt.x<=bb.x+bb.width+r&&pt.y>=bb.y-r&&pt.y<=bb.y+bb.height+r){
+      p.remove();
+    }
+  }
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',buildPenTools);
+}else{
+  setTimeout(buildPenTools,100);
+}
+</script>
+<script>
+/* ══ 요약 전용 탭 v1.0 ══ */
+(function(){
+  function hideSummary(){
+    var sv=document.getElementById('summaryView');if(sv)sv.style.display='none';
+    var ts=document.getElementById('tabSum');if(ts)ts.classList.remove('active');
+  }
+  window.switchSummary=function(){
+    var rv=document.getElementById('readingView');if(rv)rv.style.display='none';
+    ['arrangeView','grammarView','vocabView'].forEach(function(id){
+      var el=document.getElementById(id);if(el)el.classList.remove('active');});
+    if(typeof hideAllExtra==='function')hideAllExtra();
+    document.querySelectorAll('.view-tab').forEach(function(t){t.classList.remove('active');});
+    var sv=document.getElementById('summaryView');if(sv)sv.style.display='block';
+    var ts=document.getElementById('tabSum');if(ts)ts.classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  /* 다른 모든 전환 함수가 요약뷰를 숨기도록 래핑 */
+  ['switchView','switchSD','switchGA','switchQ','switchVocab'].forEach(function(fn){
+    if(typeof window[fn]!=='function')return;
+    var orig=window[fn];
+    window[fn]=function(){hideSummary();return orig.apply(this,arguments);};
+  });
+  document.addEventListener('DOMContentLoaded',hideSummary);
+  hideSummary();
+})();
 </script>
 </body>
 </html>
