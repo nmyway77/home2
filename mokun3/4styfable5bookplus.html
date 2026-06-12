@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>중3 NE능률(김성곤) · Lesson 4 리더 유형 집중 드릴 (목운중 대비)</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:940px;margin:0 auto;padding:24px;background:#FAF6EE;color:#1a2438;line-height:1.65;font-size:15px}
+
+/* Header */
+header{background:#0A1E3A;color:#FAF6EE;padding:32px 28px;border-bottom:4px solid #C99B4E;margin-bottom:24px;border-radius:4px}
+header h1{margin:0 0 8px;font-size:26px;color:#E4C589}
+header .subtitle{color:#d3cabA;font-size:14px}
+header .meta{margin-top:16px;padding-top:14px;border-top:1px solid rgba(228,197,137,0.2);display:flex;gap:24px;font-size:13px;flex-wrap:wrap}
+header .meta b{color:#C99B4E}
+
+/* Section head — guide pattern */
+.section-head{background:#112546;color:#E4C589;padding:14px 20px;margin:32px 0 20px;border-radius:4px}
+.section-head h2{margin:0 0 4px;font-size:18px;color:#E4C589}
+.section-head p{margin:0;font-size:13px;color:#d3cabA}
+.section-head[data-section-type="grammar"]{background:#3F2A6B}
+
+/* Nav tabs (sticky) — with .nav-print buttons next to tabs */
+.type-nav-wrap{position:sticky;top:0;z-index:100;background:#FAF6EE;padding:14px 0 8px;margin:0 0 0;border-bottom:2px solid #C99B4E}
+.nav-tabs{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;align-items:center}
+.nav-tab{background:#FEFBF5;border:2px solid #CBD5E1;color:#475569;padding:10px 22px;font-size:15px;font-weight:700;cursor:pointer;border-radius:6px;transition:all 0.2s;font-family:inherit}
+.nav-tab:hover{background:#F0E9D8;border-color:#C99B4E}
+.nav-tab.active{background:#0A1E3A;color:#E4C589;border-color:#0A1E3A}
+.nav-tab .count{display:inline-block;margin-left:6px;font-size:12px;background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:10px}
+.nav-tab.active .count{background:#C99B4E;color:#0A1E3A}
+
+/* NAV PRINT BUTTON — guide style */
+.nav-print{
+  background:transparent;border:none;color:#94A3B8;
+  padding:10px 6px 10px 4px;cursor:pointer;
+  border-radius:4px;transition:all 0.18s ease;
+  display:inline-flex;align-items:center;
+  margin-right:6px;
+  border-left:1px dotted rgba(201,155,78,0.3)
+}
+.nav-print:hover{color:#C99B4E;transform:translateY(-1px);background:#FEFBF5}
+.nav-print svg{width:16px;height:16px;fill:currentColor}
+.nav-print[data-print-type="all"]{border-left:none}
+
+/* PRINT TOOLBAR — guide style */
+.print-toolbar{
+  background:linear-gradient(180deg,#FAF7F2 0%,#FFFFFF 100%);
+  border-bottom:1px solid #E2E8F0;
+  margin:0 0 24px
+}
+.print-toolbar-inner{
+  max-width:940px;margin:0 auto;padding:12px 8px;
+  display:flex;align-items:center;flex-wrap:wrap;gap:10px
+}
+.pt-label{
+  font-size:11px;letter-spacing:0.18em;color:#C99B4E;
+  font-weight:800;text-transform:uppercase
+}
+.pt-btn{
+  background:white;border:1px solid #C99B4E;color:#0A1E3A;
+  padding:6px 14px;font-size:12px;font-weight:700;
+  border-radius:999px;cursor:pointer;transition:all 0.18s ease;
+  font-family:inherit
+}
+.pt-btn:hover{background:#C99B4E;color:white}
+.pt-btn.active{background:#0A1E3A;color:#E4C589;border-color:#0A1E3A}
+.pt-hint{
+  font-size:11.5px;color:#64748B;font-weight:500;line-height:1.5;
+  flex:1;min-width:200px
+}
+.pt-hint b{color:#0A1E3A}
+.pt-hint svg{width:11px;height:11px;fill:#64748B;vertical-align:-1px}
+
+/* Hidden state */
+.hidden{display:none !important}
+
+/* Question card */
+.q{background:#FEFBF5;border:1px solid #E2E8F0;padding:22px 26px;margin-bottom:22px;border-radius:4px;box-shadow:0 1px 0 rgba(10,30,58,0.03)}
+
+/* Question head */
+.q-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #E2E8F0;flex-wrap:wrap}
+.q-num{font-weight:800;font-size:17px;color:#0A1E3A;padding:0 12px 0 0;border-right:2px solid #CBD5E1;background:transparent;border-radius:0;min-width:auto;text-align:left;flex-shrink:0}
+
+/* Question type tags */
+.q-tag{font-size:11px;font-weight:700;padding:4px 10px;border-radius:2px;letter-spacing:0.08em;text-transform:uppercase;background:#0E7490;color:#CFFAFE;border:none}
+.q-tag.gr{background:#7C3AED;color:#EDE9FE}
+.q-tag.sim{background:#BE123C;color:#FFE4E6}
+
+.q-stem{font-weight:700;color:#0A1E3A;font-size:15px;margin:0;flex:1;line-height:1.5}
+
+/* Question body / passage */
+.q-body{margin:8px 0}
+.q-box{background:#F0E9D8;padding:14px 18px;border:none;border-left:3px solid #94A3B8;margin:12px 0;font-size:14.5px;line-height:1.85;border-radius:0 3px 3px 0}
+.q-box .bx-lbl{font-size:11px;font-weight:700;color:#64748B;margin-bottom:4px;letter-spacing:0.05em}
+
+.passage{background:#F0E9D8;padding:14px 18px;border:none;border-left:3px solid #94A3B8;margin:12px 0;font-size:14.5px;line-height:1.85;border-radius:0 3px 3px 0}
+.passage .label{font-size:12px;font-weight:700;color:#92400e;margin-bottom:6px;letter-spacing:0.05em}
+.passage .speaker{font-weight:700;color:#112546;margin-right:4px}
+.passage p{margin:3px 0}
+
+/* Choices */
+ol.choices{list-style:none;padding:0;margin:14px 0 4px;counter-reset:c}
+ol.choices li{counter-increment:c;display:block;padding:7px 12px 7px 36px;font-size:14px;line-height:1.7;border-radius:2px;position:relative}
+ol.choices li::before{position:absolute;left:8px;font-weight:800;color:#112546;font-size:14.5px}
+ol.choices li:nth-child(1)::before{content:"①"}
+ol.choices li:nth-child(2)::before{content:"②"}
+ol.choices li:nth-child(3)::before{content:"③"}
+ol.choices li:nth-child(4)::before{content:"④"}
+ol.choices li:nth-child(5)::before{content:"⑤"}
+ol.choices.inline{display:flex;flex-wrap:wrap;gap:4px 16px}
+ol.choices.inline li{padding:4px 12px 4px 28px}
+ol.choices.inline li::before{left:4px}
+
+/* Answer details */
+details.ans{background:#F8FAFC;border:1px solid #CBD5E1;padding:14px 18px;margin-top:12px;border-radius:3px;font-size:14px;overflow:visible}
+details.ans>summary{font-weight:700;cursor:pointer;color:#047857;padding:4px;list-style:none;background:transparent;border:none}
+details.ans>summary::-webkit-details-marker{display:none}
+details.ans>summary::before{content:"▶ ";font-size:11px;color:#C99B4E}
+details.ans[open]>summary::before{content:"▼ "}
+details.ans[open]>summary{padding-bottom:8px}
+.ans-body{padding:8px 0 0;font-size:14px;line-height:1.65}
+.ans-correct{font-weight:700;color:#0A1E3A;background:#ECFDF5;padding:10px 12px;border-left:3px solid #059669;border-radius:0;margin:8px 0 10px;display:block;font-size:14px}
+.ans-detail{margin:8px 0;color:#1a2438;line-height:1.75;padding:4px 0;font-size:13.5px}
+.ans-detail b{color:#BE123C;font-weight:700}
+.ans-detail .em{color:#BE123C;font-weight:700;text-decoration:underline}
+
+/* Option list */
+.opt-list{margin:10px 0;padding-left:0;list-style:none;background:#F0E9D8;padding:10px 12px;border-radius:3px}
+.opt-list li{padding:5px 0 5px 32px;position:relative;font-size:13px;line-height:1.55;border-top:1px dotted #CBD5E1}
+.opt-list li:first-child{border-top:none}
+.opt-list li .no{position:absolute;left:0;font-weight:700;background:#94A3B8;color:white;padding:1px 7px;border-radius:2px;font-size:11px}
+.opt-list li.ok .no{background:#059669}
+.opt-list li.ng .no{background:#BE123C}
+.opt-list li .ko{display:block;font-size:12px;color:#64748B;margin-top:2px}
+
+.tip{background:rgba(40,150,90,0.08);border-left:3px solid #059669;padding:10px 14px;margin-top:10px;font-size:13.5px;border-radius:0 3px 3px 0}
+.tip b{color:#059669}
+
+/* Answer summary block */
+.summary-block{margin-top:32px;padding:0;background:#FEFBF5;border:2px solid #C99B4E;border-radius:6px;overflow:hidden}
+.summary-block summary{font-size:18px;font-weight:800;color:#0A1E3A;cursor:pointer;padding:18px 24px;list-style:none;display:flex;align-items:center;gap:10px;background:transparent;border:none}
+.summary-block summary::-webkit-details-marker{display:none}
+.summary-block summary::before{content:"▶";font-size:13px;color:#C99B4E;transition:transform 0.2s}
+.summary-block[open]>summary::before{transform:rotate(90deg)}
+.summary-block[open]>summary{border-bottom:1px dashed #CBD5E1}
+.summary-table{padding:18px 24px 24px}
+.summary-table h4{margin:18px 0 8px;font-size:15px;color:#2C3E63;border-left:3px solid #C99B4E;padding-left:10px;font-weight:700}
+.summary-table h4:first-child{margin-top:0}
+table.akey{width:100%;border-collapse:collapse;margin:8px 0 16px;font-size:13px}
+table.akey th,table.akey td{border:1px solid #94A3B8;padding:7px 4px;text-align:center}
+table.akey th{background:#112546;color:#E4C589;font-weight:700}
+table.akey td.q{background:#F0E9D8;font-weight:700;color:#0A1E3A}
+table.akey td.a{color:#BE123C;font-weight:800;background:#FEFBF5}
+table.akey td.a.sim{color:#9f1239;background:#FFE4E6}
+
+/* Footer */
+footer.brand{background:#0A1E3A;color:#FAF6EE;padding:24px;text-align:center;margin-top:48px;border-radius:4px}
+footer.brand .ft-title{font-size:16px;color:#C99B4E;font-weight:700;margin-bottom:6px}
+footer.brand .ft-sub{font-size:13px;color:#d3cabA}
+
+/* Print-only header/footer (hidden on screen, shown in print) */
+.print-header,.print-footer{display:none}
+
+hr.div{border:0;border-top:1px dashed #CBD5E1;margin:20px 0}
+
+@media(max-width:640px){
+  body{padding:14px;font-size:14px}
+  header{padding:22px 18px}
+  .q{padding:16px 18px}
+  .passage,.q-box{padding:12px 14px;font-size:13.5px}
+  .nav-tab{padding:8px 14px;font-size:14px}
+  header h1{font-size:21px}
+}
+
+/* =========================================== */
+/* @media print — A4 최적화 (가이드 v1.0 사양)    */
+/* =========================================== */
+@media print {
+  @page{size:A4 portrait;margin:11mm 13mm 13mm 13mm}
+  
+  /* 색상·배경 강제 인쇄 */
+  *{
+    -webkit-print-color-adjust:exact !important;
+    print-color-adjust:exact !important;
+    color-adjust:exact !important;
+    box-shadow:none !important;text-shadow:none !important
+  }
+  
+  html,body{
+    background:white !important;color:black !important;
+    font-size:10pt !important;line-height:1.42 !important;
+    padding:0 !important;max-width:100% !important;margin:0 !important
+  }
+  
+  /* 화면 전용 UI 숨김 */
+  header,.type-nav-wrap,.print-toolbar,footer.brand,.nav-print,.no-print{
+    display:none !important
+  }
+  .hidden{display:none !important}
+  
+  /* 인쇄 전용 헤더/풋터 표시 */
+  .print-header{
+    display:block !important;
+    text-align:center;font-size:9pt;color:#555;
+    border-bottom:0.5pt solid #999;
+    padding-bottom:1.5mm;margin-bottom:3mm
+  }
+  .print-header b{color:#0A1E3A}
+  .print-footer{
+    display:block !important;
+    margin-top:5mm;padding-top:1.5mm;
+    border-top:0.4pt solid #999;
+    text-align:center;font-size:8pt;color:#666
+  }
+  
+  /* 첫 페이지 빈 공간 방지 */
+  body>*:first-child,body>:first-of-type{margin-top:0 !important}
+  .section-head:first-of-type{margin-top:0 !important}
+  
+  /* 섹션 헤더 컴팩트 */
+  .section-head{
+    background:white !important;color:black !important;
+    margin:0 0 3mm 0 !important;
+    padding:2.5mm 0 1.5mm !important;
+    border:none !important;border-radius:0 !important;
+    border-bottom:1.4pt solid black !important;
+    page-break-after:avoid !important;
+    break-after:avoid !important
+  }
+  .section-head h2{
+    color:black !important;font-size:11pt !important;
+    margin:0 0 1px !important
+  }
+  .section-head p{
+    color:#444 !important;font-size:8.5pt !important;margin:0 !important
+  }
+  .section-head+.q{
+    page-break-before:avoid !important;
+    break-before:avoid !important
+  }
+  
+  /* 문제 카드 — 페이지 끊김 방지 */
+  .q{
+    background:white !important;
+    page-break-inside:avoid !important;
+    break-inside:avoid !important;
+    margin:0 0 3mm 0 !important;
+    padding:2.5mm 0 2mm !important;
+    border:none !important;
+    border-bottom:0.4pt dotted #999 !important;
+    border-radius:0 !important;box-shadow:none !important
+  }
+  .q-head{
+    padding-bottom:1.5mm !important;margin-bottom:2mm !important;
+    border-bottom:0.3pt solid #ccc !important;gap:6px !important
+  }
+  .q-num{
+    font-size:10.5pt !important;color:black !important;
+    padding:0 6px 0 0 !important;
+    border-right:1pt solid #888 !important
+  }
+  .q-tag{
+    font-size:7.5pt !important;padding:1px 5px !important;
+    letter-spacing:0.05em !important
+  }
+  .q-stem{font-size:10pt !important;color:black !important;line-height:1.4 !important}
+  
+  /* 박스·passage 컴팩트 */
+  .q-body{margin:1.5mm 0 !important}
+  .q-box,.passage{
+    background:#f4f1e8 !important;
+    padding:1.5mm 3mm !important;
+    font-size:9.5pt !important;line-height:1.55 !important;
+    border-left:1pt solid #777 !important;
+    margin:1.5mm 0 !important;border-radius:0 !important
+  }
+  .passage .speaker{color:black !important;font-weight:700 !important}
+  .q-box u,.passage u{
+    background:white !important;
+    border-bottom:0.6pt solid black !important;
+    text-decoration:none;padding:0 1px !important
+  }
+  
+  /* Choices */
+  ol.choices{margin:1.5mm 0 0 !important}
+  ol.choices li{
+    padding:0.5mm 4px 0.5mm 22px !important;
+    font-size:9.5pt !important;line-height:1.4 !important
+  }
+  ol.choices li::before{font-size:9.5pt !important;color:black !important}
+  ol.choices.inline li{padding:0.5mm 4px 0.5mm 20px !important}
+  
+  /* details.ans — 사용자 선택 그대로 인쇄 */
+  details.ans:not([open]){display:none !important}
+  details.ans[open]{
+    display:block !important;
+    background:#f0eee6 !important;
+    border:0.4pt solid #999 !important;
+    padding:1.5mm 3mm !important;
+    margin-top:1.5mm !important;
+    border-radius:0 !important;
+    page-break-inside:avoid !important;
+    break-inside:avoid !important
+  }
+  details.ans[open]>summary{display:none !important}
+  .ans-body{padding:0 !important;font-size:9pt !important;line-height:1.5 !important}
+  .ans-correct{
+    background:#dcdcd0 !important;color:black !important;
+    padding:1mm 2mm !important;
+    border-left:1pt solid black !important;
+    margin:0 0 1.5mm !important;
+    font-size:9.5pt !important;border-radius:0 !important
+  }
+  .ans-detail{
+    padding:0.5mm 0 !important;margin:0.5mm 0 !important;
+    color:black !important;font-size:8.8pt !important;line-height:1.5 !important
+  }
+  .ans-detail b{color:black !important;font-weight:700 !important}
+  .ans-detail .em{color:black !important;text-decoration:underline}
+  .opt-list{
+    background:#e8e4d4 !important;
+    padding:1.5mm 2mm !important;margin:1mm 0 !important;
+    font-size:8.5pt !important;border-radius:0 !important
+  }
+  .opt-list li{padding:0.5mm 0 0.5mm 24px !important;font-size:8.5pt !important;line-height:1.4 !important;border-color:#aaa !important}
+  .opt-list li .no{
+    background:#888 !important;color:white !important;
+    font-size:7.5pt !important
+  }
+  .opt-list li.ok .no{background:#059669 !important}
+  .opt-list li.ng .no{background:#BE123C !important}
+  .tip{
+    background:#e8efe9 !important;
+    border-left:1pt solid #059669 !important;
+    padding:1mm 2mm !important;margin-top:1mm !important;
+    font-size:8.5pt !important;border-radius:0 !important
+  }
+  
+  /* Answer summary block */
+  .summary-block{
+    border:1pt solid #888 !important;border-radius:0 !important;
+    margin-top:5mm !important;background:white !important;
+    page-break-inside:avoid !important;break-inside:avoid !important
+  }
+  .summary-block summary{
+    background:#f0eee6 !important;color:black !important;
+    padding:2mm 3mm !important;font-size:10pt !important;
+    border-bottom:0.5pt solid #999 !important
+  }
+  .summary-block summary::before{display:none}
+  .summary-table{padding:3mm !important}
+  .summary-table h4{
+    color:black !important;font-size:10pt !important;
+    margin:3mm 0 1.5mm !important;
+    border-left:2pt solid black !important;padding-left:2mm !important
+  }
+  table.akey{font-size:8.5pt !important}
+  table.akey th{
+    background:#444 !important;color:white !important;
+    padding:1.5mm !important
+  }
+  table.akey td{padding:1mm 1.5mm !important;border-color:#888 !important}
+  table.akey td.q{background:#f0eee6 !important;color:black !important}
+  table.akey td.a{background:white !important;color:black !important;font-weight:800 !important}
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>중3 NE능률(김성곤) · Lesson 4 리더 유형 집중 드릴 (목운중 대비)</h1>
+<div class="subtitle">6색 리더 유형(GREEN·RED·PURPLE·ORANGE·YELLOW·BLUE) 집중 훈련 — <b>"이런 행동을 하는 사람은 어느 유형의 리더인가?"</b> 적용형 20문항 · 목운중 단골 출제 방식</div>
+<div class="meta">
+<span><b>유형 판별</b> 12문항 · 행동·인물 사례 → 유형 매칭</span>
+<span><b>적용·심화</b> 8문항 · 상황 적용 + 영어발문 + 융합 + 어법 결합 (4점 고난도)</span>
+<span><b>인쇄</b> 가이드 v1.0 표준 적용 (현재 화면 그대로 A4 인쇄)</span>
+</div>
+</header>
+
+<!-- ========================================================== -->
+<!--                  유형별 네비게이션 + 인쇄 버튼                 -->
+<!-- ========================================================== -->
+<nav class="type-nav-wrap">
+<div class="nav-tabs">
+<button class="nav-tab active" data-type="all">전체<span class="count">20</span></button>
+<button class="nav-print" data-print-type="all" title="전체 인쇄" aria-label="전체 인쇄">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+</button>
+<button class="nav-tab" data-type="dialogue">유형 판별<span class="count">12</span></button>
+<button class="nav-print" data-print-type="dialogue" title="유형 판별 12문항 인쇄" aria-label="대화문 인쇄">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+</button>
+<button class="nav-tab" data-type="grammar">적용·심화<span class="count">8</span></button>
+<button class="nav-print" data-print-type="grammar" title="적용·심화 8문항 인쇄" aria-label="어법 인쇄">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+</button>
+<button class="nav-tab" data-type="answer">정답표</button>
+<button class="nav-print" data-print-type="answer" title="정답표 인쇄" aria-label="정답표 인쇄">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+</button>
+</div>
+</nav>
+
+<!-- ========================================================== -->
+<!--                  인쇄 옵션 툴바                              -->
+<!-- ========================================================== -->
+<div class="print-toolbar">
+<div class="print-toolbar-inner">
+<span class="pt-label">📄 인쇄 옵션</span>
+<button class="pt-btn" id="answerToggle" type="button">정답 모두 펼치기</button>
+<span class="pt-hint">→ 위 인쇄 버튼(<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>)을 누르면 <b>현재 화면 그대로</b> A4로 인쇄됩니다. 정답을 빼려면 <b>'정답 모두 접기'</b>를 먼저 누르세요.</span>
+</div>
+</div>
+
+<!-- 인쇄 전용 헤더 -->
+<div class="print-header">
+<b>중3 NE능률(김성곤) · Lesson 1과</b> · <span id="printSectionLabel">전체 40문항</span> · A4 인쇄
+</div>
+
+<!-- ========================================================== -->
+<!--                  대화체 섹션 (15문항)                        -->
+<!-- ========================================================== -->
+
+<div class="section-head" data-section-type="dialogue">
+<h2>🎨 PART A — 유형 판별 (1~12번) · 3점</h2>
+<p>행동·인물 사례를 읽고 6색 리더 유형을 판별 — 목운중 단골 출제 방식 (2021 기출부터 반복). 12번은 복수정답.</p>
+</div>
+
+<div class="passage">
+<div class="label">[참고] 6색 리더 유형 핵심표 — 본문 「We Are All Leaders」</div>
+<p><b>GREEN</b> "Team Builders" — 팀이 존중받는다고 느끼게 함 · 긍정적 환경 조성 · 친절하고 대화하기 쉬움<br>
+<b>RED</b> "Logical Analysts" — 훌륭한 추론 기술 · 문제·상황 분석 · 목표 달성의 가장 효과적인 방법 생각<br>
+<b>PURPLE</b> "Hands-Off Managers" — 스스로 일하게 함 · 통제하지 않음 · 필요할 때만 조언<br>
+<b>ORANGE</b> "Strict Directors" — 모두의 역할을 분명히 · 모든 일이 제때 끝나게 · 각 단계가 적절히 이행되게<br>
+<b>YELLOW</b> "Quiet Supporters" — 솔선수범 · 팀원들이 대신 빛나게 함 · 팀원들의 요구 충족<br>
+<b>BLUE</b> "Creative Thinkers" — 새로운 방식으로 문제 접근 · 신선한 아이디어 · 남들과 다르게 일 처리</p>
+</div>
+
+<!-- Q1 -->
+<div class="q" data-type="dialogue">
+<div class="q-head"><span class="q-num">1</span><div class="q-stem">다음 설명에 해당하는 리더 유형으로 가장 적절한 것은? (3점)</div><span class="q-tag">유형판별</span></div>
+<div class="q-body"><div class="q-box">
+이 리더는 팀원들을 통제하려 하지 않는다. 팀원들이 스스로 일하도록 해 주며, 조언은 필요할 때만 한다.
+</div></div>
+<ol class="choices">
+<li>GREEN — Team Builders</li>
+<li>RED — Logical Analysts</li>
+<li>PURPLE — Hands-Off Managers</li>
+<li>ORANGE — Strict Directors</li>
+<li>YELLOW — Quiet Supporters</li>
+</ol>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-correct">정답: ③ PURPLE</span>
+<div class="ans-detail">do not try to <b>control</b> people / allow others to work <b>on their own</b> / give advice only <b>when it is needed</b> — 세 자질 모두 PURPLE(방임적 관리자). "Hands-Off(손을 떼는)"라는 별칭 자체가 결정적 힌트.</div>
+</div></details>
+</div>
+
+<!-- Q2 -->
+<div class="q" data-type="dialogue">
+<div class="q-head"><span class="q-num">2</span><div class="q-stem">다음 글의 Sora에 해당하는 리더 유형으로 가장 적절한 것은? (3점)</div><span class="q-tag">유형판별</span></div>
+<div class="q-body"><div class="q-box">
+Sora always makes sure that everyone in her club feels valued. She tries to create a positive environment for her team. Her friends say she is friendly and easy to talk to.
+</div></div>
+<ol class="choices">
+<li>GREEN</li><li>RED</li><li>PURPLE</li><li>ORANGE</li><li>BLUE</li>
+</ol>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-correct">정답: ① GREEN</span>
+<div class="ans-detail">feels <b>valued</b> + <b>positive environment</b> + friendly and <b>easy to talk to</b> = GREEN(팀 조직자)의 세 자질 완전 일치. 본문 표현이 그대로 인물 묘사에 녹아 있는 전형적 출제 패턴.</div>
+</div></details>
+</div>
+
+<!-- Q3 -->
+<div class="q" data-type="dialogue">
+<div class="q-head"><span class="q-num">3</span><div class="q-stem">다음 글의 Minjun에 해당하는 리더 유형으로 가장 적절한 것은? (3점)</div><span class="q-tag">유형판별</span></div>
+<div class="q-body"><div class="q-box">
+Minjun never solves problems in the usual way. He always approaches problems in new ways and comes up with fresh ideas. He deals with tasks differently from others.
+</div></div>
+<ol class="choices">
+<li>GREEN</li><li>PURPLE</li><li>ORANGE</li><li>YELLOW</li><li>BLUE</li>
+</ol>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-correct">정답: ⑤ BLUE</span>
+<div class="ans-detail"><b>in new ways</b> + <b>fresh ideas</b> + <b>differently from others</b> = BLUE(창조적 사상가). 시그널 어휘: new, fresh, creative, differently.</div>
+</div></details>
+</div>
+
+<!-- Q4 -->
+<div class="q" data-type="dialogue">
+<div class="q-head"><span class="q-num">4</span><div class="q-stem">다음 글의 Dahye에 해당하는 리더 유형으로 가장 적절한 것은? (3점)</div><span class="q-tag">유형판별</span></div>
+<div class="q-body"><div class="q-box">
+Dahye doesn&#39;t talk much, but she always leads by example. She lets her team members shine instead of standing in the spotlight herself. She also tries to meet the team members&#39; needs.
+</div></div>
+<ol class="choices">
+<li>GREEN</li><li>RED</li><li>ORANGE</li><li>YELLOW</li><li>BLUE</li>
+</ol>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-correct">정답: ④ YELLOW</span>
+<div class="ans-detail"><b>lead by example(솔선수범)</b> + <b>let the members shine</b> + <b>meet the needs</b> = YELLOW(조용한 지지자). "Quiet(조용한)"이라는 별칭과 "doesn&#39;t talk much"가 연결되는 것도 단서.</div>
+</div></details>
+</div>
+
+<!-- Q5 -->
+<div class="q" data-type="dialogue">
+<div class="q-head"><span class="q-num">5</span><div class="q-stem">다음 글의 Junseo에 해당하는 리더 유형으로 가장 적절한 것은? (3점)</div><span class="q-tag">유형판별</span></div>
+<div class="q-body"><div class="q-box">
+Junseo has good reasoning skills. When his team has a problem, he analyzes the situation first. Then he thinks of the most effective ways to achieve the team&#39;s goals.
+</div></div>
+<ol class="choices">
+<li>GREEN</li><li>RED</li><li>PURPLE</li><li>YELLOW</li><li>BLUE</li>
+</ol>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-correct">정답: ② RED</span>
+<div class="ans-detail"><b>reasoning skills(추론 기술)</b> + <b>analyze</b> + <b>the most effective ways</b> = RED(논리적 분석가). BLUE(새 아이디어)와 혼동 주의 — RED는 "분석·논리", BLUE는 "참신·창의"로 구분.</div>
+</div></details>
+</div>
+
+<!-- Q6 -->
+<div class="q" data-type="dialogue">
+<div class="q-head"><span class="q-num">6</span><div class="q-stem">다음 설명의 진호에 해당하는 리더 유형으로 가장 적절한 것은? (3점)</div><span class="q-tag">유형판별</span></div>
+<div class="q-body"><div class="q-box">
+학급 발표회를 준비하면서 진호는 가장 먼저 <b>모두의 역할을 분명하게</b> 나누었다. 그리고 매일 <b>각 단계가 적절히 이행되는지</b> 확인하고, <b>모든 일이 제때 끝나도록</b> 일정을 꼼꼼하게 점검했다.
+</div></div>
+<ol class="choices">
+<li>GREEN</li><li>ORANGE</li><li>PURPLE</li><li>YELLOW</li><li>BLUE</li>
+</ol>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-correct">정답: ② ORANGE</span>
+<div class="ans-detail">make everyone&#39;s role <b>clear</b> / ensure each step is done <b>properly</b> / make sure everything is finished <b>on time</b> = ORANGE(엄격한 감독관)의 세 자질. 시그널 어휘: role, on time, properly, check.</div>
+</div></details>
+</div>
+
+<!-- Q7 -->
+<div class="q" data-type="dialogue">
+<div class="q-head"><span class="q-num">7</span><div class="q-stem">리더 유형과 영문 별칭의 연결이 옳지 <b>않은</b> 것은? (3점)</div><span class="q-tag">매칭</span></div>
+<ol class="choices">
+<li>GREEN — "Team Builders"</li>
+<li>RED — "Logical Analysts"</li>
+<li>PURPLE — "Strict Directors"</li>
+<li>YELLOW — "Quiet Supporters"</li>
+<li>BLUE — "Creative Thinkers"</li>
+</ol>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-correct">정답: ③</span>
+<div class="ans-detail">PURPLE은 <b>"Hands-Off Managers"(방임적 관리자)</b>. "Strict Directors(엄격한 감독관)"는 <b>ORANGE</b>의 별칭 — 색과 별칭을 엇갈리게 배치하는 단순하지만 실수가 잦은 함정.</div>
+</div></details>
+</div>
+
+<!-- Q8 -->
+<div class="q" data-type="dialogue">
+<div class="q-head"><span class="q-num">8</span><div class="q-stem">리더 유형과 자질의 연결이 옳지 <b>않은</b> 것은? (3점)</div><span class="q-tag">매칭</span></div>
+<ol class="choices">
+<li>GREEN: 긍정적인 환경을 조성한다.</li>
+<li>RED: 문제와 상황을 분석한다.</li>
+<li>ORANGE: 모든 일이 제때 끝나도록 한다.</li>
+<li>PURPLE: 모든 단계를 직접 통제하며 세세하게 지시한다.</li>
+<li>YELLOW: 팀원들의 요구 사항을 충족한다.</li>
+</ol>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-correct">정답: ④</span>
+<div class="ans-detail">PURPLE은 <b>"do not try to control people"</b> — 통제·지시는 PURPLE과 정반대 자질. 다른 유형(ORANGE)의 행동을 뒤집어씌우는 것이 본 단원 매칭 문제의 표준 함정.</div>
+</div></details>
+</div>
+
+<!-- Q9 -->
+<div class="q" data-type="dialogue">
+<div class="q-head"><span class="q-num">9</span><div class="q-stem">다음 대화에서 화자 A에 해당하는 리더 유형으로 가장 적절한 것은? (3점)</div><span class="q-tag">유형판별</span></div>
+<div class="q-body"><div class="q-box">
+A: Don&#39;t worry, everyone. I made a checklist of everyone&#39;s role for the festival.<br>
+B: Wow, it&#39;s very detailed!<br>
+A: Let&#39;s check together if each step is done properly. We must finish everything on time.
+</div></div>
+<ol class="choices">
+<li>GREEN</li><li>ORANGE</li><li>PURPLE</li><li>YELLOW</li><li>BLUE</li>
+</ol>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-correct">정답: ② ORANGE</span>
+<div class="ans-detail">checklist of everyone&#39;s <b>role</b> / each step done <b>properly</b> / finish <b>on time</b> — ORANGE의 3대 자질이 대화 속에 모두 등장. 대화체로 위장해도 시그널 어휘는 동일.</div>
+</div></details>
+</div>
+
+<!-- Q10 -->
+<div class="q" data-type="dialogue">
+<div class="q-head"><span class="q-num">10</span><div class="q-stem">ⓐ와 ⓑ의 인물에 <b>공통으로</b> 해당하는 리더 유형은? (3점)</div><span class="q-tag">유형판별</span></div>
+<div class="q-body"><div class="q-box">
+ⓐ Mr. Kim allows his students to study on their own. He gives advice only when they ask for it.<br>
+ⓑ Coach Lee never controls his players during practice. He believes they play best when they decide things on their own.
+</div></div>
+<ol class="choices">
+<li>GREEN</li><li>RED</li><li>ORANGE</li><li>YELLOW</li><li>PURPLE</li>
+</ol>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-correct">정답: ⑤ PURPLE</span>
+<div class="ans-detail">두 인물 모두 <b>on their own(스스로)</b> + <b>통제하지 않음</b> + <b>요청 시에만 조언</b> = PURPLE. 두 사례의 공통 자질을 추출하는 변형은 난도를 한 단계 올린 출제 방식.</div>
+</div></details>
+</div>
+
+<!-- Q11 -->
+<div class="q" data-type="dialogue">
+<div class="q-head"><span class="q-num">11</span><div class="q-stem">Which type of leader is described below? (3점)</div><span class="q-tag">영어발문</span></div>
+<div class="q-body"><div class="q-box">
+a leader who supports the team quietly, meets the team members&#39; needs, and lets them shine instead
+</div></div>
+<ol class="choices">
+<li>a yellow leader</li>
+<li>a green leader</li>
+<li>a red leader</li>
+<li>an orange leader</li>
+<li>a blue leader</li>
+</ol>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-correct">정답: ①</span>
+<div class="ans-detail">quietly + meets the needs + lets them <b>shine</b> = YELLOW "Quiet Supporters". 발문·선지가 모두 영어인 형태는 2024년 이후 현행 시험의 고정 요소 — 정의문(a leader who ~)을 영영풀이처럼 처리.</div>
+</div></details>
+</div>
+
+<!-- Q12 -->
+<div class="q" data-type="dialogue">
+<div class="q-head"><span class="q-num">12</span><div class="q-stem">다음 중 BLUE 리더의 행동으로 알맞은 것을 <b>모두</b> 고르면? <b>(2개)</b> (3점)</div><span class="q-tag">복수정답</span></div>
+<ol class="choices">
+<li>신선한 아이디어를 떠올린다.</li>
+<li>다른 사람들과 다르게 일을 처리한다.</li>
+<li>팀의 목표 달성을 위한 가장 효과적인 방법을 논리적으로 추론한다.</li>
+<li>조언은 필요할 때만 한다.</li>
+<li>모두의 역할을 분명하게 정해 준다.</li>
+</ol>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-correct">정답: ①, ② (복수정답 AND)</span>
+<div class="ans-detail">BLUE = come up with <b>fresh ideas</b> + deal with tasks <b>differently</b> from others + approach in new ways. ③ RED, ④ PURPLE, ⑤ ORANGE. 목운중 복수정답 전통(매 시험 2~4문항)을 유형 판별에 결합한 형태.</div>
+</div></details>
+</div>
+
+<div class="section-head" data-section-type="grammar">
+<h2>🔥 PART B — 적용 · 심화 (13~20번) · 4점</h2>
+<p>상황에 가장 필요한 리더 찾기 · 행동 복수 선택 · 표 완성 · 영어발문 · 고민 상담 융합 · 어법 결합 개수형 — 실전 고배점 구간</p>
+</div>
+
+<!-- Q13 -->
+<div class="q" data-type="grammar">
+<div class="q-head"><span class="q-num">13</span><div class="q-stem">다음 상황에서 가장 필요한 리더 유형으로 적절한 것은? (4점)</div><span class="q-tag">적용</span></div>
+<div class="q-body"><div class="q-box">
+<b>[상황]</b> 학교 신문 동아리가 독자 수를 늘릴 방법을 몇 달째 찾지 못하고 있다. 기존 방식은 모두 시도해 보았지만 효과가 없었고, 부원들은 완전히 새로운 접근이 필요하다고 입을 모은다.
+</div></div>
+<ol class="choices">
+<li>GREEN — 긍정적인 분위기를 만들어 주는 리더</li>
+<li>PURPLE — 부원들이 스스로 일하게 두는 리더</li>
+<li>ORANGE — 마감과 역할을 철저히 관리하는 리더</li>
+<li>BLUE — 새로운 방식으로 문제에 접근하는 리더</li>
+<li>YELLOW — 조용히 솔선수범하는 리더</li>
+</ol>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-correct">정답: ④ BLUE</span>
+<div class="ans-detail">"기존 방식은 모두 시도 → <b>완전히 새로운 접근</b> 필요" = approach problems <b>in new ways</b>, come up with <b>fresh ideas</b>의 BLUE가 정확히 대응. 상황의 핵심 요구(needs)를 자질(qualities)과 연결하는 것이 적용형의 본질.</div>
+</div></details>
+</div>
+
+<!-- Q14 -->
+<div class="q" data-type="grammar">
+<div class="q-head"><span class="q-num">14</span><div class="q-stem">다음 상황에서 가장 필요한 리더 유형으로 적절한 것은? (4점)</div><span class="q-tag">적용</span></div>
+<div class="q-body"><div class="q-box">
+<b>[상황]</b> 학급 연극 공연이 일주일 앞으로 다가왔는데, 무대·소품·의상 준비가 모두 늦어지고 있다. 누가 무엇을 맡았는지조차 분명하지 않아서, 일이 제때 끝날 수 있도록 단계별로 점검해 줄 사람이 필요하다.
+</div></div>
+<ol class="choices">
+<li>GREEN</li><li>ORANGE</li><li>PURPLE</li><li>YELLOW</li><li>BLUE</li>
+</ol>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-correct">정답: ② ORANGE</span>
+<div class="ans-detail">"누가 무엇을 맡았는지 불분명(→ make everyone&#39;s role <b>clear</b>)" + "제때 끝나도록(→ <b>on time</b>)" + "단계별 점검(→ each step done <b>properly</b>)" — 상황 문장 안에 ORANGE의 자질 3개가 그대로 요구사항으로 제시됨.</div>
+</div></details>
+</div>
+
+<!-- Q15 -->
+<div class="q" data-type="grammar">
+<div class="q-head"><span class="q-num">15</span><div class="q-stem">다음 상황에서 가장 필요한 리더 유형으로 적절한 것은? (4점)</div><span class="q-tag">적용</span></div>
+<div class="q-body"><div class="q-box">
+<b>[상황]</b> 모둠 활동 중 두 친구가 크게 다툰 뒤 모둠 분위기가 매우 나빠졌다. 몇몇 부원은 자신의 의견이 존중받지 못한다고 느껴 모임에 나오고 싶어 하지 않는다.
+</div></div>
+<ol class="choices">
+<li>GREEN</li><li>RED</li><li>ORANGE</li><li>PURPLE</li><li>BLUE</li>
+</ol>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-correct">정답: ① GREEN</span>
+<div class="ans-detail">"분위기 악화 + <b>존중받지 못한다고 느낌</b>" → ensure that the team feels <b>valued</b>, create a <b>positive environment</b>의 GREEN(팀 조직자)이 필요. 본문에서 Brian이 유미를 GREEN형으로 본 근거(help people get along)와 같은 결.</div>
+</div></details>
+</div>
+
+<!-- Q16 -->
+<div class="q" data-type="grammar">
+<div class="q-head"><span class="q-num">16</span><div class="q-stem">다음 행동 중 YELLOW 리더의 행동으로 알맞은 것을 <b>모두</b> 고르면? <b>(2개)</b> (4점)</div><span class="q-tag">복수정답</span></div>
+<ol class="choices">
+<li>아무도 하기 싫어하는 교실 청소를 말없이 먼저 시작한다.</li>
+<li>공연 무대에서는 팀원들이 빛나도록 자신은 뒤에서 돕는다.</li>
+<li>회의에서 문제 상황을 분석하여 가장 논리적인 해결책을 제시한다.</li>
+<li>체크리스트를 만들어 모든 단계가 제때 끝나는지 확인한다.</li>
+<li>아무도 생각하지 못한 완전히 새로운 방식의 공연을 제안한다.</li>
+</ol>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-correct">정답: ①, ② (복수정답 AND)</span>
+<div class="ans-detail">① = <b>lead by example(솔선수범)</b> — 교과서 Think and Write의 윤아(재활용 분리수거를 먼저 시작) 사례와 동일 구조. ② = <b>let the team members shine instead</b>. ③ RED, ④ ORANGE, ⑤ BLUE.</div>
+</div></details>
+</div>
+
+<!-- Q17 -->
+<div class="q" data-type="grammar">
+<div class="q-head"><span class="q-num">17</span><div class="q-stem">본문 내용과 일치하도록 표의 빈칸 (A)~(C)에 들어갈 말로 가장 적절한 것은? (4점)</div><span class="q-tag">표완성</span></div>
+<div class="q-body"><div class="q-box">
+<b>Green Leaders:</b> ensure that the team feels (A) ________ · create a positive environment<br>
+<b>Red Leaders:</b> have good (B) ________ skills · analyze problems and situations<br>
+<b>Yellow Leaders:</b> lead by (C) ________ · let the team members shine instead
+</div></div>
+<ol class="choices">
+<li>(A) valued — (B) drawing — (C) example</li>
+<li>(A) bored — (B) reasoning — (C) example</li>
+<li>(A) valued — (B) reasoning — (C) control</li>
+<li>(A) tired — (B) cooking — (C) force</li>
+<li>(A) valued — (B) reasoning — (C) example</li>
+</ol>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-correct">정답: ⑤</span>
+<div class="ans-detail">feels <b>valued</b>(존중받는다고 느끼다 — feel+형용사 보어) / <b>reasoning</b> skills(추론 기술) / lead by <b>example</b>(솔선수범). 교과서 After You Read C(Get the BIG Picture) 표를 그대로 활용한 출제 — 한 칸만 틀린 ①·②·③이 매력적 오답.</div>
+</div></details>
+</div>
+
+<!-- Q18 -->
+<div class="q" data-type="grammar">
+<div class="q-head"><span class="q-num">18</span><div class="q-stem">According to the passage, who is most likely a "purple leader"? (4점)</div><span class="q-tag">영어발문</span></div>
+<ol class="choices">
+<li>Mina, who makes a detailed schedule and checks every step of her team&#39;s work</li>
+<li>Jiho, who lets his members work on their own and helps only when they ask</li>
+<li>Sena, who always comes up with fresh ideas for her club</li>
+<li>Hojun, who analyzes problems with logical reasoning</li>
+<li>Yuri, who creates a positive environment so that everyone feels valued</li>
+</ol>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-correct">정답: ②</span>
+<div class="ans-detail">work <b>on their own</b> + helps <b>only when they ask</b> = PURPLE. ① ORANGE ③ BLUE ④ RED ⑤ GREEN — 다섯 인물에 다섯 유형을 분산 배치한 표준 구조. 선지의 관계대명사 계속적 용법(, who ~)은 Lesson 3 어법과의 연계 포인트.</div>
+</div></details>
+</div>
+
+<!-- Q19 -->
+<div class="q" data-type="grammar">
+<div class="q-head"><span class="q-num">19</span><div class="q-stem">다음 고민 상담 대화를 읽고, (가) 현재 모둠장의 리더 유형과 (나) 미나의 모둠에 더 적합한 리더 유형을 바르게 짝지은 것은? (4점)</div><span class="q-tag">융합</span></div>
+<div class="q-body"><div class="q-box">
+미나: 선생님, 고민이 있어요. 우리 모둠장은 우리가 하는 일의 <b>모든 단계를 하나하나 확인하고, 역할표와 마감 일정을 만들어 매일 점검</b>해요. 그런데 우리 모둠원들은 이미 <b>각자 알아서 잘하고 있어서</b>, 가끔은 숨이 막혀요. 우리에게는 <b>스스로 일하게 해 주고 필요할 때만 조언해 주는</b> 리더가 더 맞는 것 같아요.
+</div></div>
+<ol class="choices">
+<li>(가) PURPLE — (나) ORANGE</li>
+<li>(가) GREEN — (나) BLUE</li>
+<li>(가) ORANGE — (나) PURPLE</li>
+<li>(가) RED — (나) YELLOW</li>
+<li>(가) ORANGE — (나) GREEN</li>
+</ol>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-correct">정답: ③</span>
+<div class="ans-detail">(가) 단계 확인 + 역할표 + 마감 점검 = <b>ORANGE</b>. (나) 스스로 일하게 + 필요할 때만 조언 = <b>PURPLE</b>. 본문 결론("각 집단의 독특한 상황이 최적의 리더십 유형을 결정한다")을 실제 상황에 적용 — ①은 (가)(나)를 뒤집은 함정.</div>
+</div></details>
+</div>
+
+<!-- Q20 -->
+<div class="q" data-type="grammar">
+<div class="q-head"><span class="q-num">20</span><div class="q-stem">리더 유형을 설명하는 문장 ⓐ~ⓔ 중 어법상 옳은 문장의 <b>개수</b>는? (4점)</div><span class="q-tag gr">개수형</span></div>
+<div class="q-body"><div class="q-box">
+ⓐ Green leaders ensure that the team feels valued.<br>
+ⓑ Purple leaders allow others to work on their own.<br>
+ⓒ Yellow leaders let the team members to shine instead.<br>
+ⓓ Orange leaders make sure everything are finished on time.<br>
+ⓔ Blue leaders come up with fresh ideas.
+</div></div>
+<ol class="choices">
+<li>1개</li><li>2개</li><li>3개</li><li>4개</li><li>5개</li>
+</ol>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-correct">정답: ③ (3개 — ⓐ, ⓑ, ⓔ)</span>
+<div class="ans-detail">ⓒ 사역동사 <b>let + 목적어 + 동사원형</b>(to shine ✗ → shine). ⓓ everything은 <b>단수 취급</b>(are ✗ → is). ⓑ allow는 목적격 보어로 <b>to부정사</b>를 취하므로 to work ○ — let과 allow의 보어 형태 차이가 이 문제의 핵심 변별점(2학년 수행평가 사역동사 O/X의 심화판).</div>
+</div></details>
+</div>
+
+<!-- 정답표 -->
+<details class="summary-block" data-type="answer">
+<summary>📋 정답 일람표 — 리더 유형 집중 드릴 (20문항)</summary>
+<div class="summary-table">
+<h4>PART A — 유형 판별 (1~12) · 각 3점</h4>
+<table class="akey"><thead><tr><th>번호</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th></tr></thead>
+<tbody><tr><td>정답</td><td>③</td><td>①</td><td>⑤</td><td>④</td><td>②</td><td>②</td><td>③</td><td>④</td><td>②</td><td>⑤</td><td>①</td><td><b>①,② AND</b></td></tr></tbody></table>
+<h4>PART B — 적용·심화 (13~20) · 각 4점</h4>
+<table class="akey"><thead><tr><th>번호</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th></tr></thead>
+<tbody><tr><td>정답</td><td>④</td><td>②</td><td>①</td><td><b>①,② AND</b></td><td>⑤</td><td>②</td><td>③</td><td>③</td></tr></tbody></table>
+<h4>🎨 유형별 시그널 어휘 치트시트</h4>
+<table class="akey">
+<thead><tr><th>유형</th><th>별칭</th><th>시그널 어휘 (이 단어가 보이면 이 유형)</th></tr></thead>
+<tbody>
+<tr><td><b>GREEN</b></td><td>Team Builders</td><td>valued · positive environment · friendly · easy to talk to · get along</td></tr>
+<tr><td><b>RED</b></td><td>Logical Analysts</td><td>reasoning · analyze · effective ways · goals</td></tr>
+<tr><td><b>PURPLE</b></td><td>Hands-Off Managers</td><td>on their own · do not control · only when it is needed</td></tr>
+<tr><td><b>ORANGE</b></td><td>Strict Directors</td><td>role clear · on time · properly · check(점검)</td></tr>
+<tr><td><b>YELLOW</b></td><td>Quiet Supporters</td><td>lead by example · shine · meet the needs · quietly</td></tr>
+<tr><td><b>BLUE</b></td><td>Creative Thinkers</td><td>new ways · fresh ideas · differently · creative</td></tr>
+</tbody></table>
+<div class="tip"><b>출제 패턴 정리:</b> ① 인물 사례 → 유형(최빈출) ② 상황의 요구 → 가장 필요한 유형 ③ 유형↔별칭/자질 매칭 오류 찾기 ④ 두 인물의 공통 유형 ⑤ 고민 상담(현재 유형 vs 적합 유형) ⑥ 어법 결합(let 원형 vs allow to V, everything 단수). 함정의 90%는 <b>RED↔BLUE(분석 vs 창의)</b>와 <b>ORANGE↔PURPLE(통제 vs 방임)</b>의 교차 배치.</div>
+</div>
+</details>
+
+<footer class="brand">목운중 대비 · Lesson 4 리더 유형 집중 드릴 — NE능률(김성곤) 중3 · 6색 유형 적용형 20문항</footer>
+<script>
+// ==========================================================
+// TYPE_LABELS — 인쇄 헤더 라벨 (가이드 4-1)
+// ==========================================================
+const TYPE_LABELS = {
+  all: '리더 유형 집중 드릴 — 전체 20문항',
+  dialogue: '유형 판별 (12문항)',
+  grammar: '적용·심화 (8문항)',
+  answer: '정답 일람표'
+};
+
+// ==========================================================
+// applyFilter() — 필터 적용 함수 (가이드 4-2)
+// ==========================================================
+function applyFilter(type){
+  // 1. nav-tab 활성 상태 갱신
+  document.querySelectorAll('.nav-tab').forEach(t=>{
+    t.classList.toggle('active', t.dataset.type === type);
+  });
+  // 2. q 카드 가시성 토글 (data-type 속성으로 판단)
+  document.querySelectorAll('.q').forEach(card=>{
+    card.classList.toggle('hidden', !(type === 'all' || card.dataset.type === type));
+  });
+  // 3. section-head 가시성 토글
+  document.querySelectorAll('.section-head[data-section-type]').forEach(sh=>{
+    sh.classList.toggle('hidden', !(type === 'all' || sh.dataset.sectionType === type));
+  });
+  // 4. 정답표 (.summary-block) 가시성
+  document.querySelectorAll('.summary-block[data-type]').forEach(sb=>{
+    sb.classList.toggle('hidden', !(type === 'all' || sb.dataset.type === type));
+  });
+  // 5. 인쇄 헤더 라벨 갱신
+  const lbl = document.getElementById('printSectionLabel');
+  if(lbl) lbl.textContent = TYPE_LABELS[type] || '전체';
+}
+
+// ==========================================================
+// nav-tab 클릭 (필터 + 부드러운 스크롤)
+// ==========================================================
+document.querySelectorAll('.nav-tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    const type = tab.dataset.type;
+    applyFilter(type);
+    // 첫 보이는 카드/헤더로 스크롤
+    if(type !== 'all'){
+      const target = document.querySelector('.section-head:not(.hidden), .q:not(.hidden), .summary-block:not(.hidden)');
+      if(target){
+        const navHeight = document.querySelector('.type-nav-wrap').offsetHeight + 8;
+        const top = target.getBoundingClientRect().top + window.scrollY - navHeight - 16;
+        window.scrollTo({top, behavior:'smooth'});
+      }
+    } else {
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+  });
+});
+
+// ==========================================================
+// nav-print 클릭 핸들러 (가이드 4-3)
+// 필터 적용 → 180ms 지연 (DOM 갱신) → window.print()
+// ==========================================================
+document.querySelectorAll('.nav-print').forEach(btn=>{
+  btn.addEventListener('click', (e)=>{
+    e.preventDefault();
+    const type = btn.dataset.printType;
+    applyFilter(type);
+    setTimeout(()=>window.print(), 180);
+  });
+});
+
+// ==========================================================
+// 정답 일괄 토글 (가이드 4-4)
+// ==========================================================
+let answersOpen = false;
+const answerToggleBtn = document.getElementById('answerToggle');
+answerToggleBtn?.addEventListener('click', ()=>{
+  answersOpen = !answersOpen;
+  document.querySelectorAll('details.ans').forEach(d=>{ d.open = answersOpen; });
+  answerToggleBtn.textContent = answersOpen ? '정답 모두 접기' : '정답 모두 펼치기';
+  answerToggleBtn.classList.toggle('active', answersOpen);
+});
+</script>
+</body>
+</html>
