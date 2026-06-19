@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>워드마스터 하이퍼2000 — 목동서로영어학원</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f1ec;--navy:#1F3864;--blue-card:#EBF3FB;--blue-border:#2E75B6;
+  --purple-card:#F3E8FF;--purple-border:#5B2D8E;--teal:#00695C;
+  --gold:#B8860B;--gold2:#f0d070;--cream:#FFF8E7;--orange:#E65100;
+  --shadow:rgba(31,56,100,0.10);--text:#1a1a2e;--text-sub:#4a4a6a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;min-height:100vh;color:var(--text);}
+
+/* ── NAV ── */
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--navy);
+  box-shadow:0 3px 16px rgba(31,56,100,0.35);display:flex;align-items:center;
+  padding:0 16px;height:48px;gap:12px;}
+.home-btn{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;
+  color:rgba(255,255,255,0.7);text-decoration:none;padding:4px 10px;border-radius:4px;
+  border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);
+  transition:all 0.2s;white-space:nowrap;}
+.home-btn:hover{background:rgba(255,255,255,0.14);color:white;}
+.nav-title-bar{font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:rgba(255,255,255,0.5);letter-spacing:1px;}
+.nav-badge{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:2px;color:var(--gold2);border:1px solid rgba(201,168,76,0.3);
+  padding:3px 10px;border-radius:3px;white-space:nowrap;}
+
+.passage{max-width:860px;margin:0 auto;padding:68px 16px 64px;}
+
+/* ── HEADER ── */
+.page-header{margin:0 0 20px;border-left:5px solid var(--navy);padding-left:20px;}
+.page-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;
+  text-transform:uppercase;color:var(--blue-border);margin-bottom:8px;}
+.page-title{font-family:'Playfair Display',serif;font-size:clamp(17px,3.5vw,26px);
+  font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:6px;}
+.page-sub{font-size:12px;color:var(--text-sub);font-weight:300;}
+
+/* ── WATERMARK ── */
+.watermark{display:flex;align-items:center;justify-content:space-between;
+  padding:7px 16px;background:var(--navy);border-radius:7px;margin-bottom:16px;flex-wrap:wrap;gap:6px;}
+.wm-logo{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--gold2);letter-spacing:1px;}
+.wm-text{font-family:'Noto Sans KR',sans-serif;font-size:11px;color:rgba(255,255,255,0.55);}
+.wm-url{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(201,168,76,0.6);letter-spacing:1px;}
+
+/* ── UNIT SELECTOR ── */
+.unit-selector-wrap{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
+.unit-selector-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--navy);font-weight:700;white-space:nowrap;}
+.unit-select{font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;
+  color:var(--navy);background:white;border:2px solid var(--navy);border-radius:8px;
+  padding:7px 36px 7px 14px;cursor:pointer;outline:none;
+  appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231F3864' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;
+  box-shadow:0 2px 8px var(--shadow);transition:all 0.2s;}
+.unit-select:focus{border-color:var(--blue-border);box-shadow:0 0 0 3px rgba(46,117,182,0.2);}
+.unit-info-badge{font-family:'JetBrains Mono',monospace;font-size:10px;
+  background:var(--blue-card);color:var(--blue-border);border:1px solid rgba(46,117,182,0.3);
+  border-radius:20px;padding:4px 12px;}
+.unit-nav-btns{display:flex;gap:6px;}
+.unit-nav-btn{font-size:13px;padding:6px 12px;border-radius:6px;border:1.5px solid rgba(31,56,100,0.2);
+  background:white;color:var(--navy);cursor:pointer;transition:all 0.2s;font-family:'JetBrains Mono',monospace;}
+.unit-nav-btn:hover{background:var(--navy);color:white;}
+
+/* ── VIEW TABS ── */
+.view-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+.view-tab{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+  padding:9px 18px;border-radius:7px;cursor:pointer;transition:all 0.2s;border:2px solid transparent;}
+.tab-vocab{background:white;color:#6A1B9A;border-color:rgba(106,27,154,0.25);}
+.tab-vocab.active{background:#6A1B9A;color:white;border-color:#6A1B9A;}
+.tab-spell{background:white;color:var(--orange);border-color:rgba(230,81,0,0.25);}
+.tab-spell.active{background:var(--orange);color:white;border-color:var(--orange);}
+.tab-meaning{background:white;color:#1D5C2B;border-color:rgba(29,92,43,0.25);}
+.tab-meaning.active{background:#1D5C2B;color:white;border-color:#1D5C2B;}
+
+/* 인쇄 탭 버튼 */
+.tab-ps{background:white;color:#1F3864;border-color:rgba(31,56,100,0.25);}
+.tab-ps.active{background:#1F3864;color:white;border-color:#1F3864;}
+.tab-pm{background:white;color:#1F3864;border-color:rgba(31,56,100,0.25);}
+.tab-pm.active{background:#1F3864;color:white;border-color:#1F3864;}
+
+/* 인쇄 뷰 표 */
+.print-view-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:16px;flex-wrap:wrap;gap:10px;
+}
+.print-view-title{
+  font-family:'JetBrains Mono',monospace;font-size:13px;
+  font-weight:700;color:var(--navy);
+}
+.print-exec-btn{
+  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+  padding:9px 22px;border-radius:8px;border:none;
+  background:var(--navy);color:white;cursor:pointer;
+  box-shadow:0 3px 10px rgba(31,56,100,0.3);transition:background 0.2s;
+  display:flex;align-items:center;gap:7px;
+}
+.print-exec-btn:hover{background:#2E75B6;}
+.print-table-wrap{
+  background:white;border-radius:12px;
+  box-shadow:0 2px 14px var(--shadow);
+  padding:20px;
+}
+.print-unit-title{
+  text-align:center;font-size:14px;font-weight:700;
+  color:var(--navy);margin-bottom:6px;
+  padding-bottom:10px;border-bottom:2px solid var(--navy);
+}
+.print-unit-sub{
+  text-align:center;font-size:11px;color:#888;margin-bottom:14px;
+}
+.print-name-row{
+  display:flex;justify-content:flex-end;gap:24px;
+  font-size:11px;color:#555;margin-bottom:10px;
+}
+.print-name-box{
+  display:inline-block;width:80px;height:16px;
+  border-bottom:1px solid #888;margin-left:4px;
+}
+.print-two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.pt{width:100%;border-collapse:collapse;}
+.pt th{
+  background:#f4ece8;color:#333;
+  font-size:12px;font-weight:700;
+  padding:7px 8px;text-align:center;
+  border:1px solid #d0b8b0;
+}
+.pt td{
+  border:1px solid #d0b8b0;
+  padding:5px 8px;font-size:12px;
+  height:30px;vertical-align:middle;
+  text-align:center;color:#333;
+}
+.pt tr:nth-child(even) td{background:#fdf7f5;}
+.pt .td-no{width:36px;color:#888;font-size:11px;}
+.pt .td-hint{text-align:left;}
+.pt .td-write{min-width:80px;}
+.print-wm{
+  margin-top:14px;text-align:center;
+  font-size:10px;color:#ccc;letter-spacing:1px;
+}
+
+@media print{
+  @page{size:A4;margin:14mm 12mm;}
+  .top-nav,.watermark,.page-header,.unit-selector-wrap,
+  .view-tabs,.print-view-header,.print-exec-btn,footer{display:none!important;}
+  .passage{padding:0!important;max-width:100%!important;}
+  .view-panel{display:none!important;}
+  #panelPrintSpell.active,#panelPrintMeaning.active{display:block!important;}
+  .print-table-wrap{box-shadow:none!important;padding:0!important;}
+  .print-two-col{display:grid!important;grid-template-columns:1fr 1fr;gap:18px;}
+  .pt th{background:#f4ece8!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .pt tr:nth-child(even) td{background:#fdf7f5!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
+
+.view-panel{display:none;}
+.view-panel.active{display:block;}
+
+/* ── VOCAB CARDS ── */
+.vcard-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;}
+.vcard{background:white;border-radius:10px;border:1px solid rgba(0,0,0,0.08);
+  box-shadow:0 2px 10px var(--shadow);overflow:hidden;cursor:pointer;
+  transition:transform 0.2s,box-shadow 0.2s;animation:slideIn 0.3s ease both;}
+.vcard:hover{transform:translateY(-3px);box-shadow:0 6px 20px var(--shadow);}
+.vcard-front{padding:14px 16px;}
+.vcard-en-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
+.vcard-en{font-family:Georgia,serif;font-size:17px;font-weight:700;color:var(--navy);flex:1;}
+.vcard-speak{background:none;border:1.5px solid rgba(46,117,182,0.3);border-radius:6px;
+  padding:3px 7px;cursor:pointer;font-size:13px;color:rgba(46,117,182,0.5);
+  transition:all 0.2s;flex-shrink:0;}
+.vcard-speak:hover{background:var(--blue-card);border-color:var(--blue-border);color:var(--blue-border);}
+.vcard-pos-kr{font-size:11px;color:var(--text-sub);font-family:'JetBrains Mono',monospace;}
+.vcard-pos-en{font-size:9px;letter-spacing:2px;color:rgba(0,0,0,0.3);text-transform:uppercase;margin-left:4px;}
+.vcard-back{max-height:0;overflow:hidden;transition:max-height 0.35s cubic-bezier(0.4,0,0.2,1);
+  background:linear-gradient(135deg,#EDE7F6,#F3E5F5);border-top:1px solid rgba(106,27,154,0.12);}
+.vcard.open .vcard-back{max-height:500px;}
+.vcard-back-inner{padding:13px 16px;}
+.vcard-kr{font-size:13.5px;color:#2d2d4e;font-weight:600;margin-bottom:8px;line-height:1.7;}
+.vcard-section{margin-top:7px;}
+.vcard-section-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;
+  text-transform:uppercase;color:#6A1B9A;font-weight:700;margin-bottom:3px;}
+.vcard-items{font-size:12px;color:#3d2d4e;line-height:1.8;}
+.vcard-syn{color:#1565C0;font-weight:600;}
+.vcard-ant{color:#B71C1C;font-weight:600;}
+.vcard-phrase{color:#1B5E20;font-style:italic;}
+.vcard-num{font-family:'JetBrains Mono',monospace;font-size:9px;background:var(--navy);
+  color:white;padding:2px 6px;border-radius:3px;margin-right:4px;}
+.open-hint{font-size:10px;color:rgba(0,0,0,0.25);font-family:'JetBrains Mono',monospace;margin-top:3px;}
+
+/* ── QUIZ CARDS ── */
+.touch-hint{background:var(--cream);border:1px solid rgba(184,134,11,0.3);border-radius:8px;
+  padding:9px 16px;font-size:12px;color:var(--gold);font-family:'JetBrains Mono',monospace;
+  margin-bottom:14px;text-align:center;}
+.quiz-card{background:white;border-radius:10px;border:1px solid rgba(0,0,0,0.08);
+  box-shadow:0 2px 10px var(--shadow);margin-bottom:12px;overflow:hidden;animation:slideIn 0.35s ease both;}
+.quiz-top{padding:14px 16px;display:flex;align-items:center;gap:12px;}
+.quiz-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
+  background:#6A1B9A;color:white;padding:3px 8px;border-radius:4px;flex-shrink:0;}
+.quiz-prompt{font-size:13px;color:var(--text);flex:1;line-height:1.6;}
+.quiz-input{font-family:Georgia,serif;font-size:14px;font-weight:600;border:none;
+  border-bottom:2px solid #6A1B9A;background:transparent;color:var(--navy);
+  outline:none;padding:2px 6px;width:150px;text-align:center;transition:border-color 0.2s;}
+.quiz-input:focus{border-bottom-color:var(--orange);}
+.quiz-input.ok{border-bottom-color:#2E7D32;color:#1B5E20;background:#E8F5E9;border-radius:4px;}
+.quiz-input.ng{border-bottom-color:#C62828;color:#B71C1C;background:#FFEBEE;border-radius:4px;}
+.choices{display:flex;flex-direction:column;gap:6px;padding:0 16px 12px;}
+.choice-btn{text-align:left;padding:8px 12px;border-radius:7px;border:1.5px solid rgba(0,0,0,0.1);
+  background:white;font-size:13px;color:var(--text);cursor:pointer;transition:all 0.15s;
+  font-family:'Noto Sans KR',sans-serif;}
+.choice-btn:hover{background:#EDE7F6;border-color:#6A1B9A;color:#6A1B9A;}
+.choice-btn.ok{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20;font-weight:700;}
+.choice-btn.ng{background:#FFEBEE;border-color:#C62828;color:#B71C1C;}
+.quiz-fb{display:none;padding:7px 16px 9px;font-size:12px;border-top:1px dashed rgba(0,0,0,0.08);}
+.quiz-fb.show{display:block;}
+.quiz-fb.ok{background:#E8F5E9;color:#1B5E20;}
+.quiz-fb.ng{background:#FFEBEE;color:#B71C1C;}
+.section-check{margin-top:14px;margin-bottom:24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.section-check-btn{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+  padding:10px 22px;border-radius:8px;border:none;background:#6A1B9A;color:white;
+  cursor:pointer;transition:background 0.2s;box-shadow:0 3px 10px rgba(106,27,154,0.3);}
+.section-check-btn:hover{background:#4A148C;}
+.section-check-btn.spell{background:var(--orange);}
+.section-check-btn.spell:hover{background:#BF360C;}
+.section-score{font-size:13px;color:var(--text-sub);}
+.gq-reset{font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 12px;
+  border-radius:6px;border:1px solid rgba(0,0,0,0.15);background:white;color:#666;cursor:pointer;}
+
+/* ── EMPTY UNIT ── */
+.empty-unit{text-align:center;padding:60px 20px;color:var(--text-sub);}
+.empty-unit-icon{font-size:48px;margin-bottom:16px;}
+.empty-unit-title{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:8px;}
+.empty-unit-desc{font-size:13px;color:var(--text-sub);line-height:1.8;}
+.empty-code{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--cream);
+  border:1px solid rgba(184,134,11,0.3);border-radius:6px;padding:8px 16px;
+  display:inline-block;margin-top:12px;color:var(--gold);text-align:left;}
+
+@keyframes slideIn{from{opacity:0;transform:translateX(-14px);}to{opacity:1;transform:translateX(0);}}
+
+footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:rgba(31,56,100,0.25);letter-spacing:1px;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="top-nav">
+  <a class="home-btn" href="https://0505.co.kr">🏠 0505.co.kr</a>
+  <span class="nav-title-bar">워드마스터 하이퍼2000</span>
+  <span class="nav-badge">✦ 목동서로영어학원</span>
+</nav>
+
+<div class="passage">
+
+  <!-- WATERMARK -->
+  <div class="watermark">
+    <span class="wm-logo">✦ 목동서로영어학원</span>
+    <span class="wm-text">본 자료는 목동서로영어학원에서 제작하였습니다</span>
+    <span class="wm-url">0505.co.kr</span>
+  </div>
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <div class="page-label">워드마스터 하이퍼2000</div>
+    <div class="page-title">워드마스터 하이퍼2000</div>
+    <div class="page-sub">각 Day 20단어 · 단어카드 + 철자퀴즈 + 뜻퀴즈</div>
+  </div>
+
+  <!-- UNIT SELECTOR -->
+  <div class="unit-selector-wrap">
+    <span class="unit-selector-label">📚 Day 선택</span>
+    <select class="unit-select" id="unitSelect" onchange="changeUnit(this.value)">
+    </select>
+    <span class="unit-info-badge" id="unitInfoBadge">단어</span>
+    <div class="unit-nav-btns">
+      <button class="unit-nav-btn" onclick="prevUnit()" title="이전 과">◀</button>
+      <button class="unit-nav-btn" onclick="nextUnit()" title="다음 과">▶</button>
+    </div>
+  </div>
+
+  <!-- VIEW TABS -->
+  <div class="view-tabs">
+    <button class="view-tab tab-vocab active" id="tabV" onclick="switchTab('vocab')">📖 단어카드</button>
+    <button class="view-tab tab-spell" id="tabS" onclick="switchTab('spell')">✏️ 철자 퀴즈</button>
+    <button class="view-tab tab-meaning" id="tabM" onclick="switchTab('meaning')">🔤 뜻 퀴즈</button>
+    <button class="view-tab tab-ps" id="tabPS" onclick="switchTab('printSpell')">🖨️ 철자쓰기</button>
+    <button class="view-tab tab-pm" id="tabPM" onclick="switchTab('printMeaning')">🖨️ 뜻쓰기</button>
+  </div>
+
+  <!-- PANELS -->
+  <div class="view-panel active" id="panelVocab">
+    <div id="vocabContent"></div>
+  </div>
+  <div class="view-panel" id="panelSpell">
+    <div id="spellContent"></div>
+  </div>
+  <div class="view-panel" id="panelMeaning">
+    <div id="meaningContent"></div>
+  </div>
+  <div class="view-panel" id="panelPrintSpell">
+    <div id="printSpellContent"></div>
+  </div>
+  <div class="view-panel" id="panelPrintMeaning">
+    <div id="printMeaningContent"></div>
+  </div>
+
+</div>
+
+<footer>✦ 워드마스터 하이퍼2000 · 목동서로영어학원 · 0505.co.kr ✦</footer>
+
+<script>
+const UNITS = [];
+UNITS[0] = [{"en": "abandon", "pos": "v.", "kr": "버리다, 그만두다"}, {"en": "feature", "pos": "v.", "kr": "특징으로 하다, 특성, 특집기사"}, {"en": "participant", "pos": "n.", "kr": "참가자"}, {"en": "colleague", "pos": "n.", "kr": "동료"}, {"en": "further", "pos": "v.", "kr": "촉진하다, 그 이상의, 게다가"}, {"en": "relieve", "pos": "v.", "kr": "안심시키다, 완화시키다, 안심시키다"}, {"en": "specific", "pos": "adj.", "kr": "특정한, 명확한, 구체적인"}, {"en": "constant", "pos": "adj.", "kr": "변함없는, 불변의, 상수"}, {"en": "instrument", "pos": "n.", "kr": "기구, 도구, 악기"}, {"en": "range", "pos": "v.", "kr": "범위가 ~에 이르다, 범위, 영역"}, {"en": "aspect", "pos": "n.", "kr": "측면, 국면, 관점"}, {"en": "significant", "pos": "adj.", "kr": "중요한, 의미심장한, 상당한, 현저한"}, {"en": "prize", "pos": "v.", "kr": "소중하게 여기다, 상"}, {"en": "reflect", "pos": "v.", "kr": "반사하다, 비추다, 반영하다"}, {"en": "obvious", "pos": "adj.", "kr": "분명한, 명백한, 뻔히 들여다보이는"}, {"en": "operate", "pos": "v.", "kr": "작동하다, 작용하다"}, {"en": "identify", "pos": "v.", "kr": "확인하다, 신원확인하다"}, {"en": "rate", "pos": "v.", "kr": "평가하다, 기준하다, 비율, 등급"}, {"en": "credit", "pos": "v.", "kr": "공로를 돌리다, 믿음, 외상"}, {"en": "former", "pos": "n.", "kr": "이전의, 전자의"}];
+UNITS[1] = [{"en": "stuff", "pos": "n.", "kr": "채워 넣다, 채우다"}, {"en": "harry", "pos": "n.", "kr": "괴롭히다, 침략하다"}, {"en": "subtle", "pos": "adj.", "kr": "미묘한, 세밀한"}, {"en": "commercial", "pos": "adj.", "kr": "상업적인, 영리적인, 광고 방송"}, {"en": "convention", "pos": "n.", "kr": "집회, 관습"}, {"en": "fright", "pos": "n.", "kr": "공포, 두려움"}, {"en": "promote", "pos": "v.", "kr": "촉진하다, 장려하다, 승진시키다"}, {"en": "archaic", "pos": "n.", "kr": "구식의, 고풍의"}, {"en": "precise", "pos": "adj.", "kr": "정확한, 정밀한"}, {"en": "perspective", "pos": "n.", "kr": "원근법, 투시도, 관점"}, {"en": "phenomenon", "pos": "n.", "kr": "현상, 사건, 비범한 인물"}, {"en": "allocate", "pos": "v.", "kr": "할당하다, 배분하다"}, {"en": "reserve", "pos": "v.", "kr": "비축하다, 예약하다, 내성적인"}, {"en": "frustrate", "pos": "v.", "kr": "실망시키다, 좌절하다"}, {"en": "objective", "pos": "adj.", "kr": "객관적인, 목적, 목표"}, {"en": "agent", "pos": "adj.", "kr": "대리인, 중개인, 행위자"}, {"en": "manipulate", "pos": "n.", "kr": "잘 다루다, 조종하다"}, {"en": "financial", "pos": "n.", "kr": "재정의, 금융의"}, {"en": "valid", "pos": "adj.", "kr": "유효한, 효과적인"}, {"en": "phrase", "pos": "v.", "kr": "표현하다, 어구, 문구"}];
+UNITS[2] = [{"en": "associate", "pos": "v.", "kr": "연상하다, 관련시키다, 교제하다, 동료"}, {"en": "rural", "pos": "n.", "kr": "시골의, 전원의"}, {"en": "inevitable", "pos": "adj.", "kr": "피할 수 없는, 필연적인"}, {"en": "predict", "pos": "v.", "kr": "예언하다, 예측하다"}, {"en": "revise", "pos": "v.", "kr": "고치다, 수정하다, 개정하다"}, {"en": "technical", "pos": "adj.", "kr": "기술적인, 전문적인"}, {"en": "aggressive", "pos": "adj.", "kr": "적극적인, 의욕적인, 공격적인"}, {"en": "virtual", "pos": "n.", "kr": "사실상의, 가상의"}, {"en": "derive", "pos": "n.", "kr": "얻다, 추론하다"}, {"en": "crucial", "pos": "adj.", "kr": "결정적인, 중대한, 중요한"}, {"en": "eliminate", "pos": "v.", "kr": "제거하다, 없애다"}, {"en": "interpret", "pos": "v.", "kr": "해석하다, 이해하다, 번역하다"}, {"en": "procedure", "pos": "n.", "kr": "절차, 처리"}, {"en": "engage", "pos": "v.", "kr": "고용하다, 약속하다, 종사하다"}, {"en": "primitive", "pos": "n.", "kr": "원시의, 옛날의, 원시적인"}, {"en": "presence", "pos": "n.", "kr": "있음, 존재, 출석"}, {"en": "acknowledge", "pos": "v.", "kr": "인정하다, 시인하다"}, {"en": "dominant", "pos": "adj.", "kr": "지배적인, 우세한, 두드러진"}, {"en": "enormous", "pos": "adj.", "kr": "거대한, 엄청난, 방대한"}, {"en": "moderate", "pos": "adj.", "kr": "온건한, 절제하는, 조정하다"}];
+UNITS[3] = [{"en": "prompt", "pos": "v.", "kr": "자극하다, 유발하다, 신속한"}, {"en": "desperate", "pos": "adj.", "kr": "절망적인, 필사적인, 절박한"}, {"en": "transmit", "pos": "v.", "kr": "보내다, 전달하다"}, {"en": "distinctive", "pos": "adj.", "kr": "독특한, 특색있는"}, {"en": "metaphor", "pos": "n.", "kr": "은유, 비유, 상징"}, {"en": "complicate", "pos": "v.", "kr": "복잡하게 하다"}, {"en": "genuine", "pos": "n.", "kr": "진짜의, 거짓이 아닌, 진실한"}, {"en": "institution", "pos": "n.", "kr": "학회, 단체, 제도, 제정"}, {"en": "disastrous", "pos": "adj.", "kr": "비참한, 재난의"}, {"en": "obstacle", "pos": "n.", "kr": "장애, 방해"}, {"en": "verbal", "pos": "n.", "kr": "말의, 구두의"}, {"en": "analysis", "pos": "n.", "kr": "분석, 해석"}, {"en": "emerge", "pos": "n.", "kr": "드러나다, 나오다"}, {"en": "stroke", "pos": "n.", "kr": "쓰다듬다, (공을) 치다"}, {"en": "anticipate", "pos": "v.", "kr": "예상하다, 기대하다"}, {"en": "discipline", "pos": "v.", "kr": "훈련하다, 훈련, 규율"}, {"en": "ancestor", "pos": "n.", "kr": "조상, 선조"}, {"en": "clan", "pos": "n.", "kr": "씨족, 집단"}, {"en": "resolve", "pos": "v.", "kr": "해결하다, 결심하다"}, {"en": "restore", "pos": "v.", "kr": "복구하다, 회복시키다"}];
+UNITS[4] = [{"en": "restrict", "pos": "v.", "kr": "제한하다, 한정하다"}, {"en": "sequence", "pos": "n.", "kr": "연속, 순서"}, {"en": "vital", "pos": "adj.", "kr": "중요한, 필수적인, 생명의, 활기찬"}, {"en": "evolve", "pos": "v.", "kr": "진화하다, 발전하다"}, {"en": "perceive", "pos": "v.", "kr": "인식하다, 알아차리다"}, {"en": "irritate", "pos": "v.", "kr": "짜증나게 하다, 자극하다"}, {"en": "preference", "pos": "n.", "kr": "선호, 편애, 우선권"}, {"en": "tremendous", "pos": "adj.", "kr": "거대한, 엄청난, 굉장한"}, {"en": "fatigue", "pos": "n.", "kr": "피로, 피곤하게 하다"}, {"en": "retention", "pos": "n.", "kr": "보유, 유지, 기억"}, {"en": "static", "pos": "adj.", "kr": "정적인, 정지된"}, {"en": "assumption", "pos": "n.", "kr": "가정, 추정, 억측"}, {"en": "commitment", "pos": "n.", "kr": "책임, 약속, 헌신"}, {"en": "mechanical", "pos": "adj.", "kr": "기계적인, 기계의"}, {"en": "prospect", "pos": "n.", "kr": "예상, 기대, 전망"}, {"en": "reference", "pos": "n.", "kr": "언급, 참조, 추천인"}, {"en": "qualify", "pos": "v.", "kr": "자격을 주다, 한정하다"}, {"en": "raw", "pos": "n.", "kr": "날것의, 가공하지 않은, 경험이없는"}, {"en": "blossom", "pos": "n.", "kr": "꽃, 개화, 꽃이 피다"}, {"en": "drain", "pos": "v.", "kr": "배수하다, 고갈시키다"}];
+UNITS[5] = [{"en": "lessen", "pos": "v.", "kr": "줄이다, 줄다, 적게하다"}, {"en": "respective", "pos": "n.", "kr": "저마다의, 개개의"}, {"en": "soar", "pos": "n.", "kr": "높이 치솟다, 급상승하다"}, {"en": "equilibrium", "pos": "n.", "kr": "평형, 균형, 평정"}, {"en": "auditory", "pos": "n.", "kr": "귀의, 청각의"}, {"en": "multiple", "pos": "n.", "kr": "다수의, 다양한, 배수의"}, {"en": "prominent", "pos": "adj.", "kr": "두드러진, 유명한, 탁월한"}, {"en": "resistant", "pos": "adj.", "kr": "저항하는, 견디는"}, {"en": "evident", "pos": "adj.", "kr": "명백한, 분명한"}, {"en": "depress", "pos": "v.", "kr": "의기소침하게 하다, 우울하게 하다"}, {"en": "intensify", "pos": "v.", "kr": "강하게 하다, 강화하다"}, {"en": "compensation", "pos": "n.", "kr": "보상, 보수(금)"}, {"en": "dismiss", "pos": "v.", "kr": "해고하다, 기각하다"}, {"en": "elaborate", "pos": "v.", "kr": "정교하게 만들다, 상세히 말하다"}, {"en": "messy", "pos": "adj.", "kr": "지저분한, 엉망인"}, {"en": "psychological", "pos": "adj.", "kr": "심리적인, 심리학적인"}, {"en": "scent", "pos": "n.", "kr": "냄새, 향기, 냄새를 맡다"}, {"en": "tempt", "pos": "v.", "kr": "유혹하다, 부추기다"}, {"en": "trace", "pos": "n.", "kr": "자취, 흔적, 추적하다"}, {"en": "treasure", "pos": "v.", "kr": "소중히 하다, 보물, 평가하다"}];
+UNITS[6] = [{"en": "trigger", "pos": "v.", "kr": "발사하다, 일으키다"}, {"en": "witness", "pos": "v.", "kr": "목격하다, 증명하다"}, {"en": "profound", "pos": "n.", "kr": "깊은, 심오한"}, {"en": "surgery", "pos": "n.", "kr": "수술, 외과"}, {"en": "conceal", "pos": "v.", "kr": "숨기다, 감추다"}, {"en": "literal", "pos": "n.", "kr": "글자 그대로의, 있는 그대로의"}, {"en": "alert", "pos": "adj.", "kr": "방심하지 않는, 경고하다, 주의하다"}, {"en": "refund", "pos": "v.", "kr": "돌려주다, 환불하다"}, {"en": "sophisticated", "pos": "n.", "kr": "세련된, 교양 있는"}, {"en": "currency", "pos": "n.", "kr": "통화, 화폐, 유통"}, {"en": "accommodate", "pos": "v.", "kr": "수용하다, 돌보다, 적응하다"}, {"en": "certificate", "pos": "n.", "kr": "자격증, 면허증, 증명서"}, {"en": "coordinate", "pos": "v.", "kr": "조정하다, 통합시키다"}, {"en": "draft", "pos": "n.", "kr": "초안, 설계도, 징병"}, {"en": "extension", "pos": "n.", "kr": "확대, 확장, 증축, 내선"}, {"en": "extract", "pos": "n.", "kr": "빼다, 추출하다"}, {"en": "fierce", "pos": "adj.", "kr": "사나운, 거친, 맹렬한"}, {"en": "steep", "pos": "n.", "kr": "적시다, 담그다"}, {"en": "nerve", "pos": "n.", "kr": "신경, 긴장, 용기"}, {"en": "phase", "pos": "n.", "kr": "모습, 양상, 국면"}];
+UNITS[7] = [{"en": "identical", "pos": "adj.", "kr": "동일한, 똑같은"}, {"en": "stare", "pos": "v.", "kr": "응시하다, 노려보다"}, {"en": "sedentary", "pos": "adj.", "kr": "주로 앉아서 지내는, 정착성의"}, {"en": "regulate", "pos": "v.", "kr": "규제하다, 조절하다"}, {"en": "supplement", "pos": "n.", "kr": "보충, 부록, 보충하다"}, {"en": "suspend", "pos": "v.", "kr": "중지하다, 정지시키다"}, {"en": "depreciate", "pos": "n.", "kr": "가치가 떨어지다, 평가 절하하다"}, {"en": "appliance", "pos": "n.", "kr": "전기 제품, 가구"}, {"en": "sublime", "pos": "adj.", "kr": "숭고한, 황홀한"}, {"en": "deteriorate", "pos": "v.", "kr": "떨어뜨리다, 악화시키다"}, {"en": "grasp", "pos": "v.", "kr": "이해하다, 붙잡다"}, {"en": "illegal", "pos": "n.", "kr": "불법의, 비합법적인"}, {"en": "ingredient", "pos": "n.", "kr": "성분, 재료"}, {"en": "dedicate", "pos": "v.", "kr": "바치다, 헌신하다"}, {"en": "urge", "pos": "n.", "kr": "충동, 욕구, 재촉하다"}, {"en": "inherit", "pos": "v.", "kr": "물려받다, 상속하다"}, {"en": "originate", "pos": "v.", "kr": "발생하다, 기원하다"}, {"en": "paralyze", "pos": "v.", "kr": "마비시키다, 무력하게 만들다"}, {"en": "recipient", "pos": "adj.", "kr": "수령인, 그릇"}, {"en": "shrink", "pos": "v.", "kr": "줄어들다, 오그라들다, 움츠러들다"}];
+UNITS[8] = [{"en": "transaction", "pos": "n.", "kr": "진행, 업무, 거래, 매매"}, {"en": "expertise", "pos": "n.", "kr": "전문 지식"}, {"en": "inferior", "pos": "adj.", "kr": "열등한, 더 못한, 하위의"}, {"en": "facilitate", "pos": "v.", "kr": "촉진하다, 수월하게 하다"}, {"en": "irrelevant", "pos": "adj.", "kr": "관계가 없는, 부적절한, 타당하지 않은"}, {"en": "literary", "pos": "n.", "kr": "문학의, 문학적인"}, {"en": "distort", "pos": "n.", "kr": "비틀다, 왜곡하다"}, {"en": "optimal", "pos": "n.", "kr": "최적의, 최선의, 최상의"}, {"en": "rear", "pos": "n.", "kr": "뒤의, 후방의, 기르다, 양육하다"}, {"en": "skeptical", "pos": "adj.", "kr": "회의적인, 의심 많은"}, {"en": "abstract", "pos": "adj.", "kr": "추상적인, 개념적인, 발췌하다"}, {"en": "empirical", "pos": "n.", "kr": "경험적, 실증적인"}, {"en": "ethnic", "pos": "n.", "kr": "민족의, 인종의"}, {"en": "allowance", "pos": "n.", "kr": "허용, 용돈, 수당"}, {"en": "coverage", "pos": "n.", "kr": "방송 보도, 취재, 범위"}, {"en": "incorporate", "pos": "v.", "kr": "포함하다, 통합하다"}, {"en": "rationality", "pos": "n.", "kr": "합리성, 이성적 판단"}, {"en": "distract", "pos": "v.", "kr": "산만하게 하다"}, {"en": "massive", "pos": "adj.", "kr": "크고 무거운, 거대한"}, {"en": "radical", "pos": "adj.", "kr": "근본적인, 급진적인"}];
+UNITS[9] = [{"en": "infer", "pos": "v.", "kr": "추론하다"}, {"en": "reinforce", "pos": "v.", "kr": "강화하다, 증진시키다"}, {"en": "representative", "pos": "n.", "kr": "대표자, 전형적인, 대표하는"}, {"en": "virtue", "pos": "n.", "kr": "선, 덕, 가치, 장점"}, {"en": "subordinate", "pos": "v.", "kr": "종속시키다, 하위의"}, {"en": "variation", "pos": "n.", "kr": "변화, 차이, 변형"}, {"en": "sacred", "pos": "adj.", "kr": "신성한, 종교적인"}, {"en": "withdraw", "pos": "v.", "kr": "철회하다, 그만두다"}, {"en": "characterize", "pos": "v.", "kr": "특징 짓다, 성격을 묘사하다"}, {"en": "dilute", "pos": "v.", "kr": "묽게 하다, 약화시키다"}, {"en": "maintenance", "pos": "n.", "kr": "유지, 보수, 정비, 생계"}, {"en": "evoke", "pos": "v.", "kr": "일깨우다, 불러일으키다"}, {"en": "exaggerate", "pos": "v.", "kr": "과장하다"}, {"en": "infinite", "pos": "adj.", "kr": "무한한, 끝없는"}, {"en": "revelation", "pos": "n.", "kr": "폭로, 드러남, 계시"}, {"en": "magnify", "pos": "v.", "kr": "확대하다, 과장하다"}, {"en": "nurture", "pos": "v.", "kr": "기르다, 양육하다"}, {"en": "vague", "pos": "adj.", "kr": "막연한, 애매한, 흐릿한"}, {"en": "strive", "pos": "v.", "kr": "노력하다, 애쓰다"}, {"en": "privilege", "pos": "n.", "kr": "특권, 특권을 주다"}];
+UNITS[10] = [{"en": "aesthetic", "pos": "n.", "kr": "미학적, 심미적, 미학"}, {"en": "starvation", "pos": "n.", "kr": "굶주림, 기아"}, {"en": "avalanche", "pos": "n.", "kr": "눈사태, 쇄도, 쇄도하다"}, {"en": "meditation", "pos": "n.", "kr": "명상, 심사숙고"}, {"en": "forecast", "pos": "v.", "kr": "예측하다, 예측"}, {"en": "inappropriate", "pos": "adj.", "kr": "부적절한, 말맞지 않은"}, {"en": "innate", "pos": "adj.", "kr": "타고난, 선천적인"}, {"en": "intimate", "pos": "adj.", "kr": "친밀한, 개인적인, 넌지시 알리다"}, {"en": "kin", "pos": "n.", "kr": "친척, 친족"}, {"en": "martial", "pos": "n.", "kr": "전쟁의, 호전적인"}, {"en": "niche", "pos": "n.", "kr": "틈새시장, 적소"}, {"en": "refuge", "pos": "n.", "kr": "피난처, 보호"}, {"en": "retrospect", "pos": "n.", "kr": "회고, 추억"}, {"en": "savage", "pos": "n.", "kr": "야만의, 야만적인"}, {"en": "antecedent", "pos": "adj.", "kr": "앞서는, 전례, 선행사건"}, {"en": "visualize", "pos": "v.", "kr": "마음속에 그리다, 상상하다"}, {"en": "constitute", "pos": "v.", "kr": "구성하다, 제정하다"}, {"en": "ban", "pos": "v.", "kr": "금지하다, 금지령"}, {"en": "withstand", "pos": "n.", "kr": "견디다, 저항하다"}, {"en": "vulnerability", "pos": "n.", "kr": "상처받기 쉬움, (취)약함"}];
+UNITS[11] = [{"en": "declare", "pos": "v.", "kr": "선언하다, 신고하다"}, {"en": "affection", "pos": "n.", "kr": "애정, 호의"}, {"en": "remedy", "pos": "n.", "kr": "치료, 구제책, 치료하다"}, {"en": "immense", "pos": "adj.", "kr": "거대한, 엄청난"}, {"en": "incline", "pos": "v.", "kr": "~하고 싶어지게 하다, 기울이다"}, {"en": "infrastructure", "pos": "n.", "kr": "사회기반시설"}, {"en": "reluctant", "pos": "adj.", "kr": "꺼리는, 마지못해 하는"}, {"en": "innocent", "pos": "adj.", "kr": "순수한, 결백한"}, {"en": "instruct", "pos": "v.", "kr": "명령하다, 가르치다"}, {"en": "infect", "pos": "v.", "kr": "감염시키다"}, {"en": "possess", "pos": "v.", "kr": "소유하다, 주술하다"}, {"en": "refine", "pos": "v.", "kr": "세련되게 하다, 정제하다"}, {"en": "integrate", "pos": "v.", "kr": "통합하다, 융합되다"}, {"en": "exploit", "pos": "v.", "kr": "착취하다, 개발하다"}, {"en": "revenue", "pos": "n.", "kr": "수입, 세입"}, {"en": "seize", "pos": "n.", "kr": "붙잡다, 장악하다"}, {"en": "flatter", "pos": "v.", "kr": "아첨하다, 우쭐하게 하다"}, {"en": "stir", "pos": "n.", "kr": "휘젓다, 선동하다"}, {"en": "substitute", "pos": "v.", "kr": "대체하다, 대체물"}, {"en": "swell", "pos": "n.", "kr": "부풀다, 팽창, 증가"}];
+UNITS[12] = [{"en": "simulate", "pos": "v.", "kr": "흉내내다"}, {"en": "altitude", "pos": "n.", "kr": "고도, 높이"}, {"en": "deprive", "pos": "n.", "kr": "빼앗다, 박탈하다"}, {"en": "discharge", "pos": "v.", "kr": "방출하다, 방전하다, 해고하다"}, {"en": "disguise", "pos": "v.", "kr": "변장하다, 숨기다, 변장"}, {"en": "corrupt", "pos": "v.", "kr": "부패하다, 매수하다"}, {"en": "patriot", "pos": "n.", "kr": "애국자"}, {"en": "disregard", "pos": "v.", "kr": "무시하다, 소홀히 하다"}, {"en": "domesticate", "pos": "v.", "kr": "길들이다, 본의화하다"}, {"en": "invariable", "pos": "n.", "kr": "불변의, 일정한"}, {"en": "drastic", "pos": "adj.", "kr": "격렬한, 과감한"}, {"en": "devour", "pos": "v.", "kr": "삼키다, 게걸스럽게 먹다"}, {"en": "patronize", "pos": "n.", "kr": "단골로 삼다, 후원하다"}, {"en": "subsequent", "pos": "n.", "kr": "그 다음의, 이후의"}, {"en": "substantial", "pos": "adj.", "kr": "상당한, 실질적인"}, {"en": "suburb", "pos": "n.", "kr": "교외, 근교"}, {"en": "ridiculous", "pos": "adj.", "kr": "우스운, 어리석은"}, {"en": "maneuver", "pos": "v.", "kr": "기동하다, 책략"}, {"en": "portray", "pos": "v.", "kr": "묘사하다, 표현하다"}, {"en": "thrive", "pos": "v.", "kr": "번영하다, 잘 자라다"}];
+UNITS[13] = [{"en": "sanction", "pos": "n.", "kr": "허가, 비준, 제재"}, {"en": "align", "pos": "v.", "kr": "정렬하다, 조정하다"}, {"en": "awe", "pos": "n.", "kr": "경외, 존경"}, {"en": "soothe", "pos": "n.", "kr": "달래다, 진정시키다"}, {"en": "disparity", "pos": "n.", "kr": "불일치, 격차"}, {"en": "evaporate", "pos": "v.", "kr": "증발하다, 사라지다"}, {"en": "indecision", "pos": "n.", "kr": "우유부단, 결단력 없음"}, {"en": "realm", "pos": "n.", "kr": "왕국, 영역"}, {"en": "furious", "pos": "adj.", "kr": "격노한, 맹렬한"}, {"en": "humiliate", "pos": "v.", "kr": "굴욕감을 주다"}, {"en": "affordable", "pos": "n.", "kr": "알맞은, 감당할 수 있는"}, {"en": "physiology", "pos": "n.", "kr": "생리학, 생리(기능)"}, {"en": "confer", "pos": "v.", "kr": "상의하다, 수여하다"}, {"en": "curb", "pos": "v.", "kr": "억제하다, 재갈, 억제"}, {"en": "endurance", "pos": "n.", "kr": "인내, 내구성, 지구력"}, {"en": "probe", "pos": "v.", "kr": "철저히 조사하다, 탐사"}, {"en": "recess", "pos": "n.", "kr": "휴식, 휴회, 휴회 시간"}, {"en": "vigorous", "pos": "adj.", "kr": "활발한, 원기 왕성한"}, {"en": "reciprocate", "pos": "v.", "kr": "보답하다, 교환하다"}, {"en": "inspection", "pos": "n.", "kr": "조사, 정밀 검사, 사찰"}];
+UNITS[14] = [{"en": "retrieve", "pos": "n.", "kr": "되찾다, 회복하다"}, {"en": "solitary", "pos": "adj.", "kr": "고독한, 외로운"}, {"en": "spectacular", "pos": "n.", "kr": "구경거리의, 장관의"}, {"en": "weird", "pos": "adj.", "kr": "이상한, 괴기스러운"}, {"en": "weary", "pos": "adj.", "kr": "피곤한, 지친, 권태가 나는"}, {"en": "superficial", "pos": "n.", "kr": "표면의, 피상적인"}, {"en": "enthusiastic", "pos": "adj.", "kr": "열렬한, 열광적인"}, {"en": "generous", "pos": "adj.", "kr": "관대한, 후한, 풍부한"}, {"en": "convert", "pos": "v.", "kr": "바꾸다, 전환시키다"}, {"en": "collapse", "pos": "n.", "kr": "무너지다, 붕괴"}, {"en": "conform", "pos": "v.", "kr": "일치하다, 순응하다"}, {"en": "hierarchy", "pos": "n.", "kr": "계급제, 계층제"}, {"en": "insulate", "pos": "v.", "kr": "절연하다, 고립시키다, 보호하다"}, {"en": "forge", "pos": "v.", "kr": "날조하다, 만들어내다, 대장간"}, {"en": "resort", "pos": "v.", "kr": "의지하다, 휴양지"}, {"en": "integral", "pos": "adj.", "kr": "필수적인, 내장된, 완전한"}, {"en": "interfere", "pos": "v.", "kr": "방해하다, 간섭하다"}, {"en": "scope", "pos": "n.", "kr": "범위, 영역, 크기"}, {"en": "ritualize", "pos": "v.", "kr": "의식적으로 행하다"}, {"en": "irrational", "pos": "adj.", "kr": "이성이 없는, 불합리한"}];
+UNITS[15] = [{"en": "intermediate", "pos": "n.", "kr": "중간의, 중급의"}, {"en": "orient", "pos": "n.", "kr": "동쪽, 적응시키다, 향하게하다"}, {"en": "fossil", "pos": "n.", "kr": "화석, 구식"}, {"en": "counterpart", "pos": "n.", "kr": "대응물, 상응하는 사람(것)"}, {"en": "proportion", "pos": "n.", "kr": "비율, 조화, 균형"}, {"en": "royalty", "pos": "n.", "kr": "왕실, 왕위, 특허권 사용료"}, {"en": "straightforward", "pos": "adj.", "kr": "직설적인, 간단한"}, {"en": "attentive", "pos": "n.", "kr": "주의 깊은, 세심한"}, {"en": "shallow", "pos": "n.", "kr": "얕은, 얄팍한, 피상적인"}, {"en": "sincerity", "pos": "n.", "kr": "성실, 진실, 정직"}, {"en": "scheme", "pos": "n.", "kr": "계획, 음모, 구성"}, {"en": "tender", "pos": "adj.", "kr": "부드러운, 연한, 상냥한"}, {"en": "undertake", "pos": "n.", "kr": "맡다, 착수하다, 시작하다"}, {"en": "parallel", "pos": "adj.", "kr": "평행한, 평행선, 유사한"}, {"en": "intervention", "pos": "n.", "kr": "개입, 중재"}, {"en": "endeavor", "pos": "n.", "kr": "노력, 시도, 노력하다"}, {"en": "envision", "pos": "v.", "kr": "마음속에 그리다, 상상하다"}, {"en": "expire", "pos": "v.", "kr": "만료되다, 끝나다, 숨을 거두다"}, {"en": "exclusive", "pos": "adj.", "kr": "독점하는, 배타적인, 독특한"}, {"en": "illuminate", "pos": "v.", "kr": "비추다, 계몽하다"}];
+UNITS[16] = [{"en": "intrigue", "pos": "v.", "kr": "호기심을 불러일으키다, 음모"}, {"en": "notorious", "pos": "n.", "kr": "악명 높은"}, {"en": "outweigh", "pos": "n.", "kr": "--보다 무겁다(크다), 대단하다, 압도하다"}, {"en": "overtake", "pos": "v.", "kr": "앞지르다, 넘치다"}, {"en": "legitimate", "pos": "n.", "kr": "합법의, 타당한, 법적인, 타당한"}, {"en": "prolific", "pos": "adj.", "kr": "열매를 많이 맺는, 다산의, 비옥한"}, {"en": "sensible", "pos": "adj.", "kr": "분별이 있는, 현명한"}, {"en": "rage", "pos": "n.", "kr": "분노, 격노, 분노하다"}, {"en": "supervise", "pos": "v.", "kr": "감독하다, 지휘하다"}, {"en": "undermine", "pos": "v.", "kr": "약화시키다, 기초를 침식하다"}, {"en": "startle", "pos": "v.", "kr": "깜짝 놀라게 하다, 깜짝 놀라다"}, {"en": "strain", "pos": "v.", "kr": "팽팽하게 하다, 긴장시키다, 노력하다, 긴장, 과로"}, {"en": "setback", "pos": "n.", "kr": "방해, 좌절, 역행"}, {"en": "pollinate", "pos": "n.", "kr": "꽃가루받이(수분하다)"}, {"en": "surge", "pos": "v.", "kr": "쇄도하다, 치솟다, 쇄도, 돌진, 급상승"}, {"en": "vendor", "pos": "adj.", "kr": "행상인, 장수, 자동차판매기"}, {"en": "utter", "pos": "v.", "kr": "입 밖에 내다, 말하다, 완전한, 철저한"}, {"en": "surpass", "pos": "v.", "kr": "능가하다, 뛰어넘다"}, {"en": "downplay", "pos": "v.", "kr": "경시하다, 얕보다"}, {"en": "epic", "pos": "n.", "kr": "서사시(의), 웅장한"}];
+UNITS[17] = [{"en": "acquisition", "pos": "n.", "kr": "습득, 획득"}, {"en": "adverse", "pos": "n.", "kr": "반대의, 거스르는"}, {"en": "affirmative", "pos": "adj.", "kr": "긍정적인, 적극적인"}, {"en": "barren", "pos": "n.", "kr": "불모의, 메마른"}, {"en": "candid", "pos": "adj.", "kr": "솔직한, 숨김없는"}, {"en": "combustion", "pos": "n.", "kr": "연소, 산화"}, {"en": "communal", "pos": "n.", "kr": "공동의, 공용체의"}, {"en": "disobedience", "pos": "n.", "kr": "불복종, 반항"}, {"en": "conserve", "pos": "v.", "kr": "보호하다, 보존하다, 유지하다"}, {"en": "console", "pos": "v.", "kr": "위로하다"}, {"en": "contagion", "pos": "n.", "kr": "전염, 전달, 영향"}, {"en": "dialect", "pos": "n.", "kr": "방언, 사투리"}, {"en": "contempt", "pos": "n.", "kr": "경멸, 멸시"}, {"en": "credibility", "pos": "n.", "kr": "신뢰성, 진실성"}, {"en": "crude", "pos": "n.", "kr": "천연의, 가공하지 않은"}, {"en": "monetary", "pos": "n.", "kr": "금전의, 재정의"}, {"en": "dissent", "pos": "v.", "kr": "반대하다, 반대"}, {"en": "diversify", "pos": "v.", "kr": "다양하게 하다"}];
+UNITS[18] = [{"en": "equanimity", "pos": "n.", "kr": "침착, 평정, 차분함"}, {"en": "fertility", "pos": "n.", "kr": "비옥함, 생식력(다산)"}, {"en": "fluency", "pos": "n.", "kr": "유창함, 달변"}, {"en": "formidable", "pos": "adj.", "kr": "무서운, 어려운, 경외로운"}, {"en": "hostile", "pos": "adj.", "kr": "적대적인, 적개심을 가진"}, {"en": "humility", "pos": "n.", "kr": "겸손, 스스로 낮춤"}, {"en": "multitude", "pos": "n.", "kr": "군중, 다수, 수많음"}, {"en": "indispensable", "pos": "adj.", "kr": "필수적인, 없어서는 안 되는"}, {"en": "infest", "pos": "n.", "kr": "들끓다, 창궐하다"}, {"en": "installment", "pos": "n.", "kr": "할부금의 1회분"}, {"en": "leakage", "pos": "n.", "kr": "누수, 누출"}, {"en": "naive", "pos": "adj.", "kr": "순진한, 순박한, 잘 속는"}, {"en": "liability", "pos": "n.", "kr": "책임, 의무, 부채, 채무, 불리한 일, 약점"}, {"en": "merger", "pos": "n.", "kr": "합병"}, {"en": "mobility", "pos": "n.", "kr": "가동성, 기동성, 사회적 이동성"}, {"en": "pester", "pos": "n.", "kr": "괴롭히다, 성가시게 하다"}, {"en": "obscure", "pos": "v.", "kr": "흐릿하게 하다, 숨기다, 모호한, 애매한"}, {"en": "deviate", "pos": "n.", "kr": "벗어나다, 일탈하다"}, {"en": "spiral", "pos": "n.", "kr": "나선형(의), 소용돌이"}, {"en": "peripheral", "pos": "n.", "kr": "주변의, 지엽적인, 중요하지않은"}];
+UNITS[19] = [{"en": "receptive", "pos": "adj.", "kr": "잘 받아들이는, 수용성의, 감수성이 있는"}, {"en": "petition", "pos": "n.", "kr": "청원, 정정하다"}, {"en": "potent", "pos": "adj.", "kr": "강력한, 효능, 영향력이 있는"}, {"en": "pronounced", "pos": "adj.", "kr": "두드러진, 현저한, 분명한"}, {"en": "prophecy", "pos": "n.", "kr": "예언"}, {"en": "oblivion", "pos": "n.", "kr": "망각, 잊혀짐"}, {"en": "retreat", "pos": "v.", "kr": "후퇴하다, 물러가다, 재차하다, 퇴각"}, {"en": "resume", "pos": "v.", "kr": "회복하다, 되찾다"}, {"en": "restless", "pos": "adj.", "kr": "불안한, 잠 못 이루는, 감추지 못하는"}, {"en": "rhetorical", "pos": "n.", "kr": "미사여구의, 수사적인"}, {"en": "stale", "pos": "n.", "kr": "신선하지 않은, 진부한"}, {"en": "scenic", "pos": "n.", "kr": "경치가 좋은, 풍경이 아름다운"}, {"en": "simultaneous", "pos": "adj.", "kr": "일어나는존재하는, 동시에"}, {"en": "spatial", "pos": "n.", "kr": "공간의, 공간적인, 우주의"}, {"en": "utilitarian", "pos": "adj.", "kr": "실용적인, 실리의"}, {"en": "synthetic", "pos": "n.", "kr": "합성의, 인조의, 진짜가 아닌"}, {"en": "texture", "pos": "n.", "kr": "본질, 기질"}, {"en": "arbitrary", "pos": "adj.", "kr": "임의적인, 자의적인, 독단적인"}, {"en": "tolerate", "pos": "n.", "kr": "관용을, 용인, 내성"}, {"en": "unencumbered", "pos": "adj.", "kr": "장애물이 없는, 방해가 없는"}];
+UNITS[20] = [{"en": "dimension", "pos": "n.", "kr": "치수, 크기, 차원"}, {"en": "assemble", "pos": "v.", "kr": "조립하다, 모으다, 모이다"}, {"en": "theft", "pos": "n.", "kr": "도둑질, 절도"}, {"en": "awkward", "pos": "adj.", "kr": "어색한, 서투른"}, {"en": "caution", "pos": "n.", "kr": "경계, 주의, 조심, 경고하다"}, {"en": "vanish", "pos": "n.", "kr": "사라지다, 없어지다"}, {"en": "explicit", "pos": "adj.", "kr": "명백한, 뚜렷한, 솔직한"}, {"en": "hinder", "pos": "v.", "kr": "지연시키다, 막다, 방해하다"}, {"en": "implication", "pos": "n.", "kr": "암시, 함축"}, {"en": "impose", "pos": "v.", "kr": "부과하다, 지우다, 강요하다"}, {"en": "inhibit", "pos": "v.", "kr": "억제하다, 막다"}, {"en": "initiate", "pos": "v.", "kr": "시작하다, 일으키다, 가입시키다"}, {"en": "medicinal", "pos": "n.", "kr": "약의, 약효가 있는, 치료의"}, {"en": "negotiate", "pos": "v.", "kr": "협상하다, 교섭하다"}, {"en": "persist", "pos": "v.", "kr": "끈질기다, 지속하다, 주장을계속하다"}, {"en": "scarcity", "pos": "n.", "kr": "부족, 결핍, 기근, 희박"}, {"en": "profession", "pos": "n.", "kr": "직업, 공업, 전문"}, {"en": "spiritual", "pos": "adj.", "kr": "정신적인, 영적인"}, {"en": "tease", "pos": "v.", "kr": "놀리다, 집적거리다, 괴롭히다"}, {"en": "presumable", "pos": "adj.", "kr": "가정할 수 있는, 그럴듯한"}];
+UNITS[21] = [{"en": "severe", "pos": "adj.", "kr": "가혹한, 심한, 엄한"}, {"en": "restraint", "pos": "n.", "kr": "규제, 구속, 자제, 체제"}, {"en": "stiff", "pos": "n.", "kr": "굳은, 뻣뻣한"}, {"en": "subsidize", "pos": "v.", "kr": "보조금을 주다"}, {"en": "revenge", "pos": "v.", "kr": "복수하다, 복수, 보복"}, {"en": "termination", "pos": "n.", "kr": "종결, 결말, 종점"}, {"en": "violate", "pos": "v.", "kr": "위반하다, 어기다, 침해하다"}, {"en": "wreck", "pos": "n.", "kr": "난파선, 잔해, 파괴하다, 망치다"}, {"en": "adhere", "pos": "n.", "kr": "들러붙다, 고수하다, 집착하다"}, {"en": "alleviate", "pos": "v.", "kr": "완화시키다, 경감하다, 덜어주다"}, {"en": "abolish", "pos": "v.", "kr": "폐지하다, 없애다"}, {"en": "circulate", "pos": "v.", "kr": "유통하다, 순환하다"}, {"en": "alternate", "pos": "v.", "kr": "번갈아 발생하다, 번갈아가며 하다"}, {"en": "anchor", "pos": "v.", "kr": "고정시키다, 닻을 내리다, 닻"}, {"en": "collision", "pos": "n.", "kr": "충돌, 격돌"}, {"en": "celebrity", "pos": "n.", "kr": "유명인사, 명성"}, {"en": "worship", "pos": "v.", "kr": "숭배하다, 신앙하다, 존경하다"}, {"en": "crave", "pos": "v.", "kr": "갈망하다, 간절히 원하다"}, {"en": "contemplate", "pos": "v.", "kr": "심사숙고하다, 추측하다, (명령)"}, {"en": "contract", "pos": "v.", "kr": "걸리다, 계약하다, 계약서"}];
+UNITS[22] = [{"en": "liberate", "pos": "v.", "kr": "자유롭게 하다"}, {"en": "disperse", "pos": "n.", "kr": "흩어지다, 분산시키다"}, {"en": "embed", "pos": "n.", "kr": "박다, 끼워 넣다"}, {"en": "entail", "pos": "v.", "kr": "수반하다, 일으키다"}, {"en": "fatality", "pos": "n.", "kr": "사망자(수), 치사율"}, {"en": "fraud", "pos": "n.", "kr": "사기, 기만, 사기꾼"}, {"en": "hesitant", "pos": "adj.", "kr": "망설이는, 주저하는"}, {"en": "indefinite", "pos": "adj.", "kr": "불명확한, 불분명한"}, {"en": "inflame", "pos": "v.", "kr": "불태우다, 홍조시키다"}, {"en": "inflate", "pos": "v.", "kr": "부풀리다, 팽창하다"}, {"en": "divulge", "pos": "v.", "kr": "누설하다, 폭로하다"}, {"en": "internalize", "pos": "v.", "kr": "내면화시키다"}, {"en": "intrude", "pos": "v.", "kr": "침입하다, 방해하다"}, {"en": "liken", "pos": "v.", "kr": "비유하다, 비교하다"}, {"en": "contaminate", "pos": "n.", "kr": "더럽히다, 오염시키다"}, {"en": "momentary", "pos": "adj.", "kr": "순간적인, 찰나의"}, {"en": "dignity", "pos": "n.", "kr": "존엄성"}, {"en": "pirate", "pos": "n.", "kr": "해적, 저작권을 침해하다"}, {"en": "plague", "pos": "n.", "kr": "역병, 전염병"}, {"en": "preoccupy", "pos": "n.", "kr": "완전히 마음을 빼앗다, 몰두하게 하다"}];
+UNITS[23] = [{"en": "linger", "pos": "n.", "kr": "오래 남아 있다, 꾸물거리다"}, {"en": "prevail", "pos": "v.", "kr": "만연하다, 지배하다"}, {"en": "proponent", "pos": "n.", "kr": "지지자, 제안자"}, {"en": "refashion", "pos": "v.", "kr": "개조하다"}, {"en": "regain", "pos": "n.", "kr": "되찾다, 회복하다"}, {"en": "intertwine", "pos": "v.", "kr": "뒤엉키다, 얽히다"}, {"en": "shrub", "pos": "n.", "kr": "관목, 작은 나무"}, {"en": "relocate", "pos": "v.", "kr": "재배치하다"}, {"en": "submerge", "pos": "v.", "kr": "잠수하다, 물에 잠기게 하"}, {"en": "advent", "pos": "n.", "kr": "출현, 도래"}, {"en": "affluent", "pos": "adj.", "kr": "부유한, 풍족한"}, {"en": "agenda", "pos": "n.", "kr": "의제, 안건"}, {"en": "ally", "pos": "n.", "kr": "동맹자, 지지자"}, {"en": "anarchy", "pos": "n.", "kr": "무정부 상태, 무질서"}, {"en": "suppress", "pos": "v.", "kr": "억압하다, 억제하다"}, {"en": "decent", "pos": "adj.", "kr": "적절한, 예의 바른"}, {"en": "authenticate", "pos": "v.", "kr": "인증하다, 진짜임을 증명하다"}, {"en": "asymmetry", "pos": "n.", "kr": "불균형, 비대칭"}, {"en": "apparatus", "pos": "n.", "kr": "장치, 기계, 기구"}, {"en": "barbarous", "pos": "adj.", "kr": "야만적인, 미개한"}];
+UNITS[24] = [{"en": "concur", "pos": "v.", "kr": "동의하다, 의견이 일치하다, 동시에 발생하다"}, {"en": "bland", "pos": "adj.", "kr": "부드러운, 온화한, 자극성이없는, 개성 없는, 재미없는"}, {"en": "collaborative", "pos": "n.", "kr": "공동의, 협력의, 합작의"}, {"en": "conviction", "pos": "n.", "kr": "확신, 신념, 유죄판결"}, {"en": "charitable", "pos": "adj.", "kr": "자비로운, 너그러운, 관대한"}, {"en": "complimentary", "pos": "adj.", "kr": "칭찬하는, 찬사의, 무료의"}, {"en": "benevolent", "pos": "adj.", "kr": "인자한, 자애로운"}, {"en": "configuration", "pos": "n.", "kr": "배열, 배치, 구성, 형태"}, {"en": "consensus", "pos": "n.", "kr": "의견일치, 합의, 여론"}, {"en": "convergence", "pos": "n.", "kr": "수렴, 융합, 집합점"}, {"en": "brutality", "pos": "n.", "kr": "잔인함, 야만성, 무자비함"}, {"en": "render", "pos": "v.", "kr": "(어떤 상태로) 만들다, 제공하다, (돈을) 지불하다, 제시하다, 나타내다"}, {"en": "clumsy", "pos": "n.", "kr": "어설픈, 서투른, 오리게진, 고삐"}, {"en": "arrogance", "pos": "n.", "kr": "거만함"}, {"en": "defective", "pos": "adj.", "kr": "결함이 있는, 불완전한"}, {"en": "farsighted", "pos": "adj.", "kr": "선견지명이 있는, 현명한"}, {"en": "definitive", "pos": "adj.", "kr": "최종적인, 결정적인, 가장 믿을 만한, 가장 완벽한, 명확한"}, {"en": "degenerative", "pos": "adj.", "kr": "퇴행하는, 퇴행성의"}, {"en": "stipulate", "pos": "v.", "kr": "규정하다, 명시하다, 조건으로요구하다"}, {"en": "disproportionate", "pos": "n.", "kr": "불균형의, 어울리지 않는"}];
+UNITS[25] = [{"en": "dormant", "pos": "adj.", "kr": "잠자고 있는, 휴면하고 있는"}, {"en": "dreary", "pos": "adj.", "kr": "쓸쓸한, 음울한, 따분한"}, {"en": "durable", "pos": "adj.", "kr": "내구성이 있는, 오래가는"}, {"en": "eligible", "pos": "adj.", "kr": "자격이 있는, 적격의, 선출될 자격이 있는"}, {"en": "elusive", "pos": "adj.", "kr": "잡히지 않는, 교묘히 피하는, 규정하기 어려운"}, {"en": "evade", "pos": "v.", "kr": "피하다, 모면하다, 잘 빠져나가다"}, {"en": "exert", "pos": "v.", "kr": "(힘을) 행사하다, 미치다, 분투하다, 애쓰다"}, {"en": "faculty", "pos": "n.", "kr": "능력, 재능, 교수진"}, {"en": "famine", "pos": "n.", "kr": "기근, 굶주림, 극심한 결핍"}, {"en": "demolition", "pos": "n.", "kr": "파괴, 해체, 철거"}, {"en": "formulate", "pos": "v.", "kr": "체계화하다, 명확하게 나타내다, 고안하다, 만들어내다"}, {"en": "fraction", "pos": "n.", "kr": "부분, 파편, 소량, 분수"}, {"en": "frenzy", "pos": "n.", "kr": "극도의 흥분, 열광"}, {"en": "discernible", "pos": "adj.", "kr": "인식할 수 있는, 뚜렷한"}, {"en": "dysfunctional", "pos": "adj.", "kr": "기능 장애가 있는, 문제가있는"}, {"en": "friction", "pos": "n.", "kr": "마찰, 불화, 충돌, 갈등"}, {"en": "fulfilling", "pos": "adj.", "kr": "성취감을 주는, 만족스러운"}, {"en": "glimpse", "pos": "n.", "kr": "흘긋 봄, 일견, 짧은 경험"}, {"en": "grin", "pos": "n.", "kr": "활짝 웃다, 씩 웃다"}, {"en": "heritage", "pos": "n.", "kr": "유산, 전통"}];
+UNITS[26] = [{"en": "immortal", "pos": "adj.", "kr": "죽지 않는, 불사의, 영원한"}, {"en": "impart", "pos": "v.", "kr": "주다, 전하다, 알리다"}, {"en": "impulsive", "pos": "adj.", "kr": "충동적인, 즉흥적인"}, {"en": "incompetent", "pos": "adj.", "kr": "무능한, 무자격의, 쓸모없는"}, {"en": "indulge", "pos": "v.", "kr": "제멋대로 하다, 탐닉하다, 충족시키다"}, {"en": "insanity", "pos": "n.", "kr": "정신 이상, 광기, 미친 짓"}, {"en": "insecure", "pos": "adj.", "kr": "확신하지 못하는, 자신이 없는, 불안정한, 위험한"}, {"en": "insufficient", "pos": "adj.", "kr": "불충분한, 부족한"}, {"en": "insurmountable", "pos": "adj.", "kr": "극복할 수 없는, 넘을 수 없는"}, {"en": "introspective", "pos": "n.", "kr": "자기 성찰의, 자신을 돌아보는"}, {"en": "intuitive", "pos": "adj.", "kr": "직관적인, 직감적인"}, {"en": "inventive", "pos": "adj.", "kr": "창의적인, 독창적인"}, {"en": "irreplaceable", "pos": "adj.", "kr": "대체할 수 없는, 둘도 없는"}, {"en": "illiterate", "pos": "n.", "kr": "문맹의, 무식한"}, {"en": "inventory", "pos": "n.", "kr": "목록, 재고품"}, {"en": "meticulous", "pos": "adj.", "kr": "꼼꼼한, 세심한, 정확한"}, {"en": "legacy", "pos": "n.", "kr": "유산, 유물"}, {"en": "leisurely", "pos": "adj.", "kr": "느긋한, 한가한, 서두르지 않는"}, {"en": "mandatory", "pos": "n.", "kr": "명령의, 의무적인, 필수적인"}, {"en": "maternity", "pos": "n.", "kr": "어머니가 될, 모성의, 산부인과 병원"}];
+UNITS[27] = [{"en": "merchandise", "pos": "n.", "kr": "상품, 제품"}, {"en": "legible", "pos": "adj.", "kr": "읽기 쉬운, 명확한"}, {"en": "municipal", "pos": "n.", "kr": "지방 자치의, 시립의"}, {"en": "needy", "pos": "adj.", "kr": "가난한, 궁핍한"}, {"en": "negligence", "pos": "n.", "kr": "부주의, 태만, 소홀함"}, {"en": "notable", "pos": "adj.", "kr": "주목할 만한, 유명한"}, {"en": "offensive", "pos": "adj.", "kr": "화나게 하는, 공격적인"}, {"en": "onlooker", "pos": "n.", "kr": "구경꾼, 방관자, 목격자"}, {"en": "oppress", "pos": "v.", "kr": "억압하다, 괴롭히다"}, {"en": "orphanage", "pos": "n.", "kr": "고아원"}, {"en": "optical", "pos": "n.", "kr": "눈의, 시각의, 광학상의"}, {"en": "permanence", "pos": "n.", "kr": "영속성, 불변, 내구성"}, {"en": "litter", "pos": "n.", "kr": "어질러진 것, 쓰레기, 흩뿌리다"}, {"en": "morale", "pos": "n.", "kr": "사기, 의욕"}, {"en": "paradox", "pos": "n.", "kr": "역설, 모순, 궤변"}, {"en": "pessimism", "pos": "n.", "kr": "비관주의, 염세주의"}, {"en": "pervasive", "pos": "adj.", "kr": "만연하는, 스며드는"}, {"en": "proficient", "pos": "adj.", "kr": "능숙한, 능란한"}, {"en": "prosperous", "pos": "adj.", "kr": "번영하는, 성공한, 호조의"}, {"en": "pursue", "pos": "n.", "kr": "뒤쫓다, 추구하다"}];
+UNITS[28] = [{"en": "reclaim", "pos": "v.", "kr": "개간하다, 간척하다, 재생시키다, 되찾다"}, {"en": "recruit", "pos": "v.", "kr": "모집하다, 징집하다"}, {"en": "redundant", "pos": "adj.", "kr": "남아도는, 중복의, 불필요한"}, {"en": "remnant", "pos": "n.", "kr": "나머지, 남은 것, 자취"}, {"en": "reign", "pos": "v.", "kr": "지배하다, 통치하다, 통치, 지배"}, {"en": "replicate", "pos": "v.", "kr": "반복하다, 복제하다"}, {"en": "respiratory", "pos": "n.", "kr": "호흡의, 호흡 기관의"}, {"en": "rigorous", "pos": "adj.", "kr": "엄격한, 엄밀한, 혹독한"}, {"en": "slender", "pos": "adj.", "kr": "날씬한, 가느다란, 호리호리한, 빈약한"}, {"en": "stereotype", "pos": "n.", "kr": "고정관념, 인습, 정형화하다"}, {"en": "speculate", "pos": "v.", "kr": "추측하다, 사색하다, 투기하다"}, {"en": "spontaneity", "pos": "n.", "kr": "자발성, 자연스러움"}, {"en": "sneak", "pos": "v.", "kr": "살금살금 몰래 가다, 훔치다, 슬쩍하다"}, {"en": "renowned", "pos": "adj.", "kr": "유명한, 명성 있는"}, {"en": "solidarity", "pos": "n.", "kr": "연대, 결속, 단결"}, {"en": "tedious", "pos": "adj.", "kr": "지루한, 따분한"}, {"en": "stern", "pos": "adj.", "kr": "엄격한, 단호한, 가차 없는"}, {"en": "subscribe", "pos": "v.", "kr": "서명하다, 동의하다, 구독하다, 기부하다"}, {"en": "subtract", "pos": "n.", "kr": "빼다, 공제하다"}, {"en": "suspicious", "pos": "adj.", "kr": "의심스러운, 수상한"}];
+UNITS[29] = [{"en": "temperament", "pos": "n.", "kr": "기질, 성질, 체질"}, {"en": "temporal", "pos": "adj.", "kr": "일시적인, 현세의, 세속적인"}, {"en": "testimony", "pos": "n.", "kr": "증언, 증거"}, {"en": "transition", "pos": "n.", "kr": "변화, 이행, 과도기"}, {"en": "underestimate", "pos": "v.", "kr": "과소평가하다"}, {"en": "underpin", "pos": "v.", "kr": "보강하다, 뒷받침하다, 지지하다"}, {"en": "unpaved", "pos": "n.", "kr": "포장되지 않은, 돌로 깔지"}, {"en": "urgency", "pos": "n.", "kr": "긴급, 위급, 절박함"}, {"en": "vegetation", "pos": "n.", "kr": "식물, 초목"}, {"en": "viable", "pos": "adj.", "kr": "실행 가능한, 생존 가능한"}, {"en": "verification", "pos": "adj.", "kr": "확인, 검증, 증명"}, {"en": "vie", "pos": "v.", "kr": "경쟁하다"}, {"en": "wail", "pos": "n.", "kr": "울부짖다, 통곡하다, 한탄하다"}, {"en": "stride", "pos": "n.", "kr": "큰 걸음, 보폭, 진전, 성큼성큼 걷다"}, {"en": "unimpeded", "pos": "adj.", "kr": "방해받지 않는, 가로막는것이 없는"}, {"en": "adjacent", "pos": "adj.", "kr": "인접한, 가까운"}, {"en": "wilderness", "pos": "n.", "kr": "황무지, 광야, 미개척지"}, {"en": "withhold", "pos": "v.", "kr": "보류하다, 주지 않다, 억제하다"}, {"en": "ambiguous", "pos": "adj.", "kr": "애매한, 모호한, 두 가지뜻으로 해석되는"}, {"en": "approval", "pos": "n.", "kr": "찬성, 승인, 인가, 인정, 칭찬"}];
+UNITS[30] = [{"en": "assess", "pos": "v.", "kr": "평가하다, 감정하다, 부과하다, 미치다"}, {"en": "assurance", "pos": "n.", "kr": "확신, 자신, 보증, 확인"}, {"en": "complementary", "pos": "adj.", "kr": "보완적인, 보충하는"}, {"en": "comprise", "pos": "v.", "kr": "포함하다, 구성되다"}, {"en": "conceive", "pos": "v.", "kr": "상상하다, 마음에 품다, 임신하다"}, {"en": "confine", "pos": "v.", "kr": "한정하다, 가두다, 투옥하다"}, {"en": "decay", "pos": "v.", "kr": "쇠퇴하다, 부패, 쇠퇴"}, {"en": "differentiate", "pos": "v.", "kr": "구별하다, 차별하다"}, {"en": "dispose", "pos": "v.", "kr": "배치하다, 폐기하다, 마음이생기게 하다"}, {"en": "equivalent", "pos": "adj.", "kr": "동등한, 등가물"}, {"en": "erode", "pos": "v.", "kr": "침식하다, 부식하다, 좀먹다, 야위게 하다"}, {"en": "greed", "pos": "n.", "kr": "탐욕, 큰 욕심"}, {"en": "mature", "pos": "n.", "kr": "익다, 성숙하다, 성숙한"}, {"en": "implementation", "pos": "n.", "kr": "이행, 실행, 완성"}, {"en": "implicit", "pos": "adj.", "kr": "암묵적인, 내포된, 은연 중의"}, {"en": "prohibition", "pos": "n.", "kr": "금지"}, {"en": "migratory", "pos": "adj.", "kr": "이동하는, 방랑성의"}, {"en": "missionary", "pos": "n.", "kr": "선교사, 전도사"}, {"en": "modesty", "pos": "n.", "kr": "겸손, 검소, 적당, 단정"}, {"en": "ornamental", "pos": "n.", "kr": "장식의, 장식용의"}];
+UNITS[31] = [{"en": "postpone", "pos": "v.", "kr": "연기하다, 뒤로 미루다"}, {"en": "premise", "pos": "n.", "kr": "전제, 가정하다, 전제하다"}, {"en": "quote", "pos": "v.", "kr": "인용하다, 예를 들다"}, {"en": "rejoice", "pos": "v.", "kr": "크게 기뻐하다"}, {"en": "intrinsic", "pos": "adj.", "kr": "본질적인, 내재하는"}, {"en": "preservation", "pos": "n.", "kr": "보존, 보호, 보관, 저장"}, {"en": "regime", "pos": "n.", "kr": "정권, 제도, 통치"}, {"en": "ripen", "pos": "n.", "kr": "익다, 숙성하다"}, {"en": "compromise", "pos": "v.", "kr": "타협하다, 화해하다, 손상시키다"}, {"en": "loyal", "pos": "adj.", "kr": "충성스러운, 충직한"}, {"en": "specify", "pos": "v.", "kr": "상술하다, 명기하다, 구체적으로 말하다"}, {"en": "tame", "pos": "v.", "kr": "길들이다, 온순한, 다루기쉬운"}, {"en": "unattainable", "pos": "adj.", "kr": "달성할 수 없는, 얻을 수없는"}, {"en": "undeserved", "pos": "adj.", "kr": "받을 자격이 없는, 부당한"}, {"en": "unparalleled", "pos": "adj.", "kr": "비할 데 없는, 유례 없는"}, {"en": "abound", "pos": "n.", "kr": "많이 있다, 풍부하다"}, {"en": "utilize", "pos": "v.", "kr": "이용하다, 활용하다"}, {"en": "vain", "pos": "adj.", "kr": "자만심이 강한, 헛된, 효과없는"}, {"en": "exemplify", "pos": "v.", "kr": "예시하다, ~의 좋은 예가되다"}, {"en": "accord", "pos": "n.", "kr": "일치, 합의, 협정"}];
+UNITS[32] = [{"en": "addictive", "pos": "n.", "kr": "중독성의, 습관성의"}, {"en": "authorize", "pos": "v.", "kr": "허가하다, 인정하다"}, {"en": "belittle", "pos": "v.", "kr": "과소평가하다, 경시하다, 얕보다"}, {"en": "besiege", "pos": "v.", "kr": "포위하다, 에워싸다, 공격하다"}, {"en": "chronic", "pos": "adj.", "kr": "만성적인, 습관적인, 장기간에걸친"}, {"en": "clinical", "pos": "adj.", "kr": "임상적인, 냉정한, 병상형"}, {"en": "covert", "pos": "n.", "kr": "비밀의, 숨겨진, 은밀한"}, {"en": "cram", "pos": "n.", "kr": "억지로 쑤셔 넣다, 벼락치기공부를 하다"}, {"en": "unprecedented", "pos": "adj.", "kr": "전례가 없는"}, {"en": "degrade", "pos": "n.", "kr": "(가치, 지위를) 떨어뜨리다, 낮추다, 타락하다"}, {"en": "designate", "pos": "v.", "kr": "가리키다, 나타내다, 명시하다, 지정하다"}, {"en": "dictate", "pos": "v.", "kr": "받아쓰게 하다, 명령하다, 구술하다"}, {"en": "decode", "pos": "n.", "kr": "암호를 풀다, 해독하다"}, {"en": "epidemic", "pos": "n.", "kr": "유행병, 전염병"}, {"en": "erupt", "pos": "v.", "kr": "분출하다, 폭발하다"}, {"en": "figurative", "pos": "adj.", "kr": "비유적인, 상징적인"}, {"en": "flaw", "pos": "n.", "kr": "결점, 흠, 결함"}, {"en": "fleeting", "pos": "adj.", "kr": "어느덧 지나가는, 순식간의"}, {"en": "fortify", "pos": "v.", "kr": "강화하다, 굳히다, 요새화하다"}, {"en": "immune", "pos": "n.", "kr": "면제된, 영향을 받지 않는"}];
+UNITS[33] = [{"en": "impair", "pos": "v.", "kr": "해치다, 손상시키다"}, {"en": "incur", "pos": "v.", "kr": "초래하다, 자초하다, 발생시키다"}, {"en": "inhabitant", "pos": "n.", "kr": "거주자, 서식 동물"}, {"en": "inscribe", "pos": "v.", "kr": "새기다, 파다, 쓰다"}, {"en": "invade", "pos": "v.", "kr": "침입하다, 침투하다"}, {"en": "irrigate", "pos": "n.", "kr": "물을 대다, 관개하다"}, {"en": "mourn", "pos": "v.", "kr": "슬퍼하다, 애도하다, 장례하다"}, {"en": "oblige", "pos": "v.", "kr": "강요하다, 의무를 지우다, 은혜를 베풀다"}, {"en": "peasant", "pos": "n.", "kr": "농부, 소작농"}, {"en": "prescribe", "pos": "v.", "kr": "처방하다, 지시하다, 규정하다"}, {"en": "refute", "pos": "v.", "kr": "반박하다, 잘못을 밝히다"}, {"en": "regressive", "pos": "adj.", "kr": "후퇴하는, 역진의"}, {"en": "resent", "pos": "v.", "kr": "분개하다, 원망을 품다"}, {"en": "dissolve", "pos": "v.", "kr": "녹이다, 용해하다"}, {"en": "postulate", "pos": "v.", "kr": "가정하다, 요구하다, 가정, 필요조건"}, {"en": "localize", "pos": "v.", "kr": "국한시키다, 집중하다"}, {"en": "stabilize", "pos": "v.", "kr": "안정시키다, 고정시키다"}, {"en": "stink", "pos": "v.", "kr": "악취를 풍기다, 악취, 고약한 냄새"}, {"en": "stroll", "pos": "v.", "kr": "방랑하다, 한가로이 거닐다, 산책"}, {"en": "surplus", "pos": "n.", "kr": "과잉, 잉여, 흑자"}];
+UNITS[34] = [{"en": "tenant", "pos": "n.", "kr": "세입자, 임차인"}, {"en": "thrust", "pos": "n.", "kr": "세게 밀다, 찌르다"}, {"en": "unanimous", "pos": "n.", "kr": "만장일치의, 이의가 없는"}, {"en": "validate", "pos": "v.", "kr": "입증하다, 인증하다, 승인하다"}, {"en": "tyrant", "pos": "n.", "kr": "폭군, 독재자"}, {"en": "confirm", "pos": "v.", "kr": "확인하다, 증언하다, 승인하다"}, {"en": "constrain", "pos": "v.", "kr": "강요하다, 억제하다, 속박하다"}, {"en": "preliminary", "pos": "n.", "kr": "예비의, 준비의, 서두, 사전준비"}, {"en": "stance", "pos": "n.", "kr": "자세, 발의 위치, 입장, 태도"}, {"en": "velocity", "pos": "n.", "kr": "속도, 빠름, 전진력"}, {"en": "nomadic", "pos": "n.", "kr": "유목의, 방랑의"}, {"en": "deform", "pos": "v.", "kr": "모양을 훼손하다, 변형시키다"}, {"en": "superstitious", "pos": "n.", "kr": "미신의, 미신을 믿는"}, {"en": "cogent", "pos": "adj.", "kr": "설득력 있는, 강력한"}, {"en": "conscientious", "pos": "adj.", "kr": "양심적인, 성실한, 세심한"}, {"en": "override", "pos": "n.", "kr": "뒤엎다, 압도하다, 우선하다"}, {"en": "perspiration", "pos": "n.", "kr": "땀, 발한, 노력"}, {"en": "precede", "pos": "v.", "kr": "앞서다, 선행하다, 우선하다"}, {"en": "attribute", "pos": "v.", "kr": "~의 탓으로 돌리다, 속성, 특성"}, {"en": "deliberate", "pos": "adj.", "kr": "의도적인, 계획적인, 숙고하다, 신중하다"}];
+UNITS[35] = [{"en": "obstruct", "pos": "n.", "kr": "막다, 방해하다"}, {"en": "flammable", "pos": "n.", "kr": "가연성의, 불붙기 쉬운"}, {"en": "testify", "pos": "v.", "kr": "증명하다, 증언하다"}, {"en": "lease", "pos": "n.", "kr": "임대, 임대차 계약, 임대하다"}, {"en": "proclaim", "pos": "v.", "kr": "선언하다, 명시하다"}, {"en": "impoverish", "pos": "v.", "kr": "가난하게 하다, 저하시키"}, {"en": "cumulative", "pos": "adj.", "kr": "누적되는, 점점 쌓이는"}, {"en": "enforce", "pos": "v.", "kr": "시행하다, 집행하다"}, {"en": "contradict", "pos": "v.", "kr": "모순되다, 부정하다"}, {"en": "interrupt", "pos": "v.", "kr": "중단하다, 가로막다"}, {"en": "augment", "pos": "v.", "kr": "증대하다, 증가하다"}, {"en": "prestige", "pos": "n.", "kr": "명성, 위신, 인기"}, {"en": "behold", "pos": "v.", "kr": "주시하다, 바라보다"}, {"en": "applicable", "pos": "adj.", "kr": "적용할 수 있는, 적절한"}, {"en": "proactive", "pos": "adj.", "kr": "앞서서 주도하는, 선제적인"}, {"en": "compelling", "pos": "adj.", "kr": "설득력 있는, 강력한, 주목하지 않을 수 없는"}, {"en": "extravagant", "pos": "adj.", "kr": "낭비하는, 지나친, 터무니없는"}, {"en": "cognitive", "pos": "n.", "kr": "인식의, 인지적인"}, {"en": "tact", "pos": "n.", "kr": "감각, 재치, 요령"}, {"en": "expel", "pos": "n.", "kr": "내쫓다, 제명하다"}];
+UNITS[36] = [{"en": "truce", "pos": "n.", "kr": "휴전, 정전, 중단"}, {"en": "reconcile", "pos": "v.", "kr": "화해하다, 조정하다, 받아들이게 하다"}, {"en": "supreme", "pos": "n.", "kr": "최고의, 최상의"}, {"en": "inexhaustible", "pos": "adj.", "kr": "고갈되지 않는, 지칠 줄 모르는"}, {"en": "summon", "pos": "v.", "kr": "소환하다, 부르다"}, {"en": "poise", "pos": "n.", "kr": "침착, 평정, 평형을 유지하다, 테세를 유지하다"}, {"en": "stifle", "pos": "v.", "kr": "억누르다, 질식시키다, 억압하다"}, {"en": "omission", "pos": "n.", "kr": "생략, 빠뜨림, 태만"}, {"en": "tactic", "pos": "n.", "kr": "전술, 작전, 병법, 술책"}, {"en": "aboriginal", "pos": "n.", "kr": "원주민의, 원래의"}, {"en": "indignant", "pos": "adj.", "kr": "분개한, 성난"}, {"en": "prioritize", "pos": "v.", "kr": "우선순위를 매기다"}, {"en": "desert", "pos": "v.", "kr": "저버리다, 도망가다, 방치하다"}, {"en": "deceptive", "pos": "adj.", "kr": "속이는, 현혹시키는"}, {"en": "sojourn", "pos": "v.", "kr": "체류하다, 묵다, 체류, 체재, 기숙"}, {"en": "brag", "pos": "v.", "kr": "자랑하다, 뽐내다"}, {"en": "grievous", "pos": "adj.", "kr": "비통한, 슬픈, 심각한"}, {"en": "impatience", "pos": "n.", "kr": "조급함, 참을 수 없음"}, {"en": "snore", "pos": "n.", "kr": "코를 골다, 코골기"}, {"en": "hospitality", "pos": "n.", "kr": "환대, 수용"}];
+UNITS[37] = [{"en": "captive", "pos": "n.", "kr": "포로의, 사로잡힌, 포로"}, {"en": "condense", "pos": "v.", "kr": "농축하다, 요약하다, 간결하게 하다"}, {"en": "elicit", "pos": "v.", "kr": "이끌어 내다, 유도해내다"}, {"en": "nutritious", "pos": "n.", "kr": "영양분이 많은"}, {"en": "quiver", "pos": "v.", "kr": "떨리다, 진동, 떨림"}, {"en": "evacuate", "pos": "v.", "kr": "비우다, 대피시키다"}, {"en": "electoral", "pos": "n.", "kr": "선거의, 유권자의"}, {"en": "authoritarian", "pos": "adj.", "kr": "권위주의적인"}, {"en": "dreadful", "pos": "adj.", "kr": "끔찍한, 무서운, 불쾌한"}, {"en": "disdain", "pos": "v.", "kr": "경멸하다, 경멸, 무시"}, {"en": "sentiment", "pos": "n.", "kr": "감정, 정서, 정감, 의견"}, {"en": "causal", "pos": "n.", "kr": "인과 관계의, 원인이 되는"}, {"en": "seductive", "pos": "adj.", "kr": "유혹적인, 매력적인"}, {"en": "relish", "pos": "v.", "kr": "즐기다, 맛, 풍미, 재미"}, {"en": "indigenous", "pos": "n.", "kr": "토착의, 타고난, 고유의"}, {"en": "condemn", "pos": "v.", "kr": "비난하다, 책망하다, 선고하다, 유죄판결을 내리다"}, {"en": "dictator", "pos": "n.", "kr": "독재자, 지배자"}, {"en": "extinguish", "pos": "n.", "kr": "(불을) 끄다, 소멸시키다"}, {"en": "criterion", "pos": "n.", "kr": "표준, 척도, 규범"}, {"en": "throne", "pos": "n.", "kr": "왕좌, 왕위"}];
+UNITS[38] = [{"en": "convince", "pos": "v.", "kr": "설득하다, 확신시키다"}, {"en": "freight", "pos": "n.", "kr": "화물, 화물 운송, 운임"}, {"en": "imperative", "pos": "adj.", "kr": "긴급한, 중요한, 명령, 필요성"}, {"en": "resourceful", "pos": "adj.", "kr": "재주가 있는, 자원이 풍부한"}, {"en": "ingratitude", "pos": "n.", "kr": "은혜를 모름, 배은망덕"}, {"en": "revolve", "pos": "v.", "kr": "회전하다, 돌다"}, {"en": "shabby", "pos": "adj.", "kr": "초라한, 누추한, 비열한"}, {"en": "certify", "pos": "v.", "kr": "증명하다, 보증하다"}, {"en": "assert", "pos": "v.", "kr": "단언하다, 주장하다"}, {"en": "disillusion", "pos": "v.", "kr": "환상을 깨뜨리다, 각성, 환멸"}, {"en": "comprehensive", "pos": "adj.", "kr": "포괄적인, 종합적인"}, {"en": "inhale", "pos": "n.", "kr": "숨을 들이마시다"}, {"en": "segregate", "pos": "v.", "kr": "분리하다, 차별하다"}, {"en": "excavate", "pos": "n.", "kr": "파다, 발굴하다"}, {"en": "sewage", "pos": "n.", "kr": "오물, 하수, 하수구"}, {"en": "martial", "pos": "n.", "kr": "결혼의, 부부의, 무력의"}, {"en": "tilt", "pos": "n.", "kr": "기울다, 기울기, 경사"}, {"en": "deploy", "pos": "v.", "kr": "배치하다, 전개하다"}, {"en": "intimidate", "pos": "v.", "kr": "협박하다, 위협하다"}, {"en": "disjoin", "pos": "v.", "kr": "떼어놓다, 분리시키다"}];
+UNITS[39] = [{"en": "contend", "pos": "n.", "kr": "다투다, 싸우다, 경쟁하다"}, {"en": "inverse", "pos": "n.", "kr": "역의, 반대의, 거꾸로 된"}, {"en": "catalyst", "pos": "n.", "kr": "촉매, 자극제, 계기"}, {"en": "altruistic", "pos": "adj.", "kr": "이타적인"}, {"en": "posture", "pos": "n.", "kr": "자세, 태도"}, {"en": "intact", "pos": "adj.", "kr": "온전한, 손상되지 않은"}, {"en": "traverse", "pos": "v.", "kr": "가로지르다, 횡단하다"}, {"en": "pious", "pos": "adj.", "kr": "경건한, 신앙심이 깊은"}, {"en": "savor", "pos": "v.", "kr": "맛보다, 음미하다, 맛, 풍미"}, {"en": "verse", "pos": "n.", "kr": "운문, 시"}, {"en": "strangle", "pos": "v.", "kr": "조르다, 질식시키다, 억압하다"}, {"en": "hostage", "pos": "n.", "kr": "인질, 볼모"}, {"en": "rash", "pos": "adj.", "kr": "경솔한, 성급한, 발진"}, {"en": "pledge", "pos": "v.", "kr": "명세하다, 서약하다, 저당잡히다"}, {"en": "inconsistent", "pos": "adj.", "kr": "일관성 없는, 모순된"}, {"en": "traitor", "pos": "n.", "kr": "배신자, 반역자, 역적"}, {"en": "unfounded", "pos": "adj.", "kr": "근거 없는, 사실 무근의"}, {"en": "connotation", "pos": "n.", "kr": "함축, 암시"}, {"en": "marginalize", "pos": "v.", "kr": "소외시키다, 주류에서 몰아내다"}];
+UNITS[40] = [{"en": "legislature", "pos": "n.", "kr": "입법부, 국회"}, {"en": "retort", "pos": "v.", "kr": "반박하다, 되받아치다"}, {"en": "plead", "pos": "v.", "kr": "간청하다, 변호하다"}, {"en": "grim", "pos": "adj.", "kr": "암울한, 엄격한, 무자비한"}, {"en": "overwhelm", "pos": "v.", "kr": "압도하다, 당황하게 하다"}, {"en": "frail", "pos": "adj.", "kr": "연약한, 깨지기 쉬운"}, {"en": "subside", "pos": "n.", "kr": "가라앉다, 진정되다"}, {"en": "perseverance", "pos": "n.", "kr": "인내, 끈기, 불굴의 노력"}, {"en": "artisan", "pos": "n.", "kr": "공예가, 장인(기능공)"}, {"en": "adhesive", "pos": "n.", "kr": "접착성의, 고착된, 접착제"}, {"en": "acquaint", "pos": "v.", "kr": "숙지시키다, 알게 하다"}, {"en": "renovate", "pos": "v.", "kr": "수리하다, 혁신하다"}, {"en": "satiate", "pos": "v.", "kr": "충분히 만족시키다, 물리게하다"}, {"en": "proposition", "pos": "n.", "kr": "진술, 주장, 명제, 제의, 문제"}, {"en": "congest", "pos": "v.", "kr": "붐비게 하다, 가득 채우다"}, {"en": "disprove", "pos": "v.", "kr": "틀렸음을 입증하다"}, {"en": "neutralize", "pos": "v.", "kr": "중립화하다, 중화하다, 무효화하다"}, {"en": "segment", "pos": "n.", "kr": "나누다, 분할하다"}, {"en": "masculine", "pos": "n.", "kr": "남성의, 남성적인"}, {"en": "recurrent", "pos": "adj.", "kr": "되풀이되는, 재발하는"}];
+UNITS[41] = [{"en": "ponder", "pos": "v.", "kr": "깊이 생각하다, 숙고하다"}, {"en": "impenetrable", "pos": "adj.", "kr": "들어갈 수 없는, 이해할수 없는"}, {"en": "pregnant", "pos": "adj.", "kr": "임신한"}, {"en": "serenity", "pos": "n.", "kr": "고요함, 평온, 침착"}, {"en": "hypothesize", "pos": "v.", "kr": "가설을 세우다, 가정하다"}, {"en": "instill", "pos": "v.", "kr": "주입하다, 스며들게 하다"}, {"en": "despise", "pos": "v.", "kr": "경멸하다, 멸시하다, 깔보다"}, {"en": "eradicate", "pos": "n.", "kr": "뿌리 뽑다, 근절하다"}, {"en": "venue", "pos": "n.", "kr": "현장, 회합 장소"}, {"en": "scant", "pos": "adj.", "kr": "불충분한, 부족한, 빈약한"}, {"en": "jury", "pos": "n.", "kr": "배심원, 심사원"}, {"en": "compound", "pos": "n.", "kr": "혼합물, 혼합의, 복합의"}, {"en": "indiscriminate", "pos": "adj.", "kr": "무차별적인, 가리지 않는"}, {"en": "subdue", "pos": "v.", "kr": "진압하다, 억누르다, 억제하다"}, {"en": "confide", "pos": "v.", "kr": "신뢰하다, 털어놓다"}, {"en": "emphatic", "pos": "n.", "kr": "강조된, 단호한"}, {"en": "sibling", "pos": "n.", "kr": "형제자매"}, {"en": "incidence", "pos": "n.", "kr": "발생, 발생률"}, {"en": "modification", "pos": "n.", "kr": "변경, 수정"}, {"en": "polarize", "pos": "v.", "kr": "양극화하다, 편향되다"}];
+UNITS[42] = [{"en": "impartial", "pos": "adj.", "kr": "공정한, 치우치지 않은"}, {"en": "attune", "pos": "v.", "kr": "조화하다, 맞추다"}, {"en": "ignorant", "pos": "adj.", "kr": "무식한, 잘 모르는"}, {"en": "involuntary", "pos": "n.", "kr": "무의식의, 미지못해 하는, 본의 아닌"}, {"en": "inflict", "pos": "v.", "kr": "가하다, 괴롭히다"}, {"en": "pretense", "pos": "n.", "kr": "겉치레, 가장, 부당한 주장"}, {"en": "perpetuate", "pos": "v.", "kr": "영속시키다, 불멸하게 하다"}, {"en": "hygienic", "pos": "adj.", "kr": "위생적인, 건강에 좋은"}, {"en": "populate", "pos": "v.", "kr": "거주하다, 살다, 차지하다"}, {"en": "ascend", "pos": "v.", "kr": "오르다, 상승하다"}, {"en": "equity", "pos": "n.", "kr": "공평함"}, {"en": "sarcastic", "pos": "adj.", "kr": "빈정대는, 비꼬는, 풍자적인"}, {"en": "shiver", "pos": "n.", "kr": "떨림, 전율, 떨다"}, {"en": "devastate", "pos": "v.", "kr": "황폐시키다, 철저히 파괴하다"}, {"en": "casualty", "pos": "n.", "kr": "사상자, 희생자"}, {"en": "refer", "pos": "v.", "kr": "언급하다, 부르다, 보내다"}, {"en": "detract", "pos": "v.", "kr": "손상시키다, (가치를) 떨어뜨리다, 헐뜯다"}, {"en": "temperate", "pos": "adj.", "kr": "온화한, 절제하는"}, {"en": "punctuate", "pos": "n.", "kr": "구두점을 찍다, 중단시키다"}, {"en": "senate", "pos": "n.", "kr": "상원, 원로원"}];
+UNITS[43] = [{"en": "stubborn", "pos": "adj.", "kr": "고집 센, 완고한"}, {"en": "mischievous", "pos": "n.", "kr": "장난꾸러기, 개구쟁이의"}, {"en": "absurdity", "pos": "n.", "kr": "어리석음"}, {"en": "entrench", "pos": "n.", "kr": "참호를 파다, 단단히 자리잡다"}, {"en": "snob", "pos": "n.", "kr": "속물, 잘난 척하는 사람"}, {"en": "cohesive", "pos": "n.", "kr": "응집성의, 결합력이 있는"}, {"en": "prudence", "pos": "n.", "kr": "현명함, 분별, 신중함"}, {"en": "demanding", "pos": "n.", "kr": "힘든, 요구가 많은"}, {"en": "autonomous", "pos": "n.", "kr": "자치의, 자율적인"}, {"en": "precept", "pos": "n.", "kr": "지침, 가르침"}, {"en": "shudder", "pos": "n.", "kr": "떨다, 몸서리치다"}, {"en": "tenure", "pos": "n.", "kr": "재임 기간, 보유, 재직"}, {"en": "sanitation", "pos": "n.", "kr": "공중위생, 위생 시설"}, {"en": "ingenious", "pos": "adj.", "kr": "독창적인, 영리한"}, {"en": "tread", "pos": "n.", "kr": "밟다, 걷다, 밟기"}, {"en": "itinerary", "pos": "n.", "kr": "여행 일정, 여행 계획"}, {"en": "courteous", "pos": "n.", "kr": "예의 바른, 정중한"}, {"en": "divert", "pos": "v.", "kr": "방향을 바꾸다, 전환하다"}, {"en": "convict", "pos": "v.", "kr": "유죄를 선고하다, 유죄 판결 받은 사람"}, {"en": "disruption", "pos": "n.", "kr": "분열, 혼란"}];
+UNITS[44] = [{"en": "fluctuate", "pos": "v.", "kr": "오르내리다, 동요하다"}, {"en": "slaughter", "pos": "n.", "kr": "도살, 살육, 도살하다, 학살하다"}, {"en": "obsession", "pos": "n.", "kr": "강박 관념, 집착"}, {"en": "allure", "pos": "v.", "kr": "유인하다, 유혹하다, 매력, 유혹"}, {"en": "dehydrate", "pos": "v.", "kr": "건조시키다, 탈수 상태가 되다"}, {"en": "instigate", "pos": "v.", "kr": "부추기다, 선동하다"}, {"en": "coward", "pos": "n.", "kr": "겁쟁이, 비겁자"}, {"en": "vocation", "pos": "n.", "kr": "소명(천직), 부르심, 적성, 직업"}, {"en": "compassionate", "pos": "n.", "kr": "동정심이 많은, 인정 많은"}, {"en": "trivial", "pos": "adj.", "kr": "평범한, 진부한, 사소한, 시시한"}, {"en": "rustic", "pos": "n.", "kr": "시골의, 소박한"}, {"en": "exhort", "pos": "v.", "kr": "강력히 권하다, 열심히 설득하다, 충고하다"}, {"en": "aviation", "pos": "n.", "kr": "비행, 항공"}, {"en": "anonymity", "pos": "n.", "kr": "익명, 무명"}, {"en": "inflexible", "pos": "adj.", "kr": "구부릴 수 없는, 경직된"}, {"en": "versatile", "pos": "adj.", "kr": "다재다능한, 융통성 있는"}, {"en": "conductive", "pos": "adj.", "kr": "도움이 되는, 기여하는"}, {"en": "sermon", "pos": "n.", "kr": "설교, 잔소리, 훈계"}, {"en": "spoilage", "pos": "n.", "kr": "손상, 부패"}, {"en": "yearn", "pos": "v.", "kr": "갈망하다, 동경하다"}];
+UNITS[45] = [{"en": "triumphant", "pos": "adj.", "kr": "크게 승리한, 성공한, 의기양양한"}, {"en": "monk", "pos": "n.", "kr": "수도사"}, {"en": "fragrance", "pos": "n.", "kr": "향기, 향수"}, {"en": "monopoly", "pos": "n.", "kr": "독점, 전매"}, {"en": "decompose", "pos": "v.", "kr": "분해하다, 부패하다"}, {"en": "inaccessible", "pos": "adj.", "kr": "접근하기 어려운, 접근하기 힘든"}, {"en": "prevention", "pos": "n.", "kr": "예방, 저지, 방해"}, {"en": "mundane", "pos": "n.", "kr": "세속의, 세속적인, 평범한"}, {"en": "hypocritical", "pos": "n.", "kr": "위선의, 위선적인"}, {"en": "obese", "pos": "n.", "kr": "비만의, 뚱뚱한"}, {"en": "compulsory", "pos": "adj.", "kr": "강제적인, 의무적인"}, {"en": "duplicate", "pos": "v.", "kr": "복제하다, 복사하다, 똑같은 것"}, {"en": "refrain", "pos": "v.", "kr": "삼가다, 자제하다, 그만두다"}, {"en": "detached", "pos": "adj.", "kr": "떨어져 있는, 분리된, 공평한"}, {"en": "funeral", "pos": "n.", "kr": "장례식"}, {"en": "cliche", "pos": "n.", "kr": "상투적인 말, 클리셰, 진부한"}, {"en": "regret", "pos": "v.", "kr": "후회하다, 유감스럽게 생각하다"}, {"en": "efficacy", "pos": "n.", "kr": "효능, 효과"}, {"en": "layman", "pos": "adj.", "kr": "문외한, 비전문가"}, {"en": "prolong", "pos": "v.", "kr": "늘리다, 연장하다"}];
+UNITS[46] = [{"en": "empathize", "pos": "v.", "kr": "공감하다, 감정 이입하다"}, {"en": "plantation", "pos": "n.", "kr": "열대 지방의 농장, 농원"}, {"en": "gnaw", "pos": "n.", "kr": "갉아먹다, 괴롭히다"}, {"en": "temper", "pos": "n.", "kr": "성질, 기질, 기분, 조절하다,"}, {"en": "transcend", "pos": "v.", "kr": "초월하다, 능가하다"}, {"en": "obstinate", "pos": "adj.", "kr": "완고한, 외고집의"}, {"en": "stingy", "pos": "adj.", "kr": "인색한, 쩨쩨한, 부족한"}, {"en": "lurk", "pos": "n.", "kr": "숨어 있다, 잠복하다"}, {"en": "elated", "pos": "adj.", "kr": "의기양양한, 우쭐대는, 마냥신난"}, {"en": "sober", "pos": "n.", "kr": "술 취하지 않은, 냉정한, 술을깨다"}, {"en": "implore", "pos": "v.", "kr": "애원하다, 간청하다"}, {"en": "conquest", "pos": "n.", "kr": "정복, 승리, 획득"}, {"en": "irreversible", "pos": "adj.", "kr": "돌이킬 수 없는, 취소할 수없는"}, {"en": "ample", "pos": "adj.", "kr": "충분한, 넉넉한, 풍부한"}, {"en": "underlying", "pos": "adj.", "kr": "근본적인, 아래에 있는, 숨겨진"}, {"en": "analogous", "pos": "adj.", "kr": "유사한, 비슷한"}, {"en": "discrepancy", "pos": "n.", "kr": "괴리, 차이, 불일치"}, {"en": "inadequate", "pos": "adj.", "kr": "불충분한, 부적당한"}, {"en": "justification", "pos": "n.", "kr": "정당화, 명분, 변명"}, {"en": "slack", "pos": "adj.", "kr": "느슨한, 처진, 꾸물거리는, 나태한"}];
+UNITS[47] = [{"en": "conclusive", "pos": "adj.", "kr": "결정적인, 최종적인, 확정적인"}, {"en": "dispense", "pos": "v.", "kr": "분배하다, 베풀다, 시행하다"}, {"en": "plunder", "pos": "v.", "kr": "강탈하다, 약탈하다, 전리품"}, {"en": "rebel", "pos": "v.", "kr": "반란을 일으키다, 반역자"}, {"en": "coincide", "pos": "n.", "kr": "동시에 일어나다, 일치하다"}, {"en": "crumble", "pos": "n.", "kr": "부수다, 부서지다, 무너지다"}, {"en": "deplete", "pos": "v.", "kr": "고갈시키다, 비우다"}, {"en": "catastrophe", "pos": "n.", "kr": "대참사, 재앙, 재난"}, {"en": "torture", "pos": "v.", "kr": "고문하다, 괴롭히다, 고통"}, {"en": "mutate", "pos": "v.", "kr": "변화하다, 변형시키다"}, {"en": "tangle", "pos": "n.", "kr": "얽히다, 혼란, 엉킴"}, {"en": "reunify", "pos": "v.", "kr": "재통합하다"}, {"en": "transparent", "pos": "adj.", "kr": "투명한, 명백한"}, {"en": "germinate", "pos": "n.", "kr": "싹트다, 성장하다"}, {"en": "mortgage", "pos": "n.", "kr": "저당, 담보 대출, 저당 잡히다"}, {"en": "inquisitive", "pos": "adj.", "kr": "호기심이 강한, 질문이 많은"}, {"en": "reproach", "pos": "v.", "kr": "비난하다, 꾸짖다"}, {"en": "obsolete", "pos": "n.", "kr": "구식의, 더 이상 쓸모없는"}, {"en": "riot", "pos": "n.", "kr": "폭동, 소요, 반란"}, {"en": "nominal", "pos": "n.", "kr": "명목상의, 이름뿐인"}];
+UNITS[48] = [{"en": "betray", "pos": "n.", "kr": "배신, 밀고, 배반"}, {"en": "publicize", "pos": "v.", "kr": "공표하다, 선전하다"}, {"en": "sniff", "pos": "v.", "kr": "코를 훌쩍거리다, 냄새 맡다, 코를 킁킁거림"}, {"en": "splendid", "pos": "adj.", "kr": "화려한, 훌륭한, 멋진"}, {"en": "unorthodox", "pos": "n.", "kr": "인습적이지 않은, 비정통적인"}, {"en": "detest", "pos": "v.", "kr": "혐오하다, 몹시 싫어하다"}, {"en": "sway", "pos": "v.", "kr": "흔들리다, 동요하다, 지배하다"}, {"en": "engross", "pos": "v.", "kr": "몰두시키다, 빼앗다"}, {"en": "delusion", "pos": "n.", "kr": "망상, 착각"}, {"en": "transplant", "pos": "v.", "kr": "이식하다, 이식, 이주"}, {"en": "improvise", "pos": "v.", "kr": "즉석에서 짓다, 임시변통하다"}, {"en": "controversial", "pos": "adj.", "kr": "논란의 여지가 있는"}, {"en": "predicate", "pos": "v.", "kr": "단정하다, 근거를 두다, 입각하다"}, {"en": "overturn", "pos": "n.", "kr": "전복, 번복, 뒤집다"}, {"en": "manifestation", "pos": "n.", "kr": "명시, 표명, 징후, 발현"}, {"en": "consecutive", "pos": "adj.", "kr": "연속적인, 일관된"}, {"en": "dispatch", "pos": "n.", "kr": "파견, 발송, 신속한 처리"}, {"en": "bewitch", "pos": "v.", "kr": "매혹하다, 홀리다"}, {"en": "lateral", "pos": "n.", "kr": "옆의, 측면의, 방계의"}, {"en": "conceit", "pos": "n.", "kr": "자부심, 자만심"}];
+UNITS[49] = [{"en": "heredity", "pos": "n.", "kr": "유전, 유전적 특징"}, {"en": "pungent", "pos": "adj.", "kr": "날카로운, 신랄한"}, {"en": "vicious", "pos": "n.", "kr": "나쁜, 악랄한, 잔인한"}, {"en": "preach", "pos": "v.", "kr": "설교하다, 전도하다"}, {"en": "punctuality", "pos": "n.", "kr": "시간 엄수, 정각"}, {"en": "provocative", "pos": "adj.", "kr": "자극적인, 화나게 하는"}, {"en": "discretion", "pos": "n.", "kr": "신중함, 분별, 사려"}, {"en": "rehabilitation", "pos": "n.", "kr": "갱생, 재활, 복구"}, {"en": "stagger", "pos": "v.", "kr": "비틀거리다, 휘청거리다"}, {"en": "ingest", "pos": "v.", "kr": "섭취하다, 받아들이다"}, {"en": "predisposed", "pos": "adj.", "kr": "~하기 쉬운 경향이 있는"}, {"en": "fabricate", "pos": "v.", "kr": "위조하다, 제작하다"}, {"en": "composed", "pos": "adj.", "kr": "침착한, 평온한"}, {"en": "offset", "pos": "v.", "kr": "상쇄하다, 벌충하다"}, {"en": "outlaw", "pos": "v.", "kr": "불법화하다, 금지하다, 무법자"}, {"en": "stout", "pos": "adj.", "kr": "튼튼한, 강한, 단호한"}, {"en": "metabolism", "pos": "n.", "kr": "신진대사, 대사작용"}, {"en": "plausible", "pos": "adj.", "kr": "그럴듯한, 말재주 있는"}, {"en": "stumble", "pos": "v.", "kr": "비틀거리다, 실수하다"}, {"en": "self-contained", "pos": "adj.", "kr": "자족적인, 독립적인, 말수가 적은"}];
+
+let currentUnit = 0;
+let currentTab  = "vocab";
+let spellScores   = {};
+let meaningScores = {};
+
+let _voicesCache = [];
+function _loadVoices(){ try{ _voicesCache = window.speechSynthesis ? (speechSynthesis.getVoices()||[]) : []; }catch(e){ _voicesCache=[]; } }
+_loadVoices();
+if(window.speechSynthesis && typeof speechSynthesis.addEventListener==="function"){
+  speechSynthesis.addEventListener("voiceschanged", _loadVoices);
+}
+function getVoice(){
+  const v = (_voicesCache && _voicesCache.length) ? _voicesCache
+          : (window.speechSynthesis ? (speechSynthesis.getVoices()||[]) : []);
+  return v.find(x=>x.lang==="en-US"&&/Google|Samantha|Daniel|Microsoft/.test(x.name))
+      || v.find(x=>x.lang&&x.lang.startsWith("en-US"))
+      || v.find(x=>x.lang&&x.lang.startsWith("en"))
+      || null;
+}
+function speakWord(word, e){
+  if(e) e.stopPropagation();
+  if(!window.speechSynthesis){
+    alert("이 환경에서는 음성 재생이 지원되지 않습니다. 파일을 브라우저(크롬/사파리)에서 열어 주세요.");
+    return;
+  }
+  try{
+    speechSynthesis.cancel();
+    const doSpeak = ()=>{
+      const u = new SpeechSynthesisUtterance(word);
+      u.lang = "en-US"; u.rate = 0.85;
+      const v = getVoice(); if(v) u.voice = v;
+      speechSynthesis.speak(u);
+    };
+    if(!_voicesCache.length){ _loadVoices(); setTimeout(doSpeak, 60); }
+    else doSpeak();
+  }catch(err){ console.warn("speak error", err); }
+}
+
+function initSelect(){
+  const sel = document.getElementById("unitSelect");
+  sel.innerHTML = "";
+  for(let i = 0; i < UNITS.length; i++){
+    const opt = document.createElement("option");
+    opt.value = i;
+    const cnt = UNITS[i].length;
+    opt.textContent = "Day " + (i+1) + (cnt > 0 ? " (" + cnt + "단어)" : " (준비중)");
+    sel.appendChild(opt);
+  }
+}
+
+function changeUnit(idx){
+  currentUnit = parseInt(idx);
+  document.getElementById("unitSelect").value = currentUnit;
+  const cnt = UNITS[currentUnit].length;
+  document.getElementById("unitInfoBadge").textContent = cnt > 0 ? cnt + " 단어" : "준비중";
+  spellScores = {}; meaningScores = {};
+  renderTab();
+}
+function prevUnit(){if(currentUnit>0) changeUnit(currentUnit-1);}
+function nextUnit(){if(currentUnit<UNITS.length-1) changeUnit(currentUnit+1);}
+
+function switchTab(tab){
+  currentTab = tab;
+  const allPanels = ["Vocab","Spell","Meaning","PrintSpell","PrintMeaning"];
+  const allTabs   = ["V","S","M","PS","PM"];
+  allPanels.forEach(p => document.getElementById("panel"+p).classList.remove("active"));
+  allTabs.forEach(t => { const el=document.getElementById("tab"+t); if(el) el.classList.remove("active"); });
+  if(tab==="vocab")             { document.getElementById("panelVocab").classList.add("active");        document.getElementById("tabV").classList.add("active"); }
+  else if(tab==="spell")        { document.getElementById("panelSpell").classList.add("active");        document.getElementById("tabS").classList.add("active"); }
+  else if(tab==="meaning")      { document.getElementById("panelMeaning").classList.add("active");      document.getElementById("tabM").classList.add("active"); }
+  else if(tab==="printSpell")   { document.getElementById("panelPrintSpell").classList.add("active");   document.getElementById("tabPS").classList.add("active"); }
+  else if(tab==="printMeaning") { document.getElementById("panelPrintMeaning").classList.add("active"); document.getElementById("tabPM").classList.add("active"); }
+  renderTab();
+}
+
+function renderTab(){
+  if(currentTab === "vocab")             buildVocabCards();
+  else if(currentTab === "spell")        buildSpellQuiz();
+  else if(currentTab === "meaning")      buildMeaningQuiz();
+  else if(currentTab === "printSpell")   buildPrintView("spell");
+  else if(currentTab === "printMeaning") buildPrintView("meaning");
+}
+
+function buildVocabCards(){
+  const box = document.getElementById("vocabContent");
+  box.innerHTML = "";
+  const words = UNITS[currentUnit];
+  if(words.length === 0){ showEmpty(box); return; }
+  const grid = document.createElement("div");
+  grid.className = "vcard-grid";
+  words.forEach((v, i)=>{
+    const synHtml  = v.syn && v.syn.length ? `<div class="vcard-section"><div class="vcard-section-label">동의어</div><div class="vcard-items"><span class="vcard-syn">${v.syn.join(", ")}</span></div></div>` : "";
+    const antHtml  = v.ant && v.ant.length ? `<div class="vcard-section"><div class="vcard-section-label">반의어</div><div class="vcard-items"><span class="vcard-ant">${v.ant.join(", ")}</span></div></div>` : "";
+    const phraseHtml = v.phrases && v.phrases.length ? `<div class="vcard-section"><div class="vcard-section-label">어구 / 숙어</div><div class="vcard-items">${v.phrases.map(p=>`<div class="vcard-phrase">• ${p}</div>`).join("")}</div></div>` : "";
+    const div = document.createElement("div");
+    div.className = "vcard";
+    div.style.animationDelay = (i * 30) + "ms";
+    div.onclick = function(){
+      const isOpen = this.classList.contains("open");
+      document.querySelectorAll(".vcard.open").forEach(c => c.classList.remove("open"));
+      if(!isOpen) this.classList.add("open");
+    };
+    div.innerHTML = `
+      <div class="vcard-front">
+        <div class="vcard-en-row">
+          <span class="vcard-num">${String(i+1).padStart(2,"0")}</span>
+          <div class="vcard-en">${v.en}</div>
+          <button class="vcard-speak" onclick="speakWord('${v.en}',event)">🔊</button>
+        </div>
+        <div class="vcard-pos-kr">${v.pos} <span class="open-hint">클릭하면 뜻 보기 ▼</span></div>
+      </div>
+      <div class="vcard-back">
+        <div class="vcard-back-inner">
+          <div class="vcard-kr">${v.kr}</div>
+          ${synHtml}${antHtml}${phraseHtml}
+        </div>
+      </div>`;
+    grid.appendChild(div);
+  });
+  box.appendChild(grid);
+}
+
+function buildSpellQuiz(){
+  const box = document.getElementById("spellContent");
+  box.innerHTML = "";
+  const words = UNITS[currentUnit];
+  if(words.length === 0){ showEmpty(box); return; }
+  const hint = document.createElement("div");
+  hint.className = "touch-hint";
+  hint.innerHTML = "💡 한국어 뜻을 보고 영어 철자를 입력하세요 — Enter 또는 버튼으로 확인";
+  box.appendChild(hint);
+  words.forEach((v, i)=>{
+    const card = document.createElement("div");
+    card.className = "quiz-card";
+    card.style.animationDelay = (i * 30) + "ms";
+    card.innerHTML = `
+      <div class="quiz-top">
+        <span class="quiz-num">${String(i+1).padStart(2,"0")}</span>
+        <div class="quiz-prompt">
+          <div style="font-size:13.5px;color:var(--text);font-weight:700;">${v.kr.split(";")[0].trim()}</div>
+          <div style="margin-top:6px;font-size:11px;color:var(--text-sub);">${v.pos}</div>
+          <div style="margin-top:6px;">
+            <input class="quiz-input" id="sp-${i}" placeholder="영어 단어 입력" autocomplete="off" spellcheck="false">
+          </div>
+        </div>
+        <button class="vcard-speak" onclick="speakWord('${v.en}',event)" style="align-self:center;">🔊</button>
+      </div>
+      <div class="quiz-fb" id="sp-fb-${i}"></div>`;
+    setTimeout(()=>{
+      const inp = document.getElementById("sp-"+i);
+      if(inp) inp.addEventListener("keydown", e=>{ if(e.key==="Enter") checkSpell(i); });
+    }, 0);
+    box.appendChild(card);
+  });
+  const wrap = document.createElement("div");
+  wrap.className = "section-check";
+  wrap.innerHTML = `<button class="section-check-btn spell" onclick="checkAllSpell()">✓ 전체 철자 확인</button><span class="section-score" id="spell-score"></span><button class="gq-reset" onclick="resetSpell()">↺ 초기화</button>`;
+  box.appendChild(wrap);
+}
+
+function checkSpell(i){
+  const words = UNITS[currentUnit];
+  const inp = document.getElementById("sp-"+i);
+  if(!inp) return;
+  const ok = inp.value.trim().toLowerCase() === words[i].en.toLowerCase();
+  inp.classList.remove("ok","ng"); inp.classList.add(ok?"ok":"ng");
+  const fb = document.getElementById("sp-fb-"+i);
+  fb.className = "quiz-fb show " + (ok?"ok":"ng");
+  fb.innerHTML = ok ? "🎉 정답!" : "❌ 정답: <strong>" + words[i].en + "</strong>";
+  spellScores[i] = ok ? 1 : 0;
+  const done = Object.keys(spellScores).length;
+  const correct = Object.values(spellScores).filter(v=>v===1).length;
+  const sc = document.getElementById("spell-score");
+  if(sc) sc.textContent = correct + " / " + done + " 정답";
+}
+function checkAllSpell(){ UNITS[currentUnit].forEach((_,i)=>checkSpell(i)); }
+function resetSpell(){
+  spellScores = {};
+  UNITS[currentUnit].forEach((_,i)=>{
+    const inp = document.getElementById("sp-"+i);
+    if(inp){ inp.value=""; inp.className="quiz-input"; }
+    const fb = document.getElementById("sp-fb-"+i);
+    if(fb) fb.className = "quiz-fb";
+  });
+  const sc = document.getElementById("spell-score");
+  if(sc) sc.textContent = "";
+}
+
+function buildMeaningQuiz(){
+  const box = document.getElementById("meaningContent");
+  box.innerHTML = "";
+  const words = UNITS[currentUnit];
+  if(words.length === 0){ showEmpty(box); return; }
+  const hint = document.createElement("div");
+  hint.className = "touch-hint";
+  hint.innerHTML = "💡 영어 단어를 보고 알맞은 뜻을 선택하세요";
+  box.appendChild(hint);
+  const shuffled = [...words].sort(()=>Math.random()-0.5);
+  shuffled.forEach((v, i)=>{
+    const wrongs = words.filter(w=>w.en!==v.en).sort(()=>Math.random()-0.5).slice(0,3).map(w=>w.kr.split(";")[0].trim());
+    const correct = v.kr.split(";")[0].trim();
+    const choices = [...wrongs, correct].sort(()=>Math.random()-0.5);
+    const card = document.createElement("div");
+    card.className = "quiz-card";
+    card.style.animationDelay = (i * 30) + "ms";
+    card.dataset.answer = correct;
+    card.innerHTML = `
+      <div class="quiz-top">
+        <span class="quiz-num" style="background:#1D5C2B;">${String(i+1).padStart(2,"0")}</span>
+        <div class="quiz-prompt">
+          <div style="font-family:Georgia,serif;font-size:17px;font-weight:700;color:var(--navy);">${v.en}</div>
+          <div style="font-size:11px;color:rgba(0,0,0,0.3);font-family:'JetBrains Mono',monospace;margin-top:2px;">${v.pos}</div>
+        </div>
+        <button class="vcard-speak" onclick="speakWord('${v.en}',event)">🔊</button>
+      </div>
+      <div class="choices" id="mc-${i}">
+        ${choices.map(ch=>`<button class="choice-btn" data-val="${ch.replace(/"/g,"&quot;")}" onclick="checkMeaning(${i},this)">${ch}</button>`).join("")}
+      </div>
+      <div class="quiz-fb" id="mc-fb-${i}"></div>`;
+    box.appendChild(card);
+  });
+  const wrap = document.createElement("div");
+  wrap.className = "section-check";
+  wrap.innerHTML = `<span class="section-score" id="meaning-score"></span><button class="gq-reset" onclick="buildMeaningQuiz()">↺ 초기화</button>`;
+  box.appendChild(wrap);
+}
+
+function checkMeaning(i, btn){
+  const card = btn.closest(".quiz-card");
+  const correct = card.dataset.answer;
+  const isOk = btn.dataset.val === correct;
+  card.querySelectorAll(".choice-btn").forEach(b=>{
+    b.onclick = null;
+    if(b.dataset.val === correct) b.classList.add("ok");
+    else if(b===btn && !isOk) b.classList.add("ng");
+  });
+  const fb = document.getElementById("mc-fb-"+i);
+  fb.className = "quiz-fb show " + (isOk?"ok":"ng");
+  fb.innerHTML = isOk ? "🎉 정답!" : "❌ 정답: <strong>" + correct + "</strong>";
+  meaningScores[i] = isOk ? 1 : 0;
+  const done = Object.keys(meaningScores).length;
+  const ok = Object.values(meaningScores).filter(v=>v===1).length;
+  const sc = document.getElementById("meaning-score");
+  if(sc) sc.textContent = ok + " / " + done + " 정답";
+}
+
+function buildPrintView(type){
+  const words  = UNITS[currentUnit];
+  const boxId  = type === "spell" ? "printSpellContent" : "printMeaningContent";
+  const box    = document.getElementById(boxId);
+  box.innerHTML = "";
+  if(!words || words.length === 0){ showEmpty(box); return; }
+  const unitNum = currentUnit + 1;
+  const isSpell = type === "spell";
+  const title   = isSpell ? "철자 쓰기" : "뜻 쓰기";
+  const col1    = isSpell ? "한글뜻" : "영단어";
+  function makeRows(arr, startNo){
+    return arr.map((v, i)=>{
+      const hint = isSpell ? v.kr.split(";")[0].trim() : v.en;
+      return `<tr><td class="td-no">${startNo+i}</td><td class="td-write"></td><td class="td-hint">${hint}</td></tr>`;
+    }).join("");
+  }
+  const half  = Math.ceil(words.length / 2);
+  const left  = words.slice(0, half);
+  const right = words.slice(half);
+  box.innerHTML = `
+    <div class="print-view-header">
+      <span class="print-view-title">🖨️ Day ${unitNum} — ${title} 프린트</span>
+      <button class="print-exec-btn" onclick="execPrint('${type}')">🖨️ 인쇄하기</button>
+    </div>
+    <div class="print-table-wrap" id="printContent-${type}">
+      <div class="print-unit-title">✦ 워드마스터 하이퍼2000 Day ${unitNum} — ${title}</div>
+      <div class="print-unit-sub">목동서로영어학원 · 0505.co.kr</div>
+      <div class="print-name-row">
+        <span>이름: <span class="print-name-box"></span></span>
+        <span>점수: <span class="print-name-box"></span></span>
+      </div>
+      <div class="print-two-col">
+        <table class="pt"><thead><tr><th class="td-no">No.</th><th>제시어</th><th>${col1}</th></tr></thead><tbody>${makeRows(left,1)}</tbody></table>
+        <table class="pt"><thead><tr><th class="td-no">No.</th><th>제시어</th><th>${col1}</th></tr></thead><tbody>${makeRows(right,left.length+1)}</tbody></table>
+      </div>
+      <div class="print-wm">✦ 목동서로영어학원 · 본 자료는 목동서로영어학원에서 제작하였습니다 · 0505.co.kr ✦</div>
+    </div>`;
+}
+
+function execPrint(type){ window.print(); }
+
+function showEmpty(box){
+  const u = currentUnit + 1;
+  box.innerHTML = `<div class="empty-unit"><div class="empty-unit-icon">📝</div><div class="empty-unit-title">${u}과 단어 데이터 준비중</div><div class="empty-unit-desc">아직 단어 데이터가 입력되지 않았습니다.</div></div>`;
+}
+
+initSelect();
+changeUnit(0);
+
+</script>
+</body>
+</html>

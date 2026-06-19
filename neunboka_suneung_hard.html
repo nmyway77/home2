@@ -370,21 +370,37 @@ let currentTab  = "vocab";
 let spellScores   = {};
 let meaningScores = {};
 
+let _voicesCache = [];
+function _loadVoices(){ try{ _voicesCache = window.speechSynthesis ? (speechSynthesis.getVoices()||[]) : []; }catch(e){ _voicesCache=[]; } }
+_loadVoices();
+if(window.speechSynthesis && typeof speechSynthesis.addEventListener==="function"){
+  speechSynthesis.addEventListener("voiceschanged", _loadVoices);
+}
 function getVoice(){
-  const v = speechSynthesis.getVoices();
-  return v.find(x=>x.lang==="en-US"&&x.name.includes("Google"))
-      || v.find(x=>x.lang.startsWith("en-US"))
-      || v.find(x=>x.lang.startsWith("en"))
+  const v = (_voicesCache && _voicesCache.length) ? _voicesCache
+          : (window.speechSynthesis ? (speechSynthesis.getVoices()||[]) : []);
+  return v.find(x=>x.lang==="en-US"&&/Google|Samantha|Daniel|Microsoft/.test(x.name))
+      || v.find(x=>x.lang&&x.lang.startsWith("en-US"))
+      || v.find(x=>x.lang&&x.lang.startsWith("en"))
       || null;
 }
-speechSynthesis.addEventListener("voiceschanged", ()=>{});
 function speakWord(word, e){
   if(e) e.stopPropagation();
-  speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(word);
-  u.lang = "en-US"; u.rate = 0.82;
-  const v = getVoice(); if(v) u.voice = v;
-  speechSynthesis.speak(u);
+  if(!window.speechSynthesis){
+    alert("이 환경에서는 음성 재생이 지원되지 않습니다. 파일을 브라우저(크롬/사파리)에서 열어 주세요.");
+    return;
+  }
+  try{
+    speechSynthesis.cancel();
+    const doSpeak = ()=>{
+      const u = new SpeechSynthesisUtterance(word);
+      u.lang = "en-US"; u.rate = 0.85;
+      const v = getVoice(); if(v) u.voice = v;
+      speechSynthesis.speak(u);
+    };
+    if(!_voicesCache.length){ _loadVoices(); setTimeout(doSpeak, 60); }
+    else doSpeak();
+  }catch(err){ console.warn("speak error", err); }
 }
 
 function initSelect(){
