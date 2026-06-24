@@ -1016,11 +1016,10 @@ function buildPenTools(){
   document.getElementById('penClearBtn').addEventListener('click',()=>{
     if(confirm('모든 필기를 지우시겠습니까?'))penLayer.innerHTML='';
   });
-  penLayer.addEventListener('pointerdown',penDown);
-  penLayer.addEventListener('pointermove',penMove);
-  penLayer.addEventListener('pointerup',penUp);
-  penLayer.addEventListener('pointercancel',penUp);
-  penLayer.addEventListener('pointerleave',penUp);
+  penLayer.addEventListener('pointerdown',penDown,{passive:false});
+  window.addEventListener('pointermove',penMove,{passive:false});
+  window.addEventListener('pointerup',penUp);
+  window.addEventListener('pointercancel',penUp);
   const sync=()=>{
     const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
     const w=Math.max(document.body.scrollWidth,document.documentElement.scrollWidth);
@@ -1046,7 +1045,6 @@ function getPenPt(e){
 function penDown(e){
   if(!penEnabled)return;
   e.preventDefault();
-  try{penLayer.setPointerCapture(e.pointerId);}catch(_){}
   if(penEraser){eraseAt(e);return;}
   const pt=getPenPt(e);
   penPath=document.createElementNS('http://www.w3.org/2000/svg','path');
