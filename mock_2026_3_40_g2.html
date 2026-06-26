@@ -142,7 +142,7 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 .answer-zone:empty::before{content:'여기에 단어를 놓으세요';color:rgba(46,117,182,0.35);font-size:12px;font-style:italic;display:flex;align-items:center;height:28px;}
 .word-pool{display:flex;flex-wrap:wrap;gap:7px;min-height:44px;padding:10px;background:#f8f8f8;border-radius:8px;border:2px dashed #ddd;margin-bottom:12px;transition:border-color 0.2s,background 0.2s;}
 .word-pool.drag-over{border-color:var(--gold);background:#fff9e6;}
-.word-chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:6px;font-family:Georgia,serif;font-size:13.5px;cursor:grab;user-select:none;transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;background:var(--blue-card);border:1.5px solid var(--blue-border);color:var(--navy);font-weight:600;white-space:nowrap;touch-action:none;}
+.word-chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:6px;font-family:Georgia,serif;font-size:13.5px;cursor:grab;user-select:none;transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;background:var(--blue-card);border:1.5px solid var(--blue-border);color:var(--navy);font-weight:600;white-space:nowrap;}
 .word-chip:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(46,117,182,0.25);}
 .word-chip.dragging{opacity:0.35;transform:scale(0.93);cursor:grabbing;}
 .word-chip.ok-chip{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20;}
@@ -306,8 +306,8 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 /* ── 공통 행동 CSS ── */
 /* 1. 호버 펼치기 완전 제거 */
 @media(hover:hover) and (pointer:fine){
-  .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
-  .s-card.grammar:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card.grammar:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
 }
 /* 2. 단어 가로 칩 배열 */
 .s-card.vocab-only .s-kr-wrap,
@@ -325,10 +325,9 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .s-card.pinned .s-vocab,
 .s-card.tapped .s-vocab{
   order:0;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25)!important;
-  border-radius:16px;padding:5px 12px 5px 10px!important;
-  white-space:normal;flex-shrink:1;border-top:none!important;
-  display:inline-flex!important;flex-wrap:wrap!important;align-items:center;gap:4px 6px;
-  max-width:100%;overflow-wrap:break-word;word-break:break-word;
+  border-radius:20px;padding:3px 12px 3px 8px!important;
+  white-space:nowrap;flex-shrink:0;border-top:none!important;
+  display:inline-flex!important;align-items:center;gap:4px;
 }
 /* 3. 문장구조도 탭·패널 */
 .tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
@@ -417,36 +416,6 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   body.psd .sd-vocab-chip{font-size:10px!important;padding:2px 7px!important;}
 }
 
-/* ══ 펜 필기 모드 v1.0 ══ */
-#penToolbar{position:fixed;bottom:20px;right:20px;z-index:10000;display:flex;flex-direction:row;gap:8px;background:rgba(255,255,255,0.96);padding:8px;border-radius:30px;box-shadow:0 4px 20px rgba(0,0,0,0.18);backdrop-filter:blur(10px);align-items:center;}
-#penToolbar .pen-btn{width:42px;height:42px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
-#penToolbar .pen-btn:hover{background:#e0e0e0;}
-#penToolbar .pen-btn.active{background:#2E75B6;color:white;}
-#penToolbar .pen-main{background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;font-size:20px;}
-#penToolbar .pen-main.active{background:linear-gradient(135deg,#dc2626,#ef4444);transform:scale(1.05);}
-#penToolbar .pen-tools{display:none;flex-direction:row;gap:6px;align-items:center;padding-left:8px;border-left:1px solid #ddd;margin-left:4px;}
-#penToolbar .pen-tools.show{display:flex;}
-#penToolbar .pen-color{width:30px;height:30px;border:2px solid white;border-radius:50%;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.2);transition:transform 0.15s;padding:0;}
-#penToolbar .pen-color:hover{transform:scale(1.1);}
-#penToolbar .pen-color.selected{border:2px solid #333;transform:scale(1.18);box-shadow:0 2px 6px rgba(0,0,0,0.3);}
-#penToolbar .pen-width{width:34px;height:34px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
-#penToolbar .pen-width:hover{background:#e0e0e0;}
-#penToolbar .pen-width span{background:#333;border-radius:50%;display:inline-block;}
-#penToolbar .pen-width.selected{background:#1F3864;}
-#penToolbar .pen-width.selected span{background:white !important;}
-#penLayer{position:absolute;top:0;left:0;pointer-events:none;z-index:998;overflow:visible;}
-#penLayer.active{pointer-events:auto;touch-action:none;cursor:crosshair;}
-@media print{#penToolbar{display:none !important;}#penLayer{display:none !important;}}
-@media (max-width:600px){
-  #penToolbar{bottom:10px;right:10px;padding:6px;gap:4px;}
-  #penToolbar .pen-btn,#penToolbar .pen-width{width:38px;height:38px;}
-  #penToolbar .pen-color{width:26px;height:26px;}
-}
-
-.tab-summary{background:white;color:#00695C;border-color:rgba(0,105,92,0.25);}
-.tab-summary.active{background:#00695C;color:white;border-color:#00695C;}
-.summary-view{display:none;}
-@media print{.summary-view{display:none!important;}}
 </style>
 </head>
 <body>
@@ -470,7 +439,6 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
   <div class="view-tabs">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
-    <button class="view-tab tab-summary" id="tabSum" onclick="switchSummary()">📄 요약</button>
     <button class="view-tab tab-sd"             id="tabSD" onclick="switchSD()">📐 문장구조도</button>
     <button class="view-tab tab-ga"             id="tabGA" onclick="switchGA()">📊 문법분석</button>
     <button class="view-tab tab-arrange"        id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
@@ -497,43 +465,41 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="cards" id="cards">
 <div class="s-card grammar" data-text="When self-experimentation and conventional experiments are both possible, the difference between them often resembles the difference between learning and showing: Self experiments are better for discovery but worse for convincing others that the solution is helpful or the answer is correct.">
   <div class="card-top"><span class="s-num">01</span><div class="s-en">When <span class="hl">self-experimentation</span> and <span class="hl">conventional</span> experiments are both possible, the difference between them often <span class="hl">resembles</span> the difference between learning and showing: Self experiments are better for discovery but worse for <span class="hl">convincing</span> others that the <span class="hl">solution</span> is helpful or the answer is correct.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr"><strong>자기 실험</strong>과 <strong>전통적</strong> 실험이 둘 다 가능할 때, 그 차이는 배움과 보여주기의 차이를 종종 <strong>닮는다</strong>: 자기 실험은 발견에 더 낫지만 다른 사람을 <strong>설득</strong>하기에는 더 나쁘다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">self-experimentation</span><span class="vocab-kr">자기 실험</span><span class="vocab-en">conventional</span><span class="vocab-kr">전통적인</span><span class="vocab-en">resembles</span><span class="vocab-kr">닮다</span><span class="vocab-en">convincing</span><span class="vocab-kr">설득하기</span><span class="vocab-en">solution</span><span class="vocab-kr">해결책</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>resembles</strong> = the difference = 단수 → resembles(단수 동사). <strong>better for ~ but worse for ~</strong> = 비교급 병렬(대조). <strong>for convincing</strong> = 전치사 for + 동명사.</div><div class="s-meaning"><span class="bracket">【주제 — 자기 실험 vs 전통 실험】</span> <strong>자기 실험(self-experimentation = 연구자가 자기 자신에게 해 보는 실험)</strong>과 <strong>전통적 실험(여러 사람 대상)</strong>이 둘 다 가능할 때, 그 차이는 ‘<strong>배우기 ↔ 보여주기</strong>’의 차이와 비슷하다 — 자기 실험은 새로운 걸 <strong>‘발견(배움)’하기엔 좋지만, 남을 ‘설득(보여주기)’하기엔 약하다</strong>. <span class="star-line">★ self-experiment = 연구자가 자신에게 하는 실험 / 발견(○) ↔ 설득(✗)</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr"><strong>자기 실험</strong>과 <strong>전통적</strong> 실험이 둘 다 가능할 때, 그 차이는 배움과 보여주기의 차이를 종종 <strong>닮는다</strong>: 자기 실험은 발견에 더 낫지만 다른 사람을 <strong>설득</strong>하기에는 더 나쁘다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">self-experimentation</span><span class="vocab-kr">자기 실험</span><span class="vocab-en">conventional</span><span class="vocab-kr">전통적인</span><span class="vocab-en">resembles</span><span class="vocab-kr">닮다</span><span class="vocab-en">convincing</span><span class="vocab-kr">설득하기</span><span class="vocab-en">solution</span><span class="vocab-kr">해결책</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>resembles</strong> = the difference = 단수 → resembles(단수 동사). <strong>better for ~ but worse for ~</strong> = 비교급 병렬(대조). <strong>for convincing</strong> = 전치사 for + 동명사.</div></div>
 </div>
 <div class="s-card grammar" data-text="Of course, most scientists want to do both - discover something and convince others of their discovery.">
   <div class="card-top"><span class="s-num">02</span><div class="s-en">Of course, most scientists want to do both—discover something and convince others of their <span class="hl">discovery</span>.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">물론, 대부분의 과학자는 둘 다 하길 원한다—무언가를 <strong>발견</strong>하고 자신의 발견에 대해 다른 사람을 설득하기.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">discovery</span><span class="vocab-kr">발견</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>want to do</strong> = want + to V. <strong>discover and convince</strong> = 동사원형 병렬 (do의 내용). <strong>convince others of</strong> = ~에 대해 설득하다 (convince + O + of).</div><div class="s-meaning"><span class="bracket">【양쪽 다 필요】</span> 물론 대부분의 과학자는 <strong>둘 다 하고 싶어</strong> 한다 — 무언가를 ‘발견’하고, 그 발견을 남에게 ‘설득’하는 것까지. <span class="star-line">★ Of course = 물론(양보 신호) / 발견 + 설득 둘 다 원함</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">물론, 대부분의 과학자는 둘 다 하길 원한다—무언가를 <strong>발견</strong>하고 자신의 발견에 대해 다른 사람을 설득하기.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">discovery</span><span class="vocab-kr">발견</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>want to do</strong> = want + to V. <strong>discover and convince</strong> = 동사원형 병렬 (do의 내용). <strong>convince others of</strong> = ~에 대해 설득하다 (convince + O + of).</div></div>
 </div>
 <div class="s-card grammar" data-text="Thus, psychologists should consider doing both self-experiments and conventional ones.">
   <div class="card-top"><span class="s-num">03</span><div class="s-en">Thus, <span class="hl">psychologists</span> should consider doing both self-experiments and conventional ones.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">따라서, <strong>심리학자</strong>는 자기 실험과 전통적 실험 둘 다 하는 것을 고려해야 한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">psychologist</span><span class="vocab-kr">심리학자</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>consider doing</strong> = consider + 동명사. <span class="ga-wrong">✗ consider to do</span> → <span class="ga-right">✓ consider doing</span>. <strong>ones</strong> = experiments 대용어.</div><div class="s-meaning"><span class="bracket">【제언 — 둘 다 하라】</span> 그러니 심리학자는 자기 실험과 전통적 실험을 ‘<strong>둘 다</strong>’ 하는 걸 고려해야 한다(ones = experiments, 반복을 피한 대명사). <span class="star-line">★ Thus = 따라서 / 한쪽만 X, 병행을 권함</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">따라서, <strong>심리학자</strong>는 자기 실험과 전통적 실험 둘 다 하는 것을 고려해야 한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">psychologist</span><span class="vocab-kr">심리학자</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>consider doing</strong> = consider + 동명사. <span class="ga-wrong">✗ consider to do</span> → <span class="ga-right">✓ consider doing</span>. <strong>ones</strong> = experiments 대용어.</div></div>
 </div>
 <div class="s-card grammar" data-text="The best use of resources may often be self-experiments followed by conventional ones.">
   <div class="card-top"><span class="s-num">04</span><div class="s-en">The best use of <span class="hl">resources</span> may often be self-experiments followed by conventional ones.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr"><strong>자원</strong>의 최선의 사용은 자기 실험 후 전통적 실험이 뒤따르는 것일 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">resources</span><span class="vocab-kr">자원</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>followed by</strong> = ~가 뒤따르는 (과거분사 수식). experiments (which are) followed by ~.</div><div class="s-meaning"><span class="bracket">【핵심 — 순서】</span> 시간·돈 같은 <strong>자원을 가장 잘 쓰는 방법</strong>은, 흔히 ‘<strong>자기 실험 먼저 → 그다음 전통적 실험</strong>’의 순서다. = <strong>순서가 핵심</strong>(자기 실험이 먼저). <span class="star-line">★ A followed by B = A 다음에 B / 이 글의 핵심 주장(순서)</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr"><strong>자원</strong>의 최선의 사용은 자기 실험 후 전통적 실험이 뒤따르는 것일 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">resources</span><span class="vocab-kr">자원</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>followed by</strong> = ~가 뒤따르는 (과거분사 수식). experiments (which are) followed by ~.</div></div>
 </div>
 <div class="s-card grammar" data-text="The researcher begins with self-experiments that, if all goes well, find large effects and/or generate and eliminate many hypotheses.">
   <div class="card-top"><span class="s-num">05</span><div class="s-en">The researcher begins with self-experiments that, if all goes well, find large effects and/or <span class="hl">generate</span> and <span class="hl">eliminate</span> many <span class="hl">hypotheses</span>.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
   <div class="s-kr-wrap"><div class="s-kr">연구자는 자기 실험으로 시작하는데, 순조로우면 큰 효과를 발견하거나 많은 <strong>가설</strong>을 <strong>생성</strong>하고 <strong>제거</strong>한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">generate</span><span class="vocab-kr">생성하다</span><span class="vocab-en">eliminate</span><span class="vocab-kr">제거하다</span><span class="vocab-en">hypothesis</span><span class="vocab-kr">가설</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>that ~ find, generate, and eliminate</strong> = 관계대명사 that + 동사 3개 병렬. experiments = 복수 → find(복수). <strong>if all goes well</strong> = 삽입 조건절.</div><div class="s-meaning"><span class="bracket">【핵심】</span> 연구의 최적 전략! ①자기 실험(탐색·발견) → ②매개변수 최적화 → ③전통적 실험(검증·설득). 자기 실험 = 발견에 최적, 전통적 실험 = 설득에 최적. <span class="star-line">★ 전자(자기실험)가 후자(전통실험)에 선행해야 가장 효율적!</span></div></div>
 </div>
 <div class="s-card grammar" data-text="This exploratory and theory-building phase lasts until a convenient solution or large effect is found.">
-  <div class="card-top"><span class="s-num">06</span><div class="s-en"><span class="ref">This</span> <span class="hl">exploratory</span> and <span class="hl">theory-building</span> <span class="hl">phase</span> lasts until a <span class="hl">convenient</span> solution or large effect is found.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">이 <strong>탐색적</strong>이고 <strong>이론 구축적인 단계<span class="pr">(= 자기 실험으로 큰 효과·가설을 찾는 탐색 단계)</span></strong>는 <strong>편리한</strong> 해결책이나 큰 효과가 발견될 때까지 지속된다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">exploratory</span><span class="vocab-kr">탐색적인</span><span class="vocab-en">theory-building</span><span class="vocab-kr">이론 구축적인</span><span class="vocab-en">phase</span><span class="vocab-kr">단계</span><span class="vocab-en">convenient</span><span class="vocab-kr">편리한</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>lasts</strong> = phase = 단수 → lasts. <strong>until ~ is found</strong> = ~이 발견될 때까지 (until + 수동).</div><div class="s-meaning"><span class="bracket">【1단계 지속 조건】</span> 이 ‘<strong>탐색·이론 구축</strong>’ 단계는 <strong>쓸 만한 해결책이나 큰 효과를 찾을 때까지(lasts until)</strong> 계속된다. = 성과가 나올 때까지 자기 실험을 반복. <span class="star-line">★ this phase = 05의 자기 실험 탐색 단계 / lasts until = ~까지 계속</span></div></div>
+  <div class="card-top"><span class="s-num">06</span><div class="s-en">This <span class="hl">exploratory</span> and <span class="hl">theory-building</span> <span class="hl">phase</span> lasts until a <span class="hl">convenient</span> solution or large effect is found.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">이 <strong>탐색적</strong>이고 <strong>이론 구축적인 단계</strong>는 <strong>편리한</strong> 해결책이나 큰 효과가 발견될 때까지 지속된다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">exploratory</span><span class="vocab-kr">탐색적인</span><span class="vocab-en">theory-building</span><span class="vocab-kr">이론 구축적인</span><span class="vocab-en">phase</span><span class="vocab-kr">단계</span><span class="vocab-en">convenient</span><span class="vocab-kr">편리한</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>lasts</strong> = phase = 단수 → lasts. <strong>until ~ is found</strong> = ~이 발견될 때까지 (until + 수동).</div></div>
 </div>
 <div class="s-card grammar" data-text="Then the researcher uses self-experiments to find the procedural parameters (e.g., duration, time of day, intensity) that optimize the solution or maximize the effect.">
   <div class="card-top"><span class="s-num">07</span><div class="s-en">Then the researcher uses self-experiments to find the <span class="hl">procedural</span> <span class="hl">parameters</span> (e.g., <span class="hl">duration</span>, time of day, <span class="hl">intensity</span>) that optimize the solution or <span class="hl">maximize</span> the effect.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">연구자는 해결책을 최적화하거나 효과를 <strong>극대화</strong>하는 <strong>절차적 매개변수</strong>(<strong>지속 시간</strong>, 시간대, <strong>강도</strong>)를 찾기 위해 자기 실험을 사용한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">procedural</span><span class="vocab-kr">절차적인</span><span class="vocab-en">parameters</span><span class="vocab-kr">매개변수</span><span class="vocab-en">duration</span><span class="vocab-kr">지속 시간</span><span class="vocab-en">intensity</span><span class="vocab-kr">강도</span><span class="vocab-en">maximize</span><span class="vocab-kr">극대화하다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>to find</strong> = 목적의 to부정사. <strong>that optimize or maximize</strong> = 관계대명사 that (parameters 수식). parameters = 복수 → optimize(복수).</div><div class="s-meaning"><span class="bracket">【2단계 — 자기 실험으로 최적화】</span> 그다음(여전히 자기 실험으로) ‘<strong>어떻게 하면 효과가 최대인지</strong>’의 세부 조건(procedural parameters) — <strong>얼마나 오래(duration)·하루 중 언제(time of day)·얼마나 세게(intensity)</strong> — 를 찾아 해결책을 다듬는다. <span class="star-line">★ parameter = (조정 가능한) 변수·조건 / 여전히 자기 실험 단계</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">연구자는 해결책을 최적화하거나 효과를 <strong>극대화</strong>하는 <strong>절차적 매개변수</strong>(<strong>지속 시간</strong>, 시간대, <strong>강도</strong>)를 찾기 위해 자기 실험을 사용한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">procedural</span><span class="vocab-kr">절차적인</span><span class="vocab-en">parameters</span><span class="vocab-kr">매개변수</span><span class="vocab-en">duration</span><span class="vocab-kr">지속 시간</span><span class="vocab-en">intensity</span><span class="vocab-kr">강도</span><span class="vocab-en">maximize</span><span class="vocab-kr">극대화하다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>to find</strong> = 목적의 to부정사. <strong>that optimize or maximize</strong> = 관계대명사 that (parameters 수식). parameters = 복수 → optimize(복수).</div></div>
 </div>
 <div class="s-card grammar" data-text="Only then would the researcher begin conventional experiments, using the optimized parameters.">
   <div class="card-top"><span class="s-num">08</span><div class="s-en">Only then would the researcher begin conventional experiments, using the <span class="hl">optimized</span> parameters.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">그제서야 연구자는 <strong>최적화된</strong> 매개변수를 사용하여 전통적 실험을 시작할 것이다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">optimized</span><span class="vocab-kr">최적화된</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>Only then would ~</strong> = Only + 부사 → 도치! would + S + V원형. 정상 어순: The researcher would begin only then. <strong>using ~</strong> = 분사구문 (수단/동시). <strong>optimized</strong> = 과거분사 전치수식.</div><div class="s-meaning"><span class="bracket">【3단계 — 비로소 전통 실험】</span> <strong>그제서야(Only then)</strong> — 자기 실험으로 조건을 다 다듬은 뒤에야 — 연구자는 그 <strong>최적 조건으로 ‘전통적 실험’을 시작</strong>한다. = 전통 실험은 맨 마지막(검증용). <span class="star-line">★ Only then = 그제서야 비로소(앞 단계 완료 후) / 전통 실험 = 검증, 맨 끝</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">그제서야 연구자는 <strong>최적화된</strong> 매개변수를 사용하여 전통적 실험을 시작할 것이다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">optimized</span><span class="vocab-kr">최적화된</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>Only then would ~</strong> = Only + 부사 → 도치! would + S + V원형. 정상 어순: The researcher would begin only then. <strong>using ~</strong> = 분사구문 (수단/동시). <strong>optimized</strong> = 과거분사 전치수식.</div></div>
 </div>
 <div class="s-card grammar" data-text="Since self-experiments are suited to exploration while conventional experiments provide validation, the most efficient strategy is for the former to precede the latter.">
-  <div class="card-top"><span class="s-num">09</span><div class="s-en">Since self-experiments <span class="hl">are suited to</span> exploration while conventional experiments provide validation, the most efficient <span class="hl">strategy</span> is for the <span class="hl">former</span> to <span class="hl">precede</span> the <span class="ref">latter</span>.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">자기 실험이 탐색에 <strong>적합</strong>한 반면 전통적 실험이 검증을 제공하므로, 가장 효율적인 <strong>전략</strong>은 <strong>전자<span class="pr">(= 자기 실험)</span></strong>가 후자<span class="pr">(= 전통적 실험)</span>에 <strong>선행</strong>하는 것이다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">are suited to</span><span class="vocab-kr">~에 적합하다</span><span class="vocab-en">strategy</span><span class="vocab-kr">전략</span><span class="vocab-en">former</span><span class="vocab-kr">전자</span><span class="vocab-en">precede</span><span class="vocab-kr">선행하다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>are suited to</strong> = ~에 적합하다 (be suited to + 명사). <strong>for the former to precede</strong> = for + O + to V = O가 V하는 것 (의미상 주어). <strong>the former / the latter</strong> = 전자 / 후자.</div><div class="s-meaning"><span class="bracket">【결론 — 자기 실험 먼저】</span> 자기 실험은 ‘<strong>탐색(찾기)</strong>’에, 전통 실험은 ‘<strong>검증(확인시키기)</strong>’에 알맞으므로, 가장 효율적인 전략은 <strong>전자(자기 실험)가 후자(전통 실험)보다 ‘먼저’ 오는 것(precede)</strong>이다. (글 전체 결론 — 순서 재확인) <span class="star-line">★ the former = 자기 실험(탐색) / the latter = 전통 실험(검증) / precede = ~보다 앞서다</span></div></div>
+  <div class="card-top"><span class="s-num">09</span><div class="s-en">Since self-experiments <span class="hl">are suited to</span> exploration while conventional experiments provide validation, the most efficient <span class="hl">strategy</span> is for the <span class="hl">former</span> to <span class="hl">precede</span> the latter.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">자기 실험이 탐색에 <strong>적합</strong>한 반면 전통적 실험이 검증을 제공하므로, 가장 효율적인 <strong>전략</strong>은 <strong>전자</strong>가 후자에 <strong>선행</strong>하는 것이다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">are suited to</span><span class="vocab-kr">~에 적합하다</span><span class="vocab-en">strategy</span><span class="vocab-kr">전략</span><span class="vocab-en">former</span><span class="vocab-kr">전자</span><span class="vocab-en">precede</span><span class="vocab-kr">선행하다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>are suited to</strong> = ~에 적합하다 (be suited to + 명사). <strong>for the former to precede</strong> = for + O + to V = O가 V하는 것 (의미상 주어). <strong>the former / the latter</strong> = 전자 / 후자.</div></div>
 </div>
 </div><!-- /cards -->
-  </div>
-<div class="summary-view" id="summaryView">
     <div class="summary-wrap"><div class="summary-header">📖 줄거리 &amp; 핵심 정리</div><div class="summary-body">
 <div style="background:linear-gradient(135deg,#1F3864,#2E75B6);border-radius:12px;padding:18px 22px;margin-bottom:20px;text-align:center;"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.6);margin-bottom:8px;">CORE MESSAGE</div><div style="font-size:15px;font-weight:700;color:white;line-height:1.6;"><span style="color:#f0d070;">자기 실험(탐색)</span> → <span style="color:#4ADE80;">전통적 실험(검증)</span> 순서가 가장 효율적!</div><div style="font-size:12px;color:rgba(255,255,255,0.65);margin-top:8px;">= Self-experiments for discovery first, then conventional experiments for validation.</div></div>
 <div style="background:#fff8e6;border-left:4px solid #f0d070;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:20px;"><div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:#a07800;margin-bottom:10px;">💡 쉬운 비유로 이해하기</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12.5px;"><div style="background:white;border-radius:8px;padding:12px 14px;border:1px solid #faedb0;"><div style="font-weight:700;color:#C55A11;margin-bottom:6px;">🔬 자기 실험 (Self)</div><div style="color:#444;line-height:1.8;">발견에 최적! 🎯<br>빠른 탐색·가설 생성/제거<br>매개변수 최적화<br>but 남 설득에 약함 ❌</div></div><div style="background:white;border-radius:8px;padding:12px 14px;border:1px solid #faedb0;"><div style="font-weight:700;color:#2E75B6;margin-bottom:6px;">📊 전통적 실험 (Conventional)</div><div style="color:#444;line-height:1.8;">설득·검증에 최적! 🎯<br>타인에게 증명<br>최적화된 매개변수 사용<br>but 탐색에 비효율 ❌</div></div></div><div style="margin-top:10px;font-size:12px;color:#7a5c00;text-align:center;font-weight:600;">→ 최적 전략: 자기 실험(전자) → 전통적 실험(후자) = <u>전자가 후자에 선행!</u></div></div>
@@ -549,7 +515,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #5B2D8E;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">for O to V (의미상 주어)</div><div style="color:#555;">O가 V하는 것</div></div>
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #C55A11;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">the former / the latter</div><div style="color:#555;">전자 / 후자</div></div>
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #C55A11;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">convince O of N</div><div style="color:#555;">O에게 N에 대해 설득</div></div></div></div></div></div>
-</div>
+  </div>
   <div class="ga-panel" id="panelGA">
 
 <div class="ga-legend"><div class="ga-leg"><div class="ga-leg-dot" style="background:#C62828;"></div><strong>Tier 1</strong> 어법 핵심</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#E65100;"></div><strong>Tier 2</strong> 어법</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#1565C0;"></div><strong>Tier 3</strong> 어휘·대명사</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#2E7D32;"></div><strong>Tier 4</strong> 혼동 어휘</div></div>
@@ -995,12 +961,6 @@ function readNext(){if(!allPlaying||allIdx>=allQueue.length){if(currentCard)curr
 
 /* ══ 배열영작 ══ */
 let scores={},dragSrc=null,clickSelectedChip=null;
-/* ── 터치 드래그 지원 (태블릿/모바일) v1.7 ── */
-let tChip=null,tClone=null,tStartX=0,tStartY=0,tOffX=0,tOffY=0,tMoved=false,tDragEnd=0;
-const T_DRAG_THRESHOLD=10;
-function arrTouchStart(e){const chip=e.target.closest('.word-chip');if(!chip)return;tChip=chip;const r=chip.getBoundingClientRect();const t=e.touches[0];tStartX=t.clientX;tStartY=t.clientY;tOffX=t.clientX-r.left;tOffY=t.clientY-r.top;tMoved=false;}
-function arrTouchMove(e){if(!tChip)return;if(e.cancelable)e.preventDefault();const t=e.touches[0];const dx=t.clientX-tStartX,dy=t.clientY-tStartY;if(!tMoved){if(Math.hypot(dx,dy)<T_DRAG_THRESHOLD)return;tMoved=true;const r=tChip.getBoundingClientRect();tClone=tChip.cloneNode(true);Object.assign(tClone.style,{position:'fixed',left:r.left+'px',top:r.top+'px',width:r.width+'px',zIndex:9999,pointerEvents:'none',opacity:0.9,transform:'scale(1.08)',boxShadow:'0 8px 24px rgba(0,0,0,0.3)',transition:'none'});document.body.appendChild(tClone);tChip.classList.add('dragging');}tClone.style.left=(t.clientX-tOffX)+'px';tClone.style.top=(t.clientY-tOffY)+'px';tClone.style.display='none';const tg=document.elementFromPoint(t.clientX,t.clientY);tClone.style.display='';const z=tg&&tg.closest('.answer-zone, .word-pool');document.querySelectorAll('.answer-zone.drag-over, .word-pool.drag-over').forEach(el=>el.classList.remove('drag-over'));if(z)z.classList.add('drag-over');}
-function arrTouchEnd(e){if(!tChip)return;if(!tMoved){tChip=null;return;}const t=e.changedTouches[0];if(tClone)tClone.style.display='none';const tg=document.elementFromPoint(t.clientX,t.clientY);const z=tg&&tg.closest('.answer-zone, .word-pool');if(z){const chips=Array.from(z.querySelectorAll('.word-chip')).filter(c=>c!==tChip);if(chips.length===0){z.appendChild(tChip);}else{let bestC=null,bestB=true,bestD=Infinity;for(const c of chips){const r=c.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const d=Math.hypot(t.clientX-cx,t.clientY-cy);if(d<bestD){bestD=d;bestC=c;bestB=t.clientX<cx;}}if(bestB)z.insertBefore(tChip,bestC);else z.insertBefore(tChip,bestC.nextSibling);}tChip.classList.remove('ok-chip');const idx=tChip.dataset.idx;const r=document.getElementById('res-'+idx);if(r)r.className='arr-result';}if(tClone){tClone.remove();tClone=null;}tChip.classList.remove('dragging');document.querySelectorAll('.answer-zone.drag-over, .word-pool.drag-over').forEach(el=>el.classList.remove('drag-over'));tChip=null;tDragEnd=Date.now();e.preventDefault();}
 function buildArrangeCards(){
   const box=document.getElementById('arrCards');box.innerHTML='';
   const hint=document.createElement('div');hint.className='touch-hint';hint.innerHTML='💡 단어 클릭 → 즉시 이동 &nbsp;|&nbsp; 드래그도 가능';box.appendChild(hint);
@@ -1009,15 +969,14 @@ function buildArrangeCards(){
     const card=document.createElement('div');card.className='arr-card';card.style.animationDelay=(idx*60)+'ms';
     card.innerHTML=`<div class="arr-header"><span class="arr-num">${item.num}</span><div class="arr-kr">${item.kr}</div></div><div class="arr-body"><div class="answer-zone" id="zone-${idx}"></div><div class="word-pool" id="pool-${idx}">${shuffled.map(w=>`<div class="word-chip" draggable="true" data-word="${w}" data-idx="${idx}">${w}</div>`).join('')}</div><div class="arr-result" id="res-${idx}"></div><div class="ans-reveal" id="ans-${idx}"><strong>정답:</strong> ${item.ans}.</div><div class="arr-btns"><button class="arr-check" onclick="checkAns(${idx})">✓ 확인</button><button class="arr-reset" onclick="resetCard(${idx})">↺ 초기화</button><button class="arr-show-ans" onclick="toggleAns(${idx})">👁 정답 보기</button></div></div>`;
     box.appendChild(card);
-    ['zone-'+idx,'pool-'+idx].forEach(zid=>{const z=document.getElementById(zid);z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(!dragSrc)return;const chips=Array.from(z.querySelectorAll('.word-chip')).filter(c=>c!==dragSrc);if(chips.length===0){z.appendChild(dragSrc);}else{let bestC=null,bestB=true,bestD=Infinity;for(const c of chips){const r=c.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const d=Math.hypot(e.clientX-cx,e.clientY-cy);if(d<bestD){bestD=d;bestC=c;bestB=e.clientX<cx;}}if(bestB)z.insertBefore(dragSrc,bestC);else z.insertBefore(dragSrc,bestC.nextSibling);}dragSrc.classList.remove('dragging','ok-chip');document.getElementById('res-'+idx).className='arr-result';dragSrc=null;});});
+    ['zone-'+idx,'pool-'+idx].forEach(zid=>{const z=document.getElementById(zid);z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(!dragSrc)return;z.appendChild(dragSrc);dragSrc.classList.remove('dragging','ok-chip');document.getElementById('res-'+idx).className='arr-result';dragSrc=null;});});
     setTimeout(()=>{document.getElementById('pool-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});document.getElementById('zone-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});},0);
   });
   box.addEventListener('dragstart',e=>{if(!e.target.classList.contains('word-chip'))return;dragSrc=e.target;e.target.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
   box.addEventListener('dragend',e=>{if(e.target.classList.contains('word-chip'))e.target.classList.remove('dragging');dragSrc=null;});
-  box.addEventListener('touchstart',arrTouchStart,{passive:true});box.addEventListener('touchmove',arrTouchMove,{passive:false});box.addEventListener('touchend',arrTouchEnd);box.addEventListener('touchcancel',arrTouchEnd);
   updateScore();
 }
-function chipClick(chip,idx){if(Date.now()-tDragEnd<500)return;const inZone=chip.parentElement.id==='zone-'+idx;const target=document.getElementById(inZone?'pool-'+idx:'zone-'+idx);chip.classList.remove('ok-chip');target.appendChild(chip);document.getElementById('res-'+idx).className='arr-result';}
+function chipClick(chip,idx){const inZone=chip.parentElement.id==='zone-'+idx;const target=document.getElementById(inZone?'pool-'+idx:'zone-'+idx);chip.classList.remove('ok-chip');target.appendChild(chip);chip.addEventListener('click',()=>chipClick(chip,idx),{once:true});document.getElementById('res-'+idx).className='arr-result';}
 function checkAns(idx){const zone=document.getElementById('zone-'+idx);const chips=Array.from(zone.querySelectorAll('.word-chip'));const userAns=chips.map(c=>c.dataset.word).join(' ');const correct=ARRANGE[idx].ans;const ok=userAns.trim().toLowerCase()===correct.trim().toLowerCase();const res=document.getElementById('res-'+idx);res.className='arr-result show '+(ok?'ok':'ng');res.innerHTML=ok?'🎉 정답입니다!':'❌ 다시 확인해 보세요. ('+chips.length+'/'+correct.split(' ').length+'개 배치됨)';if(ok)chips.forEach(c=>c.classList.add('ok-chip'));scores[idx]=ok?1:0;updateScore();}
 function resetCard(idx){const zone=document.getElementById('zone-'+idx);const pool=document.getElementById('pool-'+idx);Array.from(zone.querySelectorAll('.word-chip')).forEach(c=>{c.classList.remove('ok-chip');pool.appendChild(c);});document.getElementById('res-'+idx).className='arr-result';document.getElementById('ans-'+idx).className='ans-reveal';delete scores[idx];updateScore();}
 function toggleAns(idx){document.getElementById('ans-'+idx).classList.toggle('show');}
@@ -1242,159 +1201,6 @@ document.addEventListener("DOMContentLoaded",function(){
 });
 // 즉시 실행 (DOMContentLoaded 전에도 안전하게)
 (function(){hideQPanels();})();
-</script>
-<script>
-/* ══ 펜 필기 모드 (자유 필기) v1.0 ══ */
-const PEN_COLORS=['#dc2626','#1F3864','#0f9d58','#f59e0b','#000000'];
-const PEN_WIDTHS=[2,4,7];
-let penEnabled=false,penColor='#dc2626',penWidth=4,penEraser=false;
-let penLayer=null,penPath=null,penPts=[];
-
-function buildPenTools(){
-  if(document.getElementById('penLayer'))return;
-  penLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
-  penLayer.id='penLayer';
-  document.body.appendChild(penLayer);
-  const tb=document.createElement('div');
-  tb.id='penToolbar';
-  let html='<button class="pen-btn pen-main" id="penToggle" title="펜 ON/OFF">✏️</button><div class="pen-tools" id="penTools">';
-  PEN_COLORS.forEach(c=>html+='<button class="pen-color" data-color="'+c+'" style="background:'+c+';" title="색상"></button>');
-  PEN_WIDTHS.forEach(w=>html+='<button class="pen-width" data-width="'+w+'" title="굵기"><span style="width:'+(w*2)+'px;height:'+(w*2)+'px;"></span></button>');
-  html+='<button class="pen-btn pen-eraser" id="penEraserBtn" title="개별 지우개">🧹</button><button class="pen-btn pen-clear" id="penClearBtn" title="전체 지우기">🗑️</button></div>';
-  tb.innerHTML=html;
-  document.body.appendChild(tb);
-  document.querySelector('.pen-color[data-color="'+penColor+'"]').classList.add('selected');
-  document.querySelector('.pen-width[data-width="'+penWidth+'"]').classList.add('selected');
-  document.getElementById('penToggle').addEventListener('click',togglePen);
-  document.querySelectorAll('.pen-color').forEach(b=>b.addEventListener('click',e=>{
-    const c=e.currentTarget.dataset.color;
-    penColor=c;penEraser=false;
-    document.querySelectorAll('.pen-color').forEach(x=>x.classList.toggle('selected',x.dataset.color===c));
-    document.getElementById('penEraserBtn').classList.remove('active');
-  }));
-  document.querySelectorAll('.pen-width').forEach(b=>b.addEventListener('click',e=>{
-    const w=+e.currentTarget.dataset.width;
-    penWidth=w;
-    document.querySelectorAll('.pen-width').forEach(x=>x.classList.toggle('selected',+x.dataset.width===w));
-  }));
-  document.getElementById('penEraserBtn').addEventListener('click',()=>{
-    penEraser=!penEraser;
-    document.getElementById('penEraserBtn').classList.toggle('active',penEraser);
-  });
-  document.getElementById('penClearBtn').addEventListener('click',()=>{
-    if(confirm('모든 필기를 지우시겠습니까?'))penLayer.innerHTML='';
-  });
-  penLayer.addEventListener('pointerdown',penDown);
-  penLayer.addEventListener('pointermove',penMove);
-  penLayer.addEventListener('pointerup',penUp);
-  penLayer.addEventListener('pointercancel',penUp);
-  penLayer.addEventListener('pointerleave',penUp);
-  const sync=()=>{
-    penLayer.style.height='0px';penLayer.style.width='0px';
-    const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
-    const w=Math.max(document.body.scrollWidth,document.documentElement.scrollWidth);
-    penLayer.setAttribute('width',w);
-    penLayer.setAttribute('height',h);
-    penLayer.style.height=h+'px';
-    penLayer.style.width=w+'px';
-  };
-  sync();
-  if(window.ResizeObserver){let _roPending=false;new ResizeObserver(()=>{if(_roPending)return;_roPending=true;requestAnimationFrame(()=>{_roPending=false;sync();});}).observe(document.body);}
-  window.addEventListener('resize',sync);
-  setInterval(sync,2000);
-}
-function togglePen(){
-  penEnabled=!penEnabled;
-  document.getElementById('penToggle').classList.toggle('active',penEnabled);
-  document.getElementById('penTools').classList.toggle('show',penEnabled);
-  penLayer.classList.toggle('active',penEnabled);
-}
-function getPenPt(e){
-  return {x:e.clientX+window.scrollX,y:e.clientY+window.scrollY};
-}
-function penDown(e){
-  if(!penEnabled)return;
-  e.preventDefault();
-  try{penLayer.setPointerCapture(e.pointerId);}catch(_){}
-  if(penEraser){eraseAt(e);return;}
-  const pt=getPenPt(e);
-  penPath=document.createElementNS('http://www.w3.org/2000/svg','path');
-  penPath.setAttribute('d','M '+pt.x+' '+pt.y);
-  penPath.setAttribute('stroke',penColor);
-  penPath.setAttribute('stroke-width',penWidth);
-  penPath.setAttribute('fill','none');
-  penPath.setAttribute('stroke-linecap','round');
-  penPath.setAttribute('stroke-linejoin','round');
-  penLayer.appendChild(penPath);
-  penPts=[pt];
-}
-function penMove(e){
-  if(!penEnabled)return;
-  if(penEraser&&e.buttons){eraseAt(e);return;}
-  if(!penPath)return;
-  e.preventDefault();
-  const pt=getPenPt(e);
-  const last=penPts[penPts.length-1];
-  if(Math.hypot(pt.x-last.x,pt.y-last.y)<1.5)return;
-  penPts.push(pt);
-  let d='M '+penPts[0].x+' '+penPts[0].y;
-  for(let i=1;i<penPts.length-1;i++){
-    const c=penPts[i],n=penPts[i+1];
-    const mx=(c.x+n.x)/2,my=(c.y+n.y)/2;
-    d+=' Q '+c.x+' '+c.y+' '+mx+' '+my;
-  }
-  if(penPts.length>=2){
-    const lp=penPts[penPts.length-1];
-    d+=' L '+lp.x+' '+lp.y;
-  }
-  penPath.setAttribute('d',d);
-}
-function penUp(e){
-  if(penPath){penPath=null;penPts=[];}
-}
-function eraseAt(e){
-  const pt=getPenPt(e);
-  const r=20;
-  const paths=Array.from(penLayer.querySelectorAll('path'));
-  for(const p of paths){
-    const bb=p.getBBox();
-    if(pt.x>=bb.x-r&&pt.x<=bb.x+bb.width+r&&pt.y>=bb.y-r&&pt.y<=bb.y+bb.height+r){
-      p.remove();
-    }
-  }
-}
-if(document.readyState==='loading'){
-  document.addEventListener('DOMContentLoaded',buildPenTools);
-}else{
-  setTimeout(buildPenTools,100);
-}
-</script>
-<script>
-/* ══ 요약 전용 탭 v1.0 ══ */
-(function(){
-  function hideSummary(){
-    var sv=document.getElementById('summaryView');if(sv)sv.style.display='none';
-    var ts=document.getElementById('tabSum');if(ts)ts.classList.remove('active');
-  }
-  window.switchSummary=function(){
-    var rv=document.getElementById('readingView');if(rv)rv.style.display='none';
-    ['arrangeView','grammarView','vocabView'].forEach(function(id){
-      var el=document.getElementById(id);if(el)el.classList.remove('active');});
-    if(typeof hideAllExtra==='function')hideAllExtra();
-    document.querySelectorAll('.view-tab').forEach(function(t){t.classList.remove('active');});
-    var sv=document.getElementById('summaryView');if(sv)sv.style.display='block';
-    var ts=document.getElementById('tabSum');if(ts)ts.classList.add('active');
-    window.scrollTo({top:0,behavior:'smooth'});
-  };
-  /* 다른 모든 전환 함수가 요약뷰를 숨기도록 래핑 */
-  ['switchView','switchSD','switchGA','switchQ','switchVocab'].forEach(function(fn){
-    if(typeof window[fn]!=='function')return;
-    var orig=window[fn];
-    window[fn]=function(){hideSummary();return orig.apply(this,arguments);};
-  });
-  document.addEventListener('DOMContentLoaded',hideSummary);
-  hideSummary();
-})();
 </script>
 </body>
 </html>

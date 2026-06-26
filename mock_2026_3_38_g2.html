@@ -142,7 +142,7 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 .answer-zone:empty::before{content:'여기에 단어를 놓으세요';color:rgba(46,117,182,0.35);font-size:12px;font-style:italic;display:flex;align-items:center;height:28px;}
 .word-pool{display:flex;flex-wrap:wrap;gap:7px;min-height:44px;padding:10px;background:#f8f8f8;border-radius:8px;border:2px dashed #ddd;margin-bottom:12px;transition:border-color 0.2s,background 0.2s;}
 .word-pool.drag-over{border-color:var(--gold);background:#fff9e6;}
-.word-chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:6px;font-family:Georgia,serif;font-size:13.5px;cursor:grab;user-select:none;transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;background:var(--blue-card);border:1.5px solid var(--blue-border);color:var(--navy);font-weight:600;white-space:nowrap;touch-action:none;}
+.word-chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:6px;font-family:Georgia,serif;font-size:13.5px;cursor:grab;user-select:none;transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;background:var(--blue-card);border:1.5px solid var(--blue-border);color:var(--navy);font-weight:600;white-space:nowrap;}
 .word-chip:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(46,117,182,0.25);}
 .word-chip.dragging{opacity:0.35;transform:scale(0.93);cursor:grabbing;}
 .word-chip.ok-chip{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20;}
@@ -306,8 +306,8 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 /* ── 공통 행동 CSS ── */
 /* 1. 호버 펼치기 완전 제거 */
 @media(hover:hover) and (pointer:fine){
-  .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
-  .s-card.grammar:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card.grammar:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
 }
 /* 2. 단어 가로 칩 배열 */
 .s-card.vocab-only .s-kr-wrap,
@@ -325,10 +325,9 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .s-card.pinned .s-vocab,
 .s-card.tapped .s-vocab{
   order:0;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25)!important;
-  border-radius:16px;padding:5px 12px 5px 10px!important;
-  white-space:normal;flex-shrink:1;border-top:none!important;
-  display:inline-flex!important;flex-wrap:wrap!important;align-items:center;gap:4px 6px;
-  max-width:100%;overflow-wrap:break-word;word-break:break-word;
+  border-radius:20px;padding:3px 12px 3px 8px!important;
+  white-space:nowrap;flex-shrink:0;border-top:none!important;
+  display:inline-flex!important;align-items:center;gap:4px;
 }
 /* 3. 문장구조도 탭·패널 */
 .tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
@@ -417,36 +416,6 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   body.psd .sd-vocab-chip{font-size:10px!important;padding:2px 7px!important;}
 }
 
-/* ══ 펜 필기 모드 v1.0 ══ */
-#penToolbar{position:fixed;bottom:20px;right:20px;z-index:10000;display:flex;flex-direction:row;gap:8px;background:rgba(255,255,255,0.96);padding:8px;border-radius:30px;box-shadow:0 4px 20px rgba(0,0,0,0.18);backdrop-filter:blur(10px);align-items:center;}
-#penToolbar .pen-btn{width:42px;height:42px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
-#penToolbar .pen-btn:hover{background:#e0e0e0;}
-#penToolbar .pen-btn.active{background:#2E75B6;color:white;}
-#penToolbar .pen-main{background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;font-size:20px;}
-#penToolbar .pen-main.active{background:linear-gradient(135deg,#dc2626,#ef4444);transform:scale(1.05);}
-#penToolbar .pen-tools{display:none;flex-direction:row;gap:6px;align-items:center;padding-left:8px;border-left:1px solid #ddd;margin-left:4px;}
-#penToolbar .pen-tools.show{display:flex;}
-#penToolbar .pen-color{width:30px;height:30px;border:2px solid white;border-radius:50%;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.2);transition:transform 0.15s;padding:0;}
-#penToolbar .pen-color:hover{transform:scale(1.1);}
-#penToolbar .pen-color.selected{border:2px solid #333;transform:scale(1.18);box-shadow:0 2px 6px rgba(0,0,0,0.3);}
-#penToolbar .pen-width{width:34px;height:34px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
-#penToolbar .pen-width:hover{background:#e0e0e0;}
-#penToolbar .pen-width span{background:#333;border-radius:50%;display:inline-block;}
-#penToolbar .pen-width.selected{background:#1F3864;}
-#penToolbar .pen-width.selected span{background:white !important;}
-#penLayer{position:absolute;top:0;left:0;pointer-events:none;z-index:998;overflow:visible;}
-#penLayer.active{pointer-events:auto;touch-action:none;cursor:crosshair;}
-@media print{#penToolbar{display:none !important;}#penLayer{display:none !important;}}
-@media (max-width:600px){
-  #penToolbar{bottom:10px;right:10px;padding:6px;gap:4px;}
-  #penToolbar .pen-btn,#penToolbar .pen-width{width:38px;height:38px;}
-  #penToolbar .pen-color{width:26px;height:26px;}
-}
-
-.tab-summary{background:white;color:#00695C;border-color:rgba(0,105,92,0.25);}
-.tab-summary.active{background:#00695C;color:white;border-color:#00695C;}
-.summary-view{display:none;}
-@media print{.summary-view{display:none!important;}}
 </style>
 </head>
 <body>
@@ -470,7 +439,6 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
   <div class="view-tabs">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
-    <button class="view-tab tab-summary" id="tabSum" onclick="switchSummary()">📄 요약</button>
     <button class="view-tab tab-sd"             id="tabSD" onclick="switchSD()">📐 문장구조도</button>
     <button class="view-tab tab-ga"             id="tabGA" onclick="switchGA()">📊 문법분석</button>
     <button class="view-tab tab-arrange"        id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
@@ -497,35 +465,33 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="cards" id="cards">
 <div class="s-card grammar" data-text="There are several ways that participants in a make-believe can communicate things about the fictional world to other participants.">
   <div class="card-top"><span class="s-num">01</span><div class="s-en">There are several ways that participants in a <span class="hl">make-believe</span> can <span class="hl">communicate</span> things about the <span class="hl">fictional</span> world to other participants.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr"><strong>역할 놀이</strong> 참가자들이 <strong>가상</strong> 세계에 대한 것들을 다른 참가자들에게 <strong>전달</strong>할 수 있는 여러 방법이 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">make-believe</span><span class="vocab-kr">역할 놀이</span><span class="vocab-en">communicate</span><span class="vocab-kr">전달하다</span><span class="vocab-en">fictional</span><span class="vocab-kr">가상의</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>ways that ~ can communicate</strong> = 관계부사 that (= in which). ways 수식.</div><div class="s-meaning"><span class="bracket">【도입 — 가상 세계 정보 전달】</span> <strong>역할(상상) 놀이(make-believe)</strong>에서 참가자들이 ‘<strong>가상 세계(the fictional world)</strong>’에 대한 정보를 서로에게 전달하는 방법은 여러 가지가 있다. = 이 글의 주제: 가상 세계 정보를 어떻게 주고받나. <span class="star-line">★ make-believe = 상상(역할) 놀이 / 전달 방법이 여럿</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr"><strong>역할 놀이</strong> 참가자들이 <strong>가상</strong> 세계에 대한 것들을 다른 참가자들에게 <strong>전달</strong>할 수 있는 여러 방법이 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">make-believe</span><span class="vocab-kr">역할 놀이</span><span class="vocab-en">communicate</span><span class="vocab-kr">전달하다</span><span class="vocab-en">fictional</span><span class="vocab-kr">가상의</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>ways that ~ can communicate</strong> = 관계부사 that (= in which). ways 수식.</div></div>
 </div>
 <div class="s-card grammar" data-text="Sometimes these messages are emitted naturally as a result of full participation in the fictional world—i.e., something said or done by a player while in character communicates some things that are fictional of that world.">
-  <div class="card-top"><span class="s-num">02</span><div class="s-en">Sometimes <span class="ref">these</span> messages are <span class="hl">emitted</span> naturally as a result of full participation in the fictional world—i.e., something said or done by a player while in character communicates some things that are fictional of that world.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">메시지들<span class="pr">(= 가상 세계에 대해 전달되는 정보)</span>은 완전한 참여의 결과로 자연스럽게 <strong>방출</strong>된다—즉, 캐릭터 상태에서 말하거나 행한 것이 가상인 것들을 전달한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">emitted</span><span class="vocab-kr">방출된</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>are emitted</strong> = 수동 (방출되다). <strong>something said or done</strong> = 과거분사 수식 (말해지거나 행해진 것). <strong>communicates</strong> = something = 단수 → communicates.</div><div class="s-meaning"><span class="bracket">【방법 1 — 연기로 저절로 전달】</span> 어떤 정보는 놀이에 <strong>푹 빠진 결과로 ‘저절로’ 나온다</strong> — 즉, 참가자가 <strong>캐릭터에 몰입한 채(in character)</strong> 말하거나 행동한 것이, 그 가상 세계에서 일어나는 일을 자연스레 전달한다. = <strong>연기 자체가 메시지</strong>. <span class="star-line">★ in character = 캐릭터(역할)에 몰입한 상태로 / these messages = 가상 세계에 대한 정보</span></div></div>
+  <div class="card-top"><span class="s-num">02</span><div class="s-en">Sometimes these messages are <span class="hl">emitted</span> naturally as a result of full participation in the fictional world—i.e., something said or done by a player while in character communicates some things that are fictional of that world.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">메시지들은 완전한 참여의 결과로 자연스럽게 <strong>방출</strong>된다—즉, 캐릭터 상태에서 말하거나 행한 것이 가상인 것들을 전달한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">emitted</span><span class="vocab-kr">방출된</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>are emitted</strong> = 수동 (방출되다). <strong>something said or done</strong> = 과거분사 수식 (말해지거나 행해진 것). <strong>communicates</strong> = something = 단수 → communicates.</div></div>
 </div>
 <div class="s-card grammar" data-text="For example, a child pretending to be Peter Pan might gasp and draw a plastic knife.">
   <div class="card-top"><span class="s-num">03</span><div class="s-en">For example, a child <span class="hl">pretending</span> to be Peter Pan might <span class="hl">gasp</span> and <span class="hl">draw</span> a plastic knife.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">피터 팬인 <strong>척하는</strong> 아이가 <strong>헐떡이며</strong> 플라스틱 칼을 <strong>뽑을</strong> 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">pretending</span><span class="vocab-kr">~인 척하는</span><span class="vocab-en">gasp</span><span class="vocab-kr">헐떡이다</span><span class="vocab-en">draw</span><span class="vocab-kr">뽑다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>a child pretending to be ~</strong> = 현재분사 수식 (척하는 아이). <strong>might gasp and draw</strong> = 조동사 + 동사원형 병렬.</div><div class="s-meaning"><span class="bracket">【예시 — 피터팬 연기】</span> 예를 들어, 피터팬인 척하는 아이가 (놀라서) <strong>숨을 헉 들이쉬며(gasp) 장난감 칼을 뽑을(draw)</strong> 수 있다 — 말 없이 행동만으로. <span class="star-line">★ gasp = 헉 하고 숨 들이쉬다 / draw = (칼을) 뽑다</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">피터 팬인 <strong>척하는</strong> 아이가 <strong>헐떡이며</strong> 플라스틱 칼을 <strong>뽑을</strong> 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">pretending</span><span class="vocab-kr">~인 척하는</span><span class="vocab-en">gasp</span><span class="vocab-kr">헐떡이다</span><span class="vocab-en">draw</span><span class="vocab-kr">뽑다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>a child pretending to be ~</strong> = 현재분사 수식 (척하는 아이). <strong>might gasp and draw</strong> = 조동사 + 동사원형 병렬.</div></div>
 </div>
 <div class="s-card grammar" data-text="This might be sufficient to communicate that fictionally one of Peter's enemies, such as Captain Hook, is approaching.">
-  <div class="card-top"><span class="s-num">04</span><div class="s-en"><span class="ref">This</span> might be <span class="hl">sufficient</span> to communicate that fictionally one of Peter's <span class="hl">enemies</span>, such as Captain Hook, is <span class="hl">approaching</span>.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">이것<span class="pr">(= 아이가 헐떡이며 장난감 칼을 뽑는 행동)</span>은 피터의 <strong>적</strong> 중 하나인 후크 선장이 <strong>접근</strong> 중이라고 전달하기에 <strong>충분</strong>할 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">sufficient</span><span class="vocab-kr">충분한</span><span class="vocab-en">enemy</span><span class="vocab-kr">적</span><span class="vocab-en">approaching</span><span class="vocab-kr">접근하는</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>sufficient to communicate</strong> = ~하기에 충분한 (형용사 + to V). <strong>one of Peter's enemies is approaching</strong> = one of + 복수명사 + 단수동사.</div><div class="s-meaning"><span class="bracket">【방법 1의 효과】</span> <strong>이 행동(헉+칼 뽑기)만으로도</strong>, 가상 설정상(fictionally) ‘후크 선장 같은 피터의 적이 다가오고 있다’는 걸 <strong>전달하기에 충분</strong>할 수 있다. = 연기만으로 상황 전달 성공. <span class="star-line">★ fictionally = (가상 설정상) 사실로는 / This = 헉+칼 뽑는 행동</span></div></div>
+  <div class="card-top"><span class="s-num">04</span><div class="s-en">This might be <span class="hl">sufficient</span> to communicate that fictionally one of Peter's <span class="hl">enemies</span>, such as Captain Hook, is <span class="hl">approaching</span>.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">이것은 피터의 <strong>적</strong> 중 하나인 후크 선장이 <strong>접근</strong> 중이라고 전달하기에 <strong>충분</strong>할 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">sufficient</span><span class="vocab-kr">충분한</span><span class="vocab-en">enemy</span><span class="vocab-kr">적</span><span class="vocab-en">approaching</span><span class="vocab-kr">접근하는</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>sufficient to communicate</strong> = ~하기에 충분한 (형용사 + to V). <strong>one of Peter's enemies is approaching</strong> = one of + 복수명사 + 단수동사.</div></div>
 </div>
 <div class="s-card grammar" data-text="These in-character behaviors can be insufficient, however, to maintain the necessary amount of common ground about what is fictional in the world of the make-believe.">
-  <div class="card-top"><span class="s-num">05</span><div class="s-en"><span class="ref">These</span> <span class="hl">in-character</span> behaviors can be <span class="hl">insufficient</span>, however, to <span class="hl">maintain</span> the necessary amount of <span class="hl">common ground</span> about what is fictional in the world of the make-believe.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">그러나 이 <strong>캐릭터 내</strong> 행동<span class="pr">(= 캐릭터에 몰입한 채 하는 연기 행동)</span>은 무엇이 가상인지에 대한 <strong>공통 기반</strong>을 <strong>유지</strong>하기에 <strong>불충분</strong>할 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">in-character</span><span class="vocab-kr">캐릭터 내의</span><span class="vocab-en">insufficient</span><span class="vocab-kr">불충분한</span><span class="vocab-en">maintain</span><span class="vocab-kr">유지하다</span><span class="vocab-en">common ground</span><span class="vocab-kr">공통 기반</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>insufficient to maintain</strong> = 유지하기에 불충분한 (형용사 + to V). <strong>about what is fictional</strong> = 간접의문문 (what + S역할 + V).</div><div class="s-meaning"><span class="bracket">【핵심】</span> 역할 놀이의 소통 방식 2가지! ① 캐릭터 내 행동(in-character): 자연스러운 전달. ② 캐릭터에서 벗어나기(out of character): 혼란 방지 위해 직접 설명. <span class="star-line">★ 캐릭터 내 행동만으로 불충분 → 캐릭터 밖 소통 필요!</span></div></div>
+  <div class="card-top"><span class="s-num">05</span><div class="s-en">These <span class="hl">in-character</span> behaviors can be <span class="hl">insufficient</span>, however, to <span class="hl">maintain</span> the necessary amount of <span class="hl">common ground</span> about what is fictional in the world of the make-believe.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">그러나 이 <strong>캐릭터 내</strong> 행동은 무엇이 가상인지에 대한 <strong>공통 기반</strong>을 <strong>유지</strong>하기에 <strong>불충분</strong>할 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">in-character</span><span class="vocab-kr">캐릭터 내의</span><span class="vocab-en">insufficient</span><span class="vocab-kr">불충분한</span><span class="vocab-en">maintain</span><span class="vocab-kr">유지하다</span><span class="vocab-en">common ground</span><span class="vocab-kr">공통 기반</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>insufficient to maintain</strong> = 유지하기에 불충분한 (형용사 + to V). <strong>about what is fictional</strong> = 간접의문문 (what + S역할 + V).</div><div class="s-meaning"><span class="bracket">【핵심】</span> 역할 놀이의 소통 방식 2가지! ① 캐릭터 내 행동(in-character): 자연스러운 전달. ② 캐릭터에서 벗어나기(out of character): 혼란 방지 위해 직접 설명. <span class="star-line">★ 캐릭터 내 행동만으로 불충분 → 캐릭터 밖 소통 필요!</span></div></div>
 </div>
 <div class="s-card grammar" data-text="At these times participants often come at least partly out of character to give other participants the information they need.">
-  <div class="card-top"><span class="s-num">06</span><div class="s-en">At <span class="ref">these</span> times <span class="hl">participants</span> often come at least partly out of character to give other participants the information they need.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">이런 때<span class="pr">(= 캐릭터 내 행동만으로는 공통 이해가 부족해지는 때)</span>에 <strong>참가자</strong>들은 최소한 부분적으로 캐릭터에서 벗어나 필요한 정보를 준다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">participant</span><span class="vocab-kr">참가자</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>to give other participants the information</strong> = 목적의 to V. give + IO + DO = 4형식. <strong>the information (that) they need</strong> = 관계대명사 생략 (목적격).</div><div class="s-meaning"><span class="bracket">【방법 2 — 캐릭터 밖에서 설명】</span> 그럴 때 참가자들은 잠깐(적어도 부분적으로) ‘<strong>캐릭터에서 빠져나와(out of character)</strong>’ 상대에게 필요한 정보를 직접 알려준다. = 연기를 멈추고 ‘<strong>실제 나</strong>’로서 설명. <span class="star-line">★ out of character = 역할에서 벗어나(평소 자신으로) / these times = 공통 이해가 부족해지는 때</span></div></div>
+  <div class="card-top"><span class="s-num">06</span><div class="s-en">At these times <span class="hl">participants</span> often come at least partly out of character to give other participants the information they need.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">이런 때에 <strong>참가자</strong>들은 최소한 부분적으로 캐릭터에서 벗어나 필요한 정보를 준다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">participant</span><span class="vocab-kr">참가자</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>to give other participants the information</strong> = 목적의 to V. give + IO + DO = 4형식. <strong>the information (that) they need</strong> = 관계대명사 생략 (목적격).</div></div>
 </div>
 <div class="s-card grammar" data-text="For example, it would be important to avoid confusion about who is playing which character: 'No, you're Captain Hook, and I'm Peter Pan!'">
   <div class="card-top"><span class="s-num">07</span><div class="s-en">For example, it would be important to <span class="hl">avoid</span> <span class="hl">confusion</span> about who is playing which character: "No, you're Captain Hook, and I'm Peter Pan!"</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">누가 어떤 캐릭터를 연기하는지에 대한 <strong>혼란</strong>을 <strong>피하는</strong> 것이 중요할 것이다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">avoid</span><span class="vocab-kr">피하다</span><span class="vocab-en">confusion</span><span class="vocab-kr">혼란</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>it would be important to avoid</strong> = 가주어-진주어. <strong>avoid confusion</strong> = avoid + 명사 (피하다). <strong>about who is playing which character</strong> = 간접의문문 (의문사+S+V).</div><div class="s-meaning"><span class="bracket">【방법 2의 예】</span> 예컨대 ‘<strong>누가 어떤 역을 맡았는지</strong>’ 헷갈리지 않게 하는 게 중요하다 — “아니야, 넌 후크 선장이고 난 피터팬이야!”처럼 <strong>(역할을 벗고) 교통정리</strong>해 준다. <span class="star-line">★ 연기 멈추고 ‘실제 나’로서 역할 분담을 명확히</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">누가 어떤 캐릭터를 연기하는지에 대한 <strong>혼란</strong>을 <strong>피하는</strong> 것이 중요할 것이다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">avoid</span><span class="vocab-kr">피하다</span><span class="vocab-en">confusion</span><span class="vocab-kr">혼란</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>it would be important to avoid</strong> = 가주어-진주어. <strong>avoid confusion</strong> = avoid + 명사 (피하다). <strong>about who is playing which character</strong> = 간접의문문 (의문사+S+V).</div></div>
 </div>
 </div><!-- /cards -->
-  </div>
-<div class="summary-view" id="summaryView">
     <div class="summary-wrap"><div class="summary-header">📖 줄거리 &amp; 핵심 정리</div><div class="summary-body">
 <div style="background:linear-gradient(135deg,#1F3864,#C55A11);border-radius:12px;padding:18px 22px;margin-bottom:20px;text-align:center;"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.6);margin-bottom:8px;">CORE MESSAGE</div><div style="font-size:15px;font-weight:700;color:white;line-height:1.6;">역할 놀이 = <span style="color:#f0d070;">캐릭터 내 행동</span>만으로 불충분 → 캐릭터 밖 소통 필요!</div><div style="font-size:12px;color:rgba(255,255,255,0.65);margin-top:8px;">= In-character actions alone can't maintain common ground — stepping out is needed.</div></div>
 <div style="background:#fff8e6;border-left:4px solid #f0d070;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:20px;"><div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:#a07800;margin-bottom:10px;">💡 쉬운 비유로 이해하기</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12.5px;"><div style="background:white;border-radius:8px;padding:12px 14px;border:1px solid #faedb0;"><div style="font-weight:700;color:#2E75B6;margin-bottom:6px;">🎭 캐릭터 내 (In-character)</div><div style="color:#444;line-height:1.8;">피터 팬 역할로 헐떡이며<br>칼 뽑기 → "적이 온다!"<br>자연스러운 전달<br>but 때로 불충분!</div></div><div style="background:white;border-radius:8px;padding:12px 14px;border:1px solid #faedb0;"><div style="font-weight:700;color:#C55A11;margin-bottom:6px;">🗣 캐릭터 밖 (Out of character)</div><div style="color:#444;line-height:1.8;">"아니, 너가 후크 선장이고<br>나는 피터 팬이야!"<br>직접 설명 → 혼란 방지!<br>→ 공통 기반 유지!</div></div></div></div>
@@ -540,7 +506,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #5B2D8E;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">something said or done</div><div style="color:#555;">말해지거나 행해진 것 (p.p. 수식)</div></div>
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #C55A11;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">about what is fictional</div><div style="color:#555;">무엇이 가상인지 (간접의문)</div></div>
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #C55A11;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">as a result of</div><div style="color:#555;">~의 결과로</div></div></div></div></div></div>
-</div>
+  </div>
   <div class="ga-panel" id="panelGA">
 
 <div class="ga-legend"><div class="ga-leg"><div class="ga-leg-dot" style="background:#C62828;"></div><strong>Tier 1</strong> 어법 핵심</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#E65100;"></div><strong>Tier 2</strong> 어법</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#1565C0;"></div><strong>Tier 3</strong> 어휘·대명사</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#2E7D32;"></div><strong>Tier 4</strong> 혼동 어휘</div></div>
@@ -884,12 +850,6 @@ function readNext(){if(!allPlaying||allIdx>=allQueue.length){if(currentCard)curr
 
 /* ══ 배열영작 ══ */
 let scores={},dragSrc=null,clickSelectedChip=null;
-/* ── 터치 드래그 지원 (태블릿/모바일) v1.7 ── */
-let tChip=null,tClone=null,tStartX=0,tStartY=0,tOffX=0,tOffY=0,tMoved=false,tDragEnd=0;
-const T_DRAG_THRESHOLD=10;
-function arrTouchStart(e){const chip=e.target.closest('.word-chip');if(!chip)return;tChip=chip;const r=chip.getBoundingClientRect();const t=e.touches[0];tStartX=t.clientX;tStartY=t.clientY;tOffX=t.clientX-r.left;tOffY=t.clientY-r.top;tMoved=false;}
-function arrTouchMove(e){if(!tChip)return;if(e.cancelable)e.preventDefault();const t=e.touches[0];const dx=t.clientX-tStartX,dy=t.clientY-tStartY;if(!tMoved){if(Math.hypot(dx,dy)<T_DRAG_THRESHOLD)return;tMoved=true;const r=tChip.getBoundingClientRect();tClone=tChip.cloneNode(true);Object.assign(tClone.style,{position:'fixed',left:r.left+'px',top:r.top+'px',width:r.width+'px',zIndex:9999,pointerEvents:'none',opacity:0.9,transform:'scale(1.08)',boxShadow:'0 8px 24px rgba(0,0,0,0.3)',transition:'none'});document.body.appendChild(tClone);tChip.classList.add('dragging');}tClone.style.left=(t.clientX-tOffX)+'px';tClone.style.top=(t.clientY-tOffY)+'px';tClone.style.display='none';const tg=document.elementFromPoint(t.clientX,t.clientY);tClone.style.display='';const z=tg&&tg.closest('.answer-zone, .word-pool');document.querySelectorAll('.answer-zone.drag-over, .word-pool.drag-over').forEach(el=>el.classList.remove('drag-over'));if(z)z.classList.add('drag-over');}
-function arrTouchEnd(e){if(!tChip)return;if(!tMoved){tChip=null;return;}const t=e.changedTouches[0];if(tClone)tClone.style.display='none';const tg=document.elementFromPoint(t.clientX,t.clientY);const z=tg&&tg.closest('.answer-zone, .word-pool');if(z){const chips=Array.from(z.querySelectorAll('.word-chip')).filter(c=>c!==tChip);if(chips.length===0){z.appendChild(tChip);}else{let bestC=null,bestB=true,bestD=Infinity;for(const c of chips){const r=c.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const d=Math.hypot(t.clientX-cx,t.clientY-cy);if(d<bestD){bestD=d;bestC=c;bestB=t.clientX<cx;}}if(bestB)z.insertBefore(tChip,bestC);else z.insertBefore(tChip,bestC.nextSibling);}tChip.classList.remove('ok-chip');const idx=tChip.dataset.idx;const r=document.getElementById('res-'+idx);if(r)r.className='arr-result';}if(tClone){tClone.remove();tClone=null;}tChip.classList.remove('dragging');document.querySelectorAll('.answer-zone.drag-over, .word-pool.drag-over').forEach(el=>el.classList.remove('drag-over'));tChip=null;tDragEnd=Date.now();e.preventDefault();}
 function buildArrangeCards(){
   const box=document.getElementById('arrCards');box.innerHTML='';
   const hint=document.createElement('div');hint.className='touch-hint';hint.innerHTML='💡 단어 클릭 → 즉시 이동 &nbsp;|&nbsp; 드래그도 가능';box.appendChild(hint);
@@ -898,15 +858,14 @@ function buildArrangeCards(){
     const card=document.createElement('div');card.className='arr-card';card.style.animationDelay=(idx*60)+'ms';
     card.innerHTML=`<div class="arr-header"><span class="arr-num">${item.num}</span><div class="arr-kr">${item.kr}</div></div><div class="arr-body"><div class="answer-zone" id="zone-${idx}"></div><div class="word-pool" id="pool-${idx}">${shuffled.map(w=>`<div class="word-chip" draggable="true" data-word="${w}" data-idx="${idx}">${w}</div>`).join('')}</div><div class="arr-result" id="res-${idx}"></div><div class="ans-reveal" id="ans-${idx}"><strong>정답:</strong> ${item.ans}.</div><div class="arr-btns"><button class="arr-check" onclick="checkAns(${idx})">✓ 확인</button><button class="arr-reset" onclick="resetCard(${idx})">↺ 초기화</button><button class="arr-show-ans" onclick="toggleAns(${idx})">👁 정답 보기</button></div></div>`;
     box.appendChild(card);
-    ['zone-'+idx,'pool-'+idx].forEach(zid=>{const z=document.getElementById(zid);z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(!dragSrc)return;const chips=Array.from(z.querySelectorAll('.word-chip')).filter(c=>c!==dragSrc);if(chips.length===0){z.appendChild(dragSrc);}else{let bestC=null,bestB=true,bestD=Infinity;for(const c of chips){const r=c.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const d=Math.hypot(e.clientX-cx,e.clientY-cy);if(d<bestD){bestD=d;bestC=c;bestB=e.clientX<cx;}}if(bestB)z.insertBefore(dragSrc,bestC);else z.insertBefore(dragSrc,bestC.nextSibling);}dragSrc.classList.remove('dragging','ok-chip');document.getElementById('res-'+idx).className='arr-result';dragSrc=null;});});
+    ['zone-'+idx,'pool-'+idx].forEach(zid=>{const z=document.getElementById(zid);z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(!dragSrc)return;z.appendChild(dragSrc);dragSrc.classList.remove('dragging','ok-chip');document.getElementById('res-'+idx).className='arr-result';dragSrc=null;});});
     setTimeout(()=>{document.getElementById('pool-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});document.getElementById('zone-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});},0);
   });
   box.addEventListener('dragstart',e=>{if(!e.target.classList.contains('word-chip'))return;dragSrc=e.target;e.target.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
   box.addEventListener('dragend',e=>{if(e.target.classList.contains('word-chip'))e.target.classList.remove('dragging');dragSrc=null;});
-  box.addEventListener('touchstart',arrTouchStart,{passive:true});box.addEventListener('touchmove',arrTouchMove,{passive:false});box.addEventListener('touchend',arrTouchEnd);box.addEventListener('touchcancel',arrTouchEnd);
   updateScore();
 }
-function chipClick(chip,idx){if(Date.now()-tDragEnd<500)return;const inZone=chip.parentElement.id==='zone-'+idx;const target=document.getElementById(inZone?'pool-'+idx:'zone-'+idx);chip.classList.remove('ok-chip');target.appendChild(chip);document.getElementById('res-'+idx).className='arr-result';}
+function chipClick(chip,idx){const inZone=chip.parentElement.id==='zone-'+idx;const target=document.getElementById(inZone?'pool-'+idx:'zone-'+idx);chip.classList.remove('ok-chip');target.appendChild(chip);chip.addEventListener('click',()=>chipClick(chip,idx),{once:true});document.getElementById('res-'+idx).className='arr-result';}
 function checkAns(idx){const zone=document.getElementById('zone-'+idx);const chips=Array.from(zone.querySelectorAll('.word-chip'));const userAns=chips.map(c=>c.dataset.word).join(' ');const correct=ARRANGE[idx].ans;const ok=userAns.trim().toLowerCase()===correct.trim().toLowerCase();const res=document.getElementById('res-'+idx);res.className='arr-result show '+(ok?'ok':'ng');res.innerHTML=ok?'🎉 정답입니다!':'❌ 다시 확인해 보세요. ('+chips.length+'/'+correct.split(' ').length+'개 배치됨)';if(ok)chips.forEach(c=>c.classList.add('ok-chip'));scores[idx]=ok?1:0;updateScore();}
 function resetCard(idx){const zone=document.getElementById('zone-'+idx);const pool=document.getElementById('pool-'+idx);Array.from(zone.querySelectorAll('.word-chip')).forEach(c=>{c.classList.remove('ok-chip');pool.appendChild(c);});document.getElementById('res-'+idx).className='arr-result';document.getElementById('ans-'+idx).className='ans-reveal';delete scores[idx];updateScore();}
 function toggleAns(idx){document.getElementById('ans-'+idx).classList.toggle('show');}
@@ -1131,159 +1090,6 @@ document.addEventListener("DOMContentLoaded",function(){
 });
 // 즉시 실행 (DOMContentLoaded 전에도 안전하게)
 (function(){hideQPanels();})();
-</script>
-<script>
-/* ══ 펜 필기 모드 (자유 필기) v1.0 ══ */
-const PEN_COLORS=['#dc2626','#1F3864','#0f9d58','#f59e0b','#000000'];
-const PEN_WIDTHS=[2,4,7];
-let penEnabled=false,penColor='#dc2626',penWidth=4,penEraser=false;
-let penLayer=null,penPath=null,penPts=[];
-
-function buildPenTools(){
-  if(document.getElementById('penLayer'))return;
-  penLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
-  penLayer.id='penLayer';
-  document.body.appendChild(penLayer);
-  const tb=document.createElement('div');
-  tb.id='penToolbar';
-  let html='<button class="pen-btn pen-main" id="penToggle" title="펜 ON/OFF">✏️</button><div class="pen-tools" id="penTools">';
-  PEN_COLORS.forEach(c=>html+='<button class="pen-color" data-color="'+c+'" style="background:'+c+';" title="색상"></button>');
-  PEN_WIDTHS.forEach(w=>html+='<button class="pen-width" data-width="'+w+'" title="굵기"><span style="width:'+(w*2)+'px;height:'+(w*2)+'px;"></span></button>');
-  html+='<button class="pen-btn pen-eraser" id="penEraserBtn" title="개별 지우개">🧹</button><button class="pen-btn pen-clear" id="penClearBtn" title="전체 지우기">🗑️</button></div>';
-  tb.innerHTML=html;
-  document.body.appendChild(tb);
-  document.querySelector('.pen-color[data-color="'+penColor+'"]').classList.add('selected');
-  document.querySelector('.pen-width[data-width="'+penWidth+'"]').classList.add('selected');
-  document.getElementById('penToggle').addEventListener('click',togglePen);
-  document.querySelectorAll('.pen-color').forEach(b=>b.addEventListener('click',e=>{
-    const c=e.currentTarget.dataset.color;
-    penColor=c;penEraser=false;
-    document.querySelectorAll('.pen-color').forEach(x=>x.classList.toggle('selected',x.dataset.color===c));
-    document.getElementById('penEraserBtn').classList.remove('active');
-  }));
-  document.querySelectorAll('.pen-width').forEach(b=>b.addEventListener('click',e=>{
-    const w=+e.currentTarget.dataset.width;
-    penWidth=w;
-    document.querySelectorAll('.pen-width').forEach(x=>x.classList.toggle('selected',+x.dataset.width===w));
-  }));
-  document.getElementById('penEraserBtn').addEventListener('click',()=>{
-    penEraser=!penEraser;
-    document.getElementById('penEraserBtn').classList.toggle('active',penEraser);
-  });
-  document.getElementById('penClearBtn').addEventListener('click',()=>{
-    if(confirm('모든 필기를 지우시겠습니까?'))penLayer.innerHTML='';
-  });
-  penLayer.addEventListener('pointerdown',penDown);
-  penLayer.addEventListener('pointermove',penMove);
-  penLayer.addEventListener('pointerup',penUp);
-  penLayer.addEventListener('pointercancel',penUp);
-  penLayer.addEventListener('pointerleave',penUp);
-  const sync=()=>{
-    penLayer.style.height='0px';penLayer.style.width='0px';
-    const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
-    const w=Math.max(document.body.scrollWidth,document.documentElement.scrollWidth);
-    penLayer.setAttribute('width',w);
-    penLayer.setAttribute('height',h);
-    penLayer.style.height=h+'px';
-    penLayer.style.width=w+'px';
-  };
-  sync();
-  if(window.ResizeObserver){let _roPending=false;new ResizeObserver(()=>{if(_roPending)return;_roPending=true;requestAnimationFrame(()=>{_roPending=false;sync();});}).observe(document.body);}
-  window.addEventListener('resize',sync);
-  setInterval(sync,2000);
-}
-function togglePen(){
-  penEnabled=!penEnabled;
-  document.getElementById('penToggle').classList.toggle('active',penEnabled);
-  document.getElementById('penTools').classList.toggle('show',penEnabled);
-  penLayer.classList.toggle('active',penEnabled);
-}
-function getPenPt(e){
-  return {x:e.clientX+window.scrollX,y:e.clientY+window.scrollY};
-}
-function penDown(e){
-  if(!penEnabled)return;
-  e.preventDefault();
-  try{penLayer.setPointerCapture(e.pointerId);}catch(_){}
-  if(penEraser){eraseAt(e);return;}
-  const pt=getPenPt(e);
-  penPath=document.createElementNS('http://www.w3.org/2000/svg','path');
-  penPath.setAttribute('d','M '+pt.x+' '+pt.y);
-  penPath.setAttribute('stroke',penColor);
-  penPath.setAttribute('stroke-width',penWidth);
-  penPath.setAttribute('fill','none');
-  penPath.setAttribute('stroke-linecap','round');
-  penPath.setAttribute('stroke-linejoin','round');
-  penLayer.appendChild(penPath);
-  penPts=[pt];
-}
-function penMove(e){
-  if(!penEnabled)return;
-  if(penEraser&&e.buttons){eraseAt(e);return;}
-  if(!penPath)return;
-  e.preventDefault();
-  const pt=getPenPt(e);
-  const last=penPts[penPts.length-1];
-  if(Math.hypot(pt.x-last.x,pt.y-last.y)<1.5)return;
-  penPts.push(pt);
-  let d='M '+penPts[0].x+' '+penPts[0].y;
-  for(let i=1;i<penPts.length-1;i++){
-    const c=penPts[i],n=penPts[i+1];
-    const mx=(c.x+n.x)/2,my=(c.y+n.y)/2;
-    d+=' Q '+c.x+' '+c.y+' '+mx+' '+my;
-  }
-  if(penPts.length>=2){
-    const lp=penPts[penPts.length-1];
-    d+=' L '+lp.x+' '+lp.y;
-  }
-  penPath.setAttribute('d',d);
-}
-function penUp(e){
-  if(penPath){penPath=null;penPts=[];}
-}
-function eraseAt(e){
-  const pt=getPenPt(e);
-  const r=20;
-  const paths=Array.from(penLayer.querySelectorAll('path'));
-  for(const p of paths){
-    const bb=p.getBBox();
-    if(pt.x>=bb.x-r&&pt.x<=bb.x+bb.width+r&&pt.y>=bb.y-r&&pt.y<=bb.y+bb.height+r){
-      p.remove();
-    }
-  }
-}
-if(document.readyState==='loading'){
-  document.addEventListener('DOMContentLoaded',buildPenTools);
-}else{
-  setTimeout(buildPenTools,100);
-}
-</script>
-<script>
-/* ══ 요약 전용 탭 v1.0 ══ */
-(function(){
-  function hideSummary(){
-    var sv=document.getElementById('summaryView');if(sv)sv.style.display='none';
-    var ts=document.getElementById('tabSum');if(ts)ts.classList.remove('active');
-  }
-  window.switchSummary=function(){
-    var rv=document.getElementById('readingView');if(rv)rv.style.display='none';
-    ['arrangeView','grammarView','vocabView'].forEach(function(id){
-      var el=document.getElementById(id);if(el)el.classList.remove('active');});
-    if(typeof hideAllExtra==='function')hideAllExtra();
-    document.querySelectorAll('.view-tab').forEach(function(t){t.classList.remove('active');});
-    var sv=document.getElementById('summaryView');if(sv)sv.style.display='block';
-    var ts=document.getElementById('tabSum');if(ts)ts.classList.add('active');
-    window.scrollTo({top:0,behavior:'smooth'});
-  };
-  /* 다른 모든 전환 함수가 요약뷰를 숨기도록 래핑 */
-  ['switchView','switchSD','switchGA','switchQ','switchVocab'].forEach(function(fn){
-    if(typeof window[fn]!=='function')return;
-    var orig=window[fn];
-    window[fn]=function(){hideSummary();return orig.apply(this,arguments);};
-  });
-  document.addEventListener('DOMContentLoaded',hideSummary);
-  hideSummary();
-})();
 </script>
 </body>
 </html>

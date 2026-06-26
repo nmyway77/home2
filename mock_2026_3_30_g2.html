@@ -142,7 +142,7 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 .answer-zone:empty::before{content:'여기에 단어를 놓으세요';color:rgba(46,117,182,0.35);font-size:12px;font-style:italic;display:flex;align-items:center;height:28px;}
 .word-pool{display:flex;flex-wrap:wrap;gap:7px;min-height:44px;padding:10px;background:#f8f8f8;border-radius:8px;border:2px dashed #ddd;margin-bottom:12px;transition:border-color 0.2s,background 0.2s;}
 .word-pool.drag-over{border-color:var(--gold);background:#fff9e6;}
-.word-chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:6px;font-family:Georgia,serif;font-size:13.5px;cursor:grab;user-select:none;transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;background:var(--blue-card);border:1.5px solid var(--blue-border);color:var(--navy);font-weight:600;white-space:nowrap;touch-action:none;}
+.word-chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:6px;font-family:Georgia,serif;font-size:13.5px;cursor:grab;user-select:none;transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;background:var(--blue-card);border:1.5px solid var(--blue-border);color:var(--navy);font-weight:600;white-space:nowrap;}
 .word-chip:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(46,117,182,0.25);}
 .word-chip.dragging{opacity:0.35;transform:scale(0.93);cursor:grabbing;}
 .word-chip.ok-chip{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20;}
@@ -306,8 +306,8 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 /* ── 공통 행동 CSS ── */
 /* 1. 호버 펼치기 완전 제거 */
 @media(hover:hover) and (pointer:fine){
-  .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
-  .s-card.grammar:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card.grammar:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
 }
 /* 2. 단어 가로 칩 배열 */
 .s-card.vocab-only .s-kr-wrap,
@@ -325,10 +325,9 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .s-card.pinned .s-vocab,
 .s-card.tapped .s-vocab{
   order:0;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25)!important;
-  border-radius:16px;padding:5px 12px 5px 10px!important;
-  white-space:normal;flex-shrink:1;border-top:none!important;
-  display:inline-flex!important;flex-wrap:wrap!important;align-items:center;gap:4px 6px;
-  max-width:100%;overflow-wrap:break-word;word-break:break-word;
+  border-radius:20px;padding:3px 12px 3px 8px!important;
+  white-space:nowrap;flex-shrink:0;border-top:none!important;
+  display:inline-flex!important;align-items:center;gap:4px;
 }
 /* 3. 문장구조도 탭·패널 */
 .tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
@@ -417,36 +416,6 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   body.psd .sd-vocab-chip{font-size:10px!important;padding:2px 7px!important;}
 }
 
-/* ══ 펜 필기 모드 v1.0 ══ */
-#penToolbar{position:fixed;bottom:20px;right:20px;z-index:10000;display:flex;flex-direction:row;gap:8px;background:rgba(255,255,255,0.96);padding:8px;border-radius:30px;box-shadow:0 4px 20px rgba(0,0,0,0.18);backdrop-filter:blur(10px);align-items:center;}
-#penToolbar .pen-btn{width:42px;height:42px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
-#penToolbar .pen-btn:hover{background:#e0e0e0;}
-#penToolbar .pen-btn.active{background:#2E75B6;color:white;}
-#penToolbar .pen-main{background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;font-size:20px;}
-#penToolbar .pen-main.active{background:linear-gradient(135deg,#dc2626,#ef4444);transform:scale(1.05);}
-#penToolbar .pen-tools{display:none;flex-direction:row;gap:6px;align-items:center;padding-left:8px;border-left:1px solid #ddd;margin-left:4px;}
-#penToolbar .pen-tools.show{display:flex;}
-#penToolbar .pen-color{width:30px;height:30px;border:2px solid white;border-radius:50%;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.2);transition:transform 0.15s;padding:0;}
-#penToolbar .pen-color:hover{transform:scale(1.1);}
-#penToolbar .pen-color.selected{border:2px solid #333;transform:scale(1.18);box-shadow:0 2px 6px rgba(0,0,0,0.3);}
-#penToolbar .pen-width{width:34px;height:34px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
-#penToolbar .pen-width:hover{background:#e0e0e0;}
-#penToolbar .pen-width span{background:#333;border-radius:50%;display:inline-block;}
-#penToolbar .pen-width.selected{background:#1F3864;}
-#penToolbar .pen-width.selected span{background:white !important;}
-#penLayer{position:absolute;top:0;left:0;pointer-events:none;z-index:998;overflow:visible;}
-#penLayer.active{pointer-events:auto;touch-action:none;cursor:crosshair;}
-@media print{#penToolbar{display:none !important;}#penLayer{display:none !important;}}
-@media (max-width:600px){
-  #penToolbar{bottom:10px;right:10px;padding:6px;gap:4px;}
-  #penToolbar .pen-btn,#penToolbar .pen-width{width:38px;height:38px;}
-  #penToolbar .pen-color{width:26px;height:26px;}
-}
-
-.tab-summary{background:white;color:#00695C;border-color:rgba(0,105,92,0.25);}
-.tab-summary.active{background:#00695C;color:white;border-color:#00695C;}
-.summary-view{display:none;}
-@media print{.summary-view{display:none!important;}}
 </style>
 </head>
 <body>
@@ -470,7 +439,6 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
   <div class="view-tabs">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
-    <button class="view-tab tab-summary" id="tabSum" onclick="switchSummary()">📄 요약</button>
     <button class="view-tab tab-sd"             id="tabSD" onclick="switchSD()">📐 문장구조도</button>
     <button class="view-tab tab-ga"             id="tabGA" onclick="switchGA()">📊 문법분석</button>
     <button class="view-tab tab-arrange"        id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
@@ -497,35 +465,33 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="cards" id="cards">
 <div class="s-card grammar" data-text="In a thesis-based doctoral programme, students typically spend a significant amount of time and effort researching a specific topic.">
   <div class="card-top"><span class="s-num">01</span><div class="s-en">In a <span class="hl">thesis-based</span> <span class="hl">doctoral</span> programme, students <span class="hl">typically</span> spend a <span class="hl">significant</span> amount of time and effort researching a <span class="hl">specific</span> topic.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">논문 기반 박사 프로그램에서, 학생들은 보통 특정 주제를 연구하는 데 상당한 시간과 노력을 쏟는다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">thesis-based</span><span class="vocab-kr">논문 기반의</span><span class="vocab-en">doctoral</span><span class="vocab-kr">박사의</span><span class="vocab-en">significant</span><span class="vocab-kr">상당한</span><span class="vocab-en">specific</span><span class="vocab-kr">특정한</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>spend + O + V-ing</strong> = O를 V하는 데 쏟다. spend time researching = 연구하는 데 시간을 쏟다.</div><div class="s-meaning"><span class="bracket">【배경 — 논문형 박사】</span> 논문 중심 박사과정에서 학생은 보통 <strong>‘한 가지 특정(specific) 주제’를 파는 데</strong> 엄청난 시간·노력을 쏟는다. 한 주제를 깊게 파는 구조 — 이것이 장점이자 곧 단점의 씨앗. <span class="star-line">★ specific topic = 한정된(좁은) 한 가지 주제</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">논문 기반 박사 프로그램에서, 학생들은 보통 특정 주제를 연구하는 데 상당한 시간과 노력을 쏟는다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">thesis-based</span><span class="vocab-kr">논문 기반의</span><span class="vocab-en">doctoral</span><span class="vocab-kr">박사의</span><span class="vocab-en">significant</span><span class="vocab-kr">상당한</span><span class="vocab-en">specific</span><span class="vocab-kr">특정한</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>spend + O + V-ing</strong> = O를 V하는 데 쏟다. spend time researching = 연구하는 데 시간을 쏟다.</div></div>
 </div>
 <div class="s-card grammar" data-text="While this deep dive into a particular area allows for thorough exploration and understanding, it can also result in narrowing the focus.">
-  <div class="card-top"><span class="s-num">02</span><div class="s-en">While <span class="ref">this</span> <span class="hl">deep dive</span> into a <span class="hl">particular</span> area allows for <span class="hl">thorough</span> <span class="hl">exploration</span> and understanding, it can also <span class="hl">result in</span> <span class="hl">narrowing</span> the focus.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">특정 분야에 대한 깊은 탐구<span class="pr">(= 한 가지 특정 주제에 시간·노력을 집중하는 것)</span>가 철저한 탐색과 이해를 가능하게 하지만, 초점을 <strong>좁히는</strong> 결과를 초래할 수도 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">deep dive</span><span class="vocab-kr">깊은 탐구</span><span class="vocab-en">thorough</span><span class="vocab-kr">철저한</span><span class="vocab-en">exploration</span><span class="vocab-kr">탐색</span><span class="vocab-en">result in</span><span class="vocab-kr">~의 결과를 초래하다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>While</strong> = ~하지만 (양보). <strong>allow for</strong> = ~을 가능하게 하다. <strong>result in V-ing</strong> = V하는 결과를 초래하다. in + 동명사.</div><div class="s-meaning"><span class="bracket">【양날의 검 — ★ 핵심】</span> 한 분야를 <strong>깊이 파면(deep dive)</strong> 철저히 탐구·이해할 수 있다는 장점이 있지만, 동시에 <strong>‘초점을 좁히는(narrowing the focus)’ 부작용</strong>도 생긴다. <u>‘초점을 좁힌다’ = 한 가지에만 몰두하느라 관심·지식의 범위가 그 좁은 영역으로 쪼그라든다</u>(= 다른 분야를 못 보게 된다)는 뜻. <span class="star-line">★ While = ~이긴 하지만(양보) / narrow the focus = 보는 범위를 좁히다</span></div></div>
+  <div class="card-top"><span class="s-num">02</span><div class="s-en">While this <span class="hl">deep dive</span> into a <span class="hl">particular</span> area allows for <span class="hl">thorough</span> <span class="hl">exploration</span> and understanding, it can also <span class="hl">result in</span> <span class="hl">narrowing</span> the focus.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">특정 분야에 대한 깊은 탐구가 철저한 탐색과 이해를 가능하게 하지만, 초점을 <strong>좁히는</strong> 결과를 초래할 수도 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">deep dive</span><span class="vocab-kr">깊은 탐구</span><span class="vocab-en">thorough</span><span class="vocab-kr">철저한</span><span class="vocab-en">exploration</span><span class="vocab-kr">탐색</span><span class="vocab-en">result in</span><span class="vocab-kr">~의 결과를 초래하다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>While</strong> = ~하지만 (양보). <strong>allow for</strong> = ~을 가능하게 하다. <strong>result in V-ing</strong> = V하는 결과를 초래하다. in + 동명사.</div></div>
 </div>
 <div class="s-card grammar" data-text="As students become deeply absorbed in their research, they may spend less time exploring related fields or acquiring skills outside their immediate area of study.">
   <div class="card-top"><span class="s-num">03</span><div class="s-en">As students become deeply <span class="hl">absorbed in</span> their research, they may spend less time exploring <span class="hl">related</span> fields or acquiring skills outside their <span class="hl">immediate</span> area of study.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">학생들이 연구에 깊이 몰입하면서, 관련 분야 탐색이나 연구 영역 밖의 기술 습득에 시간을 덜 쏟을 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">absorbed in</span><span class="vocab-kr">~에 몰입한</span><span class="vocab-en">related</span><span class="vocab-kr">관련된</span><span class="vocab-en">immediate</span><span class="vocab-kr">바로 그, 즉각적인</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>become absorbed in</strong> = ~에 몰입하게 되다. <strong>spend time V-ing</strong> = V하는 데 시간을 쏟다. exploring / acquiring = 동명사 병렬.</div><div class="s-meaning"><span class="bracket">【왜 좁아지나 — 메커니즘】</span> 연구에 <strong>깊이 몰두할수록(absorbed in)</strong>, 인접 분야를 둘러보거나 <strong>자기 전공 ‘바깥(outside their area)’의 기술</strong>을 익히는 데는 시간을 덜 쓰게 된다. 앞 문장 ‘초점이 좁아짐’이 실제로 일어나는 과정. <span class="star-line">★ be absorbed in = ~에 몰두하다 / immediate area of study = 바로 자기가 하는 그 좁은 연구 영역</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">학생들이 연구에 깊이 몰입하면서, 관련 분야 탐색이나 연구 영역 밖의 기술 습득에 시간을 덜 쏟을 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">absorbed in</span><span class="vocab-kr">~에 몰입한</span><span class="vocab-en">related</span><span class="vocab-kr">관련된</span><span class="vocab-en">immediate</span><span class="vocab-kr">바로 그, 즉각적인</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>become absorbed in</strong> = ~에 몰입하게 되다. <strong>spend time V-ing</strong> = V하는 데 시간을 쏟다. exploring / acquiring = 동명사 병렬.</div></div>
 </div>
 <div class="s-card grammar" data-text="Consequently, this singular focus may limit the breadth of knowledge and skills developed during the programme, potentially hindering students' ability to adapt to diverse career paths or address interdisciplinary challenges.">
-  <div class="card-top"><span class="s-num">04</span><div class="s-en"><span class="hl">Consequently</span>, <span class="ref">this</span> <span class="hl">singular</span> focus may limit the <span class="hl">breadth</span> of knowledge and skills developed during the programme, <span class="hl">potentially</span> <span class="hl">hindering</span> students' ability to <span class="hl">adapt to</span> <span class="hl">diverse</span> career paths or <span class="hl">address</span> <span class="hl">interdisciplinary</span> challenges.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">결과적으로, 이 단일한 초점<span class="pr">(= 특정 분야에만 깊이 몰입해 초점이 좁아지는 것)</span>은 프로그램 동안 개발되는 지식·기술의 <strong>폭</strong>을 제한하며, 다양한 경력에 적응하거나 학제간 도전에 대처하는 능력을 방해할 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">singular</span><span class="vocab-kr">단일한</span><span class="vocab-en">breadth</span><span class="vocab-kr">폭, 범위</span><span class="vocab-en">hindering</span><span class="vocab-kr">방해하는</span><span class="vocab-en">diverse</span><span class="vocab-kr">다양한</span><span class="vocab-en">interdisciplinary</span><span class="vocab-kr">학제간의</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>developed during ~</strong> = 과거분사 후치수식 (skills를 수식). <strong>potentially hindering</strong> = 분사구문 (결과). <strong>ability to adapt / address</strong> = to V 병렬 (형용사적).</div><div class="s-meaning"><span class="bracket">【핵심】</span> 논문 기반 프로그램의 한계: 깊이(depth)는 있지만 폭(breadth)이 부족! → 다양한 경력·학제간 도전에 대처 못함. <span class="star-line">★ 깊이 vs 폭 — 논문 기반의 구조적 한계!</span></div></div>
+  <div class="card-top"><span class="s-num">04</span><div class="s-en"><span class="hl">Consequently</span>, this <span class="hl">singular</span> focus may limit the <span class="hl">breadth</span> of knowledge and skills developed during the programme, <span class="hl">potentially</span> <span class="hl">hindering</span> students' ability to <span class="hl">adapt to</span> <span class="hl">diverse</span> career paths or <span class="hl">address</span> <span class="hl">interdisciplinary</span> challenges.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">결과적으로, 이 단일한 초점은 프로그램 동안 개발되는 지식·기술의 <strong>폭</strong>을 제한하며, 다양한 경력에 적응하거나 학제간 도전에 대처하는 능력을 방해할 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">singular</span><span class="vocab-kr">단일한</span><span class="vocab-en">breadth</span><span class="vocab-kr">폭, 범위</span><span class="vocab-en">hindering</span><span class="vocab-kr">방해하는</span><span class="vocab-en">diverse</span><span class="vocab-kr">다양한</span><span class="vocab-en">interdisciplinary</span><span class="vocab-kr">학제간의</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>developed during ~</strong> = 과거분사 후치수식 (skills를 수식). <strong>potentially hindering</strong> = 분사구문 (결과). <strong>ability to adapt / address</strong> = to V 병렬 (형용사적).</div><div class="s-meaning"><span class="bracket">【핵심】</span> 논문 기반 프로그램의 한계: 깊이(depth)는 있지만 폭(breadth)이 부족! → 다양한 경력·학제간 도전에 대처 못함. <span class="star-line">★ 깊이 vs 폭 — 논문 기반의 구조적 한계!</span></div></div>
 </div>
 <div class="s-card grammar" data-text="Some universities in Europe have recognised the limitations of traditional thesis-based doctoral programmes and have started to implement more structured approaches.">
   <div class="card-top"><span class="s-num">05</span><div class="s-en">Some universities in Europe have <span class="hl">recognised</span> the limitations of traditional thesis-based doctoral programmes and have started to <span class="hl">implement</span> more structured approaches.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">유럽의 일부 대학들은 전통적 논문 기반 박사 프로그램의 한계를 인식하고 더 구조화된 접근법을 시행하기 시작했다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">recognised</span><span class="vocab-kr">인식한</span><span class="vocab-en">implement</span><span class="vocab-kr">시행하다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>have recognised ~ and have started</strong> = 현재완료 병렬. 과거~현재 결과. <strong>start to V</strong> = V하기 시작하다.</div><div class="s-meaning"><span class="bracket">【해결책 등장】</span> 유럽 일부 대학은 전통적 논문형 과정의 <strong>이런 한계를 깨닫고</strong>, 더 <strong>‘짜임새 있는(structured)’ 방식을 도입(implement)</strong>하기 시작했다. structured = 틀·체계가 갖춰진(자유방임의 반대). <span class="star-line">★ implement = (제도를) 시행·도입하다 / structured = 구조가 짜인</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">유럽의 일부 대학들은 전통적 논문 기반 박사 프로그램의 한계를 인식하고 더 구조화된 접근법을 시행하기 시작했다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">recognised</span><span class="vocab-kr">인식한</span><span class="vocab-en">implement</span><span class="vocab-kr">시행하다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>have recognised ~ and have started</strong> = 현재완료 병렬. 과거~현재 결과. <strong>start to V</strong> = V하기 시작하다.</div></div>
 </div>
 <div class="s-card grammar" data-text="These structured programmes often combine research with coursework and training in transferable skills.">
-  <div class="card-top"><span class="s-num">06</span><div class="s-en"><span class="ref">These</span> structured programmes often <span class="hl">combine</span> research with <span class="hl">coursework</span> and training in <span class="hl">transferable</span> skills.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">이 구조화된 프로그램들<span class="pr">(= 유럽 일부 대학이 도입한 더 구조화된 박사 프로그램)</span>은 종종 연구를 수업 과정 및 전환 가능한 기술 훈련과 결합한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">combine</span><span class="vocab-kr">결합하다</span><span class="vocab-en">coursework</span><span class="vocab-kr">수업 과정</span><span class="vocab-en">transferable</span><span class="vocab-kr">전환 가능한</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>combine A with B</strong> = A와 B를 결합하다.</div><div class="s-meaning"><span class="bracket">【대안의 내용】</span> 이 짜임새 있는 과정은 <strong>연구에다 ‘수업(coursework)’과 ‘여러 곳에 두루 쓰이는 기술(transferable skills) 훈련’을 결합</strong>한다. 연구만 하던 데서 벗어나 폭을 넓히는 장치. <span class="star-line">★ transferable skills = (다른 분야로도 옮겨 쓰는) 범용 능력 / coursework = 정규 수업·과제</span></div></div>
+  <div class="card-top"><span class="s-num">06</span><div class="s-en">These structured programmes often <span class="hl">combine</span> research with <span class="hl">coursework</span> and training in <span class="hl">transferable</span> skills.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">이 구조화된 프로그램들은 종종 연구를 수업 과정 및 전환 가능한 기술 훈련과 결합한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">combine</span><span class="vocab-kr">결합하다</span><span class="vocab-en">coursework</span><span class="vocab-kr">수업 과정</span><span class="vocab-en">transferable</span><span class="vocab-kr">전환 가능한</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>combine A with B</strong> = A와 B를 결합하다.</div></div>
 </div>
 <div class="s-card grammar" data-text="By incorporating coursework, seminars, workshops and internships into the curriculum, they aim to provide students with a broader skill set and better prepare them for a variety of career paths beyond academia.">
   <div class="card-top"><span class="s-num">07</span><div class="s-en">By <span class="hl">incorporating</span> coursework, seminars, workshops and internships into the <span class="hl">curriculum</span>, they <span class="hl">aim to</span> provide students with a broader skill set and better prepare them for a variety of career paths beyond academia.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">수업·세미나·워크숍·인턴십을 교육과정에 통합함으로써, 더 넓은 기술 세트를 제공하고 학계를 넘어 다양한 경력에 더 잘 준비시키는 것을 목표로 한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">incorporating</span><span class="vocab-kr">통합하기</span><span class="vocab-en">curriculum</span><span class="vocab-kr">교육과정</span><span class="vocab-en">aim to</span><span class="vocab-kr">~을 목표로 하다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>By incorporating ~ into</strong> = ~을 ~에 통합함으로써 (by V-ing). <strong>aim to provide ~ and (aim to) prepare ~</strong> = to V 병렬. <strong>provide A with B</strong> = A에게 B를 제공하다. <strong>prepare A for B</strong> = A를 B에 대비시키다.</div><div class="s-meaning"><span class="bracket">【대안의 목표 — 결론】</span> 수업·세미나·워크숍·인턴십을 <strong>교육과정에 끼워 넣어(incorporate into)</strong>, <strong>더 폭넓은 능력(broader skill set)</strong>을 길러주고 <strong>학계 밖(beyond academia) 다양한 진로</strong>까지 대비시키려는 것. ‘좁은 전문가’가 아니라 ‘넓게 준비된 인재’를 목표로. <span class="star-line">★ beyond academia = 학계(교수·연구) 너머의 진로 / skill set = 갖춘 능력의 묶음</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">수업·세미나·워크숍·인턴십을 교육과정에 통합함으로써, 더 넓은 기술 세트를 제공하고 학계를 넘어 다양한 경력에 더 잘 준비시키는 것을 목표로 한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">incorporating</span><span class="vocab-kr">통합하기</span><span class="vocab-en">curriculum</span><span class="vocab-kr">교육과정</span><span class="vocab-en">aim to</span><span class="vocab-kr">~을 목표로 하다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>By incorporating ~ into</strong> = ~을 ~에 통합함으로써 (by V-ing). <strong>aim to provide ~ and (aim to) prepare ~</strong> = to V 병렬. <strong>provide A with B</strong> = A에게 B를 제공하다. <strong>prepare A for B</strong> = A를 B에 대비시키다.</div></div>
 </div>
 </div><!-- /cards -->
-  </div>
-<div class="summary-view" id="summaryView">
     <div class="summary-wrap"><div class="summary-header">📖 줄거리 &amp; 핵심 정리</div><div class="summary-body">
 <div style="background:linear-gradient(135deg,#1F3864,#5B2D8E);border-radius:12px;padding:18px 22px;margin-bottom:20px;text-align:center;"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.6);margin-bottom:8px;">CORE MESSAGE</div><div style="font-size:15px;font-weight:700;color:white;line-height:1.6;">논문 기반 박사 = <span style="color:#f0d070;">깊이는 있지만 폭이 부족</span> → 구조화된 접근 필요!</div><div style="font-size:12px;color:rgba(255,255,255,0.65);margin-top:8px;">= Thesis-based programmes lack breadth — structured approaches are the solution.</div></div>
 <div style="background:#fff8e6;border-left:4px solid #f0d070;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:20px;"><div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:#a07800;margin-bottom:10px;">💡 쉬운 비유로 이해하기</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12.5px;"><div style="background:white;border-radius:8px;padding:12px 14px;border:1px solid #faedb0;"><div style="font-weight:700;color:#C62828;margin-bottom:6px;">❌ 전통적 논문 기반</div><div style="color:#444;line-height:1.8;">한 주제에 깊이 몰입<br>초점 좁아짐 → 폭 부족<br>다양한 경력 적응 어려움!</div></div><div style="background:white;border-radius:8px;padding:12px 14px;border:1px solid #faedb0;"><div style="font-weight:700;color:#1D5C2B;margin-bottom:6px;">✅ 구조화된 접근</div><div style="color:#444;line-height:1.8;">연구 + 수업 + 훈련 결합<br>전환 가능한 기술 습득<br>학계 넘어 다양한 경력!</div></div></div><div style="margin-top:10px;font-size:12px;color:#7a5c00;text-align:center;font-weight:600;">→ 유럽 대학들: 한계 인식 → <u>수업·세미나·인턴십 통합</u>!</div></div>
@@ -540,7 +506,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #5B2D8E;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">provide A with B</div><div style="color:#555;">A에게 B를 제공하다</div></div>
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #C55A11;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">by V-ing (수단)</div><div style="color:#555;">V함으로써</div></div>
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #C55A11;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">adapt to / address</div><div style="color:#555;">적응하다 / 대처하다</div></div></div></div></div></div>
-</div>
+  </div>
   <div class="ga-panel" id="panelGA">
 
 <div class="ga-legend"><div class="ga-leg"><div class="ga-leg-dot" style="background:#C62828;"></div><strong>Tier 1</strong> 어법 핵심</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#E65100;"></div><strong>Tier 2</strong> 어법</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#1565C0;"></div><strong>Tier 3</strong> 어휘·대명사</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#2E7D32;"></div><strong>Tier 4</strong> 혼동 어휘</div></div>
@@ -939,12 +905,6 @@ function readNext(){if(!allPlaying||allIdx>=allQueue.length){if(currentCard)curr
 
 /* ══ 배열영작 ══ */
 let scores={},dragSrc=null,clickSelectedChip=null;
-/* ── 터치 드래그 지원 (태블릿/모바일) v1.7 ── */
-let tChip=null,tClone=null,tStartX=0,tStartY=0,tOffX=0,tOffY=0,tMoved=false,tDragEnd=0;
-const T_DRAG_THRESHOLD=10;
-function arrTouchStart(e){const chip=e.target.closest('.word-chip');if(!chip)return;tChip=chip;const r=chip.getBoundingClientRect();const t=e.touches[0];tStartX=t.clientX;tStartY=t.clientY;tOffX=t.clientX-r.left;tOffY=t.clientY-r.top;tMoved=false;}
-function arrTouchMove(e){if(!tChip)return;if(e.cancelable)e.preventDefault();const t=e.touches[0];const dx=t.clientX-tStartX,dy=t.clientY-tStartY;if(!tMoved){if(Math.hypot(dx,dy)<T_DRAG_THRESHOLD)return;tMoved=true;const r=tChip.getBoundingClientRect();tClone=tChip.cloneNode(true);Object.assign(tClone.style,{position:'fixed',left:r.left+'px',top:r.top+'px',width:r.width+'px',zIndex:9999,pointerEvents:'none',opacity:0.9,transform:'scale(1.08)',boxShadow:'0 8px 24px rgba(0,0,0,0.3)',transition:'none'});document.body.appendChild(tClone);tChip.classList.add('dragging');}tClone.style.left=(t.clientX-tOffX)+'px';tClone.style.top=(t.clientY-tOffY)+'px';tClone.style.display='none';const tg=document.elementFromPoint(t.clientX,t.clientY);tClone.style.display='';const z=tg&&tg.closest('.answer-zone, .word-pool');document.querySelectorAll('.answer-zone.drag-over, .word-pool.drag-over').forEach(el=>el.classList.remove('drag-over'));if(z)z.classList.add('drag-over');}
-function arrTouchEnd(e){if(!tChip)return;if(!tMoved){tChip=null;return;}const t=e.changedTouches[0];if(tClone)tClone.style.display='none';const tg=document.elementFromPoint(t.clientX,t.clientY);const z=tg&&tg.closest('.answer-zone, .word-pool');if(z){const chips=Array.from(z.querySelectorAll('.word-chip')).filter(c=>c!==tChip);if(chips.length===0){z.appendChild(tChip);}else{let bestC=null,bestB=true,bestD=Infinity;for(const c of chips){const r=c.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const d=Math.hypot(t.clientX-cx,t.clientY-cy);if(d<bestD){bestD=d;bestC=c;bestB=t.clientX<cx;}}if(bestB)z.insertBefore(tChip,bestC);else z.insertBefore(tChip,bestC.nextSibling);}tChip.classList.remove('ok-chip');const idx=tChip.dataset.idx;const r=document.getElementById('res-'+idx);if(r)r.className='arr-result';}if(tClone){tClone.remove();tClone=null;}tChip.classList.remove('dragging');document.querySelectorAll('.answer-zone.drag-over, .word-pool.drag-over').forEach(el=>el.classList.remove('drag-over'));tChip=null;tDragEnd=Date.now();e.preventDefault();}
 function buildArrangeCards(){
   const box=document.getElementById('arrCards');box.innerHTML='';
   const hint=document.createElement('div');hint.className='touch-hint';hint.innerHTML='💡 단어 클릭 → 즉시 이동 &nbsp;|&nbsp; 드래그도 가능';box.appendChild(hint);
@@ -953,15 +913,14 @@ function buildArrangeCards(){
     const card=document.createElement('div');card.className='arr-card';card.style.animationDelay=(idx*60)+'ms';
     card.innerHTML=`<div class="arr-header"><span class="arr-num">${item.num}</span><div class="arr-kr">${item.kr}</div></div><div class="arr-body"><div class="answer-zone" id="zone-${idx}"></div><div class="word-pool" id="pool-${idx}">${shuffled.map(w=>`<div class="word-chip" draggable="true" data-word="${w}" data-idx="${idx}">${w}</div>`).join('')}</div><div class="arr-result" id="res-${idx}"></div><div class="ans-reveal" id="ans-${idx}"><strong>정답:</strong> ${item.ans}.</div><div class="arr-btns"><button class="arr-check" onclick="checkAns(${idx})">✓ 확인</button><button class="arr-reset" onclick="resetCard(${idx})">↺ 초기화</button><button class="arr-show-ans" onclick="toggleAns(${idx})">👁 정답 보기</button></div></div>`;
     box.appendChild(card);
-    ['zone-'+idx,'pool-'+idx].forEach(zid=>{const z=document.getElementById(zid);z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(!dragSrc)return;const chips=Array.from(z.querySelectorAll('.word-chip')).filter(c=>c!==dragSrc);if(chips.length===0){z.appendChild(dragSrc);}else{let bestC=null,bestB=true,bestD=Infinity;for(const c of chips){const r=c.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const d=Math.hypot(e.clientX-cx,e.clientY-cy);if(d<bestD){bestD=d;bestC=c;bestB=e.clientX<cx;}}if(bestB)z.insertBefore(dragSrc,bestC);else z.insertBefore(dragSrc,bestC.nextSibling);}dragSrc.classList.remove('dragging','ok-chip');document.getElementById('res-'+idx).className='arr-result';dragSrc=null;});});
+    ['zone-'+idx,'pool-'+idx].forEach(zid=>{const z=document.getElementById(zid);z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(!dragSrc)return;z.appendChild(dragSrc);dragSrc.classList.remove('dragging','ok-chip');document.getElementById('res-'+idx).className='arr-result';dragSrc=null;});});
     setTimeout(()=>{document.getElementById('pool-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});document.getElementById('zone-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});},0);
   });
   box.addEventListener('dragstart',e=>{if(!e.target.classList.contains('word-chip'))return;dragSrc=e.target;e.target.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
   box.addEventListener('dragend',e=>{if(e.target.classList.contains('word-chip'))e.target.classList.remove('dragging');dragSrc=null;});
-  box.addEventListener('touchstart',arrTouchStart,{passive:true});box.addEventListener('touchmove',arrTouchMove,{passive:false});box.addEventListener('touchend',arrTouchEnd);box.addEventListener('touchcancel',arrTouchEnd);
   updateScore();
 }
-function chipClick(chip,idx){if(Date.now()-tDragEnd<500)return;const inZone=chip.parentElement.id==='zone-'+idx;const target=document.getElementById(inZone?'pool-'+idx:'zone-'+idx);chip.classList.remove('ok-chip');target.appendChild(chip);document.getElementById('res-'+idx).className='arr-result';}
+function chipClick(chip,idx){const inZone=chip.parentElement.id==='zone-'+idx;const target=document.getElementById(inZone?'pool-'+idx:'zone-'+idx);chip.classList.remove('ok-chip');target.appendChild(chip);chip.addEventListener('click',()=>chipClick(chip,idx),{once:true});document.getElementById('res-'+idx).className='arr-result';}
 function checkAns(idx){const zone=document.getElementById('zone-'+idx);const chips=Array.from(zone.querySelectorAll('.word-chip'));const userAns=chips.map(c=>c.dataset.word).join(' ');const correct=ARRANGE[idx].ans;const ok=userAns.trim().toLowerCase()===correct.trim().toLowerCase();const res=document.getElementById('res-'+idx);res.className='arr-result show '+(ok?'ok':'ng');res.innerHTML=ok?'🎉 정답입니다!':'❌ 다시 확인해 보세요. ('+chips.length+'/'+correct.split(' ').length+'개 배치됨)';if(ok)chips.forEach(c=>c.classList.add('ok-chip'));scores[idx]=ok?1:0;updateScore();}
 function resetCard(idx){const zone=document.getElementById('zone-'+idx);const pool=document.getElementById('pool-'+idx);Array.from(zone.querySelectorAll('.word-chip')).forEach(c=>{c.classList.remove('ok-chip');pool.appendChild(c);});document.getElementById('res-'+idx).className='arr-result';document.getElementById('ans-'+idx).className='ans-reveal';delete scores[idx];updateScore();}
 function toggleAns(idx){document.getElementById('ans-'+idx).classList.toggle('show');}
@@ -1186,159 +1145,6 @@ document.addEventListener("DOMContentLoaded",function(){
 });
 // 즉시 실행 (DOMContentLoaded 전에도 안전하게)
 (function(){hideQPanels();})();
-</script>
-<script>
-/* ══ 펜 필기 모드 (자유 필기) v1.0 ══ */
-const PEN_COLORS=['#dc2626','#1F3864','#0f9d58','#f59e0b','#000000'];
-const PEN_WIDTHS=[2,4,7];
-let penEnabled=false,penColor='#dc2626',penWidth=4,penEraser=false;
-let penLayer=null,penPath=null,penPts=[];
-
-function buildPenTools(){
-  if(document.getElementById('penLayer'))return;
-  penLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
-  penLayer.id='penLayer';
-  document.body.appendChild(penLayer);
-  const tb=document.createElement('div');
-  tb.id='penToolbar';
-  let html='<button class="pen-btn pen-main" id="penToggle" title="펜 ON/OFF">✏️</button><div class="pen-tools" id="penTools">';
-  PEN_COLORS.forEach(c=>html+='<button class="pen-color" data-color="'+c+'" style="background:'+c+';" title="색상"></button>');
-  PEN_WIDTHS.forEach(w=>html+='<button class="pen-width" data-width="'+w+'" title="굵기"><span style="width:'+(w*2)+'px;height:'+(w*2)+'px;"></span></button>');
-  html+='<button class="pen-btn pen-eraser" id="penEraserBtn" title="개별 지우개">🧹</button><button class="pen-btn pen-clear" id="penClearBtn" title="전체 지우기">🗑️</button></div>';
-  tb.innerHTML=html;
-  document.body.appendChild(tb);
-  document.querySelector('.pen-color[data-color="'+penColor+'"]').classList.add('selected');
-  document.querySelector('.pen-width[data-width="'+penWidth+'"]').classList.add('selected');
-  document.getElementById('penToggle').addEventListener('click',togglePen);
-  document.querySelectorAll('.pen-color').forEach(b=>b.addEventListener('click',e=>{
-    const c=e.currentTarget.dataset.color;
-    penColor=c;penEraser=false;
-    document.querySelectorAll('.pen-color').forEach(x=>x.classList.toggle('selected',x.dataset.color===c));
-    document.getElementById('penEraserBtn').classList.remove('active');
-  }));
-  document.querySelectorAll('.pen-width').forEach(b=>b.addEventListener('click',e=>{
-    const w=+e.currentTarget.dataset.width;
-    penWidth=w;
-    document.querySelectorAll('.pen-width').forEach(x=>x.classList.toggle('selected',+x.dataset.width===w));
-  }));
-  document.getElementById('penEraserBtn').addEventListener('click',()=>{
-    penEraser=!penEraser;
-    document.getElementById('penEraserBtn').classList.toggle('active',penEraser);
-  });
-  document.getElementById('penClearBtn').addEventListener('click',()=>{
-    if(confirm('모든 필기를 지우시겠습니까?'))penLayer.innerHTML='';
-  });
-  penLayer.addEventListener('pointerdown',penDown);
-  penLayer.addEventListener('pointermove',penMove);
-  penLayer.addEventListener('pointerup',penUp);
-  penLayer.addEventListener('pointercancel',penUp);
-  penLayer.addEventListener('pointerleave',penUp);
-  const sync=()=>{
-    penLayer.style.height='0px';penLayer.style.width='0px';
-    const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
-    const w=Math.max(document.body.scrollWidth,document.documentElement.scrollWidth);
-    penLayer.setAttribute('width',w);
-    penLayer.setAttribute('height',h);
-    penLayer.style.height=h+'px';
-    penLayer.style.width=w+'px';
-  };
-  sync();
-  if(window.ResizeObserver){let _roPending=false;new ResizeObserver(()=>{if(_roPending)return;_roPending=true;requestAnimationFrame(()=>{_roPending=false;sync();});}).observe(document.body);}
-  window.addEventListener('resize',sync);
-  setInterval(sync,2000);
-}
-function togglePen(){
-  penEnabled=!penEnabled;
-  document.getElementById('penToggle').classList.toggle('active',penEnabled);
-  document.getElementById('penTools').classList.toggle('show',penEnabled);
-  penLayer.classList.toggle('active',penEnabled);
-}
-function getPenPt(e){
-  return {x:e.clientX+window.scrollX,y:e.clientY+window.scrollY};
-}
-function penDown(e){
-  if(!penEnabled)return;
-  e.preventDefault();
-  try{penLayer.setPointerCapture(e.pointerId);}catch(_){}
-  if(penEraser){eraseAt(e);return;}
-  const pt=getPenPt(e);
-  penPath=document.createElementNS('http://www.w3.org/2000/svg','path');
-  penPath.setAttribute('d','M '+pt.x+' '+pt.y);
-  penPath.setAttribute('stroke',penColor);
-  penPath.setAttribute('stroke-width',penWidth);
-  penPath.setAttribute('fill','none');
-  penPath.setAttribute('stroke-linecap','round');
-  penPath.setAttribute('stroke-linejoin','round');
-  penLayer.appendChild(penPath);
-  penPts=[pt];
-}
-function penMove(e){
-  if(!penEnabled)return;
-  if(penEraser&&e.buttons){eraseAt(e);return;}
-  if(!penPath)return;
-  e.preventDefault();
-  const pt=getPenPt(e);
-  const last=penPts[penPts.length-1];
-  if(Math.hypot(pt.x-last.x,pt.y-last.y)<1.5)return;
-  penPts.push(pt);
-  let d='M '+penPts[0].x+' '+penPts[0].y;
-  for(let i=1;i<penPts.length-1;i++){
-    const c=penPts[i],n=penPts[i+1];
-    const mx=(c.x+n.x)/2,my=(c.y+n.y)/2;
-    d+=' Q '+c.x+' '+c.y+' '+mx+' '+my;
-  }
-  if(penPts.length>=2){
-    const lp=penPts[penPts.length-1];
-    d+=' L '+lp.x+' '+lp.y;
-  }
-  penPath.setAttribute('d',d);
-}
-function penUp(e){
-  if(penPath){penPath=null;penPts=[];}
-}
-function eraseAt(e){
-  const pt=getPenPt(e);
-  const r=20;
-  const paths=Array.from(penLayer.querySelectorAll('path'));
-  for(const p of paths){
-    const bb=p.getBBox();
-    if(pt.x>=bb.x-r&&pt.x<=bb.x+bb.width+r&&pt.y>=bb.y-r&&pt.y<=bb.y+bb.height+r){
-      p.remove();
-    }
-  }
-}
-if(document.readyState==='loading'){
-  document.addEventListener('DOMContentLoaded',buildPenTools);
-}else{
-  setTimeout(buildPenTools,100);
-}
-</script>
-<script>
-/* ══ 요약 전용 탭 v1.0 ══ */
-(function(){
-  function hideSummary(){
-    var sv=document.getElementById('summaryView');if(sv)sv.style.display='none';
-    var ts=document.getElementById('tabSum');if(ts)ts.classList.remove('active');
-  }
-  window.switchSummary=function(){
-    var rv=document.getElementById('readingView');if(rv)rv.style.display='none';
-    ['arrangeView','grammarView','vocabView'].forEach(function(id){
-      var el=document.getElementById(id);if(el)el.classList.remove('active');});
-    if(typeof hideAllExtra==='function')hideAllExtra();
-    document.querySelectorAll('.view-tab').forEach(function(t){t.classList.remove('active');});
-    var sv=document.getElementById('summaryView');if(sv)sv.style.display='block';
-    var ts=document.getElementById('tabSum');if(ts)ts.classList.add('active');
-    window.scrollTo({top:0,behavior:'smooth'});
-  };
-  /* 다른 모든 전환 함수가 요약뷰를 숨기도록 래핑 */
-  ['switchView','switchSD','switchGA','switchQ','switchVocab'].forEach(function(fn){
-    if(typeof window[fn]!=='function')return;
-    var orig=window[fn];
-    window[fn]=function(){hideSummary();return orig.apply(this,arguments);};
-  });
-  document.addEventListener('DOMContentLoaded',hideSummary);
-  hideSummary();
-})();
 </script>
 </body>
 </html>

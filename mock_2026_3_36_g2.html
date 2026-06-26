@@ -142,7 +142,7 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 .answer-zone:empty::before{content:'여기에 단어를 놓으세요';color:rgba(46,117,182,0.35);font-size:12px;font-style:italic;display:flex;align-items:center;height:28px;}
 .word-pool{display:flex;flex-wrap:wrap;gap:7px;min-height:44px;padding:10px;background:#f8f8f8;border-radius:8px;border:2px dashed #ddd;margin-bottom:12px;transition:border-color 0.2s,background 0.2s;}
 .word-pool.drag-over{border-color:var(--gold);background:#fff9e6;}
-.word-chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:6px;font-family:Georgia,serif;font-size:13.5px;cursor:grab;user-select:none;transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;background:var(--blue-card);border:1.5px solid var(--blue-border);color:var(--navy);font-weight:600;white-space:nowrap;touch-action:none;}
+.word-chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:6px;font-family:Georgia,serif;font-size:13.5px;cursor:grab;user-select:none;transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;background:var(--blue-card);border:1.5px solid var(--blue-border);color:var(--navy);font-weight:600;white-space:nowrap;}
 .word-chip:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(46,117,182,0.25);}
 .word-chip.dragging{opacity:0.35;transform:scale(0.93);cursor:grabbing;}
 .word-chip.ok-chip{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20;}
@@ -306,8 +306,8 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 /* ── 공통 행동 CSS ── */
 /* 1. 호버 펼치기 완전 제거 */
 @media(hover:hover) and (pointer:fine){
-  .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
-  .s-card.grammar:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card.grammar:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
 }
 /* 2. 단어 가로 칩 배열 */
 .s-card.vocab-only .s-kr-wrap,
@@ -325,10 +325,9 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .s-card.pinned .s-vocab,
 .s-card.tapped .s-vocab{
   order:0;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25)!important;
-  border-radius:16px;padding:5px 12px 5px 10px!important;
-  white-space:normal;flex-shrink:1;border-top:none!important;
-  display:inline-flex!important;flex-wrap:wrap!important;align-items:center;gap:4px 6px;
-  max-width:100%;overflow-wrap:break-word;word-break:break-word;
+  border-radius:20px;padding:3px 12px 3px 8px!important;
+  white-space:nowrap;flex-shrink:0;border-top:none!important;
+  display:inline-flex!important;align-items:center;gap:4px;
 }
 /* 3. 문장구조도 탭·패널 */
 .tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
@@ -417,36 +416,6 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   body.psd .sd-vocab-chip{font-size:10px!important;padding:2px 7px!important;}
 }
 
-/* ══ 펜 필기 모드 v1.0 ══ */
-#penToolbar{position:fixed;bottom:20px;right:20px;z-index:10000;display:flex;flex-direction:row;gap:8px;background:rgba(255,255,255,0.96);padding:8px;border-radius:30px;box-shadow:0 4px 20px rgba(0,0,0,0.18);backdrop-filter:blur(10px);align-items:center;}
-#penToolbar .pen-btn{width:42px;height:42px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
-#penToolbar .pen-btn:hover{background:#e0e0e0;}
-#penToolbar .pen-btn.active{background:#2E75B6;color:white;}
-#penToolbar .pen-main{background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;font-size:20px;}
-#penToolbar .pen-main.active{background:linear-gradient(135deg,#dc2626,#ef4444);transform:scale(1.05);}
-#penToolbar .pen-tools{display:none;flex-direction:row;gap:6px;align-items:center;padding-left:8px;border-left:1px solid #ddd;margin-left:4px;}
-#penToolbar .pen-tools.show{display:flex;}
-#penToolbar .pen-color{width:30px;height:30px;border:2px solid white;border-radius:50%;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.2);transition:transform 0.15s;padding:0;}
-#penToolbar .pen-color:hover{transform:scale(1.1);}
-#penToolbar .pen-color.selected{border:2px solid #333;transform:scale(1.18);box-shadow:0 2px 6px rgba(0,0,0,0.3);}
-#penToolbar .pen-width{width:34px;height:34px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
-#penToolbar .pen-width:hover{background:#e0e0e0;}
-#penToolbar .pen-width span{background:#333;border-radius:50%;display:inline-block;}
-#penToolbar .pen-width.selected{background:#1F3864;}
-#penToolbar .pen-width.selected span{background:white !important;}
-#penLayer{position:absolute;top:0;left:0;pointer-events:none;z-index:998;overflow:visible;}
-#penLayer.active{pointer-events:auto;touch-action:none;cursor:crosshair;}
-@media print{#penToolbar{display:none !important;}#penLayer{display:none !important;}}
-@media (max-width:600px){
-  #penToolbar{bottom:10px;right:10px;padding:6px;gap:4px;}
-  #penToolbar .pen-btn,#penToolbar .pen-width{width:38px;height:38px;}
-  #penToolbar .pen-color{width:26px;height:26px;}
-}
-
-.tab-summary{background:white;color:#00695C;border-color:rgba(0,105,92,0.25);}
-.tab-summary.active{background:#00695C;color:white;border-color:#00695C;}
-.summary-view{display:none;}
-@media print{.summary-view{display:none!important;}}
 </style>
 </head>
 <body>
@@ -470,7 +439,6 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
   <div class="view-tabs">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
-    <button class="view-tab tab-summary" id="tabSum" onclick="switchSummary()">📄 요약</button>
     <button class="view-tab tab-sd"             id="tabSD" onclick="switchSD()">📐 문장구조도</button>
     <button class="view-tab tab-ga"             id="tabGA" onclick="switchGA()">📊 문법분석</button>
     <button class="view-tab tab-arrange"        id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
@@ -497,39 +465,37 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="cards" id="cards">
 <div class="s-card grammar" data-text="Archaeological evidence suggests that various crops were being cultivated as early as 9500 BC in the Levant.">
   <div class="card-top"><span class="s-num">01</span><div class="s-en"><span class="hl">Archaeological</span> <span class="hl">evidence</span> suggests that various crops were being <span class="hl">cultivated</span> as early as 9500 BC in the Levant.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr"><strong>고고학적</strong> 증거는 기원전 9500년이라는 이른 시기에 다양한 작물이 <strong>재배</strong>되고 있었음을 시사한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">archaeological</span><span class="vocab-kr">고고학적인</span><span class="vocab-en">evidence</span><span class="vocab-kr">증거</span><span class="vocab-en">cultivated</span><span class="vocab-kr">재배된</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>were being cultivated</strong> = 과거 진행 수동. were + being + p.p. <strong>as early as</strong> = ~라는 이른 시기에.</div><div class="s-meaning"><span class="bracket">【도입 — 농업의 오랜 역사】</span> 고고학 증거를 보면, <strong>이미 기원전 9500년경(as early as = 무려 ~만큼 이른 시기에)</strong> 레반트(동지중해 연안)에서 여러 작물이 재배되고 있었다. = 농업의 역사는 1만 년도 더 됐다. <span class="star-line">★ as early as = (무려) ~만큼 이른 / Levant = 동지중해 연안 지역</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr"><strong>고고학적</strong> 증거는 기원전 9500년이라는 이른 시기에 다양한 작물이 <strong>재배</strong>되고 있었음을 시사한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">archaeological</span><span class="vocab-kr">고고학적인</span><span class="vocab-en">evidence</span><span class="vocab-kr">증거</span><span class="vocab-en">cultivated</span><span class="vocab-kr">재배된</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>were being cultivated</strong> = 과거 진행 수동. were + being + p.p. <strong>as early as</strong> = ~라는 이른 시기에.</div></div>
 </div>
 <div class="s-card grammar" data-text="Over the millennia, continuous innovations have boosted agricultural productivity while reducing manual labor.">
   <div class="card-top"><span class="s-num">02</span><div class="s-en">Over the <span class="hl">millennia</span>, <span class="hl">continuous</span> <span class="hl">innovations</span> have <span class="hl">boosted</span> <span class="hl">agricultural</span> <span class="hl">productivity</span> while reducing <span class="hl">manual</span> <span class="hl">labor</span>.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">수천 년에 걸쳐, 지속적 <strong>혁신</strong>이 <strong>수작업</strong>을 줄이면서 농업 <strong>생산성</strong>을 높여 왔다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">millennia</span><span class="vocab-kr">수천 년</span><span class="vocab-en">continuous</span><span class="vocab-kr">지속적인</span><span class="vocab-en">innovation</span><span class="vocab-kr">혁신</span><span class="vocab-en">boosted</span><span class="vocab-kr">높인</span><span class="vocab-en">agricultural</span><span class="vocab-kr">농업의</span><span class="vocab-en">productivity</span><span class="vocab-kr">생산성</span><span class="vocab-en">manual</span><span class="vocab-kr">수작업의</span><span class="vocab-en">labor</span><span class="vocab-kr">노동</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>have boosted</strong> = 현재완료. <strong>while reducing</strong> = while + 분사구문 (~하면서).</div><div class="s-meaning"><span class="bracket">【흐름 — 혁신의 효과】</span> 수천 년 동안(over the millennia) 계속된 혁신이 <strong>‘일손은 줄이면서(reducing manual labor) 생산성은 높여(boosted productivity)’</strong> 왔다. = 기술 발전 덕에 적은 노동으로 더 많이 생산. <span class="star-line">★ while reducing ~ = ~을 줄이면서(동시에) / 그동안은 좋아졌다</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">수천 년에 걸쳐, 지속적 <strong>혁신</strong>이 <strong>수작업</strong>을 줄이면서 농업 <strong>생산성</strong>을 높여 왔다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">millennia</span><span class="vocab-kr">수천 년</span><span class="vocab-en">continuous</span><span class="vocab-kr">지속적인</span><span class="vocab-en">innovation</span><span class="vocab-kr">혁신</span><span class="vocab-en">boosted</span><span class="vocab-kr">높인</span><span class="vocab-en">agricultural</span><span class="vocab-kr">농업의</span><span class="vocab-en">productivity</span><span class="vocab-kr">생산성</span><span class="vocab-en">manual</span><span class="vocab-kr">수작업의</span><span class="vocab-en">labor</span><span class="vocab-kr">노동</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>have boosted</strong> = 현재완료. <strong>while reducing</strong> = while + 분사구문 (~하면서).</div></div>
 </div>
 <div class="s-card" data-text="However, the growing global population will always demand more food.">
   <div class="card-top"><span class="s-num">03</span><div class="s-en">However, the growing global <span class="hl">population</span> will always demand more food.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">그러나, 증가하는 세계 <strong>인구</strong>는 항상 더 많은 식량을 요구할 것이다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">population</span><span class="vocab-kr">인구</span></div><div class="s-meaning"><span class="bracket">【전환 — 끝없는 수요】</span> <strong>그러나(However)</strong> 늘어나는 세계 인구는 <strong>‘언제나 더 많은 식량’을 요구</strong>할 것이다. = 생산성이 올라도 수요가 계속 늘어 압박. (문제 제기 시작) <span class="star-line">★ However = 역접(좋아졌다 ↔ 그래도 수요는 끝없다)</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">그러나, 증가하는 세계 <strong>인구</strong>는 항상 더 많은 식량을 요구할 것이다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">population</span><span class="vocab-kr">인구</span></div></div>
 </div>
 <div class="s-card grammar" data-text="It is projected that by 2050, the world's population will increase to 9.7 billion, which will require global food production to rise by at least 70% to meet demand.">
   <div class="card-top"><span class="s-num">04</span><div class="s-en">It is projected that by 2050, the world's population will increase to 9.7 billion, which will require global food production to rise by at least 70% to <span class="hl">meet</span> demand.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
   <div class="s-kr-wrap"><div class="s-kr">2050년까지 세계 인구가 97억으로 증가할 것으로 예상되며, 수요를 <strong>충족</strong>하기 위해 식량 생산이 최소 70% 증가해야 한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">meet</span><span class="vocab-kr">충족시키다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>It is projected that ~</strong> = ~라고 예상된다 (가주어-진주어·수동). <strong>, which will require</strong> = 계속적 관계대명사. <strong>require O to V</strong> = O가 V하도록 요구하다 (5형식).</div><div class="s-meaning"><span class="bracket">【핵심】</span> 농업의 역설! 혁신으로 생산성↑ → 그러나 인구 증가(97억)로 식량 70%↑ 필요 → 근데 적합한 토지는 소량+제한+감소 중! <span class="star-line">★ 식량 수요↑ vs 농업 토지↓ — 미래 농업의 핵심 과제!</span></div></div>
 </div>
 <div class="s-card grammar" data-text="Despite this need, only a small portion of the Earth's surface is suitable for farming due to limitations such as climate, topography, soil quality, and technology.">
-  <div class="card-top"><span class="s-num">05</span><div class="s-en">Despite <span class="ref">this</span> need, only a small <span class="hl">portion</span> of the Earth's surface is <span class="hl">suitable</span> for farming due to limitations such as climate, <span class="hl">topography</span>, soil quality, and technology.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">이 필요<span class="pr">(= 2050년까지 식량 생산을 70% 늘려야 하는 필요)</span>에도 불구하고, 기후·<strong>지형</strong>·토양·기술 등의 제한 때문에 지구 표면의 작은 <strong>부분</strong>만이 농업에 <strong>적합</strong>하다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">portion</span><span class="vocab-kr">부분</span><span class="vocab-en">suitable</span><span class="vocab-kr">적합한</span><span class="vocab-en">topography</span><span class="vocab-kr">지형</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>Despite</strong> = ~에도 불구하고 (전치사). <strong>due to</strong> = ~ 때문에 (전치사). <strong>such as</strong> = ~와 같은 (예시).</div><div class="s-meaning"><span class="bracket">【모순 1 — 한정된 농지】</span> 이렇게 더 많은 식량이 필요한데도(Despite this need), <strong>기후·지형(topography)·토양·기술 같은 제약 때문에 지구 표면 중 ‘농사에 적합한 땅’은 일부뿐</strong>이다. = 수요는 느는데 쓸 수 있는 농지는 한정. <span class="star-line">★ Despite = ~에도 불구하고 / topography = 지형</span></div></div>
+  <div class="card-top"><span class="s-num">05</span><div class="s-en">Despite this need, only a small <span class="hl">portion</span> of the Earth's surface is <span class="hl">suitable</span> for farming due to limitations such as climate, <span class="hl">topography</span>, soil quality, and technology.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">이 필요에도 불구하고, 기후·<strong>지형</strong>·토양·기술 등의 제한 때문에 지구 표면의 작은 <strong>부분</strong>만이 농업에 <strong>적합</strong>하다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">portion</span><span class="vocab-kr">부분</span><span class="vocab-en">suitable</span><span class="vocab-kr">적합한</span><span class="vocab-en">topography</span><span class="vocab-kr">지형</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>Despite</strong> = ~에도 불구하고 (전치사). <strong>due to</strong> = ~ 때문에 (전치사). <strong>such as</strong> = ~와 같은 (예시).</div></div>
 </div>
 <div class="s-card grammar" data-text="Political and economic factors, including land ownership patterns, environmental laws, and population density, also influence agricultural land use.">
   <div class="card-top"><span class="s-num">06</span><div class="s-en"><span class="hl">Political</span> and economic factors, including land <span class="hl">ownership</span> patterns, environmental laws, and population <span class="hl">density</span>, also <span class="hl">influence</span> agricultural land use.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">토지 <strong>소유</strong>·환경법·인구 <strong>밀도</strong>를 포함한 정치적·경제적 요인도 농업 토지 사용에 <strong>영향</strong>을 미친다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">political</span><span class="vocab-kr">정치적인</span><span class="vocab-en">ownership</span><span class="vocab-kr">소유</span><span class="vocab-en">density</span><span class="vocab-kr">밀도</span><span class="vocab-en">influence</span><span class="vocab-kr">영향을 미치다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>, including ~,</strong> = ~을 포함한 (삽입·분사). <strong>also influence</strong> = 주어-동사 거리! factors(S) ~ influence(V). 복수 → influence.</div><div class="s-meaning"><span class="bracket">【모순 2 — 사회적 제약】</span> 게다가 <strong>토지 소유 형태·환경법·인구 밀도 같은 ‘정치·경제적 요인’도</strong> 농지를 얼마나·어떻게 쓰는지에 영향을 준다. = 자연 조건뿐 아니라 사회적 요인까지 농지를 옥죈다. <span class="star-line">★ also = ~도(추가 요인) / land use = 토지 이용</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">토지 <strong>소유</strong>·환경법·인구 <strong>밀도</strong>를 포함한 정치적·경제적 요인도 농업 토지 사용에 <strong>영향</strong>을 미친다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">political</span><span class="vocab-kr">정치적인</span><span class="vocab-en">ownership</span><span class="vocab-kr">소유</span><span class="vocab-en">density</span><span class="vocab-kr">밀도</span><span class="vocab-en">influence</span><span class="vocab-kr">영향을 미치다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>, including ~,</strong> = ~을 포함한 (삽입·분사). <strong>also influence</strong> = 주어-동사 거리! factors(S) ~ influence(V). 복수 → influence.</div></div>
 </div>
 <div class="s-card grammar" data-text="In fact, the amount of land used for agriculture has been declining.">
   <div class="card-top"><span class="s-num">07</span><div class="s-en">In fact, the amount of land used for agriculture has been declining.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">사실, 농업에 사용되는 토지의 양은 감소해 왔다.</div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>land used for agriculture</strong> = 과거분사 후치수식 (사용되는 토지). <strong>has been declining</strong> = 현재완료 진행 (감소해 오고 있다). <strong>the amount of ~ has</strong> = amount = 단수 → has.</div><div class="s-meaning"><span class="bracket">【핵심 역설】</span> <strong>실제로(In fact) 농업에 쓰이는 땅은 (늘기는커녕) 줄어들고 있다.</strong> = 수요는 느는데 농지는 오히려 감소 — 이 글의 핵심 역설(제목 ‘Shrinking Farmland’). <span class="star-line">★ has been declining = 계속 줄어 옴(현재완료진행)</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">사실, 농업에 사용되는 토지의 양은 감소해 왔다.</div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>land used for agriculture</strong> = 과거분사 후치수식 (사용되는 토지). <strong>has been declining</strong> = 현재완료 진행 (감소해 오고 있다). <strong>the amount of ~ has</strong> = amount = 단수 → has.</div></div>
 </div>
 <div class="s-card grammar" data-text="In 2013, around 18.6 million square miles was used for food production, compared to 19.5 million square miles in 1991.">
   <div class="card-top"><span class="s-num">08</span><div class="s-en">In 2013, around 18.6 million <span class="hl">square</span> miles was used for food production, <span class="hl">compared to</span> 19.5 million square miles in 1991.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">2013년에 약 1,860만 <strong>평방</strong>마일이 식량 생산에 사용되었는데, 1991년 1,950만과 <strong>비교</strong>된다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">square</span><span class="vocab-kr">평방</span><span class="vocab-en">compared to</span><span class="vocab-kr">~와 비교하여</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>compared to</strong> = ~와 비교하여 (분사구문). <strong>was used</strong> = 수동태. 18.6 million square miles = 단수 취급(하나의 양) → was.</div><div class="s-meaning"><span class="bracket">【수치 입증】</span> 구체적으로, 식량 생산에 쓰인 땅이 <strong>1991년 1,950만 평방마일 → 2013년 약 1,860만 평방마일</strong>로 줄었다(약 90만 감소). = 농지 감소를 데이터로 입증. <span class="star-line">★ compared to = ~와 비교해 / 농지 실제 감소 확인</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">2013년에 약 1,860만 <strong>평방</strong>마일이 식량 생산에 사용되었는데, 1991년 1,950만과 <strong>비교</strong>된다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">square</span><span class="vocab-kr">평방</span><span class="vocab-en">compared to</span><span class="vocab-kr">~와 비교하여</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>compared to</strong> = ~와 비교하여 (분사구문). <strong>was used</strong> = 수동태. 18.6 million square miles = 단수 취급(하나의 양) → was.</div></div>
 </div>
 </div><!-- /cards -->
-  </div>
-<div class="summary-view" id="summaryView">
     <div class="summary-wrap"><div class="summary-header">📖 줄거리 &amp; 핵심 정리</div><div class="summary-body">
 <div style="background:linear-gradient(135deg,#1F3864,#2E7D32);border-radius:12px;padding:18px 22px;margin-bottom:20px;text-align:center;"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.6);margin-bottom:8px;">CORE MESSAGE</div><div style="font-size:15px;font-weight:700;color:white;line-height:1.6;">식량 수요↑ vs <span style="color:#f0d070;">농업 토지↓</span> — 미래 농업의 핵심 과제!</div><div style="font-size:12px;color:rgba(255,255,255,0.65);margin-top:8px;">= Food demand rises while agricultural land shrinks — the challenge ahead.</div></div>
 <div style="background:#fff8e6;border-left:4px solid #f0d070;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:20px;"><div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:#a07800;margin-bottom:10px;">💡 쉬운 비유로 이해하기</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12.5px;"><div style="background:white;border-radius:8px;padding:12px 14px;border:1px solid #faedb0;"><div style="font-weight:700;color:#2E7D32;margin-bottom:6px;">📈 수요 측 (증가)</div><div style="color:#444;line-height:1.8;">인구: 2050년 97억<br>식량 생산: 최소 70%↑ 필요<br>→ 끊임없는 수요 증가!</div></div><div style="background:white;border-radius:8px;padding:12px 14px;border:1px solid #faedb0;"><div style="font-weight:700;color:#C62828;margin-bottom:6px;">📉 공급 측 (감소)</div><div style="color:#444;line-height:1.8;">적합한 토지: 소량만<br>기후·지형·토양·기술 제한<br>농업 토지: 감소 중!<br>(1991: 1950만 → 2013: 1860만)</div></div></div></div>
@@ -545,7 +511,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #5B2D8E;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">while V-ing (동시)</div><div style="color:#555;">V하면서</div></div>
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #C55A11;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">has been declining (현재완료 진행)</div><div style="color:#555;">감소해 오고 있다</div></div>
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #C55A11;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">compared to (분사구문)</div><div style="color:#555;">~와 비교하여</div></div></div></div></div></div>
-</div>
+  </div>
   <div class="ga-panel" id="panelGA">
 
 <div class="ga-legend"><div class="ga-leg"><div class="ga-leg-dot" style="background:#C62828;"></div><strong>Tier 1</strong> 어법 핵심</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#E65100;"></div><strong>Tier 2</strong> 어법</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#1565C0;"></div><strong>Tier 3</strong> 어휘·대명사</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#2E7D32;"></div><strong>Tier 4</strong> 혼동 어휘</div></div>
@@ -935,12 +901,6 @@ function readNext(){if(!allPlaying||allIdx>=allQueue.length){if(currentCard)curr
 
 /* ══ 배열영작 ══ */
 let scores={},dragSrc=null,clickSelectedChip=null;
-/* ── 터치 드래그 지원 (태블릿/모바일) v1.7 ── */
-let tChip=null,tClone=null,tStartX=0,tStartY=0,tOffX=0,tOffY=0,tMoved=false,tDragEnd=0;
-const T_DRAG_THRESHOLD=10;
-function arrTouchStart(e){const chip=e.target.closest('.word-chip');if(!chip)return;tChip=chip;const r=chip.getBoundingClientRect();const t=e.touches[0];tStartX=t.clientX;tStartY=t.clientY;tOffX=t.clientX-r.left;tOffY=t.clientY-r.top;tMoved=false;}
-function arrTouchMove(e){if(!tChip)return;if(e.cancelable)e.preventDefault();const t=e.touches[0];const dx=t.clientX-tStartX,dy=t.clientY-tStartY;if(!tMoved){if(Math.hypot(dx,dy)<T_DRAG_THRESHOLD)return;tMoved=true;const r=tChip.getBoundingClientRect();tClone=tChip.cloneNode(true);Object.assign(tClone.style,{position:'fixed',left:r.left+'px',top:r.top+'px',width:r.width+'px',zIndex:9999,pointerEvents:'none',opacity:0.9,transform:'scale(1.08)',boxShadow:'0 8px 24px rgba(0,0,0,0.3)',transition:'none'});document.body.appendChild(tClone);tChip.classList.add('dragging');}tClone.style.left=(t.clientX-tOffX)+'px';tClone.style.top=(t.clientY-tOffY)+'px';tClone.style.display='none';const tg=document.elementFromPoint(t.clientX,t.clientY);tClone.style.display='';const z=tg&&tg.closest('.answer-zone, .word-pool');document.querySelectorAll('.answer-zone.drag-over, .word-pool.drag-over').forEach(el=>el.classList.remove('drag-over'));if(z)z.classList.add('drag-over');}
-function arrTouchEnd(e){if(!tChip)return;if(!tMoved){tChip=null;return;}const t=e.changedTouches[0];if(tClone)tClone.style.display='none';const tg=document.elementFromPoint(t.clientX,t.clientY);const z=tg&&tg.closest('.answer-zone, .word-pool');if(z){const chips=Array.from(z.querySelectorAll('.word-chip')).filter(c=>c!==tChip);if(chips.length===0){z.appendChild(tChip);}else{let bestC=null,bestB=true,bestD=Infinity;for(const c of chips){const r=c.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const d=Math.hypot(t.clientX-cx,t.clientY-cy);if(d<bestD){bestD=d;bestC=c;bestB=t.clientX<cx;}}if(bestB)z.insertBefore(tChip,bestC);else z.insertBefore(tChip,bestC.nextSibling);}tChip.classList.remove('ok-chip');const idx=tChip.dataset.idx;const r=document.getElementById('res-'+idx);if(r)r.className='arr-result';}if(tClone){tClone.remove();tClone=null;}tChip.classList.remove('dragging');document.querySelectorAll('.answer-zone.drag-over, .word-pool.drag-over').forEach(el=>el.classList.remove('drag-over'));tChip=null;tDragEnd=Date.now();e.preventDefault();}
 function buildArrangeCards(){
   const box=document.getElementById('arrCards');box.innerHTML='';
   const hint=document.createElement('div');hint.className='touch-hint';hint.innerHTML='💡 단어 클릭 → 즉시 이동 &nbsp;|&nbsp; 드래그도 가능';box.appendChild(hint);
@@ -949,15 +909,14 @@ function buildArrangeCards(){
     const card=document.createElement('div');card.className='arr-card';card.style.animationDelay=(idx*60)+'ms';
     card.innerHTML=`<div class="arr-header"><span class="arr-num">${item.num}</span><div class="arr-kr">${item.kr}</div></div><div class="arr-body"><div class="answer-zone" id="zone-${idx}"></div><div class="word-pool" id="pool-${idx}">${shuffled.map(w=>`<div class="word-chip" draggable="true" data-word="${w}" data-idx="${idx}">${w}</div>`).join('')}</div><div class="arr-result" id="res-${idx}"></div><div class="ans-reveal" id="ans-${idx}"><strong>정답:</strong> ${item.ans}.</div><div class="arr-btns"><button class="arr-check" onclick="checkAns(${idx})">✓ 확인</button><button class="arr-reset" onclick="resetCard(${idx})">↺ 초기화</button><button class="arr-show-ans" onclick="toggleAns(${idx})">👁 정답 보기</button></div></div>`;
     box.appendChild(card);
-    ['zone-'+idx,'pool-'+idx].forEach(zid=>{const z=document.getElementById(zid);z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(!dragSrc)return;const chips=Array.from(z.querySelectorAll('.word-chip')).filter(c=>c!==dragSrc);if(chips.length===0){z.appendChild(dragSrc);}else{let bestC=null,bestB=true,bestD=Infinity;for(const c of chips){const r=c.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const d=Math.hypot(e.clientX-cx,e.clientY-cy);if(d<bestD){bestD=d;bestC=c;bestB=e.clientX<cx;}}if(bestB)z.insertBefore(dragSrc,bestC);else z.insertBefore(dragSrc,bestC.nextSibling);}dragSrc.classList.remove('dragging','ok-chip');document.getElementById('res-'+idx).className='arr-result';dragSrc=null;});});
+    ['zone-'+idx,'pool-'+idx].forEach(zid=>{const z=document.getElementById(zid);z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(!dragSrc)return;z.appendChild(dragSrc);dragSrc.classList.remove('dragging','ok-chip');document.getElementById('res-'+idx).className='arr-result';dragSrc=null;});});
     setTimeout(()=>{document.getElementById('pool-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});document.getElementById('zone-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});},0);
   });
   box.addEventListener('dragstart',e=>{if(!e.target.classList.contains('word-chip'))return;dragSrc=e.target;e.target.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
   box.addEventListener('dragend',e=>{if(e.target.classList.contains('word-chip'))e.target.classList.remove('dragging');dragSrc=null;});
-  box.addEventListener('touchstart',arrTouchStart,{passive:true});box.addEventListener('touchmove',arrTouchMove,{passive:false});box.addEventListener('touchend',arrTouchEnd);box.addEventListener('touchcancel',arrTouchEnd);
   updateScore();
 }
-function chipClick(chip,idx){if(Date.now()-tDragEnd<500)return;const inZone=chip.parentElement.id==='zone-'+idx;const target=document.getElementById(inZone?'pool-'+idx:'zone-'+idx);chip.classList.remove('ok-chip');target.appendChild(chip);document.getElementById('res-'+idx).className='arr-result';}
+function chipClick(chip,idx){const inZone=chip.parentElement.id==='zone-'+idx;const target=document.getElementById(inZone?'pool-'+idx:'zone-'+idx);chip.classList.remove('ok-chip');target.appendChild(chip);chip.addEventListener('click',()=>chipClick(chip,idx),{once:true});document.getElementById('res-'+idx).className='arr-result';}
 function checkAns(idx){const zone=document.getElementById('zone-'+idx);const chips=Array.from(zone.querySelectorAll('.word-chip'));const userAns=chips.map(c=>c.dataset.word).join(' ');const correct=ARRANGE[idx].ans;const ok=userAns.trim().toLowerCase()===correct.trim().toLowerCase();const res=document.getElementById('res-'+idx);res.className='arr-result show '+(ok?'ok':'ng');res.innerHTML=ok?'🎉 정답입니다!':'❌ 다시 확인해 보세요. ('+chips.length+'/'+correct.split(' ').length+'개 배치됨)';if(ok)chips.forEach(c=>c.classList.add('ok-chip'));scores[idx]=ok?1:0;updateScore();}
 function resetCard(idx){const zone=document.getElementById('zone-'+idx);const pool=document.getElementById('pool-'+idx);Array.from(zone.querySelectorAll('.word-chip')).forEach(c=>{c.classList.remove('ok-chip');pool.appendChild(c);});document.getElementById('res-'+idx).className='arr-result';document.getElementById('ans-'+idx).className='ans-reveal';delete scores[idx];updateScore();}
 function toggleAns(idx){document.getElementById('ans-'+idx).classList.toggle('show');}
@@ -1182,159 +1141,6 @@ document.addEventListener("DOMContentLoaded",function(){
 });
 // 즉시 실행 (DOMContentLoaded 전에도 안전하게)
 (function(){hideQPanels();})();
-</script>
-<script>
-/* ══ 펜 필기 모드 (자유 필기) v1.0 ══ */
-const PEN_COLORS=['#dc2626','#1F3864','#0f9d58','#f59e0b','#000000'];
-const PEN_WIDTHS=[2,4,7];
-let penEnabled=false,penColor='#dc2626',penWidth=4,penEraser=false;
-let penLayer=null,penPath=null,penPts=[];
-
-function buildPenTools(){
-  if(document.getElementById('penLayer'))return;
-  penLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
-  penLayer.id='penLayer';
-  document.body.appendChild(penLayer);
-  const tb=document.createElement('div');
-  tb.id='penToolbar';
-  let html='<button class="pen-btn pen-main" id="penToggle" title="펜 ON/OFF">✏️</button><div class="pen-tools" id="penTools">';
-  PEN_COLORS.forEach(c=>html+='<button class="pen-color" data-color="'+c+'" style="background:'+c+';" title="색상"></button>');
-  PEN_WIDTHS.forEach(w=>html+='<button class="pen-width" data-width="'+w+'" title="굵기"><span style="width:'+(w*2)+'px;height:'+(w*2)+'px;"></span></button>');
-  html+='<button class="pen-btn pen-eraser" id="penEraserBtn" title="개별 지우개">🧹</button><button class="pen-btn pen-clear" id="penClearBtn" title="전체 지우기">🗑️</button></div>';
-  tb.innerHTML=html;
-  document.body.appendChild(tb);
-  document.querySelector('.pen-color[data-color="'+penColor+'"]').classList.add('selected');
-  document.querySelector('.pen-width[data-width="'+penWidth+'"]').classList.add('selected');
-  document.getElementById('penToggle').addEventListener('click',togglePen);
-  document.querySelectorAll('.pen-color').forEach(b=>b.addEventListener('click',e=>{
-    const c=e.currentTarget.dataset.color;
-    penColor=c;penEraser=false;
-    document.querySelectorAll('.pen-color').forEach(x=>x.classList.toggle('selected',x.dataset.color===c));
-    document.getElementById('penEraserBtn').classList.remove('active');
-  }));
-  document.querySelectorAll('.pen-width').forEach(b=>b.addEventListener('click',e=>{
-    const w=+e.currentTarget.dataset.width;
-    penWidth=w;
-    document.querySelectorAll('.pen-width').forEach(x=>x.classList.toggle('selected',+x.dataset.width===w));
-  }));
-  document.getElementById('penEraserBtn').addEventListener('click',()=>{
-    penEraser=!penEraser;
-    document.getElementById('penEraserBtn').classList.toggle('active',penEraser);
-  });
-  document.getElementById('penClearBtn').addEventListener('click',()=>{
-    if(confirm('모든 필기를 지우시겠습니까?'))penLayer.innerHTML='';
-  });
-  penLayer.addEventListener('pointerdown',penDown);
-  penLayer.addEventListener('pointermove',penMove);
-  penLayer.addEventListener('pointerup',penUp);
-  penLayer.addEventListener('pointercancel',penUp);
-  penLayer.addEventListener('pointerleave',penUp);
-  const sync=()=>{
-    penLayer.style.height='0px';penLayer.style.width='0px';
-    const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
-    const w=Math.max(document.body.scrollWidth,document.documentElement.scrollWidth);
-    penLayer.setAttribute('width',w);
-    penLayer.setAttribute('height',h);
-    penLayer.style.height=h+'px';
-    penLayer.style.width=w+'px';
-  };
-  sync();
-  if(window.ResizeObserver){let _roPending=false;new ResizeObserver(()=>{if(_roPending)return;_roPending=true;requestAnimationFrame(()=>{_roPending=false;sync();});}).observe(document.body);}
-  window.addEventListener('resize',sync);
-  setInterval(sync,2000);
-}
-function togglePen(){
-  penEnabled=!penEnabled;
-  document.getElementById('penToggle').classList.toggle('active',penEnabled);
-  document.getElementById('penTools').classList.toggle('show',penEnabled);
-  penLayer.classList.toggle('active',penEnabled);
-}
-function getPenPt(e){
-  return {x:e.clientX+window.scrollX,y:e.clientY+window.scrollY};
-}
-function penDown(e){
-  if(!penEnabled)return;
-  e.preventDefault();
-  try{penLayer.setPointerCapture(e.pointerId);}catch(_){}
-  if(penEraser){eraseAt(e);return;}
-  const pt=getPenPt(e);
-  penPath=document.createElementNS('http://www.w3.org/2000/svg','path');
-  penPath.setAttribute('d','M '+pt.x+' '+pt.y);
-  penPath.setAttribute('stroke',penColor);
-  penPath.setAttribute('stroke-width',penWidth);
-  penPath.setAttribute('fill','none');
-  penPath.setAttribute('stroke-linecap','round');
-  penPath.setAttribute('stroke-linejoin','round');
-  penLayer.appendChild(penPath);
-  penPts=[pt];
-}
-function penMove(e){
-  if(!penEnabled)return;
-  if(penEraser&&e.buttons){eraseAt(e);return;}
-  if(!penPath)return;
-  e.preventDefault();
-  const pt=getPenPt(e);
-  const last=penPts[penPts.length-1];
-  if(Math.hypot(pt.x-last.x,pt.y-last.y)<1.5)return;
-  penPts.push(pt);
-  let d='M '+penPts[0].x+' '+penPts[0].y;
-  for(let i=1;i<penPts.length-1;i++){
-    const c=penPts[i],n=penPts[i+1];
-    const mx=(c.x+n.x)/2,my=(c.y+n.y)/2;
-    d+=' Q '+c.x+' '+c.y+' '+mx+' '+my;
-  }
-  if(penPts.length>=2){
-    const lp=penPts[penPts.length-1];
-    d+=' L '+lp.x+' '+lp.y;
-  }
-  penPath.setAttribute('d',d);
-}
-function penUp(e){
-  if(penPath){penPath=null;penPts=[];}
-}
-function eraseAt(e){
-  const pt=getPenPt(e);
-  const r=20;
-  const paths=Array.from(penLayer.querySelectorAll('path'));
-  for(const p of paths){
-    const bb=p.getBBox();
-    if(pt.x>=bb.x-r&&pt.x<=bb.x+bb.width+r&&pt.y>=bb.y-r&&pt.y<=bb.y+bb.height+r){
-      p.remove();
-    }
-  }
-}
-if(document.readyState==='loading'){
-  document.addEventListener('DOMContentLoaded',buildPenTools);
-}else{
-  setTimeout(buildPenTools,100);
-}
-</script>
-<script>
-/* ══ 요약 전용 탭 v1.0 ══ */
-(function(){
-  function hideSummary(){
-    var sv=document.getElementById('summaryView');if(sv)sv.style.display='none';
-    var ts=document.getElementById('tabSum');if(ts)ts.classList.remove('active');
-  }
-  window.switchSummary=function(){
-    var rv=document.getElementById('readingView');if(rv)rv.style.display='none';
-    ['arrangeView','grammarView','vocabView'].forEach(function(id){
-      var el=document.getElementById(id);if(el)el.classList.remove('active');});
-    if(typeof hideAllExtra==='function')hideAllExtra();
-    document.querySelectorAll('.view-tab').forEach(function(t){t.classList.remove('active');});
-    var sv=document.getElementById('summaryView');if(sv)sv.style.display='block';
-    var ts=document.getElementById('tabSum');if(ts)ts.classList.add('active');
-    window.scrollTo({top:0,behavior:'smooth'});
-  };
-  /* 다른 모든 전환 함수가 요약뷰를 숨기도록 래핑 */
-  ['switchView','switchSD','switchGA','switchQ','switchVocab'].forEach(function(fn){
-    if(typeof window[fn]!=='function')return;
-    var orig=window[fn];
-    window[fn]=function(){hideSummary();return orig.apply(this,arguments);};
-  });
-  document.addEventListener('DOMContentLoaded',hideSummary);
-  hideSummary();
-})();
 </script>
 </body>
 </html>
