@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+  <meta charset="UTF-8">
+  <title>내 즐겨찾기 - 사이트·영상·사진 | MYWAY.KR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="사이트·영상·사진 즐겨찾기를 직접 추가·관리하는 나만의 북마크 - MYWAY.KR">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --nav-grad: linear-gradient(95deg, #7ed6fb 10%, #b176f3 90%);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    html, body {
+      margin: 0; padding: 0;
+      background: #fff;
+      font-family: 'Segoe UI', '맑은 고딕', Arial, sans-serif;
+      -webkit-text-size-adjust: 100%;
+    }
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow-x: hidden;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    img { -webkit-user-drag: none; user-drag: none; -webkit-touch-callout: none; }
+    input, textarea, [contenteditable] {
+      -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text;
+    }
+
+    /* ===== 상단 sticky 헤더 ===== */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: saturate(180%) blur(8px);
+      -webkit-backdrop-filter: saturate(180%) blur(8px);
+      padding: 12px 14px 10px;
+      padding-left: max(14px, env(safe-area-inset-left));
+      padding-right: max(14px, env(safe-area-inset-right));
+    }
+    .topbar-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    /* 좌측 홈 아이콘 */
+    .home-link {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      text-decoration: none;
+      color: #fff;
+      background: var(--nav-grad);
+      box-shadow: 0 6px 18px rgba(177,118,243,0.28);
+      transition: transform .15s, box-shadow .15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .home-link:hover { transform: translateY(-1px); box-shadow: 0 8px 22px rgba(177,118,243,0.36); }
+    .home-link svg { width: 18px; height: 18px; fill: currentColor; }
+
+    .page-title {
+      font-size: 1.0rem; font-weight: 700;
+      color: #1f2740;
+      margin: 0;
+      letter-spacing: -0.3px;
+      flex: 0 0 auto;
+      white-space: nowrap;
+    }
+    .page-title .sub {
+      font-size: .78rem; font-weight: 500;
+      color: #8590ad;
+      margin-left: 6px;
+    }
+
+    /* 카테고리 네비 */
+    .cat-nav {
+      display: flex;
+      gap: 8px;
+      flex: 1 1 auto;
+      min-width: 0;
+      justify-content: safe center;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .cat-nav::-webkit-scrollbar { display: none; }
+    .cat-btn {
+      font: inherit;
+      font-size: .88rem;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1.5px solid #dfe3ec;
+      background: #fff;
+      color: #4a5170;
+      cursor: pointer;
+      transition: all .15s;
+      white-space: nowrap;
+      flex: 0 0 auto;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .cat-btn:hover { background: #f4f6fb; border-color: #c7cee0; }
+    .cat-btn:active { transform: scale(0.96); }
+    .cat-btn.is-active { background: #1f2740; color: #fff; border-color: #1f2740; }
+    .cat-btn .count {
+      display: inline-block;
+      margin-left: 4px;
+      font-size: .72rem;
+      opacity: .65;
+      font-weight: 500;
+    }
+    .cat-btn.is-active .count { opacity: .85; }
+
+    /* 접기 / 펼치기 토글 (티나지 않게) */
+    .collapse-toggle {
+      flex: 0 0 auto;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 1.5px solid #d3d8e4; background: #fff; color: #5a627e;
+      cursor: pointer; transition: color .2s, border-color .2s, background .2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .collapse-toggle:hover { color: #1f2740; border-color: #b9c0d2; background: #f4f6fb; }
+    .collapse-toggle:active { transform: scale(0.94); }
+    .collapse-toggle svg {
+      width: 15px; height: 15px; fill: currentColor; stroke: none;
+      transition: transform .25s ease;
+    }
+    body.is-collapsed .collapse-toggle svg { transform: rotate(180deg); }
+    body.is-collapsed .gallery-section { display: none; }
+
+    /* ===== 갤러리 섹션 ===== */
+    .gallery-section {
+      width: 100%;
+      max-width: 1100px;
+      padding: 12px 14px 48px;
+      margin: 0 auto;
+    }
+
+    /* 드래그 정렬 */
+    .masonry .card.dragging { opacity: .4; }
+    .masonry .card.drag-over { outline: 2.5px solid #7e94ff; outline-offset: 2px; border-radius: 14px; }
+
+    /* Masonry: CSS column 기반 */
+    .masonry {
+      column-count: 4;
+      column-gap: 12px;
+    }
+    .masonry .card {
+      display: block;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      -webkit-column-break-inside: avoid;
+      margin: 0 0 12px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #f4f6fb;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+      transform: translateZ(0);
+    }
+    .masonry .card img {
+      display: block;
+      width: 100%;
+      height: auto;
+      transition: filter .25s ease, transform .35s ease;
+    }
+    .masonry .card:hover img { transform: scale(1.03); }
+
+    /* 이름 캡션 (하단 그라데이션) */
+    .masonry .card .cap {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: 22px 10px 9px;
+      font-size: .82rem; font-weight: 700;
+      color: #fff;
+      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.68) 78%);
+      letter-spacing: -0.2px;
+      text-shadow: 0 1px 2px rgba(0,0,0,.45);
+      transition: opacity .2s;
+      pointer-events: none;
+    }
+    /* 제목 캡션: PC·모바일 모두 항상 표시 (마우스 올림과 무관) */
+
+    /* 카테고리 필터 — CSS data 속성으로 (JS 재렌더 없음) */
+    /* 분류 그룹 제목 (전체 너비) */
+    .masonry .section-head {
+      column-span: all;
+      -webkit-column-span: all;
+      break-inside: avoid;
+      font-weight: 800;
+      font-size: 1.02rem;
+      color: #1f2740;
+      letter-spacing: -0.3px;
+      margin: 14px 0 12px;
+      padding-bottom: 2px;
+    }
+    .masonry .section-head:first-child { margin-top: 0; }
+
+    /* 카드 위치 기준 (하단 캡션 고정용) */
+    .masonry .card { position: relative; }
+
+
+    /* 삭제 버튼 */
+    .btn-danger { background: #fdeaed; color: #d6455c; flex: 0 0 auto !important; padding-left: 16px !important; padding-right: 16px !important; }
+    .btn-danger:hover { background: #f9d8dd; }
+
+    /* 추가 모달 */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(20,24,38,.5);
+      -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+      display: none; align-items: center; justify-content: center; padding: 18px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      width: 100%; max-width: 380px; background: #fff; border-radius: 16px;
+      padding: 22px 20px 18px; box-shadow: 0 18px 50px rgba(20,24,38,.3);
+    }
+    .modal-title { margin: 0 0 16px; font-size: 1.15rem; font-weight: 800; color: #1f2740; }
+    .field { display: block; margin-bottom: 13px; }
+    .field > span { display: block; font-size: .8rem; font-weight: 700; color: #6a739c; margin-bottom: 5px; }
+    .field input, .field select {
+      width: 100%; padding: 10px 12px; border: 1.5px solid #dde2ee; border-radius: 9px;
+      font-size: .92rem; font-family: inherit; color: #1f2740; background: #fafbfe;
+      outline: none; transition: border-color .15s;
+    }
+    .field input:focus, .field select:focus { border-color: #7e94ff; }
+    .modal-actions { display: flex; gap: 9px; margin-top: 18px; }
+    .modal-actions button { flex: 1; padding: 11px; border-radius: 9px; font-size: .92rem; font-weight: 700; cursor: pointer; border: none; }
+    .btn-ghost { background: #eef0f6; color: #4a5170; }
+    .btn-ghost:hover { background: #e2e6f0; }
+    .btn-primary { background: #1f2740; color: #fff; }
+    .btn-primary:hover { background: #2a3358; }
+
+    /* 사진 미입력 시 이름 커버 플레이스홀더 */
+    .masonry .card .cover-ph {
+      width: 100%; aspect-ratio: 3 / 4;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 16px;
+      background: linear-gradient(135deg, #eef1f7, #dde3ef);
+      color: #3a426a; font-weight: 700;
+      font-size: 1.02rem; line-height: 1.45; letter-spacing: -0.3px;
+      word-break: keep-all;
+    }
+
+    /* 사이트 텍스트 카드 (indexmain7 스타일) */
+    .masonry .card.site-card {
+      background: #fff;
+      padding: 20px 18px 18px;
+      box-shadow: 0 2px 10px rgba(31,39,64,.06);
+      overflow: visible;
+      margin-bottom: 26px;
+    }
+    /* 카드 밑 음영 — 입체감 (바매거진 전체목록 스타일) */
+    .masonry .card.site-card::after {
+      content: "";
+      position: absolute;
+      left: 2.5%; right: 2.5%;
+      top: 100%;
+      height: 18px;
+      background: url('https://64.media.tumblr.com/f5f06009df6584ebb5539cad61f73c63/tumblr_inline_qsghz3XZRQ1r45nlo_500.png') center top / 100% 100% no-repeat;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .masonry .card.site-card .site-name {
+      font-size: 1.22rem; font-weight: 800; color: #1f2740;
+      letter-spacing: -0.4px; line-height: 1.25; word-break: keep-all;
+    }
+    .masonry .card.site-card .site-domain {
+      margin-top: 7px; font-size: .8rem; color: #8590ad;
+      font-family: 'JetBrains Mono', ui-monospace, monospace; word-break: break-all;
+    }
+
+    /* 보정 프리셋 (data-preset 토글) */
+    /* (제거됨) */
+
+    /* 갤러리 반응형 */
+    @media (max-width: 900px) { .masonry { column-count: 3; } }
+    @media (max-width: 600px) { .masonry { column-count: 2; column-gap: 10px; } .masonry .card { margin-bottom: 10px; } }
+
+    /* Others(etcNews): 섹션 구분 + 텍스트 카드 구조 → multi-column(+column-span) 모바일 버그 회피용 그리드 */
+    /* 네임카드(사진 없는 항목)도 그리드로 정렬 */
+    .masonry:has(.site-card){ }
+    /* iframe형 탭 뷰어 */
+    .frame-view { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 14px 24px; }
+    .frame-bar { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 12px; scrollbar-width: none; -ms-overflow-style: none; }
+    .frame-bar::-webkit-scrollbar { display: none; }
+    .frame-chip { position: relative; flex: 0 0 auto; font: inherit; font-size: .85rem; font-weight: 600; padding: 8px 15px; border-radius: 999px; border: 1.5px solid #dfe3ec; background: #fff; color: #4a5170; cursor: pointer; white-space: nowrap; -webkit-tap-highlight-color: transparent; }
+    .frame-chip:hover { background: #f4f6fb; border-color: #c7cee0; }
+    .frame-chip.active { background: #1f2740; color: #fff; border-color: #1f2740; }
+    .frame-chip.add { border-style: dashed; border-color: #c9b6f3; color: #7c4bd6; }
+    .chip-del { display: none; margin-left: 7px; font-size: .72rem; color: #d6455c; }
+    body.editing .frame-chip .chip-del { display: inline; }
+    .frame-box { width: 100%; height: 75vh; min-height: 420px; border: 1px solid #e3e7f0; border-radius: 12px; overflow: hidden; background: #0d0f12; }
+    .frame-box iframe { width: 100%; height: 100%; border: 0; display: block; }
+    .frame-empty { display: flex; align-items: center; justify-content: center; height: 100%; color: #8590ad; font-size: .9rem; }
+    .frame-open { display: inline-block; margin-top: 10px; font-size: .8rem; color: #7c4bd6; text-decoration: none; font-weight: 700; }
+    .frame-open:hover { text-decoration: underline; }
+    /* iframe형 탭: 좌우·상하 풀화면 */
+    body.frame-active .gallery-section { max-width: none; padding: 0; margin: 0; }
+    body.frame-active .frame-view { max-width: none; padding: 8px 0 0; margin: 0; }
+    body.frame-active .frame-box { height: calc(100dvh - var(--frame-top, 56px) - 42px); min-height: 320px; border: 0; border-radius: 0; }
+    body.frame-active .frame-open { display: block; text-align: center; padding: 9px; margin: 0; background: #faf8ff; border-top: 1px solid #eee; }
+    body.frame-active .myway-footer { display: none; }
+    /* 탭 편집 인라인 */
+    .tab-name-in { flex: 1; min-width: 0; font: inherit; font-size: .9rem; font-weight: 700; color: #1f2740; border: 1.5px solid #e3e7f0; border-radius: 7px; padding: 5px 8px; }
+    .tab-name-in:focus { outline: none; border-color: #7e94ff; }
+    .tab-mode-in { font: inherit; font-size: .76rem; border: 1.5px solid #e3e7f0; border-radius: 7px; padding: 5px 5px; color: #4a5170; background: #fafbfe; flex: none; }
+
+    /* 태블릿/PC: 카테고리 네비 중앙정렬 */
+    @media (min-width: 721px) {
+      .cat-nav { justify-content: safe center; }
+    }
+
+    /* ===== MYWAY.KR 공통 ===== */.myway-footer {
+      width: 100%;
+      text-align: center;
+      padding: 22px 14px calc(28px + var(--safe-bottom));
+      margin-top: 24px;
+      border-top: 1px solid #eef0f4;
+      font-size: .82rem;
+      color: #8590ad;
+    }
+    .myway-footer a.foot-link { color: #4a5170; text-decoration: none; font-weight: 700; }
+    .myway-footer a.foot-link:hover { color: #1f2740; }
+    .myway-footer .sep { display: inline-block; margin: 0 8px; opacity: .5; }
+
+    /* 푸터 하단 홈 버튼 (고정 아님 — 페이지 맨 하단에만 노출) */
+    .foot-home {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px; height: 46px;
+      margin: 0 auto 14px;
+      border-radius: 50%;
+      text-decoration: none;
+      color: #fff;
+      background: var(--nav-grad);
+      box-shadow: 0 8px 22px rgba(177,118,243,0.32);
+      transition: transform .15s, box-shadow .15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .foot-home:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(177,118,243,0.42); }
+    .foot-home svg { width: 21px; height: 21px; fill: currentColor; }
+    .myway-footer .foot-meta { display: block; }
+
+    @media (max-width: 700px) {
+      .home-link { width: 36px; height: 36px; }
+      .home-link svg { width: 19px; height: 19px; }
+      .page-title { font-size: .95rem; }
+      .cat-btn { padding: 7px 13px; font-size: .85rem; }
+    }
+
+    /* ===== 편집 도구 (news-edit) ===== */
+    .edit-toolbar { display: none; position: fixed; top: 8px; right: 12px; z-index: 200; }
+    body.show-edit .edit-toolbar { display: block; }
+    .tool-fab { width: 36px; height: 36px; border-radius: 50%; border: 0; background: linear-gradient(135deg, #7c4bd6, #5b7cfa); color: #fff; cursor: pointer; box-shadow: 0 3px 10px rgba(91,108,250,.35); display: flex; align-items: center; justify-content: center; transition: transform .15s, box-shadow .15s; -webkit-tap-highlight-color: transparent; }
+    .tool-fab:hover { transform: scale(1.08); }
+    .tool-fab.open { box-shadow: 0 4px 14px rgba(91,108,250,.5); }
+    .tool-fab.editing { box-shadow: 0 0 0 3px rgba(124,75,214,.3), 0 3px 10px rgba(91,108,250,.35); }
+    .tool-fab svg { display: block; }
+    .tool-menu { display: none; position: absolute; top: 44px; right: 0; flex-direction: column; gap: 5px; min-width: 170px; background: #fff; border: 1px solid #e3e7f0; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.18); padding: 8px; }
+    .tool-menu.open { display: flex; }
+    .tool-menu .tb-btn { width: 100%; text-align: left; border-radius: 8px; }
+    /* 전체화면 토글 버튼 (단독·iframe 모두 표시) */
+    .full-fab { display: flex; position: fixed; top: 8px; left: 12px; z-index: 9999; width: 36px; height: 36px; border-radius: 50%; border: 0; background: linear-gradient(135deg, #7c4bd6, #5b7cfa); color: #fff; cursor: pointer; box-shadow: 0 3px 10px rgba(91,108,250,.4); align-items: center; justify-content: center; transition: transform .15s, box-shadow .15s; -webkit-tap-highlight-color: transparent; }
+    .full-fab:hover { transform: scale(1.08); box-shadow: 0 4px 14px rgba(91,108,250,.55); }
+    .full-fab svg { display: block; }
+    .tb-btn { font: inherit; font-size: .83rem; font-weight: 700; padding: 7px 14px; border-radius: 999px; border: 1.5px solid #dfe3ec; background: #fff; color: #4a5170; cursor: pointer; transition: all .15s; white-space: nowrap; -webkit-tap-highlight-color: transparent; }
+    .tb-btn:hover { background: #f4f6fb; border-color: #c7cee0; }
+    .tb-btn:active { transform: scale(0.96); }
+    .tb-btn.on { background: #1f2740; border-color: #1f2740; color: #fff; }
+    .tb-btn.code { border-color: #c9b6f3; color: #7c4bd6; }
+    /* 카드 편집 오버레이 */
+    .card-ctrl { display: none; position: absolute; inset: 0; z-index: 5; background: rgba(255,255,255,.86); border-radius: 10px; align-items: center; justify-content: center; gap: 5px; flex-wrap: wrap; padding: 6px; }
+    body.editing .masonry .card .card-ctrl { display: flex; }
+    body.editing .masonry .card { cursor: default; }
+    body.editing .masonry .card:hover img { transform: none; }
+    .card-ctrl button { border: 1.5px solid #dde2ee; background: #fff; border-radius: 8px; width: 30px; height: 30px; font-size: 14px; line-height: 1; cursor: pointer; color: #444; box-shadow: 0 1px 3px rgba(0,0,0,.08); font-family: inherit; }
+    .card-ctrl button:hover { border-color: #7e94ff; color: #1f2740; }
+    .card-ctrl button.del:hover { border-color: #d6455c; color: #d6455c; }
+    /* 편집모드: 상단 탭에 점선 테두리로 편집 가능 표시 */
+    body.editing .cat-btn { box-shadow: inset 0 0 0 1.5px #c9b6f3; }
+    /* 코드/탭 모달 공통 */
+    .code-opt { display: flex; flex-direction: column; gap: 10px; }
+    .code-opt button { border: 1.5px solid #dde2ee; background: #fff; border-radius: 12px; padding: 13px 14px; text-align: left; cursor: pointer; font-family: inherit; }
+    .code-opt button:hover { border-color: #7e94ff; background: #f6f8ff; }
+    .code-opt .ct { font-size: .92rem; font-weight: 800; color: #1f2740; }
+    .code-opt .cs { font-size: .74rem; color: #8590ad; margin-top: 3px; line-height: 1.4; }
+    .code-area { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+    /* 탭 관리 리스트 */
+    .tab-list { display: flex; flex-direction: column; gap: 7px; max-height: 56vh; overflow: auto; }
+    .tab-row { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; border: 1.5px solid #e3e7f0; border-radius: 10px; padding: 7px 9px; }
+    .tab-url-in { flex: 1 1 100%; font: inherit; font-size: .8rem; border: 1.5px solid #e3e7f0; border-radius: 7px; padding: 6px 8px; color: #4a5170; }
+    .tab-url-in:focus { outline: none; border-color: #7e94ff; }
+    .tab-row .nm { flex: 1; min-width: 0; font-size: .9rem; font-weight: 700; color: #1f2740; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .tab-row .tab-badge { margin-left: 7px; font-size: .64rem; font-weight: 700; color: #7c4bd6; background: #f1ebfb; border: 1px solid #e0d4f7; border-radius: 999px; padding: 1px 7px; }
+    .tab-row button { border: 1.5px solid #dde2ee; background: #fff; border-radius: 7px; min-width: 26px; height: 26px; padding: 0 5px; font-size: 12px; line-height: 1; cursor: pointer; color: #6a739c; font-family: inherit; flex: none; }
+    .tab-row button:hover { border-color: #7e94ff; color: #1f2740; }
+    .tab-row button.del:hover { border-color: #d6455c; color: #d6455c; }
+  </style>
+</head>
+<body class="">
+
+<button class="full-fab" id="fullToggle" type="button" aria-label="전체화면" title="전체화면으로 보기"></button>
+
+  <!-- 상단 sticky 헤더 -->
+  <header class="topbar">
+    <div class="topbar-row">
+      <nav class="cat-nav" id="catNav">
+      </nav>
+    </div>
+  </header>
+
+  <!-- 편집 툴바 (편집판에서만 노출) -->
+  <div class="edit-toolbar" id="editToolbar"></div>
+
+  <!-- 갤러리 섹션 -->
+  <section class="gallery-section">
+    <div class="masonry" id="masonryGallery" data-filter=""></div>
+    <div class="frame-view" id="frameView" style="display:none"></div>
+  </section>
+
+  <!-- MYWAY.KR 공통: 푸터 (홈 버튼 포함) -->
+  <footer class="myway-footer">
+    <a href="https://myway.kr/" class="foot-home" aria-label="MYWAY.KR 홈" title="MYWAY.KR 홈">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2 2.5 11.4l1.3 1.5L5 11.85V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-8.15l1.2 1.05 1.3-1.5L12 3.2Z"></path></svg>
+    </a>
+    <span class="foot-meta">
+      <a href="https://myway.kr/" class="foot-link">myway.kr</a>
+      <span class="sep">·</span>
+      <span>© MYWAY.KR</span>
+    </span>
+  </footer>
+
+  <!-- 추가/수정 모달 -->
+  <div class="modal-overlay" id="addModal">
+    <div class="modal">
+      <h3 class="modal-title" id="modalTitle">즐겨찾기 추가</h3>
+      <label class="field">
+        <span>분류</span>
+        <select id="inCat">
+          <option value="genNews">Magazines</option>
+          <option value="entNews">News</option>
+          <option value="etcNews">Others</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>텍스트 (이름)</span>
+        <input id="inName" type="text" placeholder="예) 네이버" autocomplete="off">
+      </label>
+      <label class="field">
+        <span id="lblUrl">사이트 주소</span>
+        <input id="inUrl" type="text" placeholder="예) https://www.naver.com" autocomplete="off">
+      </label>
+      <label class="field">
+        <span id="lblImg">사진 주소 (선택)</span>
+        <input id="inImg" type="text" placeholder="이미지 URL · 비우면 이름 카드로 표시" autocomplete="off">
+      </label>
+      <div class="modal-actions">
+        <button type="button" class="btn-danger" id="delBtn" style="display:none">삭제</button>
+        <button type="button" class="btn-ghost" id="addCancel">취소</button>
+        <button type="button" class="btn-primary" id="addSubmit">등록</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 코드 / 파일 저장 모달 -->
+  <div class="modal-overlay" id="codeModal">
+    <div class="modal">
+      <h3 class="modal-title">코드 / 파일 저장</h3>
+      <div class="code-opt">
+        <button type="button" id="saveEdit"><div class="ct">📝 편집용 HTML 저장</div><div class="cs">복사방지 없음 · 현재 목록이 박힌 편집 파일</div></button>
+        <button type="button" id="saveView"><div class="ct">👁 배포용 HTML 저장</div><div class="cs">복사방지 포함 · 편집도구 없는 공개용 파일</div></button>
+        <button type="button" id="copyCode"><div class="ct">📋 데이터 코드 복사</div><div class="cs">DEFAULTS 코드를 클립보드로 복사</div></button>
+      </div>
+      <div class="modal-actions"><button type="button" class="btn-ghost" id="codeClose">닫기</button></div>
+      <textarea class="code-area" id="codeArea"></textarea>
+    </div>
+  </div>
+
+  <!-- 섹션(탭) 추가 모달 -->
+  <div class="modal-overlay" id="tabModal">
+    <div class="modal">
+      <h3 class="modal-title">섹션(상단 탭) 추가</h3>
+      <label class="field"><span>탭 이름</span><input id="tabName" type="text" placeholder="예) 스포츠" autocomplete="off"></label>
+      <label class="field"><span>형태</span>
+        <select id="tabMode">
+          <option value="photo">사진형 — 사진/네임카드 갤러리</option>
+          <option value="frame">iframe형 — 사이트가 하단에 바로 뜸</option>
+        </select>
+      </label>
+      <label class="field" id="tabUrlField" style="display:none">
+        <span>사이트 주소 (iframe으로 표시)</span>
+        <input id="tabUrl" type="text" placeholder="예) https://chzzk.naver.com" autocomplete="off">
+      </label>
+      <div class="modal-actions">
+        <button type="button" class="btn-ghost" id="tabCancel">취소</button>
+        <button type="button" class="btn-primary" id="tabSubmit">추가</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 섹션(탭) 편집 모달 -->
+  <div class="modal-overlay" id="tabMgrModal">
+    <div class="modal">
+      <h3 class="modal-title">섹션(상단 탭) 편집</h3>
+      <div class="tab-list" id="tabList"></div>
+      <button type="button" class="tb-btn" id="tabMgrAdd" style="margin-top:12px">＋ 탭 추가</button>
+      <div class="modal-actions"><button type="button" class="btn-ghost" id="tabMgrClose">닫기</button></div>
+    </div>
+  </div>
+
+  <!-- 본문 스크립트 -->
+  <script>
+    /* @CONFIG */
+    const NEWS_IS_DIST = true;
+    const NEWS_SHOW_EDIT = true;
+    const NEWS_COPY_PROTECT = false;
+    const NEWS_STORE_KEY = "mywayNewsEditV1";
+    const NEWS_DIST_SIG = "sig1782775378637";
+    /* @CONFIG_END */
+
+    /* ============ 복제방지 ============ */
+    (function(){
+      if (typeof NEWS_COPY_PROTECT !== 'undefined' && !NEWS_COPY_PROTECT) return;
+      function isEditable(t) {
+        if (!t) return false;
+        const tag = (t.tagName || '').toLowerCase();
+        if (tag === 'input' || tag === 'textarea') return true;
+        if (t.isContentEditable) return true;
+        return false;
+      }
+      ['contextmenu','dragstart','selectstart','copy','cut'].forEach(ev => {
+        document.addEventListener(ev, e => {
+          if (isEditable(e.target)) return;
+          if (ev === 'dragstart' && e.target.closest && e.target.closest('.card')) return;
+          e.preventDefault();
+        }, { capture: true });
+      });
+      document.addEventListener('keydown', e => {
+        if (isEditable(e.target)) return;
+        const k = (e.key || '').toLowerCase();
+        if (k === 'f12') { e.preventDefault(); return; }
+        if (e.ctrlKey && e.shiftKey && (k === 'i' || k === 'j' || k === 'c')) { e.preventDefault(); return; }
+        if (e.ctrlKey && !e.shiftKey && (k === 'u' || k === 's' || k === 'c' || k === 'x' || k === 'a')) { e.preventDefault(); return; }
+      }, { capture: true });
+    })();
+
+    /* ============ 뉴스 즐겨찾기 (news 전용 스코프) ============
+       이 블록 전체를 IIFE로 감싸 모든 함수·변수를 이 페이지 안에만 가둡니다.
+       (다른 즐겨찾기 페이지와 같은 도메인에 있어도 전역 이름·데이터가 충돌하지 않습니다)
+       · localStorage('mywayNewsV1')에 저장됩니다. (다른 파일과 분리)
+       · 카드 맨 끝의 [+] 카드를 눌러 추가합니다.
+       · 카드 우측 상단 색 코너를 누르면 수정/삭제 창이 열립니다.
+    ============================================================ */
+    (function(){
+
+    /* @DEFAULTS_START */
+    const DEFAULTS = {
+      cats: [
+        { code: "genNews", label: "Magazines", mode: "photo", url: "" },
+        { code: "entNews", label: "시사&경제", mode: "photo", url: "" },
+        { code: "catmqowpz71o63", label: "VOGUE", mode: "frame", url: "https://www.vogue.co.kr/" },
+        { code: "catmqowqkk3zz4", label: "ALLURE", mode: "frame", url: "https://www.allurekorea.com/" },
+        { code: "catmqowr6dd24k", label: "여성동아", mode: "frame", url: "https://woman.donga.com/" },
+        { code: "catmqowrr3ix0v", label: "마리끌레르", mode: "frame", url: "https://www.marieclairekorea.com/" },
+        { code: "catmqowslyjvp0", label: "싱글즈", mode: "frame", url: "https://m.singleskorea.com/" },
+        { code: "catmqowtgt883p", label: "더블유코리아", mode: "frame", url: "https://www.wkorea.com/" },
+        { code: "catmqowu1iuivi", label: "로피시엘", mode: "frame", url: "https://www.lofficielkorea.com/" },
+      ],
+      data: {
+        "genNews": [
+          { name: "보그", url: "https://www.vogue.co.kr/", img: "https://img.vogue.co.kr/vogue/2024/02/style_65ceef66858de-1116x1400.jpg" },
+          { name: "엘르", url: "https://www.elle.co.kr/", img: "https://www.elle.co.kr/resources_old/online/org_online_image/el/12fec014-92f2-4883-9983-6b0daff4b157.jpg" },
+          { name: "마리끌레르", url: "https://www.marieclairekorea.com/", img: "https://image.aladin.co.kr/product/16870/23/cover500/k032534972_1.jpg" },
+          { name: "코스모폴리", url: "https://www.cosmopolitan.co.kr/", img: "https://contents.kyobobook.co.kr/sih/fit-in/400x0/pdt/3904000588834.jpg" },
+          { name: "하퍼스바자", url: "https://www.harpersbazaar.co.kr/", img: "https://image.yes24.com/goods/103932601/XL" },
+          { name: "우먼센스", url: "https://www.womansense.co.kr/", img: "https://i.ytimg.com/vi/DTQjqK4_Ml4/hq720_2.jpg?sqp=-oaymwEiCLQEENAFSFryq4qpAxQIARUAAAAAJQAAyEI9AICiQ9ABAQ==&rs=AOn4CLBlZcELGfCcm06hnVjMfWxNO1fDZg" },
+          { name: "우먼동", url: "https://woman.donga.com/", img: "https://contents.kyobobook.co.kr/sih/fit-in/400x0/pdt/3904000558677.jpg" },
+          { name: "우먼조선", url: "https://woman.chosun.com/", img: "https://img.ridicdn.net/cover/486000697/xxlarge#1" },
+          { name: "씨네21", url: "https://cine21.com/", img: "https://contents.kyobobook.co.kr/sih/fit-in/400x0/pdt/3904000550336.jpg" },
+          { name: "레이디경향", url: "https://lady.khan.co.kr/", img: "https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/3904000116365.jpg" },
+          { name: "gq코리아", url: "https://www.gqkorea.co.kr/", img: "https://contents.kyobobook.co.kr/sih/fit-in/400x0/pdt/3904000525754.jpg" },
+          { name: "주부생활", url: "https://www.ju-bu.co.kr/", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJyp4rG7vBXQD6Dz6xKQSZPK0G2cwzGwpBKg&s" },
+          { name: "에스콰이어", url: "https://www.esquirekorea.co.kr/", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShE9H0xMGtDrQkbk8bKv2i2JKic-drYXTw7Q&s" },
+          { name: "텐아시아", url: "https://www.tenasia.co.kr/", img: "https://image.aladin.co.kr/product/24342/92/cover500/k492630706_1.jpg" },
+          { name: "메종", url: "https://www.maisonkorea.com/", img: "https://contents.kyobobook.co.kr/sih/fit-in/400x0/pdt/9771227846009.jpg" },
+          { name: "싱글즈", url: "https://m.singleskorea.com/", img: "https://contents.kyobobook.co.kr/sih/fit-in/400x0/pdt/3904000468310.jpg" },
+          { name: "theneighbor", url: "https://www.theneighbor.co.kr/", img: "https://contents.kyobobook.co.kr/sih/fit-in/400x0/pdt/3904000589312.jpg" },
+          { name: "디스패치", url: "https://www.dispatch.co.kr/", img: "https://pds.joongang.co.kr//news/component/htmlphoto_mmdata/201808/08/f94b6284-1f62-4dbe-8e78-77ab858e93fc.jpg" },
+          { name: "스포츠조선", url: "https://www.sportschosun.com/", img: "sportscho.png" },
+          { name: "스포츠서울", url: "https://www.sportsseoul.com/", img: "sportsseoul.png" },
+          { name: "일간스포츠", url: "https://isplus.com/", img: "1sports.jpg" },
+          { name: "더팩", url: "https://www.tf.co.kr/", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7tj6cMHuGS4odUl_RTstenIDDIv2nPfbaX0_8vmfsCbNDmitYrQcnBi7B&s=10" },
+        ],
+        "entNews": [
+          { name: "하퍼스바자", url: "https://www.harpersbazaar.co.kr/", img: "https://image.yes24.com/goods/103932601/XL" },
+          { name: "우먼센스", url: "https://www.womansense.co.kr/", img: "https://i.ytimg.com/vi/DTQjqK4_Ml4/hq720_2.jpg?sqp=-oaymwEiCLQEENAFSFryq4qpAxQIARUAAAAAJQAAyEI9AICiQ9ABAQ==&rs=AOn4CLBlZcELGfCcm06hnVjMfWxNO1fDZg" },
+          { name: "우먼동", url: "https://woman.donga.com/", img: "https://contents.kyobobook.co.kr/sih/fit-in/400x0/pdt/3904000558677.jpg" },
+          { name: "우먼조선", url: "https://woman.chosun.com/", img: "https://img.ridicdn.net/cover/486000697/xxlarge#1" },
+        ],
+        "catmqowpz71o63": [
+        ],
+        "catmqowqkk3zz4": [
+        ],
+        "catmqowr6dd24k": [
+        ],
+        "catmqowrr3ix0v": [
+        ],
+        "catmqowslyjvp0": [
+        ],
+        "catmqowtgt883p": [
+        ],
+        "catmqowu1iuivi": [
+        ]
+      }
+    };
+    /* @DEFAULTS_END */
+
+    /* ===== 로드/저장 (편집 데이터 우선) ===== */
+    let _distChecked = false;
+    function ensureDistFresh(){
+      if (_distChecked || !NEWS_IS_DIST) return; _distChecked = true;
+      try { var sk = NEWS_STORE_KEY + '_sig'; if (localStorage.getItem(sk) !== NEWS_DIST_SIG){ localStorage.setItem(sk, NEWS_DIST_SIG); localStorage.removeItem(NEWS_STORE_KEY); } } catch(_){}
+    }
+    function cleanBundle(b){
+      if (!b || typeof b !== 'object') return null;
+      var cats = Array.isArray(b.cats) ? b.cats : null;
+      var dat = (b.data && typeof b.data === 'object') ? b.data : null;
+      if (!cats && !dat){ /* 레거시 평면 {genNews:[...]} */ if (b.genNews || b.entNews || b.etcNews){ dat = b; } }
+      if (!cats){ var keys = dat ? Object.keys(dat) : []; cats = keys.map(function(k){ return { code:k, label:k, mode:'photo' }; }); }
+      cats = cats.map(function(c){ return { code:String(c.code||('cat'+Math.random().toString(36).slice(2,7))), label:String(c.label||c.code||''), mode:(c.mode==='frame'?'frame':'photo'), url:String(c.url||'') }; });
+      if (!cats.length) return null;
+      var out = {};
+      cats.forEach(function(c){
+        var arr = (dat && Array.isArray(dat[c.code])) ? dat[c.code] : [];
+        out[c.code] = arr.filter(function(x){ return x && !x.section; }).map(function(x){ return { name:String(x.name||''), url:String(x.url||''), img:String(x.img||'') }; });
+      });
+      return { cats:cats, data:out };
+    }
+    function loadBundle(){
+      ensureDistFresh();
+      try { var raw = localStorage.getItem(NEWS_STORE_KEY); if (raw){ var c = cleanBundle(JSON.parse(raw)); if (c) return c; } } catch(_){}
+      return cleanBundle(JSON.parse(JSON.stringify(DEFAULTS)));
+    }
+    function saveBundle(){ try { localStorage.setItem(NEWS_STORE_KEY, JSON.stringify({ cats:CATS, data:data })); } catch(_){} }
+
+    var _b = loadBundle();
+    let CATS = _b.cats;
+    let data = _b.data;
+    let currentFilter = CATS.length ? CATS[0].code : '';
+    let editRef = null;
+    let dragSrc = null;
+
+    /* ===== 유틸 ===== */
+    function ytId(url){ if(!url) return ''; var m = String(url).match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/); return m ? m[1] : ''; }
+    function ytThumb(id){ return 'https://img.youtube.com/vi/' + id + '/hqdefault.jpg'; }
+    function cardImage(item){ if (item.img && item.img.trim()) return item.img.trim(); var id = ytId(item.url); if (id) return ytThumb(id); return ''; }
+    function domainOf(url){ if(!url) return ''; try { return new URL(url).hostname.replace(/^www\./,''); } catch(e){ return String(url).replace(/^https?:\/\//i,'').replace(/^www\./,'').split('/')[0]; } }
+    function catOf(code){ return CATS.find(function(c){ return c.code === code; }); }
+    function modeOf(code){ var c = catOf(code); return (c && c.mode === 'frame') ? 'frame' : 'photo'; }
+
+    /* ===== 상단 네비 (탭) ===== */
+    function renderNav(){
+      var nav = document.getElementById('catNav');
+      Array.prototype.slice.call(nav.querySelectorAll('.cat-btn')).forEach(function(b){ b.remove(); });
+      var toggle = document.getElementById('collapseToggle');
+      CATS.forEach(function(c){
+        var b = document.createElement('button'); b.type = 'button';
+        b.className = 'cat-btn' + (c.code === currentFilter ? ' is-active' : '');
+        b.dataset.cat = c.code;
+        b.appendChild(document.createTextNode(c.label + ' '));
+        var cnt = document.createElement('span'); cnt.className = 'count'; cnt.textContent = (data[c.code] || []).length;
+        b.appendChild(cnt);
+        nav.insertBefore(b, toggle);
+      });
+    }
+    function setActiveTab(code){
+      if (!catOf(code)) code = CATS.length ? CATS[0].code : '';
+      currentFilter = code;
+      render();
+    }
+    function setupCatNav(){
+      document.getElementById('catNav').addEventListener('click', function(e){
+        var btn = e.target.closest('.cat-btn'); if (!btn) return;
+        setActiveTab(btn.dataset.cat);
+      });
+    }
+
+    /* ===== 본문 렌더 (선택 탭만) ===== */
+    function setFrameTop(){
+      var top = document.querySelector('.topbar');
+      document.documentElement.style.setProperty('--frame-top', (top ? top.offsetHeight : 0) + 'px');
+    }
+    function render(){
+      var root = document.getElementById('masonryGallery');
+      var viewer = document.getElementById('frameView');
+      var mode = modeOf(currentFilter);
+      if (mode === 'frame'){
+        document.body.classList.add('frame-active');
+        root.style.display = 'none';
+        viewer.style.display = '';
+        renderFrame();
+        setFrameTop();
+      } else {
+        document.body.classList.remove('frame-active');
+        viewer.style.display = 'none';
+        root.style.display = '';
+        var frag = document.createDocumentFragment();
+        (data[currentFilter] || []).forEach(function(item, idx){ frag.appendChild(buildCard(item, currentFilter, idx)); });
+        root.replaceChildren(frag);
+      }
+      renderNav();
+    }
+    /* iframe형 탭 = 단일 사이트: 탭의 url 을 iframe 으로 표시 */
+    function renderFrame(){
+      var wrap = document.getElementById('frameView'); wrap.innerHTML = '';
+      var c = catOf(currentFilter) || {};
+      var url = String(c.url || '');
+      var box = document.createElement('div'); box.className = 'frame-box';
+      if (url){
+        box.innerHTML = '<iframe title="사이트 뷰어" referrerpolicy="no-referrer" allow="autoplay; encrypted-media; fullscreen" allowfullscreen src="' + url.replace(/"/g,'%22') + '"></iframe>';
+        wrap.appendChild(box);
+        var open = document.createElement('a'); open.className = 'frame-open'; open.href = url; open.target = '_blank'; open.rel = 'noopener';
+        open.textContent = '↗ 새 탭에서 열기 (iframe 차단 사이트용)';
+        wrap.appendChild(open);
+      } else {
+        box.innerHTML = '<div class="frame-empty">📑 섹션편집에서 사이트 주소를 입력하면 여기에 바로 표시됩니다.</div>';
+        wrap.appendChild(box);
+      }
+    }
+    function buildCard(item, cat, idx){
+      var a = document.createElement('a'); a.className = 'card';
+      if (item.url){ a.href = item.url; a.target = '_blank'; a.rel = 'noopener'; } else { a.style.cursor = 'default'; }
+      a.setAttribute('aria-label', item.name);
+      a.draggable = true;
+      a.addEventListener('dragstart', function(e){ dragSrc = { cat:cat, idx:idx }; a.classList.add('dragging'); try { e.dataTransfer.effectAllowed='move'; e.dataTransfer.setData('text/plain', String(idx)); } catch(er){} });
+      a.addEventListener('dragend', function(){ a.classList.remove('dragging'); clearDragOver(); });
+      a.addEventListener('dragover', function(e){ if(!dragSrc || dragSrc.cat!==cat) return; e.preventDefault(); a.classList.add('drag-over'); });
+      a.addEventListener('dragleave', function(){ a.classList.remove('drag-over'); });
+      a.addEventListener('drop', function(e){ e.preventDefault(); a.classList.remove('drag-over'); if(!dragSrc || dragSrc.cat!==cat) return; moveItem(cat, dragSrc.idx, idx); dragSrc = null; });
+      var imgSrc = cardImage(item);
+      if (!imgSrc){
+        a.classList.add('site-card');
+        var body = document.createElement('div'); body.className = 'site-body';
+        var nm = document.createElement('div'); nm.className = 'site-name'; nm.textContent = item.name;
+        var dm = document.createElement('div'); dm.className = 'site-domain'; dm.textContent = domainOf(item.url);
+        body.appendChild(nm); body.appendChild(dm); a.appendChild(body);
+        attachCtrl(a, cat, idx); return a;
+      }
+      var img = document.createElement('img'); img.src = imgSrc; img.alt = item.name;
+      img.loading = 'lazy'; img.decoding = 'async'; img.referrerPolicy = 'no-referrer'; img.draggable = false;
+      a.appendChild(img);
+      var cap = document.createElement('div'); cap.className = 'cap'; cap.textContent = item.name; a.appendChild(cap);
+      attachCtrl(a, cat, idx); return a;
+    }
+    function attachCtrl(a, cat, idx){
+      if (!NEWS_SHOW_EDIT) return;
+      var ctrl = document.createElement('div'); ctrl.className = 'card-ctrl';
+      var mk = function(t, fn, cls){ var b = document.createElement('button'); b.type='button'; b.textContent=t; if(cls)b.className=cls; b.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); fn(); }); return b; };
+      ctrl.appendChild(mk('◀', function(){ moveItemDir(cat, idx, -1); }));
+      ctrl.appendChild(mk('✏', function(){ openEditModal(cat, idx); }));
+      ctrl.appendChild(mk('✕', function(){ deleteAt(cat, idx); }, 'del'));
+      ctrl.appendChild(mk('▶', function(){ moveItemDir(cat, idx, 1); }));
+      a.appendChild(ctrl);
+      a.addEventListener('click', function(e){ if (document.body.classList.contains('editing')) e.preventDefault(); }, true);
+    }
+    function moveItemDir(cat, idx, dir){ var arr = data[cat]; var ni = idx + dir; if (ni<0 || ni>=arr.length) return; var t = arr[idx]; arr[idx]=arr[ni]; arr[ni]=t; saveBundle(); render(); }
+    function deleteAt(cat, idx){ var it = data[cat][idx]; if (!confirm('"' + (it.name||'') + '" 항목을 삭제할까요?')) return; data[cat].splice(idx, 1); saveBundle(); render(); }
+    function clearDragOver(){ document.querySelectorAll('.card.drag-over').forEach(function(el){ el.classList.remove('drag-over'); }); }
+    function moveItem(cat, from, to){ if (from===to) return; var arr = data[cat]; var mv = arr.splice(from,1)[0]; arr.splice(from<to?to-1:to, 0, mv); saveBundle(); render(); }
+
+    /* ===== 항목 추가/수정 모달 ===== */
+    function fillCatSelect(sel){
+      var s = document.getElementById('inCat'); s.innerHTML = '';
+      CATS.filter(function(c){ return c.mode !== 'frame'; }).forEach(function(c){ var o = document.createElement('option'); o.value = c.code; o.textContent = c.label; s.appendChild(o); });
+      s.value = sel || (modeOf(currentFilter) !== 'frame' ? currentFilter : (s.options[0] ? s.options[0].value : ''));
+    }
+    function refreshUrlLabel(){ document.getElementById('lblUrl').textContent = '기사 / 사이트 주소'; document.getElementById('inUrl').placeholder = '예) https://news.naver.com/...'; document.getElementById('lblImg').textContent = '사진(썸네일) 주소'; }
+    function fillModal(item, cat){ fillCatSelect(cat); document.getElementById('inName').value = item ? item.name : ''; document.getElementById('inUrl').value = item ? item.url : ''; document.getElementById('inImg').value = item ? (item.img||'') : ''; refreshUrlLabel(); }
+    function openAddModal(){ var _pt = CATS.filter(function(c){ return c.mode !== 'frame'; }); if (!_pt.length){ alert('사진형 탭이 없어요. 먼저 사진형 탭을 만들어 주세요.'); return; } editRef = null; document.getElementById('modalTitle').textContent = '즐겨찾기 추가'; document.getElementById('addSubmit').textContent = '등록'; document.getElementById('delBtn').style.display = 'none'; fillModal(null, modeOf(currentFilter) !== 'frame' ? currentFilter : _pt[0].code); document.getElementById('addModal').classList.add('open'); setTimeout(function(){ document.getElementById('inName').focus(); }, 50); }
+    function openEditModal(cat, idx){ editRef = { cat:cat, idx:idx }; document.getElementById('modalTitle').textContent = '즐겨찾기 수정'; document.getElementById('addSubmit').textContent = '저장'; document.getElementById('delBtn').style.display = ''; fillModal(data[cat][idx], cat); document.getElementById('addModal').classList.add('open'); }
+    function closeAddModal(){ document.getElementById('addModal').classList.remove('open'); editRef = null; }
+    function normalizeUrl(u){ u = (u||'').trim(); if (!u) return ''; if (!/^https?:\/\//i.test(u)) u = 'https://' + u; return u; }
+    function submitModal(){
+      var name = document.getElementById('inName').value.trim();
+      var url = normalizeUrl(document.getElementById('inUrl').value);
+      var img = document.getElementById('inImg').value.trim();
+      var cat = document.getElementById('inCat').value;
+      if (!name){ alert('텍스트(이름)를 입력하세요.'); return; }
+      if (!url){ alert('주소를 입력하세요.'); return; }
+      var rec = { name:name, url:url, img:img };
+      if (editRef){ if (editRef.cat === cat){ data[cat][editRef.idx] = rec; } else { data[editRef.cat].splice(editRef.idx,1); data[cat].push(rec); } }
+      else { data[cat].push(rec); }
+      saveBundle(); closeAddModal(); setActiveTab(cat);
+    }
+    function deleteCurrent(){ if (!editRef) return; var item = data[editRef.cat][editRef.idx]; if (confirm('"' + item.name + '" 항목을 삭제할까요?')){ data[editRef.cat].splice(editRef.idx,1); saveBundle(); closeAddModal(); render(); } }
+
+    /* ===== 섹션(탭) 추가 ===== */
+    function openTabAdd(){ document.getElementById('tabName').value = ''; document.getElementById('tabMode').value = 'photo'; document.getElementById('tabUrl').value = ''; document.getElementById('tabUrlField').style.display = 'none'; document.getElementById('tabModal').classList.add('open'); setTimeout(function(){ document.getElementById('tabName').focus(); }, 50); }
+    function closeTabModal(){ document.getElementById('tabModal').classList.remove('open'); }
+    function genCode(){ return 'cat' + Date.now().toString(36) + Math.random().toString(36).slice(2,5); }
+    function submitTabAdd(){
+      var name = document.getElementById('tabName').value.trim();
+      if (!name){ alert('탭 이름을 입력하세요.'); return; }
+      var mode = document.getElementById('tabMode').value === 'frame' ? 'frame' : 'photo';
+      var url = (mode === 'frame') ? normalizeUrl(document.getElementById('tabUrl').value) : '';
+      if (mode === 'frame' && !url){ alert('iframe형 탭은 사이트 주소를 입력하세요.'); return; }
+      var code = genCode();
+      CATS.push({ code:code, label:name, mode:mode, url:url }); data[code] = [];
+      saveBundle(); closeTabModal(); setActiveTab(code);
+    }
+
+    /* ===== 섹션(탭) 편집 ===== */
+    function openTabMgr(){ renderTabList(); document.getElementById('tabMgrModal').classList.add('open'); }
+    function closeTabMgr(){ document.getElementById('tabMgrModal').classList.remove('open'); }
+    function renderTabList(){
+      var list = document.getElementById('tabList'); list.innerHTML = '';
+      var mk = function(t, fn, cls, title){ var b = document.createElement('button'); b.type='button'; b.textContent=t; if(cls)b.className=cls; if(title)b.title=title; b.addEventListener('click', fn); return b; };
+      CATS.forEach(function(c, i){
+        var row = document.createElement('div'); row.className = 'tab-row';
+        row.appendChild(mk('▲', function(){ moveTab(i, -1); }, '', '위로'));
+        row.appendChild(mk('▼', function(){ moveTab(i, 1); }, '', '아래로'));
+        var nmIn = document.createElement('input'); nmIn.type = 'text'; nmIn.className = 'tab-name-in'; nmIn.value = c.label;
+        nmIn.addEventListener('change', function(){ CATS[i].label = nmIn.value.trim() || CATS[i].label; nmIn.value = CATS[i].label; saveBundle(); renderNav(); });
+        row.appendChild(nmIn);
+        var sel = document.createElement('select'); sel.className = 'tab-mode-in';
+        [['photo','사진형'],['frame','iframe형']].forEach(function(o){ var op = document.createElement('option'); op.value = o[0]; op.textContent = o[1]; if (c.mode === o[0]) op.selected = true; sel.appendChild(op); });
+        sel.addEventListener('change', function(){ CATS[i].mode = (sel.value === 'frame' ? 'frame' : 'photo'); saveBundle(); renderTabList(); if (CATS[i].code === currentFilter) render(); else renderNav(); });
+        row.appendChild(sel);
+        row.appendChild(mk('✕', function(){ delTab(i); }, 'del', '삭제'));
+        if (c.mode === 'frame'){
+          var urlIn = document.createElement('input'); urlIn.type = 'text'; urlIn.className = 'tab-url-in'; urlIn.value = c.url || ''; urlIn.placeholder = '사이트 주소 (예: https://chzzk.naver.com)';
+          urlIn.addEventListener('change', function(){ CATS[i].url = normalizeUrl(urlIn.value); urlIn.value = CATS[i].url; saveBundle(); if (CATS[i].code === currentFilter) render(); });
+          row.appendChild(urlIn);
+        }
+        list.appendChild(row);
+      });
+    }
+    function moveTab(i, dir){ var ni = i + dir; if (ni<0 || ni>=CATS.length) return; var t = CATS[i]; CATS[i]=CATS[ni]; CATS[ni]=t; saveBundle(); renderTabList(); renderNav(); }
+    function delTab(i){
+      if (CATS.length <= 1){ alert('마지막 탭은 삭제할 수 없어요.'); return; }
+      var c = CATS[i]; if (!confirm('"' + c.label + '" 탭을 삭제할까요?\n항목 ' + (data[c.code]||[]).length + '개도 함께 삭제됩니다.')) return;
+      CATS.splice(i, 1); delete data[c.code];
+      if (currentFilter === c.code) currentFilter = CATS[0].code;
+      saveBundle(); renderTabList(); setActiveTab(currentFilter);
+    }
+
+    /* ===== 편집 툴바 (＋ 버튼 → 메뉴) ===== */
+    let editMode = false;
+    let toolOpen = false;
+    function closeTool(){ toolOpen = false; var m = document.querySelector('.tool-menu'); if (m) m.classList.remove('open'); var f = document.querySelector('.tool-fab'); if (f) f.classList.remove('open'); }
+    function buildToolbar(){
+      if (!NEWS_SHOW_EDIT) return;
+      document.body.classList.add('show-edit');
+      var tb = document.getElementById('editToolbar'); tb.innerHTML = '';
+      var fab = document.createElement('button'); fab.type = 'button'; fab.className = 'tool-fab' + (toolOpen ? ' open' : '') + (editMode ? ' editing' : ''); fab.title = '편집 도구';
+      fab.innerHTML = toolOpen
+        ? '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>'
+        : '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>';
+      var menu = document.createElement('div'); menu.className = 'tool-menu' + (toolOpen ? ' open' : '');
+      var mk = function(label, fn, cls){ var b = document.createElement('button'); b.type='button'; b.className = 'tb-btn' + (cls ? ' ' + cls : ''); b.textContent = label; b.addEventListener('click', function(e){ e.stopPropagation(); fn(); }); return b; };
+      menu.appendChild(mk(editMode ? '✏ 편집 끝' : '✏ 편집', function(){ editMode = !editMode; document.body.classList.toggle('editing', editMode); buildToolbar(); }, editMode ? 'on' : ''));
+      menu.appendChild(mk('＋ 항목추가', function(){ openAddModal(); closeTool(); }));
+      menu.appendChild(mk('＋ 섹션추가', function(){ openTabAdd(); closeTool(); }));
+      menu.appendChild(mk('📑 섹션편집', function(){ openTabMgr(); closeTool(); }));
+      menu.appendChild(mk('📥 가져오기', function(){ importData(); closeTool(); }));
+      menu.appendChild(mk('📤 내보내기', function(){ exportData(); closeTool(); }));
+      if (!NEWS_IS_DIST) menu.appendChild(mk('</> 코드', function(){ openCodeModal(); closeTool(); }, 'code'));
+      fab.addEventListener('click', function(e){ e.stopPropagation(); toolOpen = !toolOpen; buildToolbar(); });
+      tb.appendChild(fab); tb.appendChild(menu);
+    }
+
+    /* ===== 내보내기 / 가져오기 ===== */
+    function exportData(){ var payload = { type:'myway-news', cats:CATS, data:data }; var blob = new Blob([JSON.stringify(payload,null,2)], { type:'application/json' }); var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'myway-news.json'; a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500); }
+    function importData(){
+      var inp = document.createElement('input'); inp.type = 'file'; inp.accept = '.json,.html,.htm,text/html,application/json';
+      inp.onchange = function(){
+        var f = inp.files[0]; if (!f) return; var r = new FileReader();
+        r.onload = function(){
+          var nb = null; var txt = String(r.result);
+          try { var p = JSON.parse(txt); if (p && typeof p === 'object') nb = cleanBundle(p); } catch(_){}
+          if (!nb){ var mm = txt.match(/@DEFAULTS_START\s*\*\/\s*const\s+DEFAULTS\s*=\s*(\{[\s\S]*\})\s*;\s*\/\*\s*@DEFAULTS_END/); if (mm){ try { nb = cleanBundle(eval('(' + mm[1] + ')')); } catch(_){} } }
+          if (!nb){ alert('읽을 수 있는 데이터가 없어요.'); return; }
+          CATS = nb.cats; data = nb.data; currentFilter = CATS.length ? CATS[0].code : ''; saveBundle(); setActiveTab(currentFilter);
+          var total = CATS.reduce(function(s, c){ return s + (data[c.code]||[]).length; }, 0);
+          alert('가져왔어요. 탭 ' + CATS.length + '개 · 항목 ' + total + '개');
+        };
+        r.readAsText(f);
+      };
+      inp.click();
+    }
+
+    /* ===== 코드 / 파일 저장 ===== */
+    var codeModal = document.getElementById('codeModal');
+    function openCodeModal(){ codeModal.classList.add('open'); }
+    function closeCodeModal(){ codeModal.classList.remove('open'); }
+    function serializeBundle(b){
+      var out = '{\n      cats: [\n';
+      b.cats.forEach(function(c){ out += '        { code: ' + JSON.stringify(c.code) + ', label: ' + JSON.stringify(c.label) + ', mode: ' + JSON.stringify(c.mode === 'frame' ? 'frame' : 'photo') + ', url: ' + JSON.stringify(c.url || '') + ' },\n'; });
+      out += '      ],\n      data: {\n';
+      b.cats.forEach(function(c, ci){
+        out += '        ' + JSON.stringify(c.code) + ': [\n';
+        (b.data[c.code]||[]).forEach(function(it){ out += '          { name: ' + JSON.stringify(it.name) + ', url: ' + JSON.stringify(it.url) + ', img: ' + JSON.stringify(it.img) + ' },\n'; });
+        out += '        ]' + (ci < b.cats.length-1 ? ',' : '') + '\n';
+      });
+      out += '      }\n    }';
+      return out;
+    }
+    function buildHTML(cfg){
+      var clone = document.documentElement.cloneNode(true);
+      clone.removeAttribute('style');
+      var g = clone.querySelector('#masonryGallery'); if (g){ g.innerHTML = ''; g.className = 'masonry'; g.dataset.filter = ''; g.style.display = ''; }
+      var fv = clone.querySelector('#frameView'); if (fv){ fv.innerHTML = ''; fv.style.display = 'none'; }
+      var nv = clone.querySelector('#catNav'); if (nv){ Array.prototype.slice.call(nv.querySelectorAll('.cat-btn')).forEach(function(b){ b.remove(); }); }
+      var tbar = clone.querySelector('#editToolbar'); if (tbar) tbar.innerHTML = '';
+      var ta = clone.querySelector('#codeArea'); if (ta) ta.value = '';
+      var ft = clone.querySelector('#fullToggle'); if (ft) { ft.innerHTML = ''; ft.className = 'full-fab'; ft.removeAttribute('style'); }
+      clone.querySelectorAll('.modal-overlay.open').forEach(function(m){ m.classList.remove('open'); });
+      var tl = clone.querySelector('#tabList'); if (tl) tl.innerHTML = '';
+      var bd = clone.querySelector('body'); if (bd) bd.className = '';
+      var html = '<!DOCTYPE html>\n' + clone.outerHTML;
+      html = html.replace(/\/\* @DEFAULTS_START \*\/[\s\S]*?\/\* @DEFAULTS_END \*\//, '/* @DEFAULTS_START */\n    const DEFAULTS = ' + serializeBundle({ cats:CATS, data:data }) + ';\n    /* @DEFAULTS_END */');
+      html = html.replace(/\/\* @CONFIG \*\/[\s\S]*?\/\* @CONFIG_END \*\//, '/* @CONFIG */\n    const NEWS_IS_DIST = ' + cfg.dist + ';\n    const NEWS_SHOW_EDIT = ' + cfg.edit + ';\n    const NEWS_COPY_PROTECT = ' + cfg.prot + ';\n    const NEWS_STORE_KEY = ' + JSON.stringify(cfg.key) + ';\n    const NEWS_DIST_SIG = ' + JSON.stringify(cfg.sig) + ';\n    /* @CONFIG_END */');
+      return html;
+    }
+    function dl(name, html){ var blob = new Blob([html], { type:'text/html' }); var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500); }
+
+    /* ===== 바인딩 ===== */
+    document.getElementById('addSubmit').addEventListener('click', submitModal);
+    document.getElementById('addCancel').addEventListener('click', closeAddModal);
+    document.getElementById('delBtn').addEventListener('click', deleteCurrent);
+    document.getElementById('inCat').addEventListener('change', refreshUrlLabel);
+    document.getElementById('addModal').addEventListener('click', function(e){ if (e.target.id === 'addModal') closeAddModal(); });
+    document.getElementById('tabMode').addEventListener('change', function(){ document.getElementById('tabUrlField').style.display = (this.value === 'frame') ? 'block' : 'none'; });
+    document.getElementById('tabSubmit').addEventListener('click', submitTabAdd);
+    document.getElementById('tabCancel').addEventListener('click', closeTabModal);
+    document.getElementById('tabModal').addEventListener('click', function(e){ if (e.target.id === 'tabModal') closeTabModal(); });
+    document.getElementById('tabMgrClose').addEventListener('click', closeTabMgr);
+    document.getElementById('tabMgrAdd').addEventListener('click', function(){ closeTabMgr(); openTabAdd(); });
+    document.getElementById('tabMgrModal').addEventListener('click', function(e){ if (e.target.id === 'tabMgrModal') closeTabMgr(); });
+    document.getElementById('codeClose').addEventListener('click', closeCodeModal);
+    document.getElementById('codeModal').addEventListener('click', function(e){ if (e.target.id === 'codeModal') closeCodeModal(); });
+    document.getElementById('saveEdit').addEventListener('click', function(){ dl('news-edit.html', buildHTML({ dist:true, edit:true, prot:false, key:'mywayNewsEditV1', sig:'sig'+Date.now() })); closeCodeModal(); });
+    document.getElementById('saveView').addEventListener('click', function(){ dl('news.html', buildHTML({ dist:false, edit:false, prot:true, key:'mywayNewsV1', sig:'' })); closeCodeModal(); });
+    document.getElementById('copyCode').addEventListener('click', function(){ var code = 'const DEFAULTS = ' + serializeBundle({ cats:CATS, data:data }) + ';'; var ta = document.getElementById('codeArea'); ta.value = code; ta.style.pointerEvents = 'auto'; ta.select(); ta.setSelectionRange(0, code.length); var ok = false; try { ok = document.execCommand('copy'); } catch(_){} if (navigator.clipboard){ navigator.clipboard.writeText(code).then(function(){},function(){}); ok = true; } ta.style.pointerEvents = 'none'; alert(ok ? '데이터 코드를 복사했어요.' : '복사 실패 — 수동으로 복사해 주세요.'); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape'){ closeAddModal(); closeTabModal(); closeTabMgr(); closeCodeModal(); closeTool(); } });
+    document.addEventListener('click', function(e){ if (toolOpen && !e.target.closest('.edit-toolbar')) closeTool(); });
+
+    setupCatNav();
+    window.addEventListener('resize', function(){ if (document.body.classList.contains('frame-active')) setFrameTop(); });
+    setActiveTab(currentFilter);
+    buildToolbar();
+
+    })(); /* ===== news 전용 스코프 끝 ===== */
+
+    /* ===== iframe 임베드 시 부모에게 높이 알림 (잘림 방지) =====
+       부모(indexmain7)가 'favHeightHome' 메시지를 받아 iframe 높이를 맞춥니다. */
+    (function(){
+      if (window.parent === window) return;   /* 단독 페이지로 열렸으면 동작 안 함 */
+      /* iframe 안에서는 100vh 높이 강제를 풀어, 내용 높이만큼만 차지하도록 함
+         (이게 있으면 iframe 높이가 한 번 커진 뒤 줄지 않아 하단에 빈 공간이 길게 남음) */
+      document.documentElement.style.minHeight = '0';
+      document.body.style.minHeight = '0';
+      /* 부모(indexmain7)에 이미 푸터·홈버튼이 있으므로, iframe 안의 것은 숨겨 중복 방지 */
+      var _footer = document.querySelector('.myway-footer');
+      if (_footer) _footer.style.display = 'none';
+      function reportHeight() {
+        if (window.__newsFull) return;   /* 전체화면 중에는 높이 보고 안 함 */
+        try {
+          var h = Math.max(
+            document.body ? document.body.scrollHeight : 0,
+            document.body ? document.body.offsetHeight : 0
+          );
+          window.parent.postMessage({ type: 'favHeightHome', height: h }, '*');
+        } catch (e) {}
+      }
+      window.addEventListener('load', reportHeight);
+      window.addEventListener('resize', reportHeight);
+      document.addEventListener('DOMContentLoaded', reportHeight);
+      /* 카테고리 탭 전환·이미지 지연 로드로 높이가 바뀌는 경우 대응 */
+      document.addEventListener('click', function (e) {
+        if (e.target.closest && e.target.closest('.cat-btn')) setTimeout(reportHeight, 60);
+      });
+      /* 접기 / 펼치기 토글 */
+      var _collapseToggle = document.getElementById('collapseToggle');
+      if (_collapseToggle) {
+        _collapseToggle.addEventListener('click', function () {
+          var collapsed = document.body.classList.toggle('is-collapsed');
+          _collapseToggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+          reportHeight();
+          setTimeout(reportHeight, 60);
+          setTimeout(reportHeight, 350);
+        });
+      }
+      window.addEventListener('load', function () {
+        document.querySelectorAll('img').forEach(function (img) {
+          if (!img.complete) img.addEventListener('load', reportHeight);
+        });
+      });
+      setTimeout(reportHeight, 300);
+      setTimeout(reportHeight, 1000);
+      setInterval(reportHeight, 1000);
+    })();
+
+    /* ===== 모바일: iframe 안에서 열릴 때 링크를 최상위 창에서 직접 열어
+       뒤로가기로 MYWAY 복귀 가능하게. PC·태블릿은 새 탭 유지. ===== */
+    (function(){
+      if (!/Mobi/i.test(navigator.userAgent)) return;
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest ? e.target.closest('a[href]') : null;
+        if (!a) return;
+        var href = a.getAttribute('href') || '';
+        if (!href || href.charAt(0) === '#' || /^javascript:/i.test(href)) return;
+        e.preventDefault();
+        try { (window.top || window).location.href = a.href; }
+        catch (_) { window.open(a.href, '_blank'); }
+      }, true);
+      var _open = window.open.bind(window);
+      window.open = function (url, name, feat) {
+        if (url) { try { (window.top || window).location.href = url; } catch (_) { location.href = url; } return null; }
+        return _open(url, name, feat);
+      };
+    })();
+
+    /* ===== 전체화면 토글 (단독=브라우저 전체화면 / iframe=부모 프레임 확대) ===== */
+    (function(){
+      var btn = document.getElementById('fullToggle');
+      if (!btn) return;
+      var ICON_MAX = '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>';
+      var ICON_MIN = '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3M21 8h-3a2 2 0 0 1-2-2V3M3 16h3a2 2 0 0 1 2 2v3M16 21v-3a2 2 0 0 1 2-2h3"/></svg>';
+      var FULL_STYLE = 'position:fixed!important;top:0!important;left:0!important;right:0!important;bottom:0!important;width:100vw!important;width:100dvw!important;height:100vh!important;height:100dvh!important;max-width:none!important;max-height:none!important;min-height:0!important;z-index:2147483647!important;border:0!important;margin:0!important;padding:0!important;border-radius:0!important;display:block!important;';
+      var on = false;
+      function setIcon(){ btn.innerHTML = on ? ICON_MIN : ICON_MAX; btn.title = on ? '원래 크기로' : '전체화면으로 보기'; }
+      setIcon();
+      function parentBody(){ try { return window.parent.document.body; } catch (_) { return null; } }
+      function goFull(fe){
+        fe.setAttribute('data-prevstyle', fe.getAttribute('style') || '');
+        fe.setAttribute('style', FULL_STYLE);
+        window.__newsFull = true;
+        var pb = parentBody(); if (pb){ pb.setAttribute('data-prevof', pb.style.overflow || ''); pb.style.overflow = 'hidden'; try { window.parent.scrollTo(0,0); } catch(_){} }
+      }
+      function exitFull(fe){
+        fe.setAttribute('style', fe.getAttribute('data-prevstyle') || ''); fe.removeAttribute('data-prevstyle');
+        window.__newsFull = false;
+        var pb = parentBody(); if (pb){ pb.style.overflow = pb.getAttribute('data-prevof') || ''; pb.removeAttribute('data-prevof'); }
+        try { window.dispatchEvent(new Event('resize')); } catch(_){}
+      }
+      function fsElNow(){ return document.fullscreenElement || document.webkitFullscreenElement || null; }
+      btn.addEventListener('click', function(){
+        if (on) {
+          /* 나가기 */
+          if (fsElNow()) { try { (document.exitFullscreen || document.webkitExitFullscreen || function(){}).call(document); } catch (_) {} }
+          else { var fe0 = null; try { fe0 = window.frameElement; } catch (_) {} if (fe0) { try { exitFull(fe0); } catch (_) {} } }
+          on = false; setIcon(); return;
+        }
+        /* 들어가기 — Fullscreen API 우선.
+           부모 iframe에 allowfullscreen 이 있으면 부모의 transform 컨테이너와 무관하게
+           진짜 전체화면이 됩니다. (frameElement 직접 확대는 transform 조상에 갇혀 실패) */
+        var el = document.documentElement;
+        var req = el.requestFullscreen || el.webkitRequestFullscreen;
+        if (req) {
+          try {
+            var p = req.call(el);
+            on = true; setIcon();
+            if (p && p.catch) p.catch(function(){
+              /* Fullscreen 실패(allowfullscreen 없음 등) → frameElement 직접 확대로 대체 */
+              on = false; var fe1 = null; try { fe1 = window.frameElement; } catch (_) {}
+              if (fe1) { try { goFull(fe1); on = true; setIcon(); } catch (_) {} }
+            });
+            return;
+          } catch (_) {}
+        }
+        /* requestFullscreen 미지원 → frameElement 직접 확대 */
+        var fe2 = null; try { fe2 = window.frameElement; } catch (_) {}
+        if (fe2) { try { goFull(fe2); on = true; setIcon(); } catch (_) {} }
+      });
+      function onFsChange(){ if (!fsElNow() && on) { on = false; setIcon(); } }
+      document.addEventListener('fullscreenchange', onFsChange);
+      document.addEventListener('webkitfullscreenchange', onFsChange);
+    })();
+  </script>
+
+
+</body></html>
