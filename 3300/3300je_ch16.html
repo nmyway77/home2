@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<!--
+========================================================================
+  ANSWER-KEY WORKBOOK · MASTER HTML TEMPLATE
+  목동서로영어학원 · Mokdong Seoro English Academy · 0505.co.kr
+========================================================================
+  사용법:
+    1. 이 파일 통째로 복사
+    2. 고교 3300제 · 제16장 법 · 상세풀이집, {{HEADER_*}} 등의 플레이스홀더를 시험 정보로 채움
+    3. <main><div class="container"> 안에 정답표 + 문항들 삽입
+    4. 각 문항은 10_ANSWERKEY_QUESTION_PATTERNS.md의 스니펫 사용
+
+  통합 CSS:
+    - 모의고사용 클래스 (.dialogue, .price-table, .chart-box, .info-box, .picture-box)
+    - 학교 내신용 클래스 (.spec-box, .cond-box, .compare-table, .matrix-table, .seodap-header)
+    - 양쪽 공통 (.q-card, .passage, .q-choices, details.ans 등)
+
+  변경 절대 금지:
+    - 색상 변수 (--navy-950, --gold, --cream)
+    - 폰트 패밀리 (Pretendard, Playfair Display)
+    - .home-btn 위치/스타일
+    - footer 학원 명기
+========================================================================
+-->
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>고교 3300제 · 제16장 법 · 상세풀이집</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+<style>
+/* ========== 색상·폰트 변수 (변경 금지) ========== */
+:root{
+  --cream:#FAF6EE;--cream-dark:#F0E9D8;--warm-white:#FEFBF5;
+  --navy-950:#0A1E3A;--navy-900:#112546;--navy-700:#2C3E63;
+  --gold:#C99B4E;--gold-light:#E4C589;
+  --slate-700:#334155;--slate-600:#475569;--slate-500:#64748B;--slate-400:#94A3B8;
+  --slate-300:#CBD5E1;--slate-200:#E2E8F0;--slate-100:#F1F5F9;--slate-50:#F8FAFC;
+  --emerald-700:#047857;--emerald-600:#059669;--emerald-50:#ECFDF5;
+  --rose-600:#DC2626;--rose-50:#FEF2F2;
+  --amber-600:#D97706;--amber-50:#FEF3C7;
+  --indigo-600:#4F46E5;--indigo-50:#EEF2FF;
+  --purple-700:#7E22CE;--purple-50:#FAF5FF;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--slate-700);font-family:'Pretendard Variable',-apple-system,sans-serif;font-size:15px;line-height:1.65;letter-spacing:-0.005em}
+.container{max-width:920px;margin:0 auto;padding:0 32px}
+
+/* ========== Home Button (우상단 고정, 변경 금지) ========== */
+.home-btn{position:fixed;top:20px;right:20px;z-index:999;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;background:var(--gold);color:var(--navy-950);text-decoration:none;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;box-shadow:0 4px 14px rgba(10,30,58,0.25);transition:all 0.2s;border:2px solid var(--navy-950)}
+.home-btn:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 6px 20px rgba(10,30,58,0.35)}
+.home-btn svg{width:14px;height:14px;fill:currentColor}
+@media(max-width:720px){.home-btn{top:12px;right:12px;padding:10px 12px}.home-btn .label{display:none}}
+@media print{.home-btn{display:none}}
+
+/* ========== Header (책 표지) ========== */
+header.top{background:var(--navy-950);color:var(--cream);padding:48px 0 56px;position:relative;overflow:hidden;border-bottom:4px solid var(--gold)}
+header.top::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,var(--gold) 50%,transparent 100%)}
+.brand-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;padding-bottom:22px;border-bottom:1px solid rgba(228,197,137,0.2)}
+.brand{font-family:'Playfair Display',serif;font-style:italic;font-weight:500;font-size:15px;color:var(--gold-light);letter-spacing:0.02em}
+.brand b{font-weight:700;color:var(--gold);margin-left:6px}
+.brand .kor{display:block;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:12px;color:var(--slate-300);letter-spacing:0.14em;margin-top:3px;font-weight:500}
+.vol-tag{font-family:'Playfair Display',serif;font-size:12px;font-weight:700;letter-spacing:0.24em;color:var(--gold);text-transform:uppercase}
+.book-title{font-family:'Playfair Display',serif;font-weight:900;font-style:italic;font-size:clamp(28px,5vw,46px);letter-spacing:-0.02em;color:var(--cream);line-height:1.1;margin-bottom:10px}
+.book-title em{font-style:italic;color:var(--gold);font-weight:700}
+.book-subtitle{font-weight:500;font-size:16px;color:#D3CABA;letter-spacing:-0.01em;margin-bottom:24px;line-height:1.5}
+.meta-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0;padding-top:22px;border-top:1px solid rgba(228,197,137,0.2)}
+.meta-item{padding:0 20px;border-right:1px solid rgba(228,197,137,0.15)}
+.meta-item:first-child{padding-left:0}
+.meta-item:last-child{border-right:none;padding-right:0}
+.meta-lbl{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:6px}
+.meta-val{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--cream);letter-spacing:-0.01em}
+.meta-val .u{font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:13px;color:var(--slate-300);margin-left:4px;font-weight:500}
+
+/* ========== Main Layout ========== */
+main{padding:48px 0 80px}
+.section-divider{text-align:center;margin:56px 0 36px;position:relative}
+.section-divider::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:var(--slate-300)}
+.section-divider span{position:relative;background:var(--cream);padding:0 28px;font-family:'Playfair Display',serif;font-style:italic;font-size:20px;font-weight:700;color:var(--navy-950);letter-spacing:-0.01em}
+.section-divider span .kor{display:block;font-style:normal;font-family:'Pretendard Variable',sans-serif;font-size:11px;letter-spacing:0.14em;color:var(--slate-500);text-transform:uppercase;font-weight:700;margin-top:4px}
+
+/* ========== Question Card ========== */
+.q-card{background:var(--warm-white);border:1px solid var(--slate-200);padding:clamp(24px,3vw,36px);margin-bottom:28px;box-shadow:0 1px 0 rgba(10,30,58,0.03)}
+.q-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--slate-200)}
+.q-num{font-family:'Playfair Display',serif;font-weight:800;font-style:italic;font-size:24px;color:var(--navy-950);letter-spacing:-0.02em;padding-right:14px;border-right:2px solid var(--slate-200)}
+.q-type{font-size:11px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;padding:5px 11px;border-radius:2px}
+/* Type colors per category */
+.q-type.listen{background:var(--indigo-600);color:#E0E7FF}
+.q-type.choice{background:var(--slate-700);color:var(--gold-light)}
+.q-type.gram{background:#7C3AED;color:#EDE9FE}
+.q-type.vocab{background:#0891B2;color:#ECFEFF}
+.q-type.blank{background:var(--navy-950);color:var(--gold-light)}
+.q-type.order{background:#059669;color:#D1FAE5}
+.q-type.insert{background:#D97706;color:#FEF3C7}
+.q-type.long{background:#BE123C;color:#FFE4E6}
+.q-type.theme{background:#BE123C;color:#FFE4E6}
+.q-type.seodap{background:#7C2D12;color:#FED7AA}
+.q-pts{font-size:11px;font-weight:700;color:var(--slate-500);padding:4px 10px;background:var(--slate-50);border:1px solid var(--slate-200);border-radius:999px;margin-left:auto;letter-spacing:0.04em}
+.q-prompt{font-size:15.5px;font-weight:700;color:var(--navy-950);margin-bottom:18px;line-height:1.6;letter-spacing:-0.01em}
+.q-prompt b{color:var(--rose-600);font-weight:800}
+
+/* ========== Passage (영어 지문) ========== */
+.passage{font-family:'Playfair Display',serif;font-size:14.5px;line-height:1.95;color:var(--slate-700);padding:22px 26px;background:var(--cream);border-left:3px solid var(--slate-400);margin-bottom:18px;border-radius:0 3px 3px 0}
+.passage.insert-box{border-left:3px solid var(--gold);background:#FFF8E1;margin-bottom:14px}
+.passage .label{display:block;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:11px;font-weight:800;letter-spacing:0.15em;color:var(--navy-900);margin-bottom:8px;text-transform:uppercase}
+.passage mark{background:#FFF3C4;padding:1px 4px;font-style:normal;font-weight:600;font-family:'Pretendard Variable',sans-serif;font-size:13.5px;color:var(--navy-900)}
+.passage mark.diff{background:#FECACA;border-bottom:2px solid var(--rose-600);color:var(--rose-600)}
+.passage mark.key{background:rgba(201,155,78,0.18);border-bottom:2px solid var(--gold)}
+.passage mark.under{background:transparent;border-bottom:1.5px solid var(--navy-900);color:var(--navy-950);font-weight:600;padding:0 2px}
+.passage mark.undbox{background:transparent;border:1px dashed var(--navy-700);color:var(--navy-950);font-weight:600;padding:1px 6px}
+.passage .blank-inline{display:inline-block;min-width:90px;border-bottom:1.5px solid var(--slate-500);padding:0 10px;margin:0 3px;font-weight:700;color:var(--navy-950)}
+.passage .blank-box{display:inline-block;padding:2px 10px;background:var(--navy-950);color:var(--gold-light);font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:12px;font-weight:800;margin:0 3px;border-radius:2px;letter-spacing:0.08em;vertical-align:baseline}
+.passage .circle-num{display:inline-block;width:18px;height:18px;border-radius:50%;background:var(--navy-950);color:var(--gold-light);font-family:'Pretendard Variable',sans-serif;font-size:11px;font-weight:800;text-align:center;line-height:18px;font-style:normal;margin:0 2px;vertical-align:baseline}
+.passage .label-num{display:inline-block;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-weight:800;color:var(--navy-900);margin-right:4px}
+
+/* ========== Passage Pair (A/B 병렬 지문) ========== */
+.passage-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+@media(max-width:720px){.passage-pair{grid-template-columns:1fr}}
+.passage-pair .passage{margin-bottom:0}
+
+/* ========== Dialogue (듣기 대본) ========== */
+.dialogue{font-family:'Playfair Display',serif;font-size:14px;line-height:1.9;color:var(--slate-700);padding:20px 24px;background:var(--indigo-50);border-left:3px solid var(--indigo-600);margin-bottom:16px;border-radius:0 3px 3px 0}
+.dialogue .label{font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:11px;font-weight:800;letter-spacing:0.15em;color:var(--indigo-600);margin-bottom:10px;display:block;text-transform:uppercase}
+.dialogue .speaker{font-weight:700;font-style:normal;color:var(--indigo-600);font-family:'Pretendard Variable',sans-serif;display:inline-block;min-width:24px}
+.dialogue p{margin:6px 0}
+
+/* ========== Q10용 가격 표 ========== */
+.price-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px;font-family:'Pretendard Variable',sans-serif}
+.price-table caption{font-weight:700;color:var(--navy-950);padding:6px;text-align:center;font-size:13px;background:var(--slate-100);border:1px solid var(--slate-300)}
+.price-table th{background:var(--navy-950);color:var(--gold-light);padding:7px 10px;font-weight:700;letter-spacing:0.06em;text-align:center;font-size:12px}
+.price-table td{padding:6px 10px;text-align:center;border:1px solid var(--slate-300);background:white}
+.price-table td:first-child{text-align:center;font-weight:700;color:var(--navy-950)}
+
+/* ========== 도표 (도표 일치 문제) ========== */
+.chart-box{background:white;border:1px solid var(--slate-300);padding:20px 24px;margin:12px 0}
+.chart-title{font-family:'Pretendard Variable',sans-serif;font-weight:800;font-size:14px;color:var(--navy-950);text-align:center;margin-bottom:6px}
+.chart-subtitle{font-size:11.5px;color:var(--slate-500);text-align:center;margin-bottom:14px;letter-spacing:0.02em}
+.chart-note{font-size:11px;color:var(--slate-500);font-style:italic;text-align:right;margin-top:6px}
+.bar-row{display:grid;grid-template-columns:220px 1fr 50px;gap:10px;align-items:center;margin:7px 0;font-size:12.5px;font-family:'Pretendard Variable',sans-serif}
+.bar-row .bar-label{text-align:right;font-weight:600;color:var(--slate-700)}
+.bar-row .bar-bg{height:18px;background:var(--slate-100);position:relative;border:1px solid var(--slate-200)}
+.bar-row .bar-fill{height:100%;display:inline-block}
+.bar-row .bar-val{font-weight:700;color:var(--navy-950);text-align:left}
+@media(max-width:720px){.bar-row{grid-template-columns:120px 1fr 40px;font-size:11px}}
+
+/* ========== 정보 박스 (실용문/안내문) ========== */
+.info-box{background:white;border:1.5px solid var(--slate-400);padding:20px 24px;margin:12px 0;font-family:'Playfair Display',serif;font-size:14px;line-height:1.8}
+.info-box .info-title{font-family:'Pretendard Variable',sans-serif;font-style:normal;font-weight:800;font-size:17px;color:var(--navy-950);text-align:center;padding-bottom:10px;border-bottom:2px solid var(--navy-950);margin-bottom:14px;letter-spacing:-0.01em}
+.info-box .field{font-family:'Pretendard Variable',sans-serif;font-style:normal;margin:6px 0}
+.info-box .field b{color:var(--navy-900);font-weight:700}
+.info-box ul{margin:6px 0;padding-left:20px;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:13.5px}
+.info-box li{margin:3px 0}
+
+/* ========== Picture Box (그림 일치) ========== */
+.picture-box{background:white;border:1px solid var(--slate-300);padding:18px;margin:12px 0;text-align:center}
+.picture-caption{font-family:'Pretendard Variable',sans-serif;font-size:12px;color:var(--slate-500);text-align:center;margin-top:8px}
+
+/* ========== 신목고용 spec-box (서답형 응용 지문) ========== */
+.spec-box{background:white;border:1.5px solid var(--slate-400);padding:18px 22px;margin:12px 0;font-family:'Playfair Display',serif;font-size:14px;line-height:1.8}
+.spec-box .spec-title{font-family:'Pretendard Variable',sans-serif;font-style:normal;font-weight:800;font-size:17px;color:var(--navy-950);text-align:center;padding-bottom:10px;border-bottom:2px solid var(--navy-950);margin-bottom:14px;letter-spacing:-0.01em}
+.spec-box .field{font-family:'Pretendard Variable',sans-serif;font-style:normal;margin:6px 0;font-size:13.5px}
+.spec-box .field b{color:var(--navy-900);font-weight:700}
+.spec-box ul{margin:6px 0;padding-left:20px;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:13.5px}
+.spec-box li{margin:3px 0}
+
+/* ========== 조건 박스 (서답형 <조건>) ========== */
+.cond-box{background:#FAF5FF;border:1px solid #D8B4FE;padding:14px 18px;margin:10px 0;font-size:13px;font-family:'Pretendard Variable',sans-serif;border-radius:3px}
+.cond-box .cond-title{font-weight:800;color:var(--purple-700);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px}
+.cond-box ol{margin:4px 0 4px 20px;padding:0}
+.cond-box li{margin:2px 0;line-height:1.65}
+.cond-box .bogi{margin-top:10px;padding:8px 12px;background:white;border:1px dashed var(--purple-700);border-radius:2px;font-family:'Playfair Display',serif;font-style:italic;font-size:13.5px;text-align:center}
+.cond-box .bogi b{font-weight:700;color:var(--navy-950)}
+
+/* ========== 비교 표 (Q3 같은 표 정리 문제) ========== */
+.compare-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px;font-family:'Pretendard Variable',sans-serif}
+.compare-table th{background:var(--navy-950);color:var(--gold-light);padding:8px 10px;font-weight:700;text-align:center;font-size:12px;letter-spacing:0.04em}
+.compare-table td{padding:8px 10px;border:1px solid var(--slate-300);background:white;vertical-align:top}
+.compare-table td.num{text-align:center;font-weight:800;color:var(--navy-950);width:40px;background:var(--slate-50)}
+.compare-table td.col-head{font-weight:700;color:var(--navy-950);width:24%;background:var(--slate-50)}
+
+/* ========== Matrix Table (Q4 같은 ABCD 짝짓기) ========== */
+.matrix-table{width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:13.5px;font-family:'Pretendard Variable',sans-serif}
+.matrix-table th{background:var(--slate-100);padding:8px 10px;font-weight:700;color:var(--navy-900);border:1px solid var(--slate-300);text-align:center}
+.matrix-table td{padding:7px 10px;border:1px solid var(--slate-300);text-align:center;background:white}
+.matrix-table td.num-cell{font-weight:800;color:var(--navy-950);background:var(--slate-50);width:44px}
+.matrix-table .correct-row td{background:var(--emerald-50)!important}
+.matrix-table .correct-row td.num-cell{color:var(--emerald-700);background:var(--emerald-50)!important}
+
+/* ========== 선지 ========== */
+.q-choices{display:flex;flex-direction:column;gap:5px;margin-bottom:18px}
+.q-choices .c{display:block;padding:8px 14px;font-size:14px;line-height:1.7;color:var(--slate-700);border-radius:2px}
+.q-choices .c .num{display:inline-block;font-weight:800;margin-right:8px;color:var(--navy-900);font-size:15px}
+.q-choices .c.correct{background:var(--emerald-50);border-left:3px solid var(--emerald-600)}
+.q-choices .c.correct .num{color:var(--emerald-700)}
+.q-choices.horz{flex-direction:row;flex-wrap:wrap;gap:6px 18px}
+
+/* ========== 서답형 헤더 ========== */
+.seodap-header{background:linear-gradient(135deg,#7C2D12,#9A3412);color:#FED7AA;padding:16px 24px;margin-top:8px;margin-bottom:16px;border-radius:3px 3px 0 0}
+.seodap-header h3{margin:0;font-size:16px;font-weight:800;letter-spacing:0.04em}
+.seodap-header .s-info{font-size:12px;color:#FDBA74;margin-top:4px;font-weight:500}
+
+/* ========== 정답표 ========== */
+.answer-sheet{width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;font-family:'Pretendard Variable',sans-serif}
+.answer-sheet th{background:var(--navy-950);color:var(--gold-light);padding:8px 10px;font-weight:700;letter-spacing:0.1em;text-align:center}
+.answer-sheet td{padding:7px 8px;text-align:center;border-bottom:1px solid var(--slate-200);font-weight:600}
+.answer-sheet tr:nth-child(even){background:var(--slate-50)}
+.answer-sheet .ans-row td{color:var(--rose-600);font-weight:800;font-size:15px}
+.answer-sheet .hdr-row td{color:var(--gold);font-weight:800;font-family:'Playfair Display',serif}
+
+/* ========== 펼치기 해설 (details/summary) ========== */
+details.ans{margin-top:18px;background:var(--navy-950);color:var(--cream);border-radius:0;overflow:hidden}
+details.ans summary{cursor:pointer;padding:14px 22px;font-size:12px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold-light);list-style:none;display:flex;align-items:center;justify-content:space-between;user-select:none}
+details.ans summary::-webkit-details-marker{display:none}
+details.ans summary::after{content:'▾';font-size:14px;color:var(--gold);transition:transform 0.2s}
+details.ans[open] summary::after{transform:rotate(180deg)}
+details.ans summary:hover{background:rgba(201,155,78,0.08)}
+.ans-body{padding:20px 24px 24px;font-size:14px;line-height:1.8;color:#D3CABA;border-top:1px solid rgba(228,197,137,0.2)}
+.ans-body .ans-label{display:inline-block;font-family:'Playfair Display',serif;font-style:italic;font-size:12px;font-weight:800;letter-spacing:0.1em;color:var(--gold);margin-bottom:8px}
+.ans-body .ans-main{font-size:16px;font-weight:700;color:var(--cream);margin-bottom:12px;letter-spacing:-0.01em;line-height:1.55}
+.ans-body .ans-main .en{font-family:'Playfair Display',serif;font-style:italic;font-weight:600}
+.ans-body .ans-detail{font-size:13.5px;line-height:1.78;color:#B8B0A2;padding-top:12px;border-top:1px dashed rgba(228,197,137,0.15)}
+.ans-body b{color:var(--gold-light);font-weight:700}
+.ans-body .ko-trans{margin-top:14px;padding:12px 16px;background:rgba(228,197,137,0.06);border-left:2px solid var(--gold);font-size:13px;color:#C9BFAD;line-height:1.75}
+.ans-body .ko-trans-label{display:block;font-weight:800;color:var(--gold);font-size:11px;letter-spacing:0.12em;margin-bottom:6px;text-transform:uppercase}
+.ans-body .note{margin-top:12px;padding:10px 14px;background:rgba(201,155,78,0.08);border-left:2px solid var(--gold);font-size:12.5px;color:#C9BFAD}
+.ans-body .step{margin:8px 0;padding-left:12px;border-left:2px solid rgba(201,155,78,0.3)}
+
+/* ========== Footer ========== */
+footer{background:var(--navy-950);color:#9BA39B;padding:40px 0;margin-top:80px;font-size:13px;line-height:1.7}
+footer .foot-grid{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+footer .foot-brand{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--cream);letter-spacing:-0.01em}
+footer .foot-brand .kor{display:block;font-family:'Pretendard Variable',sans-serif;font-size:13px;font-weight:500;color:var(--gold-light);margin-top:4px;letter-spacing:0.04em}
+footer .foot-meta{text-align:right;font-size:12px;color:var(--slate-500);letter-spacing:0.04em;line-height:1.8}
+footer .foot-meta b{color:var(--gold);font-weight:700}
+
+/* ========== Print 모드 ========== */
+@media print{
+  body{background:white;font-size:12px}
+  header.top{background:white;color:var(--navy-950);border-bottom:3px solid var(--navy-950);padding:20px 0}
+  .q-card{box-shadow:none;break-inside:avoid;margin-bottom:18px}
+  details.ans{background:white!important;color:var(--navy-950)!important;border:1px solid var(--slate-300)}
+  details.ans:not([open]) .ans-body{display:block!important}
+  details.ans summary{color:var(--navy-950)!important}
+  .ans-body{color:var(--slate-700)!important}
+  .ans-body b{color:var(--navy-950)!important}
+  .ans-body .ans-main{color:var(--navy-950)!important}
+  .ans-body .ans-detail{color:var(--slate-600)!important}
+  .ans-body .ko-trans{color:var(--slate-700)!important;background:var(--slate-50)!important}
+  footer{background:white;color:var(--slate-600);border-top:1px solid var(--slate-300);padding:20px 0;margin-top:40px}
+}
+
+/* ========== Mobile 반응형 ========== */
+@media(max-width:720px){
+  .container{padding:0 18px}
+  .meta-strip{grid-template-columns:repeat(2,1fr);gap:16px 0;row-gap:20px}
+  .meta-item{padding:0 12px;border-right:none}
+  .brand-row{flex-direction:column;align-items:flex-start;gap:12px}
+}
+
+/* ===== 3300제 문법 드릴 확장 ===== */
+.concept{background:var(--warm-white);border:1px solid var(--slate-200);border-left:4px solid var(--gold);padding:20px 24px;margin:0 0 22px}
+.concept .u-tag{display:inline-block;font-family:'Playfair Display',serif;font-style:italic;font-weight:800;font-size:12px;letter-spacing:0.1em;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+.concept h4{font-family:'Pretendard Variable',sans-serif;font-size:15px;font-weight:800;color:var(--navy-950);margin:16px 0 8px;letter-spacing:-0.01em}
+.concept h4:first-of-type{margin-top:4px}
+.concept .rule{font-size:13.5px;color:var(--slate-700);margin:4px 0 6px;line-height:1.7}
+.concept .rule b{color:var(--navy-900);font-weight:700}
+.concept .eg{font-family:'Playfair Display',serif;font-size:13.5px;line-height:1.85;color:var(--slate-700);padding:6px 0 6px 14px;border-left:2px solid var(--slate-300);margin:4px 0}
+.concept .eg b{color:var(--navy-950);font-weight:700;font-style:normal}
+.concept .eg .ko{font-family:'Pretendard Variable',sans-serif;color:var(--slate-500);font-size:12px}
+.concept .arrow{color:var(--gold);font-weight:800}
+.concept table{width:100%;border-collapse:collapse;margin:10px 0;font-size:12.5px;font-family:'Pretendard Variable',sans-serif}
+.concept th{background:var(--navy-950);color:var(--gold-light);padding:7px 9px;font-weight:700;text-align:left}
+.concept td{padding:6px 9px;border:1px solid var(--slate-200);background:white;vertical-align:top}
+.concept td.h{background:var(--slate-50);font-weight:700;color:var(--navy-900);white-space:nowrap}
+.concept .idiom{display:grid;grid-template-columns:1fr auto;gap:2px 16px;font-size:13px;line-height:1.7}
+.concept .idiom .en{font-family:'Playfair Display',serif;color:var(--slate-700)}
+.concept .idiom .en b{color:var(--navy-950);font-weight:700;font-style:normal}
+.concept .idiom .kr{color:var(--slate-500);font-size:12px;text-align:right;white-space:nowrap}
+
+.ex-tag{display:flex;align-items:baseline;gap:10px;margin:22px 0 6px;padding-bottom:8px;border-bottom:2px solid var(--navy-950)}
+.ex-tag .lt{font-family:'Playfair Display',serif;font-weight:900;font-style:italic;font-size:20px;color:var(--navy-950)}
+.ex-tag .inst{font-size:13px;font-weight:700;color:var(--slate-600)}
+.drill{list-style:none;counter-reset:d;margin:0;padding:0}
+.drill>li{counter-increment:d;position:relative;padding:12px 0 12px 34px;border-bottom:1px dashed var(--slate-200);font-size:14px;line-height:1.75}
+.drill>li::before{content:counter(d);position:absolute;left:0;top:11px;width:22px;height:22px;background:var(--navy-950);color:var(--gold-light);font-family:'Pretendard Variable',sans-serif;font-size:11px;font-weight:800;text-align:center;line-height:22px;border-radius:50%}
+.drill .en{font-family:'Playfair Display',serif;color:var(--slate-700)}
+.drill .en b{color:var(--navy-950);font-weight:700;font-style:normal}
+.blk{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--slate-500);margin:0 3px;vertical-align:baseline}
+.blk.w{min-width:120px}
+.paren{color:var(--slate-500);font-size:12px;font-family:'Pretendard Variable',sans-serif}
+.arw{color:var(--gold);font-weight:800;font-style:normal;margin:0 4px}
+.choices-in{margin:2px 0 0;font-family:'Playfair Display',serif;font-size:13.5px;color:var(--slate-600)}
+
+.ans-list{list-style:none;counter-reset:a;margin:6px 0 0;padding:0}
+.ans-list>li{counter-increment:a;position:relative;padding:6px 0 6px 30px;font-size:13.5px;line-height:1.7;border-top:1px dashed rgba(228,197,137,0.15)}
+.ans-list>li:first-child{border-top:none}
+.ans-list>li::before{content:counter(a);position:absolute;left:0;top:6px;width:19px;height:19px;background:var(--gold);color:var(--navy-950);font-size:10px;font-weight:800;text-align:center;line-height:19px;border-radius:50%}
+.ans-list .a{color:var(--gold-light);font-weight:800;font-family:'Playfair Display',serif}
+.ans-list .why{color:#B8B0A2;font-size:12.5px}
+
+
+/* ══ 펜 필기 모드 v1.0 ══ */
+#penToolbar{position:fixed;bottom:20px;right:20px;z-index:10000;display:flex;flex-direction:row;gap:8px;background:rgba(255,255,255,0.96);padding:8px;border-radius:30px;box-shadow:0 4px 20px rgba(0,0,0,0.18);backdrop-filter:blur(10px);align-items:center;}
+#penToolbar .pen-btn{width:42px;height:42px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-btn:hover{background:#e0e0e0;}
+#penToolbar .pen-btn.active{background:#2E75B6;color:white;}
+#penToolbar .pen-main{background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;font-size:20px;}
+#penToolbar .pen-main.active{background:linear-gradient(135deg,#dc2626,#ef4444);transform:scale(1.05);}
+#penToolbar .pen-tools{display:none;flex-direction:row;gap:6px;align-items:center;padding-left:8px;border-left:1px solid #ddd;margin-left:4px;}
+#penToolbar .pen-tools.show{display:flex;}
+#penToolbar .pen-color{width:30px;height:30px;border:2px solid white;border-radius:50%;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.2);transition:transform 0.15s;padding:0;}
+#penToolbar .pen-color:hover{transform:scale(1.1);}
+#penToolbar .pen-color.selected{border:2px solid #333;transform:scale(1.18);box-shadow:0 2px 6px rgba(0,0,0,0.3);}
+#penToolbar .pen-width{width:34px;height:34px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-width:hover{background:#e0e0e0;}
+#penToolbar .pen-width span{background:#333;border-radius:50%;display:inline-block;}
+#penToolbar .pen-width.selected{background:#1F3864;}
+#penToolbar .pen-width.selected span{background:white !important;}
+#penLayer{position:absolute;top:0;left:0;pointer-events:none;z-index:998;overflow:visible;}
+#penLayer.active{pointer-events:auto;touch-action:none;cursor:crosshair;}
+@media print{#penToolbar{display:none !important;}#penLayer{display:none !important;}}
+@media (max-width:600px){
+  #penToolbar{bottom:10px;right:10px;padding:6px;gap:4px;}
+  #penToolbar .pen-btn,#penToolbar .pen-width{width:38px;height:38px;}
+  #penToolbar .pen-color{width:26px;height:26px;}
+}
+
+</style>
+</head>
+<body>
+
+<!-- ========== Home Button (절대 변경 금지) ========== -->
+<a href="https://0505.co.kr" class="home-btn" title="목동서로영어학원 홈페이지">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg>
+  <span class="label">Home</span>
+</a>
+
+<!-- ========== Header (책 표지) ========== -->
+<header class="top"><div class="container">
+  <div class="brand-row">
+    <div class="brand">Mokdong Seoro <b>English Academy</b><span class="kor">목동서로영어학원 · 신목고·목운중·목동중 전문</span></div>
+    <div class="vol-tag">3300제 · Chapter XVI</div>
+  </div>
+  <h1 class="book-title"><em>Mood</em> · 제16장 법<br>Complete Answer Key</h1>
+  <div class="book-subtitle">고교 내신수능 1등급 영문법연습 3300제 · 제16장 법(가정법) · 전문항 상세풀이<br>Unit 28 현재·과거 · Unit 29 과거완료·미래·혼합 · Unit 30 특수구문 · 기출응용 31문항 · 독립부정사</div>
+  <div class="meta-strip">
+    <div class="meta-item"><div class="meta-lbl">CHAPTER</div><div class="meta-val">XVI<span class="u">법</span></div></div>
+    <div class="meta-item"><div class="meta-lbl">UNIT</div><div class="meta-val">28–30<span class="u"></span></div></div>
+    <div class="meta-item"><div class="meta-lbl">EXERCISE</div><div class="meta-val">40+<span class="u">문항</span></div></div>
+    <div class="meta-item"><div class="meta-lbl">기출응용</div><div class="meta-val">31<span class="u">문항</span></div></div>
+  </div>
+</div></header>
+
+<main><div class="container">
+
+<!-- ====================================================== -->
+<!-- 정답표 영역: 09_BUILD_PROTOCOL.md Step 2 참고            -->
+<!-- ====================================================== -->
+<div class="section-divider"><span>Answer Key<span class="kor">정답 일람표</span></span></div>
+
+<details class="ans"><summary>정답 일람표 펼치기 · 기출응용 31문항</summary><div class="ans-body"><table class="answer-sheet"><tr class="hdr-row"><td>기출</td><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr><tr class="ans-row"><td>답</td><td>③</td><td>⑤</td><td>spent</td><td>snows</td><td>↓</td><td>①</td><td>②</td><td>↓</td><td>②</td><td>④</td></tr><tr class="hdr-row"><td>기출</td><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th></tr><tr class="ans-row"><td>답</td><td>⑤</td><td>①</td><td>↓</td><td>④</td><td>↓</td><td>②</td><td>②</td><td>④</td><td>②</td><td>③</td></tr><tr class="hdr-row"><td>기출</td><th>21</th><th>22</th><th>23</th><th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>29</th><th>30</th></tr><tr class="ans-row"><td>답</td><td>↓</td><td>↓</td><td>↓</td><td>①</td><td>↓</td><td>④</td><td>↓</td><td>⑤</td><td>③</td><td>⑤</td></tr><tr class="hdr-row"><td>기출</td><th>31</th></tr><tr class="ans-row"><td>답</td><td>①</td></tr></table><div style="font-size:11.5px;color:#B8B0A2;margin-top:8px">※ 화살표(↓)로 표시된 서술형은 아래 상세 정답 참고. 문항별 자세한 해설은 각 카드의 “정답 펼치기”에서 확인.</div><div style="margin-top:14px;font-size:12.5px;line-height:1.9;color:#C9BFAD"><b style="color:var(--gold)">서술형 정답</b><br><b>3.</b> spent &nbsp; <b>4.</b> snows &nbsp; <b>5.</b> had seen &nbsp; <b>8.</b> I wish I hadn’t told him a lie. &nbsp; <b>9.</b> ② &nbsp; <b>13.</b> had not been for &nbsp; <b>15.</b> If I knew many people, I would not feel lonely. &nbsp; <b>21.</b> I wish I could speak English well. &nbsp; <b>22.</b> we analyzed the survey &nbsp; <b>23.</b> I wish I had done my best at the match. &nbsp; <b>25.</b> learned how to control &nbsp; <b>27.</b> But for &nbsp; </div></div></details>
+
+<!-- ====================================================== -->
+<!-- 문항 영역: 10_QUESTION_PATTERNS.md 의 스니펫 사용         -->
+<!-- 각 article은 하나의 문항 또는 묶음 문항 (예: Q41-42)     -->
+<!-- 섹션 구분선(.section-divider)으로 카테고리 분리          -->
+<!-- ====================================================== -->
+
+<div class="section-divider"><span>Unit 28 · <em>가정법 현재와 과거</em><span class="kor">가정법 현재와 과거</span></span></div>
+
+<div class="concept">
+<span class="u-tag">Unit 28 · 가정법 현재와 과거</span>
+<h4>A. 가정법 현재</h4>
+<div class="rule">‘만일 ~라면 …할 것이다’ — 현재·미래의 <b>단순한 가정</b>. 「If+주어+동사의 현재형 ~, 주어+will/shall/can/may+동사원형 …」</div>
+<div class="eg">If you <b>are</b> tired, you <b>can go</b> home now.<br>If it <b>is</b> very cold tomorrow, I<b>’ll not go</b> out.</div>
+<h4>B. 가정법 현재 명사절</h4>
+<div class="rule">제안(suggest, propose)·주장(insist, urge)·명령(order)·추천(recommend)·요구(demand, ask, inquire, request) 동사의 that절에는 <b>「(should)+동사원형」</b>이 오며 should는 생략 가능.</div>
+<div class="eg">He asked that I <b>(should) tell</b> him the truth.<br>She demanded that he <b>(should) clean</b> the room.<br>He proposed that we <b>(should) go</b> fishing tomorrow.</div>
+<h4>C. 가정법 과거</h4>
+<div class="rule">1. ‘만일 ~라면 …할 텐데’ — <b>현재 사실과 반대</b>. 「If+주어+과거형 ~, 주어+would/should/could/might+동사원형 …」 (if절 be동사는 인칭 무관 <b>were</b>)</div>
+<div class="eg">As we don’t have a car, we can’t go on a vacation. <span class="arrow">→</span> If we <b>had</b> a car, we <b>would go</b> on a vacation.<br>As I am not rich, I can’t buy the house. <span class="arrow">→</span> If I <b>were</b> rich, I <b>would buy</b> the house.</div>
+<div class="rule">2. if절 동사가 were일 때 if를 생략하고 <b>주어와 동사의 위치를 도치</b>할 수 있다.</div>
+<div class="eg">If she were honest, she would tell me the truth. <span class="arrow">→</span> <b>Were she</b> honest, she would tell me the truth.</div>
+</div>
+
+<div class="ex-tag"><span class="lt">A</span><span class="inst">괄호 안 단어를 이용하여 조건을 나타내는 if절을 완성하세요.</span></div>
+<ol class="drill">
+<li>If it <span class="blk"></span> fine tomorrow, we will go on a picnic. <span class="paren">(be)</span></li>
+<li>If you <span class="blk"></span> her, why don’t you tell her so? <span class="paren">(love)</span></li>
+<li>If she <span class="blk"></span> to go there, I will go, too. <span class="paren">(want)</span></li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · A</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">is</span> <span class="why">가정법 현재 · 단순 조건 → 현재형</span></li>
+<li><span class="a">love</span> <span class="why">현재 조건</span></li>
+<li><span class="a">wants</span> <span class="why">3인칭 단수 현재</span></li>
+</ol></div></details>
+<div class="ex-tag"><span class="lt">B</span><span class="inst">다음 문장의 밑줄 친 부분을 어법에 맞게 한 단어로 고쳐 쓰세요.</span></div>
+<ol class="drill">
+<li>He insists that we <u>will go</u> back home.</li>
+<li>It is recommended that the speed limit <u>is</u> 45mph.</li>
+<li>He proposed that she <u>will toss</u> the coin into the air.</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · B</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">go</span> <span class="why">주장 insist → (should) 동사원형</span></li>
+<li><span class="a">be</span> <span class="why">추천 recommend → (should) be</span></li>
+<li><span class="a">toss</span> <span class="why">제안 propose → (should) 동사원형</span></li>
+</ol></div></details>
+<div class="ex-tag"><span class="lt">C-1</span><span class="inst">다음 문장들을 가정법 문장으로 바꿀 때 빈칸에 알맞은 말을 쓰세요.</span></div>
+<ol class="drill">
+<li>As we don’t work hard, we will get a bad grade. <span class="arw">→</span> If we <span class="blk w"></span> hard, we <span class="blk w"></span> get a bad grade.</li>
+<li>As you are not a bad boy, I’m not disappointed in you. <span class="arw">→</span> If you were a bad boy, I <span class="blk w"></span> be disappointed in you.</li>
+<li>As he is not my close friend, I won’t give him a hand. <span class="arw">→</span> If he <span class="blk w"></span> my close friend, I <span class="blk w"></span> give him a hand.</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · C-1</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">worked / would not (wouldn’t)</span> <span class="why">현재 반대 · 가정법 과거</span></li>
+<li><span class="a">would</span> <span class="why">가정법 과거 주절</span></li>
+<li><span class="a">were / would</span> <span class="why">be동사 were · 주절 would</span></li>
+</ol></div></details>
+<div class="ex-tag"><span class="lt">C-2</span><span class="inst">다음 우리말 해석과 같은 뜻이 되도록 빈칸에 알맞은 말을 쓰세요.</span></div>
+<ol class="drill">
+<li>충분한 물이 없다면, 우리는 죽을 것이다. = If there <span class="blk w"></span> enough water, we would die.</li>
+<li>만약에 네가 나의 펜팔친구라면 나는 굉장히 행복할 텐데. = If you were my pen pal, I <span class="blk w"></span> be very happy.</li>
+<li>그가 선생님이라면 무슨 과목을 가르치실까? = Which subject would he teach, if he <span class="blk w"></span> a teacher?</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · C-2</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">were not (weren’t)</span> <span class="why">현재 반대 부정 조건</span></li>
+<li><span class="a">would</span> <span class="why">가정법 과거</span></li>
+<li><span class="a">were</span> <span class="why">be동사 were</span></li>
+</ol></div></details>
+<div class="ex-tag"><span class="lt">C-3</span><span class="inst">다음 문장들을 if가 생략된 가정법이 되도록 빈칸에 알맞은 말을 쓰세요.</span></div>
+<ol class="drill">
+<li>If it were true, it would be very shocking. <span class="arw">→</span> <span class="blk w"></span> true, it would be very shocking.</li>
+<li>If you were in my position, you would tell him the truth. <span class="arw">→</span> <span class="blk w"></span> in my position, you would tell him the truth.</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · C-3</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">Were it</span> <span class="why">were 도치</span></li>
+<li><span class="a">Were you</span> <span class="why">were 도치</span></li>
+</ol></div></details>
+<div class="section-divider"><span>Unit 29 · <em>과거완료·미래·혼합가정법</em><span class="kor">가정법 과거완료·미래·혼합가정법</span></span></div>
+
+<div class="concept">
+<span class="u-tag">Unit 29 · 가정법 과거완료·미래·혼합가정법</span>
+<h4>A. 가정법 과거완료</h4>
+<div class="rule">1. ‘만일 ~했다면 …했을 것이다’ — <b>과거 사실과 반대</b>. 「If+주어+had+과거분사 ~, 주어+would/should/could/might+have+과거분사 …」</div>
+<div class="eg">As I didn’t work hard, I couldn’t become rich. <span class="arrow">→</span> If I <b>had worked</b> hard, I <b>would have become</b> rich.<br>If you <b>had arrived</b> ten minutes later, you <b>couldn’t have caught</b> the last train.</div>
+<div class="rule">2. if를 생략하고 <b>주어와 had를 도치</b>할 수 있다.</div>
+<div class="eg">If we had had a car, we would have gone on a vacation. = <b>Had we</b> had a car, we would have gone on a vacation.</div>
+<h4>B. 가정법 미래</h4>
+<div class="rule">1. 「If+주어+<b>should</b>+동사원형 ~, 주어+would/will/should/shall/could/can/might/may+동사원형 …」 현재·미래에 대한 강한 의심. (if 생략 시 should 도치)</div>
+<div class="eg">If it <b>should</b> be true, I would be glad. = <b>Should it</b> be true, I would be glad.</div>
+<div class="rule">2. 「If+주어+<b>were to</b>+동사원형 ~, …」 미래에 실현 불가능한 일을 가정. (조건 ‘~한다면’ / 양보 ‘~하더라도’)</div>
+<div class="eg">If the sun <b>were to</b> rise in the west, I would believe what you said.</div>
+<h4>C. 혼합가정법</h4>
+<div class="rule"><b>과거 사실이 현재까지 영향</b>을 미치는 경우. 「If+주어+had+과거분사 ~(과거), 주어+would/should/could/might+동사원형 …(현재)」</div>
+<div class="eg">If you <b>had not helped</b> me yesterday, I <b>would not be</b> alive now.<br><span class="ko">(어제 네가 나를 도와주지 않았더라면, 나는 지금 살아있지 않을 것이다.)</span></div>
+</div>
+
+<div class="ex-tag"><span class="lt">A-1</span><span class="inst">다음 문장들을 가정법 문장으로 바꿀 때 빈칸에 알맞은 말을 쓰세요.</span></div>
+<ol class="drill">
+<li>As we didn’t study hard, we got a bad grade. <span class="arw">→</span> If we <span class="blk w"></span> hard, we wouldn’t have got a bad grade.</li>
+<li>He couldn’t buy the big diamond ring because he wasn’t rich. <span class="arw">→</span> If he <span class="blk w"></span> rich, he could have bought the big diamond ring.</li>
+<li>The weather was good, so they went on a picnic. <span class="arw">→</span> If the weather hadn’t been good, they wouldn’t <span class="blk"></span> gone on a picnic.</li>
+<li>As I missed the bus, I was late for school. <span class="arw">→</span> If I hadn’t missed the bus, I <span class="blk w"></span> have been late for school.</li>
+<li>As I didn’t know his phone number, I couldn’t call him. <span class="arw">→</span> If I had known his phone number, I could <span class="blk w"></span> him.</li>
+<li>As you didn’t take my advice, you failed in the exam. <span class="arw">→</span> If you <span class="blk w"></span> my advice, you wouldn’t <span class="blk w"></span> in the exam.</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · A-1</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">had studied</span> <span class="why">과거 반대 · had+p.p.</span></li>
+<li><span class="a">had been</span> <span class="why">과거 반대</span></li>
+<li><span class="a">have</span> <span class="why">would have p.p.</span></li>
+<li><span class="a">wouldn’t</span> <span class="why">주절 부정</span></li>
+<li><span class="a">have called</span> <span class="why">could have p.p.</span></li>
+<li><span class="a">had taken / have failed</span> <span class="why">if절 had+p.p. · 주절 have p.p.</span></li>
+</ol></div></details>
+<div class="ex-tag"><span class="lt">A-2</span><span class="inst">다음 두 문장의 의미가 같도록 빈칸에 알맞은 말을 쓰세요.</span></div>
+<ol class="drill">
+<li>If I had arrived 5 minutes earlier, I could have met Julia Roberts. = <span class="blk w"></span> I arrived 5 minutes earlier, I could have met Julia Roberts.</li>
+<li>If he had known that you lived here, he would have come to meet you at once. = <span class="blk w"></span> that you lived here, he would have come to meet you at once.</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · A-2</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">Had</span> <span class="why">if 생략 · had 도치</span></li>
+<li><span class="a">Had he known</span> <span class="why">had 도치</span></li>
+</ol></div></details>
+<div class="ex-tag"><span class="lt">B</span><span class="inst">괄호 안에 들어갈 적합한 어구에 ○표 하세요.</span></div>
+<ol class="drill">
+<li>If I <div class="choices-in">( should , were to )</div> fail, I would try again.</li>
+<li>If I <div class="choices-in">( should , were to )</div> be born again, I would never be a painter.</li>
+<li>If I <div class="choices-in">( should , were to )</div> be young again, I would work harder.</li>
+<li>If you <div class="choices-in">( should , were to )</div> teach me how to solve it, I would be very grateful.</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · B</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">should</span> <span class="why">일어날 수 있는 일 · 강한 의심</span></li>
+<li><span class="a">were to</span> <span class="why">실현 불가능</span></li>
+<li><span class="a">were to</span> <span class="why">실현 불가능</span></li>
+<li><span class="a">should</span> <span class="why">충분히 가능한 일</span></li>
+</ol></div></details>
+<div class="ex-tag"><span class="lt">C</span><span class="inst">괄호 안에 들어갈 적합한 어구에 ○표 하세요. (혼합가정법)</span></div>
+<ol class="drill">
+<li>If you <div class="choices-in">( stayed up late , had stayed up late )</div> last night, you <div class="choices-in">( would be , had been )</div> sleepy now.</li>
+<li>If you <div class="choices-in">( didn’t break , had not broken )</div> your leg, you <div class="choices-in">( would be , had been )</div> skiing here now.</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · C</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">had stayed up late / would be</span> <span class="why">과거 조건 + 현재 결과</span></li>
+<li><span class="a">had not broken / would be</span> <span class="why">혼합가정법</span></li>
+</ol></div></details>
+<div class="section-divider"><span>Unit 30 · <em>가정법 특수구문</em><span class="kor">가정법 특수구문</span></span></div>
+
+<div class="concept">
+<span class="u-tag">Unit 30 · 가정법 특수구문</span>
+<h4>A. I wish + 가정법 과거 / 과거완료</h4>
+<div class="rule">1. <b>I wish+가정법 과거</b>: ‘~하면 좋을 텐데’ 현재의 실현 불가능한 소망. → 「I’m sorry / It’s a pity+직설법 현재」</div>
+<div class="eg">I wish I <b>were</b> young again. <span class="arrow">→</span> I am sorry I am not young again.</div>
+<div class="rule">2. <b>I wish+가정법 과거완료</b>: ‘~했더라면 좋았을 텐데’ 과거의 이루지 못한 소망. → 「I’m sorry / It’s a pity+직설법 과거」</div>
+<div class="eg">I wish I <b>had had</b> enough time to read the novel. <span class="arrow">→</span> I am sorry I didn’t have enough time to read the novel.</div>
+<h4>B. as if (as though) + 가정법 과거 / 과거완료</h4>
+<div class="rule">1. 「주어+현재형+as if+주어+<b>과거형</b>」 ‘마치 ~인 것처럼 …하다’ (현재 시점 · 현재 사실 반대)</div>
+<div class="eg">She feels as if she <b>were</b> in a dream. <span class="arrow">→</span> In fact, she isn’t in a dream.</div>
+<div class="rule">2. 「주어+현재형+as if+주어+<b>had+p.p.</b>」 ‘마치 ~이었던 것처럼’ (현재 시점 · 과거 사실 반대)</div>
+<div class="eg">She feels as if she <b>had been</b> in a dream. <span class="arrow">→</span> In fact, she wasn’t in a dream.</div>
+<div class="rule">3. 「주어+과거형+as if+주어+<b>과거형</b>」 (과거 시점 · 과거 사실 반대) / 4. 「주어+과거형+as if+주어+<b>had+p.p.</b>」 (과거 시점 · 그 이전 사실 반대)</div>
+<h4>C. 조건절의 대용어구</h4>
+<div class="rule">1. ‘~이 없다면 …할 텐데’ (가정법 과거): <b>If it were not for ~ = Were it not for ~ = Without ~ = But for ~</b></div>
+<div class="eg">If it were not for water, no fish could live. = Were it not for ~ = Without ~ = But for water, no fish could live.</div>
+<div class="rule">2. ‘~이 없었다면 …했을 텐데’ (가정법 과거완료): <b>If it had not been for ~ = Had it not been for ~ = Without ~ = But for ~</b></div>
+<div class="eg">If it had not been for your help, I would have failed. = Had it not been for ~ = Without ~ = But for your help, I would have failed.</div>
+<div class="rule">3. if절의 대용: <b>To hear</b> him talk, you would take him for an American.(=If you heard) / <b>Turning</b> to the right, you will find the store.(=If you turn) / I feel better; <b>otherwise</b> I would have to see the doctor.(=If I didn’t feel better)</div>
+<h4>D. It is (about / high) time + (that) + 가정법 과거</h4>
+<div class="rule">‘~해야 할 때다’ 「It is (about/high) time (that)+주어+<b>과거형</b>」 = 「~ should+동사원형」 = 「~ for+사람+to부정사」</div>
+<div class="eg">It is time you <b>went</b> to school. = It is time you should go to school. = It is time for you to go to school.</div>
+</div>
+
+<div class="ex-tag"><span class="lt">A</span><span class="inst">〈보기〉와 같이 빈칸을 채워 가정법 특수구문으로 바꾸세요. (보기: I don’t have a daughter. → I wish I had a daughter.)</span></div>
+<ol class="drill">
+<li>I can’t read fast. I want to do so. <span class="arw">→</span> I wish I <span class="blk w"></span> fast.</li>
+<li>I am so old. I want to be young again. <span class="arw">→</span> I wish I <span class="blk w"></span> young again.</li>
+<li>I am sorry I can’t marry you. <span class="arw">→</span> I wish I <span class="blk w"></span> marry you.</li>
+<li>I didn’t do my best when I was a student. And I regret it. <span class="arw">→</span> I wish I <span class="blk w"></span> my best when I was a student.</li>
+<li>I am sorry I didn’t meet her at the station. <span class="arw">→</span> I wish I <span class="blk w"></span> her at the station.</li>
+<li>It’s a pity I couldn’t finish the course that year. <span class="arw">→</span> I wish I <span class="blk w"></span> the course that year.</li>
+<li>It’s a pity I can’t meet you now. <span class="arw">→</span> I wish I <span class="blk w"></span> you now.</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · A</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">could read</span> <span class="why">현재 소망 · 가정법 과거</span></li>
+<li><span class="a">were</span> <span class="why">be동사 were</span></li>
+<li><span class="a">could</span> <span class="why">현재 소망</span></li>
+<li><span class="a">had done</span> <span class="why">과거 소망 · had+p.p.</span></li>
+<li><span class="a">had met</span> <span class="why">과거 소망</span></li>
+<li><span class="a">had finished</span> <span class="why">과거 소망</span></li>
+<li><span class="a">could meet</span> <span class="why">현재 소망</span></li>
+</ol></div></details>
+<div class="ex-tag"><span class="lt">B</span><span class="inst">다음 두 문장의 의미가 같도록 빈칸에 알맞은 말을 쓰세요.</span></div>
+<ol class="drill">
+<li>He talks like an Englishman, but he is not an Englishman. = He talks <span class="blk w"></span> he were an Englishman.</li>
+<li>She sings like a jazz singer. In fact, she is not a jazz singer. = She sings as if she <span class="blk w"></span> a jazz singer.</li>
+<li>In fact, he didn’t live in London when young. = He talks as if he <span class="blk w"></span> in London when young.</li>
+<li>In fact, she was not his wife. = She talked as if she <span class="blk w"></span> his wife.</li>
+<li>In fact, I’m not her son. = She loves me as if I <span class="blk w"></span> her son.</li>
+<li>In fact, he wasn’t sick. = He speaks as if he <span class="blk w"></span> sick.</li>
+<li>In fact, I had never seen him. = I acted as if I <span class="blk w"></span> him.</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · B</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">as if (as though)</span> <span class="why">마치 ~인 것처럼</span></li>
+<li><span class="a">were</span> <span class="why">현재 사실 반대</span></li>
+<li><span class="a">had lived</span> <span class="why">과거 사실 반대 · had+p.p.</span></li>
+<li><span class="a">were</span> <span class="why">과거 시점 · 과거 사실 반대</span></li>
+<li><span class="a">were</span> <span class="why">현재 사실 반대</span></li>
+<li><span class="a">were</span> <span class="why">현재 시점 · 과거 사실 반대이나 as if 과거형</span></li>
+<li><span class="a">had (never) seen</span> <span class="why">과거 시점 · 그 이전 사실 반대</span></li>
+</ol></div></details>
+<div class="ex-tag"><span class="lt">C-1</span><span class="inst">문장의 의미가 서로 같도록 빈칸을 채우세요.</span></div>
+<ol class="drill">
+<li>If there were no air, we could not live.<br><span class="arw">=</span> If it <span class="blk w"></span> for air, we could not live.<br><span class="arw">=</span> Were <span class="blk w"></span> air, we could not live.<br><span class="arw">=</span> <span class="blk"></span> air, we could not live.<br><span class="arw">=</span> But <span class="blk"></span> air, we could not live.</li>
+<li>If there hadn’t been his advice, you would have gone bankrupt.<br><span class="arw">=</span> If <span class="blk w"></span> his advice, …<br><span class="arw">=</span> Had <span class="blk w"></span> his advice, …<br><span class="arw">=</span> <span class="blk"></span> his advice, …<br><span class="arw">=</span> But <span class="blk"></span> his advice, …</li>
+<li>If it were not for you, the patients would suffer from the disease.<br><span class="arw">=</span> Were <span class="blk w"></span> you, …<br><span class="arw">=</span> <span class="blk"></span> you, …<br><span class="arw">=</span> <span class="blk"></span> you, …</li>
+<li>If there hadn’t been his assist, our team couldn’t have won the game.<br><span class="arw">=</span> If <span class="blk w"></span> his assist, …<br><span class="arw">=</span> Had <span class="blk w"></span> his assist, …<br><span class="arw">=</span> <span class="blk"></span> his assist, …<br><span class="arw">=</span> <span class="blk"></span> his assist, …</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · C-1</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">were not / it not for / Without / for</span> <span class="why">If it were not for = Were it not for = Without = But for</span></li>
+<li><span class="a">it had not been for / it not been for / Without / for</span> <span class="why">가정법 과거완료 대용</span></li>
+<li><span class="a">it not for / Without / But for</span> <span class="why"></span></li>
+<li><span class="a">it had not been for / it not been for / Without / But for</span> <span class="why"></span></li>
+</ol></div></details>
+<div class="ex-tag"><span class="lt">C-2</span><span class="inst">다음 문장의 의미가 서로 같도록 빈칸에 알맞은 말을 쓰세요.</span></div>
+<ol class="drill">
+<li>A Korean would not behave like that. = <span class="blk"></span> he <span class="blk"></span> a Korean, he would not behave like that.</li>
+<li>Seen at a distance, Jin-su looks like Su-cheol. = <span class="blk w"></span> at a distance, Jin-su looks like Su-cheol.</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · C-2</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">If / were</span> <span class="why">A woman of ~ 형 가정 · If he were</span></li>
+<li><span class="a">If he is seen</span> <span class="why">분사구문 → 조건 if절</span></li>
+</ol></div></details>
+<div class="ex-tag"><span class="lt">D</span><span class="inst">다음 문장의 의미가 서로 같도록 빈칸에 알맞은 말을 쓰세요.</span></div>
+<ol class="drill">
+<li>It’s time for you to do your homework.<br><span class="arw">=</span> It’s time that you <span class="blk w"></span> your homework.<br><span class="arw">=</span> It’s time that you <span class="blk w"></span> your homework.</li>
+<li>It is about time he introduced himself to us.<br><span class="arw">=</span> It is about time <span class="blk"></span> him <span class="blk"></span> introduce himself to us.<br><span class="arw">=</span> It is about time he <span class="blk w"></span> himself to us.</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · D</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">did / should do</span> <span class="why">It is time+가정법 과거 / should+원형</span></li>
+<li><span class="a">for / to / should introduce</span> <span class="why">for+사람+to부정사 / should+원형</span></li>
+</ol></div></details>
+<div class="section-divider"><span>제16장 · <em>기출응용문제</em> (1–16)<span class="kor">기출응용문제 · 앞부분</span></span></div>
+<article class="q-card"><div class="q-head"><div class="q-num">1</div><div class="q-type choice">전환</div></div><div class="q-prompt">다음 우리말을 가장 올바르게 표현한 것은?<br>만약 우리가 열심히 공부하지 않는다면 우리는 나쁜 점수를 받을 거야.</div><div class="q-choices"><div class="c"><span class="num">①</span> If we are not study hard, we will get a bad grade.</div>
+<div class="c"><span class="num">②</span> We have to get a bad grade if we study hard.</div>
+<div class="c"><span class="num">③</span> We’ll get a bad grade unless we study hard.</div>
+<div class="c"><span class="num">④</span> We’ll get a bad grade unless we don’t study hard.</div>
+<div class="c"><span class="num">⑤</span> If we study hard, we’ll get a bad grade.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">③ We’ll get a bad grade unless we study hard.</span></div><div class="ans-detail">unless = if ~ not. “열심히 공부하지 않으면 나쁜 점수” → We’ll get a bad grade <span class="en">unless we study hard</span>. ④는 이중부정으로 뜻이 반대.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">2</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 문장에서 어법상 <b>틀린</b> 것은?<br>①If Lily ②had been at the department store, ③she ④would have ⑤be killed.</div><div class="q-choices"><div class="c"><span class="num">①</span> If</div>
+<div class="c"><span class="num">②</span> had been</div>
+<div class="c"><span class="num">③</span> she</div>
+<div class="c"><span class="num">④</span> would have</div>
+<div class="c"><span class="num">⑤</span> be</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">⑤ be</span></div><div class="ans-detail">⑤ 가정법 과거완료 주절은 「would have+과거분사」 → <span class="en">would have been killed</span>. be → been.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">3</div><div class="q-type gram">어법</div></div><div class="q-prompt">밑줄 친 단어의 알맞은 형태를 쓰세요.<br>If you <u>spend</u> much time thinking about studying, you would get a good grade.</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">spent</span></div><div class="ans-detail">주절 would get에 맞춘 가정법 과거. if절 동사는 과거형 <b>spent</b>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">4</div><div class="q-type gram">영작</div></div><div class="q-prompt">우리말과 같은 뜻이 되도록 밑줄 친 곳에 알맞은 단어를 쓰세요.<br>크리스마스에 눈이 오면 우리는 여행을 갈 것이다. = If it ______ on Christmas, we will go on a trip.</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">snows</span></div><div class="ans-detail">단순 조건(가정법 현재). 주절 will → if절 현재형 <b>snows</b>(3인칭 단수).</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">5</div><div class="q-type gram">전환</div></div><div class="q-prompt">두 문장의 의미가 같도록 빈칸에 알맞은 말을 쓰세요.<br>I’m sorry I didn’t see you at the party. = I wish I ______ you at the party.</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">had seen</span></div><div class="ans-detail">과거의 이루지 못한 소망 → I wish+가정법 과거완료 「had+p.p.」.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">6</div><div class="q-type gram">어법</div></div><div class="q-prompt">빈칸에 들어갈 알맞은 말을 고르세요.<br>He suggested that I ______ to Korea to be a leader in genetic engineering.</div><div class="q-choices"><div class="c"><span class="num">①</span> go</div>
+<div class="c"><span class="num">②</span> went</div>
+<div class="c"><span class="num">③</span> would</div>
+<div class="c"><span class="num">④</span> had gone</div>
+<div class="c"><span class="num">⑤</span> have gone</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">① go</span></div><div class="ans-detail">suggest(제안) that절 → 「(should)+동사원형」, should 생략 → <span class="en">go</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">7</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 문장에서 어법상 틀린 부분을 고르세요.<br>The supervisor ①proposed that they ②would ③make a contract with the ④manufacturing company ⑤to accomplish their tasks.</div><div class="q-choices"><div class="c"><span class="num">①</span> proposed</div>
+<div class="c"><span class="num">②</span> would</div>
+<div class="c"><span class="num">③</span> make a contract</div>
+<div class="c"><span class="num">④</span> manufacturing</div>
+<div class="c"><span class="num">⑤</span> to accomplish</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">② would</span></div><div class="ans-detail">② propose(제안) that절은 「(should)+동사원형」 → would 불가, <span class="en">(should) make</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">8</div><div class="q-type gram">영작</div></div><div class="q-prompt">괄호 안에 주어진 단어를 이용하여 다음을 한 문장으로 만드세요.<br>I told him a lie. And I regret that. → ______ (wish)</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">I wish I hadn’t told him a lie.</span></div><div class="ans-detail">과거의 후회 → I wish+가정법 과거완료(부정) 「hadn’t+p.p.」.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">9</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 우리말을 영어로 표현할 때 어법상 틀린 부분은?<br>만약 네가 그녀가 말한 것을 듣는다면, 너는 아무런 문제도 갖지 않을 것이다.<br>= ①If you ②had listened to ③what she ④said, you ⑤would not have any problem.</div><div class="q-choices"><div class="c"><span class="num">①</span> If</div>
+<div class="c"><span class="num">②</span> had listened to</div>
+<div class="c"><span class="num">③</span> what</div>
+<div class="c"><span class="num">④</span> said</div>
+<div class="c"><span class="num">⑤</span> would not have</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">② had listened to</span></div><div class="ans-detail">주절 would not have(가정법 과거)에 맞춰 if절도 과거형 → <span class="en">listened to</span>. had listened(과거완료)는 틀림.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">10</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 밑줄 친 부분의 올바른 형태는?<br>It’s dangerous to drive on the highway on a rainy day. … it is recommended that the speed limit <u>can be</u> reduced to 50km/h on a rainy day.</div><div class="q-choices"><div class="c"><span class="num">①</span> is</div>
+<div class="c"><span class="num">②</span> will be</div>
+<div class="c"><span class="num">③</span> was</div>
+<div class="c"><span class="num">④</span> be</div>
+<div class="c"><span class="num">⑤</span> are</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">④ be</span></div><div class="ans-detail">recommend(추천) that절 → 「(should)+동사원형」 → <span class="en">be</span> reduced.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">11</div><div class="q-type blank">빈칸</div></div><div class="q-prompt">빈칸에 들어갈 말로 가장 알맞은 것은?<br>If the man had moved any farther toward the road side, he ______.</div><div class="q-choices"><div class="c"><span class="num">①</span> would died</div>
+<div class="c"><span class="num">②</span> should died</div>
+<div class="c"><span class="num">③</span> should have died</div>
+<div class="c"><span class="num">④</span> would die</div>
+<div class="c"><span class="num">⑤</span> would have died</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">⑤ would have died</span></div><div class="ans-detail">if절 had moved(가정법 과거완료) → 주절 「would have+p.p.」 → <span class="en">would have died</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">12</div><div class="q-type choice">어법</div></div><div class="q-prompt">다음 중 밑줄 친 표현이 <b>어색한</b> 것은?</div><div class="q-choices"><div class="c"><span class="num">①</span> If I <u>am</u> in your place, I would tell them everything.</div>
+<div class="c"><span class="num">②</span> If I <u>hadn’t had</u> exams, I would have gone there.</div>
+<div class="c"><span class="num">③</span> I wish I <u>had known</u> her.</div>
+<div class="c"><span class="num">④</span> If the sun <u>were to rise</u> in the west, I would change my mind.</div>
+<div class="c"><span class="num">⑤</span> He talks as if he <u>were</u> a teacher.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">① If I <u>am</u> in your place, I would tell them everything.</span></div><div class="ans-detail">① 주절 would tell(가정법 과거)에 맞춰 if절 be동사는 <span class="en">were</span>여야 한다. am → were.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">13</div><div class="q-type gram">전환</div></div><div class="q-prompt">다음 밑줄 친 부분을 if절로 고칠 때 빈칸에 적절한 표현을 쓰세요.<br><u>Without your help</u>, I would not have succeeded. → If it ______ your help, I would not have succeeded.</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">had not been for</span></div><div class="ans-detail">Without(가정법 과거완료) = If it had not been for. → <b>had not been for</b>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">14</div><div class="q-type gram">어법</div></div><div class="q-prompt">우리말과 같은 의미가 되도록 빈칸에 들어갈 단어가 바르게 짝지어진 것은?<br>네가 유일하게 염색을 하지 않은 학생이라면 나는 너를 자랑스러워 할 텐데.<br>= I ______ be very proud of you if you ______ the only student who didn’t have his hair dyed.</div><div class="q-choices"><div class="c"><span class="num">①</span> will - are</div>
+<div class="c"><span class="num">②</span> will - was</div>
+<div class="c"><span class="num">③</span> would - are</div>
+<div class="c"><span class="num">④</span> would - were</div>
+<div class="c"><span class="num">⑤</span> would - was</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">④ would - were</span></div><div class="ans-detail">가정법 과거. 주절 <b>would</b> be proud / if절 be동사 <b>were</b> → <span class="en">would - were</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">15</div><div class="q-type gram">전환</div></div><div class="q-prompt">주어진 문장을 가정법 문장으로 고치세요.<br>As I don’t know many people, I feel lonely. → If I ______</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">If I knew many people, I would not feel lonely.</span></div><div class="ans-detail">현재 사실 반대(가정법 과거). if절 knew · 주절 would not feel.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">16</div><div class="q-type choice">어법</div></div><div class="q-prompt">다음 중 밑줄 친 부분이 어법상 <b>올바른</b> 것은?</div><div class="q-choices"><div class="c"><span class="num">①</span> If he previewed the lecture, he <u>will understand</u> it better.</div>
+<div class="c"><span class="num">②</span> I felt as if I <u>were</u> in another country.</div>
+<div class="c"><span class="num">③</span> If you <u>spend</u> less money, you would save more money.</div>
+<div class="c"><span class="num">④</span> I don’t know if he <u>helps</u> me move tomorrow.</div>
+<div class="c"><span class="num">⑤</span> It is necessary that she <u>keeps</u> her word in any case.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">② I felt as if I <u>were</u> in another country.</span></div><div class="ans-detail">② as if+가정법 과거 were가 올바름. ①will→would ③spend→spent ④helps→will help ⑤keeps→(should) keep.</div></div></details></article>
+<div class="section-divider"><span>제16장 · <em>기출응용문제</em> (17–31)<span class="kor">기출응용문제 · 뒷부분</span></span></div>
+<article class="q-card"><div class="q-head"><div class="q-num">17</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 밑줄 친 부분 중, 어법상 <b>잘못된</b> 것은?<br>Chris was sorry that my parents and I <u>had</u> different thoughts about my jobs. She suggested that I <u>talked</u> to my parents <u>more frankly</u> about what I really <u>wanted to be</u>.</div><div class="q-choices"><div class="c"><span class="num">①</span> had</div>
+<div class="c"><span class="num">②</span> talked</div>
+<div class="c"><span class="num">③</span> more frankly</div>
+<div class="c"><span class="num">④</span> wanted to be</div>
+<div class="c"><span class="num">⑤</span> 틀린 부분 없음</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">② talked</span></div><div class="ans-detail">② suggest(제안) that절 → 「(should)+동사원형」 → <span class="en">talk</span>. talked는 틀림.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">18</div><div class="q-type blank">빈칸</div></div><div class="q-prompt">빈칸에 들어갈 알맞은 말을 고르세요.<br>She talked as if she ______ to the United States.</div><div class="q-choices"><div class="c"><span class="num">①</span> is</div>
+<div class="c"><span class="num">②</span> was</div>
+<div class="c"><span class="num">③</span> were</div>
+<div class="c"><span class="num">④</span> had been</div>
+<div class="c"><span class="num">⑤</span> has been</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">④ had been</span></div><div class="ans-detail">과거 시점(talked)에서 그 이전 사실을 반대로 → as if+「had+p.p.」 → <span class="en">had been</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">19</div><div class="q-type choice">어법</div></div><div class="q-prompt">다음 중 어법상 <b>잘못된</b> 문장은?</div><div class="q-choices"><div class="c"><span class="num">①</span> I wish I had my hair dyed.</div>
+<div class="c"><span class="num">②</span> If I went shopping, I will buy you something to eat.</div>
+<div class="c"><span class="num">③</span> This novel was not boring, and neither was that one.</div>
+<div class="c"><span class="num">④</span> Pierced ears are just a fashion, and so are torn jeans.</div>
+<div class="c"><span class="num">⑤</span> He looks thinner in the jacket.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">② If I went shopping, I will buy you something to eat.</span></div><div class="ans-detail">② if절 went(가정법 과거)에 맞춰 주절도 <span class="en">would buy</span>여야 한다. will buy는 틀림.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">20</div><div class="q-type blank">빈칸</div></div><div class="q-prompt">다음 빈칸에 들어갈 알맞은 말은?<br>What sort of novel would you write, if you ______ a novelist?</div><div class="q-choices"><div class="c"><span class="num">①</span> is</div>
+<div class="c"><span class="num">②</span> was</div>
+<div class="c"><span class="num">③</span> were</div>
+<div class="c"><span class="num">④</span> will be</div>
+<div class="c"><span class="num">⑤</span> would be</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">③ were</span></div><div class="ans-detail">주절 would write(가정법 과거) → if절 be동사 <span class="en">were</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">21</div><div class="q-type gram">영작</div></div><div class="q-prompt">괄호 안에 주어진 단어를 이용하여 이어지는 문장을 완성하세요.<br>I can’t speak English well, so I feel embarrassed when I have to talk with foreigners.<br>→ ______ (well, I, could, I, speak, wish, English)</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">I wish I could speak English well.</span></div><div class="ans-detail">현재의 실현 불가능한 소망 → I wish+가정법 과거 「could+동사원형」.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">22</div><div class="q-type gram">전환</div></div><div class="q-prompt">두 문장이 같은 뜻이 되도록 빈칸을 채우세요.<br>I think we should analyze the survey. = It is time that ______.</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">we analyzed the survey</span></div><div class="ans-detail">It is time that+가정법 과거 → 동사 과거형 <b>analyzed</b>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">23</div><div class="q-type gram">전환</div></div><div class="q-prompt">〈보기〉와 같이 다음의 문장을 바꾸세요.<br>보기: I don’t have a dog. And I want to have one. → I wish I had a dog.<br>I didn’t do my best at the match. And I regret it. → ______</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">I wish I had done my best at the match.</span></div><div class="ans-detail">과거의 후회 → I wish+가정법 과거완료 「had+p.p.」.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">24</div><div class="q-type choice">빈칸</div></div><div class="q-prompt">다음 빈칸에 들어갈 말로 적절한 것을 고르세요.<br>When I entered the amusement park, I felt ______ I were one of the characters in a fairy tale.</div><div class="q-choices"><div class="c"><span class="num">①</span> as if</div>
+<div class="c"><span class="num">②</span> I wish</div>
+<div class="c"><span class="num">③</span> without</div>
+<div class="c"><span class="num">④</span> if</div>
+<div class="c"><span class="num">⑤</span> unless</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">① as if</span></div><div class="ans-detail">‘마치 ~인 것처럼’ + 가정법 과거(were) → <span class="en">as if</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">25</div><div class="q-type gram">배열</div></div><div class="q-prompt">다음 우리말과 뜻이 같도록 주어진 단어를 알맞은 순서로 배열하세요.<br>어떻게 너 스스로를 조절해야 할지를 배워야 할 때가 되었다.<br>= It’s about time that you ______ yourself. (control, how, learned, to)</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">learned how to control</span></div><div class="ans-detail">It’s about time that+가정법 과거(learned) + 「how to+동사원형」 → learned how to control.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">26</div><div class="q-type blank">빈칸</div></div><div class="q-prompt">다음 빈칸에 들어갈 알맞은 말은?<br>He talks as if he ______ in London when he was a child.</div><div class="q-choices"><div class="c"><span class="num">①</span> is</div>
+<div class="c"><span class="num">②</span> was</div>
+<div class="c"><span class="num">③</span> were</div>
+<div class="c"><span class="num">④</span> had been</div>
+<div class="c"><span class="num">⑤</span> has been</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">④ had been</span></div><div class="ans-detail">현재(talks) 시점에서 과거 사실을 반대로 → as if+「had+p.p.」 → <span class="en">had been</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">27</div><div class="q-type gram">전환</div></div><div class="q-prompt">다음 두 문장이 같은 뜻이 되도록 빈칸에 들어갈 알맞은 말을 두 단어로 적으세요.<br>If it were not for you, I would be very sad. = ______ you, I would be very sad.</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">But for</span></div><div class="ans-detail">If it were not for = But for(= Without). 두 단어 → <b>But for</b>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">28</div><div class="q-type choice">어법</div></div><div class="q-prompt">주어진 문장에서 의미가 <b>다른</b> 하나를 고르세요.</div><div class="q-choices"><div class="c"><span class="num">①</span> Without water, all living things would disappear.</div>
+<div class="c"><span class="num">②</span> But for water, all living things would disappear.</div>
+<div class="c"><span class="num">③</span> If it were not for water, all living things would disappear.</div>
+<div class="c"><span class="num">④</span> Were it not for water, all living things would disappear.</div>
+<div class="c"><span class="num">⑤</span> If there were water, all living things would disappear.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">⑤ If there were water, all living things would disappear.</span></div><div class="ans-detail">①~④는 모두 “물이 <b>없다면</b>”. ⑤만 “물이 <b>있다면</b>”으로 정반대 의미.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">29</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 빈칸에 공통으로 들어갈 단어를 고르세요.<br>• I couldn’t wait to see ______ everything was all right with my family. • Susan continued her work as ______ she had seen nothing. • Please call me ______ you want to join the club.</div><div class="q-choices"><div class="c"><span class="num">①</span> so</div>
+<div class="c"><span class="num">②</span> or</div>
+<div class="c"><span class="num">③</span> if</div>
+<div class="c"><span class="num">④</span> when</div>
+<div class="c"><span class="num">⑤</span> though</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">③ if</span></div><div class="ans-detail">see <b>if</b>(~인지) / as <b>if</b>(마치 ~처럼) / <b>if</b> you want(~라면). 공통 → <span class="en">if</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">30</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 중 어법상 <b>어색한</b> 문장을 고르세요.</div><div class="q-choices"><div class="c"><span class="num">①</span> My father has been ill since last year.</div>
+<div class="c"><span class="num">②</span> If my brother comes back home, I will be happy.</div>
+<div class="c"><span class="num">③</span> The last bus arrived at 11.</div>
+<div class="c"><span class="num">④</span> She bought the necklace three years ago.</div>
+<div class="c"><span class="num">⑤</span> If I had made lots of money, I will be rich now.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">⑤ If I had made lots of money, I will be rich now.</span></div><div class="ans-detail">⑤ 혼합가정법: 과거 조건(had made) + 현재 결과이므로 주절은 <span class="en">would be</span> rich now. will be는 틀림.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">31</div><div class="q-type gram">어법</div></div><div class="q-prompt">빈칸에 들어갈 말을 차례대로 연결한 것은?<br>• If you ______ much time reading books, you would be very smart. • I would be very happy if you ______ my penpal. • W: I wish my parents ______ so, too.</div><div class="q-choices"><div class="c"><span class="num">①</span> spent - were - thought</div>
+<div class="c"><span class="num">②</span> spend - are - think</div>
+<div class="c"><span class="num">③</span> spent - are - thought</div>
+<div class="c"><span class="num">④</span> spent - were - think</div>
+<div class="c"><span class="num">⑤</span> spend - were - thought</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">① spent - were - thought</span></div><div class="ans-detail">세 문장 모두 가정법 과거: if절/wish절 동사는 과거형 → <span class="en">spent - were - thought</span>.</div></div></details></article>
+<div class="section-divider"><span>부록 · <em>독립부정사</em><span class="kor">Independent Infinitive</span></span></div>
+
+<div class="concept">
+<span class="u-tag">Reference · 독립부정사 (Independent Infinitive)</span>
+<div class="rule">문장 전체를 수식하는 <b>독립부정사</b> 관용 표현 정리. (제16장 부록)</div>
+<div class="eg"><b>To tell the truth</b>, I don’t like him that much. <span class="ko">〈사실을 말하자면〉</span></div>
+<div class="eg"><b>To make a long story short / In a word / In short(brief)</b>, I found the book interesting. <span class="ko">〈간단히 말하자면〉</span></div>
+<div class="eg">He can play the flute, <b>not to mention / to say nothing of / not to speak of / let alone</b> the piano. <span class="ko">〈…은 말할 나위도 없이〉</span></div>
+<div class="eg"><b>To begin with / First of all / Above all / To start with / Before getting started</b>, I’d like to thank you for coming. <span class="ko">〈우선, 첫째로〉</span></div>
+<div class="eg"><b>To make matters worse / What is worse / What makes matters worse</b>, I had acrophobia. <span class="ko">〈설상가상으로〉 (acrophobia 고소공포증)</span></div>
+<div class="eg">He is, <b>so to speak / that is to say</b>, kindness itself. <span class="ko">〈말하자면〉</span></div>
+<div class="eg"><b>Strange to say</b>, his advice encouraged me greatly. <span class="ko">〈말하기 이상하지만〉</span></div>
+</div>
+
+<!-- {{INSERT_QUESTIONS_HERE}} -->
+
+</div></main>
+
+<!-- ========== Footer (학원 표기 절대 변경 금지) ========== -->
+<footer><div class="container"><div class="foot-grid">
+  <div class="foot-brand">Mokdong Seoro English Academy<span class="kor">목동서로영어학원 · 0505.co.kr</span></div>
+  <div class="foot-meta">신목고·목운중·목동중 전문 영어학원<br><b>고교 3300제 · 제16장 법 · 완전판 상세풀이</b><br>본 자료는 학원 수강생 전용 교육 자료입니다. 무단 배포 금지.<br>Unit 28 현재·과거 · Unit 29 과거완료·미래·혼합 · Unit 30 특수구문 · 기출응용 31문항</div>
+</div></div></footer>
+
+<script>
+/* ══ 펜 필기 모드 (자유 필기) v1.0 ══ */
+const PEN_COLORS=['#dc2626','#1F3864','#0f9d58','#f59e0b','#000000'];
+const PEN_WIDTHS=[2,4,7];
+let penEnabled=false,penColor='#dc2626',penWidth=4,penEraser=false;
+let penLayer=null,penPath=null,penPts=[];
+
+function buildPenTools(){
+  if(document.getElementById('penLayer'))return;
+  penLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  penLayer.id='penLayer';
+  document.body.appendChild(penLayer);
+  const tb=document.createElement('div');
+  tb.id='penToolbar';
+  let html='<button class="pen-btn pen-main" id="penToggle" title="펜 ON/OFF">✏️</button><div class="pen-tools" id="penTools">';
+  PEN_COLORS.forEach(c=>html+='<button class="pen-color" data-color="'+c+'" style="background:'+c+';" title="색상"></button>');
+  PEN_WIDTHS.forEach(w=>html+='<button class="pen-width" data-width="'+w+'" title="굵기"><span style="width:'+(w*2)+'px;height:'+(w*2)+'px;"></span></button>');
+  html+='<button class="pen-btn pen-eraser" id="penEraserBtn" title="개별 지우개">🧹</button><button class="pen-btn pen-clear" id="penClearBtn" title="전체 지우기">🗑️</button></div>';
+  tb.innerHTML=html;
+  document.body.appendChild(tb);
+  document.querySelector('.pen-color[data-color="'+penColor+'"]').classList.add('selected');
+  document.querySelector('.pen-width[data-width="'+penWidth+'"]').classList.add('selected');
+  document.getElementById('penToggle').addEventListener('click',togglePen);
+  document.querySelectorAll('.pen-color').forEach(b=>b.addEventListener('click',e=>{
+    const c=e.currentTarget.dataset.color;
+    penColor=c;penEraser=false;
+    document.querySelectorAll('.pen-color').forEach(x=>x.classList.toggle('selected',x.dataset.color===c));
+    document.getElementById('penEraserBtn').classList.remove('active');
+  }));
+  document.querySelectorAll('.pen-width').forEach(b=>b.addEventListener('click',e=>{
+    const w=+e.currentTarget.dataset.width;
+    penWidth=w;
+    document.querySelectorAll('.pen-width').forEach(x=>x.classList.toggle('selected',+x.dataset.width===w));
+  }));
+  document.getElementById('penEraserBtn').addEventListener('click',()=>{
+    penEraser=!penEraser;
+    document.getElementById('penEraserBtn').classList.toggle('active',penEraser);
+  });
+  document.getElementById('penClearBtn').addEventListener('click',()=>{
+    if(confirm('모든 필기를 지우시겠습니까?'))penLayer.innerHTML='';
+  });
+  penLayer.addEventListener('pointerdown',penDown);
+  penLayer.addEventListener('pointermove',penMove);
+  penLayer.addEventListener('pointerup',penUp);
+  penLayer.addEventListener('pointercancel',penUp);
+  penLayer.addEventListener('pointerleave',penUp);
+  const sync=()=>{
+    const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
+    const w=Math.max(document.body.scrollWidth,document.documentElement.scrollWidth);
+    penLayer.setAttribute('width',w);
+    penLayer.setAttribute('height',h);
+    penLayer.style.height=h+'px';
+    penLayer.style.width=w+'px';
+  };
+  sync();
+  if(window.ResizeObserver)new ResizeObserver(sync).observe(document.body);
+  window.addEventListener('resize',sync);
+  setInterval(sync,2000);
+}
+function togglePen(){
+  penEnabled=!penEnabled;
+  document.getElementById('penToggle').classList.toggle('active',penEnabled);
+  document.getElementById('penTools').classList.toggle('show',penEnabled);
+  penLayer.classList.toggle('active',penEnabled);
+}
+function getPenPt(e){
+  return {x:e.clientX+window.scrollX,y:e.clientY+window.scrollY};
+}
+function penDown(e){
+  if(!penEnabled)return;
+  e.preventDefault();
+  try{penLayer.setPointerCapture(e.pointerId);}catch(_){}
+  if(penEraser){eraseAt(e);return;}
+  const pt=getPenPt(e);
+  penPath=document.createElementNS('http://www.w3.org/2000/svg','path');
+  penPath.setAttribute('d','M '+pt.x+' '+pt.y);
+  penPath.setAttribute('stroke',penColor);
+  penPath.setAttribute('stroke-width',penWidth);
+  penPath.setAttribute('fill','none');
+  penPath.setAttribute('stroke-linecap','round');
+  penPath.setAttribute('stroke-linejoin','round');
+  penLayer.appendChild(penPath);
+  penPts=[pt];
+}
+function penMove(e){
+  if(!penEnabled)return;
+  if(penEraser&&e.buttons){eraseAt(e);return;}
+  if(!penPath)return;
+  e.preventDefault();
+  const pt=getPenPt(e);
+  const last=penPts[penPts.length-1];
+  if(Math.hypot(pt.x-last.x,pt.y-last.y)<1.5)return;
+  penPts.push(pt);
+  let d='M '+penPts[0].x+' '+penPts[0].y;
+  for(let i=1;i<penPts.length-1;i++){
+    const c=penPts[i],n=penPts[i+1];
+    const mx=(c.x+n.x)/2,my=(c.y+n.y)/2;
+    d+=' Q '+c.x+' '+c.y+' '+mx+' '+my;
+  }
+  if(penPts.length>=2){
+    const lp=penPts[penPts.length-1];
+    d+=' L '+lp.x+' '+lp.y;
+  }
+  penPath.setAttribute('d',d);
+}
+function penUp(e){
+  if(penPath){penPath=null;penPts=[];}
+}
+function eraseAt(e){
+  const pt=getPenPt(e);
+  const r=20;
+  const paths=Array.from(penLayer.querySelectorAll('path'));
+  for(const p of paths){
+    const bb=p.getBBox();
+    if(pt.x>=bb.x-r&&pt.x<=bb.x+bb.width+r&&pt.y>=bb.y-r&&pt.y<=bb.y+bb.height+r){
+      p.remove();
+    }
+  }
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',buildPenTools);
+}else{
+  setTimeout(buildPenTools,100);
+}
+</script>
+</body>
+</html>

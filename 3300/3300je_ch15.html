@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<!--
+========================================================================
+  ANSWER-KEY WORKBOOK · MASTER HTML TEMPLATE
+  목동서로영어학원 · Mokdong Seoro English Academy · 0505.co.kr
+========================================================================
+  사용법:
+    1. 이 파일 통째로 복사
+    2. 고교 3300제 · 제15장 태 · 상세풀이집, {{HEADER_*}} 등의 플레이스홀더를 시험 정보로 채움
+    3. <main><div class="container"> 안에 정답표 + 문항들 삽입
+    4. 각 문항은 10_ANSWERKEY_QUESTION_PATTERNS.md의 스니펫 사용
+
+  통합 CSS:
+    - 모의고사용 클래스 (.dialogue, .price-table, .chart-box, .info-box, .picture-box)
+    - 학교 내신용 클래스 (.spec-box, .cond-box, .compare-table, .matrix-table, .seodap-header)
+    - 양쪽 공통 (.q-card, .passage, .q-choices, details.ans 등)
+
+  변경 절대 금지:
+    - 색상 변수 (--navy-950, --gold, --cream)
+    - 폰트 패밀리 (Pretendard, Playfair Display)
+    - .home-btn 위치/스타일
+    - footer 학원 명기
+========================================================================
+-->
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>고교 3300제 · 제15장 태 · 상세풀이집</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+<style>
+/* ========== 색상·폰트 변수 (변경 금지) ========== */
+:root{
+  --cream:#FAF6EE;--cream-dark:#F0E9D8;--warm-white:#FEFBF5;
+  --navy-950:#0A1E3A;--navy-900:#112546;--navy-700:#2C3E63;
+  --gold:#C99B4E;--gold-light:#E4C589;
+  --slate-700:#334155;--slate-600:#475569;--slate-500:#64748B;--slate-400:#94A3B8;
+  --slate-300:#CBD5E1;--slate-200:#E2E8F0;--slate-100:#F1F5F9;--slate-50:#F8FAFC;
+  --emerald-700:#047857;--emerald-600:#059669;--emerald-50:#ECFDF5;
+  --rose-600:#DC2626;--rose-50:#FEF2F2;
+  --amber-600:#D97706;--amber-50:#FEF3C7;
+  --indigo-600:#4F46E5;--indigo-50:#EEF2FF;
+  --purple-700:#7E22CE;--purple-50:#FAF5FF;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--slate-700);font-family:'Pretendard Variable',-apple-system,sans-serif;font-size:15px;line-height:1.65;letter-spacing:-0.005em}
+.container{max-width:920px;margin:0 auto;padding:0 32px}
+
+/* ========== Home Button (우상단 고정, 변경 금지) ========== */
+.home-btn{position:fixed;top:20px;right:20px;z-index:999;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;background:var(--gold);color:var(--navy-950);text-decoration:none;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;box-shadow:0 4px 14px rgba(10,30,58,0.25);transition:all 0.2s;border:2px solid var(--navy-950)}
+.home-btn:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 6px 20px rgba(10,30,58,0.35)}
+.home-btn svg{width:14px;height:14px;fill:currentColor}
+@media(max-width:720px){.home-btn{top:12px;right:12px;padding:10px 12px}.home-btn .label{display:none}}
+@media print{.home-btn{display:none}}
+
+/* ========== Header (책 표지) ========== */
+header.top{background:var(--navy-950);color:var(--cream);padding:48px 0 56px;position:relative;overflow:hidden;border-bottom:4px solid var(--gold)}
+header.top::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,var(--gold) 50%,transparent 100%)}
+.brand-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;padding-bottom:22px;border-bottom:1px solid rgba(228,197,137,0.2)}
+.brand{font-family:'Playfair Display',serif;font-style:italic;font-weight:500;font-size:15px;color:var(--gold-light);letter-spacing:0.02em}
+.brand b{font-weight:700;color:var(--gold);margin-left:6px}
+.brand .kor{display:block;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:12px;color:var(--slate-300);letter-spacing:0.14em;margin-top:3px;font-weight:500}
+.vol-tag{font-family:'Playfair Display',serif;font-size:12px;font-weight:700;letter-spacing:0.24em;color:var(--gold);text-transform:uppercase}
+.book-title{font-family:'Playfair Display',serif;font-weight:900;font-style:italic;font-size:clamp(28px,5vw,46px);letter-spacing:-0.02em;color:var(--cream);line-height:1.1;margin-bottom:10px}
+.book-title em{font-style:italic;color:var(--gold);font-weight:700}
+.book-subtitle{font-weight:500;font-size:16px;color:#D3CABA;letter-spacing:-0.01em;margin-bottom:24px;line-height:1.5}
+.meta-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0;padding-top:22px;border-top:1px solid rgba(228,197,137,0.2)}
+.meta-item{padding:0 20px;border-right:1px solid rgba(228,197,137,0.15)}
+.meta-item:first-child{padding-left:0}
+.meta-item:last-child{border-right:none;padding-right:0}
+.meta-lbl{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:6px}
+.meta-val{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--cream);letter-spacing:-0.01em}
+.meta-val .u{font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:13px;color:var(--slate-300);margin-left:4px;font-weight:500}
+
+/* ========== Main Layout ========== */
+main{padding:48px 0 80px}
+.section-divider{text-align:center;margin:56px 0 36px;position:relative}
+.section-divider::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:var(--slate-300)}
+.section-divider span{position:relative;background:var(--cream);padding:0 28px;font-family:'Playfair Display',serif;font-style:italic;font-size:20px;font-weight:700;color:var(--navy-950);letter-spacing:-0.01em}
+.section-divider span .kor{display:block;font-style:normal;font-family:'Pretendard Variable',sans-serif;font-size:11px;letter-spacing:0.14em;color:var(--slate-500);text-transform:uppercase;font-weight:700;margin-top:4px}
+
+/* ========== Question Card ========== */
+.q-card{background:var(--warm-white);border:1px solid var(--slate-200);padding:clamp(24px,3vw,36px);margin-bottom:28px;box-shadow:0 1px 0 rgba(10,30,58,0.03)}
+.q-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--slate-200)}
+.q-num{font-family:'Playfair Display',serif;font-weight:800;font-style:italic;font-size:24px;color:var(--navy-950);letter-spacing:-0.02em;padding-right:14px;border-right:2px solid var(--slate-200)}
+.q-type{font-size:11px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;padding:5px 11px;border-radius:2px}
+/* Type colors per category */
+.q-type.listen{background:var(--indigo-600);color:#E0E7FF}
+.q-type.choice{background:var(--slate-700);color:var(--gold-light)}
+.q-type.gram{background:#7C3AED;color:#EDE9FE}
+.q-type.vocab{background:#0891B2;color:#ECFEFF}
+.q-type.blank{background:var(--navy-950);color:var(--gold-light)}
+.q-type.order{background:#059669;color:#D1FAE5}
+.q-type.insert{background:#D97706;color:#FEF3C7}
+.q-type.long{background:#BE123C;color:#FFE4E6}
+.q-type.theme{background:#BE123C;color:#FFE4E6}
+.q-type.seodap{background:#7C2D12;color:#FED7AA}
+.q-pts{font-size:11px;font-weight:700;color:var(--slate-500);padding:4px 10px;background:var(--slate-50);border:1px solid var(--slate-200);border-radius:999px;margin-left:auto;letter-spacing:0.04em}
+.q-prompt{font-size:15.5px;font-weight:700;color:var(--navy-950);margin-bottom:18px;line-height:1.6;letter-spacing:-0.01em}
+.q-prompt b{color:var(--rose-600);font-weight:800}
+
+/* ========== Passage (영어 지문) ========== */
+.passage{font-family:'Playfair Display',serif;font-size:14.5px;line-height:1.95;color:var(--slate-700);padding:22px 26px;background:var(--cream);border-left:3px solid var(--slate-400);margin-bottom:18px;border-radius:0 3px 3px 0}
+.passage.insert-box{border-left:3px solid var(--gold);background:#FFF8E1;margin-bottom:14px}
+.passage .label{display:block;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:11px;font-weight:800;letter-spacing:0.15em;color:var(--navy-900);margin-bottom:8px;text-transform:uppercase}
+.passage mark{background:#FFF3C4;padding:1px 4px;font-style:normal;font-weight:600;font-family:'Pretendard Variable',sans-serif;font-size:13.5px;color:var(--navy-900)}
+.passage mark.diff{background:#FECACA;border-bottom:2px solid var(--rose-600);color:var(--rose-600)}
+.passage mark.key{background:rgba(201,155,78,0.18);border-bottom:2px solid var(--gold)}
+.passage mark.under{background:transparent;border-bottom:1.5px solid var(--navy-900);color:var(--navy-950);font-weight:600;padding:0 2px}
+.passage mark.undbox{background:transparent;border:1px dashed var(--navy-700);color:var(--navy-950);font-weight:600;padding:1px 6px}
+.passage .blank-inline{display:inline-block;min-width:90px;border-bottom:1.5px solid var(--slate-500);padding:0 10px;margin:0 3px;font-weight:700;color:var(--navy-950)}
+.passage .blank-box{display:inline-block;padding:2px 10px;background:var(--navy-950);color:var(--gold-light);font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:12px;font-weight:800;margin:0 3px;border-radius:2px;letter-spacing:0.08em;vertical-align:baseline}
+.passage .circle-num{display:inline-block;width:18px;height:18px;border-radius:50%;background:var(--navy-950);color:var(--gold-light);font-family:'Pretendard Variable',sans-serif;font-size:11px;font-weight:800;text-align:center;line-height:18px;font-style:normal;margin:0 2px;vertical-align:baseline}
+.passage .label-num{display:inline-block;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-weight:800;color:var(--navy-900);margin-right:4px}
+
+/* ========== Passage Pair (A/B 병렬 지문) ========== */
+.passage-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+@media(max-width:720px){.passage-pair{grid-template-columns:1fr}}
+.passage-pair .passage{margin-bottom:0}
+
+/* ========== Dialogue (듣기 대본) ========== */
+.dialogue{font-family:'Playfair Display',serif;font-size:14px;line-height:1.9;color:var(--slate-700);padding:20px 24px;background:var(--indigo-50);border-left:3px solid var(--indigo-600);margin-bottom:16px;border-radius:0 3px 3px 0}
+.dialogue .label{font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:11px;font-weight:800;letter-spacing:0.15em;color:var(--indigo-600);margin-bottom:10px;display:block;text-transform:uppercase}
+.dialogue .speaker{font-weight:700;font-style:normal;color:var(--indigo-600);font-family:'Pretendard Variable',sans-serif;display:inline-block;min-width:24px}
+.dialogue p{margin:6px 0}
+
+/* ========== Q10용 가격 표 ========== */
+.price-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px;font-family:'Pretendard Variable',sans-serif}
+.price-table caption{font-weight:700;color:var(--navy-950);padding:6px;text-align:center;font-size:13px;background:var(--slate-100);border:1px solid var(--slate-300)}
+.price-table th{background:var(--navy-950);color:var(--gold-light);padding:7px 10px;font-weight:700;letter-spacing:0.06em;text-align:center;font-size:12px}
+.price-table td{padding:6px 10px;text-align:center;border:1px solid var(--slate-300);background:white}
+.price-table td:first-child{text-align:center;font-weight:700;color:var(--navy-950)}
+
+/* ========== 도표 (도표 일치 문제) ========== */
+.chart-box{background:white;border:1px solid var(--slate-300);padding:20px 24px;margin:12px 0}
+.chart-title{font-family:'Pretendard Variable',sans-serif;font-weight:800;font-size:14px;color:var(--navy-950);text-align:center;margin-bottom:6px}
+.chart-subtitle{font-size:11.5px;color:var(--slate-500);text-align:center;margin-bottom:14px;letter-spacing:0.02em}
+.chart-note{font-size:11px;color:var(--slate-500);font-style:italic;text-align:right;margin-top:6px}
+.bar-row{display:grid;grid-template-columns:220px 1fr 50px;gap:10px;align-items:center;margin:7px 0;font-size:12.5px;font-family:'Pretendard Variable',sans-serif}
+.bar-row .bar-label{text-align:right;font-weight:600;color:var(--slate-700)}
+.bar-row .bar-bg{height:18px;background:var(--slate-100);position:relative;border:1px solid var(--slate-200)}
+.bar-row .bar-fill{height:100%;display:inline-block}
+.bar-row .bar-val{font-weight:700;color:var(--navy-950);text-align:left}
+@media(max-width:720px){.bar-row{grid-template-columns:120px 1fr 40px;font-size:11px}}
+
+/* ========== 정보 박스 (실용문/안내문) ========== */
+.info-box{background:white;border:1.5px solid var(--slate-400);padding:20px 24px;margin:12px 0;font-family:'Playfair Display',serif;font-size:14px;line-height:1.8}
+.info-box .info-title{font-family:'Pretendard Variable',sans-serif;font-style:normal;font-weight:800;font-size:17px;color:var(--navy-950);text-align:center;padding-bottom:10px;border-bottom:2px solid var(--navy-950);margin-bottom:14px;letter-spacing:-0.01em}
+.info-box .field{font-family:'Pretendard Variable',sans-serif;font-style:normal;margin:6px 0}
+.info-box .field b{color:var(--navy-900);font-weight:700}
+.info-box ul{margin:6px 0;padding-left:20px;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:13.5px}
+.info-box li{margin:3px 0}
+
+/* ========== Picture Box (그림 일치) ========== */
+.picture-box{background:white;border:1px solid var(--slate-300);padding:18px;margin:12px 0;text-align:center}
+.picture-caption{font-family:'Pretendard Variable',sans-serif;font-size:12px;color:var(--slate-500);text-align:center;margin-top:8px}
+
+/* ========== 신목고용 spec-box (서답형 응용 지문) ========== */
+.spec-box{background:white;border:1.5px solid var(--slate-400);padding:18px 22px;margin:12px 0;font-family:'Playfair Display',serif;font-size:14px;line-height:1.8}
+.spec-box .spec-title{font-family:'Pretendard Variable',sans-serif;font-style:normal;font-weight:800;font-size:17px;color:var(--navy-950);text-align:center;padding-bottom:10px;border-bottom:2px solid var(--navy-950);margin-bottom:14px;letter-spacing:-0.01em}
+.spec-box .field{font-family:'Pretendard Variable',sans-serif;font-style:normal;margin:6px 0;font-size:13.5px}
+.spec-box .field b{color:var(--navy-900);font-weight:700}
+.spec-box ul{margin:6px 0;padding-left:20px;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:13.5px}
+.spec-box li{margin:3px 0}
+
+/* ========== 조건 박스 (서답형 <조건>) ========== */
+.cond-box{background:#FAF5FF;border:1px solid #D8B4FE;padding:14px 18px;margin:10px 0;font-size:13px;font-family:'Pretendard Variable',sans-serif;border-radius:3px}
+.cond-box .cond-title{font-weight:800;color:var(--purple-700);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px}
+.cond-box ol{margin:4px 0 4px 20px;padding:0}
+.cond-box li{margin:2px 0;line-height:1.65}
+.cond-box .bogi{margin-top:10px;padding:8px 12px;background:white;border:1px dashed var(--purple-700);border-radius:2px;font-family:'Playfair Display',serif;font-style:italic;font-size:13.5px;text-align:center}
+.cond-box .bogi b{font-weight:700;color:var(--navy-950)}
+
+/* ========== 비교 표 (Q3 같은 표 정리 문제) ========== */
+.compare-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px;font-family:'Pretendard Variable',sans-serif}
+.compare-table th{background:var(--navy-950);color:var(--gold-light);padding:8px 10px;font-weight:700;text-align:center;font-size:12px;letter-spacing:0.04em}
+.compare-table td{padding:8px 10px;border:1px solid var(--slate-300);background:white;vertical-align:top}
+.compare-table td.num{text-align:center;font-weight:800;color:var(--navy-950);width:40px;background:var(--slate-50)}
+.compare-table td.col-head{font-weight:700;color:var(--navy-950);width:24%;background:var(--slate-50)}
+
+/* ========== Matrix Table (Q4 같은 ABCD 짝짓기) ========== */
+.matrix-table{width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:13.5px;font-family:'Pretendard Variable',sans-serif}
+.matrix-table th{background:var(--slate-100);padding:8px 10px;font-weight:700;color:var(--navy-900);border:1px solid var(--slate-300);text-align:center}
+.matrix-table td{padding:7px 10px;border:1px solid var(--slate-300);text-align:center;background:white}
+.matrix-table td.num-cell{font-weight:800;color:var(--navy-950);background:var(--slate-50);width:44px}
+.matrix-table .correct-row td{background:var(--emerald-50)!important}
+.matrix-table .correct-row td.num-cell{color:var(--emerald-700);background:var(--emerald-50)!important}
+
+/* ========== 선지 ========== */
+.q-choices{display:flex;flex-direction:column;gap:5px;margin-bottom:18px}
+.q-choices .c{display:block;padding:8px 14px;font-size:14px;line-height:1.7;color:var(--slate-700);border-radius:2px}
+.q-choices .c .num{display:inline-block;font-weight:800;margin-right:8px;color:var(--navy-900);font-size:15px}
+.q-choices .c.correct{background:var(--emerald-50);border-left:3px solid var(--emerald-600)}
+.q-choices .c.correct .num{color:var(--emerald-700)}
+.q-choices.horz{flex-direction:row;flex-wrap:wrap;gap:6px 18px}
+
+/* ========== 서답형 헤더 ========== */
+.seodap-header{background:linear-gradient(135deg,#7C2D12,#9A3412);color:#FED7AA;padding:16px 24px;margin-top:8px;margin-bottom:16px;border-radius:3px 3px 0 0}
+.seodap-header h3{margin:0;font-size:16px;font-weight:800;letter-spacing:0.04em}
+.seodap-header .s-info{font-size:12px;color:#FDBA74;margin-top:4px;font-weight:500}
+
+/* ========== 정답표 ========== */
+.answer-sheet{width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;font-family:'Pretendard Variable',sans-serif}
+.answer-sheet th{background:var(--navy-950);color:var(--gold-light);padding:8px 10px;font-weight:700;letter-spacing:0.1em;text-align:center}
+.answer-sheet td{padding:7px 8px;text-align:center;border-bottom:1px solid var(--slate-200);font-weight:600}
+.answer-sheet tr:nth-child(even){background:var(--slate-50)}
+.answer-sheet .ans-row td{color:var(--rose-600);font-weight:800;font-size:15px}
+.answer-sheet .hdr-row td{color:var(--gold);font-weight:800;font-family:'Playfair Display',serif}
+
+/* ========== 펼치기 해설 (details/summary) ========== */
+details.ans{margin-top:18px;background:var(--navy-950);color:var(--cream);border-radius:0;overflow:hidden}
+details.ans summary{cursor:pointer;padding:14px 22px;font-size:12px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold-light);list-style:none;display:flex;align-items:center;justify-content:space-between;user-select:none}
+details.ans summary::-webkit-details-marker{display:none}
+details.ans summary::after{content:'▾';font-size:14px;color:var(--gold);transition:transform 0.2s}
+details.ans[open] summary::after{transform:rotate(180deg)}
+details.ans summary:hover{background:rgba(201,155,78,0.08)}
+.ans-body{padding:20px 24px 24px;font-size:14px;line-height:1.8;color:#D3CABA;border-top:1px solid rgba(228,197,137,0.2)}
+.ans-body .ans-label{display:inline-block;font-family:'Playfair Display',serif;font-style:italic;font-size:12px;font-weight:800;letter-spacing:0.1em;color:var(--gold);margin-bottom:8px}
+.ans-body .ans-main{font-size:16px;font-weight:700;color:var(--cream);margin-bottom:12px;letter-spacing:-0.01em;line-height:1.55}
+.ans-body .ans-main .en{font-family:'Playfair Display',serif;font-style:italic;font-weight:600}
+.ans-body .ans-detail{font-size:13.5px;line-height:1.78;color:#B8B0A2;padding-top:12px;border-top:1px dashed rgba(228,197,137,0.15)}
+.ans-body b{color:var(--gold-light);font-weight:700}
+.ans-body .ko-trans{margin-top:14px;padding:12px 16px;background:rgba(228,197,137,0.06);border-left:2px solid var(--gold);font-size:13px;color:#C9BFAD;line-height:1.75}
+.ans-body .ko-trans-label{display:block;font-weight:800;color:var(--gold);font-size:11px;letter-spacing:0.12em;margin-bottom:6px;text-transform:uppercase}
+.ans-body .note{margin-top:12px;padding:10px 14px;background:rgba(201,155,78,0.08);border-left:2px solid var(--gold);font-size:12.5px;color:#C9BFAD}
+.ans-body .step{margin:8px 0;padding-left:12px;border-left:2px solid rgba(201,155,78,0.3)}
+
+/* ========== Footer ========== */
+footer{background:var(--navy-950);color:#9BA39B;padding:40px 0;margin-top:80px;font-size:13px;line-height:1.7}
+footer .foot-grid{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+footer .foot-brand{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--cream);letter-spacing:-0.01em}
+footer .foot-brand .kor{display:block;font-family:'Pretendard Variable',sans-serif;font-size:13px;font-weight:500;color:var(--gold-light);margin-top:4px;letter-spacing:0.04em}
+footer .foot-meta{text-align:right;font-size:12px;color:var(--slate-500);letter-spacing:0.04em;line-height:1.8}
+footer .foot-meta b{color:var(--gold);font-weight:700}
+
+/* ========== Print 모드 ========== */
+@media print{
+  body{background:white;font-size:12px}
+  header.top{background:white;color:var(--navy-950);border-bottom:3px solid var(--navy-950);padding:20px 0}
+  .q-card{box-shadow:none;break-inside:avoid;margin-bottom:18px}
+  details.ans{background:white!important;color:var(--navy-950)!important;border:1px solid var(--slate-300)}
+  details.ans:not([open]) .ans-body{display:block!important}
+  details.ans summary{color:var(--navy-950)!important}
+  .ans-body{color:var(--slate-700)!important}
+  .ans-body b{color:var(--navy-950)!important}
+  .ans-body .ans-main{color:var(--navy-950)!important}
+  .ans-body .ans-detail{color:var(--slate-600)!important}
+  .ans-body .ko-trans{color:var(--slate-700)!important;background:var(--slate-50)!important}
+  footer{background:white;color:var(--slate-600);border-top:1px solid var(--slate-300);padding:20px 0;margin-top:40px}
+}
+
+/* ========== Mobile 반응형 ========== */
+@media(max-width:720px){
+  .container{padding:0 18px}
+  .meta-strip{grid-template-columns:repeat(2,1fr);gap:16px 0;row-gap:20px}
+  .meta-item{padding:0 12px;border-right:none}
+  .brand-row{flex-direction:column;align-items:flex-start;gap:12px}
+}
+
+/* ===== 3300제 문법 드릴 확장 ===== */
+.concept{background:var(--warm-white);border:1px solid var(--slate-200);border-left:4px solid var(--gold);padding:20px 24px;margin:0 0 22px}
+.concept .u-tag{display:inline-block;font-family:'Playfair Display',serif;font-style:italic;font-weight:800;font-size:12px;letter-spacing:0.1em;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+.concept h4{font-family:'Pretendard Variable',sans-serif;font-size:15px;font-weight:800;color:var(--navy-950);margin:16px 0 8px;letter-spacing:-0.01em}
+.concept h4:first-of-type{margin-top:4px}
+.concept .rule{font-size:13.5px;color:var(--slate-700);margin:4px 0 6px;line-height:1.7}
+.concept .rule b{color:var(--navy-900);font-weight:700}
+.concept .eg{font-family:'Playfair Display',serif;font-size:13.5px;line-height:1.85;color:var(--slate-700);padding:6px 0 6px 14px;border-left:2px solid var(--slate-300);margin:4px 0}
+.concept .eg b{color:var(--navy-950);font-weight:700;font-style:normal}
+.concept .eg .ko{font-family:'Pretendard Variable',sans-serif;color:var(--slate-500);font-size:12px}
+.concept .arrow{color:var(--gold);font-weight:800}
+.concept table{width:100%;border-collapse:collapse;margin:10px 0;font-size:12.5px;font-family:'Pretendard Variable',sans-serif}
+.concept th{background:var(--navy-950);color:var(--gold-light);padding:7px 9px;font-weight:700;text-align:left}
+.concept td{padding:6px 9px;border:1px solid var(--slate-200);background:white;vertical-align:top}
+.concept td.h{background:var(--slate-50);font-weight:700;color:var(--navy-900);white-space:nowrap}
+.concept .idiom{display:grid;grid-template-columns:1fr auto;gap:2px 16px;font-size:13px;line-height:1.7}
+.concept .idiom .en{font-family:'Playfair Display',serif;color:var(--slate-700)}
+.concept .idiom .en b{color:var(--navy-950);font-weight:700;font-style:normal}
+.concept .idiom .kr{color:var(--slate-500);font-size:12px;text-align:right;white-space:nowrap}
+
+.ex-tag{display:flex;align-items:baseline;gap:10px;margin:22px 0 6px;padding-bottom:8px;border-bottom:2px solid var(--navy-950)}
+.ex-tag .lt{font-family:'Playfair Display',serif;font-weight:900;font-style:italic;font-size:20px;color:var(--navy-950)}
+.ex-tag .inst{font-size:13px;font-weight:700;color:var(--slate-600)}
+.drill{list-style:none;counter-reset:d;margin:0;padding:0}
+.drill>li{counter-increment:d;position:relative;padding:12px 0 12px 34px;border-bottom:1px dashed var(--slate-200);font-size:14px;line-height:1.75}
+.drill>li::before{content:counter(d);position:absolute;left:0;top:11px;width:22px;height:22px;background:var(--navy-950);color:var(--gold-light);font-family:'Pretendard Variable',sans-serif;font-size:11px;font-weight:800;text-align:center;line-height:22px;border-radius:50%}
+.drill .en{font-family:'Playfair Display',serif;color:var(--slate-700)}
+.drill .en b{color:var(--navy-950);font-weight:700;font-style:normal}
+.blk{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--slate-500);margin:0 3px;vertical-align:baseline}
+.blk.w{min-width:120px}
+.paren{color:var(--slate-500);font-size:12px;font-family:'Pretendard Variable',sans-serif}
+.arw{color:var(--gold);font-weight:800;font-style:normal;margin:0 4px}
+.choices-in{margin:2px 0 0;font-family:'Playfair Display',serif;font-size:13.5px;color:var(--slate-600)}
+
+.ans-list{list-style:none;counter-reset:a;margin:6px 0 0;padding:0}
+.ans-list>li{counter-increment:a;position:relative;padding:6px 0 6px 30px;font-size:13.5px;line-height:1.7;border-top:1px dashed rgba(228,197,137,0.15)}
+.ans-list>li:first-child{border-top:none}
+.ans-list>li::before{content:counter(a);position:absolute;left:0;top:6px;width:19px;height:19px;background:var(--gold);color:var(--navy-950);font-size:10px;font-weight:800;text-align:center;line-height:19px;border-radius:50%}
+.ans-list .a{color:var(--gold-light);font-weight:800;font-family:'Playfair Display',serif}
+.ans-list .why{color:#B8B0A2;font-size:12.5px}
+
+
+/* ══ 펜 필기 모드 v1.0 ══ */
+#penToolbar{position:fixed;bottom:20px;right:20px;z-index:10000;display:flex;flex-direction:row;gap:8px;background:rgba(255,255,255,0.96);padding:8px;border-radius:30px;box-shadow:0 4px 20px rgba(0,0,0,0.18);backdrop-filter:blur(10px);align-items:center;}
+#penToolbar .pen-btn{width:42px;height:42px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-btn:hover{background:#e0e0e0;}
+#penToolbar .pen-btn.active{background:#2E75B6;color:white;}
+#penToolbar .pen-main{background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;font-size:20px;}
+#penToolbar .pen-main.active{background:linear-gradient(135deg,#dc2626,#ef4444);transform:scale(1.05);}
+#penToolbar .pen-tools{display:none;flex-direction:row;gap:6px;align-items:center;padding-left:8px;border-left:1px solid #ddd;margin-left:4px;}
+#penToolbar .pen-tools.show{display:flex;}
+#penToolbar .pen-color{width:30px;height:30px;border:2px solid white;border-radius:50%;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.2);transition:transform 0.15s;padding:0;}
+#penToolbar .pen-color:hover{transform:scale(1.1);}
+#penToolbar .pen-color.selected{border:2px solid #333;transform:scale(1.18);box-shadow:0 2px 6px rgba(0,0,0,0.3);}
+#penToolbar .pen-width{width:34px;height:34px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-width:hover{background:#e0e0e0;}
+#penToolbar .pen-width span{background:#333;border-radius:50%;display:inline-block;}
+#penToolbar .pen-width.selected{background:#1F3864;}
+#penToolbar .pen-width.selected span{background:white !important;}
+#penLayer{position:absolute;top:0;left:0;pointer-events:none;z-index:998;overflow:visible;}
+#penLayer.active{pointer-events:auto;touch-action:none;cursor:crosshair;}
+@media print{#penToolbar{display:none !important;}#penLayer{display:none !important;}}
+@media (max-width:600px){
+  #penToolbar{bottom:10px;right:10px;padding:6px;gap:4px;}
+  #penToolbar .pen-btn,#penToolbar .pen-width{width:38px;height:38px;}
+  #penToolbar .pen-color{width:26px;height:26px;}
+}
+
+</style>
+</head>
+<body>
+
+<!-- ========== Home Button (절대 변경 금지) ========== -->
+<a href="https://0505.co.kr" class="home-btn" title="목동서로영어학원 홈페이지">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg>
+  <span class="label">Home</span>
+</a>
+
+<!-- ========== Header (책 표지) ========== -->
+<header class="top"><div class="container">
+  <div class="brand-row">
+    <div class="brand">Mokdong Seoro <b>English Academy</b><span class="kor">목동서로영어학원 · 신목고·목운중·목동중 전문</span></div>
+    <div class="vol-tag">3300제 · Chapter XV</div>
+  </div>
+  <h1 class="book-title"><em>Voice</em> · 제15장 태<br>Complete Answer Key</h1>
+  <div class="book-subtitle">고교 내신수능 1등급 영문법연습 3300제 · 제15장 태(수동태) · 전문항 상세풀이<br>Unit 25 3형식 · Unit 26 4·5형식 · Unit 27 주의해야 할 수동태 · 필수암기 · 기출응용 37문항</div>
+  <div class="meta-strip">
+    <div class="meta-item"><div class="meta-lbl">CHAPTER</div><div class="meta-val">XV<span class="u">태</span></div></div>
+    <div class="meta-item"><div class="meta-lbl">UNIT</div><div class="meta-val">25–27<span class="u"></span></div></div>
+    <div class="meta-item"><div class="meta-lbl">EXERCISE</div><div class="meta-val">70<span class="u">문항</span></div></div>
+    <div class="meta-item"><div class="meta-lbl">기출응용</div><div class="meta-val">37<span class="u">문항</span></div></div>
+  </div>
+</div></header>
+
+<main><div class="container">
+
+<!-- ====================================================== -->
+<!-- 정답표 영역: 09_BUILD_PROTOCOL.md Step 2 참고            -->
+<!-- ====================================================== -->
+<div class="section-divider"><span>Answer Key<span class="kor">정답 일람표</span></span></div>
+
+<details class="ans"><summary>정답 일람표 펼치기 · 기출응용 37문항</summary><div class="ans-body"><table class="answer-sheet"><tr class="hdr-row"><td>기출</td><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr><tr class="ans-row"><td>답</td><td>⑤</td><td>④</td><td>↓</td><td>①</td><td>↓</td><td>③</td><td>↓</td><td>↓</td><td>④</td><td>②</td></tr><tr class="hdr-row"><td>기출</td><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th></tr><tr class="ans-row"><td>답</td><td>↓</td><td>④</td><td>↓</td><td>③</td><td>↓</td><td>③</td><td>↓</td><td>⑤</td><td>⑤</td><td>②</td></tr><tr class="hdr-row"><td>기출</td><th>21</th><th>22</th><th>23</th><th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>29</th><th>30</th></tr><tr class="ans-row"><td>답</td><td>↓</td><td>③</td><td>⑤</td><td>③</td><td>↓</td><td>⑤</td><td>↓</td><td>①</td><td>④</td><td>①</td></tr><tr class="hdr-row"><td>기출</td><th>31</th><th>32</th><th>33</th><th>34</th><th>35</th><th>36</th><th>37</th></tr><tr class="ans-row"><td>답</td><td>↓</td><td>③</td><td>①</td><td>②</td><td>↓</td><td>④</td><td>⑤</td></tr></table><div style="font-size:11.5px;color:#B8B0A2;margin-top:8px">※ 화살표(↓)로 표시된 서술형은 아래 상세 정답을 참고하세요. 각 문항의 자세한 해설은 문항 카드의 “정답 펼치기”에서 확인.</div><div style="margin-top:14px;font-size:12.5px;line-height:1.9;color:#C9BFAD"><b style="color:var(--gold)">서술형 정답</b><br><b>3.</b> was believed &nbsp; <b>5.</b> was charged &nbsp; <b>7.</b> thought to have &nbsp; <b>8.</b> packed / following &nbsp; <b>11.</b> By whom can the dishes be washed? &nbsp; <b>13.</b> was seen to &nbsp; <b>15.</b> Let the matter be discussed over dinner. &nbsp; <b>16.</b> ③ &nbsp; <b>17.</b> Don't let your eyes be opened until you hear the music. &nbsp; <b>21.</b> covered with &nbsp; <b>25.</b> was looked down on &nbsp; <b>27.</b> be done away with by &nbsp; <b>31.</b> surprised &nbsp; <b>35.</b> by them &nbsp; </div></div></details>
+
+<!-- ====================================================== -->
+<!-- 문항 영역: 10_QUESTION_PATTERNS.md 의 스니펫 사용         -->
+<!-- 각 article은 하나의 문항 또는 묶음 문항 (예: Q41-42)     -->
+<!-- 섹션 구분선(.section-divider)으로 카테고리 분리          -->
+<!-- ====================================================== -->
+
+<div class="section-divider"><span>Unit 25 · <em>3형식의 수동태</em><span class="kor">3형식의 수동태</span></span></div>
+
+<div class="concept">
+<span class="u-tag">Unit 25 · 3형식의 수동태</span>
+<h4>A. 능동태를 수동태로 바꾸는 방법</h4>
+<div class="rule">1. 능동태의 <b>목적어</b>를 수동태의 <b>주어</b>로 한다.</div>
+<div class="eg">He wrote <b>this novel</b>. <span class="arrow">→</span> <b>This novel</b> was written by him.</div>
+<div class="rule">2. 능동태의 동사는 <b>「be+과거분사」</b> 형태로 한다.</div>
+<div class="eg">They <b>love</b> their teacher. <span class="arrow">→</span> Their teacher <b>is loved</b> by them.</div>
+<div class="rule">3. 능동태의 주어는 <b>「by+목적격」</b> 형태로 한다.</div>
+<div class="eg">She built this house. <span class="arrow">→</span> This house was built <b>by her</b>.</div>
+<div class="rule"><b>cf)</b> 능동태의 주어가 일반인을 나타내거나 행위의 주체를 나타낼 필요가 없을 때는 「by+목적격」을 생략할 수 있다.</div>
+<h4>B. 수동태의 시제</h4>
+<table>
+<tr><th>시제</th><th>능동태</th><th>수동태</th></tr>
+<tr><td class="h">현재</td><td>I clean my room.</td><td>My room <b>is cleaned</b> by me.</td></tr>
+<tr><td class="h">과거</td><td>I cleaned my room.</td><td>My room <b>was cleaned</b> by me.</td></tr>
+<tr><td class="h">미래</td><td>I will clean my room.</td><td>My room <b>will be cleaned</b> by me.</td></tr>
+<tr><td class="h">현재완료</td><td>I have cleaned my room.</td><td>My room <b>has been cleaned</b> by me.</td></tr>
+<tr><td class="h">과거완료</td><td>I had cleaned my room.</td><td>My room <b>had been cleaned</b> by me.</td></tr>
+<tr><td class="h">미래완료</td><td>I will have cleaned my room.</td><td>My room <b>will have been cleaned</b> by me.</td></tr>
+<tr><td class="h">현재진행</td><td>I am cleaning my room.</td><td>My room <b>is being cleaned</b> by me.</td></tr>
+<tr><td class="h">과거진행</td><td>I was cleaning my room.</td><td>My room <b>was being cleaned</b> by me.</td></tr>
+</table>
+<h4>C. 목적어가 명사절인 경우</h4>
+<div class="rule">「It ~ that …」 구문으로 만들거나, that절 속의 주어를 수동태의 주어로 한다.</div>
+<div class="eg">They say that he is a hero. <span class="arrow">→</span> <b>It is said that</b> he is a hero. / He <b>is said to be</b> a hero.</div>
+<div class="rule"><b>cf)</b> that절 속의 동사 시제가 주절보다 앞서면 「to have+과거분사」 형태가 된다.</div>
+<div class="eg">People believe that she was guilty. <span class="arrow">→</span> She <b>is believed to have been</b> guilty.</div>
+<h4>D. 동사구의 수동태</h4>
+<div class="rule">laugh at, listen to, look after, look up to, look down on, do away with, make fun of, make a fool of, run over, look into … 같은 동사구는 수동태에서 <b>한 단어처럼</b> 취급한다.</div>
+<div class="eg">They laughed at me. <span class="arrow">→</span> I <b>was laughed at</b> by them.</div>
+<div class="eg">All of them look up to him. <span class="arrow">→</span> He <b>is looked up to</b> by all of them.</div>
+</div>
+
+<div class="ex-tag"><span class="lt">A</span><span class="inst">빈칸을 채워 다음 문장을 수동태로 바꾸세요.</span></div>
+<ol class="drill">
+<li>All Koreans love her. <span class="arw">→</span> <span class="blk"></span> is loved by all Koreans.</li>
+<li>He invented this computer. <span class="arw">→</span> <span class="blk w"></span> was invented by him.</li>
+<li>Jake took these pictures. <span class="arw">→</span> These pictures <span class="blk"></span> by Jake.</li>
+<li>The storm destroyed many buildings. <span class="arw">→</span> Many buildings <span class="blk"></span> by the storm.</li>
+<li>He will find the treasure. <span class="arw">→</span> The treasure <span class="blk"></span> by him.</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · A</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">She</span> <span class="why">능동 목적어 her→주어 She</span></li>
+<li><span class="a">This computer</span> <span class="why">목적어 this computer→주어</span></li>
+<li><span class="a">were taken</span> <span class="why">과거·복수주어 → were+p.p.</span></li>
+<li><span class="a">were destroyed</span> <span class="why">과거·복수주어</span></li>
+<li><span class="a">will be found</span> <span class="why">미래 → will be+p.p.</span></li>
+</ol></div></details>
+<div class="ex-tag"><span class="lt">B</span><span class="inst">빈칸을 채워 다음 문장을 수동태로 바꾸세요.</span></div>
+<ol class="drill">
+<li>We are using computers to run machines and factories. <span class="arw">→</span> Computers <span class="blk w"></span> to run machines and factories.</li>
+<li>They will kill the animals. <span class="arw">→</span> The animals <span class="blk"></span> by them.</li>
+<li>She had done it. <span class="arw">→</span> It <span class="blk"></span> by her.</li>
+<li>They were baking the cookies. <span class="arw">→</span> The cookies <span class="blk"></span> by them.</li>
+<li>I had bought a watch the day before. <span class="arw">→</span> A watch <span class="blk"></span> by me the day before.</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · B</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">are being used</span> <span class="why">현재진행 수동 → is/are being+p.p.</span></li>
+<li><span class="a">will be killed</span> <span class="why">미래</span></li>
+<li><span class="a">had been done</span> <span class="why">과거완료 → had been+p.p.</span></li>
+<li><span class="a">were being baked</span> <span class="why">과거진행 수동</span></li>
+<li><span class="a">had been bought</span> <span class="why">과거완료</span></li>
+</ol></div></details>
+<div class="ex-tag"><span class="lt">C</span><span class="inst">빈칸을 채워 다음 문장을 수동태로 바꾸세요.</span></div>
+<ol class="drill">
+<li>They report that Busan is famous for its beaches. <span class="arw">→</span> It is <span class="blk"></span> Busan is famous for its beaches. <span class="arw">→</span> Busan <span class="blk"></span> famous for its beaches.</li>
+<li>They believe that she had the key. <span class="arw">→</span> <span class="blk w"></span> she had the key. <span class="arw">→</span> She <span class="blk w"></span> the key.</li>
+<li>They say that the second team won. <span class="arw">→</span> <span class="blk w"></span> the second team won. <span class="arw">→</span> The second team <span class="blk w"></span>.</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · C</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">reported that / is reported to be</span> <span class="why">It is reported that ~ / 주어를 올린 형태</span></li>
+<li><span class="a">It is believed that / is believed to have had</span> <span class="why">종속절 시제(과거)가 앞서 → to have+p.p.</span></li>
+<li><span class="a">It is said that / is said to have won</span> <span class="why">won(과거)이 앞서 → to have won</span></li>
+</ol></div></details>
+<div class="ex-tag"><span class="lt">D</span><span class="inst">빈칸을 채워 다음 문장을 수동태로 바꾸세요.</span></div>
+<ol class="drill">
+<li>The detective looked into the accident. <span class="arw">→</span> The accident <span class="blk w"></span> by the detective.</li>
+<li>She laughed at the beggar. <span class="arw">→</span> The beggar <span class="blk w"></span> her.</li>
+<li>You should do away with your bad habit. <span class="arw">→</span> Your bad habit <span class="blk w"></span> you.</li>
+<li>She made a fool of her sister. <span class="arw">→</span> Her sister <span class="blk w"></span> her.</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · D</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">was looked into</span> <span class="why">look into 한 단어처럼</span></li>
+<li><span class="a">was laughed at by</span> <span class="why">laugh at + by</span></li>
+<li><span class="a">should be done away with by</span> <span class="why">조동사+be+동사구 p.p.+by</span></li>
+<li><span class="a">was made a fool of by</span> <span class="why">make a fool of 통째로</span></li>
+</ol></div></details>
+<div class="section-divider"><span>Unit 26 · <em>4·5형식의 수동태</em><span class="kor">4·5형식의 수동태</span></span></div>
+
+<div class="concept">
+<span class="u-tag">Unit 26 · 4·5형식의 수동태</span>
+<h4>A. 4형식의 수동태</h4>
+<div class="rule">1. 간접목적어·직접목적어가 <b>둘 다</b> 수동태 주어가 될 수 있는 동사: give, hand, lend, offer, pay, teach, show, promise, tell → 간접목적어 앞에 <b>to</b>. ask → 간접목적어 앞에 <b>of</b>.</div>
+<div class="eg">She gave me a chance. <span class="arrow">→</span> <b>I</b> was given a chance by her. / <b>A chance</b> was given <b>to</b> me by her.</div>
+<div class="rule">2. <b>직접목적어만</b> 수동태 주어가 되는 동사: pass, read, sing, write → 간접목적어 앞에 <b>to</b>. build, buy, choose, cook, do, find, get, make → 간접목적어 앞에 <b>for</b>.</div>
+<div class="eg">Mom wrote me a letter. <span class="arrow">→</span> A letter was written <b>to</b> me.<br>He bought me a nice bag. <span class="arrow">→</span> A nice bag was bought <b>for</b> me.</div>
+<div class="rule">3. 직접목적어를 수동태 주어로 쓸 수 <b>없는</b> 동사: envy, save, spare.</div>
+<div class="eg">I envy you your success. <span class="arrow">→</span> You are envied your success by me.</div>
+<h4>B. 5형식의 수동태</h4>
+<div class="rule">1. 능동태의 목적어가 수동태 주어가 되고, <b>목적보어는 주격보어 자리</b>에 온다.</div>
+<div class="eg">They called the baby Snow White. <span class="arrow">→</span> The baby was called <b>Snow White</b>.<br>You kept me waiting for an hour. <span class="arrow">→</span> I was kept <b>waiting</b> for an hour.</div>
+<div class="rule">2. 사역동사(make, help)·지각동사 문장이 수동태가 되면 목적보어인 동사원형이 <b>to부정사</b>가 된다.</div>
+<div class="eg">He made me care for the baby. <span class="arrow">→</span> I was made <b>to care</b> for the baby by him.<br>I saw a police officer enter the house. <span class="arrow">→</span> A police officer was seen <b>to enter</b> the house by me.</div>
+<div class="rule">3. 지각·사역동사의 목적보어가 <b>현재분사·과거분사</b>일 때는 형태가 변하지 않는다.</div>
+<div class="eg">I saw him painting the house. <span class="arrow">→</span> He was seen <b>painting</b> the house.</div>
+<div class="rule">4. 사역동사 <b>have</b>와 <b>let</b>은 수동형으로 쓰이지 못한다.</div>
+<div class="eg">She let me do the dishes. <span class="arrow">→</span> I was let to do the dishes. (×) / I was <b>allowed to</b> do the dishes. (○)</div>
+</div>
+
+<div class="ex-tag"><span class="lt">A</span><span class="inst">빈칸을 채워 다음 문장을 수동태로 바꾸세요.</span></div>
+<ol class="drill">
+<li>She bought him a muffler. <span class="arw">→</span> A muffler <span class="blk w"></span> him by her.</li>
+<li>He gave Jane a necklace. <span class="arw">→</span> Jane was <span class="blk w"></span> by him. <span class="arw">→</span> A necklace was <span class="blk w"></span> by him.</li>
+<li>I wrote her a letter. <span class="arw">→</span> A letter <span class="blk w"></span> by me.</li>
+<li>Some students asked me a confusing question. <span class="arw">→</span> A confusing question <span class="blk w"></span> by some students. <span class="arw">→</span> I <span class="blk w"></span> by some students.</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · A</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">was bought for</span> <span class="why">buy는 직접목적어만 주어 · for</span></li>
+<li><span class="a">given a necklace / given to Jane</span> <span class="why">give는 둘 다 주어 가능 · to</span></li>
+<li><span class="a">was written to her</span> <span class="why">write는 직접목적어만 · to</span></li>
+<li><span class="a">was asked of me / was asked a confusing question</span> <span class="why">ask는 of</span></li>
+</ol></div></details>
+<div class="ex-tag"><span class="lt">B</span><span class="inst">빈칸을 채워 다음 문장을 수동태로 바꾸세요.</span></div>
+<ol class="drill">
+<li>People found the movie moving. <span class="arw">→</span> The movie <span class="blk w"></span>.</li>
+<li>My mom persuaded me to go to the dentist. <span class="arw">→</span> I <span class="blk w"></span> to the dentist by my mom.</li>
+<li>We elected him chairman. <span class="arw">→</span> He <span class="blk w"></span> by us.</li>
+<li>The lady asked us to push her car. <span class="arw">→</span> We <span class="blk w"></span> her car by the lady.</li>
+<li>I heard her play the piano. <span class="arw">→</span> She <span class="blk w"></span> the piano by me.</li>
+<li>The police officer made Jack pull over at once. <span class="arw">→</span> Jack <span class="blk w"></span> over at once by the police officer.</li>
+<li>I saw some koalas eating leaves. <span class="arw">→</span> Some koalas <span class="blk w"></span> leaves by me.</li>
+<li>I made my boss satisfied with the result. <span class="arw">→</span> My boss <span class="blk w"></span> with the result by me.</li>
+<li>He let me play in the garden. <span class="arw">→</span> I <span class="blk w"></span> in the garden by him.</li>
+<li>I will let him go home right away. <span class="arw">→</span> He <span class="blk w"></span> home right away by me.</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · B</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">was found moving</span> <span class="why">5형식 · 목적보어 moving 유지</span></li>
+<li><span class="a">was persuaded to go</span> <span class="why">to부정사 목적보어 유지</span></li>
+<li><span class="a">was elected chairman</span> <span class="why">명사 보어</span></li>
+<li><span class="a">were asked to push</span> <span class="why">to부정사 유지</span></li>
+<li><span class="a">was heard to play</span> <span class="why">지각동사 → to부정사</span></li>
+<li><span class="a">was made to pull</span> <span class="why">사역 make → to부정사</span></li>
+<li><span class="a">were seen eating</span> <span class="why">현재분사 보어 유지</span></li>
+<li><span class="a">was made satisfied</span> <span class="why">과거분사 보어 유지</span></li>
+<li><span class="a">was allowed to play</span> <span class="why">let 수동 불가 → be allowed to</span></li>
+<li><span class="a">will be allowed to go</span> <span class="why">let → be allowed to</span></li>
+</ol></div></details>
+<div class="section-divider"><span>Unit 27 · <em>주의해야 할 수동태</em><span class="kor">주의해야 할 수동태</span></span></div>
+
+<div class="concept">
+<span class="u-tag">Unit 27 · 주의해야 할 수동태</span>
+<h4>A. 의문문의 수동태</h4>
+<div class="rule">의문문 <span class="arrow">→</span> 평서문 <span class="arrow">→</span> 수동태 <span class="arrow">→</span> 의문문의 단계로 고친다.</div>
+<div class="eg">Did you write this novel? <span class="arrow">→</span> Was this novel written <b>by you</b>?</div>
+<div class="rule">의문대명사(whom, what, which)가 목적어: 「의문사(주격)+be+p.p.+by+목적격」</div>
+<div class="eg">What did you do yesterday? <span class="arrow">→</span> <b>What was done</b> by you yesterday?</div>
+<div class="rule">의문사 who가 주어일 때:</div>
+<div class="eg">Who discovered coffee? <span class="arrow">→</span> <b>By whom was</b> coffee discovered?</div>
+<div class="rule">의문사가 있는 의문문:</div>
+<div class="eg">When did he take this picture? <span class="arrow">→</span> When was this picture taken?</div>
+<h4>B. 명령문의 수동태</h4>
+<div class="rule">1. 긍정명령문 <b>「Let+목적어+be+과거분사」</b></div>
+<div class="eg">Open the window. <span class="arrow">→</span> Let the window <b>be opened</b>.</div>
+<div class="rule">2. 부정명령문 ① <b>「Don't+let+목적어+be+p.p.」</b> ② <b>「Let+목적어+not+be+p.p.」</b></div>
+<div class="eg">Don't turn on the TV. <span class="arrow">→</span> Don't let the TV be turned on.<br>Don't waste your money. <span class="arrow">→</span> Let your money <b>not</b> be wasted.</div>
+<h4>C. 관용적 표현의 수동태</h4>
+<div class="idiom">
+<div class="en">be covered <b>with</b></div><div class="kr">~로 덮여 있다</div>
+<div class="en">be surprised <b>at</b></div><div class="kr">~에 놀라다</div>
+<div class="en">be satisfied <b>with</b></div><div class="kr">~에 만족하다</div>
+<div class="en">be pleased <b>with</b></div><div class="kr">~에 기뻐하다</div>
+<div class="en">be interested <b>in</b></div><div class="kr">~에 흥미가 있다</div>
+<div class="en">be known <b>to</b></div><div class="kr">~에게 알려져 있다</div>
+<div class="en">be known <b>as</b></div><div class="kr">~로 알려져 있다</div>
+<div class="en">be known <b>by</b></div><div class="kr">~에 의해 알 수 있다</div>
+<div class="en">be known <b>for</b></div><div class="kr">~로 유명하다</div>
+<div class="en">be disappointed <b>in</b></div><div class="kr">~(사람)에 실망하다</div>
+<div class="en">be disappointed <b>with</b></div><div class="kr">~(사물)에 실망하다</div>
+<div class="en">be caught <b>in</b></div><div class="kr">~에 갇히다(비 등)</div>
+<div class="en">be packed <b>with</b></div><div class="kr">~로 가득 차다</div>
+<div class="en">be divided <b>into</b></div><div class="kr">~로 나누어지다</div>
+<div class="en">be dressed <b>in</b></div><div class="kr">~을 입고 있다</div>
+<div class="en">be charged <b>with</b></div><div class="kr">~로 기소되다</div>
+<div class="en">be concerned <b>about</b></div><div class="kr">~을 걱정하다</div>
+<div class="en">be tired <b>of</b></div><div class="kr">~에 싫증나다</div>
+<div class="en">be absorbed <b>in</b></div><div class="kr">~에 몰두하다</div>
+<div class="en">be contented <b>with</b></div><div class="kr">~에 만족하다</div>
+<div class="en">be composed <b>of</b></div><div class="kr">~으로 구성되다</div>
+</div>
+<h4>D. 수동태로 사용될 수 없는 타동사</h4>
+<div class="rule"><b>escape, cost, resemble, become</b>(잘 어울리다)은 수동태로 사용될 수 없다.</div>
+<div class="eg">That girl resembles my sister. <span class="arrow">→</span> My sister is resembled by that girl. (×)</div>
+</div>
+
+<div class="ex-tag"><span class="lt">A</span><span class="inst">빈칸을 채워 다음 문장을 수동태로 바꾸세요.</span></div>
+<ol class="drill">
+<li>Did you cut the paper? <span class="arw">→</span> Was <span class="blk w"></span> by you?</li>
+<li>Did he give her a necklace? <span class="arw">→</span> Was a <span class="blk w"></span> by him?</li>
+<li>Who broke my favorite cup? <span class="arw">→</span> <span class="blk w"></span> my favorite cup <span class="blk"></span>?</li>
+<li>Who will clean the classroom? <span class="arw">→</span> <span class="blk w"></span> the classroom <span class="blk"></span>?</li>
+<li>What will they play at the concert? <span class="arw">→</span> <span class="blk w"></span> at the concert by them?</li>
+<li>Where did he buy the watch? <span class="arw">→</span> <span class="blk w"></span> by him?</li>
+<li>What did you buy? <span class="arw">→</span> <span class="blk w"></span> by you?</li>
+<li>How did you win the scholarship? <span class="arw">→</span> How <span class="blk w"></span> by you?</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · A</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">the paper cut</span> <span class="why">일반의문문 · 목적어→주어</span></li>
+<li><span class="a">necklace given (to) her</span> <span class="why">4형식 수동</span></li>
+<li><span class="a">By whom was / broken</span> <span class="why">who 주어 → By whom was ~ p.p.</span></li>
+<li><span class="a">By whom will / be cleaned</span> <span class="why">조동사 will</span></li>
+<li><span class="a">What will be played</span> <span class="why">what 목적어</span></li>
+<li><span class="a">Where was the watch bought</span> <span class="why">의문사 있는 의문문</span></li>
+<li><span class="a">What was bought</span> <span class="why">what 목적어</span></li>
+<li><span class="a">was the scholarship won</span> <span class="why">부사 의문사 유지</span></li>
+</ol></div></details>
+<div class="ex-tag"><span class="lt">B</span><span class="inst">다음 문장의 태를 바꿀 때 빈칸에 알맞은 어구를 쓰세요.</span></div>
+<ol class="drill">
+<li>Do your homework at once. <span class="arw">→</span> <span class="blk"></span> your homework <span class="blk w"></span> at once.</li>
+<li>Discuss this issue more thoroughly. <span class="arw">→</span> <span class="blk"></span> this issue <span class="blk w"></span> thoroughly.</li>
+<li>Close your eyes. <span class="arw">→</span> <span class="blk"></span> your eyes <span class="blk"></span>.</li>
+<li>Don't touch the button. <span class="arw">→</span> Don't <span class="blk w"></span>. <span class="arw">→</span> <span class="blk"></span> the button <span class="blk w"></span>.</li>
+<li>Don't forget this lesson. <span class="arw">→</span> Don't <span class="blk w"></span>. <span class="arw">→</span> <span class="blk"></span> this lesson <span class="blk w"></span>.</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · B</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">Let / be done</span> <span class="why">긍정명령문 · Let+O+be+p.p.</span></li>
+<li><span class="a">Let / be discussed more</span> <span class="why">Let+O+be+p.p.</span></li>
+<li><span class="a">Let / be closed</span> <span class="why"></span></li>
+<li><span class="a">let the button be touched / Let / not be touched</span> <span class="why">부정명령문 2가지</span></li>
+<li><span class="a">let this lesson be forgotten / Let / not be forgotten</span> <span class="why">부정명령문 2가지</span></li>
+</ol></div></details>
+<div class="section-divider"><span>필수암기 · <em>Unit 27 EXERCISE</em><span class="kor">관용 수동태 전치사 · 수동 불가 타동사</span></span></div>
+<div class="ex-tag"><span class="lt">C</span><span class="inst">다음 빈칸에 알맞은 전치사를 쓰세요. (관용적 수동태)</span></div>
+<ol class="drill">
+<li>A week is divided <span class="blk"></span> seven days.</li>
+<li>A man is known <span class="blk"></span> the company he keeps.</li>
+<li>He was known <span class="blk"></span> a teacher.</li>
+<li>He was pleased <span class="blk"></span> her invitation.</li>
+<li>She was surprised <span class="blk"></span> the news.</li>
+<li>Was he disappointed <span class="blk"></span> his new manager?</li>
+<li>My wife and I were caught <span class="blk"></span> a heavy rain.</li>
+<li>My boss was satisfied <span class="blk"></span> my report.</li>
+<li>The teacher is known <span class="blk"></span> his sense of humor.</li>
+<li>The bus was packed <span class="blk"></span> students.</li>
+<li>The professor was known <span class="blk"></span> everyone.</li>
+<li>The floor was covered <span class="blk"></span> dust.</li>
+<li>We were concerned <span class="blk"></span> the result of the final match.</li>
+<li>She is interested <span class="blk"></span> flower arrangement.</li>
+<li>He was charged <span class="blk"></span> theft.</li>
+<li>She was dressed <span class="blk"></span> white.</li>
+<li>She was contented <span class="blk"></span> the result.</li>
+<li>He was absorbed <span class="blk"></span> the novel she was reading.</li>
+<li>Forever is composed <span class="blk"></span> nows.</li>
+<li>I was tired <span class="blk"></span> being alone.</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · C</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">into</span> <span class="why">~로 나누어지다</span></li>
+<li><span class="a">by</span> <span class="why">~에 의해 알 수 있다</span></li>
+<li><span class="a">as</span> <span class="why">~로 알려져 있다</span></li>
+<li><span class="a">with</span> <span class="why">~에 기뻐하다</span></li>
+<li><span class="a">at</span> <span class="why">~에 놀라다</span></li>
+<li><span class="a">in</span> <span class="why">~(사람)에 실망하다</span></li>
+<li><span class="a">in</span> <span class="why">~에 갇히다</span></li>
+<li><span class="a">with</span> <span class="why">~에 만족하다</span></li>
+<li><span class="a">for</span> <span class="why">~로 유명하다</span></li>
+<li><span class="a">with</span> <span class="why">~로 가득 차다</span></li>
+<li><span class="a">to</span> <span class="why">~에게 알려져 있다</span></li>
+<li><span class="a">with</span> <span class="why">~로 덮여 있다</span></li>
+<li><span class="a">about</span> <span class="why">~을 걱정하다</span></li>
+<li><span class="a">in</span> <span class="why">~에 흥미가 있다</span></li>
+<li><span class="a">with</span> <span class="why">~로 기소되다</span></li>
+<li><span class="a">in</span> <span class="why">~을 입고 있다</span></li>
+<li><span class="a">with</span> <span class="why">~에 만족하다</span></li>
+<li><span class="a">in</span> <span class="why">~에 몰두하다</span></li>
+<li><span class="a">of</span> <span class="why">~으로 구성되다</span></li>
+<li><span class="a">of</span> <span class="why">~에 싫증나다</span></li>
+</ol></div></details>
+<div class="ex-tag"><span class="lt">D</span><span class="inst">다음 수동태 문장이 어법상 맞으면 ○, 틀리면 ✕.</span></div>
+<ol class="drill">
+<li>Gambling is resembled by life in a lot of ways.</li>
+<li>A lot of money was cost me to buy this house by it.</li>
+<li>My passport was stolen while I was in France.</li>
+<li>A prison was escaped from by him.</li>
+<li>I am become by this dress.</li>
+<li>He was looked after by Jane.</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · D</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">✕</span> <span class="why">resemble은 수동 불가 → Life resembles gambling ~</span></li>
+<li><span class="a">✕</span> <span class="why">cost는 수동 불가</span></li>
+<li><span class="a">○</span> <span class="why">steal의 정상 수동태</span></li>
+<li><span class="a">✕</span> <span class="why">escape는 수동 불가</span></li>
+<li><span class="a">✕</span> <span class="why">become(어울리다)은 수동 불가</span></li>
+<li><span class="a">○</span> <span class="why">look after 동사구 수동 가능</span></li>
+</ol></div></details>
+<div class="section-divider"><span>제15장 · <em>기출응용문제</em> (1–19)<span class="kor">기출응용문제 · 앞부분</span></span></div>
+<article class="q-card"><div class="q-head"><div class="q-num">1</div><div class="q-type blank">빈칸</div></div><div class="q-prompt">My school ______ in 1965. It is famous for its soccer team.</div><div class="q-choices"><div class="c"><span class="num">①</span> found</div>
+<div class="c"><span class="num">②</span> founds</div>
+<div class="c"><span class="num">③</span> founded</div>
+<div class="c"><span class="num">④</span> was found</div>
+<div class="c"><span class="num">⑤</span> was founded</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">⑤ was founded</span></div><div class="ans-detail">school은 <b>설립되는 대상</b>이므로 수동태. found(설립하다)의 과거분사는 founded → <span class="en">was founded</span>. find-found-found(찾다)와 혼동 주의.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">2</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 대화의 밑줄 친 부분 중 어법상 <b>틀린</b> 것은?</div><div class="q-choices"><div class="c"><span class="num">①</span> A: I’m looking forward <u>to the baseball game</u>.</div>
+<div class="c"><span class="num">②</span> B: It’s exciting <u>to watch</u> the teams compete.</div>
+<div class="c"><span class="num">③</span> A: Which team do you <u>think will win</u>?</div>
+<div class="c"><span class="num">④</span> A: I’m sure Korea can <u>be beaten them</u>.</div>
+<div class="c"><span class="num">⑤</span> B: I want Japan <u>to win</u>, anyway.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">④ A: I’m sure Korea can <u>be beaten them</u>.</span></div><div class="ans-detail">④ be beaten은 수동태인데 뒤에 목적어 them이 왔으므로 틀림. 능동 <b>beat</b>이 필요 → “Korea can <span class="en">beat</span> them.”</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">3</div><div class="q-type gram">전환</div></div><div class="q-prompt">두 문장이 같은 뜻이 되도록 빈칸을 채우세요.<br>We believed that the kid had swallowed the coin. = It ______ that the kid had swallowed the coin.</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">was believed</span></div><div class="ans-detail">명사절 목적어의 수동태 「It+be+p.p.+that ~」. 과거이므로 <b>was believed</b>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">4</div><div class="q-type choice">전환</div></div><div class="q-prompt">She has just finished her homework. 를 수동태로 바르게 바꾼 것은?</div><div class="q-choices"><div class="c"><span class="num">①</span> Her homework has just been finished by her.</div>
+<div class="c"><span class="num">②</span> Her homework has been just finished with her.</div>
+<div class="c"><span class="num">③</span> Her homework had just been finished by her.</div>
+<div class="c"><span class="num">④</span> Her homework had been just finishing with her.</div>
+<div class="c"><span class="num">⑤</span> Her homework has just been finishing by her.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">① Her homework has just been finished by her.</span></div><div class="ans-detail">현재완료 수동태는 <b>have/has been+p.p.</b>. just는 have와 p.p. 사이 → <span class="en">has just been finished by her</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">5</div><div class="q-type gram">영작</div></div><div class="q-prompt">우리말 뜻에 맞게 밑줄 친 단어를 올바른 형태로 바꾸세요.<br>그는 아동 학대죄로 기소되었다. — He <u>charge</u> with child-battering.</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">was charged</span></div><div class="ans-detail">be charged with = ~로 기소되다. 과거 → <b>was charged</b>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">6</div><div class="q-type choice">전환</div></div><div class="q-prompt">〈보기〉를 참고하여 아래 문장을 바르게 고친 것은?<br>Koreans say that Dokdo is part of Korea.</div><div class="q-choices"><div class="c"><span class="num">①</span> Dokdo is being said to be part of Korea.</div>
+<div class="c"><span class="num">②</span> Koreans are said that Dokdo is part of Korea.</div>
+<div class="c"><span class="num">③</span> Dokdo is said to be part of Korea.</div>
+<div class="c"><span class="num">④</span> Koreans are said to be part of Korea.</div>
+<div class="c"><span class="num">⑤</span> Part of Korea is said to be Dokdo by Koreans.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">③ Dokdo is said to be part of Korea.</span></div><div class="ans-detail">that절 주어를 올려 「S+be said+to부정사」 형태로. Dokdo is said to be part of Korea. ②는 주어(Koreans)를 잘못 올린 오답.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">7</div><div class="q-type gram">전환</div></div><div class="q-prompt">We think that he has an interest in animation. → He is ______ an interest in animation.</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">thought to have</span></div><div class="ans-detail">that절 주어(he)를 올린 수동태 「be thought to+동사원형」 → <b>thought to have</b>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">8</div><div class="q-type gram">영작</div></div><div class="q-prompt">우리말과 같도록 괄호 안의 단어를 올바른 형태로 고치세요.<br>그곳은 그 유명한 여배우를 따라다니는 학생들로 가득 차 있었다.<br>The place was ( pack ) with the students ( follow ) the famous actress.</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">packed , following</span></div><div class="ans-detail">be packed with = ~로 가득 차다 → <b>packed</b>. the students를 뒤에서 수식하는 현재분사 → <b>following</b>(능동, 학생들이 따라다님).</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">9</div><div class="q-type blank">빈칸</div></div><div class="q-prompt">It is a market which ______ to exchange products.</div><div class="q-choices"><div class="c"><span class="num">①</span> create</div>
+<div class="c"><span class="num">②</span> creates</div>
+<div class="c"><span class="num">③</span> created</div>
+<div class="c"><span class="num">④</span> was created</div>
+<div class="c"><span class="num">⑤</span> were created</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">④ was created</span></div><div class="ans-detail">market은 <b>만들어진 대상</b>이며 단수. 과거 수동 → <span class="en">was created</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">10</div><div class="q-type gram">어법</div></div><div class="q-prompt">빈칸 (A), (B)에 들어갈 단어가 알맞게 짝지어진 것은?<br>All disorders are (A) by people (B) illegal things.</div><div class="q-choices"><div class="c"><span class="num">①</span> make - commited</div>
+<div class="c"><span class="num">②</span> made - committing</div>
+<div class="c"><span class="num">③</span> make - commiting</div>
+<div class="c"><span class="num">④</span> made - commiting</div>
+<div class="c"><span class="num">⑤</span> made - committed</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">② made - committing</span></div><div class="ans-detail">(A) 무질서는 만들어지는 대상 → 수동 <b>made</b>. (B) people을 수식하며 “불법을 저지르는”(능동) → 현재분사 <b>committing</b>(commit의 -tt- 철자).</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">11</div><div class="q-type gram">전환</div></div><div class="q-prompt">〈보기〉와 같이 바꾸어 쓰세요.<br>보기: Who will clean the classroom? → By whom will the classroom be cleaned?<br>Who can wash the dishes?</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">By whom can the dishes be washed?</span></div><div class="ans-detail">who 주어 의문문의 수동태 → 「By whom+조동사+주어+be+p.p.?」.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">12</div><div class="q-type choice">어법</div></div><div class="q-prompt">다음 중 <b>어색한</b> 문장은?</div><div class="q-choices"><div class="c"><span class="num">①</span> A letter was written by her.</div>
+<div class="c"><span class="num">②</span> The car was being washed by us.</div>
+<div class="c"><span class="num">③</span> Who is loved by her?</div>
+<div class="c"><span class="num">④</span> He was heard sing my favorite song by me.</div>
+<div class="c"><span class="num">⑤</span> Let the painting job be finished.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">④ He was heard sing my favorite song by me.</span></div><div class="ans-detail">④ 지각동사 hear가 수동이 되면 목적보어 동사원형이 to부정사로 바뀐다 → <span class="en">was heard to sing</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">13</div><div class="q-type gram">전환</div></div><div class="q-prompt">He saw one of his friends cross the street. → One of his friends ______ cross the street by him.</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">was seen to</span></div><div class="ans-detail">지각동사 see의 수동태 → 목적보어 동사원형 cross가 to부정사로. was seen <b>to</b> cross.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">14</div><div class="q-type choice">전환</div></div><div class="q-prompt">His mother made him water the garden. 를 수동태로 바르게 바꾼 것은?</div><div class="q-choices"><div class="c"><span class="num">①</span> He was to watered the garden by his mother.</div>
+<div class="c"><span class="num">②</span> He was made water to the garden by his mother.</div>
+<div class="c"><span class="num">③</span> He was made to water the garden by his mother.</div>
+<div class="c"><span class="num">④</span> The garden was made to water by him his mother.</div>
+<div class="c"><span class="num">⑤</span> The garden was made to water him by his mother.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">③ He was made to water the garden by his mother.</span></div><div class="ans-detail">사역동사 make의 수동태 → 목적보어 water(동사원형)가 to부정사로. He was made <span class="en">to water</span> the garden.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">15</div><div class="q-type gram">전환</div></div><div class="q-prompt">Discuss the matter over dinner. (명령문을 수동태로)</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">Let the matter be discussed over dinner.</span></div><div class="ans-detail">긍정명령문 수동태 「Let+목적어+be+p.p.」.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">16</div><div class="q-type choice">전환</div></div><div class="q-prompt">Don’t conceal your good feelings toward her. 를 수동태로 바르게 바꾼 것은?</div><div class="q-choices"><div class="c"><span class="num">①</span> Let your good feelings toward her not be concealed.</div>
+<div class="c"><span class="num">②</span> Let your good feelings toward her don’t be concealed.</div>
+<div class="c"><span class="num">③</span> Don’t let your good feelings toward her be concealed.</div>
+<div class="c"><span class="num">④</span> Don’t let your good feelings toward her concealed.</div>
+<div class="c"><span class="num">⑤</span> Don’t let your good feelings toward her conceal.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">③ Don’t let your good feelings toward her be concealed.</span></div><div class="ans-detail">부정명령문 수동태 「Don’t let+목적어+be+p.p.」 → Don’t let ~ <span class="en">be concealed</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">17</div><div class="q-type gram">전환</div></div><div class="q-prompt">〈보기〉와 같이 바꾸세요.<br>보기: Don’t put it into your pocket. → Don’t let it be put into your pocket.<br>Don’t open your eyes until you hear the music.</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">Don’t let your eyes be opened until you hear the music.</span></div><div class="ans-detail">부정명령문 수동태 「Don’t let+O+be+p.p.」.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">18</div><div class="q-type choice">전환</div></div><div class="q-prompt">Sign this contract at once. 를 수동태로 바르게 바꾼 것은?</div><div class="q-choices"><div class="c"><span class="num">①</span> Be signed this contract at once.</div>
+<div class="c"><span class="num">②</span> Be this contract signed at once.</div>
+<div class="c"><span class="num">③</span> Let this contract signed at once.</div>
+<div class="c"><span class="num">④</span> Let this contract sign by you at once.</div>
+<div class="c"><span class="num">⑤</span> Let this contract be signed at once.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">⑤ Let this contract be signed at once.</span></div><div class="ans-detail">긍정명령문 수동태 「Let+목적어+be+p.p.」 → Let this contract <span class="en">be signed</span> at once.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">19</div><div class="q-type blank">빈칸</div></div><div class="q-prompt">Chopsticks are made ______ wood from rain forests.</div><div class="q-choices"><div class="c"><span class="num">①</span> in</div>
+<div class="c"><span class="num">②</span> on</div>
+<div class="c"><span class="num">③</span> from</div>
+<div class="c"><span class="num">④</span> of</div>
+<div class="c"><span class="num">⑤</span> out of</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">⑤ out of</span></div><div class="ans-detail">재료를 나타내는 be made 표현. 나무를 잘라 가공해 만든 것을 강조 → <b>be made out of</b>. (성질이 그대로 유지된다고 보면 of도 쓰이지만, 본 문항은 out of를 정답으로 함.)</div></div></details></article>
+<div class="section-divider"><span>제15장 · <em>기출응용문제</em> (20–37)<span class="kor">기출응용문제 · 뒷부분</span></span></div>
+<article class="q-card"><div class="q-head"><div class="q-num">20</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 문장 중에서 어법상 옳지 <b>않은</b> 것을 고르세요.</div><div class="q-choices"><div class="c"><span class="num">①</span> The National Museum of Korea was founded in 1945.</div>
+<div class="c"><span class="num">②</span> I was surprising at the news reported by him.</div>
+<div class="c"><span class="num">③</span> The play was written by Shakespeare.</div>
+<div class="c"><span class="num">④</span> Sara had the wall broken.</div>
+<div class="c"><span class="num">⑤</span> There were two foolish men shouting at a dog.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">② I was surprising at the news reported by him.</span></div><div class="ans-detail">② 감정을 “느끼는” 주어(I)는 <b>과거분사</b>를 써야 한다 → be surprised at → <span class="en">I was surprised at the news</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">21</div><div class="q-type gram">전환</div></div><div class="q-prompt">Snow covered the top of the mountain. → The top of the mountain was ______ snow.</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">covered with</span></div><div class="ans-detail">be covered with = ~로 덮여 있다.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">22</div><div class="q-type choice">전환</div></div><div class="q-prompt">두 문장의 빈칸에 공통으로 들어갈 알맞은 전치사를 고르세요.<br>• A day is divided ______ 24 hours. • The rain changed ______ snow.</div><div class="q-choices"><div class="c"><span class="num">①</span> off</div>
+<div class="c"><span class="num">②</span> with</div>
+<div class="c"><span class="num">③</span> into</div>
+<div class="c"><span class="num">④</span> by</div>
+<div class="c"><span class="num">⑤</span> on</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">③ into</span></div><div class="ans-detail">be divided <b>into</b> = ~로 나누어지다 / change <b>into</b> = ~로 바뀌다. 공통 전치사 <span class="en">into</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">23</div><div class="q-type choice">전환</div></div><div class="q-prompt">His answer satisfied my teacher. → My teacher ______ his answer.</div><div class="q-choices"><div class="c"><span class="num">①</span> is satisfied by</div>
+<div class="c"><span class="num">②</span> was satisfied by</div>
+<div class="c"><span class="num">③</span> satisfied</div>
+<div class="c"><span class="num">④</span> is satisfied with</div>
+<div class="c"><span class="num">⑤</span> was satisfied with</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">⑤ was satisfied with</span></div><div class="ans-detail">be satisfied <b>with</b> = ~에 만족하다. 과거이므로 <span class="en">was satisfied with</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">24</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 중 밑줄 친 전치사의 쓰임이 <b>잘못된</b> 것은?</div><div class="q-choices"><div class="c"><span class="num">①</span> They are interested <u>in</u> reading his novel.</div>
+<div class="c"><span class="num">②</span> She was quite satisfied <u>with</u> his proposal.</div>
+<div class="c"><span class="num">③</span> The professor was known <u>for</u> everyone.</div>
+<div class="c"><span class="num">④</span> Is he disappointed <u>in</u> his new secretary?</div>
+<div class="c"><span class="num">⑤</span> My friends were caught <u>in</u> a heavy rain.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">③ The professor was known <u>for</u> everyone.</span></div><div class="ans-detail">③ be known <b>to</b> = ~에게 알려져 있다. everyone에게 알려진 것이므로 for → <span class="en">to</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">25</div><div class="q-type gram">전환</div></div><div class="q-prompt">A few of them looked down on him. = He ______ by a few of them.</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">was looked down on</span></div><div class="ans-detail">look down on(경멸하다) 동사구 수동태. was <b>looked down on</b> by ~.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">26</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 중 밑줄 친 전치사의 쓰임이 <b>잘못된</b> 것은?</div><div class="q-choices"><div class="c"><span class="num">①</span> We are more concerned <u>about</u> receiving rather than giving.</div>
+<div class="c"><span class="num">②</span> The desk is made <u>of</u> wood.</div>
+<div class="c"><span class="num">③</span> He is known <u>as</u> a reporter.</div>
+<div class="c"><span class="num">④</span> I’m tired <u>of</u> taking care of naughty kids.</div>
+<div class="c"><span class="num">⑤</span> She will be pleased <u>of</u> his promotion.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">⑤ She will be pleased <u>of</u> his promotion.</span></div><div class="ans-detail">⑤ be pleased <b>with</b>(또는 at/about) = ~에 기뻐하다. of는 틀림 → <span class="en">with</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">27</div><div class="q-type gram">전환</div></div><div class="q-prompt">We should do away with this bad tradition. → This bad tradition should ______ us.</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">be done away with by</span></div><div class="ans-detail">do away with(폐지하다) 동사구 수동. 조동사 should+be+동사구p.p.+by → should <b>be done away with by</b>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">28</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 중 문법적으로 <b>잘못된</b> 문장을 고르세요.</div><div class="q-choices"><div class="c"><span class="num">①</span> My hamsters looked after by my sister.</div>
+<div class="c"><span class="num">②</span> An omelette was cooked for me by her.</div>
+<div class="c"><span class="num">③</span> It is said that time is money.</div>
+<div class="c"><span class="num">④</span> The wolf was seen to come out of the house by a hunter.</div>
+<div class="c"><span class="num">⑤</span> Let the work be done by one of them.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">① My hamsters looked after by my sister.</span></div><div class="ans-detail">① be동사가 빠졌다. look after 동사구 수동은 「be+looked after」 → <span class="en">were looked after</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">29</div><div class="q-type choice">전환</div></div><div class="q-prompt">Mary made a fool of him every day. → He ______ Mary every day.</div><div class="q-choices"><div class="c"><span class="num">①</span> was made a fool of</div>
+<div class="c"><span class="num">②</span> was made a fool by</div>
+<div class="c"><span class="num">③</span> was made a fool by of</div>
+<div class="c"><span class="num">④</span> was made a fool of by</div>
+<div class="c"><span class="num">⑤</span> was made a fool</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">④ was made a fool of by</span></div><div class="ans-detail">make a fool of(놀리다)를 한 덩어리로 수동태. 행위자 Mary 앞에 by → <span class="en">was made a fool of by</span> Mary.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">30</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 중 문맥상 stick의 가장 알맞은 형태는?<br>A number of students and commuters got ______ on the subway platform this morning.</div><div class="q-choices"><div class="c"><span class="num">①</span> stuck</div>
+<div class="c"><span class="num">②</span> stick</div>
+<div class="c"><span class="num">③</span> sticking</div>
+<div class="c"><span class="num">④</span> sticks</div>
+<div class="c"><span class="num">⑤</span> sticked</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">① stuck</span></div><div class="ans-detail">get stuck = 꼼짝 못하게 되다/갇히다. stick-stuck-stuck → <span class="en">stuck</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">31</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 문장에서 틀린 부분을 찾아 고치세요.<br>Don’t be surprising when you suddenly see a clean stream flowing along beautiful surroundings.</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">surprising → surprised</span></div><div class="ans-detail">감정을 느끼는 주어(you)는 과거분사. be <b>surprised</b>(놀라다).</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">32</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 글을 읽고 밑줄 친 단어를 알맞게 변형한 것을 고르세요.<br>Kangaroo is the animal’s name in the Australian native language. It <u>derive</u> from the word ga-urru, “a large black or grey species of kangaroo.”</div><div class="q-choices"><div class="c"><span class="num">①</span> deriving</div>
+<div class="c"><span class="num">②</span> derive</div>
+<div class="c"><span class="num">③</span> derives</div>
+<div class="c"><span class="num">④</span> is deriving</div>
+<div class="c"><span class="num">⑤</span> was deriving</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">③ derives</span></div><div class="ans-detail">derive from = ~에서 유래하다(자동사, 수동 아님). 일반적 사실·3인칭 단수 현재 → <span class="en">derives</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">33</div><div class="q-type blank">빈칸</div></div><div class="q-prompt">Ms. Johnson’s diamond necklace ______ from a safe in her bedroom.</div><div class="q-choices"><div class="c"><span class="num">①</span> was stolen</div>
+<div class="c"><span class="num">②</span> were stolen</div>
+<div class="c"><span class="num">③</span> was robbed</div>
+<div class="c"><span class="num">④</span> were robbed</div>
+<div class="c"><span class="num">⑤</span> robbed</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">① was stolen</span></div><div class="ans-detail">necklace(단수)는 도난당한 대상 → steal의 수동 <span class="en">was stolen</span>. rob은 사람·장소를 목적어로 하므로 부적절.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">34</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 문장들 중 어법상 <b>틀린</b> 문장의 개수는?<br>• Rhinos are hunted for their horns. • Dolphins are moving to another area. • The castle is surrounding by water. • I was never given any privileges. • The students are reacted differently to the survey.</div><div class="q-choices"><div class="c"><span class="num">①</span> 1개</div>
+<div class="c"><span class="num">②</span> 2개</div>
+<div class="c"><span class="num">③</span> 3개</div>
+<div class="c"><span class="num">④</span> 4개</div>
+<div class="c"><span class="num">⑤</span> 5개</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">② 2개</span></div><div class="ans-detail">틀린 문장은 2개. ③ 성은 “둘러싸이는” 대상 → is <b>surrounded</b> by. ⑤ react는 자동사라 수동 불가 → The students <b>react</b> differently.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">35</div><div class="q-type gram">전환</div></div><div class="q-prompt">다음 수동태 문장에서 생략할 수 있는 어구를 쓰세요.<br>English is spoken in Australia by them.</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">by them</span></div><div class="ans-detail">행위자가 일반인(they)이라 나타낼 필요가 없으므로 「by+목적격」 생략 가능 → <b>by them</b>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">36</div><div class="q-type choice">전환</div></div><div class="q-prompt">Who broke my favorite cup? 를 수동태로 바르게 바꾼 것은?</div><div class="q-choices"><div class="c"><span class="num">①</span> Was my favorite cup broken by whom?</div>
+<div class="c"><span class="num">②</span> Was my favorite cup broken who by?</div>
+<div class="c"><span class="num">③</span> Who was broken by my favorite cup?</div>
+<div class="c"><span class="num">④</span> By whom was my favorite cup broken?</div>
+<div class="c"><span class="num">⑤</span> By whom was broken my favorite cup?</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">④ By whom was my favorite cup broken?</span></div><div class="ans-detail">who 주어 의문문의 수동태 → 「By whom+be+주어+p.p.?」 → <span class="en">By whom was my favorite cup broken?</span></div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">37</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 중 밑줄 친 전치사의 쓰임이 <b>잘못된</b> 것은?</div><div class="q-choices"><div class="c"><span class="num">①</span> Our company is famous <u>for</u> a series of excellent English reference books.</div>
+<div class="c"><span class="num">②</span> She will be contented <u>with</u> the result.</div>
+<div class="c"><span class="num">③</span> You will be known <u>by</u> your friends.</div>
+<div class="c"><span class="num">④</span> Are you satisfied <u>with</u> your new house?</div>
+<div class="c"><span class="num">⑤</span> The office was packed <u>of</u> a lot of volunteers.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">⑤ The office was packed <u>of</u> a lot of volunteers.</span></div><div class="ans-detail">⑤ be packed <b>with</b> = ~로 가득 차다. of는 틀림 → <span class="en">with</span>.</div></div></details></article>
+<!-- {{INSERT_QUESTIONS_HERE}} -->
+
+</div></main>
+
+<!-- ========== Footer (학원 표기 절대 변경 금지) ========== -->
+<footer><div class="container"><div class="foot-grid">
+  <div class="foot-brand">Mokdong Seoro English Academy<span class="kor">목동서로영어학원 · 0505.co.kr</span></div>
+  <div class="foot-meta">신목고·목운중·목동중 전문 영어학원<br><b>고교 3300제 · 제15장 태 · 완전판 상세풀이</b><br>본 자료는 학원 수강생 전용 교육 자료입니다. 무단 배포 금지.<br>Unit 25 3형식 · Unit 26 4·5형식 · Unit 27 주의해야 할 수동태 · 기출응용 37문항</div>
+</div></div></footer>
+
+<script>
+/* ══ 펜 필기 모드 (자유 필기) v1.0 ══ */
+const PEN_COLORS=['#dc2626','#1F3864','#0f9d58','#f59e0b','#000000'];
+const PEN_WIDTHS=[2,4,7];
+let penEnabled=false,penColor='#dc2626',penWidth=4,penEraser=false;
+let penLayer=null,penPath=null,penPts=[];
+
+function buildPenTools(){
+  if(document.getElementById('penLayer'))return;
+  penLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  penLayer.id='penLayer';
+  document.body.appendChild(penLayer);
+  const tb=document.createElement('div');
+  tb.id='penToolbar';
+  let html='<button class="pen-btn pen-main" id="penToggle" title="펜 ON/OFF">✏️</button><div class="pen-tools" id="penTools">';
+  PEN_COLORS.forEach(c=>html+='<button class="pen-color" data-color="'+c+'" style="background:'+c+';" title="색상"></button>');
+  PEN_WIDTHS.forEach(w=>html+='<button class="pen-width" data-width="'+w+'" title="굵기"><span style="width:'+(w*2)+'px;height:'+(w*2)+'px;"></span></button>');
+  html+='<button class="pen-btn pen-eraser" id="penEraserBtn" title="개별 지우개">🧹</button><button class="pen-btn pen-clear" id="penClearBtn" title="전체 지우기">🗑️</button></div>';
+  tb.innerHTML=html;
+  document.body.appendChild(tb);
+  document.querySelector('.pen-color[data-color="'+penColor+'"]').classList.add('selected');
+  document.querySelector('.pen-width[data-width="'+penWidth+'"]').classList.add('selected');
+  document.getElementById('penToggle').addEventListener('click',togglePen);
+  document.querySelectorAll('.pen-color').forEach(b=>b.addEventListener('click',e=>{
+    const c=e.currentTarget.dataset.color;
+    penColor=c;penEraser=false;
+    document.querySelectorAll('.pen-color').forEach(x=>x.classList.toggle('selected',x.dataset.color===c));
+    document.getElementById('penEraserBtn').classList.remove('active');
+  }));
+  document.querySelectorAll('.pen-width').forEach(b=>b.addEventListener('click',e=>{
+    const w=+e.currentTarget.dataset.width;
+    penWidth=w;
+    document.querySelectorAll('.pen-width').forEach(x=>x.classList.toggle('selected',+x.dataset.width===w));
+  }));
+  document.getElementById('penEraserBtn').addEventListener('click',()=>{
+    penEraser=!penEraser;
+    document.getElementById('penEraserBtn').classList.toggle('active',penEraser);
+  });
+  document.getElementById('penClearBtn').addEventListener('click',()=>{
+    if(confirm('모든 필기를 지우시겠습니까?'))penLayer.innerHTML='';
+  });
+  penLayer.addEventListener('pointerdown',penDown);
+  penLayer.addEventListener('pointermove',penMove);
+  penLayer.addEventListener('pointerup',penUp);
+  penLayer.addEventListener('pointercancel',penUp);
+  penLayer.addEventListener('pointerleave',penUp);
+  const sync=()=>{
+    const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
+    const w=Math.max(document.body.scrollWidth,document.documentElement.scrollWidth);
+    penLayer.setAttribute('width',w);
+    penLayer.setAttribute('height',h);
+    penLayer.style.height=h+'px';
+    penLayer.style.width=w+'px';
+  };
+  sync();
+  if(window.ResizeObserver)new ResizeObserver(sync).observe(document.body);
+  window.addEventListener('resize',sync);
+  setInterval(sync,2000);
+}
+function togglePen(){
+  penEnabled=!penEnabled;
+  document.getElementById('penToggle').classList.toggle('active',penEnabled);
+  document.getElementById('penTools').classList.toggle('show',penEnabled);
+  penLayer.classList.toggle('active',penEnabled);
+}
+function getPenPt(e){
+  return {x:e.clientX+window.scrollX,y:e.clientY+window.scrollY};
+}
+function penDown(e){
+  if(!penEnabled)return;
+  e.preventDefault();
+  try{penLayer.setPointerCapture(e.pointerId);}catch(_){}
+  if(penEraser){eraseAt(e);return;}
+  const pt=getPenPt(e);
+  penPath=document.createElementNS('http://www.w3.org/2000/svg','path');
+  penPath.setAttribute('d','M '+pt.x+' '+pt.y);
+  penPath.setAttribute('stroke',penColor);
+  penPath.setAttribute('stroke-width',penWidth);
+  penPath.setAttribute('fill','none');
+  penPath.setAttribute('stroke-linecap','round');
+  penPath.setAttribute('stroke-linejoin','round');
+  penLayer.appendChild(penPath);
+  penPts=[pt];
+}
+function penMove(e){
+  if(!penEnabled)return;
+  if(penEraser&&e.buttons){eraseAt(e);return;}
+  if(!penPath)return;
+  e.preventDefault();
+  const pt=getPenPt(e);
+  const last=penPts[penPts.length-1];
+  if(Math.hypot(pt.x-last.x,pt.y-last.y)<1.5)return;
+  penPts.push(pt);
+  let d='M '+penPts[0].x+' '+penPts[0].y;
+  for(let i=1;i<penPts.length-1;i++){
+    const c=penPts[i],n=penPts[i+1];
+    const mx=(c.x+n.x)/2,my=(c.y+n.y)/2;
+    d+=' Q '+c.x+' '+c.y+' '+mx+' '+my;
+  }
+  if(penPts.length>=2){
+    const lp=penPts[penPts.length-1];
+    d+=' L '+lp.x+' '+lp.y;
+  }
+  penPath.setAttribute('d',d);
+}
+function penUp(e){
+  if(penPath){penPath=null;penPts=[];}
+}
+function eraseAt(e){
+  const pt=getPenPt(e);
+  const r=20;
+  const paths=Array.from(penLayer.querySelectorAll('path'));
+  for(const p of paths){
+    const bb=p.getBBox();
+    if(pt.x>=bb.x-r&&pt.x<=bb.x+bb.width+r&&pt.y>=bb.y-r&&pt.y<=bb.y+bb.height+r){
+      p.remove();
+    }
+  }
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',buildPenTools);
+}else{
+  setTimeout(buildPenTools,100);
+}
+</script>
+</body>
+</html>

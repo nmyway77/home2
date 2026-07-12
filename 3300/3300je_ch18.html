@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<!--
+========================================================================
+  ANSWER-KEY WORKBOOK · MASTER HTML TEMPLATE
+  목동서로영어학원 · Mokdong Seoro English Academy · 0505.co.kr
+========================================================================
+  사용법:
+    1. 이 파일 통째로 복사
+    2. 고교 3300제 · 제18장 동명사 · 상세풀이집, {{HEADER_*}} 등의 플레이스홀더를 시험 정보로 채움
+    3. <main><div class="container"> 안에 정답표 + 문항들 삽입
+    4. 각 문항은 10_ANSWERKEY_QUESTION_PATTERNS.md의 스니펫 사용
+
+  통합 CSS:
+    - 모의고사용 클래스 (.dialogue, .price-table, .chart-box, .info-box, .picture-box)
+    - 학교 내신용 클래스 (.spec-box, .cond-box, .compare-table, .matrix-table, .seodap-header)
+    - 양쪽 공통 (.q-card, .passage, .q-choices, details.ans 등)
+
+  변경 절대 금지:
+    - 색상 변수 (--navy-950, --gold, --cream)
+    - 폰트 패밀리 (Pretendard, Playfair Display)
+    - .home-btn 위치/스타일
+    - footer 학원 명기
+========================================================================
+-->
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>고교 3300제 · 제18장 동명사 · 상세풀이집</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+<style>
+/* ========== 색상·폰트 변수 (변경 금지) ========== */
+:root{
+  --cream:#FAF6EE;--cream-dark:#F0E9D8;--warm-white:#FEFBF5;
+  --navy-950:#0A1E3A;--navy-900:#112546;--navy-700:#2C3E63;
+  --gold:#C99B4E;--gold-light:#E4C589;
+  --slate-700:#334155;--slate-600:#475569;--slate-500:#64748B;--slate-400:#94A3B8;
+  --slate-300:#CBD5E1;--slate-200:#E2E8F0;--slate-100:#F1F5F9;--slate-50:#F8FAFC;
+  --emerald-700:#047857;--emerald-600:#059669;--emerald-50:#ECFDF5;
+  --rose-600:#DC2626;--rose-50:#FEF2F2;
+  --amber-600:#D97706;--amber-50:#FEF3C7;
+  --indigo-600:#4F46E5;--indigo-50:#EEF2FF;
+  --purple-700:#7E22CE;--purple-50:#FAF5FF;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--slate-700);font-family:'Pretendard Variable',-apple-system,sans-serif;font-size:15px;line-height:1.65;letter-spacing:-0.005em}
+.container{max-width:920px;margin:0 auto;padding:0 32px}
+
+/* ========== Home Button (우상단 고정, 변경 금지) ========== */
+.home-btn{position:fixed;top:20px;right:20px;z-index:999;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;background:var(--gold);color:var(--navy-950);text-decoration:none;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;box-shadow:0 4px 14px rgba(10,30,58,0.25);transition:all 0.2s;border:2px solid var(--navy-950)}
+.home-btn:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 6px 20px rgba(10,30,58,0.35)}
+.home-btn svg{width:14px;height:14px;fill:currentColor}
+@media(max-width:720px){.home-btn{top:12px;right:12px;padding:10px 12px}.home-btn .label{display:none}}
+@media print{.home-btn{display:none}}
+
+/* ========== Header (책 표지) ========== */
+header.top{background:var(--navy-950);color:var(--cream);padding:48px 0 56px;position:relative;overflow:hidden;border-bottom:4px solid var(--gold)}
+header.top::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,var(--gold) 50%,transparent 100%)}
+.brand-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;padding-bottom:22px;border-bottom:1px solid rgba(228,197,137,0.2)}
+.brand{font-family:'Playfair Display',serif;font-style:italic;font-weight:500;font-size:15px;color:var(--gold-light);letter-spacing:0.02em}
+.brand b{font-weight:700;color:var(--gold);margin-left:6px}
+.brand .kor{display:block;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:12px;color:var(--slate-300);letter-spacing:0.14em;margin-top:3px;font-weight:500}
+.vol-tag{font-family:'Playfair Display',serif;font-size:12px;font-weight:700;letter-spacing:0.24em;color:var(--gold);text-transform:uppercase}
+.book-title{font-family:'Playfair Display',serif;font-weight:900;font-style:italic;font-size:clamp(28px,5vw,46px);letter-spacing:-0.02em;color:var(--cream);line-height:1.1;margin-bottom:10px}
+.book-title em{font-style:italic;color:var(--gold);font-weight:700}
+.book-subtitle{font-weight:500;font-size:16px;color:#D3CABA;letter-spacing:-0.01em;margin-bottom:24px;line-height:1.5}
+.meta-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0;padding-top:22px;border-top:1px solid rgba(228,197,137,0.2)}
+.meta-item{padding:0 20px;border-right:1px solid rgba(228,197,137,0.15)}
+.meta-item:first-child{padding-left:0}
+.meta-item:last-child{border-right:none;padding-right:0}
+.meta-lbl{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:6px}
+.meta-val{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--cream);letter-spacing:-0.01em}
+.meta-val .u{font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:13px;color:var(--slate-300);margin-left:4px;font-weight:500}
+
+/* ========== Main Layout ========== */
+main{padding:48px 0 80px}
+.section-divider{text-align:center;margin:56px 0 36px;position:relative}
+.section-divider::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:var(--slate-300)}
+.section-divider span{position:relative;background:var(--cream);padding:0 28px;font-family:'Playfair Display',serif;font-style:italic;font-size:20px;font-weight:700;color:var(--navy-950);letter-spacing:-0.01em}
+.section-divider span .kor{display:block;font-style:normal;font-family:'Pretendard Variable',sans-serif;font-size:11px;letter-spacing:0.14em;color:var(--slate-500);text-transform:uppercase;font-weight:700;margin-top:4px}
+
+/* ========== Question Card ========== */
+.q-card{background:var(--warm-white);border:1px solid var(--slate-200);padding:clamp(24px,3vw,36px);margin-bottom:28px;box-shadow:0 1px 0 rgba(10,30,58,0.03)}
+.q-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--slate-200)}
+.q-num{font-family:'Playfair Display',serif;font-weight:800;font-style:italic;font-size:24px;color:var(--navy-950);letter-spacing:-0.02em;padding-right:14px;border-right:2px solid var(--slate-200)}
+.q-type{font-size:11px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;padding:5px 11px;border-radius:2px}
+/* Type colors per category */
+.q-type.listen{background:var(--indigo-600);color:#E0E7FF}
+.q-type.choice{background:var(--slate-700);color:var(--gold-light)}
+.q-type.gram{background:#7C3AED;color:#EDE9FE}
+.q-type.vocab{background:#0891B2;color:#ECFEFF}
+.q-type.blank{background:var(--navy-950);color:var(--gold-light)}
+.q-type.order{background:#059669;color:#D1FAE5}
+.q-type.insert{background:#D97706;color:#FEF3C7}
+.q-type.long{background:#BE123C;color:#FFE4E6}
+.q-type.theme{background:#BE123C;color:#FFE4E6}
+.q-type.seodap{background:#7C2D12;color:#FED7AA}
+.q-pts{font-size:11px;font-weight:700;color:var(--slate-500);padding:4px 10px;background:var(--slate-50);border:1px solid var(--slate-200);border-radius:999px;margin-left:auto;letter-spacing:0.04em}
+.q-prompt{font-size:15.5px;font-weight:700;color:var(--navy-950);margin-bottom:18px;line-height:1.6;letter-spacing:-0.01em}
+.q-prompt b{color:var(--rose-600);font-weight:800}
+
+/* ========== Passage (영어 지문) ========== */
+.passage{font-family:'Playfair Display',serif;font-size:14.5px;line-height:1.95;color:var(--slate-700);padding:22px 26px;background:var(--cream);border-left:3px solid var(--slate-400);margin-bottom:18px;border-radius:0 3px 3px 0}
+.passage.insert-box{border-left:3px solid var(--gold);background:#FFF8E1;margin-bottom:14px}
+.passage .label{display:block;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:11px;font-weight:800;letter-spacing:0.15em;color:var(--navy-900);margin-bottom:8px;text-transform:uppercase}
+.passage mark{background:#FFF3C4;padding:1px 4px;font-style:normal;font-weight:600;font-family:'Pretendard Variable',sans-serif;font-size:13.5px;color:var(--navy-900)}
+.passage mark.diff{background:#FECACA;border-bottom:2px solid var(--rose-600);color:var(--rose-600)}
+.passage mark.key{background:rgba(201,155,78,0.18);border-bottom:2px solid var(--gold)}
+.passage mark.under{background:transparent;border-bottom:1.5px solid var(--navy-900);color:var(--navy-950);font-weight:600;padding:0 2px}
+.passage mark.undbox{background:transparent;border:1px dashed var(--navy-700);color:var(--navy-950);font-weight:600;padding:1px 6px}
+.passage .blank-inline{display:inline-block;min-width:90px;border-bottom:1.5px solid var(--slate-500);padding:0 10px;margin:0 3px;font-weight:700;color:var(--navy-950)}
+.passage .blank-box{display:inline-block;padding:2px 10px;background:var(--navy-950);color:var(--gold-light);font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:12px;font-weight:800;margin:0 3px;border-radius:2px;letter-spacing:0.08em;vertical-align:baseline}
+.passage .circle-num{display:inline-block;width:18px;height:18px;border-radius:50%;background:var(--navy-950);color:var(--gold-light);font-family:'Pretendard Variable',sans-serif;font-size:11px;font-weight:800;text-align:center;line-height:18px;font-style:normal;margin:0 2px;vertical-align:baseline}
+.passage .label-num{display:inline-block;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-weight:800;color:var(--navy-900);margin-right:4px}
+
+/* ========== Passage Pair (A/B 병렬 지문) ========== */
+.passage-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+@media(max-width:720px){.passage-pair{grid-template-columns:1fr}}
+.passage-pair .passage{margin-bottom:0}
+
+/* ========== Dialogue (듣기 대본) ========== */
+.dialogue{font-family:'Playfair Display',serif;font-size:14px;line-height:1.9;color:var(--slate-700);padding:20px 24px;background:var(--indigo-50);border-left:3px solid var(--indigo-600);margin-bottom:16px;border-radius:0 3px 3px 0}
+.dialogue .label{font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:11px;font-weight:800;letter-spacing:0.15em;color:var(--indigo-600);margin-bottom:10px;display:block;text-transform:uppercase}
+.dialogue .speaker{font-weight:700;font-style:normal;color:var(--indigo-600);font-family:'Pretendard Variable',sans-serif;display:inline-block;min-width:24px}
+.dialogue p{margin:6px 0}
+
+/* ========== Q10용 가격 표 ========== */
+.price-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px;font-family:'Pretendard Variable',sans-serif}
+.price-table caption{font-weight:700;color:var(--navy-950);padding:6px;text-align:center;font-size:13px;background:var(--slate-100);border:1px solid var(--slate-300)}
+.price-table th{background:var(--navy-950);color:var(--gold-light);padding:7px 10px;font-weight:700;letter-spacing:0.06em;text-align:center;font-size:12px}
+.price-table td{padding:6px 10px;text-align:center;border:1px solid var(--slate-300);background:white}
+.price-table td:first-child{text-align:center;font-weight:700;color:var(--navy-950)}
+
+/* ========== 도표 (도표 일치 문제) ========== */
+.chart-box{background:white;border:1px solid var(--slate-300);padding:20px 24px;margin:12px 0}
+.chart-title{font-family:'Pretendard Variable',sans-serif;font-weight:800;font-size:14px;color:var(--navy-950);text-align:center;margin-bottom:6px}
+.chart-subtitle{font-size:11.5px;color:var(--slate-500);text-align:center;margin-bottom:14px;letter-spacing:0.02em}
+.chart-note{font-size:11px;color:var(--slate-500);font-style:italic;text-align:right;margin-top:6px}
+.bar-row{display:grid;grid-template-columns:220px 1fr 50px;gap:10px;align-items:center;margin:7px 0;font-size:12.5px;font-family:'Pretendard Variable',sans-serif}
+.bar-row .bar-label{text-align:right;font-weight:600;color:var(--slate-700)}
+.bar-row .bar-bg{height:18px;background:var(--slate-100);position:relative;border:1px solid var(--slate-200)}
+.bar-row .bar-fill{height:100%;display:inline-block}
+.bar-row .bar-val{font-weight:700;color:var(--navy-950);text-align:left}
+@media(max-width:720px){.bar-row{grid-template-columns:120px 1fr 40px;font-size:11px}}
+
+/* ========== 정보 박스 (실용문/안내문) ========== */
+.info-box{background:white;border:1.5px solid var(--slate-400);padding:20px 24px;margin:12px 0;font-family:'Playfair Display',serif;font-size:14px;line-height:1.8}
+.info-box .info-title{font-family:'Pretendard Variable',sans-serif;font-style:normal;font-weight:800;font-size:17px;color:var(--navy-950);text-align:center;padding-bottom:10px;border-bottom:2px solid var(--navy-950);margin-bottom:14px;letter-spacing:-0.01em}
+.info-box .field{font-family:'Pretendard Variable',sans-serif;font-style:normal;margin:6px 0}
+.info-box .field b{color:var(--navy-900);font-weight:700}
+.info-box ul{margin:6px 0;padding-left:20px;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:13.5px}
+.info-box li{margin:3px 0}
+
+/* ========== Picture Box (그림 일치) ========== */
+.picture-box{background:white;border:1px solid var(--slate-300);padding:18px;margin:12px 0;text-align:center}
+.picture-caption{font-family:'Pretendard Variable',sans-serif;font-size:12px;color:var(--slate-500);text-align:center;margin-top:8px}
+
+/* ========== 신목고용 spec-box (서답형 응용 지문) ========== */
+.spec-box{background:white;border:1.5px solid var(--slate-400);padding:18px 22px;margin:12px 0;font-family:'Playfair Display',serif;font-size:14px;line-height:1.8}
+.spec-box .spec-title{font-family:'Pretendard Variable',sans-serif;font-style:normal;font-weight:800;font-size:17px;color:var(--navy-950);text-align:center;padding-bottom:10px;border-bottom:2px solid var(--navy-950);margin-bottom:14px;letter-spacing:-0.01em}
+.spec-box .field{font-family:'Pretendard Variable',sans-serif;font-style:normal;margin:6px 0;font-size:13.5px}
+.spec-box .field b{color:var(--navy-900);font-weight:700}
+.spec-box ul{margin:6px 0;padding-left:20px;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:13.5px}
+.spec-box li{margin:3px 0}
+
+/* ========== 조건 박스 (서답형 <조건>) ========== */
+.cond-box{background:#FAF5FF;border:1px solid #D8B4FE;padding:14px 18px;margin:10px 0;font-size:13px;font-family:'Pretendard Variable',sans-serif;border-radius:3px}
+.cond-box .cond-title{font-weight:800;color:var(--purple-700);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px}
+.cond-box ol{margin:4px 0 4px 20px;padding:0}
+.cond-box li{margin:2px 0;line-height:1.65}
+.cond-box .bogi{margin-top:10px;padding:8px 12px;background:white;border:1px dashed var(--purple-700);border-radius:2px;font-family:'Playfair Display',serif;font-style:italic;font-size:13.5px;text-align:center}
+.cond-box .bogi b{font-weight:700;color:var(--navy-950)}
+
+/* ========== 비교 표 (Q3 같은 표 정리 문제) ========== */
+.compare-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px;font-family:'Pretendard Variable',sans-serif}
+.compare-table th{background:var(--navy-950);color:var(--gold-light);padding:8px 10px;font-weight:700;text-align:center;font-size:12px;letter-spacing:0.04em}
+.compare-table td{padding:8px 10px;border:1px solid var(--slate-300);background:white;vertical-align:top}
+.compare-table td.num{text-align:center;font-weight:800;color:var(--navy-950);width:40px;background:var(--slate-50)}
+.compare-table td.col-head{font-weight:700;color:var(--navy-950);width:24%;background:var(--slate-50)}
+
+/* ========== Matrix Table (Q4 같은 ABCD 짝짓기) ========== */
+.matrix-table{width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:13.5px;font-family:'Pretendard Variable',sans-serif}
+.matrix-table th{background:var(--slate-100);padding:8px 10px;font-weight:700;color:var(--navy-900);border:1px solid var(--slate-300);text-align:center}
+.matrix-table td{padding:7px 10px;border:1px solid var(--slate-300);text-align:center;background:white}
+.matrix-table td.num-cell{font-weight:800;color:var(--navy-950);background:var(--slate-50);width:44px}
+.matrix-table .correct-row td{background:var(--emerald-50)!important}
+.matrix-table .correct-row td.num-cell{color:var(--emerald-700);background:var(--emerald-50)!important}
+
+/* ========== 선지 ========== */
+.q-choices{display:flex;flex-direction:column;gap:5px;margin-bottom:18px}
+.q-choices .c{display:block;padding:8px 14px;font-size:14px;line-height:1.7;color:var(--slate-700);border-radius:2px}
+.q-choices .c .num{display:inline-block;font-weight:800;margin-right:8px;color:var(--navy-900);font-size:15px}
+.q-choices .c.correct{background:var(--emerald-50);border-left:3px solid var(--emerald-600)}
+.q-choices .c.correct .num{color:var(--emerald-700)}
+.q-choices.horz{flex-direction:row;flex-wrap:wrap;gap:6px 18px}
+
+/* ========== 서답형 헤더 ========== */
+.seodap-header{background:linear-gradient(135deg,#7C2D12,#9A3412);color:#FED7AA;padding:16px 24px;margin-top:8px;margin-bottom:16px;border-radius:3px 3px 0 0}
+.seodap-header h3{margin:0;font-size:16px;font-weight:800;letter-spacing:0.04em}
+.seodap-header .s-info{font-size:12px;color:#FDBA74;margin-top:4px;font-weight:500}
+
+/* ========== 정답표 ========== */
+.answer-sheet{width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;font-family:'Pretendard Variable',sans-serif}
+.answer-sheet th{background:var(--navy-950);color:var(--gold-light);padding:8px 10px;font-weight:700;letter-spacing:0.1em;text-align:center}
+.answer-sheet td{padding:7px 8px;text-align:center;border-bottom:1px solid var(--slate-200);font-weight:600}
+.answer-sheet tr:nth-child(even){background:var(--slate-50)}
+.answer-sheet .ans-row td{color:var(--rose-600);font-weight:800;font-size:15px}
+.answer-sheet .hdr-row td{color:var(--gold);font-weight:800;font-family:'Playfair Display',serif}
+
+/* ========== 펼치기 해설 (details/summary) ========== */
+details.ans{margin-top:18px;background:var(--navy-950);color:var(--cream);border-radius:0;overflow:hidden}
+details.ans summary{cursor:pointer;padding:14px 22px;font-size:12px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold-light);list-style:none;display:flex;align-items:center;justify-content:space-between;user-select:none}
+details.ans summary::-webkit-details-marker{display:none}
+details.ans summary::after{content:'▾';font-size:14px;color:var(--gold);transition:transform 0.2s}
+details.ans[open] summary::after{transform:rotate(180deg)}
+details.ans summary:hover{background:rgba(201,155,78,0.08)}
+.ans-body{padding:20px 24px 24px;font-size:14px;line-height:1.8;color:#D3CABA;border-top:1px solid rgba(228,197,137,0.2)}
+.ans-body .ans-label{display:inline-block;font-family:'Playfair Display',serif;font-style:italic;font-size:12px;font-weight:800;letter-spacing:0.1em;color:var(--gold);margin-bottom:8px}
+.ans-body .ans-main{font-size:16px;font-weight:700;color:var(--cream);margin-bottom:12px;letter-spacing:-0.01em;line-height:1.55}
+.ans-body .ans-main .en{font-family:'Playfair Display',serif;font-style:italic;font-weight:600}
+.ans-body .ans-detail{font-size:13.5px;line-height:1.78;color:#B8B0A2;padding-top:12px;border-top:1px dashed rgba(228,197,137,0.15)}
+.ans-body b{color:var(--gold-light);font-weight:700}
+.ans-body .ko-trans{margin-top:14px;padding:12px 16px;background:rgba(228,197,137,0.06);border-left:2px solid var(--gold);font-size:13px;color:#C9BFAD;line-height:1.75}
+.ans-body .ko-trans-label{display:block;font-weight:800;color:var(--gold);font-size:11px;letter-spacing:0.12em;margin-bottom:6px;text-transform:uppercase}
+.ans-body .note{margin-top:12px;padding:10px 14px;background:rgba(201,155,78,0.08);border-left:2px solid var(--gold);font-size:12.5px;color:#C9BFAD}
+.ans-body .step{margin:8px 0;padding-left:12px;border-left:2px solid rgba(201,155,78,0.3)}
+
+/* ========== Footer ========== */
+footer{background:var(--navy-950);color:#9BA39B;padding:40px 0;margin-top:80px;font-size:13px;line-height:1.7}
+footer .foot-grid{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+footer .foot-brand{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--cream);letter-spacing:-0.01em}
+footer .foot-brand .kor{display:block;font-family:'Pretendard Variable',sans-serif;font-size:13px;font-weight:500;color:var(--gold-light);margin-top:4px;letter-spacing:0.04em}
+footer .foot-meta{text-align:right;font-size:12px;color:var(--slate-500);letter-spacing:0.04em;line-height:1.8}
+footer .foot-meta b{color:var(--gold);font-weight:700}
+
+/* ========== Print 모드 ========== */
+@media print{
+  body{background:white;font-size:12px}
+  header.top{background:white;color:var(--navy-950);border-bottom:3px solid var(--navy-950);padding:20px 0}
+  .q-card{box-shadow:none;break-inside:avoid;margin-bottom:18px}
+  details.ans{background:white!important;color:var(--navy-950)!important;border:1px solid var(--slate-300)}
+  details.ans:not([open]) .ans-body{display:block!important}
+  details.ans summary{color:var(--navy-950)!important}
+  .ans-body{color:var(--slate-700)!important}
+  .ans-body b{color:var(--navy-950)!important}
+  .ans-body .ans-main{color:var(--navy-950)!important}
+  .ans-body .ans-detail{color:var(--slate-600)!important}
+  .ans-body .ko-trans{color:var(--slate-700)!important;background:var(--slate-50)!important}
+  footer{background:white;color:var(--slate-600);border-top:1px solid var(--slate-300);padding:20px 0;margin-top:40px}
+}
+
+/* ========== Mobile 반응형 ========== */
+@media(max-width:720px){
+  .container{padding:0 18px}
+  .meta-strip{grid-template-columns:repeat(2,1fr);gap:16px 0;row-gap:20px}
+  .meta-item{padding:0 12px;border-right:none}
+  .brand-row{flex-direction:column;align-items:flex-start;gap:12px}
+}
+
+/* ===== 3300제 문법 드릴 확장 ===== */
+.concept{background:var(--warm-white);border:1px solid var(--slate-200);border-left:4px solid var(--gold);padding:20px 24px;margin:0 0 22px}
+.concept .u-tag{display:inline-block;font-family:'Playfair Display',serif;font-style:italic;font-weight:800;font-size:12px;letter-spacing:0.1em;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+.concept h4{font-family:'Pretendard Variable',sans-serif;font-size:15px;font-weight:800;color:var(--navy-950);margin:16px 0 8px;letter-spacing:-0.01em}
+.concept h4:first-of-type{margin-top:4px}
+.concept .rule{font-size:13.5px;color:var(--slate-700);margin:4px 0 6px;line-height:1.7}
+.concept .rule b{color:var(--navy-900);font-weight:700}
+.concept .eg{font-family:'Playfair Display',serif;font-size:13.5px;line-height:1.85;color:var(--slate-700);padding:6px 0 6px 14px;border-left:2px solid var(--slate-300);margin:4px 0}
+.concept .eg b{color:var(--navy-950);font-weight:700;font-style:normal}
+.concept .eg .ko{font-family:'Pretendard Variable',sans-serif;color:var(--slate-500);font-size:12px}
+.concept .arrow{color:var(--gold);font-weight:800}
+.concept table{width:100%;border-collapse:collapse;margin:10px 0;font-size:12.5px;font-family:'Pretendard Variable',sans-serif}
+.concept th{background:var(--navy-950);color:var(--gold-light);padding:7px 9px;font-weight:700;text-align:left}
+.concept td{padding:6px 9px;border:1px solid var(--slate-200);background:white;vertical-align:top}
+.concept td.h{background:var(--slate-50);font-weight:700;color:var(--navy-900);white-space:nowrap}
+.concept .idiom{display:grid;grid-template-columns:1fr auto;gap:2px 16px;font-size:13px;line-height:1.7}
+.concept .idiom .en{font-family:'Playfair Display',serif;color:var(--slate-700)}
+.concept .idiom .en b{color:var(--navy-950);font-weight:700;font-style:normal}
+.concept .idiom .kr{color:var(--slate-500);font-size:12px;text-align:right;white-space:nowrap}
+
+.ex-tag{display:flex;align-items:baseline;gap:10px;margin:22px 0 6px;padding-bottom:8px;border-bottom:2px solid var(--navy-950)}
+.ex-tag .lt{font-family:'Playfair Display',serif;font-weight:900;font-style:italic;font-size:20px;color:var(--navy-950)}
+.ex-tag .inst{font-size:13px;font-weight:700;color:var(--slate-600)}
+.drill{list-style:none;counter-reset:d;margin:0;padding:0}
+.drill>li{counter-increment:d;position:relative;padding:12px 0 12px 34px;border-bottom:1px dashed var(--slate-200);font-size:14px;line-height:1.75}
+.drill>li::before{content:counter(d);position:absolute;left:0;top:11px;width:22px;height:22px;background:var(--navy-950);color:var(--gold-light);font-family:'Pretendard Variable',sans-serif;font-size:11px;font-weight:800;text-align:center;line-height:22px;border-radius:50%}
+.drill .en{font-family:'Playfair Display',serif;color:var(--slate-700)}
+.drill .en b{color:var(--navy-950);font-weight:700;font-style:normal}
+.blk{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--slate-500);margin:0 3px;vertical-align:baseline}
+.blk.w{min-width:120px}
+.paren{color:var(--slate-500);font-size:12px;font-family:'Pretendard Variable',sans-serif}
+.arw{color:var(--gold);font-weight:800;font-style:normal;margin:0 4px}
+.choices-in{margin:2px 0 0;font-family:'Playfair Display',serif;font-size:13.5px;color:var(--slate-600)}
+
+.ans-list{list-style:none;counter-reset:a;margin:6px 0 0;padding:0}
+.ans-list>li{counter-increment:a;position:relative;padding:6px 0 6px 30px;font-size:13.5px;line-height:1.7;border-top:1px dashed rgba(228,197,137,0.15)}
+.ans-list>li:first-child{border-top:none}
+.ans-list>li::before{content:counter(a);position:absolute;left:0;top:6px;width:19px;height:19px;background:var(--gold);color:var(--navy-950);font-size:10px;font-weight:800;text-align:center;line-height:19px;border-radius:50%}
+.ans-list .a{color:var(--gold-light);font-weight:800;font-family:'Playfair Display',serif}
+.ans-list .why{color:#B8B0A2;font-size:12.5px}
+
+
+/* ══ 펜 필기 모드 v1.0 ══ */
+#penToolbar{position:fixed;bottom:20px;right:20px;z-index:10000;display:flex;flex-direction:row;gap:8px;background:rgba(255,255,255,0.96);padding:8px;border-radius:30px;box-shadow:0 4px 20px rgba(0,0,0,0.18);backdrop-filter:blur(10px);align-items:center;}
+#penToolbar .pen-btn{width:42px;height:42px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-btn:hover{background:#e0e0e0;}
+#penToolbar .pen-btn.active{background:#2E75B6;color:white;}
+#penToolbar .pen-main{background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;font-size:20px;}
+#penToolbar .pen-main.active{background:linear-gradient(135deg,#dc2626,#ef4444);transform:scale(1.05);}
+#penToolbar .pen-tools{display:none;flex-direction:row;gap:6px;align-items:center;padding-left:8px;border-left:1px solid #ddd;margin-left:4px;}
+#penToolbar .pen-tools.show{display:flex;}
+#penToolbar .pen-color{width:30px;height:30px;border:2px solid white;border-radius:50%;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.2);transition:transform 0.15s;padding:0;}
+#penToolbar .pen-color:hover{transform:scale(1.1);}
+#penToolbar .pen-color.selected{border:2px solid #333;transform:scale(1.18);box-shadow:0 2px 6px rgba(0,0,0,0.3);}
+#penToolbar .pen-width{width:34px;height:34px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-width:hover{background:#e0e0e0;}
+#penToolbar .pen-width span{background:#333;border-radius:50%;display:inline-block;}
+#penToolbar .pen-width.selected{background:#1F3864;}
+#penToolbar .pen-width.selected span{background:white !important;}
+#penLayer{position:absolute;top:0;left:0;pointer-events:none;z-index:998;overflow:visible;}
+#penLayer.active{pointer-events:auto;touch-action:none;cursor:crosshair;}
+@media print{#penToolbar{display:none !important;}#penLayer{display:none !important;}}
+@media (max-width:600px){
+  #penToolbar{bottom:10px;right:10px;padding:6px;gap:4px;}
+  #penToolbar .pen-btn,#penToolbar .pen-width{width:38px;height:38px;}
+  #penToolbar .pen-color{width:26px;height:26px;}
+}
+
+</style>
+</head>
+<body>
+
+<!-- ========== Home Button (절대 변경 금지) ========== -->
+<a href="https://0505.co.kr" class="home-btn" title="목동서로영어학원 홈페이지">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg>
+  <span class="label">Home</span>
+</a>
+
+<!-- ========== Header (책 표지) ========== -->
+<header class="top"><div class="container">
+  <div class="brand-row">
+    <div class="brand">Mokdong Seoro <b>English Academy</b><span class="kor">목동서로영어학원 · 신목고·목운중·목동중 전문</span></div>
+    <div class="vol-tag">3300제 · Chapter XVIII</div>
+  </div>
+  <h1 class="book-title">제18장 동명사<br><span style="font-family:'Playfair Display',serif;font-style:italic;font-weight:800;color:var(--gold)">Gerund</span></h1>
+  <div class="book-subtitle">고교 내신수능 1등급 영문법연습 3300제 · 제18장 동명사 · 전문항 상세풀이<br>Unit 33 동명사의 용법 · 기출응용 37문항</div>
+  <div class="meta-strip">
+    <div class="meta-item"><div class="meta-lbl">CHAPTER</div><div class="meta-val">XVIII<span class="u">동명사</span></div></div>
+    <div class="meta-item"><div class="meta-lbl">UNIT</div><div class="meta-val">33<span class="u"></span></div></div>
+    <div class="meta-item"><div class="meta-lbl">기출응용</div><div class="meta-val">37<span class="u">문항</span></div></div>
+    <div class="meta-item"><div class="meta-lbl">난이도</div><div class="meta-val">내신·수능<span class="u"></span></div></div>
+  </div>
+</div></header>
+
+<main><div class="container">
+
+<!-- ====================================================== -->
+<!-- 정답표 영역: 09_BUILD_PROTOCOL.md Step 2 참고            -->
+<!-- ====================================================== -->
+<div class="section-divider"><span>Answer Key<span class="kor">정답 일람표</span></span></div>
+
+<details class="ans"><summary>정답 일람표 펼치기 · 기출응용 37문항</summary><div class="ans-body"><table class="answer-sheet"><tr class="hdr-row"><td>기출</td><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr><tr class="ans-row"><td>답</td><td>⑤</td><td>②</td><td>③</td><td>her</td><td>↓</td><td>②</td><td>①</td><td>④</td><td>↓</td><td>③</td></tr><tr class="hdr-row"><td>기출</td><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th></tr><tr class="ans-row"><td>답</td><td>↓</td><td>①</td><td>③</td><td>③</td><td>②</td><td>④</td><td>③</td><td>④</td><td>④</td><td>②</td></tr><tr class="hdr-row"><td>기출</td><th>21</th><th>22</th><th>23</th><th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>29</th><th>30</th></tr><tr class="ans-row"><td>답</td><td>④</td><td>⑤</td><td>④</td><td>↓</td><td>②</td><td>↓</td><td>③</td><td>⑤</td><td>⑤</td><td>④</td></tr><tr class="hdr-row"><td>기출</td><th>31</th><th>32</th><th>33</th><th>34</th><th>35</th><th>36</th><th>37</th></tr><tr class="ans-row"><td>답</td><td>④</td><td>③</td><td>↓</td><td>④</td><td>↓</td><td>④</td><td>①</td></tr></table><div style="font-size:11.5px;color:#B8B0A2;margin-top:8px">※ ↓ 표시 서술형은 아래 상세 정답 및 각 카드 해설 참고.</div><div style="margin-top:12px;font-size:12.5px;line-height:1.9;color:#C9BFAD"><b style="color:var(--gold)">서술형 정답</b><br><b>4.</b> her &nbsp; <b>5.</b> begin→beginning &nbsp; <b>7.</b> ① &nbsp; <b>9.</b> regretting &nbsp; <b>11.</b> worry→worrying &nbsp; <b>24.</b> seeing the attractive woman &nbsp; <b>26.</b> make→making &nbsp; <b>33.</b> shop→shopping &nbsp; <b>35.</b> being chased &nbsp; </div></div></details>
+
+<!-- ====================================================== -->
+<!-- 문항 영역: 10_QUESTION_PATTERNS.md 의 스니펫 사용         -->
+<!-- 각 article은 하나의 문항 또는 묶음 문항 (예: Q41-42)     -->
+<!-- 섹션 구분선(.section-divider)으로 카테고리 분리          -->
+<!-- ====================================================== -->
+
+<div class="section-divider"><span>Unit 33 · <em>동명사의 용법</em><span class="kor">기능·의미상 주어·시제·관용구</span></span></div>
+
+<div class="concept">
+<span class="u-tag">Unit 33 · 동명사의 용법</span>
+<h4>A. 동명사의 기능</h4>
+<div class="rule">1. <b>주어</b> : Surfing the Internet is very interesting.</div>
+<div class="rule">2. <b>보어</b> : My hobby is collecting stamps.</div>
+<div class="rule">3. <b>타동사의 목적어</b> : I enjoyed playing soccer last summer.</div>
+<div class="rule">4. <b>전치사의 목적어</b> : Thank you for helping me.</div>
+<h4>B. 동명사의 의미상의 주어</h4>
+<div class="rule">1. <b>나타내지 않는 경우</b> — ① 문장의 주어와 같을 때 (I like reading his novels.) ② 일반인일 때 (Smoking indoors is prohibited.) ③ 문장의 목적어와 같을 때 (I praised him for working hard.)</div>
+<div class="rule">2. <b>나타내는 경우</b> — ① 사람·생물은 <b>소유격</b>이 원칙 (Do you mind <b>my</b> smoking here? / <b>Your</b> doing things should result in success.) ② 부정대명사·고유명사·무생물·추상명사는 <b>목적격(=주격)</b> (I can’t stand <b>Mary</b> acting like that. / He was sure of <b>the news</b> being true. / We imagined <b>the television set</b> falling down the stairs.)</div>
+<h4>C. 동명사의 시제·태·부정</h4>
+<div class="rule">1. <b>단순동명사 ~ing</b> — 동사와 시제가 같거나 그 이후. (She is proud of <b>having</b> a race car. = She is proud that she has a race car.)<br>cf) remember, forget+단순동명사는 <b>과거</b>의 일. (I remember <b>seeing</b> her once. / I forgot <b>posting</b> the package the day before.)</div>
+<div class="rule">2. <b>완료형 동명사 having+p.p.</b> — 동사의 시제보다 <b>먼저</b> 일어난 일. (He denies <b>having stolen</b> the bag. = He denies that he stole the bag.)</div>
+<div class="rule">3. <b>수동형 동명사</b> — She was afraid of <b>being seen</b> by her friends. / He was ashamed of <b>having been fired</b>.</div>
+<div class="rule">4. <b>동명사의 부정</b> — 동명사 앞에 not이나 never. (I’m sorry for your <b>not having</b> come with us.)</div>
+<h4>D. 동명사와 부정사를 목적어로 취하는 동사</h4>
+<div class="rule">1. <b>동명사만</b> : delay, enjoy, finish, keep, give up, mind, postpone, put off, quit, suggest, avoid, admit, look forward to, stop<br>cf) I stopped <b>to watch</b> TV(~하기 위해 멈추다)는 to부정사가 부사구.</div>
+<div class="rule">2. <b>부정사만</b> : agree, choose, decide, expect, hope, plan, prepare, promise, refuse, seem, wish, would like, pretend, order, desire</div>
+<div class="rule">3. <b>둘 다 취하며 뜻 같음</b> : begin, start, continue, love, hate, like</div>
+<div class="rule">4. <b>둘 다 취하며 뜻 다름</b> : try+부정사(~하려 노력)/+동명사(시험 삼아 ~해보다) · forget/remember+부정사(~할 것)/+동명사(~한 것) · regret+부정사(~해서 유감)/+동명사(~한 것을 후회)</div>
+<h4>E. 동명사의 관용적 구문</h4>
+<div class="idiom">
+<span class="en"><b>be used to</b> ~ing</span><span class="kr">~에 익숙해 있다</span>
+<span class="en"><b>be busy</b> ~ing</span><span class="kr">~하느라 바쁘다</span>
+<span class="en"><b>cannot help</b> ~ing</span><span class="kr">~하지 않을 수 없다</span>
+<span class="en"><b>feel like</b> ~ing</span><span class="kr">~하고 싶다</span>
+<span class="en"><b>go</b> ~ing</span><span class="kr">~하러 가다</span>
+<span class="en"><b>have difficulty(trouble) (in)</b> ~ing</span><span class="kr">~하는 데 어려움을 겪다</span>
+<span class="en"><b>It’s no use</b> ~ing</span><span class="kr">~해도 소용없다</span>
+<span class="en"><b>look forward to</b> ~ing</span><span class="kr">~하기를 고대하다</span>
+<span class="en"><b>on</b> ~ing</span><span class="kr">~하자마자</span>
+<span class="en"><b>spend … </b> ~ing</span><span class="kr">~하느라 …를 소비하다</span>
+<span class="en"><b>be worth</b> ~ing</span><span class="kr">~할 가치가 있다</span>
+<span class="en"><b>be far from</b> ~ing</span><span class="kr">결코 ~않다</span>
+<span class="en"><b>need</b> ~ing</span><span class="kr">~할 필요가 있다(=need to be p.p.)</span>
+</div>
+</div>
+
+<div class="ex-tag"><span class="lt">A</span><span class="inst">〈보기〉의 단어를 이용하여 빈칸에 알맞은 동명사를 써 넣으세요. 〈보기: listen, take, invite, keep, bake, get, play, surf〉</span></div>
+<ol class="drill">
+<li>(주어) <span class="blk w"></span> the Internet is fun.</li>
+<li>(주어) <span class="blk w"></span> up early is good for health.</li>
+<li>(보어) His hobby is <span class="blk w"></span> basketball.</li>
+<li>(보어) The topic was <span class="blk w"></span> pets at home.</li>
+<li>(타동사 목적어) Do you like <span class="blk w"></span> cookies?</li>
+<li>(타동사 목적어) I love <span class="blk w"></span> to music.</li>
+<li>(전치사 목적어) I came here quickly by <span class="blk w"></span> a taxi.</li>
+<li>(전치사 목적어) Thank you for <span class="blk w"></span> me.</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · A</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">Surfing</span> <span class="why">주어 역할 동명사</span></li>
+<li><span class="a">Getting</span> <span class="why">주어</span></li>
+<li><span class="a">playing</span> <span class="why">보어</span></li>
+<li><span class="a">keeping</span> <span class="why">보어</span></li>
+<li><span class="a">baking</span> <span class="why">like의 목적어</span></li>
+<li><span class="a">listening</span> <span class="why">love의 목적어</span></li>
+<li><span class="a">taking</span> <span class="why">by+동명사</span></li>
+<li><span class="a">inviting</span> <span class="why">for+동명사</span></li>
+</ol></div></details>
+<div class="ex-tag"><span class="lt">B</span><span class="inst">동명사의 의미상 주어가 문장의 주어와 같으면 ①, 일반인이면 ②, 문장의 목적어와 같으면 ③, 소유격·목적격으로 나타나 있으면 ④를 쓰세요.</span></div>
+<ol class="drill">
+<li>Playing computer games is exciting. [ <span class="blk"></span> ]</li>
+<li>I’m sorry for not having come to your party. [ <span class="blk"></span> ]</li>
+<li>I gave up playing the piano. [ <span class="blk"></span> ]</li>
+<li>I congratulate you on entering high school. [ <span class="blk"></span> ]</li>
+<li>I’m looking forward to my son’s passing the exam. [ <span class="blk"></span> ]</li>
+<li>Making a decision is not easy. [ <span class="blk"></span> ]</li>
+<li>I like running with my dog. [ <span class="blk"></span> ]</li>
+<li>He is ashamed of not being handsome. [ <span class="blk"></span> ]</li>
+<li>I don’t like his punishing his students. [ <span class="blk"></span> ]</li>
+<li>John talking with her does not surprise me. [ <span class="blk"></span> ]</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · B</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">②</span> <span class="why">일반인 · 명시된 주어 없음</span></li>
+<li><span class="a">①</span> <span class="why">의미상 주어 = 문장 주어 I</span></li>
+<li><span class="a">①</span> <span class="why">주어 I와 일치</span></li>
+<li><span class="a">③</span> <span class="why">목적어 you와 일치</span></li>
+<li><span class="a">④</span> <span class="why">소유격 my son’s</span></li>
+<li><span class="a">②</span> <span class="why">일반인</span></li>
+<li><span class="a">①</span> <span class="why">주어 I</span></li>
+<li><span class="a">①</span> <span class="why">주어 He</span></li>
+<li><span class="a">④</span> <span class="why">소유격 his</span></li>
+<li><span class="a">④</span> <span class="why">고유명사 목적격 John</span></li>
+</ol></div></details>
+<div class="ex-tag"><span class="lt">C</span><span class="inst">다음 문장에서 어법상 가장 알맞은 어구를 괄호 속에서 고르세요.</span></div>
+<ol class="drill">
+<li>Don’t be afraid of <div class="choices-in">( asking , having asked )</div> for my help.</li>
+<li>I remember <div class="choices-in">( seeing , to see )</div> you somewhere once.</li>
+<li>I regret <div class="choices-in">( having never been , never having been )</div> abroad while young.</li>
+<li>He is sorry for <div class="choices-in">( having been , being )</div> idle in his youth.</li>
+<li>Judy’s proud of <div class="choices-in">( having studied , studying )</div> hard in school days.</li>
+<li>I am afraid of <div class="choices-in">( kidnapping , being kidnapped )</div>.</li>
+<li>I am worried about <div class="choices-in">( not having finished , having not finished )</div> the report.</li>
+<li>His trip to Jirisan led to his <div class="choices-in">( to marry , marrying )</div> an attractive girl.</li>
+<li>He objected to <div class="choices-in">( go , going )</div> camping with another party.</li>
+<li>The driver was so hungry that he stopped <div class="choices-in">( to eat , eating )</div> at diners.</li>
+<li>She was proud of <div class="choices-in">( been , being )</div> slim.</li>
+<li>Fish can swim without <div class="choices-in">( teaching , being taught )</div>.</li>
+<li>Can you remember <div class="choices-in">( selling , to sell )</div> the tickets by tomorrow?</li>
+<li>I’m sorry, but I forgot <div class="choices-in">( paying , to pay )</div> him the bill a few hours ago.</li>
+<li>He is sure of your <div class="choices-in">( breaking , having broken )</div> the vase.</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · C</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">asking</span> <span class="why">단순동명사 · 동시</span></li>
+<li><span class="a">seeing</span> <span class="why">remember+동명사 = 과거</span></li>
+<li><span class="a">never having been</span> <span class="why">부정어는 동명사 앞</span></li>
+<li><span class="a">having been</span> <span class="why">과거 · 완료동명사</span></li>
+<li><span class="a">having studied</span> <span class="why">과거 · 완료동명사</span></li>
+<li><span class="a">being kidnapped</span> <span class="why">수동 · being p.p.</span></li>
+<li><span class="a">not having finished</span> <span class="why">부정어 not이 앞</span></li>
+<li><span class="a">marrying</span> <span class="why">led to+(동)명사 · to는 전치사</span></li>
+<li><span class="a">going</span> <span class="why">object to+동명사</span></li>
+<li><span class="a">to eat</span> <span class="why">~하기 위해 멈추다 · 부사적</span></li>
+<li><span class="a">being</span> <span class="why">전치사 of+동명사</span></li>
+<li><span class="a">being taught</span> <span class="why">수동 · 배워지는 것</span></li>
+<li><span class="a">to sell</span> <span class="why">미래(by tomorrow) · remember+to부정사</span></li>
+<li><span class="a">paying</span> <span class="why">몇 시간 전 이미 지불 · 과거 → forget+동명사</span></li>
+<li><span class="a">having broken</span> <span class="why">과거 · 완료동명사</span></li>
+</ol></div></details>
+<div class="ex-tag"><span class="lt">D</span><span class="inst">다음 문장에서 어법상 가장 알맞은 어구를 고르세요.</span></div>
+<ol class="drill">
+<li>I’d like <div class="choices-in">( to have , having )</div> a beef sandwich.</li>
+<li>Usually they don’t mind <div class="choices-in">( to go , going )</div> around in the rain.</li>
+<li>My friends don’t want <div class="choices-in">( to talk , talking )</div> with me.</li>
+<li>In fact, he never stopped <div class="choices-in">( to smoke , smoking )</div> for a week.</li>
+<li>Louis decided <div class="choices-in">( to find , finding )</div> a better way.</li>
+<li>We promised <div class="choices-in">( to meet , meeting )</div> at the riverside every Sunday.</li>
+<li>I finished <div class="choices-in">( to read , reading )</div> the story of Lincoln.</li>
+<li>I’m planning <div class="choices-in">( to keep , keeping )</div> a diary in English.</li>
+<li>Tom kept <div class="choices-in">( to think , thinking )</div> about his bottle.</li>
+<li>He gave up <div class="choices-in">( to play , playing )</div> the guitar.</li>
+<li>He delayed <div class="choices-in">( to clean , cleaning )</div> his room.</li>
+<li>Did you refuse <div class="choices-in">( to do , doing )</div> the dishes?</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · D</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">to have</span> <span class="why">would like+to부정사</span></li>
+<li><span class="a">going</span> <span class="why">mind+동명사</span></li>
+<li><span class="a">to talk</span> <span class="why">want+to부정사</span></li>
+<li><span class="a">smoking</span> <span class="why">일주일간 담배를 끊지 못함 · stop+동명사</span></li>
+<li><span class="a">to find</span> <span class="why">decide+to부정사</span></li>
+<li><span class="a">to meet</span> <span class="why">promise+to부정사</span></li>
+<li><span class="a">reading</span> <span class="why">finish+동명사</span></li>
+<li><span class="a">to keep</span> <span class="why">plan+to부정사</span></li>
+<li><span class="a">thinking</span> <span class="why">keep+동명사</span></li>
+<li><span class="a">playing</span> <span class="why">give up+동명사</span></li>
+<li><span class="a">cleaning</span> <span class="why">delay+동명사</span></li>
+<li><span class="a">to do</span> <span class="why">refuse+to부정사</span></li>
+</ol></div></details>
+<div class="ex-tag"><span class="lt">E-1</span><span class="inst">괄호 안의 동사를 알맞은 형태로 바꾸세요.</span></div>
+<ol class="drill">
+<li>How about (make) time for your friends? <span class="arw">→</span> <span class="blk w"></span></li>
+<li>This car needs to (repair). <span class="arw">→</span> <span class="blk w"></span></li>
+<li>The man was busy (plant) trees in the garden. <span class="arw">→</span> <span class="blk w"></span></li>
+<li>Engineers spent their time (think) of new ideas. <span class="arw">→</span> <span class="blk w"></span></li>
+<li>They had no choice but (stop) crying. <span class="arw">→</span> <span class="blk w"></span></li>
+<li>I feel like (sleep) all day long. <span class="arw">→</span> <span class="blk w"></span></li>
+<li>What do you think of (meet) her tonight? <span class="arw">→</span> <span class="blk w"></span></li>
+<li>When you go (climb), make sure that you put out your fire. <span class="arw">→</span> <span class="blk w"></span></li>
+<li>It is no use just (excuse) it. <span class="arw">→</span> <span class="blk w"></span></li>
+<li>I’m looking forward to (attend) the meeting. <span class="arw">→</span> <span class="blk w"></span></li>
+<li>I can’t help (feel) sorry for Lisa. <span class="arw">→</span> <span class="blk w"></span></li>
+<li>Many of you have difficulty (solve) your own problems. <span class="arw">→</span> <span class="blk w"></span></li>
+<li>We have trouble (read) the words on the book. <span class="arw">→</span> <span class="blk w"></span></li>
+<li>On (lie) on the floor, he fell asleep. <span class="arw">→</span> <span class="blk w"></span></li>
+<li>Your composition is worth (praise). <span class="arw">→</span> <span class="blk w"></span></li>
+<li>The fight for our right is far from (be) over. <span class="arw">→</span> <span class="blk w"></span></li>
+<li>We cannot but (struggle) for our freedom. <span class="arw">→</span> <span class="blk w"></span></li>
+<li>I am used to (take) a walk in the morning. <span class="arw">→</span> <span class="blk w"></span></li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · E-1</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">making</span> <span class="why">How about+동명사</span></li>
+<li><span class="a">be repaired</span> <span class="why">need to be+p.p. · 수동</span></li>
+<li><span class="a">planting</span> <span class="why">be busy+동명사</span></li>
+<li><span class="a">thinking</span> <span class="why">spend+시간+동명사</span></li>
+<li><span class="a">to stop</span> <span class="why">had no choice but to+원형</span></li>
+<li><span class="a">sleeping</span> <span class="why">feel like+동명사</span></li>
+<li><span class="a">meeting</span> <span class="why">think of+동명사</span></li>
+<li><span class="a">climbing</span> <span class="why">go+동명사</span></li>
+<li><span class="a">excusing</span> <span class="why">It’s no use+동명사</span></li>
+<li><span class="a">attending</span> <span class="why">look forward to+동명사</span></li>
+<li><span class="a">feeling</span> <span class="why">can’t help+동명사</span></li>
+<li><span class="a">solving</span> <span class="why">have difficulty+동명사</span></li>
+<li><span class="a">reading</span> <span class="why">have trouble+동명사</span></li>
+<li><span class="a">lying</span> <span class="why">on+동명사 · lie→lying</span></li>
+<li><span class="a">praising</span> <span class="why">be worth+동명사</span></li>
+<li><span class="a">being</span> <span class="why">be far from+동명사</span></li>
+<li><span class="a">struggle</span> <span class="why">cannot but+원형부정사</span></li>
+<li><span class="a">taking</span> <span class="why">be used to+동명사 · ~에 익숙</span></li>
+</ol></div></details>
+<div class="ex-tag"><span class="lt">E-2</span><span class="inst">다음 빈칸에 들어갈 단어를 〈보기〉에서 찾아 쓰세요. 〈보기: about, difficulty, forward, from, go, help, like, to〉</span></div>
+<ol class="drill">
+<li>How <span class="blk w"></span> going to the movies this weekend?</li>
+<li>I saw Jenny’s money on her desk. I couldn’t <span class="blk w"></span> taking it.</li>
+<li>I guess I’m just not used <span class="blk w"></span> eating raw fish.</li>
+<li>Let’s <span class="blk w"></span> shopping.</li>
+<li>I don’t feel <span class="blk w"></span> eating anything.</li>
+<li>Some people have <span class="blk w"></span> concentrating when there is no noise.</li>
+<li>John is far <span class="blk w"></span> being angry.</li>
+<li>I’m looking <span class="blk w"></span> to hearing from Jenny.</li>
+</ol>
+<details class="ans"><summary>정답 펼치기 · E-2</summary><div class="ans-body"><span class="ans-label">Answer &amp; Explanation</span><ol class="ans-list">
+<li><span class="a">about</span> <span class="why">What/How about+동명사</span></li>
+<li><span class="a">help</span> <span class="why">cannot help+동명사</span></li>
+<li><span class="a">to</span> <span class="why">be used to+동명사</span></li>
+<li><span class="a">go</span> <span class="why">go+동명사</span></li>
+<li><span class="a">like</span> <span class="why">feel like+동명사</span></li>
+<li><span class="a">difficulty</span> <span class="why">have difficulty+동명사</span></li>
+<li><span class="a">from</span> <span class="why">be far from+동명사</span></li>
+<li><span class="a">forward</span> <span class="why">look forward to+동명사</span></li>
+</ol></div></details>
+<div class="section-divider"><span>제18장 · <em>기출응용문제</em> (1–19)<span class="kor">기출응용 · 앞부분</span></span></div>
+<article class="q-card"><div class="q-head"><div class="q-num">1</div><div class="q-type choice">용법</div></div><div class="q-prompt">다음 밑줄 친 동명사 중 문장에서의 역할이 다른 하나는?</div><div class="q-choices"><div class="c"><span class="num">①</span> Aren’t you going to stop interfering with my work?</div>
+<div class="c"><span class="num">②</span> I like cooking Chinese food.</div>
+<div class="c"><span class="num">③</span> Most girls enjoy chatting with friends.</div>
+<div class="c"><span class="num">④</span> I love watching TV, but dislike reading novels.</div>
+<div class="c"><span class="num">⑤</span> Visiting foreign countries sounds very exciting.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">⑤ Visiting foreign countries sounds very exciting.</span></div><div class="ans-detail">①~④는 타동사의 <b>목적어</b> 역할. ⑤ Visiting…은 문장의 <b>주어</b>로 역할이 다르다.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">2</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 글의 (A),(B),(C)에 들어갈 말이 순서대로 옳게 짝지어진 것은?</div><div class="passage"><span class="label">지문</span>Perhaps an English newspaper is quite difficult to read, but (A)<u>reading</u> about what’s going on in your society is interesting. Reading a newspaper will not only (B)<u>increase</u> your vocabulary but also help you (C)<u>understand</u> English television news…</div><div class="q-choices"><div class="c"><span class="num">①</span> read - increase - understanding</div>
+<div class="c"><span class="num">②</span> reading - increase - understand</div>
+<div class="c"><span class="num">③</span> read - increasing - understanding</div>
+<div class="c"><span class="num">④</span> reading - increasing - understand</div>
+<div class="c"><span class="num">⑤</span> read - increase - understand</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">② reading - increase - understand</span></div><div class="ans-detail">(A) 문장의 주어 → reading (B) will not only+동사원형 → increase (C) help you+(to)원형 → understand. → <span class="en">reading - increase - understand</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">3</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 밑줄 친 부분 중 문법적으로 옳지 않은 것을 고르세요.</div><div class="passage"><span class="label">지문</span>①Getting a good job is not ②the only reason for ③learn English. ④Making a friend is ⑤even more important.</div><div class="q-choices"><div class="c"><span class="num">①</span> Getting</div>
+<div class="c"><span class="num">②</span> the only</div>
+<div class="c"><span class="num">③</span> learn</div>
+<div class="c"><span class="num">④</span> Making</div>
+<div class="c"><span class="num">⑤</span> even more</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">③ learn</span></div><div class="ans-detail">③ 전치사 for 뒤에는 동명사 → <span class="en">learning</span>. reason for learning English. learn은 틀림.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">4</div><div class="q-type gram">어법</div></div><div class="q-prompt">주어진 단어를 알맞은 형태로 바꾸어 문장을 완성하세요.<br>Would you object to ______ turning on the radio? (she)</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">her</span></div><div class="ans-detail">동명사(turning)의 의미상 주어 → 소유격/목적격 <b>her</b>. object to+동명사.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">5</div><div class="q-type gram">어법</div></div><div class="q-prompt">밑줄 친 단어를 어법상 알맞게 고치세요.<br>Are you afraid of <u>begin</u> your new life in high school?</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">begin → beginning</span></div><div class="ans-detail">전치사 of 뒤에는 동명사 → <b>beginning</b>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">6</div><div class="q-type gram">어법</div></div><div class="q-prompt">밑줄 친 ①~⑤ 중에서 어법상 옳지 않은 것을 고르세요.</div><div class="passage"><span class="label">지문</span>Nowadays I realized the necessity of ①speaking and listening skills, in addition to ②read and write skills. It might ③be worrying ④to make mistakes, but the ⑤ultimate aim of language learning is communication…</div><div class="q-choices"><div class="c"><span class="num">①</span> speaking and listening</div>
+<div class="c"><span class="num">②</span> read and write</div>
+<div class="c"><span class="num">③</span> be worrying</div>
+<div class="c"><span class="num">④</span> to make mistakes</div>
+<div class="c"><span class="num">⑤</span> ultimate</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">② read and write</span></div><div class="ans-detail">② in addition to의 to는 전치사 → 동명사 <span class="en">reading and writing</span> skills. read and write는 틀림.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">7</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 문장에서 밑줄 친 단어를 어법에 맞게 고친 것은?</div><div class="passage"><span class="label">지문</span>My father insisted on <u>I</u> going to bed immediately.</div><div class="q-choices"><div class="c"><span class="num">①</span> my</div>
+<div class="c"><span class="num">②</span> I</div>
+<div class="c"><span class="num">③</span> mine</div>
+<div class="c"><span class="num">④</span> myself</div>
+<div class="c"><span class="num">⑤</span> I’m</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">① my</span></div><div class="ans-detail">동명사 going의 의미상 주어는 소유격이 원칙 → <span class="en">my</span> going.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">8</div><div class="q-type choice">어법</div></div><div class="q-prompt">다음 문장 중 어법상 맞는 것은?</div><div class="q-choices"><div class="c"><span class="num">①</span> You must will apologize to her for your mistake.</div>
+<div class="c"><span class="num">②</span> You may well losing your temper.</div>
+<div class="c"><span class="num">③</span> When I was in highschool, I could solve math problems very faster than now.</div>
+<div class="c"><span class="num">④</span> I could not help following the man.</div>
+<div class="c"><span class="num">⑤</span> He tried winning the race.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">④ I could not help following the man.</span></div><div class="ans-detail">④ cannot help+동명사 = ‘~하지 않을 수 없다’ → could not help following (올바름). ① must apologize ② may well lose ③ much faster ⑤ 문맥상 부적절.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">9</div><div class="q-type gram">어법</div></div><div class="q-prompt">괄호 안에 주어진 단어를 이용하여 빈칸을 채우세요.<br>It is no use ______ about what you have done. (regret)</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">regretting</span></div><div class="ans-detail">It is no use+동명사 = ‘~해도 소용없다’ → regretting.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">10</div><div class="q-type choice">어법</div></div><div class="q-prompt">다음 중 어법상 올바른 문장을 고르세요.</div><div class="q-choices"><div class="c"><span class="num">①</span> The man enjoyed to watch the sunset.</div>
+<div class="c"><span class="num">②</span> He doesn’t like I going there.</div>
+<div class="c"><span class="num">③</span> I should stay in bed instead of going to work.</div>
+<div class="c"><span class="num">④</span> I forgot posting the letter this morning. When does the post office close?</div>
+<div class="c"><span class="num">⑤</span> I will go to shopping this evening.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">③ I should stay in bed instead of going to work.</span></div><div class="ans-detail">③ instead of+동명사 going (올바름). ① enjoyed watching ② my going ④ forgot to post(아직 안 함) ⑤ go shopping.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">11</div><div class="q-type gram">어법</div></div><div class="q-prompt">밑줄 친 worry를 어법에 맞게 바꾸세요.<br>I couldn’t help <u>worry</u> about her injury.</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">worry → worrying</span></div><div class="ans-detail">cannot help+동명사 = ‘~하지 않을 수 없다’ → worrying.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">12</div><div class="q-type choice">어법</div></div><div class="q-prompt">다음 중 어법상 옳은 문장을 고르세요.</div><div class="q-choices"><div class="c"><span class="num">①</span> I’m sorry for having kept you waiting so long.</div>
+<div class="c"><span class="num">②</span> It will make you to feel dizzy.</div>
+<div class="c"><span class="num">③</span> You can get him follow the direction.</div>
+<div class="c"><span class="num">④</span> I hope you succeeding in the trial.</div>
+<div class="c"><span class="num">⑤</span> I heard my name calling by someone.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">① I’m sorry for having kept you waiting so long.</span></div><div class="ans-detail">① 전치사 for+완료동명사 having kept (올바름). ② make you feel ③ get him to follow ④ hope to succeed ⑤ my name called.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">13</div><div class="q-type blank">빈칸</div></div><div class="q-prompt">밑줄 친 (A)에 들어가기에 가장 적합한 것을 고르세요.</div><div class="passage"><span class="label">지문</span>First of all, tell your son to stop ____(A)____ her.</div><div class="q-choices"><div class="c"><span class="num">①</span> tease</div>
+<div class="c"><span class="num">②</span> to tease</div>
+<div class="c"><span class="num">③</span> teasing</div>
+<div class="c"><span class="num">④</span> teased</div>
+<div class="c"><span class="num">⑤</span> from teasing</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">③ teasing</span></div><div class="ans-detail">stop+동명사 = ‘~하기를 멈추다’ → <span class="en">teasing</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">14</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 밑줄 친 부분 중 어법상 어색한 것을 고르세요.</div><div class="passage"><span class="label">지문</span>I ①am not worried because I know we ②will be able to overcome our difficulties by ③understand the differences and ④trying ⑤to harmonize with each other.</div><div class="q-choices"><div class="c"><span class="num">①</span> am not worried</div>
+<div class="c"><span class="num">②</span> will be able to</div>
+<div class="c"><span class="num">③</span> understand</div>
+<div class="c"><span class="num">④</span> trying</div>
+<div class="c"><span class="num">⑤</span> to harmonize</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">③ understand</span></div><div class="ans-detail">③ 전치사 by 뒤에는 동명사 → <span class="en">understanding</span>. by understanding the differences.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">15</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 중 어법상 어색한 것을 고르세요.</div><div class="passage"><span class="label">지문</span>• I decided ①to read many books in my spare time ②instead of playing computer games or watch TV. So he and I studied very hard ③without chatting. • Every employee ④has strong feelings of ⑤belonging to the company.</div><div class="q-choices"><div class="c"><span class="num">①</span> to read many books</div>
+<div class="c"><span class="num">②</span> instead of playing computer games or watch TV</div>
+<div class="c"><span class="num">③</span> without chatting</div>
+<div class="c"><span class="num">④</span> has strong feelings</div>
+<div class="c"><span class="num">⑤</span> belonging to the company</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">② instead of playing computer games or watch TV</span></div><div class="ans-detail">② instead of 뒤 병렬 → playing과 대등하게 <span class="en">watching TV</span>. or watch TV는 틀림.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">16</div><div class="q-type choice">어법</div></div><div class="q-prompt">다음 중 어법상 올바른 문장을 고르세요.</div><div class="q-choices"><div class="c"><span class="num">①</span> The reception is to hold tomorrow morning.</div>
+<div class="c"><span class="num">②</span> He is enough fast to be a runner.</div>
+<div class="c"><span class="num">③</span> Waiting for people who are late make me angry.</div>
+<div class="c"><span class="num">④</span> We got used to operating this equipment.</div>
+<div class="c"><span class="num">⑤</span> I thought useless to fight with them.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">④ We got used to operating this equipment.</span></div><div class="ans-detail">④ be used to+동명사 = ‘~에 익숙해지다’ → got used to operating (올바름). ① to be held ② fast enough ③ makes ⑤ thought it useless.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">17</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 밑줄 친 ⓐ, ⓑ의 올바른 형태로 알맞게 짝지어진 것은?</div><div class="passage"><span class="label">지문</span>When ⓐ<u>ask</u> what he was looking forward to next year, In-ho said, “I’m looking forward to ⓑ<u>complete</u> my project and starting new one.”</div><div class="q-choices"><div class="c"><span class="num">①</span> asking - completing</div>
+<div class="c"><span class="num">②</span> asks - complete</div>
+<div class="c"><span class="num">③</span> asked - completing</div>
+<div class="c"><span class="num">④</span> asked - complete</div>
+<div class="c"><span class="num">⑤</span> asking - completed</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">③ asked - completing</span></div><div class="ans-detail">ⓐ When (he was) <b>asked</b> — 수동 · 분사구문 / ⓑ look forward to+동명사 → <b>completing</b>. → <span class="en">asked - completing</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">18</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음의 (A),(B),(C)에 들어갈 단어를 바르게 나열한 것은?</div><div class="passage"><span class="label">지문</span>There (A)<u>are</u> a lot of club activities in some schools. Many students study very hard while (B)<u>enjoying</u> the extracurricular activities. That’s (C)<u>what</u> I really have wanted to do in my school.</div><div class="q-choices"><div class="c"><span class="num">①</span> is - enjoying - which</div>
+<div class="c"><span class="num">②</span> is - enjoy - what</div>
+<div class="c"><span class="num">③</span> are - enjoy - what</div>
+<div class="c"><span class="num">④</span> are - enjoying - what</div>
+<div class="c"><span class="num">⑤</span> are - enjoying - which</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">④ are - enjoying - what</span></div><div class="ans-detail">(A) a lot of+복수 → are (B) while+동명사 → enjoying (C) 선행사 포함 관계대명사 → what. → <span class="en">are - enjoying - what</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">19</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 글의 ①~⑤ 중 표현이 어색한 것을 고르세요.</div><div class="passage"><span class="label">지문</span>Min-ji gained five kilograms. She used to enjoy ①walking with her father in the mountains. They liked ②to talk about the nature and ③changing seasons. But recently she gave up ④to try to control her weight, and continues ⑤to eat fast food.</div><div class="q-choices"><div class="c"><span class="num">①</span> walking</div>
+<div class="c"><span class="num">②</span> to talk</div>
+<div class="c"><span class="num">③</span> changing</div>
+<div class="c"><span class="num">④</span> to try</div>
+<div class="c"><span class="num">⑤</span> to eat</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">④ to try</span></div><div class="ans-detail">④ give up+동명사 → <span class="en">trying</span>. gave up trying to control. to try는 틀림.</div></div></details></article>
+<div class="section-divider"><span>제18장 · <em>기출응용문제</em> (20–37)<span class="kor">기출응용 · 뒷부분</span></span></div>
+<article class="q-card"><div class="q-head"><div class="q-num">20</div><div class="q-type choice">어법</div></div><div class="q-prompt">다음 중 어법상 적절하지 못한 것을 고르세요.</div><div class="q-choices"><div class="c"><span class="num">①</span> I felt a fluffy dog touch my cheek.</div>
+<div class="c"><span class="num">②</span> I remember to see the man before.</div>
+<div class="c"><span class="num">③</span> I want a pen pal to write to.</div>
+<div class="c"><span class="num">④</span> She is not a woman to betray you.</div>
+<div class="c"><span class="num">⑤</span> He never studies without listening to music.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">② I remember to see the man before.</span></div><div class="ans-detail">② 과거의 일(before)은 remember+동명사 → <span class="en">remember seeing</span>. to see는 틀림.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">21</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 밑줄 친 부분 중 어법상 어색한 것을 고르세요.</div><div class="passage"><span class="label">지문</span>①Think again before you ②buy something. It would make you ③have a look at what you have and ④stop to buy ⑤what you don’t really need.</div><div class="q-choices"><div class="c"><span class="num">①</span> Think again</div>
+<div class="c"><span class="num">②</span> buy</div>
+<div class="c"><span class="num">③</span> have a look at</div>
+<div class="c"><span class="num">④</span> stop to buy</div>
+<div class="c"><span class="num">⑤</span> what you don’t really need</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">④ stop to buy</span></div><div class="ans-detail">④ 문맥상 ‘정말 필요 없는 것을 사는 것을 멈추다’ → stop+동명사 <span class="en">stop buying</span>. to buy는 틀림.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">22</div><div class="q-type choice">어법</div></div><div class="q-prompt">다음 중 어법상 틀린 문장을 고르세요.</div><div class="q-choices"><div class="c"><span class="num">①</span> The assignment should be accomplished.</div>
+<div class="c"><span class="num">②</span> Su-jin keeps falling asleep in history class.</div>
+<div class="c"><span class="num">③</span> To tolerate the pain would have been very difficult.</div>
+<div class="c"><span class="num">④</span> If the weather gets worse, our field trip may have to be postponed.</div>
+<div class="c"><span class="num">⑤</span> Don’t forget cleaning the room before he arrives.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">⑤ Don’t forget cleaning the room before he arrives.</span></div><div class="ans-detail">⑤ 미래의 할 일 → forget+to부정사 = ‘~할 것을 잊다’ → <span class="en">forget to clean</span>. cleaning은 틀림.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">23</div><div class="q-type gram">어법</div></div><div class="q-prompt">밑줄 친 (A),(B)를 어법상 올바른 형태로 짝지은 것은?</div><div class="passage"><span class="label">지문</span>• How about (A)<u>try</u> to eat fresh vegetables and fruits with fat-free dressings. • Do you mind (B)<u>close</u> the window for me?</div><div class="q-choices"><div class="c"><span class="num">①</span> try - close</div>
+<div class="c"><span class="num">②</span> try - closing</div>
+<div class="c"><span class="num">③</span> trying - to close</div>
+<div class="c"><span class="num">④</span> trying - closing</div>
+<div class="c"><span class="num">⑤</span> to try - to close</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">④ trying - closing</span></div><div class="ans-detail">(A) How about+동명사 → trying (B) mind+동명사 → closing. → <span class="en">trying - closing</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">24</div><div class="q-type gram">전환</div></div><div class="q-prompt">다음 두 문장이 같은 뜻이 되도록 빈칸에 알맞은 말을 쓰세요.<br>As soon as I saw the attractive woman, my face turned red. = On ______, my face turned red.</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">seeing the attractive woman</span></div><div class="ans-detail">on+동명사 = ‘~하자마자’. As soon as I saw → On seeing.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">25</div><div class="q-type blank">빈칸</div></div><div class="q-prompt">다음 밑줄 친 부분에 들어갈 알맞은 표현을 고르세요.</div><div class="passage"><span class="label">지문</span>What do you think of ______ a plastic operation?</div><div class="q-choices"><div class="c"><span class="num">①</span> undergo</div>
+<div class="c"><span class="num">②</span> undergoing</div>
+<div class="c"><span class="num">③</span> underwent</div>
+<div class="c"><span class="num">④</span> to undergo</div>
+<div class="c"><span class="num">⑤</span> undergoes</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">② undergoing</span></div><div class="ans-detail">think of+동명사 → <span class="en">undergoing</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">26</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 밑줄 친 make를 어법에 맞게 변형시켜 쓰세요.<br>Amy is so shy that she has trouble <u>make</u> new friends.</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">make → making</span></div><div class="ans-detail">have trouble (in)+동명사 = ‘~하는 데 어려움을 겪다’ → making.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">27</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 글에서 밑줄 친 동사를 문맥에 맞게 고친 것으로 알맞은 것은?</div><div class="passage"><span class="label">지문</span>I have been busy <u>attend</u> so many club activities.</div><div class="q-choices"><div class="c"><span class="num">①</span> to attend</div>
+<div class="c"><span class="num">②</span> attend</div>
+<div class="c"><span class="num">③</span> attending</div>
+<div class="c"><span class="num">④</span> attended</div>
+<div class="c"><span class="num">⑤</span> attention</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">③ attending</span></div><div class="ans-detail">be busy+동명사 = ‘~하느라 바쁘다’ → <span class="en">attending</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">28</div><div class="q-type gram">어법</div></div><div class="q-prompt">밑줄 친 부분이 문맥상 어색한 것을 고르세요.</div><div class="passage"><span class="label">지문</span>① Teenagers tend <u>to imitate</u> the fashion of celebrities. ② <u>Compared to</u> Dong-su, In-ho is really thoughtful and diligent. ③ I often have difficulty <u>in getting up</u> early in the morning. ④ I was just five minutes late but he didn’t wait <u>for me</u>. ⑤ Last Sunday, I spent the whole day <u>played</u> computer games.</div><div class="q-choices"><div class="c"><span class="num">①</span> to imitate</div>
+<div class="c"><span class="num">②</span> Compared to</div>
+<div class="c"><span class="num">③</span> in getting up</div>
+<div class="c"><span class="num">④</span> for me</div>
+<div class="c"><span class="num">⑤</span> played</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">⑤ played</span></div><div class="ans-detail">⑤ spend+시간+동명사 = ‘~하느라 …를 보내다’ → <span class="en">playing</span>. spent the whole day played는 틀림.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">29</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 ⓐ, ⓑ, ⓒ의 알맞은 형태를 바르게 짝지은 것은?</div><div class="passage"><span class="label">지문</span>My body was ⓐ<u>paralyze</u> with fear and panic but I kept ⓑ<u>say</u> to my ⓒ<u>paralyze</u> body “Don’t stop moving.”</div><div class="q-choices"><div class="c"><span class="num">①</span> paralyzed - saying - paralyzing</div>
+<div class="c"><span class="num">②</span> paralyzing - saying - paralyzed</div>
+<div class="c"><span class="num">③</span> paralyzing - said - paralyzed</div>
+<div class="c"><span class="num">④</span> paralyzed - said - paralyzing</div>
+<div class="c"><span class="num">⑤</span> paralyzed - saying - paralyzed</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">⑤ paralyzed - saying - paralyzed</span></div><div class="ans-detail">ⓐ be paralyzed(수동) → paralyzed / ⓑ keep+동명사 → saying / ⓒ 마비된 몸(수동·수식) → paralyzed. → <span class="en">paralyzed - saying - paralyzed</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">30</div><div class="q-type choice">어법</div></div><div class="q-prompt">다음 중 어법상 틀린 문장을 고르세요.</div><div class="q-choices"><div class="c"><span class="num">①</span> She hates to watch soccer games.</div>
+<div class="c"><span class="num">②</span> She started crying to see the news.</div>
+<div class="c"><span class="num">③</span> My MP3 player needs repairing.</div>
+<div class="c"><span class="num">④</span> I finished to mow the lawn.</div>
+<div class="c"><span class="num">⑤</span> I felt like swimming in the river then.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">④ I finished to mow the lawn.</span></div><div class="ans-detail">④ finish+동명사 → <span class="en">finished mowing</span>. to mow는 틀림.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">31</div><div class="q-type blank">빈칸</div></div><div class="q-prompt">다음 문장의 빈칸에 들어갈 알맞은 것은?</div><div class="passage"><span class="label">지문</span>He broke his left leg in a traffic accident. He has a lot of trouble ______ without a stick.</div><div class="q-choices"><div class="c"><span class="num">①</span> walk</div>
+<div class="c"><span class="num">②</span> to walk</div>
+<div class="c"><span class="num">③</span> walks</div>
+<div class="c"><span class="num">④</span> walking</div>
+<div class="c"><span class="num">⑤</span> of walking</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">④ walking</span></div><div class="ans-detail">have trouble (in)+동명사 → <span class="en">walking</span>.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">32</div><div class="q-type choice">어법</div></div><div class="q-prompt">다음 중 어법상 어색한 문장을 고르세요.</div><div class="q-choices"><div class="c"><span class="num">①</span> I don’t feel like meeting them now.</div>
+<div class="c"><span class="num">②</span> She objected to helping the homeless without any plans.</div>
+<div class="c"><span class="num">③</span> I’m looking forward to see you again.</div>
+<div class="c"><span class="num">④</span> I’m ashamed of not having applied to volunteer.</div>
+<div class="c"><span class="num">⑤</span> She denied having cheated us.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">③ I’m looking forward to see you again.</span></div><div class="ans-detail">③ look forward to의 to는 전치사 → 동명사 <span class="en">to seeing</span>. to see는 틀림.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">33</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음의 대화에서 어색한 표현을 골라 바르게 고치세요.<br>A: He said he planned to have a party this Saturday. B: Will his girlfriend Jane be there? A: No, I don’t think so. She will go <u>shop</u> with her friends.</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">shop → shopping</span></div><div class="ans-detail">go+동명사 = ‘~하러 가다’ → go shopping.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">34</div><div class="q-type choice">용법</div></div><div class="q-prompt">밑줄 친 부분의 용법이 나머지와 다른 것을 고르세요.</div><div class="q-choices"><div class="c"><span class="num">①</span> Speaking English fluently is very difficult for me.</div>
+<div class="c"><span class="num">②</span> We are looking forward to watching the Jazz Dance performance.</div>
+<div class="c"><span class="num">③</span> Love is understanding and forgiving.</div>
+<div class="c"><span class="num">④</span> My son is whispering her name over and over.</div>
+<div class="c"><span class="num">⑤</span> I like collecting the antiques.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">④ My son is whispering her name over and over.</span></div><div class="ans-detail">①②③⑤는 동명사(주어·전치사목적어·보어·목적어). ④는 진행형을 만드는 <b>현재분사</b>로 용법이 다르다.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">35</div><div class="q-type gram">어법</div></div><div class="q-prompt">괄호 안의 단어를 알맞은 형태로 고쳐 쓰세요.<br>Are you anxious about (chase) by the police?</div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main"><span class="en">being chased</span></div><div class="ans-detail">전치사 about+동명사, 쫓기는 수동 → being chased.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">36</div><div class="q-type gram">어법</div></div><div class="q-prompt">다음 글에서 어법상 틀린 것을 고르세요.</div><div class="passage"><span class="label">지문</span>She ①stayed at home ②instead of ③going out and ④had a date ⑤with him.</div><div class="q-choices"><div class="c"><span class="num">①</span> stayed at home</div>
+<div class="c"><span class="num">②</span> instead of</div>
+<div class="c"><span class="num">③</span> going out</div>
+<div class="c"><span class="num">④</span> had a date</div>
+<div class="c"><span class="num">⑤</span> with him</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">④ had a date</span></div><div class="ans-detail">④ instead of 뒤 병렬 구조 → going out과 대등하게 <span class="en">having a date</span>. had a date는 틀림.</div></div></details></article>
+<article class="q-card"><div class="q-head"><div class="q-num">37</div><div class="q-type choice">어법</div></div><div class="q-prompt">다음 중 어법상 어색한 문장을 고르세요.</div><div class="q-choices"><div class="c"><span class="num">①</span> Are you nervous about take the first exam at your high school?</div>
+<div class="c"><span class="num">②</span> I feel like living in the city.</div>
+<div class="c"><span class="num">③</span> All I did was take care of the dog.</div>
+<div class="c"><span class="num">④</span> He was on the point of leaving for London.</div>
+<div class="c"><span class="num">⑤</span> I succeeded in solving the problem.</div></div><details class="ans"><summary>정답 펼치기</summary><div class="ans-body"><span class="ans-label">Answer</span><div class="ans-main">정답 &nbsp;<span class="en">① Are you nervous about take the first exam at your high school?</span></div><div class="ans-detail">① 전치사 about+동명사 → <span class="en">taking</span>. about take는 틀림.</div></div></details></article>
+<!-- {{INSERT_QUESTIONS_HERE}} -->
+
+</div></main>
+
+<!-- ========== Footer (학원 표기 절대 변경 금지) ========== -->
+<footer><div class="container"><div class="foot-grid">
+  <div class="foot-brand">Mokdong Seoro English Academy<span class="kor">목동서로영어학원 · 0505.co.kr</span></div>
+  <div class="foot-meta">신목고·목운중·목동중 전문 영어학원<br><b>고교 3300제 · 제18장 동명사 · 완전판 상세풀이</b><br>본 자료는 학원 수강생 전용 교육 자료입니다. 무단 배포 금지.<br>Unit 33 동명사의 용법 · 기출응용 37문항</div>
+</div></div></footer>
+
+<script>
+/* ══ 펜 필기 모드 (자유 필기) v1.0 ══ */
+const PEN_COLORS=['#dc2626','#1F3864','#0f9d58','#f59e0b','#000000'];
+const PEN_WIDTHS=[2,4,7];
+let penEnabled=false,penColor='#dc2626',penWidth=4,penEraser=false;
+let penLayer=null,penPath=null,penPts=[];
+
+function buildPenTools(){
+  if(document.getElementById('penLayer'))return;
+  penLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  penLayer.id='penLayer';
+  document.body.appendChild(penLayer);
+  const tb=document.createElement('div');
+  tb.id='penToolbar';
+  let html='<button class="pen-btn pen-main" id="penToggle" title="펜 ON/OFF">✏️</button><div class="pen-tools" id="penTools">';
+  PEN_COLORS.forEach(c=>html+='<button class="pen-color" data-color="'+c+'" style="background:'+c+';" title="색상"></button>');
+  PEN_WIDTHS.forEach(w=>html+='<button class="pen-width" data-width="'+w+'" title="굵기"><span style="width:'+(w*2)+'px;height:'+(w*2)+'px;"></span></button>');
+  html+='<button class="pen-btn pen-eraser" id="penEraserBtn" title="개별 지우개">🧹</button><button class="pen-btn pen-clear" id="penClearBtn" title="전체 지우기">🗑️</button></div>';
+  tb.innerHTML=html;
+  document.body.appendChild(tb);
+  document.querySelector('.pen-color[data-color="'+penColor+'"]').classList.add('selected');
+  document.querySelector('.pen-width[data-width="'+penWidth+'"]').classList.add('selected');
+  document.getElementById('penToggle').addEventListener('click',togglePen);
+  document.querySelectorAll('.pen-color').forEach(b=>b.addEventListener('click',e=>{
+    const c=e.currentTarget.dataset.color;
+    penColor=c;penEraser=false;
+    document.querySelectorAll('.pen-color').forEach(x=>x.classList.toggle('selected',x.dataset.color===c));
+    document.getElementById('penEraserBtn').classList.remove('active');
+  }));
+  document.querySelectorAll('.pen-width').forEach(b=>b.addEventListener('click',e=>{
+    const w=+e.currentTarget.dataset.width;
+    penWidth=w;
+    document.querySelectorAll('.pen-width').forEach(x=>x.classList.toggle('selected',+x.dataset.width===w));
+  }));
+  document.getElementById('penEraserBtn').addEventListener('click',()=>{
+    penEraser=!penEraser;
+    document.getElementById('penEraserBtn').classList.toggle('active',penEraser);
+  });
+  document.getElementById('penClearBtn').addEventListener('click',()=>{
+    if(confirm('모든 필기를 지우시겠습니까?'))penLayer.innerHTML='';
+  });
+  penLayer.addEventListener('pointerdown',penDown);
+  penLayer.addEventListener('pointermove',penMove);
+  penLayer.addEventListener('pointerup',penUp);
+  penLayer.addEventListener('pointercancel',penUp);
+  penLayer.addEventListener('pointerleave',penUp);
+  const sync=()=>{
+    const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
+    const w=Math.max(document.body.scrollWidth,document.documentElement.scrollWidth);
+    penLayer.setAttribute('width',w);
+    penLayer.setAttribute('height',h);
+    penLayer.style.height=h+'px';
+    penLayer.style.width=w+'px';
+  };
+  sync();
+  if(window.ResizeObserver)new ResizeObserver(sync).observe(document.body);
+  window.addEventListener('resize',sync);
+  setInterval(sync,2000);
+}
+function togglePen(){
+  penEnabled=!penEnabled;
+  document.getElementById('penToggle').classList.toggle('active',penEnabled);
+  document.getElementById('penTools').classList.toggle('show',penEnabled);
+  penLayer.classList.toggle('active',penEnabled);
+}
+function getPenPt(e){
+  return {x:e.clientX+window.scrollX,y:e.clientY+window.scrollY};
+}
+function penDown(e){
+  if(!penEnabled)return;
+  e.preventDefault();
+  try{penLayer.setPointerCapture(e.pointerId);}catch(_){}
+  if(penEraser){eraseAt(e);return;}
+  const pt=getPenPt(e);
+  penPath=document.createElementNS('http://www.w3.org/2000/svg','path');
+  penPath.setAttribute('d','M '+pt.x+' '+pt.y);
+  penPath.setAttribute('stroke',penColor);
+  penPath.setAttribute('stroke-width',penWidth);
+  penPath.setAttribute('fill','none');
+  penPath.setAttribute('stroke-linecap','round');
+  penPath.setAttribute('stroke-linejoin','round');
+  penLayer.appendChild(penPath);
+  penPts=[pt];
+}
+function penMove(e){
+  if(!penEnabled)return;
+  if(penEraser&&e.buttons){eraseAt(e);return;}
+  if(!penPath)return;
+  e.preventDefault();
+  const pt=getPenPt(e);
+  const last=penPts[penPts.length-1];
+  if(Math.hypot(pt.x-last.x,pt.y-last.y)<1.5)return;
+  penPts.push(pt);
+  let d='M '+penPts[0].x+' '+penPts[0].y;
+  for(let i=1;i<penPts.length-1;i++){
+    const c=penPts[i],n=penPts[i+1];
+    const mx=(c.x+n.x)/2,my=(c.y+n.y)/2;
+    d+=' Q '+c.x+' '+c.y+' '+mx+' '+my;
+  }
+  if(penPts.length>=2){
+    const lp=penPts[penPts.length-1];
+    d+=' L '+lp.x+' '+lp.y;
+  }
+  penPath.setAttribute('d',d);
+}
+function penUp(e){
+  if(penPath){penPath=null;penPts=[];}
+}
+function eraseAt(e){
+  const pt=getPenPt(e);
+  const r=20;
+  const paths=Array.from(penLayer.querySelectorAll('path'));
+  for(const p of paths){
+    const bb=p.getBBox();
+    if(pt.x>=bb.x-r&&pt.x<=bb.x+bb.width+r&&pt.y>=bb.y-r&&pt.y<=bb.y+bb.height+r){
+      p.remove();
+    }
+  }
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',buildPenTools);
+}else{
+  setTimeout(buildPenTools,100);
+}
+</script>
+</body>
+</html>
