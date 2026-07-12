@@ -306,8 +306,8 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 /* ── 공통 행동 CSS ── */
 /* 1. 호버 펼치기 완전 제거 */
 @media(hover:hover) and (pointer:fine){
-  .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
-  .s-card.grammar:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card.grammar:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
 }
 /* 2. 단어 가로 칩 배열 */
 .s-card.vocab-only .s-kr-wrap,
@@ -330,6 +330,14 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   display:inline-flex!important;flex-wrap:wrap!important;align-items:center;gap:4px 6px;
   max-width:100%;overflow-wrap:break-word;word-break:break-word;
 }
+/* 2-B. 인카드 문장 구조도 (v2.0) */
+.s-structure{padding:6px 14px 8px 42px;border-top:1px dashed rgba(46,117,182,0.15);background:#FBFCFF;}
+.s-card.grammar .s-structure{border-top-color:rgba(91,45,142,0.15);}
+.s-structure-label{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;color:#993C1D;margin-bottom:5px;}
+.s-structure svg{width:100%;display:block;background:white;border:1px solid rgba(0,0,0,0.07);border-radius:8px;padding:8px 10px;box-sizing:border-box;}
+.s-card.vocab-only .s-structure{display:none;}
+.s-card.pinned .s-structure,.s-card.tapped .s-structure{width:100%;flex-basis:100%;order:0;padding:4px 0 2px!important;border-top:none;background:transparent;}
+.s-card.has-sd.pinned .s-kr-wrap,.s-card.has-sd.tapped .s-kr-wrap{max-height:2600px;}
 /* 3. 문장구조도 탭·패널 */
 .tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
 .tab-sd.active{background:#993C1D;color:white;border-color:#993C1D;}
@@ -417,6 +425,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   body.psd .sd-vocab-chip{font-size:10px!important;padding:2px 7px!important;}
 }
 
+
 /* ══ 펜 필기 모드 v1.0 ══ */
 #penToolbar{position:fixed;bottom:20px;right:20px;z-index:10000;display:flex;flex-direction:row;gap:8px;background:rgba(255,255,255,0.96);padding:8px;border-radius:30px;box-shadow:0 4px 20px rgba(0,0,0,0.18);backdrop-filter:blur(10px);align-items:center;}
 #penToolbar .pen-btn{width:42px;height:42px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
@@ -447,6 +456,12 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .tab-summary.active{background:#00695C;color:white;border-color:#00695C;}
 .summary-view{display:none;}
 @media print{.summary-view{display:none!important;}}
+
+/* ═══ 단락 배지 (재빌드 주입) ═══ */
+.para-div{display:flex;align-items:center;gap:10px;margin:22px 2px 10px;}
+.para-badge{width:26px;height:26px;border-radius:50%;background:#1F3864;color:#fff;font-weight:700;font-size:14px;font-family:'JetBrains Mono',monospace;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 6px rgba(31,56,100,0.25);}
+.para-line{flex:1;height:1px;background:linear-gradient(to right,rgba(31,56,100,0.35),transparent);}
+@media print{.para-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
 </style>
 </head>
 <body>
@@ -495,35 +510,229 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
       <button class="ctrl-btn" id="btnAll"   onclick="speakAll()">🔊 전체 읽기</button>
     </div>
     <div class="cards" id="cards">
-<div class="s-card grammar" data-text="In a thesis-based doctoral programme, students typically spend a significant amount of time and effort researching a specific topic.">
+<!-- ═══ 단락 ⓐ ═══ -->
+<div class="para-div"><span class="para-badge">ⓐ</span><span class="para-line"></span></div>
+<div class="s-card grammar has-sd" data-text="In a thesis-based doctoral programme, students typically spend a significant amount of time and effort researching a specific topic.">
   <div class="card-top"><span class="s-num">01</span><div class="s-en">In a <span class="hl">thesis-based</span> <span class="hl">doctoral</span> programme, students <span class="hl">typically</span> spend a <span class="hl">significant</span> amount of time and effort researching a <span class="hl">specific</span> topic.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">논문 기반 박사 프로그램에서, 학생들은 보통 특정 주제를 연구하는 데 상당한 시간과 노력을 쏟는다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">thesis-based</span><span class="vocab-kr">논문 기반의</span><span class="vocab-en">doctoral</span><span class="vocab-kr">박사의</span><span class="vocab-en">significant</span><span class="vocab-kr">상당한</span><span class="vocab-en">specific</span><span class="vocab-kr">특정한</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>spend + O + V-ing</strong> = O를 V하는 데 쏟다. spend time researching = 연구하는 데 시간을 쏟다.</div><div class="s-meaning"><span class="bracket">【배경 — 논문형 박사】</span> 논문 중심 박사과정에서 학생은 보통 <strong>‘한 가지 특정(specific) 주제’를 파는 데</strong> 엄청난 시간·노력을 쏟는다. 한 주제를 깊게 파는 구조 — 이것이 장점이자 곧 단점의 씨앗. <span class="star-line">★ specific topic = 한정된(좁은) 한 가지 주제</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">논문 기반 박사 프로그램에서, 학생들은 보통 특정 주제를 연구하는 데 상당한 시간과 노력을 쏟는다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">thesis-based</span><span class="vocab-kr">논문 기반의</span><span class="vocab-en">doctoral</span><span class="vocab-kr">박사의</span><span class="vocab-en">significant</span><span class="vocab-kr">상당한</span><span class="vocab-en">specific</span><span class="vocab-kr">특정한</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="298" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="159" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">In a thesis-based doctoral programme</text>
+  <text x="159" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">논문 기반 박사 프로그램에서 (부사구)</text>
+  <rect x="316" y="10" width="96" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="364" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">students</text>
+  <text x="364" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">학생들은 (S)</text>
+  <rect x="420" y="10" width="148" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="494" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">typically spend</text>
+  <text x="494" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">보통 쏟는다 (V)</text>
+  <rect x="576" y="10" width="320" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="736" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">a significant amount of time and effort</text>
+  <text x="736" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">상당한 시간과 노력을 (O)</text>
+  <rect x="10" y="94" width="238" height="28" rx="3" fill="#E8F5E9" stroke="#A5D6A7" stroke-width="1.3"/>
+  <text x="129" y="113" font-size="14" font-weight="500" fill="#1B5E20" text-anchor="middle" font-family="Georgia,serif">researching a specific topic</text>
+  <text x="129" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">특정 주제를 연구하는 데 (현재분사)</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">논문 기반 박사 프로그램에서, 학생들은 보통 특정 주제를 연구하는 데 상당한 시간과 노력을</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">쏟는다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>spend + O + V-ing</strong> = O를 V하는 데 쏟다. spend time researching = 연구하는 데 시간을 쏟다.</div><div class="s-meaning"><span class="bracket">【도입 — 논문 기반 박사과정】</span> 쉽게 말하면 '<strong>한 주제를 몇 년씩 깊게 파는 과정</strong>'. 특정 주제 연구에 상당한 시간·노력을 쏟는 것이 논문 기반 박사과정의 본질 — 이 '깊이'가 다음 문장부터 양날의 검으로 드러남. <span class="star-line">★ spend + 시간/노력 + V-ing = V하는 데 쏟다!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="While this deep dive into a particular area allows for thorough exploration and understanding, it can also result in narrowing the focus.">
-  <div class="card-top"><span class="s-num">02</span><div class="s-en">While <span class="ref">this</span> <span class="hl">deep dive</span> into a <span class="hl">particular</span> area allows for <span class="hl">thorough</span> <span class="hl">exploration</span> and understanding, it can also <span class="hl">result in</span> <span class="hl">narrowing</span> the focus.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">특정 분야에 대한 깊은 탐구<span class="pr">(= 한 가지 특정 주제에 시간·노력을 집중하는 것)</span>가 철저한 탐색과 이해를 가능하게 하지만, 초점을 <strong>좁히는</strong> 결과를 초래할 수도 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">deep dive</span><span class="vocab-kr">깊은 탐구</span><span class="vocab-en">thorough</span><span class="vocab-kr">철저한</span><span class="vocab-en">exploration</span><span class="vocab-kr">탐색</span><span class="vocab-en">result in</span><span class="vocab-kr">~의 결과를 초래하다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>While</strong> = ~하지만 (양보). <strong>allow for</strong> = ~을 가능하게 하다. <strong>result in V-ing</strong> = V하는 결과를 초래하다. in + 동명사.</div><div class="s-meaning"><span class="bracket">【양날의 검 — ★ 핵심】</span> 한 분야를 <strong>깊이 파면(deep dive)</strong> 철저히 탐구·이해할 수 있다는 장점이 있지만, 동시에 <strong>‘초점을 좁히는(narrowing the focus)’ 부작용</strong>도 생긴다. <u>‘초점을 좁힌다’ = 한 가지에만 몰두하느라 관심·지식의 범위가 그 좁은 영역으로 쪼그라든다</u>(= 다른 분야를 못 보게 된다)는 뜻. <span class="star-line">★ While = ~이긴 하지만(양보) / narrow the focus = 보는 범위를 좁히다</span></div></div>
+<!-- ═══ 단락 ⓑ ═══ -->
+<div class="para-div"><span class="para-badge">ⓑ</span><span class="para-line"></span></div>
+<div class="s-card grammar has-sd" data-text="While this deep dive into a particular area allows for thorough exploration and understanding, it can also result in narrowing the focus.">
+  <div class="card-top"><span class="s-num">02</span><div class="s-en">While this <span class="hl">deep dive</span> into a <span class="hl">particular</span> area allows for <span class="hl">thorough</span> <span class="hl">exploration</span> and understanding, it can also <span class="hl">result in</span> <span class="hl">narrowing</span> the focus.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">특정 분야에 대한 깊은 탐구가 철저한 탐색과 이해를 가능하게 하지만, 초점을 <strong>좁히는</strong> 결과를 초래할 수도 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">deep dive</span><span class="vocab-kr">깊은 탐구</span><span class="vocab-en">thorough</span><span class="vocab-kr">철저한</span><span class="vocab-en">exploration</span><span class="vocab-kr">탐색</span><span class="vocab-en">result in</span><span class="vocab-kr">~의 결과를 초래하다</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="5" width="666" height="36" rx="5" fill="none" stroke="#085041" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="343" y="4" font-size="10" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">While절 (양보)</text>
+  <text x="43" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">While</text>
+  <text x="43" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">~하지만 (양보)</text>
+  <rect x="78" y="12" width="140" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="148" y="31" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">this deep dive</text>
+  <text x="148" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이 깊은 탐구가</text>
+  <rect x="226" y="12" width="113" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="282" y="31" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">allows for</text>
+  <text x="282" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가능하게 하지만</text>
+  <rect x="347" y="12" width="313" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="503" y="31" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">thorough exploration and understanding</text>
+  <text x="503" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">철저한 탐색과 이해를</text>
+  <rect x="684" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="716" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">it</text>
+  <text x="716" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그것은 (S)</text>
+  <rect x="10" y="94" width="172" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="96" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">can also result in</text>
+  <text x="96" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">또한 초래할 수 있다 (V)</text>
+  <rect x="190" y="94" width="180" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="280" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">narrowing the focus</text>
+  <text x="280" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">초점 좁히기를 (O·동명사)</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">이 특정 분야에 대한 깊은 탐구가 철저한 탐색과 이해를 가능하게 하지만, 초점을 좁히는 결과를</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">초래할 수도 있다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>While</strong> = ~하지만 (양보). <strong>allow for</strong> = ~을 가능하게 하다. <strong>result in V-ing</strong> = V하는 결과를 초래하다. in + 동명사.</div><div class="s-meaning"><span class="bracket">【양날의 검 — 깊이 vs 폭】</span> 깊은 탐구(deep dive)는 철저한 이해를 주지만(While), 동시에 <strong>초점을 좁히는 결과</strong>도 낳는다 — 글 전체의 문제 제기. 장점 인정 후 단점 지적의 전형적 흐름. <span class="star-line">★ result in V-ing = ~라는 결과를 낳다!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="As students become deeply absorbed in their research, they may spend less time exploring related fields or acquiring skills outside their immediate area of study.">
+<div class="s-card grammar has-sd" data-text="As students become deeply absorbed in their research, they may spend less time exploring related fields or acquiring skills outside their immediate area of study.">
   <div class="card-top"><span class="s-num">03</span><div class="s-en">As students become deeply <span class="hl">absorbed in</span> their research, they may spend less time exploring <span class="hl">related</span> fields or acquiring skills outside their <span class="hl">immediate</span> area of study.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">학생들이 연구에 깊이 몰입하면서, 관련 분야 탐색이나 연구 영역 밖의 기술 습득에 시간을 덜 쏟을 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">absorbed in</span><span class="vocab-kr">~에 몰입한</span><span class="vocab-en">related</span><span class="vocab-kr">관련된</span><span class="vocab-en">immediate</span><span class="vocab-kr">바로 그, 즉각적인</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>become absorbed in</strong> = ~에 몰입하게 되다. <strong>spend time V-ing</strong> = V하는 데 시간을 쏟다. exploring / acquiring = 동명사 병렬.</div><div class="s-meaning"><span class="bracket">【왜 좁아지나 — 메커니즘】</span> 연구에 <strong>깊이 몰두할수록(absorbed in)</strong>, 인접 분야를 둘러보거나 <strong>자기 전공 ‘바깥(outside their area)’의 기술</strong>을 익히는 데는 시간을 덜 쓰게 된다. 앞 문장 ‘초점이 좁아짐’이 실제로 일어나는 과정. <span class="star-line">★ be absorbed in = ~에 몰두하다 / immediate area of study = 바로 자기가 하는 그 좁은 연구 영역</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">학생들이 연구에 깊이 몰입하면서, 관련 분야 탐색이나 연구 영역 밖의 기술 습득에 시간을 덜 쏟을 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">absorbed in</span><span class="vocab-kr">~에 몰입한</span><span class="vocab-en">related</span><span class="vocab-kr">관련된</span><span class="vocab-en">immediate</span><span class="vocab-kr">바로 그, 즉각적인</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="5" width="527" height="36" rx="5" fill="none" stroke="#085041" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="273" y="4" font-size="10" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">As절 (시간/비례)</text>
+  <text x="31" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">As</text>
+  <text x="31" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">~하면서</text>
+  <rect x="54" y="12" width="96" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="102" y="31" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">students</text>
+  <text x="102" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">학생들이</text>
+  <rect x="158" y="12" width="215" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="265" y="31" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">become deeply absorbed in</text>
+  <text x="265" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">깊이 몰입하게 되면서</text>
+  <rect x="381" y="12" width="140" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="451" y="31" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">their research</text>
+  <text x="451" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">연구에</text>
+  <rect x="545" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="577" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">they</text>
+  <text x="577" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들은 (S)</text>
+  <rect x="617" y="10" width="104" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="669" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">may spend</text>
+  <text x="669" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">쏟을 수 있다 (V)</text>
+  <rect x="729" y="10" width="104" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="781" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">less time</text>
+  <text x="781" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">더 적은 시간을 (O)</text>
+  <rect x="10" y="94" width="208" height="28" rx="3" fill="#E8F5E9" stroke="#A5D6A7" stroke-width="1.3"/>
+  <text x="114" y="113" font-size="14" font-weight="500" fill="#1B5E20" text-anchor="middle" font-family="Georgia,serif">exploring related fields</text>
+  <text x="114" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">관련 분야를 탐색하거나 (현재분사)</text>
+  <text x="241" y="113" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">or</text>
+  <text x="241" y="146" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">또는</text>
+  <rect x="264" y="94" width="365" height="28" rx="3" fill="#E8F5E9" stroke="#A5D6A7" stroke-width="1.3"/>
+  <text x="446" y="113" font-size="14" font-weight="500" fill="#1B5E20" text-anchor="middle" font-family="Georgia,serif">acquiring skills outside their immediate area</text>
+  <text x="446" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">연구 영역 밖의 기술 습득에 (현재분사)</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">학생들이 연구에 깊이 몰입하게 되면서, 관련 분야를 탐색하거나 바로 그 연구 영역 밖의 기술을</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">습득하는 데 시간을 덜 쏟을 수 있다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>become absorbed in</strong> = ~에 몰입하게 되다. <strong>spend time V-ing</strong> = V하는 데 시간을 쏟다. exploring / acquiring = 동명사 병렬.</div><div class="s-meaning"><span class="bracket">【협소화의 실제 모습】</span> 연구에 깊이 몰입할수록 <strong>인접 분야 탐색·전공 밖 기술 습득에 쓰는 시간이 줄어든다</strong>. S02의 'narrowing the focus'가 학생의 일상에서 어떻게 나타나는지 구체화. <span class="star-line">★ exploring / acquiring — 동명사 병렬!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="Consequently, this singular focus may limit the breadth of knowledge and skills developed during the programme, potentially hindering students' ability to adapt to diverse career paths or address interdisciplinary challenges.">
-  <div class="card-top"><span class="s-num">04</span><div class="s-en"><span class="hl">Consequently</span>, <span class="ref">this</span> <span class="hl">singular</span> focus may limit the <span class="hl">breadth</span> of knowledge and skills developed during the programme, <span class="hl">potentially</span> <span class="hl">hindering</span> students' ability to <span class="hl">adapt to</span> <span class="hl">diverse</span> career paths or <span class="hl">address</span> <span class="hl">interdisciplinary</span> challenges.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">결과적으로, 이 단일한 초점<span class="pr">(= 특정 분야에만 깊이 몰입해 초점이 좁아지는 것)</span>은 프로그램 동안 개발되는 지식·기술의 <strong>폭</strong>을 제한하며, 다양한 경력에 적응하거나 학제간 도전에 대처하는 능력을 방해할 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">singular</span><span class="vocab-kr">단일한</span><span class="vocab-en">breadth</span><span class="vocab-kr">폭, 범위</span><span class="vocab-en">hindering</span><span class="vocab-kr">방해하는</span><span class="vocab-en">diverse</span><span class="vocab-kr">다양한</span><span class="vocab-en">interdisciplinary</span><span class="vocab-kr">학제간의</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>developed during ~</strong> = 과거분사 후치수식 (skills를 수식). <strong>potentially hindering</strong> = 분사구문 (결과). <strong>ability to adapt / address</strong> = to V 병렬 (형용사적).</div><div class="s-meaning"><span class="bracket">【핵심】</span> 논문 기반 프로그램의 한계: 깊이(depth)는 있지만 폭(breadth)이 부족! → 다양한 경력·학제간 도전에 대처 못함. <span class="star-line">★ 깊이 vs 폭 — 논문 기반의 구조적 한계!</span></div></div>
+<div class="s-card grammar has-sd" data-text="Consequently, this singular focus may limit the breadth of knowledge and skills developed during the programme, potentially hindering students' ability to adapt to diverse career paths or address interdisciplinary challenges.">
+  <div class="card-top"><span class="s-num">04</span><div class="s-en"><span class="hl">Consequently</span>, this <span class="hl">singular</span> focus may limit the <span class="hl">breadth</span> of knowledge and skills developed during the programme, <span class="hl">potentially</span> <span class="hl">hindering</span> students' ability to <span class="hl">adapt to</span> <span class="hl">diverse</span> career paths or <span class="hl">address</span> <span class="hl">interdisciplinary</span> challenges.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">결과적으로, 이 단일한 초점은<span class="pr">(= 한 주제만 깊게 파는 것)</span> 프로그램 동안 개발되는 지식·기술의 <strong>폭</strong>을 제한하며, 다양한 경력에 적응하거나 학제간 도전에 대처하는 능력을 방해할 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">singular</span><span class="vocab-kr">단일한</span><span class="vocab-en">breadth</span><span class="vocab-kr">폭, 범위</span><span class="vocab-en">hindering</span><span class="vocab-kr">방해하는</span><span class="vocab-en">diverse</span><span class="vocab-kr">다양한</span><span class="vocab-en">interdisciplinary</span><span class="vocab-kr">학제간의</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 432" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="124" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="72" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">Consequently</text>
+  <text x="72" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">결과적으로 (부사)</text>
+  <rect x="142" y="10" width="180" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="232" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">this singular focus</text>
+  <text x="232" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이 단일한 초점은 (S)</text>
+  <rect x="330" y="10" width="104" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="382" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">may limit</text>
+  <text x="382" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">제한할 수 있다 (V)</text>
+  <rect x="442" y="10" width="290" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="587" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the breadth of knowledge and skills</text>
+  <text x="587" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">지식과 기술의 폭을 (O)</text>
+  <rect x="10" y="94" width="253" height="28" rx="3" fill="#FFF3E0" stroke="#FFCC80" stroke-width="1.3"/>
+  <text x="136" y="113" font-size="14" font-weight="500" fill="#BF360C" text-anchor="middle" font-family="Georgia,serif">developed during the programme</text>
+  <text x="136" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">프로그램 동안 개발된 (과거분사 수식)</text>
+  <rect x="10" y="178" width="320" height="28" rx="3" fill="#E8F5E9" stroke="#A5D6A7" stroke-width="1.3"/>
+  <text x="170" y="197" font-size="14" font-weight="500" fill="#1B5E20" text-anchor="middle" font-family="Georgia,serif">potentially hindering students' ability</text>
+  <text x="170" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">잠재적으로 학생 능력을 방해하며 (분사구문)</text>
+  <rect x="338" y="178" width="268" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="472" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to adapt to diverse career paths</text>
+  <text x="472" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">다양한 경력 경로에 적응할 (to V)</text>
+  <text x="629" y="197" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">or</text>
+  <text x="629" y="230" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">또는</text>
+  <rect x="10" y="262" width="298" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="159" y="281" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">address interdisciplinary challenges</text>
+  <text x="159" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">학제간 도전에 대처할 (to V 병렬)</text>
+  <line x1="10" y1="342" x2="950" y2="342" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="362" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">결과적으로, 이 단일한 초점은 프로그램 동안 개발되는 지식과 기술의 폭을 제한할 수 있으며,</text>
+  <text x="10" y="382" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">잠재적으로 다양한 경력 경로에 적응하거나 학제간 도전에 대처하는 학생들의 능력을 방해할 수</text>
+  <text x="10" y="402" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">있다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>developed during ~</strong> = 과거분사 후치수식 (skills를 수식). <strong>potentially hindering</strong> = 분사구문 (결과). <strong>ability to adapt / address</strong> = to V 병렬 (형용사적).</div><div class="s-meaning"><span class="bracket">【핵심】</span> 논문 기반 프로그램의 한계: 깊이(depth)는 있지만 폭(breadth)이 부족! → 다양한 경력·학제간 도전에 대처 못함. <span class="star-line">★ 깊이 vs 폭 — 논문 기반의 구조적 한계!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="Some universities in Europe have recognised the limitations of traditional thesis-based doctoral programmes and have started to implement more structured approaches.">
+<!-- ═══ 단락 ⓒ ═══ -->
+<div class="para-div"><span class="para-badge">ⓒ</span><span class="para-line"></span></div>
+<div class="s-card grammar has-sd" data-text="Some universities in Europe have recognised the limitations of traditional thesis-based doctoral programmes and have started to implement more structured approaches.">
   <div class="card-top"><span class="s-num">05</span><div class="s-en">Some universities in Europe have <span class="hl">recognised</span> the limitations of traditional thesis-based doctoral programmes and have started to <span class="hl">implement</span> more structured approaches.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">유럽의 일부 대학들은 전통적 논문 기반 박사 프로그램의 한계를 인식하고 더 구조화된 접근법을 시행하기 시작했다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">recognised</span><span class="vocab-kr">인식한</span><span class="vocab-en">implement</span><span class="vocab-kr">시행하다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>have recognised ~ and have started</strong> = 현재완료 병렬. 과거~현재 결과. <strong>start to V</strong> = V하기 시작하다.</div><div class="s-meaning"><span class="bracket">【해결책 등장】</span> 유럽 일부 대학은 전통적 논문형 과정의 <strong>이런 한계를 깨닫고</strong>, 더 <strong>‘짜임새 있는(structured)’ 방식을 도입(implement)</strong>하기 시작했다. structured = 틀·체계가 갖춰진(자유방임의 반대). <span class="star-line">★ implement = (제도를) 시행·도입하다 / structured = 구조가 짜인</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">유럽의 일부 대학들은 전통적 논문 기반 박사 프로그램의 한계를 인식하고 더 구조화된 접근법을 시행하기 시작했다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">recognised</span><span class="vocab-kr">인식한</span><span class="vocab-en">implement</span><span class="vocab-kr">시행하다</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="230" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="125" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Some universities in Europe</text>
+  <text x="125" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">유럽의 일부 대학들은 (S)</text>
+  <rect x="248" y="10" width="148" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="322" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">have recognised</text>
+  <text x="322" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">인식하고 (V1·현재완료)</text>
+  <rect x="404" y="10" width="148" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="478" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the limitations</text>
+  <text x="478" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">한계를 (O)</text>
+  <text x="578" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="578" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="605" y="10" width="215" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="712" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">have started to implement</text>
+  <text x="712" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">시행하기 시작했다 (V2)</text>
+  <rect x="10" y="94" width="223" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="121" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">more structured approaches</text>
+  <text x="121" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">더 구조화된 접근법을 (O)</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">유럽의 일부 대학들은 전통적 논문 기반 박사 프로그램의 한계를 인식하고 더 구조화된 접근법을</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">시행하기 시작했다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>have recognised ~ and have started</strong> = 현재완료 병렬. 과거~현재 결과. <strong>start to V</strong> = V하기 시작하다.</div><div class="s-meaning"><span class="bracket">【전환 — 유럽 대학의 대응】</span> 문제(ⓑ)에서 해결(ⓒ)로 넘어가는 전환점: 유럽 일부 대학이 <strong>한계를 인식하고 더 구조화된 접근을 시행하기 시작</strong>. 현재완료 두 개 = 과거의 인식이 현재의 실행으로 이어짐. <span class="star-line">★ have p.p. and have p.p. — 현재완료 병렬!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="These structured programmes often combine research with coursework and training in transferable skills.">
-  <div class="card-top"><span class="s-num">06</span><div class="s-en"><span class="ref">These</span> structured programmes often <span class="hl">combine</span> research with <span class="hl">coursework</span> and training in <span class="hl">transferable</span> skills.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">이 구조화된 프로그램들<span class="pr">(= 유럽 일부 대학이 도입한 더 구조화된 박사 프로그램)</span>은 종종 연구를 수업 과정 및 전환 가능한 기술 훈련과 결합한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">combine</span><span class="vocab-kr">결합하다</span><span class="vocab-en">coursework</span><span class="vocab-kr">수업 과정</span><span class="vocab-en">transferable</span><span class="vocab-kr">전환 가능한</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>combine A with B</strong> = A와 B를 결합하다.</div><div class="s-meaning"><span class="bracket">【대안의 내용】</span> 이 짜임새 있는 과정은 <strong>연구에다 ‘수업(coursework)’과 ‘여러 곳에 두루 쓰이는 기술(transferable skills) 훈련’을 결합</strong>한다. 연구만 하던 데서 벗어나 폭을 넓히는 장치. <span class="star-line">★ transferable skills = (다른 분야로도 옮겨 쓰는) 범용 능력 / coursework = 정규 수업·과제</span></div></div>
+<div class="s-card grammar has-sd" data-text="These structured programmes often combine research with coursework and training in transferable skills.">
+  <div class="card-top"><span class="s-num">06</span><div class="s-en">These structured programmes often <span class="hl">combine</span> research with <span class="hl">coursework</span> and training in <span class="hl">transferable</span> skills.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">이 구조화된 프로그램들은<span class="pr">(= 유럽 대학의 새 박사과정)</span> 종종 연구를 수업 과정 및 전환 가능한 기술 훈련과 결합한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">combine</span><span class="vocab-kr">결합하다</span><span class="vocab-en">coursework</span><span class="vocab-kr">수업 과정</span><span class="vocab-en">transferable</span><span class="vocab-kr">전환 가능한</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="230" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="125" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">These structured programmes</text>
+  <text x="125" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이 구조화된 프로그램들은 (S)</text>
+  <rect x="248" y="10" width="132" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="314" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">often combine</text>
+  <text x="314" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">종종 결합한다 (V)</text>
+  <rect x="388" y="10" width="96" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="436" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">research</text>
+  <text x="436" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">연구를 (O)</text>
+  <rect x="492" y="10" width="410" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="697" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">with coursework and training in transferable skills</text>
+  <text x="697" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수업 과정 및 전환 가능한 기술 훈련과 (부사구)</text>
+  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">이 구조화된 프로그램들은 종종 연구를 수업 과정 및 전환 가능한 기술 훈련과 결합한다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>combine A with B</strong> = A와 B를 결합하다.</div><div class="s-meaning"><span class="bracket">【해결책의 내용】</span> 구조화된 프로그램 = <strong>연구 + 수업(coursework) + 전환 가능 기술(transferable skills) 훈련</strong>의 결합. 논문 하나만 파던 기존 방식과 대비되는 다층 구성. <span class="star-line">★ combine A with B = A와 B를 결합하다!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="By incorporating coursework, seminars, workshops and internships into the curriculum, they aim to provide students with a broader skill set and better prepare them for a variety of career paths beyond academia.">
+<div class="s-card grammar has-sd" data-text="By incorporating coursework, seminars, workshops and internships into the curriculum, they aim to provide students with a broader skill set and better prepare them for a variety of career paths beyond academia.">
   <div class="card-top"><span class="s-num">07</span><div class="s-en">By <span class="hl">incorporating</span> coursework, seminars, workshops and internships into the <span class="hl">curriculum</span>, they <span class="hl">aim to</span> provide students with a broader skill set and better prepare them for a variety of career paths beyond academia.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">수업·세미나·워크숍·인턴십을 교육과정에 통합함으로써, 더 넓은 기술 세트를 제공하고 학계를 넘어 다양한 경력에 더 잘 준비시키는 것을 목표로 한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">incorporating</span><span class="vocab-kr">통합하기</span><span class="vocab-en">curriculum</span><span class="vocab-kr">교육과정</span><span class="vocab-en">aim to</span><span class="vocab-kr">~을 목표로 하다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>By incorporating ~ into</strong> = ~을 ~에 통합함으로써 (by V-ing). <strong>aim to provide ~ and (aim to) prepare ~</strong> = to V 병렬. <strong>provide A with B</strong> = A에게 B를 제공하다. <strong>prepare A for B</strong> = A를 B에 대비시키다.</div><div class="s-meaning"><span class="bracket">【대안의 목표 — 결론】</span> 수업·세미나·워크숍·인턴십을 <strong>교육과정에 끼워 넣어(incorporate into)</strong>, <strong>더 폭넓은 능력(broader skill set)</strong>을 길러주고 <strong>학계 밖(beyond academia) 다양한 진로</strong>까지 대비시키려는 것. ‘좁은 전문가’가 아니라 ‘넓게 준비된 인재’를 목표로. <span class="star-line">★ beyond academia = 학계(교수·연구) 너머의 진로 / skill set = 갖춘 능력의 묶음</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">수업·세미나·워크숍·인턴십을 교육과정에 통합함으로써, 더 넓은 기술 세트를 제공하고 학계를 넘어 다양한 경력에 더 잘 준비시키는 것을 목표로 한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">incorporating</span><span class="vocab-kr">통합하기</span><span class="vocab-en">curriculum</span><span class="vocab-kr">교육과정</span><span class="vocab-en">aim to</span><span class="vocab-kr">~을 목표로 하다</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="508" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="264" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">By incorporating coursework, seminars, workshops and internships</text>
+  <text x="264" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수업·세미나·워크숍·인턴십을 통합함으로써 (by V-ing)</text>
+  <rect x="526" y="10" width="180" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="616" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">into the curriculum</text>
+  <text x="616" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">교육과정에 (부사구)</text>
+  <rect x="10" y="94" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">they</text>
+  <text x="42" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들은 (S)</text>
+  <rect x="82" y="94" width="140" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="152" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">aim to provide</text>
+  <text x="152" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">제공하는 것을 목표로 (V1)</text>
+  <rect x="230" y="94" width="275" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="367" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">students with a broader skill set</text>
+  <text x="367" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">학생들에게 더 넓은 기술 세트를 (O)</text>
+  <text x="531" y="113" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="531" y="146" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="558" y="94" width="140" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="628" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">better prepare</text>
+  <text x="628" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">더 잘 준비시킨다 (V2)</text>
+  <rect x="10" y="178" width="403" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="211" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">them for a variety of career paths beyond academia</text>
+  <text x="211" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">학계를 넘어 다양한 경력 경로에 (O)</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">수업 과정, 세미나, 워크숍, 인턴십을 교육과정에 통합함으로써, 더 넓은 기술 세트를</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">학생들에게 제공하고 학계를 넘어 다양한 경력 경로에 더 잘 준비시키는 것을 목표로 한다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>By incorporating ~ into</strong> = ~을 ~에 통합함으로써 (by V-ing). <strong>aim to provide ~ and (aim to) prepare ~</strong> = to V 병렬. <strong>provide A with B</strong> = A에게 B를 제공하다. <strong>prepare A for B</strong> = A를 B에 대비시키다.</div><div class="s-meaning"><span class="bracket">【기대 효과 — 학계 너머까지】</span> 수업·세미나·워크숍·인턴십을 교육과정에 통합 → <strong>더 넓은 기술 세트 + 학계 밖 다양한 진로 대비</strong>. S04의 '적응 능력 저해'라는 문제를 정확히 뒤집는 결론. <span class="star-line">★ provide A with B / prepare A for B!</span></div></div>
 </div>
 </div><!-- /cards -->
+    
   </div>
 <div class="summary-view" id="summaryView">
     <div class="summary-wrap"><div class="summary-header">📖 줄거리 &amp; 핵심 정리</div><div class="summary-body">
@@ -541,6 +750,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #C55A11;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">by V-ing (수단)</div><div style="color:#555;">V함으로써</div></div>
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #C55A11;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">adapt to / address</div><div style="color:#555;">적응하다 / 대처하다</div></div></div></div></div></div>
 </div>
+
   <div class="ga-panel" id="panelGA">
 
 <div class="ga-legend"><div class="ga-leg"><div class="ga-leg-dot" style="background:#C62828;"></div><strong>Tier 1</strong> 어법 핵심</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#E65100;"></div><strong>Tier 2</strong> 어법</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#1565C0;"></div><strong>Tier 3</strong> 어휘·대명사</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#2E7D32;"></div><strong>Tier 4</strong> 혼동 어휘</div></div>

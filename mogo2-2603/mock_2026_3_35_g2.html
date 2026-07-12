@@ -306,8 +306,8 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 /* ── 공통 행동 CSS ── */
 /* 1. 호버 펼치기 완전 제거 */
 @media(hover:hover) and (pointer:fine){
-  .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
-  .s-card.grammar:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card.grammar:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
 }
 /* 2. 단어 가로 칩 배열 */
 .s-card.vocab-only .s-kr-wrap,
@@ -325,10 +325,19 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .s-card.pinned .s-vocab,
 .s-card.tapped .s-vocab{
   order:0;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25)!important;
-  border-radius:20px;padding:3px 12px 3px 8px!important;
-  white-space:nowrap;flex-shrink:0;border-top:none!important;
-  display:inline-flex!important;align-items:center;gap:4px;
+  border-radius:16px;padding:5px 12px 5px 10px!important;
+  white-space:normal;flex-shrink:1;border-top:none!important;
+  display:inline-flex!important;flex-wrap:wrap!important;align-items:center;gap:4px 6px;
+  max-width:100%;overflow-wrap:break-word;word-break:break-word;
 }
+/* 2-B. 인카드 문장 구조도 (v2.0) */
+.s-structure{padding:6px 14px 8px 42px;border-top:1px dashed rgba(46,117,182,0.15);background:#FBFCFF;}
+.s-card.grammar .s-structure{border-top-color:rgba(91,45,142,0.15);}
+.s-structure-label{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;color:#993C1D;margin-bottom:5px;}
+.s-structure svg{width:100%;display:block;background:white;border:1px solid rgba(0,0,0,0.07);border-radius:8px;padding:8px 10px;box-sizing:border-box;}
+.s-card.vocab-only .s-structure{display:none;}
+.s-card.pinned .s-structure,.s-card.tapped .s-structure{width:100%;flex-basis:100%;order:0;padding:4px 0 2px!important;border-top:none;background:transparent;}
+.s-card.has-sd.pinned .s-kr-wrap,.s-card.has-sd.tapped .s-kr-wrap{max-height:2600px;}
 /* 3. 문장구조도 탭·패널 */
 .tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
 .tab-sd.active{background:#993C1D;color:white;border-color:#993C1D;}
@@ -463,25 +472,143 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
       <button class="ctrl-btn" id="btnAll"   onclick="speakAll()">🔊 전체 읽기</button>
     </div>
     <div class="cards" id="cards">
-<div class="s-card grammar" data-text="Standardization of information was an effect of printing; since it allowed exact reproduction of information in a way that manuscript copying did not.">
+<div class="s-card grammar has-sd" data-text="Standardization of information was an effect of printing; since it allowed exact reproduction of information in a way that manuscript copying did not.">
   <div class="card-top"><span class="s-num">01</span><div class="s-en"><span class="hl">Standardization</span> of information was an <span class="hl">effect</span> of <span class="hl">printing</span>; since it allowed <span class="hl">exact</span> <span class="hl">reproduction</span> of information in a way that <span class="hl">manuscript</span> <span class="hl">copying</span> did not.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">정보의 <strong>표준화</strong>는 인쇄의 효과였는데; <strong>필사본</strong> 복사가 하지 못한 방식으로 정보의 <strong>정확한 재생산</strong>을 가능하게 했기 때문이다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">standardization</span><span class="vocab-kr">표준화</span><span class="vocab-en">effect</span><span class="vocab-kr">효과</span><span class="vocab-en">printing</span><span class="vocab-kr">인쇄</span><span class="vocab-en">exact</span><span class="vocab-kr">정확한</span><span class="vocab-en">reproduction</span><span class="vocab-kr">재생산</span><span class="vocab-en">manuscript</span><span class="vocab-kr">필사본</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>since</strong> = ~이므로 (이유 접속사). <strong>in a way that ~ did not</strong> = ~가 하지 못한 방식으로 (관계부사 that). <strong>allowed</strong> = 가능하게 했다 (allow + O).</div></div>
+  <div class="s-kr-wrap"><div class="s-kr">정보의 <strong>표준화</strong>는 인쇄의 효과였는데; <strong>필사본</strong> 복사가 하지 못한 방식으로 정보의 <strong>정확한 재생산</strong>을 가능하게 했기 때문이다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">standardization</span><span class="vocab-kr">표준화</span><span class="vocab-en">effect</span><span class="vocab-kr">효과</span><span class="vocab-en">printing</span><span class="vocab-kr">인쇄</span><span class="vocab-en">exact</span><span class="vocab-kr">정확한</span><span class="vocab-en">reproduction</span><span class="vocab-kr">재생산</span><span class="vocab-en">manuscript</span><span class="vocab-kr">필사본</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="253" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="136" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Standardization of information</text>
+  <text x="136" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">정보의 표준화는 (S)</text>
+  <rect x="271" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="303" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">was</text>
+  <text x="303" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이었다 (V)</text>
+  <rect x="343" y="10" width="185" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="435" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">an effect of printing</text>
+  <text x="435" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">인쇄의 효과 (C)</text>
+  <text x="37" y="113" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">since</text>
+  <text x="37" y="146" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">~이므로 (이유)</text>
+  <rect x="72" y="94" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="104" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">it</text>
+  <text x="104" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그것은 (S)</text>
+  <rect x="144" y="94" width="87" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="187" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">allowed</text>
+  <text x="187" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가능하게 했다 (V)</text>
+  <rect x="239" y="94" width="275" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="376" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">exact reproduction of information</text>
+  <text x="376" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">정보의 정확한 재생산을 (O)</text>
+  <rect x="522" y="94" width="328" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="686" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">in a way that manuscript copying did not</text>
+  <text x="686" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">필사본 복사가 하지 못한 방식으로 (부사구+that절)</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">정보의 표준화는 인쇄의 효과였는데; 필사본 복사가 하지 못한 방식으로 정보의 정확한 재생산을</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">가능하게 했기 때문이다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>since</strong> = ~이므로 (이유 접속사). <strong>in a way that ~ did not</strong> = ~가 하지 못한 방식으로 (관계부사 that). <strong>allowed</strong> = 가능하게 했다 (allow + O).</div></div>
 </div>
-<div class="s-card grammar" data-text="This is evident in the contrast between the travel logs of Marco Polo and those of Christopher Columbus.">
+<div class="s-card grammar has-sd" data-text="This is evident in the contrast between the travel logs of Marco Polo and those of Christopher Columbus.">
   <div class="card-top"><span class="s-num">02</span><div class="s-en">This is <span class="hl">evident</span> in the <span class="hl">contrast</span> between the travel <span class="hl">logs</span> of Marco Polo and those of Christopher Columbus.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">이것은 폴로의 여행 <strong>기록</strong>과 콜럼버스의 기록 사이의 <strong>대조</strong>에서 <strong>분명</strong>하다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">evident</span><span class="vocab-kr">분명한</span><span class="vocab-en">contrast</span><span class="vocab-kr">대조</span><span class="vocab-en">log</span><span class="vocab-kr">기록</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>those of ~</strong> = ~의 것들 (those = the travel logs 대용). <strong>between A and B</strong> = A와 B 사이의.</div></div>
+  <div class="s-kr-wrap"><div class="s-kr">이것은 폴로의 여행 <strong>기록</strong>과 콜럼버스의 기록 사이의 <strong>대조</strong>에서 <strong>분명</strong>하다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">evident</span><span class="vocab-kr">분명한</span><span class="vocab-en">contrast</span><span class="vocab-kr">대조</span><span class="vocab-en">log</span><span class="vocab-kr">기록</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">This</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이것은 (S)</text>
+  <rect x="82" y="10" width="113" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="138" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is evident</text>
+  <text x="138" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">분명하다 (V)</text>
+  <rect x="203" y="10" width="680" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="543" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">in the contrast between the travel logs of Marco Polo and those of Christopher Columbus</text>
+  <text x="543" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">폴로의 여행 기록과 콜럼버스의 기록 사이의 대조에서 (부사구)</text>
+  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">이것은 마르코 폴로의 여행 기록과 크리스토퍼 콜럼버스의 여행 기록 사이의 대조에서 분명하다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>those of ~</strong> = ~의 것들 (those = the travel logs 대용). <strong>between A and B</strong> = A와 B 사이의.</div></div>
 </div>
-<div class="s-card grammar" data-text="After his return from China in 1295, a century and a half before printing, Polo's narrative was copied in about 150 different manuscripts, with so many differences that we're not sure which version is authentic.">
+<div class="s-card grammar has-sd" data-text="After his return from China in 1295, a century and a half before printing, Polo's narrative was copied in about 150 different manuscripts, with so many differences that we're not sure which version is authentic.">
   <div class="card-top"><span class="s-num">03</span><div class="s-en">After his return from China in 1295, a century and a half before printing, Polo's <span class="hl">narrative</span> was copied in about 150 different manuscripts, with so many differences that we're not sure which <span class="hl">version</span> is <span class="hl">authentic</span>.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">1295년 중국에서 돌아온 후, 폴로의 <strong>서사</strong>는 약 150개의 필사본으로 복사되었는데, 너무 많은 차이가 있어서 어떤 <strong>판본</strong>이 <strong>진본</strong>인지 확신 못 한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">narrative</span><span class="vocab-kr">서사</span><span class="vocab-en">version</span><span class="vocab-kr">판본</span><span class="vocab-en">authentic</span><span class="vocab-kr">진본의</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>was copied</strong> = 수동태. <strong>with so many differences that ~</strong> = so~that 결과 구문 (너무 많아서 ~). <strong>which version is authentic</strong> = 간접의문문 (의문사+S+V 어순).</div><div class="s-meaning"><span class="bracket">【핵심】</span> 인쇄 전(필사본) vs 인쇄 후 대비! 폴로(인쇄 전): 150개 필사본 → 차이 많아 진본 불확실. 콜럼버스(인쇄 후): 단 1개 판본 → 인쇄로 고정·배포. <span class="star-line">★ 인쇄 = 정보의 표준화·정확한 재생산 → 구술-필사본 문화의 개선!</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">1295년 중국에서 돌아온 후, 폴로의 <strong>서사</strong>는 약 150개의 필사본으로 복사되었는데, 너무 많은 차이가 있어서 어떤 <strong>판본</strong>이 <strong>진본</strong>인지 확신 못 한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">narrative</span><span class="vocab-kr">서사</span><span class="vocab-en">version</span><span class="vocab-kr">판본</span><span class="vocab-en">authentic</span><span class="vocab-kr">진본의</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="290" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="155" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">After his return from China in 1295</text>
+  <text x="155" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">1295년 중국에서 돌아온 후 (부사구)</text>
+  <rect x="308" y="10" width="298" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="457" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">a century and a half before printing</text>
+  <text x="457" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">인쇄 1세기 반 전 (동격 삽입)</text>
+  <rect x="10" y="94" width="156" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="88" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Polo's narrative</text>
+  <text x="88" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">폴로의 서사는 (S)</text>
+  <rect x="174" y="94" width="113" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="230" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">was copied</text>
+  <text x="230" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">복사되었다 (V·수동)</text>
+  <rect x="295" y="94" width="283" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="436" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">in about 150 different manuscripts</text>
+  <text x="436" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">약 150개의 서로 다른 필사본으로 (부사구)</text>
+  <rect x="10" y="178" width="560" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="290" y="197" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">with so many differences that we're not sure which version is authentic</text>
+  <text x="290" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">너무 많은 차이가 있어서 어떤 판본이 진본인지 확신 못 함 (so~that 결과)</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">인쇄 1세기 반 전인 1295년 중국에서 돌아온 후, 폴로의 서사는 약 150개의 서로 다른</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">필사본으로 복사되었는데, 너무 많은 차이가 있어서 어떤 판본이 진본인지 확신할 수 없다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>was copied</strong> = 수동태. <strong>with so many differences that ~</strong> = so~that 결과 구문 (너무 많아서 ~). <strong>which version is authentic</strong> = 간접의문문 (의문사+S+V 어순).</div><div class="s-meaning"><span class="bracket">【핵심】</span> 인쇄 전(필사본) vs 인쇄 후 대비! 폴로(인쇄 전): 150개 필사본 → 차이 많아 진본 불확실. 콜럼버스(인쇄 후): 단 1개 판본 → 인쇄로 고정·배포. <span class="star-line">★ 인쇄 = 정보의 표준화·정확한 재생산 → 구술-필사본 문화의 개선!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="In contrast, there is only one version of Christopher Columbus's letters about the exploration of the Caribbean in the 1490s, since they were fixed in printed form and widely distributed at the time they were written.">
+<div class="s-card grammar has-sd" data-text="In contrast, there is only one version of Christopher Columbus's letters about the exploration of the Caribbean in the 1490s, since they were fixed in printed form and widely distributed at the time they were written.">
   <div class="card-top"><span class="s-num">04</span><div class="s-en">In contrast, there is only one version of Christopher Columbus's letters about the <span class="hl">exploration</span> of the Caribbean in the 1490s, since they were fixed in printed form and widely <span class="hl">distributed</span> at the time they were written.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">반면에, 콜럼버스의 카리브해 <strong>탐험</strong> 편지는 단 하나의 판본만 있는데, 쓰여진 당시 인쇄 형태로 고정되고 널리 <strong>배포</strong>되었기 때문이다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">exploration</span><span class="vocab-kr">탐험</span><span class="vocab-en">distributed</span><span class="vocab-kr">배포된</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>In contrast</strong> = 반면에 (대조). <strong>were fixed ~ and widely distributed</strong> = 수동태 병렬. <strong>at the time (that) they were written</strong> = 쓰여진 당시에 (관계부사 생략).</div></div>
+  <div class="s-kr-wrap"><div class="s-kr">반면에, 콜럼버스의 카리브해 <strong>탐험</strong> 편지는 단 하나의 판본만 있는데, 쓰여진 당시 인쇄 형태로 고정되고 널리 <strong>배포</strong>되었기 때문이다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">exploration</span><span class="vocab-kr">탐험</span><span class="vocab-en">distributed</span><span class="vocab-kr">배포된</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="116" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="68" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">In contrast</text>
+  <text x="68" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">반면에 (대조)</text>
+  <rect x="134" y="10" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="182" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">there is</text>
+  <text x="182" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">있다 (V)</text>
+  <rect x="238" y="10" width="313" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="394" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">only one version of Columbus's letters</text>
+  <text x="394" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">콜럼버스 편지의 단 하나의 판본만 (S)</text>
+  <rect x="10" y="94" width="410" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="215" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">about the exploration of the Caribbean in the 1490s</text>
+  <text x="215" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">1490년대 카리브해 탐험에 대한 (부사구)</text>
+  <rect x="10" y="173" width="804" height="36" rx="5" fill="none" stroke="#6A1B9A" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="412" y="172" font-size="10" font-weight="400" fill="#6A1B9A" text-anchor="middle" font-family="sans-serif">since절 (이유)</text>
+  <text x="43" y="197" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">since</text>
+  <text x="43" y="230" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">~이므로</text>
+  <rect x="78" y="180" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="110" y="199" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">they</text>
+  <text x="110" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그것들이</text>
+  <rect x="150" y="180" width="395" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="347" y="199" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">were fixed in printed form and widely distributed</text>
+  <text x="347" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">인쇄 형태로 고정되고 널리 배포되었기 때문 (수동 병렬)</text>
+  <rect x="553" y="180" width="245" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="675" y="199" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">at the time they were written</text>
+  <text x="675" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">쓰여진 당시에</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">반면에, 1490년대 카리브해 탐험에 대한 크리스토퍼 콜럼버스의 편지는 단 하나의 판본만</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">있는데, 쓰여진 당시에 인쇄 형태로 고정되고 널리 배포되었기 때문이다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>In contrast</strong> = 반면에 (대조). <strong>were fixed ~ and widely distributed</strong> = 수동태 병렬. <strong>at the time (that) they were written</strong> = 쓰여진 당시에 (관계부사 생략).</div></div>
 </div>
-<div class="s-card grammar" data-text="So the certainty of accuracy was a way that printing was an improvement over the old oral-manuscript culture.">
+<div class="s-card grammar has-sd" data-text="So the certainty of accuracy was a way that printing was an improvement over the old oral-manuscript culture.">
   <div class="card-top"><span class="s-num">05</span><div class="s-en">So the certainty of <span class="hl">accuracy</span> was a way that printing was an <span class="hl">improvement</span> over the old <span class="hl">oral-manuscript</span> culture.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">따라서 <strong>정확성</strong>의 확실성은 인쇄가 오래된 <strong>구술-필사본</strong> 문화보다 <strong>개선</strong>이었던 방식이었다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">accuracy</span><span class="vocab-kr">정확성</span><span class="vocab-en">improvement</span><span class="vocab-kr">개선</span><span class="vocab-en">oral-manuscript</span><span class="vocab-kr">구술-필사본의</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>a way that ~</strong> = ~인 방식 (관계부사 that = in which). <strong>an improvement over</strong> = ~보다 개선 (over = ~보다).</div></div>
+  <div class="s-kr-wrap"><div class="s-kr">따라서 <strong>정확성</strong>의 확실성은 인쇄가 오래된 <strong>구술-필사본</strong> 문화보다 <strong>개선</strong>이었던 방식이었다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">accuracy</span><span class="vocab-kr">정확성</span><span class="vocab-en">improvement</span><span class="vocab-kr">개선</span><span class="vocab-en">oral-manuscript</span><span class="vocab-kr">구술-필사본의</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 224" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">So</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">따라서 (부사)</text>
+  <rect x="82" y="10" width="215" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="189" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the certainty of accuracy</text>
+  <text x="189" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">정확성의 확실성은 (S)</text>
+  <rect x="305" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="337" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">was</text>
+  <text x="337" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이었다 (V)</text>
+  <rect x="377" y="10" width="313" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="533" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">a way that printing was an improvement</text>
+  <text x="533" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">인쇄가 개선이었던 방식 (C+that절)</text>
+  <rect x="10" y="94" width="298" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="159" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">over the old oral-manuscript culture</text>
+  <text x="159" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">오래된 구술-필사본 문화보다 (부사구)</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">따라서 정확성의 확실성은 인쇄가 오래된 구술-필사본 문화보다 개선된 방식이었다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>a way that ~</strong> = ~인 방식 (관계부사 that = in which). <strong>an improvement over</strong> = ~보다 개선 (over = ~보다).</div></div>
 </div>
 </div><!-- /cards -->
     <div class="summary-wrap"><div class="summary-header">📖 줄거리 &amp; 핵심 정리</div><div class="summary-body">

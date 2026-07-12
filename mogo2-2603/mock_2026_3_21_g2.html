@@ -306,8 +306,8 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 /* ── 공통 행동 CSS ── */
 /* 1. 호버 펼치기 완전 제거 */
 @media(hover:hover) and (pointer:fine){
-  .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
-  .s-card.grammar:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card.grammar:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
 }
 /* 2. 단어 가로 칩 배열 */
 .s-card.vocab-only .s-kr-wrap,
@@ -330,6 +330,14 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   display:inline-flex!important;flex-wrap:wrap!important;align-items:center;gap:4px 6px;
   max-width:100%;overflow-wrap:break-word;word-break:break-word;
 }
+/* 2-B. 인카드 문장 구조도 (v2.0) */
+.s-structure{padding:6px 14px 8px 42px;border-top:1px dashed rgba(46,117,182,0.15);background:#FBFCFF;}
+.s-card.grammar .s-structure{border-top-color:rgba(91,45,142,0.15);}
+.s-structure-label{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;color:#993C1D;margin-bottom:5px;}
+.s-structure svg{width:100%;display:block;background:white;border:1px solid rgba(0,0,0,0.07);border-radius:8px;padding:8px 10px;box-sizing:border-box;}
+.s-card.vocab-only .s-structure{display:none;}
+.s-card.pinned .s-structure,.s-card.tapped .s-structure{width:100%;flex-basis:100%;order:0;padding:4px 0 2px!important;border-top:none;background:transparent;}
+.s-card.has-sd.pinned .s-kr-wrap,.s-card.has-sd.tapped .s-kr-wrap{max-height:2600px;}
 /* 3. 문장구조도 탭·패널 */
 .tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
 .tab-sd.active{background:#993C1D;color:white;border-color:#993C1D;}
@@ -447,6 +455,12 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .tab-summary.active{background:#00695C;color:white;border-color:#00695C;}
 .summary-view{display:none;}
 @media print{.summary-view{display:none!important;}}
+
+/* ═══ 단락 배지 (재빌드 주입) ═══ */
+.para-div{display:flex;align-items:center;gap:10px;margin:22px 2px 10px;}
+.para-badge{width:26px;height:26px;border-radius:50%;background:#1F3864;color:#fff;font-weight:700;font-size:14px;font-family:'JetBrains Mono',monospace;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 6px rgba(31,56,100,0.25);}
+.para-line{flex:1;height:1px;background:linear-gradient(to right,rgba(31,56,100,0.35),transparent);}
+@media print{.para-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
 </style>
 </head>
 <body>
@@ -495,41 +509,287 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
       <button class="ctrl-btn" id="btnAll"   onclick="speakAll()">🔊 전체 읽기</button>
     </div>
     <div class="cards" id="cards">
-<div class="s-card grammar" data-text="A first step toward establishing a respectful classroom learning community is acceptance of all ideas and answers—regardless of any obvious errors.">
+<!-- ═══ 단락 ⓐ ═══ -->
+<div class="para-div"><span class="para-badge">ⓐ</span><span class="para-line"></span></div>
+<div class="s-card grammar has-sd" data-text="A first step toward establishing a respectful classroom learning community is acceptance of all ideas and answers—regardless of any obvious errors.">
   <div class="card-top"><span class="s-num">01</span><div class="s-en">A first step toward <span class="hl">establishing</span> a <span class="hl">respectful</span> classroom learning community is <span class="hl">acceptance</span> of all ideas and answers—<span class="hl">regardless of</span> any <span class="hl">obvious</span> errors.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">존중하는 교실 학습 공동체를 확립하기 위한 첫 번째 단계는 명백한 오류에 <strong>상관없이</strong> 모든 아이디어와 답을 수용하는 것이다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">establishing</span><span class="vocab-kr">확립하기</span><span class="vocab-en">respectful</span><span class="vocab-kr">존중하는</span><span class="vocab-en">acceptance</span><span class="vocab-kr">수용</span><span class="vocab-en">regardless of</span><span class="vocab-kr">~에 상관없이</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>toward establishing</strong> = 전치사 + 동명사. <strong>regardless of</strong> = ~에 상관없이 (전치사구). <strong>A is B</strong> = 1단계는 수용이다 (2형식).</div><div class="s-meaning"><span class="bracket">【핵심】</span> 글의 핵심 주장 첫 문장! 존중하는 교실 = 모든 답을 수용. 오류가 있어도 수용해야 → 이것이 풍부한 토론의 전제 조건! <span class="star-line">★ 수용(acceptance) = 안전한 학습 공동체의 첫걸음!</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">존중하는 교실 학습 공동체를 확립하기 위한 첫 번째 단계는 명백한 오류에 <strong>상관없이</strong> 모든 아이디어와 답을 수용하는 것이다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">establishing</span><span class="vocab-kr">확립하기</span><span class="vocab-en">respectful</span><span class="vocab-kr">존중하는</span><span class="vocab-en">acceptance</span><span class="vocab-kr">수용</span><span class="vocab-en">regardless of</span><span class="vocab-kr">~에 상관없이</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="124" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="72" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">A first step</text>
+  <text x="72" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">첫 번째 단계는 (S)</text>
+  <rect x="142" y="10" width="418" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="351" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">toward establishing a respectful classroom community</text>
+  <text x="351" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">존중하는 교실 공동체를 확립하기 위한 (전치사+동명사)</text>
+  <rect x="568" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="600" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="600" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다 (V)</text>
+  <rect x="10" y="94" width="290" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="155" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">acceptance of all ideas and answers</text>
+  <text x="155" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">모든 아이디어와 답의 수용 (C)</text>
+  <rect x="10" y="178" width="268" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="144" y="197" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">regardless of any obvious errors</text>
+  <text x="144" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">명백한 오류에 상관없이 (부사구)</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">존중하는 교실 학습 공동체를 확립하기 위한 첫 번째 단계는 명백한 오류에 상관없이 모든</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">아이디어와 답을 수용하는 것이다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>toward establishing</strong> = 전치사 + 동명사. <strong>regardless of</strong> = ~에 상관없이 (전치사구). <strong>A is B</strong> = 1단계는 수용이다 (2형식).</div><div class="s-meaning"><span class="bracket">【핵심】</span> 글의 핵심 주장 첫 문장! 존중하는 교실 = 모든 답을 수용. 오류가 있어도 수용해야 → 이것이 풍부한 토론의 전제 조건! <span class="star-line">★ 수용(acceptance) = 안전한 학습 공동체의 첫걸음!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="Rich mathematical discussions cannot occur if this expectation is not in place.">
+<div class="s-card grammar has-sd" data-text="Rich mathematical discussions cannot occur if this expectation is not in place.">
   <div class="card-top"><span class="s-num">02</span><div class="s-en">Rich <span class="hl">mathematical</span> discussions cannot <span class="hl">occur</span> if <span class="ref">this</span> expectation is not in place.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">이 기대<span class="pr">(= 모든 아이디어와 답을 수용한다는 기대)</span>가 갖춰지지 않으면 풍부한 수학적 토론이 일어날 수 없다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">mathematical</span><span class="vocab-kr">수학적인</span><span class="vocab-en">occur</span><span class="vocab-kr">일어나다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>cannot occur</strong> = 일어날 수 없다. occur = 자동사 (수동태 불가). <strong>in place</strong> = 갖춰진, 제자리에.</div><div class="s-meaning"><span class="bracket">【전제 조건】</span> ‘풍부한 수학 토론’은 저절로 안 생긴다. <strong>이 기대(=모든 답을 수용)가 자리 잡혀(in place) 있지 않으면</strong> 활발한 토론 자체가 불가능하다. 즉 <strong>‘수용 분위기’가 토론의 필요조건</strong>이라는 뜻. <span class="star-line">★ in place = (제도·분위기로) 갖춰진 · 수용 분위기 → 토론의 전제</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">이 기대<span class="pr">(= 모든 아이디어와 답을 수용한다는 기대)</span>가 갖춰지지 않으면 풍부한 수학적 토론이 일어날 수 없다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">mathematical</span><span class="vocab-kr">수학적인</span><span class="vocab-en">occur</span><span class="vocab-kr">일어나다</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="245" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="132" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Rich mathematical discussions</text>
+  <text x="132" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">풍부한 수학적 토론은 (S)</text>
+  <rect x="263" y="10" width="124" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="325" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">cannot occur</text>
+  <text x="325" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">일어날 수 없다 (V)</text>
+  <rect x="395" y="5" width="372" height="36" rx="5" fill="none" stroke="#085041" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="581" y="4" font-size="10" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">if절 (조건)</text>
+  <text x="416" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">if</text>
+  <text x="416" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">만약 ~하지 않으면</text>
+  <rect x="439" y="12" width="156" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="517" y="31" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">this expectation</text>
+  <text x="517" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이 기대가</text>
+  <rect x="603" y="12" width="148" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="677" y="31" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is not in place</text>
+  <text x="677" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">갖춰지지 않으면</text>
+  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">이 기대가 갖춰지지 않으면 풍부한 수학적 토론이 일어날 수 없다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>cannot occur</strong> = 일어날 수 없다. occur = 자동사 (수동태 불가). <strong>in place</strong> = 갖춰진, 제자리에.</div><div class="s-meaning"><span class="bracket">【수용 없이는 토론 없음】</span> 쉽게 말하면 '<strong>수용 분위기가 없으면 깊은 수학 토론도 없다</strong>'. this expectation은 S01의 '모든 아이디어·답을 수용한다'는 기대. 그 전제가 in place(갖춰져) 있어야 풍부한 토론이 가능. <span class="star-line">★ in place = 제자리에 갖춰진 / occur = 자동사 → 수동태 불가!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="We must remember that wrong answers are often rooted in misconceptions, and unless these ideas are allowed to be brought to the forefront, we cannot help students confront their thinking.">
+<div class="s-card grammar has-sd" data-text="We must remember that wrong answers are often rooted in misconceptions, and unless these ideas are allowed to be brought to the forefront, we cannot help students confront their thinking.">
   <div class="card-top"><span class="s-num">03</span><div class="s-en">We must remember that wrong answers <span class="hl">are</span> often <span class="hl">rooted in</span> <span class="hl">misconceptions</span>, and unless <span class="ref">these</span> ideas are allowed to be brought to the <span class="hl">forefront</span>, we cannot help students <span class="hl">confront</span> their thinking.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">오답이 종종 오개념에 뿌리를 두고 있다는 것을 기억해야 하며, 이 아이디어들<span class="pr">(= 오개념에 뿌리를 둔 오답들)</span>이 최전면에 드러나도록 허용되지 않는 한, 학생들이 자신의 사고와 <strong>맞서도록</strong> 도울 수 없다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">rooted in</span><span class="vocab-kr">~에 뿌리를 둔</span><span class="vocab-en">misconception</span><span class="vocab-kr">오개념</span><span class="vocab-en">forefront</span><span class="vocab-kr">최전면</span><span class="vocab-en">confront</span><span class="vocab-kr">맞서다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>are rooted in</strong> = ~에 뿌리를 두다 (수동). <strong>unless</strong> = ~하지 않는 한 (= if ~ not). <strong>are allowed to be brought</strong> = 이중 수동 (허용되다 + 드러나다). <strong>help + O + V원형</strong> = O가 V하도록 돕다 (사역).</div><div class="s-meaning"><span class="bracket">【왜 오답을 드러내야 하나】</span> 오답은 대개 <strong>오개념(틀린 생각)</strong>에서 나온다. 그 오개념을 <strong>수면 위로 끌어내(brought to the forefront) 드러내지 않으면</strong>, 학생이 자기 생각의 문제점을 <strong>마주 보고(confront) 고칠</strong> 기회를 줄 수 없다. → 그래서 오답을 숨기지 말고 공개해야 한다. <span class="star-line">★ forefront = 맨 앞·수면 위 / confront one’s thinking = 자기 사고와 정면으로 마주하다</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">오답이 종종 오개념에 뿌리를 두고 있다는 것을 기억해야 하며, 이 아이디어들<span class="pr">(= 오개념에 뿌리를 둔 오답들)</span>이 최전면에 드러나도록 허용되지 않는 한, 학생들이 자신의 사고와 <strong>맞서도록</strong> 도울 수 없다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">rooted in</span><span class="vocab-kr">~에 뿌리를 둔</span><span class="vocab-en">misconception</span><span class="vocab-kr">오개념</span><span class="vocab-en">forefront</span><span class="vocab-kr">최전면</span><span class="vocab-en">confront</span><span class="vocab-kr">맞서다</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">We</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리는 (S)</text>
+  <rect x="82" y="10" width="132" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="148" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">must remember</text>
+  <text x="148" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">기억해야 한다 (V)</text>
+  <rect x="222" y="5" width="544" height="36" rx="5" fill="none" stroke="#6A1B9A" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="494" y="4" font-size="10" font-weight="400" fill="#6A1B9A" text-anchor="middle" font-family="sans-serif">that절</text>
+  <text x="251" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">that</text>
+  <text x="251" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">~라는 것을</text>
+  <rect x="282" y="12" width="132" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="348" y="31" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">wrong answers</text>
+  <text x="348" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">오답이</text>
+  <rect x="422" y="12" width="180" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="512" y="31" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are often rooted in</text>
+  <text x="512" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">종종 뿌리를 두고 있다</text>
+  <rect x="610" y="12" width="140" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="680" y="31" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">misconceptions</text>
+  <text x="680" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">오개념에</text>
+  <rect x="10" y="89" width="596" height="36" rx="5" fill="none" stroke="#085041" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="308" y="88" font-size="10" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">unless절 (조건)</text>
+  <text x="47" y="113" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">unless</text>
+  <text x="47" y="146" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">~하지 않는 한</text>
+  <rect x="87" y="96" width="116" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="145" y="115" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">these ideas</text>
+  <text x="145" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이 아이디어들이</text>
+  <rect x="211" y="96" width="215" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="318" y="115" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are allowed to be brought</text>
+  <text x="318" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">드러나도록 허용되지 않는 한</text>
+  <rect x="434" y="96" width="156" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="512" y="115" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">to the forefront</text>
+  <text x="512" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">최전면에</text>
+  <rect x="614" y="94" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="646" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">we</text>
+  <text x="646" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리는 (S)</text>
+  <rect x="686" y="94" width="116" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="744" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">cannot help</text>
+  <text x="744" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">도울 수 없다 (V)</text>
+  <rect x="10" y="178" width="268" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="144" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">students confront their thinking</text>
+  <text x="144" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">학생들이 사고와 맞서도록 (O+OC)</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">우리는 오답이 종종 오개념에 뿌리를 두고 있다는 것을 기억해야 하며, 이 아이디어들이 최전면에</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">드러나도록 허용되지 않는 한, 학생들이 자신의 사고와 맞서도록 도울 수 없다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>are rooted in</strong> = ~에 뿌리를 두다 (수동). <strong>unless</strong> = ~하지 않는 한 (= if ~ not). <strong>are allowed to be brought</strong> = 이중 수동 (허용되다 + 드러나다). <strong>help + O + V원형</strong> = O가 V하도록 돕다 (사역).</div><div class="s-meaning"><span class="bracket">【오답의 가치】</span> 오답은 우연이 아니라 <strong>오개념(misconception)의 신호</strong>. 오답을 수면 위로 드러내야(brought to the forefront) 학생이 자기 사고와 직접 대면(confront)할 수 있다 — 감추면 교정 기회도 사라짐. <span class="star-line">★ unless = if ~ not / help + O + V원형!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="Students who are in safe learning environments are willing to risk sharing an incorrect answer with their peers in order to grow mathematically.">
+<!-- ═══ 단락 ⓑ ═══ -->
+<div class="para-div"><span class="para-badge">ⓑ</span><span class="para-line"></span></div>
+<div class="s-card grammar has-sd" data-text="Students who are in safe learning environments are willing to risk sharing an incorrect answer with their peers in order to grow mathematically.">
   <div class="card-top"><span class="s-num">04</span><div class="s-en">Students who are in safe learning environments are willing to <span class="hl">risk</span> sharing an <span class="hl">incorrect</span> answer with their <span class="hl">peers</span> in order to grow mathematically.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">안전한 학습 환경에 있는 학생들은 수학적으로 성장하기 위해 기꺼이 동료들에게 틀린 답을 공유하는 위험을 감수한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">risk</span><span class="vocab-kr">위험을 감수하다</span><span class="vocab-en">incorrect</span><span class="vocab-kr">틀린</span><span class="vocab-en">peer</span><span class="vocab-kr">동료, 또래</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>who are in safe ~</strong> = 관계대명사 who (Students 수식). <strong>be willing to V</strong> = 기꺼이 V하다. <strong>risk V-ing</strong> = V하는 것을 감수하다 (risk + 동명사). <strong>in order to V</strong> = V하기 위해.</div><div class="s-meaning"><span class="bracket">【안전함의 효과】</span> 교실이 <strong>안전하다고 느낄 때</strong> 학생은 ‘틀리면 창피할 텐데’ 하는 <strong>위험을 무릅쓰고(risk sharing)</strong> 동료 앞에서 오답을 내놓는다 — 수학적으로 성장하려고. <strong>심리적 안전 → 도전(오답 공유) → 성장</strong>의 흐름. <span class="star-line">★ risk sharing = 공유하는 위험을 감수하다 · 비웃음 걱정이 없어야 용기가 난다</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">안전한 학습 환경에 있는 학생들은 수학적으로 성장하기 위해 기꺼이 동료들에게 틀린 답을 공유하는 위험을 감수한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">risk</span><span class="vocab-kr">위험을 감수하다</span><span class="vocab-en">incorrect</span><span class="vocab-kr">틀린</span><span class="vocab-en">peer</span><span class="vocab-kr">동료, 또래</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="96" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="58" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Students</text>
+  <text x="58" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">학생들은 (S)</text>
+  <rect x="114" y="5" width="342" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="285" y="4" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">who절 (Students 수식)</text>
+  <text x="138" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">who</text>
+  <text x="138" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">~에 있는</text>
+  <rect x="165" y="12" width="275" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="302" y="31" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are in safe learning environments</text>
+  <text x="302" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">안전한 학습 환경에 있는</text>
+  <rect x="464" y="10" width="180" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="554" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are willing to risk</text>
+  <text x="554" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">기꺼이 감수한다 (V)</text>
+  <rect x="652" y="10" width="230" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="767" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">sharing an incorrect answer</text>
+  <text x="767" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">틀린 답을 공유하는 것을 (O·동명사)</text>
+  <rect x="10" y="94" width="156" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="88" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">with their peers</text>
+  <text x="88" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">동료들에게 (부사구)</text>
+  <rect x="174" y="94" width="260" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="304" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">in order to grow mathematically</text>
+  <text x="304" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수학적으로 성장하기 위해 (to V·목적)</text>
+  <path d="M 285,41 C 285,80 58,80 58,38" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="55,18 58,10 61,18" fill="#534AB7"/>
+  <rect x="96" y="82" width="150" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="171" y="93" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">who절 → Students 수식</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">안전한 학습 환경에 있는 학생들은 수학적으로 성장하기 위해 기꺼이 동료들에게 틀린 답을</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">공유하는 위험을 감수한다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>who are in safe ~</strong> = 관계대명사 who (Students 수식). <strong>be willing to V</strong> = 기꺼이 V하다. <strong>risk V-ing</strong> = V하는 것을 감수하다 (risk + 동명사). <strong>in order to V</strong> = V하기 위해.</div><div class="s-meaning"><span class="bracket">【안전한 환경의 효과】</span> 쉽게 말하면 '<strong>안전하다고 느끼면 틀린 답도 기꺼이 내놓는다</strong>'. 틀린 답 공유라는 위험(risk)을 감수하는 이유 = 수학적으로 성장하기 위해. S01~03 주장의 학생 쪽 효과. <span class="star-line">★ risk V-ing = V할 위험을 감수하다 (동명사 목적어)!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="It is important to model and expect the acceptance of all ideas without derogatory comments.">
+<div class="s-card grammar has-sd" data-text="It is important to model and expect the acceptance of all ideas without derogatory comments.">
   <div class="card-top"><span class="s-num">05</span><div class="s-en">It is important to <span class="hl">model</span> and expect the acceptance of all ideas without <span class="hl">derogatory</span> comments.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">경멸적인 말 없이 모든 아이디어의 수용을 모범 보이고 기대하는 것이 중요하다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">model</span><span class="vocab-kr">모범을 보이다</span><span class="vocab-en">derogatory</span><span class="vocab-kr">경멸적인</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>It is important to V</strong> = V하는 것이 중요하다 (가주어-진주어). <strong>model and expect</strong> = to부정사 병렬.</div><div class="s-meaning"><span class="bracket">【교사의 역할 1 — 본보기】</span> 교사가 <strong>먼저 시범을 보이고(model)</strong>, <strong>비하하는 말(derogatory comments) 없이</strong> 모든 답을 받아들이는 태도를 (학생에게도) 기대해야 한다. 말로만 “수용하라” 하지 말고 교사가 직접 실천하라는 것. <span class="star-line">★ model = (직접) 본보기를 보이다 / comments = 말·언급(‘댓글’ 아님)</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">경멸적인 댓글 없이 모든 아이디어의 수용을 모범 보이고 기대하는 것이 중요하다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">model</span><span class="vocab-kr">모범을 보이다</span><span class="vocab-en">derogatory</span><span class="vocab-kr">경멸적인</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">It</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그것은 (가주어)</text>
+  <rect x="82" y="10" width="124" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="144" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is important</text>
+  <text x="144" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">중요하다 (V)</text>
+  <rect x="214" y="10" width="283" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="355" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to model and expect the acceptance</text>
+  <text x="355" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수용을 모범 보이고 기대하는 것 (진주어·to V)</text>
+  <rect x="505" y="10" width="124" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="567" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">of all ideas</text>
+  <text x="567" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">모든 아이디어의 (후치수식)</text>
+  <rect x="637" y="10" width="230" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="752" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">without derogatory comments</text>
+  <text x="752" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">경멸적 댓글 없이 (부사구)</text>
+  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">경멸적인 댓글 없이 모든 아이디어의 수용을 모범 보이고 기대하는 것이 중요하다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>It is important to V</strong> = V하는 것이 중요하다 (가주어-진주어). <strong>model and expect</strong> = to부정사 병렬.</div><div class="s-meaning"><span class="bracket">【교사의 자세 — 모범과 기대】</span> 쉽게 말하면 '<strong>경멸적인 말 없이 모든 아이디어를 수용하는 모습을 교사가 먼저 보여라</strong>'. model(모범 보이다)과 expect(기대하다)가 병렬 — 보여주는 것과 요구하는 것 둘 다 필요. <span class="star-line">★ 가주어 It — 진주어 to model and (to) expect!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="As educators we can model this by recording all answers to be considered without giving any verbal or physical expressions that indicate agreement or disagreement with any answer.">
+<div class="s-card grammar has-sd" data-text="As educators we can model this by recording all answers to be considered without giving any verbal or physical expressions that indicate agreement or disagreement with any answer.">
   <div class="card-top"><span class="s-num">06</span><div class="s-en">As <span class="hl">educators</span> we can model <span class="ref">this</span> by recording all answers to be considered without giving any <span class="hl">verbal</span> or physical expressions that <span class="hl">indicate</span> <span class="hl">agreement</span> or disagreement with any answer.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">교육자로서 우리는 동의나 불동의를 나타내는 어떤 언어적·신체적 표현도 하지 않고 고려될 모든 답을 기록함으로써 이<span class="pr">(= 경멸 없이 모든 아이디어를 수용하는 것)</span>를 모범 보일 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">educator</span><span class="vocab-kr">교육자</span><span class="vocab-en">verbal</span><span class="vocab-kr">언어적인</span><span class="vocab-en">indicate</span><span class="vocab-kr">나타내다</span><span class="vocab-en">agreement</span><span class="vocab-kr">동의</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>by recording</strong> = ~함으로써 (수단 by + 동명사). <strong>to be considered</strong> = 고려될 (to부정사 수동·형용사적). <strong>that indicate</strong> = 관계대명사 that (expressions 수식).</div><div class="s-meaning"><span class="bracket">【교사의 역할 2 — 구체적 방법】</span> 그 시범을 이렇게 보일 수 있다 — 어떤 답에도 <strong>동의/반대를 드러내는 말이나 표정·몸짓 없이</strong>, 고려할 <strong>모든 답을 그냥 기록</strong>해 둔다. 그러면 학생은 ‘어떤 답이든 안전하다’고 느낀다. <span class="star-line">★ 판단(좋다·나쁘다)을 보류하고 중립적으로 다 적기</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">교육자로서 우리는 동의나 불동의를 나타내는 어떤 언어적·신체적 표현도 하지 않고 고려될 모든 답을 기록함으로써 이<span class="pr">(= 경멸 없이 모든 아이디어를 수용하는 것)</span>를 모범 보일 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">educator</span><span class="vocab-kr">교육자</span><span class="vocab-en">verbal</span><span class="vocab-kr">언어적인</span><span class="vocab-en">indicate</span><span class="vocab-kr">나타내다</span><span class="vocab-en">agreement</span><span class="vocab-kr">동의</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="124" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="72" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">As educators</text>
+  <text x="72" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">교육자로서 (부사구)</text>
+  <rect x="142" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="174" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">we</text>
+  <text x="174" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리는 (S)</text>
+  <rect x="214" y="10" width="104" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="266" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">can model</text>
+  <text x="266" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">모범 보일 수 있다 (V)</text>
+  <rect x="326" y="10" width="64" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="358" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">this</text>
+  <text x="358" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이것을 (O)</text>
+  <rect x="398" y="10" width="208" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="502" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">by recording all answers</text>
+  <text x="502" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">모든 답을 기록함으로써 (by V-ing)</text>
+  <rect x="10" y="94" width="156" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="88" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to be considered</text>
+  <text x="88" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">고려될 (to V·형용사적 수동)</text>
+  <rect x="174" y="94" width="395" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="371" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">without giving any verbal or physical expressions</text>
+  <text x="371" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">언어적·신체적 표현 없이 (부사구)</text>
+  <rect x="10" y="173" width="395" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="207" y="172" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">that절 (expressions 수식)</text>
+  <text x="39" y="197" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">that</text>
+  <text x="39" y="230" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">~하는</text>
+  <rect x="70" y="180" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="118" y="199" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">indicate</text>
+  <text x="118" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">나타내는</text>
+  <rect x="174" y="180" width="215" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="281" y="199" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">agreement or disagreement</text>
+  <text x="281" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">동의나 불동의를</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">교육자로서 우리는 어떤 답에 대한 동의나 불동의를 나타내는 어떤 언어적 또는 신체적 표현도</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">하지 않고 고려될 모든 답을 기록함으로써 이를 모범 보일 수 있다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>by recording</strong> = ~함으로써 (수단 by + 동명사). <strong>to be considered</strong> = 고려될 (to부정사 수동·형용사적). <strong>that indicate</strong> = 관계대명사 that (expressions 수식).</div><div class="s-meaning"><span class="bracket">【실천 방법 — 표정 없이 기록】</span> 구체적 실천법: 어떤 답이든 <strong>동의·반대 신호(말·표정) 없이 일단 기록</strong>한다. 기록 자체가 '네 답도 고려 대상'이라는 메시지 — S05의 모범을 행동으로 옮긴 것. <span class="star-line">★ to be considered = to부정사 수동(고려될) — answers 수식!</span></div></div>
 </div>
-<div class="s-card" data-text="The teacher may need to practice having a blank face.">
+<!-- ═══ 단락 ⓒ ═══ -->
+<div class="para-div"><span class="para-badge">ⓒ</span><span class="para-line"></span></div>
+<div class="s-card grammar has-sd" data-text="The teacher may need to practice having a blank face.">
   <div class="card-top"><span class="s-num">07</span><div class="s-en">The teacher may need to practice having a "<span class="hl">blank face</span>."</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">교사는 "무표정"을 연습할 필요가 있을 수도 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">blank face</span><span class="vocab-kr">무표정</span></div><div class="s-meaning"><span class="bracket">【무표정의 이유】</span> 그래서 교사는 <strong>‘무표정(blank face)’ 짓기를 연습</strong>해야 할 수도 있다. 답을 듣고 무의식중에 좋고 나쁨이 얼굴에 드러나면, 학생이 곧장 정답·오답을 눈치채기 때문. 일종의 ‘포커페이스’. <span class="star-line">★ blank face = 평가를 드러내지 않는 중립 표정</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">교사는 "무표정"을 연습할 필요가 있을 수도 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">blank face</span><span class="vocab-kr">무표정</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="116" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="68" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">The teacher</text>
+  <text x="68" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">교사는 (S)</text>
+  <rect x="134" y="10" width="188" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="228" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">may need to practice</text>
+  <text x="228" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">연습할 필요가 있을 수도 (V)</text>
+  <rect x="330" y="10" width="180" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="420" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">having a blank face</text>
+  <text x="420" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">무표정을 갖는 것을 (O·동명사)</text>
+  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">교사는 “무표정”을 연습할 필요가 있을 수도 있다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>may need to V</strong> = ~할 필요가 있을지도 모른다 (조동사 may + need to). <strong>practice V-ing</strong> = 연습하다 — practice는 동명사를 목적어로 취함 (to V 불가). <strong>having a &quot;blank face&quot;</strong> = 무표정 짓기 (have의 동명사).</div><div class="s-meaning"><span class="bracket">【무표정 연습】</span> 쉽게 말하면 '<strong>정답 여부를 얼굴에 드러내지 않는 연습</strong>'. 교사가 살짝 찡그리거나 끄덕이는 순간 학생들은 답을 눈치챈다 — 그래서 blank face(무표정)가 훈련이 필요한 기술. <span class="star-line">★ practice + V-ing — practice having (O), practice to have (X)!</span></div></div>
 </div>
-<div class="s-card" data-text="Students look to teachers as the source of correct answers.">
+<div class="s-card grammar has-sd" data-text="Students look to teachers as the source of correct answers.">
   <div class="card-top"><span class="s-num">08</span><div class="s-en">Students look to teachers as the <span class="hl">source</span> of correct answers.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">학생들은 교사를 정답의 원천으로 바라본다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">source</span><span class="vocab-kr">원천, 출처</span></div><div class="s-meaning"><span class="bracket">【문제 상황】</span> 학생들은 교사를 <strong>‘정답을 주는 사람(source of correct answers)’으로 여기고 의존</strong>한다(look to A as B = A를 B로 여겨 기대다). 늘 교사에게 정답을 구하면 스스로 사고하지 않는다 → 다음 문장의 ‘해결책’을 위한 깔개. <span class="star-line">★ look to A as B = A를 B로 여겨 의지하다</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">학생들은 교사를 정답의 원천으로 바라본다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">source</span><span class="vocab-kr">원천, 출처</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="96" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="58" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Students</text>
+  <text x="58" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">학생들은 (S)</text>
+  <rect x="114" y="10" width="87" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="157" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">look to</text>
+  <text x="157" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">바라본다 (V)</text>
+  <rect x="209" y="10" width="96" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="257" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">teachers</text>
+  <text x="257" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">교사를 (O)</text>
+  <rect x="313" y="10" width="268" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="447" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">as the source of correct answers</text>
+  <text x="447" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">정답의 원천으로 (부사구)</text>
+  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">학생들은 교사를 정답의 원천으로 바라본다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>look to A as B</strong> = A를 B로 여기다·기대다 (= regard A as B). <strong>the source of correct answers</strong> = 정답의 원천 — of 전치사구가 source 수식.</div><div class="s-meaning"><span class="bracket">【학생들의 습관 — 교사 = 정답의 원천】</span> 무표정이 필요한 이유: 학생들은 <strong>교사의 얼굴에서 정답 신호를 찾는 습관</strong>이 있다(look to). 이 습관이 있는 한 학생은 스스로 판단하지 않는다 — 다음 문장의 '전환'으로 연결. <span class="star-line">★ look to A as B = A를 B로 여기고 기대다!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="Part of building a safe learning community is to shift this source of knowledge to the students, by equipping them to defend the thinking behind their solutions.">
+<div class="s-card grammar has-sd" data-text="Part of building a safe learning community is to shift this source of knowledge to the students, by equipping them to defend the thinking behind their solutions.">
   <div class="card-top"><span class="s-num">09</span><div class="s-en">Part of building a safe learning community is to shift <span class="ref">this</span> source of knowledge to the students, by <span class="hl">equipping</span> them to <span class="hl">defend</span> the thinking behind their <span class="hl">solutions</span>.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">안전한 학습 공동체 구축의 일부는 학생들이 해법 뒤의 사고를 <strong>방어</strong>할 수 있도록 장비를 갖추게 함으로써 지식의 원천<span class="pr">(= 그동안 교사가 쥐고 있던 정답의 원천)</span>을 학생들에게로 전환하는 것이다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">equipping</span><span class="vocab-kr">장비를 갖추게 하기</span><span class="vocab-en">defend</span><span class="vocab-kr">방어하다</span><span class="vocab-en">solution</span><span class="vocab-kr">해법, 풀이</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>Part of V-ing is to V</strong> = V하는 것의 일부는 V하는 것이다. <strong>by equipping them to defend</strong> = 그들이 방어하도록 장비를 갖추게 함으로써. equip + O + to V = O가 V할 수 있도록 갖추게 하다.</div><div class="s-meaning"><span class="bracket">【결론 — 주도권 이동】</span> 안전한 교실을 만드는 한 방법은 <strong>‘정답의 출처’를 교사 → 학생으로 옮기는 것</strong>. 방법은, 학생이 <strong>자기 풀이의 근거를 스스로 설명·옹호(defend)할 수 있게(equip to defend) 해 주는</strong> 것. 그러면 학생이 곧 지식의 주체가 된다. <span class="star-line">★ equip A to V = A가 ~할 수 있게 갖춰 주다 / defend = (근거를 들어) 자기 답을 옹호하다</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">안전한 학습 공동체 구축의 일부는 학생들이 해법 뒤의 사고를 <strong>방어</strong>할 수 있도록 장비를 갖추게 함으로써 지식의 원천<span class="pr">(= 그동안 교사가 쥐고 있던 정답의 원천)</span>을 학생들에게로 전환하는 것이다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">equipping</span><span class="vocab-kr">장비를 갖추게 하기</span><span class="vocab-en">defend</span><span class="vocab-kr">방어하다</span><span class="vocab-en">solution</span><span class="vocab-kr">해법, 풀이</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="343" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="181" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Part of building a safe learning community</text>
+  <text x="181" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">안전한 학습 공동체 구축의 일부는 (S)</text>
+  <rect x="361" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="393" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="393" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다 (V)</text>
+  <rect x="433" y="10" width="275" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="570" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to shift this source of knowledge</text>
+  <text x="570" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">지식의 원천을 전환하는 것 (C·to V)</text>
+  <rect x="716" y="10" width="148" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="790" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">to the students</text>
+  <text x="790" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">학생들에게로 (부사구)</text>
+  <rect x="10" y="94" width="164" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="92" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">by equipping them</text>
+  <text x="92" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들에게 장비를 갖추게 함으로써 (by V-ing)</text>
+  <rect x="182" y="94" width="193" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="278" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to defend the thinking</text>
+  <text x="278" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사고를 방어할 수 있도록 (to V)</text>
+  <rect x="383" y="94" width="193" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="479" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">behind their solutions</text>
+  <text x="479" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">해법 뒤에 있는 (후치수식)</text>
+  <path d="M 479,122 C 479,164 278,164 278,122" fill="none" stroke="#633806" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="275,102 278,94 281,102" fill="#633806"/>
+  <rect x="303" y="166" width="150" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="378" y="177" font-size="11" font-weight="500" fill="#633806" text-anchor="middle" font-family="sans-serif">전치사구 → thinking 수식</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">안전한 학습 공동체를 구축하는 것의 일부는 학생들이 자신의 해법 뒤에 있는 사고를 방어할 수</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">있도록 장비를 갖추게 함으로써 이 지식의 원천을 학생들에게로 전환하는 것이다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>Part of V-ing is to V</strong> = V하는 것의 일부는 V하는 것이다. <strong>by equipping them to defend</strong> = 그들이 방어하도록 장비를 갖추게 함으로써. equip + O + to V = O가 V할 수 있도록 갖추게 하다.</div><div class="s-meaning"><span class="bracket">【결론 — 지식 원천의 전환】</span> 쉽게 말하면 '<strong>정답 판정 권한을 교사에서 학생에게로 옮겨라</strong>'. 방법 = 학생이 자기 풀이 뒤의 사고를 스스로 방어(defend)할 수 있게 갖추어 주기(equip). 안전한 학습 공동체의 완성. <span class="star-line">★ equip + O + to V = O가 V할 수 있도록 갖추게 하다!</span></div></div>
 </div>
 </div><!-- /cards -->
   </div>

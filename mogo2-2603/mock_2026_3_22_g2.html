@@ -306,8 +306,8 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 /* ── 공통 행동 CSS ── */
 /* 1. 호버 펼치기 완전 제거 */
 @media(hover:hover) and (pointer:fine){
-  .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
-  .s-card.grammar:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card.grammar:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
 }
 /* 2. 단어 가로 칩 배열 */
 .s-card.vocab-only .s-kr-wrap,
@@ -330,6 +330,14 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   display:inline-flex!important;flex-wrap:wrap!important;align-items:center;gap:4px 6px;
   max-width:100%;overflow-wrap:break-word;word-break:break-word;
 }
+/* 2-B. 인카드 문장 구조도 (v2.0) */
+.s-structure{padding:6px 14px 8px 42px;border-top:1px dashed rgba(46,117,182,0.15);background:#FBFCFF;}
+.s-card.grammar .s-structure{border-top-color:rgba(91,45,142,0.15);}
+.s-structure-label{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;color:#993C1D;margin-bottom:5px;}
+.s-structure svg{width:100%;display:block;background:white;border:1px solid rgba(0,0,0,0.07);border-radius:8px;padding:8px 10px;box-sizing:border-box;}
+.s-card.vocab-only .s-structure{display:none;}
+.s-card.pinned .s-structure,.s-card.tapped .s-structure{width:100%;flex-basis:100%;order:0;padding:4px 0 2px!important;border-top:none;background:transparent;}
+.s-card.has-sd.pinned .s-kr-wrap,.s-card.has-sd.tapped .s-kr-wrap{max-height:2600px;}
 /* 3. 문장구조도 탭·패널 */
 .tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
 .tab-sd.active{background:#993C1D;color:white;border-color:#993C1D;}
@@ -447,6 +455,12 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .tab-summary.active{background:#00695C;color:white;border-color:#00695C;}
 .summary-view{display:none;}
 @media print{.summary-view{display:none!important;}}
+
+/* ═══ 단락 배지 (재빌드 주입) ═══ */
+.para-div{display:flex;align-items:center;gap:10px;margin:22px 2px 10px;}
+.para-badge{width:26px;height:26px;border-radius:50%;background:#1F3864;color:#fff;font-weight:700;font-size:14px;font-family:'JetBrains Mono',monospace;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 6px rgba(31,56,100,0.25);}
+.para-line{flex:1;height:1px;background:linear-gradient(to right,rgba(31,56,100,0.35),transparent);}
+@media print{.para-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
 </style>
 </head>
 <body>
@@ -495,41 +509,241 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
       <button class="ctrl-btn" id="btnAll"   onclick="speakAll()">🔊 전체 읽기</button>
     </div>
     <div class="cards" id="cards">
-<div class="s-card" data-text="The usual intercity traveler moves slowly through the station area.">
+<!-- ═══ 단락 ⓐ ═══ -->
+<div class="para-div"><span class="para-badge">ⓐ</span><span class="para-line"></span></div>
+<div class="s-card grammar has-sd" data-text="The usual intercity traveler moves slowly through the station area.">
   <div class="card-top"><span class="s-num">01</span><div class="s-en">The usual <span class="hl">intercity</span> traveler moves slowly through the station area.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">일반적인 장거리 여행자는 역 구내를 천천히 이동한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">intercity</span><span class="vocab-kr">도시 간의, 장거리</span></div><div class="s-meaning"><span class="bracket">【대상 1 — 장거리 여행자】</span> 글의 두 주인공 중 첫째. <strong>도시 간(intercity) 여행자</strong>는 역 구내를 <strong>천천히</strong> 돌아다닌다. ‘서두르지 않고 느리게 움직임’이 핵심 특징(뒤의 통근자와 대비). <span class="star-line">★ intercity = 도시와 도시 사이의(장거리)</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">일반적인 장거리 여행자는 역 구내를 천천히 이동한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">intercity</span><span class="vocab-kr">도시 간의, 장거리</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="238" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="129" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">The usual intercity traveler</text>
+  <text x="129" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">일반적인 장거리 여행자는 (S)</text>
+  <rect x="256" y="10" width="70" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="291" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">moves</text>
+  <text x="291" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이동한다 (V)</text>
+  <rect x="334" y="10" width="79" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="373" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">slowly</text>
+  <text x="373" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">천천히 (부사)</text>
+  <rect x="421" y="10" width="208" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="525" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">through the station area</text>
+  <text x="525" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">역 구내를 (부사구)</text>
+  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">일반적인 장거리 여행자는 역 구내를 천천히 이동한다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>The usual intercity traveler</strong> = the + 단수명사 = 그 부류 전체(총칭) — 장거리 여행자란 사람들. <strong>moves slowly through ~</strong> = 자동사 move + 전치사구(역 구내를 통과하며).</div><div class="s-meaning"><span class="bracket">【등장인물① — 장거리 여행자】</span> 쉽게 말하면 '<strong>장거리 여행자는 역 안을 느릿느릿 움직인다</strong>'. 글의 첫 대조축 — 이 '느림'이 왜인지 다음 문장이 설명하고, S03의 통근자(빠름)와 대비된다. <span class="star-line">★ the + 단수명사 = 부류 전체를 대표(총칭)!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="The passenger may not be familiar with the routine, have baggage to handle and check or retrieve, have a long wait for connections or delayed trains, and may require information, food, and a comfortable place to sit.">
+<div class="s-card grammar has-sd" data-text="The passenger may not be familiar with the routine, have baggage to handle and check or retrieve, have a long wait for connections or delayed trains, and may require information, food, and a comfortable place to sit.">
   <div class="card-top"><span class="s-num">02</span><div class="s-en">The <span class="hl">passenger</span> may not <span class="hl">be familiar with</span> the routine, have <span class="hl">baggage</span> to <span class="hl">handle</span> and check or <span class="hl">retrieve</span>, have a long wait for <span class="hl">connections</span> or <span class="hl">delayed</span> trains, and may require information, food, and a comfortable place to sit.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">승객<span class="pr">(= 장거리 여행자)</span>은 절차에 익숙하지 않을 수 있고, 처리하고 맡기거나 찾을 수하물이 있으며, 환승이나 지연 열차를 위해 오래 기다려야 하고, 정보·음식·편안한 좌석이 필요할 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">be familiar with</span><span class="vocab-kr">~에 익숙하다</span><span class="vocab-en">baggage</span><span class="vocab-kr">수하물</span><span class="vocab-en">handle</span><span class="vocab-kr">처리하다</span><span class="vocab-en">retrieve</span><span class="vocab-kr">찾아오다</span><span class="vocab-en">connection</span><span class="vocab-kr">환승</span><span class="vocab-en">delayed</span><span class="vocab-kr">지연된</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>be familiar with</strong> = ~에 익숙하다. <strong>baggage to handle</strong> = 처리할 수하물 (to부정사 형용사적). <strong>may not ~ / have ~ / have ~ / may require ~</strong> = 4개 동사구 병렬.</div><div class="s-meaning"><span class="bracket">【장거리 여행자의 특징】</span> 이 여행자는 ① 역 이용 <strong>절차(routine)가 낯설고</strong> ② 들고 다니거나 <strong>맡겼다 찾을(check or retrieve) 짐</strong>이 있고 ③ <strong>환승(connections)·연착</strong>으로 오래 기다리며 ④ 안내·음식·앉을 자리가 필요하다. 한마디로 <strong>역에 오래 머물며 이것저것 필요한 사람</strong>. <span class="star-line">★ check = (짐을) 맡기다 / retrieve = 되찾다 / connection = 환승</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">승객<span class="pr">(= 장거리 여행자)</span>은 절차에 익숙하지 않을 수 있고, 처리하고 맡기거나 찾을 수하물이 있으며, 환승이나 지연 열차를 위해 오래 기다려야 하고, 정보·음식·편안한 좌석이 필요할 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">be familiar with</span><span class="vocab-kr">~에 익숙하다</span><span class="vocab-en">baggage</span><span class="vocab-kr">수하물</span><span class="vocab-en">handle</span><span class="vocab-kr">처리하다</span><span class="vocab-en">retrieve</span><span class="vocab-kr">찾아오다</span><span class="vocab-en">connection</span><span class="vocab-kr">환승</span><span class="vocab-en">delayed</span><span class="vocab-kr">지연된</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="132" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="76" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">The passenger</text>
+  <text x="76" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">승객은 (S)</text>
+  <rect x="150" y="10" width="208" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="254" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">may not be familiar with</text>
+  <text x="254" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">익숙하지 않을 수 있고 (V)</text>
+  <rect x="366" y="10" width="116" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="424" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the routine</text>
+  <text x="424" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">절차에 (O)</text>
+  <rect x="10" y="94" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="42" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">have</text>
+  <text x="42" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가지고 있으며 (V)</text>
+  <rect x="82" y="94" width="320" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="242" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">baggage to handle and check or retrieve</text>
+  <text x="242" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">처리하고 맡기거나 찾을 수하물이 (O+to V)</text>
+  <rect x="410" y="94" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="442" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">have</text>
+  <text x="442" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">있고 (V)</text>
+  <rect x="482" y="94" width="365" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="664" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">a long wait for connections or delayed trains</text>
+  <text x="664" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">환승·지연 열차를 위한 긴 대기가 (O)</text>
+  <text x="28" y="197" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="28" y="230" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="55" y="178" width="116" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="113" y="197" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">may require</text>
+  <text x="113" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">필요로 할 수 있다 (V)</text>
+  <rect x="179" y="178" width="395" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="376" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">information, food, and a comfortable place to sit</text>
+  <text x="376" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">정보, 음식, 편안한 좌석 (O)</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">승객은 절차에 익숙하지 않을 수 있고, 처리하고 맡기거나 찾을 수하물이 있으며, 환승이나</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">지연된 열차를 위해 오래 기다려야 하고, 정보, 음식, 편안한 좌석이 필요할 수 있다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>be familiar with</strong> = ~에 익숙하다. <strong>baggage to handle</strong> = 처리할 수하물 (to부정사 형용사적). <strong>may not ~ / have ~ / have ~ / may require ~</strong> = 4개 동사구 병렬.</div><div class="s-meaning"><span class="bracket">【느린 이유 — 4가지 나열】</span> 장거리 여행자가 느린 이유: ① 절차가 낯설고 ② 수하물 처리·위탁·수취 ③ 환승·지연으로 긴 대기 ④ 정보·음식·앉을 곳 필요. <strong>네 개의 동사구가 병렬</strong>로 이어짐. <span class="star-line">★ may not be / have / have / may require — 동사구 4개 병렬!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="Commuters, on the other hand, are familiar with the route through the station, have little or no luggage, and are usually in a hurry.">
+<!-- ═══ 단락 ⓑ ═══ -->
+<div class="para-div"><span class="para-badge">ⓑ</span><span class="para-line"></span></div>
+<div class="s-card grammar has-sd" data-text="Commuters, on the other hand, are familiar with the route through the station, have little or no luggage, and are usually in a hurry.">
   <div class="card-top"><span class="s-num">03</span><div class="s-en"><span class="hl">Commuters</span>, on the other hand, are familiar with the <span class="hl">route</span> through the station, have little or no <span class="hl">luggage</span>, and are usually in a hurry.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">반면에, 통근자들은 역을 지나는 경로에 익숙하고, 수하물이 거의/전혀 없으며, 보통 서두르고 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">commuter</span><span class="vocab-kr">통근자</span><span class="vocab-en">route</span><span class="vocab-kr">경로</span><span class="vocab-en">luggage</span><span class="vocab-kr">수하물</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>on the other hand</strong> = 반면에 (대조 연결). <strong>little or no</strong> = 거의 또는 전혀 없는. <strong>in a hurry</strong> = 서두르는.</div><div class="s-meaning"><span class="bracket">【핵심】</span> S02(장거리 여행자) vs S03(통근자) 대비! 여행자: 느림·수하물·대기 vs 통근자: 빠름·수하물 없음·서두름 → 따라서 분리 필요! <span class="star-line">★ 핵심 대비 — 두 유형의 교통을 분리해야!</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">반면에, 통근자들은 역을 지나는 경로에 익숙하고, 수하물이 거의/전혀 없으며, 보통 서두르고 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">commuter</span><span class="vocab-kr">통근자</span><span class="vocab-en">route</span><span class="vocab-kr">경로</span><span class="vocab-en">luggage</span><span class="vocab-kr">수하물</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="104" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="62" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Commuters</text>
+  <text x="62" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">통근자들은 (S)</text>
+  <rect x="122" y="10" width="164" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="204" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">on the other hand</text>
+  <text x="204" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">반면에 (삽입)</text>
+  <rect x="294" y="10" width="164" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="376" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are familiar with</text>
+  <text x="376" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">익숙하다 (V)</text>
+  <rect x="466" y="10" width="245" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="588" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the route through the station</text>
+  <text x="588" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">역을 지나는 경로에 (O)</text>
+  <rect x="10" y="94" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="42" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">have</text>
+  <text x="42" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가지고 있으며 (V)</text>
+  <rect x="82" y="94" width="188" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="176" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">little or no luggage</text>
+  <text x="176" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수하물이 거의/전혀 없고 (O)</text>
+  <text x="296" y="113" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="296" y="146" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="323" y="94" width="193" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="419" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are usually in a hurry</text>
+  <text x="419" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">보통 서두르고 있다 (V)</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">반면에, 통근자들은 역을 지나는 경로에 익숙하고, 수하물이 거의 또는 전혀 없으며, 보통</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">서두르고 있다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>on the other hand</strong> = 반면에 (대조 연결). <strong>little or no</strong> = 거의 또는 전혀 없는. <strong>in a hurry</strong> = 서두르는.</div><div class="s-meaning"><span class="bracket">【핵심】</span> S02(장거리 여행자) vs S03(통근자) 대비! 여행자: 느림·수하물·대기 vs 통근자: 빠름·수하물 없음·서두름 → 따라서 분리 필요! <span class="star-line">★ 핵심 대비 — 두 유형의 교통을 분리해야!</span></div></div>
 </div>
-<div class="s-card" data-text="They want direct access to or from local streets and transport.">
+<div class="s-card grammar has-sd" data-text="They want direct access to or from local streets and transport.">
   <div class="card-top"><span class="s-num">04</span><div class="s-en"><span class="ref">They</span> want direct <span class="hl">access</span> to or from local streets and <span class="hl">transport</span>.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">그들<span class="pr">(= 통근자들)</span>은 지역 도로와 교통수단으로의/부터의 직접적 접근을 원한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">access</span><span class="vocab-kr">접근</span><span class="vocab-en">transport</span><span class="vocab-kr">교통수단</span></div><div class="s-meaning"><span class="bracket">【통근자의 요구】</span> 통근자는 동네 길·대중교통으로 <strong>곧장 들고 나는 ‘직행 동선(direct access)’</strong>을 원한다 — 빙 돌지 않고 최단 경로로. 매일 다니므로 ‘빠른 직행’이 최우선(여행자의 ‘편의’와 정반대). <span class="star-line">★ direct access = 우회 없는 곧장 연결</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">그들<span class="pr">(= 통근자들)</span>은 지역 도로와 교통수단으로의/부터의 직접적 접근을 원한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">access</span><span class="vocab-kr">접근</span><span class="vocab-en">transport</span><span class="vocab-kr">교통수단</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">They</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들은 (S)</text>
+  <rect x="82" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="114" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">want</text>
+  <text x="114" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">원한다 (V)</text>
+  <rect x="154" y="10" width="132" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="220" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">direct access</text>
+  <text x="220" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">직접적 접근을 (O)</text>
+  <rect x="294" y="10" width="313" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="450" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">to or from local streets and transport</text>
+  <text x="450" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">지역 도로와 교통수단으로/부터 (부사구)</text>
+  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">그들은 지역 도로와 교통수단으로의 또는 그로부터의 직접적 접근을 원한다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>access to or from ~</strong> = 전치사 to와 from의 병렬 — ~로의 접근과 ~로부터의 접근. <strong>direct access</strong> = 직접적인 접근 (형용사 direct가 access 수식).</div><div class="s-meaning"><span class="bracket">【통근자의 요구 — 직통】</span> 쉽게 말하면 '<strong>통근자는 빙 돌지 않고 거리·교통수단과 바로 연결되길 원한다</strong>'. 서두르는 사람(S03)에게 필요한 건 직통 동선 — 두 유형의 요구가 정반대임이 확정. <span class="star-line">★ to or from — 전치사끼리도 병렬 가능!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="These two types of traffic should be kept separate to avoid conflict and confusion.">
+<!-- ═══ 단락 ⓒ ═══ -->
+<div class="para-div"><span class="para-badge">ⓒ</span><span class="para-line"></span></div>
+<div class="s-card grammar has-sd" data-text="These two types of traffic should be kept separate to avoid conflict and confusion.">
   <div class="card-top"><span class="s-num">05</span><div class="s-en"><span class="ref">These</span> two types of traffic should be kept <span class="hl">separate</span> to avoid <span class="hl">conflict</span> and <span class="hl">confusion</span>.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">이 두 유형의 교통<span class="pr">(= 장거리 여행자 통행과 통근자 통행)</span>은 충돌과 혼란을 피하기 위해 분리되어 유지되어야 한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">separate</span><span class="vocab-kr">분리된</span><span class="vocab-en">conflict</span><span class="vocab-kr">충돌</span><span class="vocab-en">confusion</span><span class="vocab-kr">혼란</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>should be kept separate</strong> = keep + O + OC(형용사)의 수동. 분리되어 유지. <strong>to avoid</strong> = 목적의 to부정사.</div><div class="s-meaning"><span class="bracket">【핵심 주장】</span> 이 <strong>두 종류의 사람 흐름(느린 여행자 ↔ 빠른 통근자)</strong>은 서로 부딪히고 헷갈리지 않도록 <strong>분리해야</strong> 한다. 여기서 traffic은 ‘교통량’이 아니라 <strong>오가는 사람들의 흐름</strong>. 속도·목적이 정반대라 섞이면 충돌·혼란. <span class="star-line">★ keep ~ separate = ~을 따로 유지하다 / traffic = (사람의) 통행 흐름</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">이 두 유형의 교통<span class="pr">(= 장거리 여행자 통행과 통근자 통행)</span>은 충돌과 혼란을 피하기 위해 분리되어 유지되어야 한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">separate</span><span class="vocab-kr">분리된</span><span class="vocab-en">conflict</span><span class="vocab-kr">충돌</span><span class="vocab-en">confusion</span><span class="vocab-kr">혼란</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="223" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="121" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">These two types of traffic</text>
+  <text x="121" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이 두 유형의 교통은 (S)</text>
+  <rect x="241" y="10" width="140" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="311" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">should be kept</text>
+  <text x="311" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">유지되어야 한다 (V·수동)</text>
+  <rect x="389" y="10" width="96" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="437" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">separate</text>
+  <text x="437" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">분리되어 (OC)</text>
+  <rect x="493" y="10" width="260" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="623" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to avoid conflict and confusion</text>
+  <text x="623" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">충돌과 혼란을 피하기 위해 (to V·목적)</text>
+  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">이 두 유형의 교통은 충돌과 혼란을 피하기 위해 분리되어 유지되어야 한다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>should be kept separate</strong> = keep + O + OC(형용사)의 수동. 분리되어 유지. <strong>to avoid</strong> = 목적의 to부정사.</div><div class="s-meaning"><span class="bracket">【주제문 — 분리 원칙】</span> 쉽게 말하면 '<strong>두 흐름을 섞지 말고 분리해서 유지하라</strong>'. 섞으면 충돌(conflict)과 혼란(confusion) → 글 전체의 핵심 주장. 이후 S06~08은 분리의 실제 사례들. <span class="star-line">★ keep + O + 형용사(separate)의 수동 — be kept separate!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="In some large stations such as Grand Central Terminal in New York City, commuter and intercity trains arrive and depart on different levels.">
+<div class="s-card grammar has-sd" data-text="In some large stations such as Grand Central Terminal in New York City, commuter and intercity trains arrive and depart on different levels.">
   <div class="card-top"><span class="s-num">06</span><div class="s-en">In some large stations such as Grand Central Terminal in New York City, commuter and intercity trains arrive and <span class="hl">depart</span> on different levels.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">뉴욕시의 그랜드 센트럴 터미널 같은 큰 역에서, 통근·장거리 열차는 다른 층에서 도착·출발한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">depart</span><span class="vocab-kr">출발하다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>such as</strong> = ~와 같은 (예시). <strong>arrive and depart</strong> = 동사 병렬.</div><div class="s-meaning"><span class="bracket">【분리 방법 1 — 대형역】</span> 큰 역(예: 뉴욕 그랜드 센트럴)은 통근 열차와 장거리 열차를 아예 <strong>다른 ‘층(levels)’에서</strong> 타고 내리게 한다. → 위아래로 분리. <span class="star-line">★ on different levels = 서로 다른 층에서</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">뉴욕시의 그랜드 센트럴 터미널 같은 큰 역에서, 통근·장거리 열차는 다른 층에서 도착·출발한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">depart</span><span class="vocab-kr">출발하다</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="425" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="222" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">In some large stations such as Grand Central Terminal</text>
+  <text x="222" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그랜드 센트럴 같은 큰 역에서 (부사구)</text>
+  <rect x="443" y="10" width="245" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="565" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">commuter and intercity trains</text>
+  <text x="565" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">통근·장거리 열차는 (S)</text>
+  <rect x="696" y="10" width="164" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="778" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">arrive and depart</text>
+  <text x="778" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">도착하고 출발한다 (V)</text>
+  <rect x="10" y="94" width="180" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="100" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">on different levels</text>
+  <text x="100" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">다른 층에서 (부사구)</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">뉴욕시의 그랜드 센트럴 터미널과 같은 일부 큰 역에서, 통근 열차와 장거리 열차는 다른 층에서</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">도착하고 출발한다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>such as</strong> = ~와 같은 (예시). <strong>arrive and depart</strong> = 동사 병렬.</div><div class="s-meaning"><span class="bracket">【사례① 대형역 — 층으로 분리】</span> 그랜드 센트럴 터미널: <strong>통근열차와 장거리열차가 아예 다른 층</strong>에서 도착·출발. 가장 큰 규모의 분리 방식. <span class="star-line">★ such as = 구체적 예시 제시!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="In smaller stations, separate platforms should be used and traffic routed so that the two lines of movement do not cross.">
+<div class="s-card grammar has-sd" data-text="In smaller stations, separate platforms should be used and traffic routed so that the two lines of movement do not cross.">
   <div class="card-top"><span class="s-num">07</span><div class="s-en">In smaller stations, <span class="hl">separate</span> <span class="hl">platforms</span> should be used and traffic <span class="hl">routed</span> so that the two lines of movement do not cross.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">더 작은 역에서는, 두 이동 경로가 교차하지 않도록 별도의 플랫폼이 사용되고 교통이 경로 지정되어야 한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">platform</span><span class="vocab-kr">플랫폼, 승강장</span><span class="vocab-en">routed</span><span class="vocab-kr">경로가 지정된</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>should be used and (traffic should be) routed</strong> = 수동태 병렬 (should be 생략). <strong>so that ~ do not cross</strong> = ~하지 않도록 (목적).</div><div class="s-meaning"><span class="bracket">【분리 방법 2 — 소형역】</span> 작은 역은 층 분리가 어려우니, <strong>플랫폼을 따로 쓰고 동선을 짜서(traffic routed)</strong> <strong>두 흐름이 겹치지(교차하지) 않게</strong> 한다. <span class="star-line">★ route = 경로를 정해 보내다 / so that ~ do not cross = ~이 교차하지 않도록</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">더 작은 역에서는, 두 이동 경로가 교차하지 않도록 별도의 플랫폼이 사용되고 교통이 경로 지정되어야 한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">platform</span><span class="vocab-kr">플랫폼, 승강장</span><span class="vocab-en">routed</span><span class="vocab-kr">경로가 지정된</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="180" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="100" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">In smaller stations</text>
+  <text x="100" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">더 작은 역에서 (부사구)</text>
+  <rect x="198" y="10" width="172" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="284" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">separate platforms</text>
+  <text x="284" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">별도의 플랫폼이 (S)</text>
+  <rect x="378" y="10" width="140" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="448" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">should be used</text>
+  <text x="448" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사용되어야 하고 (V·수동)</text>
+  <text x="544" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="544" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="571" y="10" width="87" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="614" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">traffic</text>
+  <text x="614" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">교통이 (S)</text>
+  <rect x="666" y="10" width="172" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="752" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">(should be) routed</text>
+  <text x="752" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">경로 지정되어야 (V·수동 생략)</text>
+  <rect x="10" y="89" width="448" height="36" rx="5" fill="none" stroke="#6A1B9A" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="234" y="88" font-size="10" font-weight="400" fill="#6A1B9A" text-anchor="middle" font-family="sans-serif">so that절 (목적)</text>
+  <text x="51" y="113" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">so that</text>
+  <text x="51" y="146" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">~하도록</text>
+  <rect x="95" y="96" width="215" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="202" y="115" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the two lines of movement</text>
+  <text x="202" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">두 이동 경로가</text>
+  <rect x="318" y="96" width="124" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="380" y="115" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">do not cross</text>
+  <text x="380" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">교차하지 않도록</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">더 작은 역에서는, 두 이동 경로가 교차하지 않도록 별도의 플랫폼이 사용되고 교통이 경로</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">지정되어야 한다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>should be used and (traffic should be) routed</strong> = 수동태 병렬 (should be 생략). <strong>so that ~ do not cross</strong> = ~하지 않도록 (목적).</div><div class="s-meaning"><span class="bracket">【사례② 소형역 — 플랫폼·동선 분리】</span> 작은 역의 방법: <strong>별도 플랫폼 + 두 동선이 교차하지 않게 경로 지정</strong>. traffic (should be) routed에서 should be가 반복이라 생략됨. <span class="star-line">★ (should be) routed — 공통 어구 반복 생략!</span></div></div>
 </div>
-<div class="s-card" data-text="In some instances, separate stations are in use.">
+<div class="s-card grammar has-sd" data-text="In some instances, separate stations are in use.">
   <div class="card-top"><span class="s-num">08</span><div class="s-en">In some instances, separate stations are in use.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">일부 경우에, 별도의 역이 사용되고 있다.</div><div class="s-meaning"><span class="bracket">【분리 방법 3 — 극단】</span> 경우에 따라선 같은 역도 아닌 <strong>‘별도의 역’ 자체를 따로 운영</strong>한다. 분리 강도가 점점 세진다: 층 → 플랫폼 → 아예 다른 역. <span class="star-line">★ in some instances = 경우에 따라서는 / in use = 사용 중</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">일부 경우에, 별도의 역이 사용되고 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">instance</span><span class="vocab-kr">경우, 사례</span><span class="vocab-en">separate</span><span class="vocab-kr">별도의, 분리된</span><span class="vocab-en">in use</span><span class="vocab-kr">사용 중인</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="164" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="92" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">In some instances</text>
+  <text x="92" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">일부 경우에 (부사구)</text>
+  <rect x="182" y="10" width="164" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="264" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">separate stations</text>
+  <text x="264" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">별도의 역이 (S)</text>
+  <rect x="354" y="10" width="113" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="410" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are in use</text>
+  <text x="410" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사용되고 있다 (V)</text>
+  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">일부 경우에, 별도의 역이 사용되고 있다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>In some instances</strong> = 일부 경우에는 (= in some cases). <strong>are in use</strong> = 사용되고 있다 — be in use(사용 중인) 관용 표현.</div><div class="s-meaning"><span class="bracket">【사례③ — 아예 역을 분리】</span> 가장 강한 분리: <strong>통근용 역과 장거리용 역을 따로 운영</strong>. 층 분리(S06) → 플랫폼 분리(S07) → 역 분리(S08)로 분리 강도가 점점 세지는 나열. <span class="star-line">★ be in use = 사용 중이다!</span></div></div>
 </div>
-<div class="s-card" data-text="Clear and concise direction and routing signs and other means of channelization are desirable.">
+<div class="s-card grammar has-sd" data-text="Clear and concise direction and routing signs and other means of channelization are desirable.">
   <div class="card-top"><span class="s-num">09</span><div class="s-en">Clear and <span class="hl">concise</span> direction and routing signs and other means of channelization are <span class="hl">desirable</span>.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">명확하고 간결한 방향·경로 표지판과 기타 유도 수단이 바람직하다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">concise</span><span class="vocab-kr">간결한</span><span class="vocab-en">desirable</span><span class="vocab-kr">바람직한</span></div><div class="s-meaning"><span class="bracket">【보조 수단】</span> 물리적 분리에 더해, <strong>분명·간결한 방향·경로 표지판</strong>과 사람들을 한 방향으로 자연스럽게 흐르게 하는 <strong>유도 장치(channelization)</strong>가 있으면 좋다(desirable). 물길 트듯 사람 흐름을 정리한다는 뜻. <span class="star-line">★ channelization = (사람 흐름을) 수로처럼 유도하기 / desirable = 바람직한</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">명확하고 간결한 방향·경로 표지판과 기타 유도 수단이 바람직하다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">concise</span><span class="vocab-kr">간결한</span><span class="vocab-en">desirable</span><span class="vocab-kr">바람직한</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="620" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="320" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Clear and concise direction and routing signs and other means of channelization</text>
+  <text x="320" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">명확·간결한 방향/경로 표지판과 유도 수단이 (S)</text>
+  <rect x="638" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="670" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are</text>
+  <text x="670" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다 (V)</text>
+  <rect x="710" y="10" width="104" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="762" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">desirable</text>
+  <text x="762" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">바람직한 (C)</text>
+  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">명확하고 간결한 방향 및 경로 표지판과 기타 유도 수단이 바람직하다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>Clear and concise</strong> = 형용사 병렬 — signs를 수식. <strong>means of channelization</strong> = 유도(수로화) 수단 — means는 단수·복수 같은 형태. <strong>are desirable</strong> = 주어가 signs and other means(복수) → are.</div><div class="s-meaning"><span class="bracket">【마무리 — 표지판으로 흐름 유도】</span> 물리적 분리에 더해 <strong>명확·간결한 방향/경로 표지판 등 유도 수단</strong>도 바람직하다. 시설 분리(하드웨어) + 안내 표지(소프트웨어)로 두 흐름의 충돌을 막는 것이 결론. <span class="star-line">★ means = 수단 (단수·복수 동형 명사)!</span></div></div>
 </div>
 </div><!-- /cards -->
   </div>

@@ -142,7 +142,7 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 .answer-zone:empty::before{content:'여기에 단어를 놓으세요';color:rgba(46,117,182,0.35);font-size:12px;font-style:italic;display:flex;align-items:center;height:28px;}
 .word-pool{display:flex;flex-wrap:wrap;gap:7px;min-height:44px;padding:10px;background:#f8f8f8;border-radius:8px;border:2px dashed #ddd;margin-bottom:12px;transition:border-color 0.2s,background 0.2s;}
 .word-pool.drag-over{border-color:var(--gold);background:#fff9e6;}
-.word-chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:6px;font-family:Georgia,serif;font-size:13.5px;cursor:grab;user-select:none;transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;background:var(--blue-card);border:1.5px solid var(--blue-border);color:var(--navy);font-weight:600;white-space:nowrap;}
+.word-chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:6px;font-family:Georgia,serif;font-size:13.5px;cursor:grab;user-select:none;transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;background:var(--blue-card);border:1.5px solid var(--blue-border);color:var(--navy);font-weight:600;white-space:nowrap;touch-action:none;}
 .word-chip:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(46,117,182,0.25);}
 .word-chip.dragging{opacity:0.35;transform:scale(0.93);cursor:grabbing;}
 .word-chip.ok-chip{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20;}
@@ -306,8 +306,8 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 /* ── 공통 행동 CSS ── */
 /* 1. 호버 펼치기 완전 제거 */
 @media(hover:hover) and (pointer:fine){
-  .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
-  .s-card.grammar:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card.grammar:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
 }
 /* 2. 단어 가로 칩 배열 */
 .s-card.vocab-only .s-kr-wrap,
@@ -325,10 +325,19 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .s-card.pinned .s-vocab,
 .s-card.tapped .s-vocab{
   order:0;background:#EBF3FB;border:1px solid rgba(46,117,182,0.25)!important;
-  border-radius:20px;padding:3px 12px 3px 8px!important;
-  white-space:nowrap;flex-shrink:0;border-top:none!important;
-  display:inline-flex!important;align-items:center;gap:4px;
+  border-radius:16px;padding:5px 12px 5px 10px!important;
+  white-space:normal;flex-shrink:1;border-top:none!important;
+  display:inline-flex!important;flex-wrap:wrap!important;align-items:center;gap:4px 6px;
+  max-width:100%;overflow-wrap:break-word;word-break:break-word;
 }
+/* 2-B. 인카드 문장 구조도 (v2.0) */
+.s-structure{padding:6px 14px 8px 42px;border-top:1px dashed rgba(46,117,182,0.15);background:#FBFCFF;}
+.s-card.grammar .s-structure{border-top-color:rgba(91,45,142,0.15);}
+.s-structure-label{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;color:#993C1D;margin-bottom:5px;}
+.s-structure svg{width:100%;display:block;background:white;border:1px solid rgba(0,0,0,0.07);border-radius:8px;padding:8px 10px;box-sizing:border-box;}
+.s-card.vocab-only .s-structure{display:none;}
+.s-card.pinned .s-structure,.s-card.tapped .s-structure{width:100%;flex-basis:100%;order:0;padding:4px 0 2px!important;border-top:none;background:transparent;}
+.s-card.has-sd.pinned .s-kr-wrap,.s-card.has-sd.tapped .s-kr-wrap{max-height:2600px;}
 /* 3. 문장구조도 탭·패널 */
 .tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
 .tab-sd.active{background:#993C1D;color:white;border-color:#993C1D;}
@@ -416,6 +425,43 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   body.psd .sd-vocab-chip{font-size:10px!important;padding:2px 7px!important;}
 }
 
+
+/* ══ 펜 필기 모드 v1.0 ══ */
+#penToolbar{position:fixed;bottom:20px;right:20px;z-index:10000;display:flex;flex-direction:row;gap:8px;background:rgba(255,255,255,0.96);padding:8px;border-radius:30px;box-shadow:0 4px 20px rgba(0,0,0,0.18);backdrop-filter:blur(10px);align-items:center;}
+#penToolbar .pen-btn{width:42px;height:42px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-btn:hover{background:#e0e0e0;}
+#penToolbar .pen-btn.active{background:#2E75B6;color:white;}
+#penToolbar .pen-main{background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;font-size:20px;}
+#penToolbar .pen-main.active{background:linear-gradient(135deg,#dc2626,#ef4444);transform:scale(1.05);}
+#penToolbar .pen-tools{display:none;flex-direction:row;gap:6px;align-items:center;padding-left:8px;border-left:1px solid #ddd;margin-left:4px;}
+#penToolbar .pen-tools.show{display:flex;}
+#penToolbar .pen-color{width:30px;height:30px;border:2px solid white;border-radius:50%;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.2);transition:transform 0.15s;padding:0;}
+#penToolbar .pen-color:hover{transform:scale(1.1);}
+#penToolbar .pen-color.selected{border:2px solid #333;transform:scale(1.18);box-shadow:0 2px 6px rgba(0,0,0,0.3);}
+#penToolbar .pen-width{width:34px;height:34px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-width:hover{background:#e0e0e0;}
+#penToolbar .pen-width span{background:#333;border-radius:50%;display:inline-block;}
+#penToolbar .pen-width.selected{background:#1F3864;}
+#penToolbar .pen-width.selected span{background:white !important;}
+#penLayer{position:absolute;top:0;left:0;pointer-events:none;z-index:998;overflow:visible;}
+#penLayer.active{pointer-events:auto;touch-action:none;cursor:crosshair;}
+@media print{#penToolbar{display:none !important;}#penLayer{display:none !important;}}
+@media (max-width:600px){
+  #penToolbar{bottom:10px;right:10px;padding:6px;gap:4px;}
+  #penToolbar .pen-btn,#penToolbar .pen-width{width:38px;height:38px;}
+  #penToolbar .pen-color{width:26px;height:26px;}
+}
+
+.tab-summary{background:white;color:#00695C;border-color:rgba(0,105,92,0.25);}
+.tab-summary.active{background:#00695C;color:white;border-color:#00695C;}
+.summary-view{display:none;}
+@media print{.summary-view{display:none!important;}}
+
+/* ═══ 단락 배지 (재빌드 주입) ═══ */
+.para-div{display:flex;align-items:center;gap:10px;margin:22px 2px 10px;}
+.para-badge{width:26px;height:26px;border-radius:50%;background:#1F3864;color:#fff;font-weight:700;font-size:14px;font-family:'JetBrains Mono',monospace;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 6px rgba(31,56,100,0.25);}
+.para-line{flex:1;height:1px;background:linear-gradient(to right,rgba(31,56,100,0.35),transparent);}
+@media print{.para-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
 </style>
 </head>
 <body>
@@ -439,6 +485,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
   <div class="view-tabs">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
+    <button class="view-tab tab-summary" id="tabSum" onclick="switchSummary()">📄 요약</button>
     <button class="view-tab tab-sd"             id="tabSD" onclick="switchSD()">📐 문장구조도</button>
     <button class="view-tab tab-ga"             id="tabGA" onclick="switchGA()">📊 문법분석</button>
     <button class="view-tab tab-arrange"        id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
@@ -463,39 +510,280 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
       <button class="ctrl-btn" id="btnAll"   onclick="speakAll()">🔊 전체 읽기</button>
     </div>
     <div class="cards" id="cards">
-<div class="s-card grammar" data-text="Research shows that, by age three, children understand that imaginary objects do not come to life.">
+<!-- ═══ 단락 ⓐ ═══ -->
+<div class="para-div"><span class="para-badge">ⓐ</span><span class="para-line"></span></div>
+<div class="s-card grammar has-sd" data-text="Research shows that, by age three, children understand that imaginary objects do not come to life.">
   <div class="card-top"><span class="s-num">01</span><div class="s-en">Research shows that, by age three, children understand that <span class="hl">imaginary</span> <span class="hl">objects</span> do not <span class="hl">come to life</span>.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">연구에 따르면, 세 살이 되면 아이들은 상상 속 물체가 <strong>살아나지 않는다</strong>는 것을 이해한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">imaginary</span><span class="vocab-kr">상상의</span><span class="vocab-en">object</span><span class="vocab-kr">물체</span><span class="vocab-en">come to life</span><span class="vocab-kr">살아나다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>shows that ~ understand that ~</strong> = that절 이중 중첩. 첫 that = shows의 목적어, 둘째 that = understand의 목적어.</div></div>
+  <div class="s-kr-wrap"><div class="s-kr">연구에 따르면, 세 살이 되면 아이들은 상상 속 물체가 <strong>살아나지 않는다</strong>는 것을 이해한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">imaginary</span><span class="vocab-kr">상상의</span><span class="vocab-en">object</span><span class="vocab-kr">물체</span><span class="vocab-en">come to life</span><span class="vocab-kr">살아나다</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 224" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="96" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="58" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Research</text>
+  <text x="58" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">연구는 (S)</text>
+  <rect x="114" y="10" width="70" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="149" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">shows</text>
+  <text x="149" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">보여준다 (V)</text>
+  <rect x="192" y="5" width="425" height="36" rx="5" fill="none" stroke="#6A1B9A" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="404" y="4" font-size="10" font-weight="400" fill="#6A1B9A" text-anchor="middle" font-family="sans-serif">that절 (shows의 목적어)</text>
+  <text x="221" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">that</text>
+  <text x="221" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">~라는 것을</text>
+  <rect x="252" y="12" width="124" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="314" y="31" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">by age three</text>
+  <text x="314" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">세 살이 되면</text>
+  <rect x="384" y="12" width="96" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="432" y="31" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">children</text>
+  <text x="432" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">아이들이</text>
+  <rect x="488" y="12" width="113" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="544" y="31" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">understand</text>
+  <text x="544" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이해한다</text>
+  <rect x="10" y="89" width="428" height="36" rx="5" fill="none" stroke="#6A1B9A" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="224" y="88" font-size="10" font-weight="400" fill="#6A1B9A" text-anchor="middle" font-family="sans-serif">that절 (understand의 목적어)</text>
+  <text x="39" y="113" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">that</text>
+  <text x="39" y="146" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">~라는 것을</text>
+  <rect x="70" y="96" width="164" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="152" y="115" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">imaginary objects</text>
+  <text x="152" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">상상 속 물체가</text>
+  <rect x="242" y="96" width="180" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="332" y="115" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">do not come to life</text>
+  <text x="332" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">살아나지 않는다</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">연구에 따르면, 세 살이 되면 아이들은 상상 속 물체가 살아나지 않는다는 것을 이해한다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>shows that ~ understand that ~</strong> = that절 이중 중첩. 첫 that = shows의 목적어, 둘째 that = understand의 목적어.</div><div class="s-meaning"><span class="bracket">【전제 — 세 살이면 안다】</span> 연구의 출발점: <strong>세 살쯤이면 상상 속 물체가 실제로 살아나지 않는다는 걸 이해</strong>한다. 아이들의 인지 능력은 이미 충분하다는 전제 — 뒤에서 이 전제가 흔들리는 상황이 나옴. <span class="star-line">★ shows that ~ understand that ~ — that절 이중 중첩!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="This is especially clear with respect to everyday objects—children know that even though they imagine a pencil in an empty box, the box will remain empty.">
+<div class="s-card grammar has-sd" data-text="This is especially clear with respect to everyday objects—children know that even though they imagine a pencil in an empty box, the box will remain empty.">
   <div class="card-top"><span class="s-num">02</span><div class="s-en">This is especially clear <span class="hl">with respect to</span> everyday objects—children know that even though they imagine a pencil in an empty box, the box will remain empty.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">이것은 일상적 물체에 관해서 특히 명확하다—연필을 상상하더라도 상자가 비어 있을 것이라고 안다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">with respect to</span><span class="vocab-kr">~에 관해서</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>with respect to</strong> = ~에 관해서 (= regarding). <strong>even though</strong> = ~하더라도 (양보). <strong>will remain empty</strong> = remain + 형용사(보어) = 2형식.</div></div>
+  <div class="s-kr-wrap"><div class="s-kr">이것은<span class="pr">(= 상상이 현실이 되지 않는다는 이해)</span> 일상적 물체에 관해서 특히 명확하다—연필을 상상하더라도 상자가 비어 있을 것이라고 안다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">with respect to</span><span class="vocab-kr">~에 관해서</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">This</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이것은 (S)</text>
+  <rect x="82" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="114" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="114" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다 (V)</text>
+  <rect x="154" y="10" width="156" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="232" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">especially clear</text>
+  <text x="232" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">특히 명확하다 (C)</text>
+  <rect x="318" y="10" width="268" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="452" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">with respect to everyday objects</text>
+  <text x="452" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">일상적 물체에 관해서 (부사구)</text>
+  <rect x="10" y="94" width="96" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="58" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">children</text>
+  <text x="58" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">아이들은 (S)</text>
+  <rect x="114" y="94" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="146" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">know</text>
+  <text x="146" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">안다 (V)</text>
+  <rect x="186" y="89" width="618" height="36" rx="5" fill="none" stroke="#6A1B9A" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="495" y="88" font-size="10" font-weight="400" fill="#6A1B9A" text-anchor="middle" font-family="sans-serif">that절</text>
+  <text x="215" y="113" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">that</text>
+  <text x="215" y="146" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">~라는 것을</text>
+  <rect x="246" y="96" width="275" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="383" y="115" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">even though they imagine a pencil</text>
+  <text x="383" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">연필을 상상하더라도 (양보)</text>
+  <rect x="529" y="96" width="87" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="572" y="115" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the box</text>
+  <text x="572" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">상자가</text>
+  <rect x="624" y="96" width="164" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="706" y="115" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">will remain empty</text>
+  <text x="706" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">비어 있을 것이다</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">이것은 일상적 물체에 관해서 특히 명확하다—아이들은 빈 상자에 연필을 상상하더라도 상자가 비어</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">있을 것이라는 것을 안다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>with respect to</strong> = ~에 관해서 (= regarding). <strong>even though</strong> = ~하더라도 (양보). <strong>will remain empty</strong> = remain + 형용사(보어) = 2형식.</div><div class="s-meaning"><span class="bracket">【일상 물체 예시 — 연필과 상자】</span> ⓐ의 구체 예: <strong>빈 상자에 연필을 상상해도 상자는 여전히 비어 있음을 안다</strong>. 일상적 물체에 관해서는 상상≠현실 구분이 특히 명확. <span class="star-line">★ remain + 형용사 = 2형식 (~인 채로 있다)!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="However, emotion can sometimes disrupt this understanding, or at least its expression.">
+<!-- ═══ 단락 ⓑ ═══ -->
+<div class="para-div"><span class="para-badge">ⓑ</span><span class="para-line"></span></div>
+<div class="s-card grammar has-sd" data-text="However, emotion can sometimes disrupt this understanding, or at least its expression.">
   <div class="card-top"><span class="s-num">03</span><div class="s-en">However, <span class="hl">emotion</span> can sometimes <span class="hl">disrupt</span> this understanding, or at least its <span class="hl">expression</span>.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">그러나, 감정이 때때로 이 이해를, 또는 최소한 그 <strong>표현</strong>을 방해할 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">emotion</span><span class="vocab-kr">감정</span><span class="vocab-en">disrupt</span><span class="vocab-kr">방해하다</span><span class="vocab-en">expression</span><span class="vocab-kr">표현</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>However</strong> = 그러나 (전환). <strong>or at least</strong> = 또는 최소한. <strong>its expression</strong> = its = this understanding의 소유격.</div><div class="s-meaning"><span class="bracket">【핵심】</span> 글의 핵심 전환! S01~02: 아이들은 상상≠현실을 안다. S03: 그러나 감정이 이 이해를 방해! 머리로는 알지만 감정(공포)이 행동을 지배. <span class="star-line">★ 핵심: 지식 vs 감정 — 공포가 현실 인식을 압도!</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">그러나, 감정이 때때로 이 이해를<span class="pr">(= 상상≠현실이라는 이해)</span>, 또는 최소한 그 <strong>표현</strong>을 방해할 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">emotion</span><span class="vocab-kr">감정</span><span class="vocab-en">disrupt</span><span class="vocab-kr">방해하다</span><span class="vocab-en">expression</span><span class="vocab-kr">표현</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="87" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="53" y="29" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">However</text>
+  <text x="53" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그러나 (전환)</text>
+  <rect x="105" y="10" width="87" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="148" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">emotion</text>
+  <text x="148" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">감정이 (S)</text>
+  <rect x="200" y="10" width="185" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="292" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">can sometimes disrupt</text>
+  <text x="292" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">때때로 방해할 수 있다 (V)</text>
+  <rect x="393" y="10" width="373" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="579" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">this understanding, or at least its expression</text>
+  <text x="579" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이 이해를, 또는 최소한 그 표현을 (O)</text>
+  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">그러나, 감정이 때때로 이 이해를, 또는 최소한 그 표현을 방해할 수 있다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>However</strong> = 그러나 (전환). <strong>or at least</strong> = 또는 최소한. <strong>its expression</strong> = its = this understanding의 소유격.</div><div class="s-meaning"><span class="bracket">【핵심】</span> 글의 핵심 전환! S01~02: 아이들은 상상≠현실을 안다. S03: 그러나 감정이 이 이해를 방해! 머리로는 알지만 감정(공포)이 행동을 지배. <span class="star-line">★ 핵심: 지식 vs 감정 — 공포가 현실 인식을 압도!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="That is, even though a child knows that monsters are not real, the thought of a monster under a bed might be enough to make a child refuse to go into his room at night.">
+<div class="s-card grammar has-sd" data-text="That is, even though a child knows that monsters are not real, the thought of a monster under a bed might be enough to make a child refuse to go into his room at night.">
   <div class="card-top"><span class="s-num">04</span><div class="s-en">That is, even though a child knows that <span class="hl">monsters</span> are not real, the <span class="hl">thought</span> of a monster under a bed might be enough to make a child <span class="hl">refuse</span> to go into his room at night.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">즉, 괴물이 실재하지 않는다고 알더라도, 침대 아래 괴물의 생각은 밤에 방에 들어가기를 <strong>거부</strong>하게 만들기에 충분할 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">monster</span><span class="vocab-kr">괴물</span><span class="vocab-en">thought</span><span class="vocab-kr">생각</span><span class="vocab-en">refuse</span><span class="vocab-kr">거부하다</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>even though</strong> = ~하더라도 (양보). <strong>enough to make</strong> = ~하게 만들기에 충분한 (enough + to V). <strong>make + O + V원형</strong> = O가 V하게 만들다 (사역). make a child refuse.</div></div>
+  <div class="s-kr-wrap"><div class="s-kr">즉, 괴물이 실재하지 않는다고 알더라도, 침대 아래 괴물의 생각은 밤에 방에 들어가기를 <strong>거부</strong>하게 만들기에 충분할 수 있다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">monster</span><span class="vocab-kr">괴물</span><span class="vocab-en">thought</span><span class="vocab-kr">생각</span><span class="vocab-en">refuse</span><span class="vocab-kr">거부하다</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="87" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="53" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">That is</text>
+  <text x="53" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">즉 (삽입)</text>
+  <rect x="105" y="5" width="498" height="36" rx="5" fill="none" stroke="#085041" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="354" y="4" font-size="10" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">even though절 (양보)</text>
+  <text x="163" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">even though</text>
+  <text x="163" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">~하더라도</text>
+  <rect x="224" y="12" width="87" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="267" y="31" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">a child</text>
+  <text x="267" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">아이가</text>
+  <rect x="319" y="12" width="268" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="453" y="31" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">knows that monsters are not real</text>
+  <text x="453" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">괴물이 실재하지 않는다고 알더라도</text>
+  <rect x="10" y="94" width="298" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="159" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the thought of a monster under a bed</text>
+  <text x="159" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">침대 아래 괴물의 생각은 (S)</text>
+  <rect x="316" y="94" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="364" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">might be</text>
+  <text x="364" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">~일 수 있다 (V)</text>
+  <rect x="420" y="94" width="245" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="542" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">enough to make a child refuse</text>
+  <text x="542" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">아이가 거부하게 만들기에 충분한 (C)</text>
+  <rect x="673" y="94" width="238" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="792" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to go into his room at night</text>
+  <text x="792" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">밤에 방에 들어가기를 (to V)</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">즉, 아이가 괴물이 실재하지 않는다는 것을 알더라도, 침대 아래 괴물의 생각은 밤에 방에</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">들어가기를 거부하게 만들기에 충분할 수 있다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>even though</strong> = ~하더라도 (양보). <strong>enough to make</strong> = ~하게 만들기에 충분한 (enough + to V). <strong>make + O + V원형</strong> = O가 V하게 만들다 (사역). make a child refuse.</div><div class="s-meaning"><span class="bracket">【괴물 예시 — 앎 ≠ 행동】</span> That is(즉)로 S03을 풀어 설명: 괴물이 가짜인 걸 '알아도' <strong>침대 밑 괴물 생각만으로 밤에 방에 못 들어간다</strong> — 감정이 지식을 이기는 순간. <span class="star-line">★ make + O + V원형 (사역) — make a child refuse!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="Indeed, research shows that children have a more difficult time displaying their understanding of the causal relations between imagination and reality when they are asked to pretend or imagine scary things, like monsters.">
+<div class="s-card grammar has-sd" data-text="Indeed, research shows that children have a more difficult time displaying their understanding of the causal relations between imagination and reality when they are asked to pretend or imagine scary things, like monsters.">
   <div class="card-top"><span class="s-num">05</span><div class="s-en"><span class="hl">Indeed</span>, research shows that children have a more difficult time <span class="hl">displaying</span> their understanding of the <span class="hl">causal relations</span> between imagination and reality when they are asked to <span class="hl">pretend</span> or imagine <span class="hl">scary</span> things, like monsters.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">실제로, 괴물 같은 무서운 것을 가장하거나 상상하도록 요청받을 때 아이들은 인과 관계에 대한 이해를 보여주는 데 더 어려운 시간을 갖는다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">displaying</span><span class="vocab-kr">보여주기</span><span class="vocab-en">causal relations</span><span class="vocab-kr">인과 관계</span><span class="vocab-en">pretend</span><span class="vocab-kr">가장하다</span><span class="vocab-en">scary</span><span class="vocab-kr">무서운</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>have a difficult time V-ing</strong> = V하는 데 어려운 시간을 갖다 (= have difficulty V-ing). <strong>are asked to pretend</strong> = 가장하도록 요청받다 (수동 + to V).</div></div>
+  <div class="s-kr-wrap"><div class="s-kr">실제로, 괴물 같은 무서운 것을 가장하거나 상상하도록 요청받을 때 아이들은 인과 관계에 대한 이해를 보여주는 데 더 어려운 시간을 갖는다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">displaying</span><span class="vocab-kr">보여주기</span><span class="vocab-en">causal relations</span><span class="vocab-kr">인과 관계</span><span class="vocab-en">pretend</span><span class="vocab-kr">가장하다</span><span class="vocab-en">scary</span><span class="vocab-kr">무서운</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="79" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="49" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">Indeed</text>
+  <text x="49" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">실제로 (부사)</text>
+  <rect x="97" y="10" width="96" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="145" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">research</text>
+  <text x="145" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">연구는 (S)</text>
+  <rect x="201" y="10" width="113" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="257" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">shows that</text>
+  <text x="257" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">보여준다 (V)</text>
+  <rect x="10" y="94" width="96" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="58" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">children</text>
+  <text x="58" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">아이들은 (S)</text>
+  <rect x="114" y="94" width="223" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="225" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">have a more difficult time</text>
+  <text x="225" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">더 어려운 시간을 갖는다 (V)</text>
+  <rect x="345" y="94" width="433" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="561" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">displaying their understanding of the causal relations</text>
+  <text x="561" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">인과 관계에 대한 이해를 보여주는 데 (O·동명사)</text>
+  <rect x="10" y="173" width="646" height="36" rx="5" fill="none" stroke="#085041" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="333" y="172" font-size="10" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">when절</text>
+  <text x="39" y="197" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">when</text>
+  <text x="39" y="230" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">~할 때</text>
+  <rect x="70" y="180" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="102" y="199" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">they</text>
+  <text x="102" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들이</text>
+  <rect x="142" y="180" width="260" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="272" y="199" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are asked to pretend or imagine</text>
+  <text x="272" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가장하거나 상상하도록 요청받을 때 (수동)</text>
+  <rect x="410" y="180" width="230" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="525" y="199" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">scary things, like monsters</text>
+  <text x="525" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">괴물 같은 무서운 것을</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">실제로, 연구에 따르면 아이들은 괴물처럼 무서운 것을 가장하거나 상상하도록 요청받을 때 상상과</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">현실 사이의 인과 관계에 대한 이해를 보여주는 데 더 어려운 시간을 갖는다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>have a difficult time V-ing</strong> = V하는 데 어려운 시간을 갖다 (= have difficulty V-ing). <strong>are asked to pretend</strong> = 가장하도록 요청받다 (수동 + to V).</div><div class="s-meaning"><span class="bracket">【연구 근거 — 무서우면 이해를 못 보여줌】</span> 실증 연구: <strong>무서운 것(괴물 등)을 가장·상상하라고 하면</strong> 상상↔현실의 인과 관계 이해를 '보여주는' 것이 더 어려워진다. 이해 자체가 아니라 그 '표현'이 막히는 것(S03 호응). <span class="star-line">★ have a difficult time V-ing = V하는 데 애먹다!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="In one study, preschool children were shown an empty box and were asked to imagine a monster inside.">
+<!-- ═══ 단락 ⓒ ═══ -->
+<div class="para-div"><span class="para-badge">ⓒ</span><span class="para-line"></span></div>
+<div class="s-card grammar has-sd" data-text="In one study, preschool children were shown an empty box and were asked to imagine a monster inside.">
   <div class="card-top"><span class="s-num">06</span><div class="s-en">In one study, <span class="hl">preschool children</span> were shown an empty box and were asked to imagine a monster inside.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">한 연구에서, 미취학 아동에게 빈 상자를 보여주고 안에 괴물을 상상하도록 요청했다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">preschool children</span><span class="vocab-kr">미취학 아동</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>were shown ~ and were asked</strong> = 수동태 병렬. show + IO + DO의 수동 → IO가 주어. <strong>were asked to imagine</strong> = ask + O + to V의 수동.</div></div>
+  <div class="s-kr-wrap"><div class="s-kr">한 연구에서, 미취학 아동에게 빈 상자를 보여주고 안에 괴물을 상상하도록 요청했다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">preschool children</span><span class="vocab-kr">미취학 아동</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 224" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="124" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="72" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">In one study</text>
+  <text x="72" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">한 연구에서 (부사구)</text>
+  <rect x="142" y="10" width="172" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="228" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">preschool children</text>
+  <text x="228" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">미취학 아동에게 (S)</text>
+  <rect x="322" y="10" width="113" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="378" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">were shown</text>
+  <text x="378" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">보여주고 (V1·수동)</text>
+  <rect x="443" y="10" width="124" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="505" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">an empty box</text>
+  <text x="505" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">빈 상자를 (O)</text>
+  <text x="593" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="593" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="620" y="10" width="185" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="712" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">were asked to imagine</text>
+  <text x="712" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">상상하도록 요청받았다 (V2·수동)</text>
+  <rect x="10" y="94" width="156" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="88" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">a monster inside</text>
+  <text x="88" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">안에 괴물을 (O)</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">한 연구에서, 미취학 아동에게 빈 상자를 보여주고 안에 괴물을 상상하도록 요청했다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>were shown ~ and were asked</strong> = 수동태 병렬. show + IO + DO의 수동 → IO가 주어. <strong>were asked to imagine</strong> = ask + O + to V의 수동.</div><div class="s-meaning"><span class="bracket">【실험 설정】</span> ⓒ 실험 사례 시작: 미취학 아동에게 <strong>빈 상자를 보여주고, 그 안에 괴물을 상상하도록 요청</strong>. 조건은 단순 — 이후 대답과 행동의 불일치가 관전 포인트. <span class="star-line">★ 수동태 병렬 — were shown / were asked (to V)!</span></div></div>
 </div>
-<div class="s-card" data-text="All children agreed that the box was empty.">
+<div class="s-card grammar has-sd" data-text="All children agreed that the box was empty.">
   <div class="card-top"><span class="s-num">07</span><div class="s-en">All children <span class="hl">agreed</span> that the box was empty.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">모든 아이들은 상자가 비어 있다고 동의했다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">agreed</span><span class="vocab-kr">동의했다</span></div></div>
+  <div class="s-kr-wrap"><div class="s-kr">모든 아이들은 상자가 비어 있다고 동의했다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">agreed</span><span class="vocab-kr">동의했다</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="124" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="72" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">All children</text>
+  <text x="72" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">모든 아이들은 (S)</text>
+  <rect x="142" y="10" width="79" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="181" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">agreed</text>
+  <text x="181" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">동의했다 (V)</text>
+  <rect x="229" y="5" width="275" height="36" rx="5" fill="none" stroke="#6A1B9A" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="366" y="4" font-size="10" font-weight="400" fill="#6A1B9A" text-anchor="middle" font-family="sans-serif">that절</text>
+  <text x="258" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">that</text>
+  <text x="258" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">~라고</text>
+  <rect x="289" y="12" width="87" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="332" y="31" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the box</text>
+  <text x="332" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">상자가</text>
+  <rect x="384" y="12" width="104" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="436" y="31" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">was empty</text>
+  <text x="436" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">비어 있다고</text>
+  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">모든 아이들은 상자가 비어 있다고 동의했다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>agree that S V</strong> = that절(명사절)이 agree의 목적어 — ~라는 데 동의하다. <strong>the box was empty</strong> = 주절 과거(agreed) → 종속절도 과거(was) — 시제 일치.</div><div class="s-meaning"><span class="bracket">【아이들의 대답 — 머리로는 안다】</span> 전원이 <strong>'상자는 비었다'고 동의</strong> = 인지적 이해는 완벽. S01~02의 전제가 실험에서도 재확인되는 장면 — 그래서 다음 문장의 반전이 강력해짐. <span class="star-line">★ agree + that절 = ~라는 데 동의하다!</span></div></div>
 </div>
-<div class="s-card grammar" data-text="However, when they were left alone with the box they exhibited fear and avoidance of it.">
+<div class="s-card grammar has-sd" data-text="However, when they were left alone with the box they exhibited fear and avoidance of it.">
   <div class="card-top"><span class="s-num">08</span><div class="s-en">However, when they were left alone with the box they <span class="hl">exhibited</span> fear and <span class="hl">avoidance</span> of it.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">그러나, 상자와 함께 혼자 남겨졌을 때 그들은 <strong>두려움과 회피</strong>를 보였다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">exhibited</span><span class="vocab-kr">보였다, 나타냈다</span><span class="vocab-en">avoidance</span><span class="vocab-kr">회피</span></div><div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>were left alone</strong> = leave + O + OC(alone)의 수동. 혼자 남겨지다. <strong>exhibited</strong> = 보였다, 나타냈다 (= showed/displayed).</div></div>
+  <div class="s-kr-wrap"><div class="s-kr">그러나, 상자와 함께 혼자 남겨졌을 때 그들은 <strong>두려움과 회피</strong>를 보였다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">exhibited</span><span class="vocab-kr">보였다, 나타냈다</span><span class="vocab-en">avoidance</span><span class="vocab-kr">회피</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 224" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="87" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="53" y="29" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">However</text>
+  <text x="53" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그러나 (전환)</text>
+  <rect x="105" y="5" width="428" height="36" rx="5" fill="none" stroke="#085041" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="319" y="4" font-size="10" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">when절</text>
+  <text x="134" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">when</text>
+  <text x="134" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">~할 때</text>
+  <rect x="165" y="12" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="197" y="31" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">they</text>
+  <text x="197" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들이</text>
+  <rect x="237" y="12" width="148" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="311" y="31" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">were left alone</text>
+  <text x="311" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">혼자 남겨졌을 때 (수동)</text>
+  <rect x="393" y="12" width="124" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="455" y="31" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">with the box</text>
+  <text x="455" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">상자와 함께</text>
+  <rect x="541" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="573" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">they</text>
+  <text x="573" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들은 (S)</text>
+  <rect x="613" y="10" width="104" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="665" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">exhibited</text>
+  <text x="665" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">보였다 (V)</text>
+  <rect x="10" y="94" width="208" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="114" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">fear and avoidance of it</text>
+  <text x="114" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">두려움과 회피를 (O)</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">그러나, 상자와 함께 혼자 남겨졌을 때 그들은 두려움과 회피를 보였다.</text>
+</svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>were left alone</strong> = leave + O + OC(alone)의 수동. 혼자 남겨지다. <strong>exhibited</strong> = 보였다, 나타냈다 (= showed/displayed).</div><div class="s-meaning"><span class="bracket">【행동은 달랐다 — 반전 결말】</span> 그러나 상자와 <strong>혼자 남겨지자 두려움과 회피</strong>를 보임. 말('비었다')과 행동('무서워함')의 불일치 — 감정이 이해의 표현을 압도한다는 글 전체의 결론. <span class="star-line">★ leave + O + alone의 수동 — be left alone!</span></div></div>
 </div>
 </div><!-- /cards -->
+    
+  </div>
+<div class="summary-view" id="summaryView">
     <div class="summary-wrap"><div class="summary-header">📖 줄거리 &amp; 핵심 정리</div><div class="summary-body">
 <div style="background:linear-gradient(135deg,#1F3864,#C62828);border-radius:12px;padding:18px 22px;margin-bottom:20px;text-align:center;"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.6);margin-bottom:8px;">CORE MESSAGE</div><div style="font-size:15px;font-weight:700;color:white;line-height:1.6;">아이들은 상상≠현실을 알지만, <span style="color:#f0d070;">공포 감정</span>이 이 이해를 압도한다!</div><div style="font-size:12px;color:rgba(255,255,255,0.65);margin-top:8px;">= Children know imaginary things aren't real, but fear overrides that knowledge.</div></div>
 <div style="background:#fff8e6;border-left:4px solid #f0d070;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:20px;"><div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:#a07800;margin-bottom:10px;">💡 쉬운 비유로 이해하기</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12.5px;"><div style="background:white;border-radius:8px;padding:12px 14px;border:1px solid #faedb0;"><div style="font-weight:700;color:#1F3864;margin-bottom:6px;">🧠 머리로는 안다</div><div style="color:#444;line-height:1.8;">상상 속 물체 = 실재하지 않음<br>빈 상자 = 비어 있음<br>괴물 = 진짜가 아님<br>→ 인지적으로 이해!</div></div><div style="background:white;border-radius:8px;padding:12px 14px;border:1px solid #faedb0;"><div style="font-weight:700;color:#C62828;margin-bottom:6px;">😱 감정은 다르다</div><div style="color:#444;line-height:1.8;">"괴물 상상해봐" → 무서움!<br>혼자 남겨지면 → 두려움+회피<br>공포가 지식을 압도<br>→ 행동은 감정을 따름!</div></div></div><div style="margin-top:10px;font-size:12px;color:#7a5c00;text-align:center;font-weight:600;">→ 핵심: 아이들은 알면서도(지식) <u>무서워한다(감정)</u> — 감정이 행동 지배!</div></div>
@@ -511,7 +799,8 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #5B2D8E;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">have a difficult time V-ing</div><div style="color:#555;">V하는 데 어려움을 겪다</div></div>
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #C55A11;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">were left alone (수동 5형식)</div><div style="color:#555;">혼자 남겨졌다</div></div>
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #C55A11;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">enough to V</div><div style="color:#555;">V하기에 충분한</div></div></div></div></div></div>
-  </div>
+</div>
+
   <div class="ga-panel" id="panelGA">
 
 <div class="ga-legend"><div class="ga-leg"><div class="ga-leg-dot" style="background:#C62828;"></div><strong>Tier 1</strong> 어법 핵심</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#E65100;"></div><strong>Tier 2</strong> 어법</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#1565C0;"></div><strong>Tier 3</strong> 어휘·대명사</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#2E7D32;"></div><strong>Tier 4</strong> 혼동 어휘</div></div>
@@ -958,6 +1247,12 @@ function readNext(){if(!allPlaying||allIdx>=allQueue.length){if(currentCard)curr
 
 /* ══ 배열영작 ══ */
 let scores={},dragSrc=null,clickSelectedChip=null;
+/* ── 터치 드래그 지원 (태블릿/모바일) v1.7 ── */
+let tChip=null,tClone=null,tStartX=0,tStartY=0,tOffX=0,tOffY=0,tMoved=false,tDragEnd=0;
+const T_DRAG_THRESHOLD=10;
+function arrTouchStart(e){const chip=e.target.closest('.word-chip');if(!chip)return;tChip=chip;const r=chip.getBoundingClientRect();const t=e.touches[0];tStartX=t.clientX;tStartY=t.clientY;tOffX=t.clientX-r.left;tOffY=t.clientY-r.top;tMoved=false;}
+function arrTouchMove(e){if(!tChip)return;if(e.cancelable)e.preventDefault();const t=e.touches[0];const dx=t.clientX-tStartX,dy=t.clientY-tStartY;if(!tMoved){if(Math.hypot(dx,dy)<T_DRAG_THRESHOLD)return;tMoved=true;const r=tChip.getBoundingClientRect();tClone=tChip.cloneNode(true);Object.assign(tClone.style,{position:'fixed',left:r.left+'px',top:r.top+'px',width:r.width+'px',zIndex:9999,pointerEvents:'none',opacity:0.9,transform:'scale(1.08)',boxShadow:'0 8px 24px rgba(0,0,0,0.3)',transition:'none'});document.body.appendChild(tClone);tChip.classList.add('dragging');}tClone.style.left=(t.clientX-tOffX)+'px';tClone.style.top=(t.clientY-tOffY)+'px';tClone.style.display='none';const tg=document.elementFromPoint(t.clientX,t.clientY);tClone.style.display='';const z=tg&&tg.closest('.answer-zone, .word-pool');document.querySelectorAll('.answer-zone.drag-over, .word-pool.drag-over').forEach(el=>el.classList.remove('drag-over'));if(z)z.classList.add('drag-over');}
+function arrTouchEnd(e){if(!tChip)return;if(!tMoved){tChip=null;return;}const t=e.changedTouches[0];if(tClone)tClone.style.display='none';const tg=document.elementFromPoint(t.clientX,t.clientY);const z=tg&&tg.closest('.answer-zone, .word-pool');if(z){const chips=Array.from(z.querySelectorAll('.word-chip')).filter(c=>c!==tChip);if(chips.length===0){z.appendChild(tChip);}else{let bestC=null,bestB=true,bestD=Infinity;for(const c of chips){const r=c.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const d=Math.hypot(t.clientX-cx,t.clientY-cy);if(d<bestD){bestD=d;bestC=c;bestB=t.clientX<cx;}}if(bestB)z.insertBefore(tChip,bestC);else z.insertBefore(tChip,bestC.nextSibling);}tChip.classList.remove('ok-chip');const idx=tChip.dataset.idx;const r=document.getElementById('res-'+idx);if(r)r.className='arr-result';}if(tClone){tClone.remove();tClone=null;}tChip.classList.remove('dragging');document.querySelectorAll('.answer-zone.drag-over, .word-pool.drag-over').forEach(el=>el.classList.remove('drag-over'));tChip=null;tDragEnd=Date.now();e.preventDefault();}
 function buildArrangeCards(){
   const box=document.getElementById('arrCards');box.innerHTML='';
   const hint=document.createElement('div');hint.className='touch-hint';hint.innerHTML='💡 단어 클릭 → 즉시 이동 &nbsp;|&nbsp; 드래그도 가능';box.appendChild(hint);
@@ -966,14 +1261,15 @@ function buildArrangeCards(){
     const card=document.createElement('div');card.className='arr-card';card.style.animationDelay=(idx*60)+'ms';
     card.innerHTML=`<div class="arr-header"><span class="arr-num">${item.num}</span><div class="arr-kr">${item.kr}</div></div><div class="arr-body"><div class="answer-zone" id="zone-${idx}"></div><div class="word-pool" id="pool-${idx}">${shuffled.map(w=>`<div class="word-chip" draggable="true" data-word="${w}" data-idx="${idx}">${w}</div>`).join('')}</div><div class="arr-result" id="res-${idx}"></div><div class="ans-reveal" id="ans-${idx}"><strong>정답:</strong> ${item.ans}.</div><div class="arr-btns"><button class="arr-check" onclick="checkAns(${idx})">✓ 확인</button><button class="arr-reset" onclick="resetCard(${idx})">↺ 초기화</button><button class="arr-show-ans" onclick="toggleAns(${idx})">👁 정답 보기</button></div></div>`;
     box.appendChild(card);
-    ['zone-'+idx,'pool-'+idx].forEach(zid=>{const z=document.getElementById(zid);z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(!dragSrc)return;z.appendChild(dragSrc);dragSrc.classList.remove('dragging','ok-chip');document.getElementById('res-'+idx).className='arr-result';dragSrc=null;});});
+    ['zone-'+idx,'pool-'+idx].forEach(zid=>{const z=document.getElementById(zid);z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(!dragSrc)return;const chips=Array.from(z.querySelectorAll('.word-chip')).filter(c=>c!==dragSrc);if(chips.length===0){z.appendChild(dragSrc);}else{let bestC=null,bestB=true,bestD=Infinity;for(const c of chips){const r=c.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const d=Math.hypot(e.clientX-cx,e.clientY-cy);if(d<bestD){bestD=d;bestC=c;bestB=e.clientX<cx;}}if(bestB)z.insertBefore(dragSrc,bestC);else z.insertBefore(dragSrc,bestC.nextSibling);}dragSrc.classList.remove('dragging','ok-chip');document.getElementById('res-'+idx).className='arr-result';dragSrc=null;});});
     setTimeout(()=>{document.getElementById('pool-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});document.getElementById('zone-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});},0);
   });
   box.addEventListener('dragstart',e=>{if(!e.target.classList.contains('word-chip'))return;dragSrc=e.target;e.target.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
   box.addEventListener('dragend',e=>{if(e.target.classList.contains('word-chip'))e.target.classList.remove('dragging');dragSrc=null;});
+  box.addEventListener('touchstart',arrTouchStart,{passive:true});box.addEventListener('touchmove',arrTouchMove,{passive:false});box.addEventListener('touchend',arrTouchEnd);box.addEventListener('touchcancel',arrTouchEnd);
   updateScore();
 }
-function chipClick(chip,idx){const inZone=chip.parentElement.id==='zone-'+idx;const target=document.getElementById(inZone?'pool-'+idx:'zone-'+idx);chip.classList.remove('ok-chip');target.appendChild(chip);chip.addEventListener('click',()=>chipClick(chip,idx),{once:true});document.getElementById('res-'+idx).className='arr-result';}
+function chipClick(chip,idx){if(Date.now()-tDragEnd<500)return;const inZone=chip.parentElement.id==='zone-'+idx;const target=document.getElementById(inZone?'pool-'+idx:'zone-'+idx);chip.classList.remove('ok-chip');target.appendChild(chip);document.getElementById('res-'+idx).className='arr-result';}
 function checkAns(idx){const zone=document.getElementById('zone-'+idx);const chips=Array.from(zone.querySelectorAll('.word-chip'));const userAns=chips.map(c=>c.dataset.word).join(' ');const correct=ARRANGE[idx].ans;const ok=userAns.trim().toLowerCase()===correct.trim().toLowerCase();const res=document.getElementById('res-'+idx);res.className='arr-result show '+(ok?'ok':'ng');res.innerHTML=ok?'🎉 정답입니다!':'❌ 다시 확인해 보세요. ('+chips.length+'/'+correct.split(' ').length+'개 배치됨)';if(ok)chips.forEach(c=>c.classList.add('ok-chip'));scores[idx]=ok?1:0;updateScore();}
 function resetCard(idx){const zone=document.getElementById('zone-'+idx);const pool=document.getElementById('pool-'+idx);Array.from(zone.querySelectorAll('.word-chip')).forEach(c=>{c.classList.remove('ok-chip');pool.appendChild(c);});document.getElementById('res-'+idx).className='arr-result';document.getElementById('ans-'+idx).className='ans-reveal';delete scores[idx];updateScore();}
 function toggleAns(idx){document.getElementById('ans-'+idx).classList.toggle('show');}
@@ -1198,6 +1494,159 @@ document.addEventListener("DOMContentLoaded",function(){
 });
 // 즉시 실행 (DOMContentLoaded 전에도 안전하게)
 (function(){hideQPanels();})();
+</script>
+<script>
+/* ══ 펜 필기 모드 (자유 필기) v1.0 ══ */
+const PEN_COLORS=['#dc2626','#1F3864','#0f9d58','#f59e0b','#000000'];
+const PEN_WIDTHS=[2,4,7];
+let penEnabled=false,penColor='#dc2626',penWidth=4,penEraser=false;
+let penLayer=null,penPath=null,penPts=[];
+
+function buildPenTools(){
+  if(document.getElementById('penLayer'))return;
+  penLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  penLayer.id='penLayer';
+  document.body.appendChild(penLayer);
+  const tb=document.createElement('div');
+  tb.id='penToolbar';
+  let html='<button class="pen-btn pen-main" id="penToggle" title="펜 ON/OFF">✏️</button><div class="pen-tools" id="penTools">';
+  PEN_COLORS.forEach(c=>html+='<button class="pen-color" data-color="'+c+'" style="background:'+c+';" title="색상"></button>');
+  PEN_WIDTHS.forEach(w=>html+='<button class="pen-width" data-width="'+w+'" title="굵기"><span style="width:'+(w*2)+'px;height:'+(w*2)+'px;"></span></button>');
+  html+='<button class="pen-btn pen-eraser" id="penEraserBtn" title="개별 지우개">🧹</button><button class="pen-btn pen-clear" id="penClearBtn" title="전체 지우기">🗑️</button></div>';
+  tb.innerHTML=html;
+  document.body.appendChild(tb);
+  document.querySelector('.pen-color[data-color="'+penColor+'"]').classList.add('selected');
+  document.querySelector('.pen-width[data-width="'+penWidth+'"]').classList.add('selected');
+  document.getElementById('penToggle').addEventListener('click',togglePen);
+  document.querySelectorAll('.pen-color').forEach(b=>b.addEventListener('click',e=>{
+    const c=e.currentTarget.dataset.color;
+    penColor=c;penEraser=false;
+    document.querySelectorAll('.pen-color').forEach(x=>x.classList.toggle('selected',x.dataset.color===c));
+    document.getElementById('penEraserBtn').classList.remove('active');
+  }));
+  document.querySelectorAll('.pen-width').forEach(b=>b.addEventListener('click',e=>{
+    const w=+e.currentTarget.dataset.width;
+    penWidth=w;
+    document.querySelectorAll('.pen-width').forEach(x=>x.classList.toggle('selected',+x.dataset.width===w));
+  }));
+  document.getElementById('penEraserBtn').addEventListener('click',()=>{
+    penEraser=!penEraser;
+    document.getElementById('penEraserBtn').classList.toggle('active',penEraser);
+  });
+  document.getElementById('penClearBtn').addEventListener('click',()=>{
+    if(confirm('모든 필기를 지우시겠습니까?'))penLayer.innerHTML='';
+  });
+  penLayer.addEventListener('pointerdown',penDown);
+  penLayer.addEventListener('pointermove',penMove);
+  penLayer.addEventListener('pointerup',penUp);
+  penLayer.addEventListener('pointercancel',penUp);
+  penLayer.addEventListener('pointerleave',penUp);
+  const sync=()=>{
+    penLayer.style.height='0px';penLayer.style.width='0px';
+    const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
+    const w=Math.max(document.body.scrollWidth,document.documentElement.scrollWidth);
+    penLayer.setAttribute('width',w);
+    penLayer.setAttribute('height',h);
+    penLayer.style.height=h+'px';
+    penLayer.style.width=w+'px';
+  };
+  sync();
+  if(window.ResizeObserver){let _roPending=false;new ResizeObserver(()=>{if(_roPending)return;_roPending=true;requestAnimationFrame(()=>{_roPending=false;sync();});}).observe(document.body);}
+  window.addEventListener('resize',sync);
+  setInterval(sync,2000);
+}
+function togglePen(){
+  penEnabled=!penEnabled;
+  document.getElementById('penToggle').classList.toggle('active',penEnabled);
+  document.getElementById('penTools').classList.toggle('show',penEnabled);
+  penLayer.classList.toggle('active',penEnabled);
+}
+function getPenPt(e){
+  return {x:e.clientX+window.scrollX,y:e.clientY+window.scrollY};
+}
+function penDown(e){
+  if(!penEnabled)return;
+  e.preventDefault();
+  try{penLayer.setPointerCapture(e.pointerId);}catch(_){}
+  if(penEraser){eraseAt(e);return;}
+  const pt=getPenPt(e);
+  penPath=document.createElementNS('http://www.w3.org/2000/svg','path');
+  penPath.setAttribute('d','M '+pt.x+' '+pt.y);
+  penPath.setAttribute('stroke',penColor);
+  penPath.setAttribute('stroke-width',penWidth);
+  penPath.setAttribute('fill','none');
+  penPath.setAttribute('stroke-linecap','round');
+  penPath.setAttribute('stroke-linejoin','round');
+  penLayer.appendChild(penPath);
+  penPts=[pt];
+}
+function penMove(e){
+  if(!penEnabled)return;
+  if(penEraser&&e.buttons){eraseAt(e);return;}
+  if(!penPath)return;
+  e.preventDefault();
+  const pt=getPenPt(e);
+  const last=penPts[penPts.length-1];
+  if(Math.hypot(pt.x-last.x,pt.y-last.y)<1.5)return;
+  penPts.push(pt);
+  let d='M '+penPts[0].x+' '+penPts[0].y;
+  for(let i=1;i<penPts.length-1;i++){
+    const c=penPts[i],n=penPts[i+1];
+    const mx=(c.x+n.x)/2,my=(c.y+n.y)/2;
+    d+=' Q '+c.x+' '+c.y+' '+mx+' '+my;
+  }
+  if(penPts.length>=2){
+    const lp=penPts[penPts.length-1];
+    d+=' L '+lp.x+' '+lp.y;
+  }
+  penPath.setAttribute('d',d);
+}
+function penUp(e){
+  if(penPath){penPath=null;penPts=[];}
+}
+function eraseAt(e){
+  const pt=getPenPt(e);
+  const r=20;
+  const paths=Array.from(penLayer.querySelectorAll('path'));
+  for(const p of paths){
+    const bb=p.getBBox();
+    if(pt.x>=bb.x-r&&pt.x<=bb.x+bb.width+r&&pt.y>=bb.y-r&&pt.y<=bb.y+bb.height+r){
+      p.remove();
+    }
+  }
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',buildPenTools);
+}else{
+  setTimeout(buildPenTools,100);
+}
+</script>
+<script>
+/* ══ 요약 전용 탭 v1.0 ══ */
+(function(){
+  function hideSummary(){
+    var sv=document.getElementById('summaryView');if(sv)sv.style.display='none';
+    var ts=document.getElementById('tabSum');if(ts)ts.classList.remove('active');
+  }
+  window.switchSummary=function(){
+    var rv=document.getElementById('readingView');if(rv)rv.style.display='none';
+    ['arrangeView','grammarView','vocabView'].forEach(function(id){
+      var el=document.getElementById(id);if(el)el.classList.remove('active');});
+    if(typeof hideAllExtra==='function')hideAllExtra();
+    document.querySelectorAll('.view-tab').forEach(function(t){t.classList.remove('active');});
+    var sv=document.getElementById('summaryView');if(sv)sv.style.display='block';
+    var ts=document.getElementById('tabSum');if(ts)ts.classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  /* 다른 모든 전환 함수가 요약뷰를 숨기도록 래핑 */
+  ['switchView','switchSD','switchGA','switchQ','switchVocab'].forEach(function(fn){
+    if(typeof window[fn]!=='function')return;
+    var orig=window[fn];
+    window[fn]=function(){hideSummary();return orig.apply(this,arguments);};
+  });
+  document.addEventListener('DOMContentLoaded',hideSummary);
+  hideSummary();
+})();
 </script>
 </body>
 </html>
