@@ -306,8 +306,8 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 /* ── 공통 행동 CSS ── */
 /* 1. 호버 펼치기 완전 제거 */
 @media(hover:hover) and (pointer:fine){
-  .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
-  .s-card.grammar:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card.grammar:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
 }
 /* 2. 단어 가로 칩 배열 */
 .s-card.vocab-only .s-kr-wrap,
@@ -330,6 +330,14 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   display:inline-flex!important;flex-wrap:wrap!important;align-items:center;gap:4px 6px;
   max-width:100%;overflow-wrap:break-word;word-break:break-word;
 }
+/* 2-B. 인카드 문장 구조도 (v2.0) */
+.s-structure{padding:6px 14px 8px 42px;border-top:1px dashed rgba(46,117,182,0.15);background:#FBFCFF;}
+.s-card.grammar .s-structure{border-top-color:rgba(91,45,142,0.15);}
+.s-structure-label{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;color:#993C1D;margin-bottom:5px;}
+.s-structure svg{width:100%;display:block;background:white;border:1px solid rgba(0,0,0,0.07);border-radius:8px;padding:8px 10px;box-sizing:border-box;}
+.s-card.vocab-only .s-structure{display:none;}
+.s-card.pinned .s-structure,.s-card.tapped .s-structure{width:100%;flex-basis:100%;order:0;padding:4px 0 2px!important;border-top:none;background:transparent;}
+.s-card.has-sd.pinned .s-kr-wrap,.s-card.has-sd.tapped .s-kr-wrap{max-height:2600px;}
 /* 3. 문장구조도 탭·패널 */
 .tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
 .tab-sd.active{background:#993C1D;color:white;border-color:#993C1D;}
@@ -497,7 +505,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="cards" id="cards">
 
 <!-- S1 -->
-<div class="s-card grammar" data-text="As Kuhn proposed, our propositions about the world are embedded within paradigms, roughly a network of interrelated commitments to a particular theory, a conception of a subject matter, and methodological practices.">
+<div class="s-card grammar has-sd" data-text="As Kuhn proposed, our propositions about the world are embedded within paradigms, roughly a network of interrelated commitments to a particular theory, a conception of a subject matter, and methodological practices.">
   <div class="card-top">
     <span class="s-num">01</span>
     <div class="s-en"><span class="gm">As Kuhn proposed</span>, our <span class="hl">propositions</span> about the world <span class="gm">are embedded</span> within paradigms, <span class="hl">roughly</span> a network of <span class="hl">interrelated</span> <span class="hl">commitments</span> to a <span class="hl">particular</span> <span class="hl">theory</span>, a <span class="hl">conception</span> of a subject matter, and <span class="hl">methodological</span> <span class="hl">practices</span>.</div>
@@ -507,13 +515,62 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">쿤이 제안한 대로, <strong>세상에 대한 우리의 명제들은 패러다임 안에 내재되어 있는데</strong>, 이는 대략 <strong>특정 이론, 주제에 대한 개념, 그리고 방법론적 관행에 대한 상호 연결된 헌신의 네트워크</strong>이다.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">proposition</span><span class="vocab-kr">명제</span><span class="vocab-en">embedded</span><span class="vocab-kr">내재된</span><span class="vocab-en">paradigm</span><span class="vocab-kr">패러다임</span><span class="vocab-en">commitment</span><span class="vocab-kr">헌신</span><span class="vocab-en">methodological</span><span class="vocab-kr">방법론적</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 580" xmlns="http://www.w3.org/2000/svg">
+  <text x="25" y="29" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">As</text>
+  <text x="25" y="62" font-size="12" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">~대로 (접속사)</text>
+  <rect x="48" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="80" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Kuhn</text>
+  <text x="80" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">쿤이</text>
+  <rect x="120" y="10" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="168" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">proposed</text>
+  <text x="168" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">제안했다</text>
+  <rect x="10" y="94" width="156" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="88" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">our propositions</text>
+  <text x="88" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리의 명제들은 (S)</text>
+  <rect x="174" y="94" width="148" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="248" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">about the world</text>
+  <text x="248" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">세상에 대한</text>
+  <rect x="330" y="94" width="124" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="392" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are embedded</text>
+  <text x="392" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">내재되어 있다 (V, 수동)</text>
+  <rect x="462" y="94" width="156" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="540" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">within paradigms</text>
+  <text x="540" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">패러다임 안에</text>
+  <rect x="10" y="178" width="104" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="62" y="197" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">, roughly</text>
+  <text x="62" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">(대략, 부사)</text>
+  <rect x="122" y="178" width="305" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="274" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">a network of interrelated commitments</text>
+  <text x="274" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">상호 연결된 헌신의 네트워크 (동격, paradigms 부연)</text>
+  <text x="25" y="281" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to</text>
+  <text x="25" y="314" font-size="12" font-weight="400" fill="#633806" text-anchor="middle" font-family="sans-serif">~에 대한</text>
+  <rect x="48" y="262" width="180" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="138" y="281" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">a particular theory</text>
+  <text x="138" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">특정 이론 (N1)</text>
+  <rect x="10" y="346" width="64" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="42" y="365" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">,</text>
+  <text x="42" y="398" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">,</text>
+  <rect x="82" y="346" width="268" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="216" y="365" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">a conception of a subject matter</text>
+  <text x="216" y="398" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">주제에 대한 개념 (N2, 병렬)</text>
+  <rect x="10" y="430" width="70" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="45" y="449" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">, and</text>
+  <text x="45" y="482" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="88" y="430" width="208" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="192" y="449" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">methodological practices</text>
+  <text x="192" y="482" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">방법론적 관행 (N3, 병렬)</text>
+  <line x1="10" y1="510" x2="950" y2="510" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="530" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">쿤이 제안한 대로, 세상에 대한 우리의 명제들은 패러다임 안에 내재되어 있는데, 이는 대략</text>
+  <text x="10" y="550" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">특정 이론, 주제에 대한 개념, 그리고 방법론적 관행에 대한 상호 연결된 헌신의 네트워크이다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>As + S + V</strong> = ~대로 (방식·양태 접속사). / <strong>are embedded</strong> = 수동태 (내재되어 있다). 명제는 <em>내재되는</em> 대상. / <strong>a network of ~ to ~, ~, and ~</strong> = paradigms의 <u>동격</u>(부연). commitments to + 3개 명사구 병렬 (theory / conception / practices).</div>
     <div class="s-meaning"><span class="bracket">【핵심 정의】</span>쉽게 말하면 <strong>"과학적 주장은 '패러다임' 안에서만 존재"</strong> — 이론 + 주제관 + 방법론의 얽힘. <span class="star-line">★ 글의 주제 — 패러다임 정의.</span></div>
   </div>
 </div>
 
 <!-- S2 -->
-<div class="s-card grammar" data-text="Thus, when scientists undertake research, they do so from within a specific paradigm.">
+<div class="s-card grammar has-sd" data-text="Thus, when scientists undertake research, they do so from within a specific paradigm.">
   <div class="card-top">
     <span class="s-num">02</span>
     <div class="s-en">Thus, when scientists <span class="hl">undertake</span> research, they <span class="gm">do so</span> from within a <span class="hl">specific</span> <span class="hl">paradigm</span>.</div>
@@ -523,13 +580,40 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">그러므로 <strong>과학자들이 연구에 착수할 때</strong>, 그들은 <strong>특정 패러다임 안에서 그렇게 한다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">undertake</span><span class="vocab-kr">착수하다</span><span class="vocab-en">specific</span><span class="vocab-kr">특정한</span><span class="vocab-en">from within</span><span class="vocab-kr">~안에서</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 224" xmlns="http://www.w3.org/2000/svg">
+  <text x="37" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">Thus,</text>
+  <text x="37" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그러므로</text>
+  <text x="95" y="29" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">when</text>
+  <text x="95" y="62" font-size="12" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">~할 때</text>
+  <rect x="126" y="10" width="113" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="182" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">scientists</text>
+  <text x="182" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">과학자들이</text>
+  <rect x="247" y="10" width="104" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="299" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">undertake</text>
+  <text x="299" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">착수하다</text>
+  <rect x="359" y="10" width="96" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="407" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">research</text>
+  <text x="407" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">연구에</text>
+  <rect x="10" y="94" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">they</text>
+  <text x="42" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들은 (S)</text>
+  <rect x="82" y="94" width="70" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="117" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">do so</text>
+  <text x="117" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그렇게 한다 (대동사, = undertake research)</text>
+  <rect x="160" y="94" width="260" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="290" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">from within a specific paradigm</text>
+  <text x="290" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">특정 패러다임 안에서</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">그러므로 과학자들이 연구에 착수할 때, 그들은 특정 패러다임 안에서 그렇게 한다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>do so</strong> = <u>대동사</u> (앞 undertake research의 반복 회피). / <strong>from within</strong> = 이중 전치사 (~안에서 비롯한). 두 전치사가 연달아 사용되어 "위치+방향" 의미. 비슷한 패턴: from behind, from under, from among.</div>
     <div class="s-meaning"><span class="bracket">【추론】</span>쉽게 말하면 <strong>"모든 연구는 특정 패러다임 안에서 이루어진다"</strong>. <span class="star-line">★ S01의 직접적 결과.</span></div>
   </div>
 </div>
 
 <!-- S3 -->
-<div class="s-card grammar" data-text="Even the most exacting measurements are only sensible from within that paradigm.">
+<div class="s-card grammar has-sd" data-text="Even the most exacting measurements are only sensible from within that paradigm.">
   <div class="card-top">
     <span class="s-num">03</span>
     <div class="s-en">Even the most <span class="hl">exacting</span> <span class="hl">measurements</span> are only <span class="hl">sensible</span> from within <span class="ref">that</span> paradigm.</div>
@@ -539,13 +623,36 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr"><strong>가장 엄격한 측정조차 그 패러다임<span class="pr">(= 과학자가 속한 특정 패러다임)</span> 안에서만 이해될 수 있다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">exacting</span><span class="vocab-kr">엄격한</span><span class="vocab-en">measurement</span><span class="vocab-kr">측정</span><span class="vocab-en">sensible</span><span class="vocab-kr">이해 가능한</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 224" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">Even</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">심지어</text>
+  <rect x="82" y="10" width="253" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="208" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the most exacting measurements</text>
+  <text x="208" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가장 엄격한 측정조차 (S, 최상급)</text>
+  <rect x="343" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="375" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are</text>
+  <text x="375" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다 (V)</text>
+  <rect x="415" y="10" width="64" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="447" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">only</text>
+  <text x="447" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">오직</text>
+  <rect x="487" y="10" width="96" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="535" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">sensible</text>
+  <text x="535" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이해될 수 있는 (C)</text>
+  <rect x="10" y="94" width="215" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="117" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">from within that paradigm</text>
+  <text x="117" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그 패러다임 안에서만</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">가장 엄격한 측정조차 그 패러다임 안에서만 이해될 수 있다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>Even + 최상급</strong>: the most + 형용사 (심지어 가장 ~한 것조차). 양보·극단 강조. / <strong>sensible</strong>: 의미 주의 — '분별 있는'이 아닌 <em>'이해할 수 있는'</em>(= able to be understood). / <strong>exacting</strong>: 형용사 '엄격한/까다로운' (exact 형용사 '정확한'과 구분).</div>
     <div class="s-meaning"><span class="bracket">【주장 강화】</span>쉽게 말하면 <strong>"아무리 엄격한 측정도 패러다임 밖에선 무의미"</strong>. <span class="star-line">★ 극단 사례로 강조.</span></div>
   </div>
 </div>
 
 <!-- S4 -->
-<div class="s-card grammar" data-text="For example, a look into a microscope tells you nothing unless you are already informed about the nature of the instrument and what you are supposed to be looking at.">
+<div class="s-card grammar has-sd" data-text="For example, a look into a microscope tells you nothing unless you are already informed about the nature of the instrument and what you are supposed to be looking at.">
   <div class="card-top">
     <span class="s-num">04</span>
     <div class="s-en">For example, a look into a <span class="hl">microscope</span> tells you nothing <span class="gm">unless</span> you are already <span class="gm">informed about</span> the <span class="hl">nature</span> of the <span class="hl">instrument</span> and <span class="gm">what you are supposed to be looking at</span>.</div>
@@ -555,13 +662,57 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">예를 들어 <strong>현미경을 들여다보는 것은 그 기구의 본질과 무엇을 보아야 하는지에 대해 이미 알지 못하는 한, 당신에게 아무것도 말해주지 않는다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">microscope</span><span class="vocab-kr">현미경</span><span class="vocab-en">instrument</span><span class="vocab-kr">기구</span><span class="vocab-en">be supposed to</span><span class="vocab-kr">~해야 한다</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <text x="67" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">For example,</text>
+  <text x="67" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">예를 들어</text>
+  <rect x="132" y="10" width="208" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="236" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">a look into a microscope</text>
+  <text x="236" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">현미경을 들여다보는 것은 (S)</text>
+  <rect x="348" y="10" width="70" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="383" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">tells</text>
+  <text x="383" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">말해준다 (V)</text>
+  <rect x="426" y="10" width="64" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="458" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">you</text>
+  <text x="458" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">당신에게 (IO)</text>
+  <rect x="498" y="10" width="87" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="541" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">nothing</text>
+  <text x="541" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">아무것도 (DO, 부정)</text>
+  <text x="41" y="113" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">unless</text>
+  <text x="41" y="146" font-size="12" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">~하지 않는 한</text>
+  <rect x="81" y="94" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="113" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">you</text>
+  <text x="113" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">당신이</text>
+  <rect x="153" y="94" width="188" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="247" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are already informed</text>
+  <text x="247" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이미 알고 있다 (수동)</text>
+  <rect x="349" y="94" width="283" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="490" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">about the nature of the instrument</text>
+  <text x="490" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">기구의 본질에 대해</text>
+  <rect x="10" y="178" width="64" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="42" y="197" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="42" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="82" y="173" width="393" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="278" y="172" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">what절 (간접의문문, about의 O 2)</text>
+  <text x="111" y="197" font-size="14" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="Georgia,serif">what</text>
+  <text x="111" y="230" font-size="12" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">무엇을</text>
+  <rect x="142" y="180" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="174" y="199" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">you</text>
+  <text x="174" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">당신이</text>
+  <rect x="214" y="180" width="245" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="336" y="199" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are supposed to be looking at</text>
+  <text x="336" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">보아야 하는지 (수동 진행)</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">예를 들어 현미경을 들여다보는 것은 그 기구의 본질과 무엇을 보아야 하는지에 대해 이미 알고</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">있지 않는 한, 당신에게 아무것도 말해주지 않는다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>unless</strong> = if not (~하지 않는 한). 이미 부정을 포함하므로 절 안에 not 불필요. / <strong>be informed about</strong> = ~에 대해 정보를 받다, 알다 (수동). / <strong>what you are supposed to be looking at</strong> = 간접의문문(what절) + <em>be supposed to + 진행부정사</em>. informed about의 O 2개(the nature ~ / what ~) 병렬.</div>
     <div class="s-meaning"><span class="bracket">【구체 예시】</span>쉽게 말하면 <strong>"현미경? 사전 지식 없으면 아무것도 안 보인다"</strong>. <span class="star-line">★ S03의 구체적 예시 — 도구 + 배경 지식 = 패러다임.</span></div>
   </div>
 </div>
 
 <!-- S5 -->
-<div class="s-card grammar" data-text="Thus, what we call major progress in science is not a movement from a less to a more accurate paradigm.">
+<div class="s-card grammar has-sd" data-text="Thus, what we call major progress in science is not a movement from a less to a more accurate paradigm.">
   <div class="card-top">
     <span class="s-num">05</span>
     <div class="s-en">Thus, <span class="gm">what we call</span> <span class="hl">major</span> <span class="hl">progress</span> in <span class="hl">science</span> is not a <span class="hl">movement</span> from a less to a more <span class="hl">accurate</span> paradigm.</div>
@@ -571,13 +722,53 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">그러므로 <strong>우리가 과학에서의 주요한 진보라고 부르는 것은 덜 정확한 패러다임에서 더 정확한 패러다임으로의 이동이 아니다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">major progress</span><span class="vocab-kr">주요한 진보</span><span class="vocab-en">movement</span><span class="vocab-kr">이동</span><span class="vocab-en">accurate</span><span class="vocab-kr">정확한</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <text x="37" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">Thus,</text>
+  <text x="37" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그러므로</text>
+  <rect x="72" y="5" width="435" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="289" y="4" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">what절 (주어, ~라고 부르는 것)</text>
+  <text x="101" y="29" font-size="14" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="Georgia,serif">what</text>
+  <text x="101" y="62" font-size="12" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">~라고</text>
+  <rect x="132" y="12" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="164" y="31" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">we</text>
+  <text x="164" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리가</text>
+  <rect x="204" y="12" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="236" y="31" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">call</text>
+  <text x="236" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">부르는</text>
+  <rect x="276" y="12" width="215" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="383" y="31" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">major progress in science</text>
+  <text x="383" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">과학의 주요한 진보</text>
+  <rect x="10" y="94" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="42" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="42" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다 (V)</text>
+  <rect x="82" y="94" width="64" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="114" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">not</text>
+  <text x="114" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">~아니다</text>
+  <rect x="154" y="94" width="113" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="210" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">a movement</text>
+  <text x="210" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이동 (C)</text>
+  <text x="33" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">from</text>
+  <text x="33" y="230" font-size="12" font-weight="400" fill="#633806" text-anchor="middle" font-family="sans-serif">~에서</text>
+  <rect x="64" y="178" width="79" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="103" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">a less</text>
+  <text x="103" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">덜 (비교급)</text>
+  <text x="166" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to</text>
+  <text x="166" y="230" font-size="12" font-weight="400" fill="#633806" text-anchor="middle" font-family="sans-serif">~로</text>
+  <rect x="189" y="178" width="208" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="293" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">a more accurate paradigm</text>
+  <text x="293" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">더 정확한 패러다임</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">그러므로 우리가 과학에서의 주요한 진보라고 부르는 것은 덜 정확한 패러다임에서 더 정확한</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">패러다임으로의 이동이 아니다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>what we call + N</strong> = 우리가 N이라고 부르는 것 (관계대명사 what의 특수 용법, 5형식). 주어 역할의 명사절. / <strong>from a less to a more accurate paradigm</strong> = <u>from A to B</u>에서 A와 B가 각각 비교급 형용사. 'a less (accurate paradigm) to a more accurate paradigm'의 생략 형태.</div>
     <div class="s-meaning"><span class="bracket">【핵심 반전】</span>쉽게 말하면 <strong>"과학의 진보는 '더 정확해지는' 수직 이동이 아니다"</strong>. <span class="star-line">★ 통념 부정 — 중요한 전환.</span></div>
   </div>
 </div>
 
 <!-- S6 -->
-<div class="s-card grammar" data-text="Rather, it is a horizontal shift from one way of seeing the world to another.">
+<div class="s-card grammar has-sd" data-text="Rather, it is a horizontal shift from one way of seeing the world to another.">
   <div class="card-top">
     <span class="s-num">06</span>
     <div class="s-en"><span class="gm">Rather</span>, <span class="ref">it</span> is a <span class="hl">horizontal</span> <span class="hl">shift</span> <span class="gm">from one</span> &lsquo;way of seeing the world&rsquo; <span class="gm">to another</span>.</div>
@@ -587,13 +778,39 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">오히려 <strong>그것<span class="pr">(= 과학에서의 주요 진보)</span>은 하나의 '세상을 보는 방식'에서 다른 방식으로의 수평적 이동이다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">horizontal</span><span class="vocab-kr">수평의</span><span class="vocab-en">shift</span><span class="vocab-kr">이동, 전환</span><span class="vocab-en">one ~ another</span><span class="vocab-kr">하나 ~ 다른 하나</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 308" xmlns="http://www.w3.org/2000/svg">
+  <text x="45" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">Rather,</text>
+  <text x="45" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">오히려</text>
+  <rect x="89" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="121" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">it</text>
+  <text x="121" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그것은 (S)</text>
+  <rect x="161" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="193" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="193" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다</text>
+  <rect x="233" y="10" width="172" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="319" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">a horizontal shift</text>
+  <text x="319" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수평적 이동 (C)</text>
+  <text x="33" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">from</text>
+  <text x="33" y="146" font-size="12" font-weight="400" fill="#633806" text-anchor="middle" font-family="sans-serif">~로부터</text>
+  <rect x="64" y="94" width="245" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="186" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">one 'way of seeing the world'</text>
+  <text x="186" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">하나의 세상을 보는 방식</text>
+  <text x="25" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to</text>
+  <text x="25" y="230" font-size="12" font-weight="400" fill="#633806" text-anchor="middle" font-family="sans-serif">~로</text>
+  <rect x="48" y="178" width="87" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="91" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">another</text>
+  <text x="91" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">다른 것 (= another way)</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">오히려 그것은 하나의 '세상을 보는 방식'에서 다른 방식으로의 수평적 이동이다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>Rather</strong>(오히려): 앞 문장(S05) 부정 + 이 문장 긍정 = 강한 대조. / <strong>from one ~ to another</strong> = 하나에서 다른 것으로 (상관 구문). another = another way of seeing the world의 축약.</div>
     <div class="s-meaning"><span class="bracket">【주제문】</span>쉽게 말하면 <strong>"과학 진보 = 수직이 아니라 수평 이동 (보는 방식의 교체)"</strong>. <span class="star-line">★ 글의 핵심 주제문 — Kuhn 사상 요약.</span></div>
   </div>
 </div>
 
 <!-- S7 -->
-<div class="s-card grammar" data-text="For Kuhn, the scientist with a new paradigm sees differently from the way he had seen before.">
+<div class="s-card grammar has-sd" data-text="For Kuhn, the scientist with a new paradigm sees differently from the way he had seen before.">
   <div class="card-top">
     <span class="s-num">07</span>
     <div class="s-en">For Kuhn, &lsquo;the scientist with a new paradigm sees <span class="hl">differently</span> from the way <span class="gm">he had seen</span> before.&rsquo;</div>
@@ -603,6 +820,45 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">쿤에게 있어, '<strong>새로운 패러다임을 가진 과학자는 이전에 보았던 방식과 다르게 본다</strong>.'</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">differently from</span><span class="vocab-kr">~와 다르게</span><span class="vocab-en">had seen</span><span class="vocab-kr">보았었다 (과거완료)</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 308" xmlns="http://www.w3.org/2000/svg">
+  <text x="54" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">For Kuhn,</text>
+  <text x="54" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">쿤에게 있어</text>
+  <rect x="106" y="10" width="132" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="172" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the scientist</text>
+  <text x="172" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">과학자 (S)</text>
+  <rect x="246" y="10" width="180" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="336" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">with a new paradigm</text>
+  <text x="336" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">새 패러다임을 가진</text>
+  <rect x="10" y="94" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="42" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">sees</text>
+  <text x="42" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">본다 (V)</text>
+  <rect x="82" y="94" width="116" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="140" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">differently</text>
+  <text x="140" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">다르게</text>
+  <text x="229" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">from</text>
+  <text x="229" y="146" font-size="12" font-weight="400" fill="#633806" text-anchor="middle" font-family="sans-serif">~와</text>
+  <rect x="260" y="94" width="87" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="303" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the way</text>
+  <text x="303" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그 방식</text>
+  <rect x="10" y="173" width="277" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="148" y="172" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">관계부사절 (way 수식)</text>
+  <rect x="16" y="180" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="48" y="199" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">he</text>
+  <text x="48" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그가</text>
+  <rect x="88" y="180" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="136" y="199" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">had seen</text>
+  <text x="136" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">보았던 (과거완료)</text>
+  <rect x="192" y="180" width="79" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="231" y="199" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">before</text>
+  <text x="231" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">전에</text>
+  <path d="M 148,209 C 148,248 303,248 303,122" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="300,102 303,94 306,102" fill="#534AB7"/>
+  <rect x="150" y="250" width="150" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="225" y="261" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">관계절 → the way 수식</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">쿤에게 있어, '새로운 패러다임을 가진 과학자는 이전에 보았던 방식과 다르게 본다.'</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>differently from N</strong> = N과 다르게 (부사 + 전치사 from). / <strong>the way (that) he had seen before</strong> = 그가 전에 보았던 방식 (관계부사/관계사 생략). / <strong>had seen</strong> = 과거완료 (주절의 과거 sees보다 <u>더 이전</u>의 시점). 시제 일치 X — 주절이 현재여도 "이전의 과거" 표현.</div>
     <div class="s-meaning"><span class="bracket">【Kuhn 직접 인용】</span>쉽게 말하면 <strong>"새 패러다임 = 새로운 시각으로 보기"</strong>. <span class="star-line">★ 결론 — Kuhn의 문장 인용.</span></div>
   </div>
@@ -2042,7 +2298,7 @@ function buildPenTools(){
     penLayer.style.width=w+'px';
   };
   sync();
-  if(window.ResizeObserver){let _roPending=false;new ResizeObserver(()=>{if(_roPending)return;_roPending=true;requestAnimationFrame(()=>{_roPending=false;sync();});}).observe(document.body);}
+  if(window.ResizeObserver)new ResizeObserver(sync).observe(document.body);
   window.addEventListener('resize',sync);
   setInterval(sync,2000);
 }

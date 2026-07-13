@@ -85,7 +85,7 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 
 /* KR WRAP */
 .s-kr-wrap{max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1),opacity 0.3s;opacity:0;background:rgba(255,255,255,0.6);border-top:1px dashed transparent;}
-@media(hover:hover) and (pointer:fine){.s-card:hover .s-kr-wrap{max-height:2000px;opacity:1;border-top-color:rgba(46,117,182,0.2);}.s-card.grammar:hover .s-kr-wrap{border-top-color:rgba(91,45,142,0.2);}}
+@media(hover:hover) and (pointer:fine){.s-card:not(.vocab-only):hover .s-kr-wrap{max-height:2000px;opacity:1;border-top-color:rgba(46,117,182,0.2);}.s-card.grammar:not(.vocab-only):hover .s-kr-wrap{border-top-color:rgba(91,45,142,0.2);}}
 .s-card.pinned .s-kr-wrap,.s-card.tapped .s-kr-wrap{max-height:2000px;opacity:1;border-top-color:rgba(46,117,182,0.2);}
 .s-card.grammar.pinned .s-kr-wrap,.s-card.grammar.tapped .s-kr-wrap{border-top-color:rgba(91,45,142,0.2);}
 .s-card.vocab-only .s-kr-wrap{max-height:2000px;opacity:1;border-top-color:rgba(46,117,182,0.2);}
@@ -306,8 +306,8 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 /* ── 공통 행동 CSS ── */
 /* 1. 호버 펼치기 완전 제거 */
 @media(hover:hover) and (pointer:fine){
-  .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
-  .s-card.grammar:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card.grammar:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
 }
 /* 2. 단어 가로 칩 배열 */
 .s-card.vocab-only .s-kr-wrap,
@@ -351,6 +351,14 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .s-card.vocab-only .s-vocab .vocab-label,
 .s-card.pinned .s-vocab .vocab-label,
 .s-card.tapped .s-vocab .vocab-label{align-self:center;margin-right:2px;}
+/* 2-B. 인카드 문장 구조도 (v2.0) */
+.s-structure{padding:6px 14px 8px 42px;border-top:1px dashed rgba(46,117,182,0.15);background:#FBFCFF;}
+.s-card.grammar .s-structure{border-top-color:rgba(91,45,142,0.15);}
+.s-structure-label{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;color:#993C1D;margin-bottom:5px;}
+.s-structure svg{width:100%;display:block;background:white;border:1px solid rgba(0,0,0,0.07);border-radius:8px;padding:8px 10px;box-sizing:border-box;}
+.s-card.vocab-only .s-structure{display:none;}
+.s-card.pinned .s-structure,.s-card.tapped .s-structure{width:100%;flex-basis:100%;order:0;padding:4px 0 2px!important;border-top:none;background:transparent;}
+.s-card.has-sd.pinned .s-kr-wrap,.s-card.has-sd.tapped .s-kr-wrap{max-height:2600px;}
 /* 3. 문장구조도 탭·패널 */
 .tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
 .tab-sd.active{background:#993C1D;color:white;border-color:#993C1D;}
@@ -519,7 +527,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="cards" id="cards">
 
 <!-- S01 -->
-<div class="s-card grammar" data-start="0" data-end="11.26" data-text="We are now at a point of unprecedented genetic, cultural, and environmental power as a species, and we are linked to nearly every other person on Earth.">
+<div class="s-card grammar has-sd" data-start="0" data-end="11.26" data-text="We are now at a point of unprecedented genetic, cultural, and environmental power as a species, and we are linked to nearly every other person on Earth.">
   <div class="card-top">
     <span class="s-num">01</span>
     <div class="s-en"><span class="ref">We</span> are now at a <span class="hl">point</span> of <span class="hl">unprecedented</span> genetic, cultural, and environmental power <span class="gm">as a species</span>, and we are <span class="gm">linked to</span> nearly every other person on Earth.</div>
@@ -529,6 +537,32 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">우리<span class="pr">(= 인류 전체)</span>는 이제 하나의 종으로서 전례 없는 유전적, 문화적, 환경적 힘의 지점에 와 있으며, 지구상의 거의 모든 다른 사람과 연결되어 있다.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-pair"><span class="vocab-en">unprecedented</span><span class="vocab-kr">전례 없는</span></span><span class="vocab-pair"><span class="vocab-en">species</span><span class="vocab-kr">종(種)</span></span><span class="vocab-pair"><span class="vocab-en">be linked to</span><span class="vocab-kr">~에 연결되다 (수동)</span></span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">We</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리는 (S)</text>
+  <rect x="82" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="114" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are</text>
+  <text x="114" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">있다 (V)</text>
+  <rect x="154" y="10" width="275" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="291" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">at a point of unprecedented power</text>
+  <text x="291" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">전례 없는 힘의 지점에 (부사구)</text>
+  <rect x="437" y="10" width="124" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="499" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">as a species</text>
+  <text x="499" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">하나의 종으로서 (부사구)</text>
+  <text x="587" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="587" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="614" y="10" width="132" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="680" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are linked to</text>
+  <text x="680" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">연결되어 있다 (V-수동)</text>
+  <rect x="10" y="94" width="238" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="129" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">nearly every person on Earth</text>
+  <text x="129" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">지구상 거의 모든 사람과</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">우리는 이제 하나의 종으로서 전례 없는 유전적, 문화적, 환경적 힘의 지점에 와 있으며,</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">지구상의 거의 모든 다른 사람과 연결되어 있다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>be at a point of</strong> = ~의 지점에 있다 / <strong>as a species</strong> = 하나의 종으로서 / <strong>be linked to</strong> = ~와 연결되어 있다 (수동태).</div>
     <div class="s-meaning">
       <span class="bracket">【개념】</span>
@@ -540,7 +574,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 </div>
 
 <!-- S02 -->
-<div class="s-card grammar" data-start="12.20" data-end="23.55" data-text="We are embodied individuals trapped within limited time, but we are also networked data streams, memories, and influencers, and part of a grander humanity.">
+<div class="s-card grammar has-sd" data-start="12.20" data-end="23.55" data-text="We are embodied individuals trapped within limited time, but we are also networked data streams, memories, and influencers, and part of a grander humanity.">
   <div class="card-top">
     <span class="s-num">02</span>
     <div class="s-en">We are <span class="gm">embodied individuals</span> <span class="gm">trapped within</span> limited time, but we are also <span class="hl">networked</span> data streams, memories, and influencers, and <span class="gm">part of</span> a <span class="hl">grander</span> humanity.</div>
@@ -550,6 +584,36 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">우리는 제한된 시간 안에 갇힌 구현된 개인들이지만, 동시에 연결된 데이터 스트림, 기억, 그리고 영향력 있는 존재들이며 더 위대한 인류의 일부이다.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-pair"><span class="vocab-en">embodied</span><span class="vocab-kr">몸을 가진, 구현된</span></span><span class="vocab-pair"><span class="vocab-en">trapped within</span><span class="vocab-kr">~안에 갇힌</span></span><span class="vocab-pair"><span class="vocab-en">networked</span><span class="vocab-kr">연결된</span></span><span class="vocab-pair"><span class="vocab-en">grander</span><span class="vocab-kr">더 위대한</span></span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">We</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리는 (S)</text>
+  <rect x="82" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="114" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are</text>
+  <text x="114" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다 (V)</text>
+  <rect x="154" y="10" width="188" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="248" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">embodied individuals</text>
+  <text x="248" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">구현된 개인들 (C-과거분사 수식)</text>
+  <rect x="350" y="10" width="230" height="28" rx="3" fill="#E8F5E9" stroke="#A5D6A7" stroke-width="1.3"/>
+  <text x="465" y="29" font-size="14" font-weight="500" fill="#1B5E20" text-anchor="middle" font-family="Georgia,serif">trapped within limited time</text>
+  <text x="465" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">시간 안에 갇힌 (과거분사 수식)</text>
+  <text x="636" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">but ~ also</text>
+  <text x="636" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">하지만 ~이기도</text>
+  <rect x="10" y="94" width="268" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="144" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">networked data streams, memories</text>
+  <text x="144" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">연결된 데이터·기억 (C)</text>
+  <rect x="286" y="94" width="223" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="397" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">part of a grander humanity</text>
+  <text x="397" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">더 위대한 인류의 일부 (C)</text>
+  <path d="M 465,38 C 465,80 248,80 248,38" fill="none" stroke="#BF360C" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="245,18 248,10 251,18" fill="#BF360C"/>
+  <rect x="260" y="82" width="192" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="356" y="93" font-size="11" font-weight="500" fill="#BF360C" text-anchor="middle" font-family="sans-serif">trapped → individuals 수식</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">우리는 제한된 시간 안에 갇힌 구현된 개인들이지만, 동시에 연결된 데이터 스트림, 기억,</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">영향력 있는 존재들이며 더 위대한 인류의 일부이다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>embodied</strong> + <strong>trapped</strong> = 과거분사 두 개가 individuals를 수식 / but ~ also = 하지만 ~이기도 하다 / <strong>part of</strong> = ~의 일부 (무관사).</div>
     <div class="s-meaning">
       <span class="bracket">【핵심】</span>
@@ -562,7 +626,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 </div>
 
 <!-- S03 주제문 -->
-<div class="s-card grammar" data-start="24.46" data-end="42.92" data-text="Our decisions today have far-reaching impacts that place a responsibility on us to become good ancestors, to take the long view and time travel forward to imagine the well-being of billions of people whose lives will be lived in the world we are currently making.">
+<div class="s-card grammar has-sd" data-start="24.46" data-end="42.92" data-text="Our decisions today have far-reaching impacts that place a responsibility on us to become good ancestors, to take the long view and time travel forward to imagine the well-being of billions of people whose lives will be lived in the world we are currently making.">
   <div class="card-top">
     <span class="s-num">03</span>
     <div class="s-en">Our decisions today have <span class="hl">far-reaching impacts</span> <span class="gm">that place a responsibility on us</span> <span class="gm">to become good ancestors</span>, <span class="gm">to take the long view</span> and <span class="gm">time travel forward to imagine</span> the <span class="hl">well-being</span> of billions of people <span class="gm">whose lives will be lived</span> in the world we are currently making. <span style="font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--blue-border);margin-left:4px;">★주제문</span></div>
@@ -572,6 +636,44 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">오늘날 우리의 결정들은 우리에게 좋은 조상이 되고, 장기적인 시각을 취하며, 앞으로 시간 여행을 하여 우리가 현재 만들고 있는 세상에서 살게 될 수십억 명의 사람들의 안녕을 상상할 책임을 지우는 광범위한 영향을 가지고 있다.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-pair"><span class="vocab-en">far-reaching</span><span class="vocab-kr">광범위한</span></span><span class="vocab-pair"><span class="vocab-en">responsibility</span><span class="vocab-kr">책임</span></span><span class="vocab-pair"><span class="vocab-en">ancestor</span><span class="vocab-kr">조상</span></span><span class="vocab-pair"><span class="vocab-en">well-being</span><span class="vocab-kr">안녕, 복지</span></span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="180" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="100" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Our decisions today</text>
+  <text x="100" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">오늘날 우리의 결정들은 (S)</text>
+  <rect x="198" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="230" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">have</text>
+  <text x="230" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가지고 있다 (V)</text>
+  <rect x="270" y="10" width="188" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="364" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">far-reaching impacts</text>
+  <text x="364" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">광범위한 영향을 (O)</text>
+  <rect x="466" y="5" width="347" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="639" y="4" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">주격 관계절 (that place)</text>
+  <text x="495" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">that</text>
+  <text x="495" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">~하는</text>
+  <rect x="526" y="12" width="193" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="622" y="31" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">place a responsibility</text>
+  <text x="622" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">책임을 지우는 (V)</text>
+  <rect x="727" y="12" width="70" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="762" y="31" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">on us</text>
+  <text x="762" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리에게</text>
+  <text x="118" y="113" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">to become good ancestors</text>
+  <text x="118" y="146" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">좋은 조상이 되는 것 (to부정사 ①)</text>
+  <text x="329" y="113" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">to take the long view</text>
+  <text x="329" y="146" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">장기 시각을 취하는 것 (to부정사 ②)</text>
+  <text x="544" y="113" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">to imagine the well-being</text>
+  <text x="544" y="146" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">안녕을 상상하는 것 (to부정사 ③)</text>
+  <rect x="10" y="178" width="305" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="162" y="197" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">of billions whose lives will be lived</text>
+  <text x="162" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">삶이 살아질 수십억 명의 (소유격 관계절)</text>
+  <path d="M 639,41 C 639,80 364,80 364,38" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="361,18 364,10 367,18" fill="#534AB7"/>
+  <rect x="426" y="82" width="150" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="501" y="93" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">관계절 → impacts 수식</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">오늘날 우리의 결정들은 우리에게 좋은 조상이 되고, 장기적 시각을 취하며, 수십억 후손의</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">안녕을 상상할 책임을 지우는 광범위한 영향을 가지고 있다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>that place a responsibility on us</strong> = 주격 관계대명사절 / <strong>to become / to take / to imagine</strong> = to부정사 3개 병렬 (책임의 내용) / <strong>whose lives will be lived</strong> = 소유격 관계대명사 + 수동태.</div>
     <div class="s-meaning">
       <span class="bracket">【구조】</span>
@@ -584,7 +686,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 </div>
 
 <!-- S04 -->
-<div class="s-card grammar" data-start="44.06" data-end="58.87" data-text="Centuries ago, leaders of the native North American Iroquois people created seven generation stewardship, instructing people to consider the impact of every decision on their children, seven generations into the future.">
+<div class="s-card grammar has-sd" data-start="44.06" data-end="58.87" data-text="Centuries ago, leaders of the native North American Iroquois people created seven generation stewardship, instructing people to consider the impact of every decision on their children, seven generations into the future.">
   <div class="card-top">
     <span class="s-num">04</span>
     <div class="s-en">Centuries ago, leaders of the native North American <span class="ref">Iroquois</span> people created <span class="hl">"seven generation stewardship,"</span> <span class="gm">instructing</span> people to consider the impact of every decision on their children, <span class="hl">seven generations into the future</span>.</div>
@@ -594,6 +696,36 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">수 세기 전, 북미 원주민 이로쿼이족의 지도자들은 "7세대 청지기 정신"을 만들어, 사람들에게 모든 결정이 자녀들에게 미치는 영향을 미래의 7세대 앞을 내다보며 고려하도록 지시했다.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-pair"><span class="vocab-en">stewardship</span><span class="vocab-kr">청지기 정신, 관리 책임</span></span><span class="vocab-pair"><span class="vocab-en">instruct</span><span class="vocab-kr">지시하다</span></span><span class="vocab-pair"><span class="vocab-en">generation</span><span class="vocab-kr">세대</span></span><span class="vocab-pair"><span class="vocab-en">consider</span><span class="vocab-kr">고려하다</span></span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="132" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="76" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">Centuries ago</text>
+  <text x="76" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수 세기 전 (부사구)</text>
+  <rect x="150" y="10" width="253" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="276" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">leaders of the Iroquois people</text>
+  <text x="276" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이로쿼이족 지도자들은 (S)</text>
+  <rect x="411" y="10" width="87" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="454" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">created</text>
+  <text x="454" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">만들었다 (V)</text>
+  <rect x="506" y="10" width="238" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="625" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">seven generation stewardship</text>
+  <text x="625" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">7세대 청지기 정신을 (O)</text>
+  <rect x="10" y="94" width="172" height="28" rx="3" fill="#E8F5E9" stroke="#A5D6A7" stroke-width="1.3"/>
+  <text x="96" y="113" font-size="14" font-weight="500" fill="#1B5E20" text-anchor="middle" font-family="Georgia,serif">instructing people</text>
+  <text x="96" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사람들에게 지시하면서 (분사구문)</text>
+  <rect x="190" y="94" width="193" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="286" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to consider the impact</text>
+  <text x="286" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">영향을 고려하도록 (to부정사)</text>
+  <rect x="391" y="94" width="164" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="473" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">of every decision</text>
+  <text x="473" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">모든 결정의 (전치사구)</text>
+  <rect x="563" y="94" width="275" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="700" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">seven generations into the future</text>
+  <text x="700" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">미래 7세대 앞으로 (부사구)</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">수 세기 전, 이로쿼이족 지도자들은 7세대 청지기 정신을 만들어, 사람들에게 모든 결정의</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">영향을 7세대 앞을 내다보며 고려하도록 지시했다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>instructing</strong> = 분사구문 (동시·결과: ~함으로써) / to consider = to부정사 (지시의 내용) / <strong>seven generations into the future</strong> = 미래 7세대 앞으로.</div>
     <div class="s-meaning">
       <span class="bracket">【개념】</span>
@@ -605,7 +737,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 </div>
 
 <!-- S05 -->
-<div class="s-card grammar" data-start="59.80" data-end="69.49" data-text="In the precious few decades that Earth is ours, while we enjoy the gardens planted by our ancestors, we must not steal the shade from our descendants.">
+<div class="s-card grammar has-sd" data-start="59.80" data-end="69.49" data-text="In the precious few decades that Earth is ours, while we enjoy the gardens planted by our ancestors, we must not steal the shade from our descendants.">
   <div class="card-top">
     <span class="s-num">05</span>
     <div class="s-en">In the <span class="hl">precious</span> few decades <span class="gm">that Earth is ours</span>, while we enjoy the gardens <span class="gm">planted by our ancestors</span>, we <span class="gm">must not steal</span> the <span class="hl">shade</span> from our <span class="hl">descendants</span>.</div>
@@ -615,6 +747,51 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">지구가 우리의 것인 소중한 몇십 년 동안, 우리의 조상들이 심은 정원을 즐기는 동안, 우리는 우리의 후손들로부터 그늘<span class="pr">(= 후손이 누려야 할 환경·자원의 혜택)</span>을 빼앗아서는 안 된다.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-pair"><span class="vocab-en">precious</span><span class="vocab-kr">소중한</span></span><span class="vocab-pair"><span class="vocab-en">shade</span><span class="vocab-kr">그늘</span></span><span class="vocab-pair"><span class="vocab-en">descendant</span><span class="vocab-kr">후손</span></span><span class="vocab-pair"><span class="vocab-en">steal</span><span class="vocab-kr">빼앗다</span></span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="230" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="125" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">In the precious few decades</text>
+  <text x="125" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">소중한 몇십 년 동안 (부사구)</text>
+  <rect x="248" y="5" width="241" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="368" y="4" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">관계절 (that Earth is ours)</text>
+  <text x="277" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">that</text>
+  <text x="277" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">~인</text>
+  <rect x="308" y="12" width="70" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="343" y="31" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Earth</text>
+  <text x="343" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">지구가 (S)</text>
+  <rect x="386" y="12" width="87" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="429" y="31" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is ours</text>
+  <text x="429" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리의 것인 (V)</text>
+  <rect x="10" y="94" width="223" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="121" y="113" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">while we enjoy the gardens</text>
+  <text x="121" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">정원을 즐기는 동안 (부사절)</text>
+  <rect x="241" y="94" width="208" height="28" rx="3" fill="#E8F5E9" stroke="#A5D6A7" stroke-width="1.3"/>
+  <text x="345" y="113" font-size="14" font-weight="500" fill="#1B5E20" text-anchor="middle" font-family="Georgia,serif">planted by our ancestors</text>
+  <text x="345" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">조상들이 심은 (과거분사 수식)</text>
+  <rect x="10" y="178" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="197" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">we</text>
+  <text x="42" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리는 (S)</text>
+  <rect x="82" y="178" width="140" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="152" y="197" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">must not steal</text>
+  <text x="152" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">빼앗아서는 안 된다 (V-금지)</text>
+  <rect x="230" y="178" width="104" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="282" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the shade</text>
+  <text x="282" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그늘을 (O)</text>
+  <rect x="342" y="178" width="188" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="436" y="197" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">from our descendants</text>
+  <text x="436" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">후손들로부터 (부사구)</text>
+  <path d="M 368,41 C 368,80 125,80 125,38" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="122,18 125,10 128,18" fill="#534AB7"/>
+  <rect x="171" y="82" width="150" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="246" y="93" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">관계절 → decades 수식</text>
+  <path d="M 345,122 C 345,164 121,164 121,122" fill="none" stroke="#BF360C" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="118,102 121,94 124,102" fill="#BF360C"/>
+  <rect x="151" y="166" width="164" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="233" y="177" font-size="11" font-weight="500" fill="#BF360C" text-anchor="middle" font-family="sans-serif">planted → gardens 수식</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">지구가 우리의 것인 소중한 몇십 년 동안, 조상들이 심은 정원을 즐기는 동안, 우리는</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">후손들로부터 그늘을 빼앗아서는 안 된다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>that Earth is ours</strong> = 관계대명사절 (few decades 수식) / <strong>planted by our ancestors</strong> = 과거분사 후치수식 (gardens 수식) / <strong>must not steal</strong> = 빼앗아서는 안 된다.</div>
     <div class="s-meaning">
       <span class="bracket">【비유】</span>
@@ -1713,7 +1890,7 @@ function buildPenTools(){
     penLayer.style.width=w+'px';
   };
   sync();
-  if(window.ResizeObserver){let _roPending=false;new ResizeObserver(()=>{if(_roPending)return;_roPending=true;requestAnimationFrame(()=>{_roPending=false;sync();});}).observe(document.body);}
+  if(window.ResizeObserver)new ResizeObserver(sync).observe(document.body);
   window.addEventListener('resize',sync);
   setInterval(sync,2000);
 }

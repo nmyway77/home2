@@ -306,8 +306,8 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 /* ── 공통 행동 CSS ── */
 /* 1. 호버 펼치기 완전 제거 */
 @media(hover:hover) and (pointer:fine){
-  .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
-  .s-card.grammar:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card.grammar:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
 }
 /* 2. 단어 가로 칩 배열 */
 .s-card.vocab-only .s-kr-wrap,
@@ -330,6 +330,14 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   display:inline-flex!important;flex-wrap:wrap!important;align-items:center;gap:4px 6px;
   max-width:100%;overflow-wrap:break-word;word-break:break-word;
 }
+/* 2-B. 인카드 문장 구조도 (v2.0) */
+.s-structure{padding:6px 14px 8px 42px;border-top:1px dashed rgba(46,117,182,0.15);background:#FBFCFF;}
+.s-card.grammar .s-structure{border-top-color:rgba(91,45,142,0.15);}
+.s-structure-label{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;color:#993C1D;margin-bottom:5px;}
+.s-structure svg{width:100%;display:block;background:white;border:1px solid rgba(0,0,0,0.07);border-radius:8px;padding:8px 10px;box-sizing:border-box;}
+.s-card.vocab-only .s-structure{display:none;}
+.s-card.pinned .s-structure,.s-card.tapped .s-structure{width:100%;flex-basis:100%;order:0;padding:4px 0 2px!important;border-top:none;background:transparent;}
+.s-card.has-sd.pinned .s-kr-wrap,.s-card.has-sd.tapped .s-kr-wrap{max-height:2600px;}
 /* 3. 문장구조도 탭·패널 */
 .tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
 .tab-sd.active{background:#993C1D;color:white;border-color:#993C1D;}
@@ -497,7 +505,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="cards" id="cards">
 
 <!-- S1 -->
-<div class="s-card grammar" data-text="Initially the catchphrase less is more had a simple meaning.">
+<div class="s-card grammar has-sd" data-text="Initially the catchphrase less is more had a simple meaning.">
   <div class="card-top">
     <span class="s-num">01</span>
     <div class="s-en"><span class="hl">Initially</span> the <span class="hl">catchphrase</span> &ldquo;less is more&rdquo; had a simple <span class="hl">meaning</span>.</div>
@@ -507,13 +515,29 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">처음에 <strong>'적을수록 더 많다'는 표어</strong>는 단순한 의미를 가졌다.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">initially</span><span class="vocab-kr">처음에</span><span class="vocab-en">catchphrase</span><span class="vocab-kr">표어, 문구</span><span class="vocab-en">meaning</span><span class="vocab-kr">의미</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
+  <text x="54" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">Initially</text>
+  <text x="54" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">처음에</text>
+  <rect x="106" y="10" width="253" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="232" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the catchphrase "less is more"</text>
+  <text x="232" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">'적을수록 더 많다'는 표어는 (S)</text>
+  <rect x="367" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="399" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">had</text>
+  <text x="399" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가졌다 (V)</text>
+  <rect x="439" y="10" width="156" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="517" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">a simple meaning</text>
+  <text x="517" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">단순한 의미를 (O)</text>
+  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">처음에 '적을수록 더 많다'는 표어는 단순한 의미를 가졌다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>Initially</strong>: 문장부사, 시간적 시작점 제시. (= at first). / <strong>catchphrase</strong> = 사람들 입에 자주 오르내리는 표어·문구. 단일 명사.</div>
     <div class="s-meaning"><span class="bracket">【도입】</span>쉽게 말하면 <strong>"처음엔 이 말의 뜻이 단순했다"</strong>. <span class="star-line">★ 시대적 배경 제시 — 원래 의미는 심플함.</span></div>
   </div>
 </div>
 
 <!-- S2 -->
-<div class="s-card grammar" data-text="First mentioned in Robert Browning's poem Andrea del Sarto, it suggests that everything simple is better and more beautiful than the complex and tangled.">
+<div class="s-card grammar has-sd" data-text="First mentioned in Robert Browning's poem Andrea del Sarto, it suggests that everything simple is better and more beautiful than the complex and tangled.">
   <div class="card-top">
     <span class="s-num">02</span>
     <div class="s-en"><span class="gm">First mentioned</span> in Robert Browning&rsquo;s <span class="hl">poem</span> &ldquo;Andrea del Sarto,&rdquo; <span class="ref">it</span> <span class="gm">suggests that</span> everything <span class="hl">simple</span> is better and more beautiful than <span class="gm">the complex and tangled</span>.</div>
@@ -523,13 +547,53 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">로버트 브라우닝의 시 'Andrea del Sarto'에서 <strong>처음 언급된 그것<span class="pr">(= '적을수록 더 많다'는 표어)</span>은</strong>, <strong>단순한 모든 것이 복잡하고 얽힌 것보다 더 낫고 더 아름답다</strong>는 것을 시사한다.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">mention</span><span class="vocab-kr">언급하다</span><span class="vocab-en">poem</span><span class="vocab-kr">시</span><span class="vocab-en">tangled</span><span class="vocab-kr">얽힌</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 412" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="5" width="543" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="281" y="4" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">과거분사구 (= which was first mentioned)</text>
+  <rect x="16" y="12" width="148" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="90" y="31" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">First mentioned</text>
+  <text x="90" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">처음 언급된 (p.p. 수동)</text>
+  <rect x="172" y="12" width="365" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="354" y="31" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">in Robert Browning's poem "Andrea del Sarto,"</text>
+  <text x="354" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">로버트 브라우닝의 시에서</text>
+  <rect x="10" y="94" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">it</text>
+  <text x="42" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그것은 (S, = catchphrase)</text>
+  <rect x="82" y="94" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="130" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">suggests</text>
+  <text x="130" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">시사한다 (V)</text>
+  <text x="209" y="113" font-size="14" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="Georgia,serif">that</text>
+  <text x="209" y="146" font-size="12" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">~라는 것을</text>
+  <rect x="10" y="178" width="164" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="92" y="197" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">everything simple</text>
+  <text x="92" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">단순한 모든 것이 (후치 수식)</text>
+  <rect x="182" y="178" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="214" y="197" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="214" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다</text>
+  <rect x="254" y="178" width="215" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="361" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">better and more beautiful</text>
+  <text x="361" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">더 낫고 더 아름다운 (C, 병렬)</text>
+  <text x="33" y="281" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">than</text>
+  <text x="33" y="314" font-size="12" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">~보다</text>
+  <rect x="64" y="262" width="200" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="164" y="281" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the complex and tangled</text>
+  <text x="164" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">복잡하고 얽힌 것 (the + 형용사 = N)</text>
+  <path d="M 281,41 C 281,80 42,80 42,122" fill="none" stroke="#633806" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="39,102 42,94 45,102" fill="#633806"/>
+  <rect x="65" y="82" width="192" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="161" y="93" font-size="11" font-weight="500" fill="#633806" text-anchor="middle" font-family="sans-serif">분사구 → it(catchphrase) 수식</text>
+  <line x1="10" y1="342" x2="950" y2="342" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="362" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">로버트 브라우닝의 시 'Andrea del Sarto'에서 처음 언급되었을 때, 그것은 단순한</text>
+  <text x="10" y="382" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">모든 것이 복잡하고 얽힌 것보다 더 낫고 더 아름답다는 것을 시사한다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>First mentioned ~,</strong> = <u>과거분사구 문두</u> (= Having been first mentioned ~ 의 축약). 주절 주어 it를 수식. 수동(<em>언급되는</em>). / <strong>everything simple</strong> = everything + 형용사(후치 수식). -thing/-body/-one 복합대명사 뒤 형용사 올 수 있음. / <strong>the complex and tangled</strong> = the + 형용사 = 명사(복잡한 것들).</div>
     <div class="s-meaning"><span class="bracket">【원 의미】</span>쉽게 말하면 <strong>"단순한 것이 복잡한 것보다 낫다"</strong>. <span class="star-line">★ 문구의 본래 의미 설명 — 미학적 원칙.</span></div>
   </div>
 </div>
 
 <!-- S3 -->
-<div class="s-card grammar" data-text="Nowadays this phrase is heard often. Maybe even too often.">
+<div class="s-card grammar has-sd" data-text="Nowadays this phrase is heard often. Maybe even too often.">
   <div class="card-top">
     <span class="s-num">03</span>
     <div class="s-en"><span class="hl">Nowadays</span> this <span class="hl">phrase</span> <span class="gm">is heard</span> often&mdash;maybe even too often.</div>
@@ -539,13 +603,32 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">요즘 이 문구는 <strong>자주 — 어쩌면 너무 자주 — 들린다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">nowadays</span><span class="vocab-kr">요즘</span><span class="vocab-en">phrase</span><span class="vocab-kr">문구</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 224" xmlns="http://www.w3.org/2000/svg">
+  <text x="50" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">Nowadays</text>
+  <text x="50" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">요즘</text>
+  <rect x="98" y="10" width="116" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="156" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">this phrase</text>
+  <text x="156" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이 문구는 (S)</text>
+  <rect x="222" y="10" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="270" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is heard</text>
+  <text x="270" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">들린다 (V, 수동)</text>
+  <rect x="326" y="10" width="70" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="361" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">often</text>
+  <text x="361" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">자주</text>
+  <rect x="10" y="94" width="193" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="106" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">—maybe even too often.</text>
+  <text x="106" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">(삽입: 어쩌면 너무 자주)</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">요즘 이 문구는 자주 — 어쩌면 너무 자주 — 들린다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>is heard</strong>: 현재 수동태 (~가 들린다). 문구는 <em>듣게 되는</em> 대상. / <strong>em dash 삽입</strong> = maybe even too often. 저자의 주관적 평가 개입.</div>
     <div class="s-meaning"><span class="bracket">【시대 변화】</span>쉽게 말하면 <strong>"요즘 이 말이 너무 자주 들린다"</strong>. <span class="star-line">★ 과거(S01·02)와 현재(S03)의 대비.</span></div>
   </div>
 </div>
 
 <!-- S4 -->
-<div class="s-card grammar" data-text="But it's important to recognize that the way of thinking that lies behind these words slowly extinguishes certain habits from our daily life.">
+<div class="s-card grammar has-sd" data-text="But it's important to recognize that the way of thinking that lies behind these words slowly extinguishes certain habits from our daily life.">
   <div class="card-top">
     <span class="s-num">04</span>
     <div class="s-en">But <span class="gm">it&rsquo;s important to</span> <span class="hl">recognize</span> that the way of thinking <span class="gm">that lies behind</span> these words <span class="hl">slowly</span> <span class="hl">extinguishes</span> <span class="hl">certain</span> habits from our daily life.</div>
@@ -555,13 +638,65 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">하지만 <strong>이 말들 뒤에 있는 사고방식이 우리 일상에서 특정 습관을 서서히 소멸시킨다는 것을 인식하는 것이 중요하다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">recognize</span><span class="vocab-kr">인식하다</span><span class="vocab-en">lie behind</span><span class="vocab-kr">~뒤에 있다</span><span class="vocab-en">extinguish</span><span class="vocab-kr">소멸시키다</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">But</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">하지만</text>
+  <rect x="82" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="114" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">it</text>
+  <text x="114" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">(가주어)</text>
+  <rect x="154" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="186" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="186" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다</text>
+  <rect x="226" y="10" width="104" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="278" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">important</text>
+  <text x="278" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">중요한 (C)</text>
+  <rect x="338" y="10" width="124" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="400" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to recognize</text>
+  <text x="400" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">인식하기 (진주어)</text>
+  <text x="493" y="29" font-size="14" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="Georgia,serif">that</text>
+  <text x="493" y="62" font-size="12" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">~라는 것을</text>
+  <rect x="10" y="94" width="180" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="100" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the way of thinking</text>
+  <text x="100" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사고방식이 (S, that절의 S)</text>
+  <rect x="198" y="89" width="320" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="358" y="88" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">that절 (the way of thinking 수식)</text>
+  <text x="227" y="113" font-size="14" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="Georgia,serif">that</text>
+  <text x="227" y="146" font-size="12" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">~인</text>
+  <rect x="258" y="96" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="290" y="115" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">lies</text>
+  <text x="290" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">있는</text>
+  <rect x="330" y="96" width="172" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="416" y="115" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">behind these words</text>
+  <text x="416" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이 말들 뒤에</text>
+  <rect x="10" y="178" width="79" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="49" y="197" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">slowly</text>
+  <text x="49" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">서서히</text>
+  <rect x="97" y="178" width="124" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="159" y="197" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">extinguishes</text>
+  <text x="159" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">소멸시킨다 (V)</text>
+  <rect x="229" y="178" width="140" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="299" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">certain habits</text>
+  <text x="299" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">특정 습관을 (O)</text>
+  <rect x="377" y="178" width="180" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="467" y="197" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">from our daily life</text>
+  <text x="467" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리 일상에서</text>
+  <path d="M 358,125 C 358,164 100,164 100,122" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="97,102 100,94 103,102" fill="#534AB7"/>
+  <rect x="112" y="166" width="234" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="229" y="177" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">that절 → the way of thinking 수식</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">하지만 이 말들 뒤에 있는 사고방식이 우리 일상에서 특정 습관을 서서히 소멸시킨다는 것을</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">인식하는 것이 중요하다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>it's important to V</strong> = 가주어 It + 진주어 to부정사. / <strong>that 명사절</strong>(recognize의 O) 안에 또 <strong>that 관계대명사절</strong>이 있음 — <em>the way of thinking that lies behind</em> (주격 관계사, the way of thinking 수식). that 2개의 역할이 다름.</div>
     <div class="s-meaning"><span class="bracket">【핵심 경고】</span>쉽게 말하면 <strong>"이 말 뒤의 사고방식이 우리 일상 습관을 조용히 없애고 있다"</strong>. <span class="star-line">★ 글의 핵심 주장.</span></div>
   </div>
 </div>
 
 <!-- S5 -->
-<div class="s-card grammar" data-text="For example, think about the heavy, massive radio receivers that existed back in the day.">
+<div class="s-card grammar has-sd" data-text="For example, think about the heavy, massive radio receivers that existed back in the day.">
   <div class="card-top">
     <span class="s-num">05</span>
     <div class="s-en">For example, think about the <span class="hl">heavy</span>, <span class="hl">massive</span> radio <span class="hl">receivers</span> <span class="gm">that existed</span> <span class="gm">back in the day</span>.</div>
@@ -571,13 +706,40 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">예를 들어, <strong>옛날에 존재했던 무겁고 거대한 라디오 수신기를 생각해보라</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">massive</span><span class="vocab-kr">거대한</span><span class="vocab-en">receiver</span><span class="vocab-kr">수신기</span><span class="vocab-en">back in the day</span><span class="vocab-kr">옛날에</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 224" xmlns="http://www.w3.org/2000/svg">
+  <text x="67" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">For example,</text>
+  <text x="67" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">예를 들어</text>
+  <rect x="132" y="10" width="116" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="190" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">think about</text>
+  <text x="190" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">생각해보라 (명령문)</text>
+  <rect x="256" y="10" width="283" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="397" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the heavy, massive radio receivers</text>
+  <text x="397" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">무겁고 거대한 라디오 수신기를 (O)</text>
+  <rect x="10" y="89" width="319" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="169" y="88" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">that절 (receivers 수식, 주격)</text>
+  <text x="39" y="113" font-size="14" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="Georgia,serif">that</text>
+  <text x="39" y="146" font-size="12" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">~인</text>
+  <rect x="70" y="96" width="87" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="113" y="115" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">existed</text>
+  <text x="113" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">존재한</text>
+  <rect x="165" y="96" width="148" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="239" y="115" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">back in the day</text>
+  <text x="239" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">옛날에</text>
+  <path d="M 169,125 C 169,164 397,164 397,38" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="394,18 397,10 400,18" fill="#534AB7"/>
+  <rect x="201" y="166" width="164" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="283" y="177" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">that절 → receivers 수식</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">예를 들어, 옛날에 존재했던 무겁고 거대한 라디오 수신기를 생각해보라.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>For example,</strong> = 예시 제시 연결어. / <strong>that existed</strong> = 주격 관계사절 (receivers 수식). / <strong>back in the day</strong> = 옛날에 (구어 관용구).</div>
     <div class="s-meaning"><span class="bracket">【예시 도입】</span>쉽게 말하면 <strong>"옛날의 크고 무거운 라디오 생각해봐"</strong>. <span class="star-line">★ 구체 예시 시작 — 라디오 → 스마트폰.</span></div>
   </div>
 </div>
 
 <!-- S6 -->
-<div class="s-card grammar" data-text="Over time, many of their buttons became viewed as extra and were removed. And with each reduction these devices eventually developed into the phones in our pockets.">
+<div class="s-card grammar has-sd" data-text="Over time, many of their buttons became viewed as extra and were removed. And with each reduction these devices eventually developed into the phones in our pockets.">
   <div class="card-top">
     <span class="s-num">06</span>
     <div class="s-en">Over time, many of <span class="ref">their</span> buttons <span class="gm">became viewed as</span> &ldquo;<span class="hl">extra</span>&rdquo; and <span class="gm">were removed</span>, and with each <span class="hl">reduction</span> <span class="ref">these</span> <span class="hl">devices</span> <span class="hl">eventually</span> <span class="gm">developed into</span> the phones in our <span class="hl">pockets</span>.</div>
@@ -587,13 +749,59 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">시간이 지나면서 그들<span class="pr">(= 라디오 수신기)</span>의 많은 버튼들은 <strong>'여분'으로 여겨지게 되었고 제거되었으며</strong>, <strong>각 축소와 함께 이 기기들<span class="pr">(= 버튼이 점차 줄어든 라디오 수신기)</span>은 결국 우리 주머니 속 전화기로 발전했다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">extra</span><span class="vocab-kr">여분의</span><span class="vocab-en">remove</span><span class="vocab-kr">제거하다</span><span class="vocab-en">reduction</span><span class="vocab-kr">축소</span><span class="vocab-en">develop into</span><span class="vocab-kr">~로 발전하다</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 496" xmlns="http://www.w3.org/2000/svg">
+  <text x="58" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">Over time,</text>
+  <text x="58" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">시간이 지나면서</text>
+  <rect x="115" y="10" width="185" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="207" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">many of their buttons</text>
+  <text x="207" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들의 많은 버튼이 (S)</text>
+  <rect x="10" y="94" width="132" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="76" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">became viewed</text>
+  <text x="76" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">여겨지게 되었다 (V1)</text>
+  <text x="165" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">as</text>
+  <text x="165" y="146" font-size="12" font-weight="400" fill="#633806" text-anchor="middle" font-family="sans-serif">~로서</text>
+  <rect x="188" y="94" width="87" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="231" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">"extra"</text>
+  <text x="231" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">여분</text>
+  <rect x="10" y="178" width="64" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="42" y="197" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="42" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="82" y="178" width="124" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="144" y="197" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">were removed</text>
+  <text x="144" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">제거되었다 (V2, 수동 병렬)</text>
+  <rect x="10" y="262" width="70" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="45" y="281" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">, and</text>
+  <text x="45" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="88" y="262" width="180" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="178" y="281" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">with each reduction</text>
+  <text x="178" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">각 축소와 함께</text>
+  <rect x="276" y="262" width="132" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="342" y="281" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">these devices</text>
+  <text x="342" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이 기기들은 (S)</text>
+  <rect x="10" y="346" width="113" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="66" y="365" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">eventually</text>
+  <text x="66" y="398" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">결국</text>
+  <rect x="131" y="346" width="140" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="201" y="365" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">developed into</text>
+  <text x="201" y="398" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">발전했다 (V + 전치사)</text>
+  <rect x="279" y="346" width="113" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="335" y="365" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the phones</text>
+  <text x="335" y="398" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">전화기로</text>
+  <rect x="400" y="346" width="140" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="470" y="365" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">in our pockets</text>
+  <text x="470" y="398" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리 주머니 속</text>
+  <line x1="10" y1="426" x2="950" y2="426" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="446" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">시간이 지나면서 그것들의 많은 버튼들은 '여분'으로 여겨지게 되었고 제거되었으며, 각 축소와</text>
+  <text x="10" y="466" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">함께 이 기기들은 결국 우리 주머니 속 전화기로 발전했다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>became viewed as</strong> = become + 과거분사 + as (~로 여겨지게 되다). became 뒤에 형용사·p.p. 가능. / <strong>were removed</strong> = 수동태 (제거되었다), became과 and로 병렬. / <strong>developed into</strong> = ~로 발전하다 (전치사 into 고정, 변화). / <strong>with each reduction</strong> = 전치사구 (with가 동반·수반).</div>
     <div class="s-meaning"><span class="bracket">【변화 과정】</span>쉽게 말하면 <strong>"버튼이 '불필요'로 간주 → 제거 → 결국 스마트폰으로 축소"</strong>. <span class="star-line">★ 구체 사례 — less is more의 실제 작동.</span></div>
   </div>
 </div>
 
 <!-- S7 -->
-<div class="s-card grammar" data-text="The scale of the object became smaller, and the functions of the buttons got lost in the three-dot menus and multilayered folders of our phones.">
+<div class="s-card grammar has-sd" data-text="The scale of the object became smaller, and the functions of the buttons got lost in the three-dot menus and multilayered folders of our phones.">
   <div class="card-top">
     <span class="s-num">07</span>
     <div class="s-en">The <span class="hl">scale</span> of the <span class="hl">object</span> became smaller, and the <span class="hl">functions</span> of the buttons <span class="gm">got lost</span> in the three-dot menus and <span class="hl">multilayered</span> folders of our phones.</div>
@@ -603,6 +811,46 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr"><strong>물건의 크기는 더 작아졌고</strong>, <strong>버튼들의 기능은 우리 전화기의 세 점 메뉴와 여러 층 폴더 속으로 사라졌다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">scale</span><span class="vocab-kr">규모, 크기</span><span class="vocab-en">function</span><span class="vocab-kr">기능</span><span class="vocab-en">get lost</span><span class="vocab-kr">사라지다</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 412" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="200" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="110" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">The scale of the object</text>
+  <text x="110" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">물건의 크기는 (S)</text>
+  <rect x="218" y="10" width="79" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="257" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">became</text>
+  <text x="257" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">되었다 (V)</text>
+  <rect x="305" y="10" width="87" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="348" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">smaller</text>
+  <text x="348" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">더 작은 (C, 비교급)</text>
+  <rect x="10" y="94" width="70" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="45" y="113" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">, and</text>
+  <text x="45" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="88" y="94" width="238" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="207" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the functions of the buttons</text>
+  <text x="207" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">버튼의 기능은 (S)</text>
+  <rect x="334" y="94" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="382" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">got lost</text>
+  <text x="382" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사라졌다 (get + p.p.)</text>
+  <text x="25" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">in</text>
+  <text x="25" y="230" font-size="12" font-weight="400" fill="#633806" text-anchor="middle" font-family="sans-serif">~속으로</text>
+  <rect x="48" y="178" width="180" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="138" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the three-dot menus</text>
+  <text x="138" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">세 점 메뉴</text>
+  <rect x="236" y="178" width="64" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="268" y="197" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="268" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="308" y="178" width="188" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="402" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">multilayered folders</text>
+  <text x="402" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">다층 폴더</text>
+  <text x="25" y="281" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">of</text>
+  <text x="25" y="314" font-size="12" font-weight="400" fill="#633806" text-anchor="middle" font-family="sans-serif">~의</text>
+  <rect x="48" y="262" width="113" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="104" y="281" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">our phones</text>
+  <text x="104" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리 전화기의</text>
+  <line x1="10" y1="342" x2="950" y2="342" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="362" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">물건의 크기는 더 작아졌고, 버튼들의 기능은 우리 전화기의 세 점 메뉴와 여러 층 폴더 속으로</text>
+  <text x="10" y="382" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">사라졌다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>became smaller</strong> = become + 비교급 (더 ~해지다). / <strong>got lost</strong> = get + p.p.(수동, 구어적, 일시적 변화 뉘앙스). vs be lost(상태). / <strong>three-dot menus and multilayered folders</strong> = 병렬 복합명사.</div>
     <div class="s-meaning"><span class="bracket">【역설 결론】</span>쉽게 말하면 <strong>"겉은 작아졌지만 기능은 메뉴 속에 숨어 사라짐"</strong>. <span class="star-line">★ 결론 — less is more의 실제 대가(costs).</span></div>
   </div>
@@ -2010,7 +2258,7 @@ function buildPenTools(){
     penLayer.style.width=w+'px';
   };
   sync();
-  if(window.ResizeObserver){let _roPending=false;new ResizeObserver(()=>{if(_roPending)return;_roPending=true;requestAnimationFrame(()=>{_roPending=false;sync();});}).observe(document.body);}
+  if(window.ResizeObserver)new ResizeObserver(sync).observe(document.body);
   window.addEventListener('resize',sync);
   setInterval(sync,2000);
 }

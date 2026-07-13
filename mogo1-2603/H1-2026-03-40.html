@@ -306,8 +306,8 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 /* ── 공통 행동 CSS ── */
 /* 1. 호버 펼치기 완전 제거 */
 @media(hover:hover) and (pointer:fine){
-  .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
-  .s-card.grammar:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card.grammar:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
 }
 /* 2. 단어 가로 칩 배열 */
 .s-card.vocab-only .s-kr-wrap,
@@ -330,6 +330,14 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   display:inline-flex!important;flex-wrap:wrap!important;align-items:center;gap:4px 6px;
   max-width:100%;overflow-wrap:break-word;word-break:break-word;
 }
+/* 2-B. 인카드 문장 구조도 (v2.0) */
+.s-structure{padding:6px 14px 8px 42px;border-top:1px dashed rgba(46,117,182,0.15);background:#FBFCFF;}
+.s-card.grammar .s-structure{border-top-color:rgba(91,45,142,0.15);}
+.s-structure-label{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;color:#993C1D;margin-bottom:5px;}
+.s-structure svg{width:100%;display:block;background:white;border:1px solid rgba(0,0,0,0.07);border-radius:8px;padding:8px 10px;box-sizing:border-box;}
+.s-card.vocab-only .s-structure{display:none;}
+.s-card.pinned .s-structure,.s-card.tapped .s-structure{width:100%;flex-basis:100%;order:0;padding:4px 0 2px!important;border-top:none;background:transparent;}
+.s-card.has-sd.pinned .s-kr-wrap,.s-card.has-sd.tapped .s-kr-wrap{max-height:2600px;}
 /* 3. 문장구조도 탭·패널 */
 .tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
 .tab-sd.active{background:#993C1D;color:white;border-color:#993C1D;}
@@ -497,7 +505,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="cards" id="cards">
 
 <!-- S1 -->
-<div class="s-card grammar" data-text="Parenting experts say children need to learn independence and resilience.">
+<div class="s-card grammar has-sd" data-text="Parenting experts say children need to learn independence and resilience.">
   <div class="card-top">
     <span class="s-num">01</span>
     <div class="s-en"><span class="hl">Parenting</span> <span class="hl">experts</span> say children need to learn <span class="hl">independence</span> and <span class="hl">resilience</span>.</div>
@@ -507,13 +515,35 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr"><strong>육아 전문가들은 아이들이 독립심과 회복탄력성을 배울 필요가 있다</strong>고 말한다.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">parenting</span><span class="vocab-kr">육아</span><span class="vocab-en">independence</span><span class="vocab-kr">독립심</span><span class="vocab-en">resilience</span><span class="vocab-kr">회복탄력성</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 224" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="164" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="92" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Parenting experts</text>
+  <text x="92" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">육아 전문가들은 (S)</text>
+  <rect x="182" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="214" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">say</text>
+  <text x="214" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">말한다 (V)</text>
+  <text x="285" y="29" font-size="14" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="Georgia,serif">(that)</text>
+  <text x="285" y="62" font-size="12" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">~라고 (that 생략)</text>
+  <rect x="10" y="94" width="96" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="58" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">children</text>
+  <text x="58" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">아이들이</text>
+  <rect x="114" y="94" width="132" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="180" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">need to learn</text>
+  <text x="180" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">배울 필요가 있다</text>
+  <rect x="254" y="94" width="230" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="369" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">independence and resilience</text>
+  <text x="369" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">독립심과 회복탄력성을 (O, 병렬)</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">육아 전문가들은 아이들이 독립심과 회복탄력성을 배울 필요가 있다고 말한다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>say (that) children need to V</strong>: 목적어 that절의 that 생략. 동사 say의 <em>목적어</em>로 명사절. / <strong>need to learn + O 2개 병렬</strong>: independence and resilience. 뒤 명사 복수 연결.</div>
     <div class="s-meaning"><span class="bracket">【도입 — 통념】</span>쉽게 말하면 <strong>"전문가들: 아이는 독립심·회복력 필요해!"</strong>. <span class="star-line">★ 글 도입부 — 전문가 의견.</span></div>
   </div>
 </div>
 
 <!-- S2 -->
-<div class="s-card grammar" data-text="But cities and suburbs don't offer safe walk and bike routes to school, malls kick teenagers out on the weekends, and free time disappears under a spreadsheet of activities.">
+<div class="s-card grammar has-sd" data-text="But cities and suburbs don't offer safe walk and bike routes to school, malls kick teenagers out on the weekends, and free time disappears under a spreadsheet of activities.">
   <div class="card-top">
     <span class="s-num">02</span>
     <div class="s-en">But cities and <span class="hl">suburbs</span> <span class="gm">don't offer</span> safe walk and bike routes to school, malls <span class="gm">kick</span> teenagers <span class="gm">out</span> on the weekends, and free time <span class="gm">disappears</span> under a <span class="hl">spreadsheet</span> of <span class="hl">activities</span>.</div>
@@ -523,13 +553,64 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">그러나 <strong>도시와 교외는 학교까지의 안전한 보행·자전거 경로를 제공하지 않고</strong>, <strong>쇼핑몰은 주말에 십대들을 쫓아내며</strong>, <strong>자유 시간은 활동 스프레드시트 아래로 사라진다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">suburb</span><span class="vocab-kr">교외</span><span class="vocab-en">kick out</span><span class="vocab-kr">쫓아내다</span><span class="vocab-en">spreadsheet</span><span class="vocab-kr">스프레드시트</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">But</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그러나</text>
+  <rect x="82" y="10" width="172" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="168" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">cities and suburbs</text>
+  <text x="168" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">도시와 교외는 (S1)</text>
+  <rect x="262" y="10" width="116" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="320" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">don't offer</text>
+  <text x="320" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">제공하지 않는다 (V1)</text>
+  <rect x="386" y="10" width="215" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="493" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">safe walk and bike routes</text>
+  <text x="493" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">안전한 보행·자전거 경로를</text>
+  <rect x="609" y="10" width="104" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="661" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">to school</text>
+  <text x="661" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">학교까지의</text>
+  <rect x="10" y="94" width="64" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="42" y="113" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">,</text>
+  <text x="42" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">,</text>
+  <rect x="82" y="94" width="70" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="117" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">malls</text>
+  <text x="117" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">쇼핑몰은 (S2)</text>
+  <rect x="160" y="94" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="192" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">kick</text>
+  <text x="192" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">쫓아낸다 (V2, 구동사)</text>
+  <rect x="232" y="94" width="104" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="284" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">teenagers</text>
+  <text x="284" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">십대를</text>
+  <rect x="344" y="94" width="64" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="376" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">out</text>
+  <text x="376" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">밖으로 (kick out)</text>
+  <rect x="416" y="94" width="148" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="490" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">on the weekends</text>
+  <text x="490" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">주말에</text>
+  <rect x="10" y="178" width="70" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="45" y="197" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">, and</text>
+  <text x="45" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="88" y="178" width="104" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="140" y="197" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">free time</text>
+  <text x="140" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">자유 시간은 (S3)</text>
+  <rect x="200" y="178" width="113" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="256" y="197" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">disappears</text>
+  <text x="256" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사라진다 (V3)</text>
+  <rect x="321" y="178" width="275" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="458" y="197" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">under a spreadsheet of activities</text>
+  <text x="458" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">활동 스프레드시트 아래로</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">그러나 도시와 교외는 학교까지 가는 안전한 보행·자전거 경로를 제공하지 않고, 쇼핑몰은 주말에</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">십대들을 쫓아내며, 자유 시간은 활동 스프레드시트 아래로 사라진다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>세 개의 독립절 병렬</strong>: cities and suburbs don't offer ~, malls kick ~, and free time disappears ~. 콤마+and로 3개의 주-동-목 절 연결. / <strong>kick + O + out</strong> = 구동사 (타동사 + 부사). O가 명사면 중간/뒤 둘 다 가능, 대명사면 중간에만.</div>
     <div class="s-meaning"><span class="bracket">【현실 — 반박】</span>쉽게 말하면 <strong>"현실은: 보행 불가, 몰도 쫓아냄, 스케줄로 자유시간 없음"</strong>. <span class="star-line">★ 전문가 주장을 막는 3가지 현실적 장벽.</span></div>
   </div>
 </div>
 
 <!-- S3 -->
-<div class="s-card grammar" data-text="All of those musts take more of the parents' time or money to navigate, because the child can't do it on their own.">
+<div class="s-card grammar has-sd" data-text="All of those musts take more of the parents' time or money to navigate, because the child can't do it on their own.">
   <div class="card-top">
     <span class="s-num">03</span>
     <div class="s-en">All of <span class="ref">those</span> &ldquo;<span class="hl">musts</span>&rdquo; take more of the parents&rsquo; time or money <span class="gm">to navigate</span>, because the child can't do <span class="ref">it</span> <span class="gm">on <span class="ref">their</span> own</span>.</div>
@@ -539,13 +620,45 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr"><strong>그 모든 '필수 사항들'<span class="pr">(=빼곡한 활동·스케줄 같은 오늘날 아이들의 일들)</span>은 해결하기 위해 부모의 시간이나 돈을 더 많이 필요로 한다</strong>. 왜냐하면 <strong>아이가 그것을<span class="pr">(=그 필수 사항들을 해결하는 일을)</span> 스스로 할 수 없기</strong> 때문이다.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">navigate</span><span class="vocab-kr">해결하다</span><span class="vocab-en">on their own</span><span class="vocab-kr">스스로</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="188" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="104" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">All of those "musts"</text>
+  <text x="104" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그 모든 '필수사항'이 (S)</text>
+  <rect x="206" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="238" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">take</text>
+  <text x="238" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">필요로 한다 (V)</text>
+  <rect x="278" y="10" width="283" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="419" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">more of the parents' time or money</text>
+  <text x="419" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">부모의 시간·돈을 더 많이 (O)</text>
+  <rect x="569" y="10" width="116" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="627" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to navigate</text>
+  <text x="627" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">해결하기 위해 (부사적 to-V)</text>
+  <text x="45" y="113" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">because</text>
+  <text x="45" y="146" font-size="12" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">~때문에</text>
+  <rect x="89" y="94" width="104" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="141" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the child</text>
+  <text x="141" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">아이가</text>
+  <rect x="201" y="94" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="249" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">can't do</text>
+  <text x="249" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">할 수 없다</text>
+  <rect x="305" y="94" width="64" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="337" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">it</text>
+  <text x="337" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그것을</text>
+  <rect x="377" y="94" width="124" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="439" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">on their own</text>
+  <text x="439" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">스스로</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">그러한 모든 '필수 사항들'은 부모의 시간이나 돈을 더 많이 들여야 해결할 수 있는데,</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">왜냐하면 아이가 스스로 할 수 없기 때문이다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>take + O + to V</strong> = O를 필요로 한다 + ~하기 위해 (부사적 to-V). take는 '(시간·돈을) 필요로 하다' 의미. / <strong>on their own</strong> = 스스로 (= by themselves). their은 복수 대명사 — child를 받지만 <u>성중립적 단수</u> 용법 (modern English).</div>
     <div class="s-meaning"><span class="bracket">【역설】</span>쉽게 말하면 <strong>"필수사항들이 부모 부담만 키움 — 아이 독립심 대신 부모 짐!"</strong>. <span class="star-line">★ 아이러니 — 독립심 위한 것이 오히려 부모 의존 구조.</span></div>
   </div>
 </div>
 
 <!-- S4 -->
-<div class="s-card grammar" data-text="As Darby Saxbe, a clinical psychologist, recently wrote in the New York Times, underparenting requires structural change.">
+<div class="s-card grammar has-sd" data-text="As Darby Saxbe, a clinical psychologist, recently wrote in the New York Times, underparenting requires structural change.">
   <div class="card-top">
     <span class="s-num">04</span>
     <div class="s-en"><span class="gm">As</span> Darby Saxbe, <span class="gm">a clinical psychologist</span>, <span class="hl">recently</span> wrote in the New York Times, &ldquo;<span class="hl">underparenting</span> <span class="hl">requires</span> <span class="hl">structural</span> change.&rdquo;</div>
@@ -555,13 +668,47 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr"><strong>임상 심리학자 Darby Saxbe가 최근 뉴욕 타임즈에 썼듯이</strong>, '<strong>느슨한 양육은 구조적 변화를 요구한다</strong>.'</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">clinical psychologist</span><span class="vocab-kr">임상 심리학자</span><span class="vocab-en">underparenting</span><span class="vocab-kr">느슨한 양육</span><span class="vocab-en">structural</span><span class="vocab-kr">구조적인</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <text x="25" y="29" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">As</text>
+  <text x="25" y="62" font-size="12" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">~하듯이</text>
+  <rect x="48" y="10" width="116" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="106" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Darby Saxbe</text>
+  <text x="106" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">Darby Saxbe가</text>
+  <rect x="172" y="10" width="223" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="283" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">, a clinical psychologist,</text>
+  <text x="283" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">(동격: 임상 심리학자)</text>
+  <rect x="403" y="10" width="96" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="451" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">recently</text>
+  <text x="451" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">최근에</text>
+  <rect x="507" y="10" width="70" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="542" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">wrote</text>
+  <text x="542" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">썼다</text>
+  <rect x="585" y="10" width="185" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="677" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">in the New York Times</text>
+  <text x="677" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">NYT에</text>
+  <rect x="10" y="89" width="438" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="229" y="88" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">직접 인용 (she wrote의 O)</text>
+  <rect x="16" y="96" width="140" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="86" y="115" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">underparenting</text>
+  <text x="86" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">느슨한 양육은</text>
+  <rect x="164" y="96" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="212" y="115" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">requires</text>
+  <text x="212" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">요구한다</text>
+  <rect x="268" y="96" width="164" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="350" y="115" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">structural change</text>
+  <text x="350" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">구조적 변화를</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">임상 심리학자 Darby Saxbe가 최근 New York Times에 썼듯이, '느슨한</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">양육은 구조적 변화를 요구한다.'</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 問 법</span><strong>As + S V</strong> = ~하듯이 (양태 접속사, 인용에 자주). / <strong>Darby Saxbe, a clinical psychologist,</strong> = <u>동격 삽입</u>. 콤마로 앞 사람의 신분 설명. / <strong>underparenting</strong> = under- (부족) + parenting(양육) = 느슨한·소극적 양육.</div>
     <div class="s-meaning"><span class="bracket">【권위자 의견】</span>쉽게 말하면 <strong>"전문가 왈: 이건 '구조적 변화' 문제"</strong>. <span class="star-line">★ 글의 주제 도입 — 구조적 변화 필요.</span></div>
   </div>
 </div>
 
 <!-- S5 -->
-<div class="s-card grammar" data-text="Unlike most political experts, she's not just talking about economic policies like family leave and government-supported childcare.">
+<div class="s-card grammar has-sd" data-text="Unlike most political experts, she's not just talking about economic policies like family leave and government-supported childcare.">
   <div class="card-top">
     <span class="s-num">05</span>
     <div class="s-en"><span class="gm">Unlike</span> most <span class="hl">political</span> experts, <span class="ref">she</span>'s <span class="gm">not just talking about</span> <span class="hl">economic</span> <span class="hl">policies</span> like <span class="hl">family leave</span> and <span class="hl">government-supported</span> <span class="hl">childcare</span>.</div>
@@ -571,13 +718,44 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr"><strong>대부분의 정치 전문가들과 달리</strong>, 그녀<span class="pr">(=Saxbe)</span>는 <strong>가족 휴가와 정부 지원 보육 같은 경제 정책만을 이야기하는 것이 아니다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">Unlike</span><span class="vocab-kr">~와 달리</span><span class="vocab-en">political</span><span class="vocab-kr">정치의</span><span class="vocab-en">family leave</span><span class="vocab-kr">가족 휴가</span><span class="vocab-en">childcare</span><span class="vocab-kr">보육</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <text x="41" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">Unlike</text>
+  <text x="41" y="62" font-size="12" font-weight="400" fill="#633806" text-anchor="middle" font-family="sans-serif">~와 달리 (전치사)</text>
+  <rect x="81" y="10" width="193" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="177" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">most political experts</text>
+  <text x="177" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">대부분의 정치 전문가들</text>
+  <rect x="10" y="94" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">she</text>
+  <text x="42" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그녀는 (S)</text>
+  <rect x="82" y="94" width="215" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="189" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is not just talking about</text>
+  <text x="189" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">단지 ~만 말하는 것이 아니다</text>
+  <rect x="305" y="94" width="164" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="387" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">economic policies</text>
+  <text x="387" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">경제 정책을 (O)</text>
+  <text x="33" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">like</text>
+  <text x="33" y="230" font-size="12" font-weight="400" fill="#633806" text-anchor="middle" font-family="sans-serif">~와 같은</text>
+  <rect x="64" y="178" width="124" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="126" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">family leave</text>
+  <text x="126" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가족 휴가 (예1)</text>
+  <rect x="196" y="178" width="64" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="228" y="197" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="228" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="268" y="178" width="253" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="394" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">government-supported childcare</text>
+  <text x="394" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">정부 지원 보육 (예2)</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">대부분의 정치 전문가들과 달리, 그녀는 가족 휴가와 정부 지원 보육 같은 경제 정책만을</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">이야기하는 것이 아니다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>Unlike + N</strong> = ~와 달리 (전치사, 뒤 명사). Unlike 접속사 X. / <strong>not just ~</strong> = 단지 ~만은 아니다 (부분 부정, 뒤에 but also 예상). / <strong>like + N</strong> = ~와 같은 (예시 전치사). / <strong>government-supported</strong> = 하이픈 합성 형용사 (명사 + p.p.).</div>
     <div class="s-meaning"><span class="bracket">【차별화】</span>쉽게 말하면 <strong>"정치권이 말하는 정책이 전부가 아니야 — 더 있어!"</strong>. <span class="star-line">★ not just ~ but ~ 구조 예고.</span></div>
   </div>
 </div>
 
 <!-- S6 -->
-<div class="s-card grammar" data-text="She's talking about actual physical structures, and the cultural change required to populate them.">
+<div class="s-card grammar has-sd" data-text="She's talking about actual physical structures, and the cultural change required to populate them.">
   <div class="card-top">
     <span class="s-num">06</span>
     <div class="s-en"><span class="ref">She</span>'s talking about <span class="hl">actual</span> <span class="hl">physical</span> <span class="hl">structures</span>, and the <span class="hl">cultural</span> change <span class="gm">required to populate</span> <span class="ref">them</span>.</div>
@@ -587,13 +765,49 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">그녀<span class="pr">(=Saxbe)</span>는 <strong>실제 물리적 구조물</strong>과, <strong>그것들<span class="pr">(=물리적 구조물)</span>을 사람들로 채우는 데 요구되는 문화적 변화</strong>에 대해 말하고 있다.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">physical structure</span><span class="vocab-kr">물리적 구조</span><span class="vocab-en">cultural</span><span class="vocab-kr">문화적인</span><span class="vocab-en">populate</span><span class="vocab-kr">살게 하다, 채우다</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">She</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그녀는 (S)</text>
+  <rect x="82" y="10" width="156" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="160" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is talking about</text>
+  <text x="160" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">말하고 있다</text>
+  <rect x="246" y="10" width="223" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="357" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">actual physical structures</text>
+  <text x="357" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">실제 물리적 구조물 (O1)</text>
+  <rect x="10" y="94" width="70" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="45" y="113" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">, and</text>
+  <text x="45" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="88" y="94" width="180" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="178" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the cultural change</text>
+  <text x="178" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">문화적 변화 (O2)</text>
+  <rect x="10" y="173" width="314" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="167" y="172" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">과거분사구 (the cultural change 수식)</text>
+  <rect x="16" y="180" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="64" y="199" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">required</text>
+  <text x="64" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">요구되는 (p.p.)</text>
+  <rect x="120" y="180" width="116" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="178" y="199" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to populate</text>
+  <text x="178" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">채우기 위해 (부사적 to-V)</text>
+  <rect x="244" y="180" width="64" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="276" y="199" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">them</text>
+  <text x="276" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그것들을 (= structures)</text>
+  <path d="M 167,209 C 167,248 178,248 178,122" fill="none" stroke="#633806" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="175,102 178,94 181,102" fill="#633806"/>
+  <rect x="41" y="250" width="262" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="172" y="261" font-size="11" font-weight="500" fill="#633806" text-anchor="middle" font-family="sans-serif">required to V → cultural change 수식</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">그녀는 실제 물리적 구조물과, 그것들을 (사람들이) 이용하게 하는 데 요구되는 문화적 변화에</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">대해 이야기하고 있다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>about + N1, and N2</strong>: talking about의 O 2개 병렬 (physical structures / the cultural change). / <strong>required to V</strong> = 과거분사구(수동) — the cultural change를 수식. <em>요구되는</em> 문화 변화. / <strong>populate</strong>: 사람들을 살게 하다, 채우다 (타동사).</div>
     <div class="s-meaning"><span class="bracket">【핵심 주장】</span>쉽게 말하면 <strong>"정책만이 아닌 — 진짜 물리적 구조 + 문화 변화까지!"</strong>. <span class="star-line">★ but also에 해당하는 강조 내용.</span></div>
   </div>
 </div>
 
 <!-- S7 -->
-<div class="s-card grammar" data-text="We need to build back our tolerance for children in public spaces, she writes, and create safe environments where lightly supervised kids can move around freely.">
+<div class="s-card grammar has-sd" data-text="We need to build back our tolerance for children in public spaces, she writes, and create safe environments where lightly supervised kids can move around freely.">
   <div class="card-top">
     <span class="s-num">07</span>
     <div class="s-en">We need to &ldquo;<span class="gm">build back</span> our <span class="hl">tolerance</span> for children in <span class="hl">public</span> spaces,&rdquo; <span class="ref">she</span> writes, &ldquo;and create safe <span class="hl">environments</span> <span class="gm">where</span> <span class="gm">lightly</span> <span class="gm">supervised</span> kids can move around <span class="hl">freely</span>.&rdquo;</div>
@@ -603,13 +817,63 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">그녀<span class="pr">(=Saxbe)</span>는 '<strong>우리는 공공 공간에서 아이들에 대한 관용을 되찾고</strong>, <strong>가볍게 감독받는 아이들이 자유롭게 돌아다닐 수 있는 안전한 환경을 만들어야 한다</strong>'고 쓴다.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">tolerance</span><span class="vocab-kr">관용</span><span class="vocab-en">lightly supervised</span><span class="vocab-kr">가볍게 감독받는</span><span class="vocab-en">move around</span><span class="vocab-kr">돌아다니다</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 412" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">We</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리는 (S)</text>
+  <rect x="82" y="10" width="87" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="125" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">need to</text>
+  <text x="125" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">~해야 한다</text>
+  <rect x="177" y="10" width="113" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="233" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">build back</text>
+  <text x="233" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">되찾다 (V1, 구동사)</text>
+  <rect x="298" y="10" width="132" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="364" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">our tolerance</text>
+  <text x="364" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리의 관용을</text>
+  <rect x="438" y="10" width="245" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="560" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">for children in public spaces</text>
+  <text x="560" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">공공 공간의 아이들에 대한</text>
+  <rect x="10" y="94" width="116" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="68" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">she writes,</text>
+  <text x="68" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">(삽입: 그녀가 쓴다)</text>
+  <rect x="10" y="178" width="64" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="42" y="197" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="42" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="82" y="178" width="79" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="121" y="197" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">create</text>
+  <text x="121" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">만들다 (V2, need to + V 병렬)</text>
+  <rect x="169" y="178" width="164" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="251" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">safe environments</text>
+  <text x="251" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">안전한 환경을</text>
+  <rect x="10" y="257" width="527" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="273" y="256" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">where 관계부사절 (environments 수식)</text>
+  <text x="43" y="281" font-size="14" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="Georgia,serif">where</text>
+  <text x="43" y="314" font-size="12" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">~에서</text>
+  <rect x="78" y="264" width="200" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="178" y="283" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">lightly supervised kids</text>
+  <text x="178" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가볍게 감독받는 아이들이</text>
+  <rect x="286" y="264" width="148" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="360" y="283" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">can move around</text>
+  <text x="360" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">돌아다닐 수 있다</text>
+  <rect x="442" y="264" width="79" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="481" y="283" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">freely</text>
+  <text x="481" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">자유롭게</text>
+  <path d="M 273,293 C 273,332 251,332 251,206" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="248,186 251,178 254,186" fill="#534AB7"/>
+  <rect x="166" y="334" width="192" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="262" y="345" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">where절 → environments 수식</text>
+  <line x1="10" y1="342" x2="950" y2="342" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="362" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">그녀는 '우리는 공공 공간에서 아이들에 대한 관용을 되찾고, 가볍게 감독받는 아이들이 자유롭게</text>
+  <text x="10" y="382" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">돌아다닐 수 있는 안전한 환경을 만들어야 한다'고 쓴다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>need to + V1 and V2 병렬</strong>: build back + create — need to에 걸리는 두 동사 원형. / <strong>where + S V</strong> = 관계부사 (environments 수식, 장소). / <strong>lightly supervised</strong> = 부사 + p.p. 합성 형용사. / <strong>move around</strong> = 돌아다니다 (구동사).</div>
     <div class="s-meaning"><span class="bracket">【구체 제안】</span>쉽게 말하면 <strong>"공공 공간의 아이 관용 회복 + 가벼운 감독 속 자유로운 환경 구축!"</strong>. <span class="star-line">★ Saxbe의 구체적 제안.</span></div>
   </div>
 </div>
 
 <!-- S8 -->
-<div class="s-card grammar" data-text="To help parents raise independent children, cities and suburbs need to create supportive environments, where parents can keep their children under mild supervision, through changes in physical structure and culture.">
+<div class="s-card grammar has-sd" data-text="To help parents raise independent children, cities and suburbs need to create supportive environments, where parents can keep their children under mild supervision, through changes in physical structure and culture.">
   <div class="card-top">
     <span class="s-num">08</span>
     <div class="s-en"><span class="gm">To help</span> parents <span class="gm">raise</span> <span class="hl">independent</span> children, cities and suburbs need to create <span class="hl">supportive</span> environments, <span class="gm">where</span> parents can keep <span class="ref">their</span> children <span class="gm">under</span> <span class="hl">mild</span> <span class="hl">supervision</span>, <span class="gm">through</span> changes in physical structure and culture.</div>
@@ -619,6 +883,53 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr"><strong>부모가 독립적인 아이를 키우도록 돕기 위해</strong>, 도시와 교외는 <strong>물리적 구조와 문화의 변화를 통해</strong>, <strong>부모가 자신의<span class="pr">(=their=부모의)</span> 아이를 가벼운 감독 하에 둘 수 있는 지지적인 환경을 만들어야 한다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">raise</span><span class="vocab-kr">키우다</span><span class="vocab-en">supportive</span><span class="vocab-kr">지지적인</span><span class="vocab-en">mild supervision</span><span class="vocab-kr">가벼운 감독</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 412" xmlns="http://www.w3.org/2000/svg">
+  <text x="45" y="29" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">To help</text>
+  <text x="45" y="62" font-size="12" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">돕기 위해 (부사적 to-V)</text>
+  <rect x="89" y="10" width="87" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="132" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">parents</text>
+  <text x="132" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">부모가 (O)</text>
+  <rect x="184" y="10" width="70" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="219" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">raise</text>
+  <text x="219" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">키우도록 (원형 부정사, OC)</text>
+  <rect x="262" y="10" width="188" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="356" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">independent children</text>
+  <text x="356" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">독립적인 아이를</text>
+  <rect x="10" y="94" width="172" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="96" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">cities and suburbs</text>
+  <text x="96" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">도시와 교외는 (S)</text>
+  <rect x="190" y="94" width="140" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="260" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">need to create</text>
+  <text x="260" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">만들어야 한다</text>
+  <rect x="338" y="94" width="200" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="438" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">supportive environments</text>
+  <text x="438" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">지지적인 환경을 (O)</text>
+  <rect x="10" y="173" width="641" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="330" y="172" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">계속적 관계부사절 (environments 부연)</text>
+  <text x="51" y="197" font-size="14" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="Georgia,serif">, where</text>
+  <text x="51" y="230" font-size="12" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">그 안에서</text>
+  <rect x="95" y="180" width="87" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="138" y="199" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">parents</text>
+  <text x="138" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">부모가</text>
+  <rect x="190" y="180" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="238" y="199" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">can keep</text>
+  <text x="238" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">둘 수 있다</text>
+  <rect x="294" y="180" width="140" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="364" y="199" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">their children</text>
+  <text x="364" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">아이들을</text>
+  <rect x="442" y="180" width="193" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="538" y="199" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">under mild supervision</text>
+  <text x="538" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가벼운 감독 하에</text>
+  <text x="45" y="281" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">through</text>
+  <text x="45" y="314" font-size="12" font-weight="400" fill="#633806" text-anchor="middle" font-family="sans-serif">~을 통해</text>
+  <rect x="89" y="262" width="335" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="256" y="281" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">changes in physical structure and culture</text>
+  <text x="256" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">물리적 구조와 문화의 변화</text>
+  <line x1="10" y1="342" x2="950" y2="342" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="362" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">부모가 독립적인 아이를 키우도록 돕기 위해, 도시와 교외는 물리적 구조와 문화의 변화를 통해,</text>
+  <text x="10" y="382" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">부모가 아이들을 가벼운 감독 하에 둘 수 있는 지지적인 환경을 만들어야 한다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>To help + O + V원형</strong> = 부사적 to부정사(목적) + help의 5형식(O + 원형부정사 OC). help 뒤 to 생략 가능. / <strong>, where</strong> = <u>계속적 관계부사</u> (supportive environments 부연). / <strong>under + N</strong> = ~ 하에 (상태 전치사).</div>
     <div class="s-meaning"><span class="bracket">【요약문 ★】</span>쉽게 말하면 <strong>"독립심 기르려면 → 도시가 '가벼운 감독 속 자유 환경'을 만들어야 함!"</strong>. <span class="star-line">★ 전체 요약 — 40번 답 핵심.</span></div>
   </div>
@@ -2193,7 +2504,7 @@ function buildPenTools(){
     penLayer.style.width=w+'px';
   };
   sync();
-  if(window.ResizeObserver){let _roPending=false;new ResizeObserver(()=>{if(_roPending)return;_roPending=true;requestAnimationFrame(()=>{_roPending=false;sync();});}).observe(document.body);}
+  if(window.ResizeObserver)new ResizeObserver(sync).observe(document.body);
   window.addEventListener('resize',sync);
   setInterval(sync,2000);
 }

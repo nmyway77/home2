@@ -306,8 +306,8 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 /* ── 공통 행동 CSS ── */
 /* 1. 호버 펼치기 완전 제거 */
 @media(hover:hover) and (pointer:fine){
-  .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
-  .s-card.grammar:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card.grammar:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
 }
 /* 2. 단어 가로 칩 배열 */
 .s-card.vocab-only .s-kr-wrap,
@@ -330,6 +330,14 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   display:inline-flex!important;flex-wrap:wrap!important;align-items:center;gap:4px 6px;
   max-width:100%;overflow-wrap:break-word;word-break:break-word;
 }
+/* 2-B. 인카드 문장 구조도 (v2.0) */
+.s-structure{padding:6px 14px 8px 42px;border-top:1px dashed rgba(46,117,182,0.15);background:#FBFCFF;}
+.s-card.grammar .s-structure{border-top-color:rgba(91,45,142,0.15);}
+.s-structure-label{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;color:#993C1D;margin-bottom:5px;}
+.s-structure svg{width:100%;display:block;background:white;border:1px solid rgba(0,0,0,0.07);border-radius:8px;padding:8px 10px;box-sizing:border-box;}
+.s-card.vocab-only .s-structure{display:none;}
+.s-card.pinned .s-structure,.s-card.tapped .s-structure{width:100%;flex-basis:100%;order:0;padding:4px 0 2px!important;border-top:none;background:transparent;}
+.s-card.has-sd.pinned .s-kr-wrap,.s-card.has-sd.tapped .s-kr-wrap{max-height:2600px;}
 /* 3. 문장구조도 탭·패널 */
 .tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
 .tab-sd.active{background:#993C1D;color:white;border-color:#993C1D;}
@@ -497,7 +505,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="cards" id="cards">
 
 <!-- S1 -->
-<div class="s-card grammar" data-text="Just like how other rooms in your home can cause anxiety when filled with too much stuff, the same is true for kids.">
+<div class="s-card grammar has-sd" data-text="Just like how other rooms in your home can cause anxiety when filled with too much stuff, the same is true for kids.">
   <div class="card-top">
     <span class="s-num">01</span>
     <div class="s-en"><span class="gm">Just like how</span> other rooms in your home can <span class="hl">cause</span> <span class="hl">anxiety</span> <span class="gm">when filled with</span> too much stuff, <span class="ref">the same</span> is true for kids.</div>
@@ -507,13 +515,55 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">집의 <strong>다른 방들이 너무 많은 물건으로 가득 찰 때 불안감을 유발할 수 있는 것과 마찬가지로</strong>, 아이들에게도 똑같다<span class="pr">(= 물건이 너무 많으면 불안을 유발한다는 점)</span>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">cause anxiety</span><span class="vocab-kr">불안을 유발하다</span><span class="vocab-en">filled with</span><span class="vocab-kr">~로 가득 찬</span><span class="vocab-en">stuff</span><span class="vocab-kr">물건</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <text x="71" y="29" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">Just like how</text>
+  <text x="71" y="62" font-size="12" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">~와 마찬가지로 (비유)</text>
+  <rect x="140" y="10" width="116" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="198" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">other rooms</text>
+  <text x="198" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">다른 방들이 (S)</text>
+  <rect x="264" y="10" width="124" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="326" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">in your home</text>
+  <text x="326" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">집에 있는</text>
+  <rect x="396" y="10" width="104" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="448" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">can cause</text>
+  <text x="448" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">유발할 수 있다</text>
+  <rect x="508" y="10" width="87" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="551" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">anxiety</text>
+  <text x="551" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">불안감을 (O)</text>
+  <rect x="10" y="89" width="340" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="180" y="88" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">분사구문 축약 (= when they are filled)</text>
+  <text x="39" y="113" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">when</text>
+  <text x="39" y="146" font-size="12" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">~할 때</text>
+  <rect x="70" y="96" width="116" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="128" y="115" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">filled with</text>
+  <text x="128" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가득 차 있는 (p.p. 수동)</text>
+  <rect x="194" y="96" width="140" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="264" y="115" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">too much stuff</text>
+  <text x="264" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">너무 많은 물건으로</text>
+  <rect x="10" y="178" width="96" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="58" y="197" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the same</text>
+  <text x="58" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">똑같은 것 (S)</text>
+  <rect x="114" y="178" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="146" y="197" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="146" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다 (V)</text>
+  <rect x="186" y="178" width="64" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="218" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">true</text>
+  <text x="218" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">참인 (C)</text>
+  <rect x="258" y="178" width="96" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="306" y="197" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">for kids</text>
+  <text x="306" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">아이들에게도</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">집의 다른 방들이 너무 많은 물건으로 가득 차 있을 때 불안감을 유발할 수 있는 것과</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">마찬가지로, 아이들에게도 똑같다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>Just like how + 절</strong> = ~와 마찬가지로 (비유 도입). / <strong>when filled with</strong> = <u>분사구문 축약</u> (= when they are filled), 접속사 뒤 주어+be 생략.</div>
     <div class="s-meaning"><span class="bracket">【도입 비유】</span>쉽게 말하면 <strong>"방이 잡동사니로 가득 차면 불안하듯, 아이도 똑같다"</strong>. <span class="star-line">★ 이 글의 분위기 설정 — 너무 많으면 문제.</span></div>
   </div>
 </div>
 
 <!-- S2 -->
-<div class="s-card grammar" data-text="If the play space houses every single toy that has ever been purchased for them since birth, they may not be able to express their feelings, but they can feel overwhelmed by so much stuff.">
+<div class="s-card grammar has-sd" data-text="If the play space houses every single toy that has ever been purchased for them since birth, they may not be able to express their feelings, but they can feel overwhelmed by so much stuff.">
   <div class="card-top">
     <span class="s-num">02</span>
     <div class="s-en">If the play <span class="hl">space</span> <span class="hl">houses</span> every single toy <span class="gm">that has ever been purchased</span> for <span class="ref">them</span> since birth, they may not be able to <span class="hl">express</span> their <span class="hl">feelings</span>, <span class="gm">but</span> they can feel <span class="hl">overwhelmed</span> by so much stuff.</div>
@@ -523,13 +573,68 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">놀이 공간이 <strong>태어날 때부터 그들<span class="pr">(= 아이들)</span>을 위해 구입되어 온 모든 장난감을 수용한다면</strong>, 아이들은 자신의 감정을 <strong>표현하지는 못할지라도</strong> 너무 많은 물건에 <strong>압도당함을 느낄 수 있다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">house (v.)</span><span class="vocab-kr">수용하다</span><span class="vocab-en">purchase</span><span class="vocab-kr">구입하다</span><span class="vocab-en">express</span><span class="vocab-kr">표현하다</span><span class="vocab-en">overwhelmed</span><span class="vocab-kr">압도된</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 412" xmlns="http://www.w3.org/2000/svg">
+  <text x="25" y="29" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">If</text>
+  <text x="25" y="62" font-size="12" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">~라면</text>
+  <rect x="48" y="10" width="140" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="118" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the play space</text>
+  <text x="118" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">놀이 공간이 (S)</text>
+  <rect x="196" y="10" width="79" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="235" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">houses</text>
+  <text x="235" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수용한다 (V, 동사)</text>
+  <rect x="283" y="10" width="156" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="361" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">every single toy</text>
+  <text x="361" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">모든 장난감을 (O)</text>
+  <rect x="10" y="89" width="472" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="246" y="88" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">that절 (toy 수식, 현재완료 수동)</text>
+  <text x="39" y="113" font-size="14" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="Georgia,serif">that</text>
+  <text x="39" y="146" font-size="12" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">~된</text>
+  <rect x="70" y="96" width="200" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="170" y="115" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">has ever been purchased</text>
+  <text x="170" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">구입되어 온 (현재완료 + 수동)</text>
+  <rect x="278" y="96" width="188" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="372" y="115" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">for them since birth</text>
+  <text x="372" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">태어날 때부터 그들을 위해</text>
+  <rect x="10" y="178" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="197" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">they</text>
+  <text x="42" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들은 (S)</text>
+  <rect x="82" y="178" width="223" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="193" y="197" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">may not be able to express</text>
+  <text x="193" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">표현할 수 없을지도 모른다</text>
+  <rect x="313" y="178" width="140" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="383" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">their feelings</text>
+  <text x="383" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">자신의 감정을 (O)</text>
+  <rect x="10" y="262" width="64" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="42" y="281" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">but</text>
+  <text x="42" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">하지만</text>
+  <rect x="82" y="262" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="114" y="281" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">they</text>
+  <text x="114" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들은 (S)</text>
+  <rect x="154" y="262" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="202" y="281" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">can feel</text>
+  <text x="202" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">느낄 수 있다</text>
+  <rect x="258" y="262" width="116" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="316" y="281" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">overwhelmed</text>
+  <text x="316" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">압도됨 (C, 과거분사)</text>
+  <rect x="382" y="262" width="156" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="460" y="281" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">by so much stuff</text>
+  <text x="460" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">너무 많은 물건에</text>
+  <path d="M 246,125 C 246,164 361,164 361,38" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="358,18 361,10 364,18" fill="#534AB7"/>
+  <rect x="197" y="166" width="213" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="303" y="177" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">that절 → every single toy 수식</text>
+  <line x1="10" y1="342" x2="950" y2="342" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="362" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">놀이 공간이 태어날 때부터 그들을 위해 구입된 모든 장난감을 수용한다면, 그들은 자신의 감정을</text>
+  <text x="10" y="382" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">표현할 수 없을지는 몰라도 너무 많은 물건에 압도당할 수 있다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>that has ever been purchased</strong> = 주격 관계사 + <u>현재완료 수동태</u> (toy 수식). 장난감은 <em>구입되는</em> 대상. / <strong>may not ~ but</strong> = ~이 아니지만(못하더라도), ~일 수 있다 (양보-긍정 대조). / <strong>feel + p.p.</strong> = 수동 감정 형용사 (압도된 느낌).</div>
     <div class="s-meaning"><span class="bracket">【핵심 문제】</span>쉽게 말하면 <strong>"지금껏 받은 장난감 다 있으면? 아이는 말 못해도 버거워한다"</strong>. <span class="star-line">★ 왜 간소화가 필요한지의 근거.</span></div>
   </div>
 </div>
 
 <!-- S3 -->
-<div class="s-card grammar" data-text="This reminds us of how women look in their closets packed full of clothes and think, I have nothing to wear.">
+<div class="s-card grammar has-sd" data-text="This reminds us of how women look in their closets packed full of clothes and think, I have nothing to wear.">
   <div class="card-top">
     <span class="s-num">03</span>
     <div class="s-en"><span class="ref">This</span> <span class="gm">reminds</span> us <span class="gm">of how</span> women look in their <span class="hl">closets</span> <span class="gm">packed</span> full of clothes <span class="gm">and</span> think, I have nothing to wear.</div>
@@ -539,13 +644,60 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">이것은<span class="pr">(= 놀이공간에 장난감이 너무 많아 아이가 압도되는 상황)</span> 여성들이 <strong>옷으로 가득 찬 옷장을 들여다보고 '입을 게 없다'고 생각하는 모습을 떠올리게 한다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">remind A of B</span><span class="vocab-kr">A에게 B를 상기시키다</span><span class="vocab-en">closet</span><span class="vocab-kr">옷장</span><span class="vocab-en">packed</span><span class="vocab-kr">가득 찬</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 412" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">This</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이것은 (S)</text>
+  <rect x="82" y="10" width="87" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="125" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">reminds</text>
+  <text x="125" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">상기시킨다</text>
+  <rect x="177" y="10" width="64" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="209" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">us</text>
+  <text x="209" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리에게</text>
+  <text x="280" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">of how</text>
+  <text x="280" y="62" font-size="12" font-weight="400" fill="#633806" text-anchor="middle" font-family="sans-serif">~하는 방식을</text>
+  <rect x="10" y="94" width="70" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="45" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">women</text>
+  <text x="45" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">여성들이 (S, how절의 S)</text>
+  <rect x="88" y="94" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="120" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">look</text>
+  <text x="120" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">들여다보고</text>
+  <rect x="160" y="94" width="156" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="238" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">in their closets</text>
+  <text x="238" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">자신의 옷장 속을</text>
+  <rect x="10" y="173" width="257" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="138" y="172" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">과거분사구 (closets 수식)</text>
+  <rect x="16" y="180" width="79" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="55" y="199" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">packed</text>
+  <text x="55" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가득 찬 (p.p., 수동)</text>
+  <rect x="103" y="180" width="148" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="177" y="199" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">full of clothes</text>
+  <text x="177" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">옷으로 가득한</text>
+  <rect x="10" y="262" width="64" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="42" y="281" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="42" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="82" y="262" width="70" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="117" y="281" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">think</text>
+  <text x="117" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">생각하다 (병렬 V)</text>
+  <rect x="160" y="262" width="215" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="267" y="281" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">, I have nothing to wear.</text>
+  <text x="267" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">(직접화법: 입을 게 없네)</text>
+  <path d="M 138,209 C 138,248 238,248 238,122" fill="none" stroke="#633806" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="235,102 238,94 241,102" fill="#633806"/>
+  <rect x="103" y="250" width="171" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="188" y="261" font-size="11" font-weight="500" fill="#633806" text-anchor="middle" font-family="sans-serif">packed ~ → closets 수식</text>
+  <line x1="10" y1="342" x2="950" y2="342" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="362" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">이것은 여성들이 옷으로 가득 찬 옷장 안을 들여다보고 '입을 게 없네'라고 생각하는 것을</text>
+  <text x="10" y="382" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">연상시킨다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>remind A of B</strong> = A에게 B를 상기시키다 (전치사 of 고정). / <strong>how women look ~ and think</strong> = of의 목적어 간접의문문 (평서문 어순 S+V+V). / <strong>packed full of clothes</strong> = 과거분사구, closets 수식 (= which were packed full of).</div>
     <div class="s-meaning"><span class="bracket">【공감 비유】</span>쉽게 말하면 <strong>"옷장이 터질 듯 차도 '입을 게 없다' 하는 것처럼"</strong>. <span class="star-line">★ 풍요 속 빈곤 — 역설적 심리.</span></div>
   </div>
 </div>
 
 <!-- S4 -->
-<div class="s-card grammar" data-text="Revision helps everyone see what they have and use what they own.">
+<div class="s-card grammar has-sd" data-text="Revision helps everyone see what they have and use what they own.">
   <div class="card-top">
     <span class="s-num">04</span>
     <div class="s-en"><span class="hl">Revision</span> <span class="gm">helps</span> everyone <span class="gm">see what</span> they have <span class="gm">and use what</span> they <span class="hl">own</span>.</div>
@@ -555,13 +707,56 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr"><strong>정리</strong>는 모두가 <strong>자신이 가진 것을 보고 자신이 소유한 것을 사용하도록 돕는다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">revision</span><span class="vocab-kr">정리, 수정</span><span class="vocab-en">own</span><span class="vocab-kr">소유하다</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 308" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="96" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="58" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Revision</text>
+  <text x="58" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">정리가 (S)</text>
+  <rect x="114" y="10" width="70" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="149" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">helps</text>
+  <text x="149" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">돕는다 (V)</text>
+  <rect x="192" y="10" width="96" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="240" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">everyone</text>
+  <text x="240" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">모두를 (O)</text>
+  <rect x="296" y="10" width="64" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="328" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">see</text>
+  <text x="328" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">보도록 (원형 OC1)</text>
+  <rect x="10" y="89" width="212" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="116" y="88" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">what절① (see의 목적어)</text>
+  <text x="39" y="113" font-size="14" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="Georgia,serif">what</text>
+  <text x="39" y="146" font-size="12" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">~한 것</text>
+  <rect x="70" y="96" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="102" y="115" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">they</text>
+  <text x="102" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들이</text>
+  <rect x="142" y="96" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="174" y="115" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">have</text>
+  <text x="174" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가진</text>
+  <rect x="10" y="178" width="64" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="42" y="197" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="42" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="82" y="178" width="64" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="114" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">use</text>
+  <text x="114" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사용하도록 (원형 OC2, 병렬)</text>
+  <rect x="154" y="173" width="212" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="260" y="172" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">what절② (use의 목적어)</text>
+  <text x="183" y="197" font-size="14" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="Georgia,serif">what</text>
+  <text x="183" y="230" font-size="12" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">~한 것</text>
+  <rect x="214" y="180" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="246" y="199" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">they</text>
+  <text x="246" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들이</text>
+  <rect x="286" y="180" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="318" y="199" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">own</text>
+  <text x="318" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">소유한</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">정리는 모두가 자신이 가진 것을 보고 자신이 소유한 것을 사용하도록 돕는다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>help + O + 원형</strong>(또는 to-V): helps everyone see ~. / <strong>what they have</strong> &amp; <strong>what they own</strong> = <u>관계대명사 what절 2개 병렬</u> (see와 use의 목적어). what = the thing(s) that.</div>
     <div class="s-meaning"><span class="bracket">【해결 제안】</span>쉽게 말하면 <strong>"덜어내야 뭘 가졌는지 보이고 쓰게 된다"</strong>. <span class="star-line">★ Revision = 이 글의 해법 단어.</span></div>
   </div>
 </div>
 
 <!-- S5 -->
-<div class="s-card grammar" data-text="When there is too much to see, too much to step over, and too much input, kids have a hard time making a choice.">
+<div class="s-card grammar has-sd" data-text="When there is too much to see, too much to step over, and too much input, kids have a hard time making a choice.">
   <div class="card-top">
     <span class="s-num">05</span>
     <div class="s-en">When there&rsquo;s <span class="gm">too much to see</span>, <span class="gm">too much to step over</span>, <span class="gm">and too much</span> <span class="hl">input</span>, kids <span class="gm">have a hard time making</span> a choice.</div>
@@ -571,13 +766,57 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr"><strong>볼 것이 너무 많고, 넘어야 할 것이 너무 많고, 자극이 너무 많을 때</strong>, 아이들은 <strong>선택하는 데 어려움을 겪는다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">step over</span><span class="vocab-kr">넘어가다</span><span class="vocab-en">input</span><span class="vocab-kr">자극, 입력</span><span class="vocab-en">have a hard time</span><span class="vocab-kr">~에 어려움을 겪다</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 412" xmlns="http://www.w3.org/2000/svg">
+  <text x="33" y="29" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">When</text>
+  <text x="33" y="62" font-size="12" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">~할 때</text>
+  <rect x="64" y="10" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="112" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">there is</text>
+  <text x="112" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">있다</text>
+  <rect x="168" y="10" width="96" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="216" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">too much</text>
+  <text x="216" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">너무 많은 것 (S)</text>
+  <rect x="272" y="10" width="79" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="311" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to see</text>
+  <text x="311" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">볼 (to부정사, 형용사적 용법)</text>
+  <rect x="10" y="94" width="64" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="42" y="113" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">,</text>
+  <text x="42" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">,</text>
+  <rect x="82" y="94" width="96" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="130" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">too much</text>
+  <text x="130" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">너무 많은 것 (S2 병렬)</text>
+  <rect x="186" y="94" width="124" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="248" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to step over</text>
+  <text x="248" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">넘어야 할</text>
+  <rect x="10" y="178" width="70" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="45" y="197" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">, and</text>
+  <text x="45" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그리고 (최종 병렬)</text>
+  <rect x="88" y="178" width="140" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="158" y="197" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">too much input</text>
+  <text x="158" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">너무 많은 자극 (S3 병렬)</text>
+  <rect x="10" y="262" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="281" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">kids</text>
+  <text x="42" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">아이들은 (S)</text>
+  <rect x="82" y="262" width="156" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="160" y="281" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">have a hard time</text>
+  <text x="160" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">어려움을 겪는다 (V + O)</text>
+  <rect x="246" y="262" width="79" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="285" y="281" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">making</text>
+  <text x="285" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">하는 데 (V-ing, 관용구 고정)</text>
+  <rect x="333" y="262" width="96" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="381" y="281" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">a choice</text>
+  <text x="381" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">선택을</text>
+  <line x1="10" y1="342" x2="950" y2="342" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="362" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">볼 것이 너무 많고, 넘어야 할 것이 너무 많고, 자극이 너무 많을 때, 아이들은 선택하는 데</text>
+  <text x="10" y="382" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">어려움을 겪는다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>too much to V</strong> = V하기에 너무 많은 (형용사적 용법). 3개 병렬 (to see / to step over / + too much input). / <strong>have a hard time (in) V-ing</strong> = ~하는 데 어려움을 겪다. <u>뒤에 반드시 V-ing</u>. <span class="ga-wrong">✗ to make</span> → <span class="ga-right">✓ making</span>.</div>
     <div class="s-meaning"><span class="bracket">【원인 진단】</span>쉽게 말하면 <strong>"너무 많으면 결정 장애 온다"</strong>. <span class="star-line">★ 31번 빈칸의 힌트 — 간소화의 당위성.</span></div>
   </div>
 </div>
 
 <!-- S6 -->
-<div class="s-card grammar" data-text="Streamlining a play space is so important.">
+<div class="s-card grammar has-sd" data-text="Streamlining a play space is so important.">
   <div class="card-top">
     <span class="s-num">06</span>
     <div class="s-en"><span class="hl">Streamlining</span> a play space <span class="gm">is</span> so <span class="hl">important</span>.</div>
@@ -587,13 +826,30 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr"><strong>놀이 공간을 간소화하는 것</strong>은 매우 <strong>중요하다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">streamline</span><span class="vocab-kr">간소화하다</span><span class="vocab-en">important</span><span class="vocab-kr">중요한</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="124" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="72" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Streamlining</text>
+  <text x="72" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">간소화하는 것 (S, 동명사)</text>
+  <rect x="142" y="10" width="124" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="204" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">a play space</text>
+  <text x="204" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">놀이 공간을 (동명사의 O)</text>
+  <rect x="274" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="306" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="306" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다 (V, 단수)</text>
+  <rect x="346" y="10" width="124" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="408" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">so important</text>
+  <text x="408" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">매우 중요한 (C)</text>
+  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">놀이 공간을 간소화하는 것은 매우 중요하다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>Streamlining ~ is</strong>: 동명사 주어 → 단수 동사 is. Streamlining은 V+ing 형태의 동명사로 "간소화하는 것"이라는 의미. 뒤에 목적어 a play space를 취함.</div>
     <div class="s-meaning"><span class="bracket">【주제문】</span>쉽게 말하면 <strong>"놀이방 슬림화는 진짜 중요하다"</strong>. <span class="star-line">★ 이 글의 주제문 — 빈칸 키워드 후보.</span></div>
   </div>
 </div>
 
 <!-- S7 -->
-<div class="s-card grammar" data-text="You want your kids to feel inspired and imaginative in the room, not overcome with indecision.">
+<div class="s-card grammar has-sd" data-text="You want your kids to feel inspired and imaginative in the room, not overcome with indecision.">
   <div class="card-top">
     <span class="s-num">07</span>
     <div class="s-en">You <span class="gm">want</span> your kids <span class="gm">to feel</span> <span class="hl">inspired</span> and <span class="hl">imaginative</span> in the room&mdash;<span class="gm">not</span> <span class="hl">overcome</span> with <span class="hl">indecision</span>.</div>
@@ -603,6 +859,44 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">당신은 아이들이 방에서 <strong>영감받고 상상력 풍부한 느낌을 받기</strong>를 원하지 — <strong>우유부단함에 사로잡히기</strong>를 원하는 건 아니다.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">inspired</span><span class="vocab-kr">영감받은</span><span class="vocab-en">imaginative</span><span class="vocab-kr">상상력 풍부한</span><span class="vocab-en">overcome</span><span class="vocab-kr">사로잡힌 (p.p.)</span><span class="vocab-en">indecision</span><span class="vocab-kr">우유부단</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">You</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">당신은 (S)</text>
+  <rect x="82" y="10" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="114" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">want</text>
+  <text x="114" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">원한다 (V)</text>
+  <rect x="154" y="10" width="104" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="206" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">your kids</text>
+  <text x="206" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">당신의 아이들이 (O)</text>
+  <rect x="266" y="10" width="87" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="309" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to feel</text>
+  <text x="309" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">느끼도록 (to-V OC)</text>
+  <rect x="10" y="94" width="96" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="58" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">inspired</text>
+  <text x="58" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">영감받은 (C1, p.p. 형용사)</text>
+  <rect x="114" y="94" width="64" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="146" y="113" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="146" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="186" y="94" width="116" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="244" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">imaginative</text>
+  <text x="244" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">상상력 풍부한 (C2, 병렬)</text>
+  <rect x="310" y="94" width="116" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="368" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">in the room</text>
+  <text x="368" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">방에서</text>
+  <text x="33" y="197" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">—not</text>
+  <text x="33" y="230" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">~가 아니라 (대조)</text>
+  <rect x="64" y="178" width="96" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="112" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">overcome</text>
+  <text x="112" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사로잡힌 (C, p.p. 형용사)</text>
+  <rect x="168" y="178" width="148" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="242" y="197" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">with indecision</text>
+  <text x="242" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우유부단에</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">당신은 아이들이 방에서 영감받고 상상력 풍부한 느낌을 받기를 원하지, 우유부단함에 사로잡히는</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">것을 원하지 않는다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>want + O + to-V</strong> = O가 ~하기를 원하다 (5형식). / <strong>inspired, imaginative, overcome</strong> 모두 <u>형용사형 보어</u> (feel의 C). inspired/overcome은 과거분사가 형용사화. / <strong>— not ~</strong> = em dash 뒤 부정 대조 (긍정 vs 부정 느낌 대비).</div>
     <div class="s-meaning"><span class="bracket">【결론】</span>쉽게 말하면 <strong>"정리된 방 → 영감·상상력 / 잡동사니 방 → 우유부단"</strong>. <span class="star-line">★ 이 글의 마지막 교훈.</span></div>
   </div>
@@ -2036,7 +2330,7 @@ function buildPenTools(){
     penLayer.style.width=w+'px';
   };
   sync();
-  if(window.ResizeObserver){let _roPending=false;new ResizeObserver(()=>{if(_roPending)return;_roPending=true;requestAnimationFrame(()=>{_roPending=false;sync();});}).observe(document.body);}
+  if(window.ResizeObserver)new ResizeObserver(sync).observe(document.body);
   window.addEventListener('resize',sync);
   setInterval(sync,2000);
 }

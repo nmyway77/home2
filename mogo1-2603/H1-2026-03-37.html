@@ -306,8 +306,8 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 /* ── 공통 행동 CSS ── */
 /* 1. 호버 펼치기 완전 제거 */
 @media(hover:hover) and (pointer:fine){
-  .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
-  .s-card.grammar:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card.grammar:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
 }
 /* 2. 단어 가로 칩 배열 */
 .s-card.vocab-only .s-kr-wrap,
@@ -330,6 +330,14 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   display:inline-flex!important;flex-wrap:wrap!important;align-items:center;gap:4px 6px;
   max-width:100%;overflow-wrap:break-word;word-break:break-word;
 }
+/* 2-B. 인카드 문장 구조도 (v2.0) */
+.s-structure{padding:6px 14px 8px 42px;border-top:1px dashed rgba(46,117,182,0.15);background:#FBFCFF;}
+.s-card.grammar .s-structure{border-top-color:rgba(91,45,142,0.15);}
+.s-structure-label{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;color:#993C1D;margin-bottom:5px;}
+.s-structure svg{width:100%;display:block;background:white;border:1px solid rgba(0,0,0,0.07);border-radius:8px;padding:8px 10px;box-sizing:border-box;}
+.s-card.vocab-only .s-structure{display:none;}
+.s-card.pinned .s-structure,.s-card.tapped .s-structure{width:100%;flex-basis:100%;order:0;padding:4px 0 2px!important;border-top:none;background:transparent;}
+.s-card.has-sd.pinned .s-kr-wrap,.s-card.has-sd.tapped .s-kr-wrap{max-height:2600px;}
 /* 3. 문장구조도 탭·패널 */
 .tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
 .tab-sd.active{background:#993C1D;color:white;border-color:#993C1D;}
@@ -497,7 +505,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="cards" id="cards">
 
 <!-- S1 -->
-<div class="s-card grammar" data-text="We first need to understand the short but hidden history behind the plastics industry and how it became deeply rooted in our daily lives.">
+<div class="s-card grammar has-sd" data-text="We first need to understand the short but hidden history behind the plastics industry and how it became deeply rooted in our daily lives.">
   <div class="card-top">
     <span class="s-num">01</span>
     <div class="s-en">We first need to <span class="hl">understand</span> the short but <span class="hl">hidden</span> history behind the plastics <span class="hl">industry</span> and <span class="gm">how</span> <span class="ref">it</span> <span class="gm">became deeply rooted</span> in our daily lives.</div>
@@ -507,13 +515,56 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">우리는 먼저 <strong>플라스틱 산업의 짧지만 숨겨진 역사와</strong>, <strong>그것<span class="pr">(= 플라스틱 산업)</span>이 어떻게 우리 일상에 깊이 뿌리박히게 되었는지</strong>를 이해할 필요가 있다.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">plastics industry</span><span class="vocab-kr">플라스틱 산업</span><span class="vocab-en">rooted</span><span class="vocab-kr">뿌리박힌</span><span class="vocab-en">hidden</span><span class="vocab-kr">숨겨진</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">We</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리는 (S)</text>
+  <rect x="82" y="10" width="70" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="117" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">first</text>
+  <text x="117" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">먼저</text>
+  <rect x="160" y="10" width="172" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="246" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">need to understand</text>
+  <text x="246" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이해할 필요가 있다</text>
+  <rect x="10" y="94" width="238" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="129" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the short but hidden history</text>
+  <text x="129" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">짧지만 숨겨진 역사를 (O1)</text>
+  <rect x="256" y="94" width="238" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="375" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">behind the plastics industry</text>
+  <text x="375" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">플라스틱 산업 뒤의</text>
+  <rect x="10" y="178" width="64" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="42" y="197" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="42" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="82" y="173" width="572" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="368" y="172" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">how절 (O2, 간접의문문)</text>
+  <text x="106" y="197" font-size="14" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="Georgia,serif">how</text>
+  <text x="106" y="230" font-size="12" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">어떻게</text>
+  <rect x="133" y="180" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="165" y="199" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">it</text>
+  <text x="165" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그것이 (= industry)</text>
+  <rect x="205" y="180" width="79" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="244" y="199" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">became</text>
+  <text x="244" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">되었는지 (become + p.p.)</text>
+  <rect x="292" y="180" width="79" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="331" y="199" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">deeply</text>
+  <text x="331" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">깊이</text>
+  <rect x="379" y="180" width="79" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="418" y="199" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">rooted</text>
+  <text x="418" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">뿌리박히게 (p.p. 보어)</text>
+  <rect x="466" y="180" width="172" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="552" y="199" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">in our daily lives</text>
+  <text x="552" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리 일상에</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">우리는 먼저 플라스틱 산업의 짧지만 숨겨진 역사와, 그것이 어떻게 우리 일상생활에 깊이</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">뿌리박히게 되었는지를 이해할 필요가 있다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>need to V</strong>: ~할 필요가 있다. / <strong>how + S + V</strong>: 간접의문문(명사절). understand의 O 2개 중 하나 — <em>history</em>(명사)와 <em>how절</em>(명사절)이 and로 병렬. / <strong>become + p.p.</strong>: ~하게 되다 (상태 변화 수동). rooted(뿌리박힌)은 p.p. 보어.</div>
     <div class="s-meaning"><span class="bracket">【도입】</span>쉽게 말하면 <strong>"플라스틱 산업의 이면을 알아야 한다"</strong>. <span class="star-line">★ 글의 도입 — 탐구 대상 제시.</span></div>
   </div>
 </div>
 
 <!-- S2 -->
-<div class="s-card grammar" data-text="Before plastic, people lived more sustainably, with far fewer waste problems than we face today.">
+<div class="s-card grammar has-sd" data-text="Before plastic, people lived more sustainably, with far fewer waste problems than we face today.">
   <div class="card-top">
     <span class="s-num">02</span>
     <div class="s-en">Before plastic, people <span class="gm">lived more sustainably</span>, with <span class="gm">far fewer</span> <span class="hl">waste</span> <span class="hl">problems</span> than we <span class="hl">face</span> today.</div>
@@ -523,13 +574,49 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">플라스틱이 있기 전, 사람들은 <strong>더 지속가능하게 살았고</strong>, <strong>오늘날 우리가 직면하는 것보다 훨씬 적은 쓰레기 문제</strong>를 가졌다.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">sustainably</span><span class="vocab-kr">지속가능하게</span><span class="vocab-en">waste</span><span class="vocab-kr">쓰레기</span><span class="vocab-en">face</span><span class="vocab-kr">직면하다</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <text x="79" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">Before plastic,</text>
+  <text x="79" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">플라스틱 전에</text>
+  <rect x="157" y="10" width="79" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="196" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">people</text>
+  <text x="196" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사람들은 (S)</text>
+  <rect x="244" y="10" width="70" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="279" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">lived</text>
+  <text x="279" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">살았다 (V)</text>
+  <rect x="322" y="10" width="156" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="400" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">more sustainably</text>
+  <text x="400" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">더 지속가능하게 (부사 비교급)</text>
+  <text x="33" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">with</text>
+  <text x="33" y="146" font-size="12" font-weight="400" fill="#633806" text-anchor="middle" font-family="sans-serif">~를 가지고</text>
+  <rect x="64" y="94" width="104" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="116" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">far fewer</text>
+  <text x="116" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">훨씬 더 적은 (강조 far + 비교급)</text>
+  <rect x="176" y="94" width="140" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="246" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">waste problems</text>
+  <text x="246" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">쓰레기 문제를</text>
+  <text x="33" y="197" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">than</text>
+  <text x="33" y="230" font-size="12" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">~보다</text>
+  <rect x="64" y="178" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="96" y="197" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">we</text>
+  <text x="96" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리가</text>
+  <rect x="136" y="178" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="168" y="197" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">face</text>
+  <text x="168" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">직면하다</text>
+  <rect x="208" y="178" width="70" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="243" y="197" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">today</text>
+  <text x="243" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">오늘날</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">플라스틱이 있기 전에 사람들은 더 지속가능하게 살았고, 오늘날 우리가 직면하는 것보다 훨씬</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">적은 쓰레기 문제를 가지고 있었다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>lived more sustainably</strong>: 동사 + 부사 비교급. / <strong>far fewer</strong>: far(비교급 강조, 훨씬) + fewer(few의 비교급, 가산명사 수식). <u>far + 비교급</u>은 비교 강조 (cf. much + 비교급, very X). / <strong>than we face</strong>: 비교 대상 (we face today → 오늘날 우리가 직면하는 것).</div>
     <div class="s-meaning"><span class="bracket">【과거 상황】</span>쉽게 말하면 <strong>"플라스틱 이전엔 쓰레기 문제가 훨씬 적었다"</strong>. <span class="star-line">★ 대조의 출발점 — 과거 vs 현재.</span></div>
   </div>
 </div>
 
 <!-- S3 -->
-<div class="s-card grammar" data-text="However, after the invention of plastic, its rapid adoption during World War II, and its explosion into consumer goods, plastic was everywhere.">
+<div class="s-card grammar has-sd" data-text="However, after the invention of plastic, its rapid adoption during World War II, and its explosion into consumer goods, plastic was everywhere.">
   <div class="card-top">
     <span class="s-num">03</span>
     <div class="s-en"><span class="gm">However</span>, after the <span class="hl">invention</span> of plastic, its <span class="hl">rapid</span> <span class="hl">adoption</span> during World War II, and its <span class="hl">explosion</span> into <span class="hl">consumer goods</span>, plastic was everywhere.</div>
@@ -539,13 +626,53 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">그러나 <strong>플라스틱의 발명, 제2차 세계대전 중의 급속한 채택, 그리고 소비재로의 폭발적 보급 이후</strong>, 플라스틱은 어디에나 있었다.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">invention</span><span class="vocab-kr">발명</span><span class="vocab-en">rapid adoption</span><span class="vocab-kr">급속한 채택</span><span class="vocab-en">explosion into</span><span class="vocab-kr">~로의 폭발적 보급</span><span class="vocab-en">consumer goods</span><span class="vocab-kr">소비재</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 412" xmlns="http://www.w3.org/2000/svg">
+  <text x="50" y="29" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">However,</text>
+  <text x="50" y="62" font-size="12" font-weight="400" fill="#72243E" text-anchor="middle" font-family="sans-serif">그러나</text>
+  <text x="125" y="29" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">after</text>
+  <text x="125" y="62" font-size="12" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">~후에</text>
+  <rect x="160" y="10" width="208" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="264" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the invention of plastic</text>
+  <text x="264" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">플라스틱의 발명 (N1)</text>
+  <rect x="10" y="94" width="64" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="42" y="113" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">,</text>
+  <text x="42" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">,</text>
+  <rect x="82" y="94" width="172" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="168" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">its rapid adoption</text>
+  <text x="168" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그것의 급속한 채택 (N2)</text>
+  <rect x="262" y="94" width="180" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="352" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">during World War II</text>
+  <text x="352" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">제2차 세계대전 중에</text>
+  <rect x="10" y="178" width="70" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="45" y="197" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">, and</text>
+  <text x="45" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="88" y="178" width="132" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="154" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">its explosion</text>
+  <text x="154" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그것의 폭발 (N3)</text>
+  <rect x="228" y="178" width="180" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="318" y="197" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">into consumer goods</text>
+  <text x="318" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">소비재로의</text>
+  <rect x="10" y="262" width="87" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="53" y="281" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">plastic</text>
+  <text x="53" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">플라스틱이 (S)</text>
+  <rect x="105" y="262" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="137" y="281" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">was</text>
+  <text x="137" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">있었다 (V)</text>
+  <rect x="177" y="262" width="113" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="233" y="281" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">everywhere</text>
+  <text x="233" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">어디에나</text>
+  <line x1="10" y1="342" x2="950" y2="342" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="362" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">그러나 플라스틱의 발명, 제2차 세계대전 중의 급속한 채택, 그리고 소비재로의 폭발적 보급</text>
+  <text x="10" y="382" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">이후, 플라스틱은 어디에나 있었다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>after + 명사구 3개 병렬</strong>: the invention / its rapid adoption / its explosion — 전치사 after의 O가 3개 콤마+and로 병렬. / 모두 동작 명사(action nouns). / <strong>explosion into</strong> = ~로의 폭발적 보급 (전치사 into).</div>
     <div class="s-meaning"><span class="bracket">【변곡점】</span>쉽게 말하면 <strong>"플라스틱 발명 → 전쟁 → 소비재 폭발 = 어디에나 플라스틱"</strong>. <span class="star-line">★ 확산 과정 요약.</span></div>
   </div>
 </div>
 
 <!-- S4 -->
-<div class="s-card grammar" data-text="The growing industry came to symbolize the convenience and prosperity of the American dream. This dream came with a price.">
+<div class="s-card grammar has-sd" data-text="The growing industry came to symbolize the convenience and prosperity of the American dream. This dream came with a price.">
   <div class="card-top">
     <span class="s-num">04</span>
     <div class="s-en">The <span class="hl">growing</span> industry <span class="gm">came to symbolize</span> the <span class="hl">convenience</span> and <span class="hl">prosperity</span> of the American dream. <span class="ref">This</span> dream <span class="gm">came with</span> a price.</div>
@@ -555,13 +682,40 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr"><strong>성장하는 산업은 아메리칸 드림의 편리함과 번영을 상징하게 되었다</strong>. <strong>이 꿈<span class="pr">(= 아메리칸 드림)</span>은 대가를 치르고 왔다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">symbolize</span><span class="vocab-kr">상징하다</span><span class="vocab-en">convenience</span><span class="vocab-kr">편리함</span><span class="vocab-en">prosperity</span><span class="vocab-kr">번영</span><span class="vocab-en">come with a price</span><span class="vocab-kr">대가를 치르다</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="188" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="104" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">The growing industry</text>
+  <text x="104" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">성장하는 산업은 (S)</text>
+  <rect x="206" y="10" width="164" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="288" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">came to symbolize</text>
+  <text x="288" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">상징하게 되었다 (V, came to V 관용)</text>
+  <rect x="378" y="10" width="253" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="504" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the convenience and prosperity</text>
+  <text x="504" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">편리함과 번영을 (O)</text>
+  <rect x="639" y="10" width="185" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="731" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">of the American dream</text>
+  <text x="731" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">아메리칸 드림의</text>
+  <rect x="10" y="94" width="113" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="66" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">This dream</text>
+  <text x="66" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이 꿈은 (S, 두 번째 문장)</text>
+  <rect x="131" y="94" width="104" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="183" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">came with</text>
+  <text x="183" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">~을 동반했다 (V + 전치사)</text>
+  <rect x="243" y="94" width="87" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="286" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">a price</text>
+  <text x="286" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">대가를 (O)</text>
+  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">성장하는 산업은 아메리칸 드림의 편리함과 번영을 상징하게 되었다. 이 꿈은 대가를 치르고</text>
+  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">왔다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>came to V</strong> = ~하게 되다 (점진적 상태 변화). come to like, come to know와 유사. get used to와 구분. / <strong>come with a price</strong> = 대가를 치르다, 대가가 따르다 (관용구). come with는 '~을 수반하다'의 의미. / 두 문장이 한 단락으로 묶여 <u>대비 강조</u>.</div>
     <div class="s-meaning"><span class="bracket">【영광과 대가】</span>쉽게 말하면 <strong>"플라스틱 = 아메리칸 드림의 상징 — 하지만 공짜가 아니었다"</strong>. <span class="star-line">★ 영광과 그늘의 대비.</span></div>
   </div>
 </div>
 
 <!-- S5 -->
-<div class="s-card grammar" data-text="Over time, people began to notice the environmental impact, and the early seeds of today's environmental movement were planted.">
+<div class="s-card grammar has-sd" data-text="Over time, people began to notice the environmental impact, and the early seeds of today's environmental movement were planted.">
   <div class="card-top">
     <span class="s-num">05</span>
     <div class="s-en">Over time, people <span class="gm">began to notice</span> the <span class="hl">environmental</span> <span class="hl">impact</span>, and the early <span class="hl">seeds</span> of today&rsquo;s environmental <span class="hl">movement</span> <span class="gm">were planted</span>.</div>
@@ -571,13 +725,42 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">시간이 지나면서 <strong>사람들은 환경적 영향을 알아차리기 시작했고</strong>, <strong>오늘날 환경 운동의 초기 씨앗이 심어졌다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">notice</span><span class="vocab-kr">알아차리다</span><span class="vocab-en">environmental impact</span><span class="vocab-kr">환경적 영향</span><span class="vocab-en">movement</span><span class="vocab-kr">운동</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <text x="58" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">Over time,</text>
+  <text x="58" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">시간이 지나면서</text>
+  <rect x="115" y="10" width="79" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="154" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">people</text>
+  <text x="154" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사람들은 (S)</text>
+  <rect x="202" y="10" width="148" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="276" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">began to notice</text>
+  <text x="276" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">알아차리기 시작했다 (began + to-V)</text>
+  <rect x="358" y="10" width="208" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="462" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the environmental impact</text>
+  <text x="462" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">환경적 영향을 (O)</text>
+  <rect x="10" y="94" width="70" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="45" y="113" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">, and</text>
+  <text x="45" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="88" y="94" width="148" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="162" y="113" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the early seeds</text>
+  <text x="162" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">초기 씨앗들이 (S)</text>
+  <rect x="244" y="94" width="275" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="381" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">of today's environmental movement</text>
+  <text x="381" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">오늘날 환경 운동의</text>
+  <rect x="10" y="178" width="124" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="72" y="197" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">were planted</text>
+  <text x="72" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">심어졌다 (V, 수동)</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">시간이 지나면서 사람들은 환경적 영향을 알아차리기 시작했고, 오늘날 환경 운동의 초기 씨앗이</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">심어졌다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>began to V</strong> = ~하기 시작하다 (begin + to-V / begin + V-ing 둘 다 가능). / <strong>were planted</strong> = 수동태 과거 (씨앗이 <em>심어졌다</em>). 자발적 뉘앙스 — 운동이 우연히 시작된 것이 아니라 의도적.</div>
     <div class="s-meaning"><span class="bracket">【각성】</span>쉽게 말하면 <strong>"점차 환경 운동이 태동"</strong>. <span class="star-line">★ 반전 시작 — 소비자들이 깨달음.</span></div>
   </div>
 </div>
 
 <!-- S6 -->
-<div class="s-card grammar" data-text="However, the plastics industry was quick to counter these concerns, launching campaigns that presented recycling as the solution to all our problems.">
+<div class="s-card grammar has-sd" data-text="However, the plastics industry was quick to counter these concerns, launching campaigns that presented recycling as the solution to all our problems.">
   <div class="card-top">
     <span class="s-num">06</span>
     <div class="s-en">However, the plastics industry <span class="gm">was quick to counter</span> <span class="ref">these</span> <span class="hl">concerns</span>, <span class="gm">launching</span> <span class="hl">campaigns</span> <span class="gm">that presented</span> <span class="hl">recycling</span> <span class="gm">as</span> the <span class="hl">solution</span> to all our problems.</div>
@@ -587,13 +770,60 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">그러나 <strong>플라스틱 산업은 이러한 우려<span class="pr">(= 플라스틱의 환경 영향에 대한 우려)</span>에 빠르게 대응했고</strong>, <strong>재활용을 우리 모든 문제의 해결책으로 제시하는 캠페인을 시작하면서 대응했다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">counter</span><span class="vocab-kr">대응하다</span><span class="vocab-en">launch</span><span class="vocab-kr">시작하다</span><span class="vocab-en">recycling</span><span class="vocab-kr">재활용</span><span class="vocab-en">present A as B</span><span class="vocab-kr">A를 B로 제시하다</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <text x="50" y="29" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">However,</text>
+  <text x="50" y="62" font-size="12" font-weight="400" fill="#72243E" text-anchor="middle" font-family="sans-serif">그러나</text>
+  <rect x="98" y="10" width="185" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="190" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the plastics industry</text>
+  <text x="190" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">플라스틱 산업은 (S)</text>
+  <rect x="291" y="10" width="188" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="385" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">was quick to counter</text>
+  <text x="385" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">빠르게 대응했다 (be quick to V)</text>
+  <rect x="487" y="10" width="140" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="557" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">these concerns</text>
+  <text x="557" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이러한 우려에 (O)</text>
+  <rect x="10" y="89" width="238" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="129" y="88" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">분사구문 (결과/부대상황)</text>
+  <rect x="16" y="96" width="104" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="68" y="115" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">launching</text>
+  <text x="68" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">시작하면서 (분사구문)</text>
+  <rect x="128" y="96" width="104" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="180" y="115" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">campaigns</text>
+  <text x="180" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">캠페인을</text>
+  <rect x="10" y="173" width="650" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="335" y="172" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">that절 (campaigns 수식)</text>
+  <text x="39" y="197" font-size="14" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="Georgia,serif">that</text>
+  <text x="39" y="230" font-size="12" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">~하는</text>
+  <rect x="70" y="180" width="104" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="122" y="199" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">presented</text>
+  <text x="122" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">제시했다</text>
+  <rect x="182" y="180" width="104" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="234" y="199" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">recycling</text>
+  <text x="234" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">재활용을 (A)</text>
+  <text x="309" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">as</text>
+  <text x="309" y="230" font-size="12" font-weight="400" fill="#633806" text-anchor="middle" font-family="sans-serif">~로</text>
+  <rect x="332" y="180" width="124" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="394" y="199" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the solution</text>
+  <text x="394" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">해결책 (B)</text>
+  <rect x="464" y="180" width="180" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="554" y="199" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">to all our problems</text>
+  <text x="554" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리 모든 문제의</text>
+  <path d="M 335,209 C 335,248 129,248 129,125" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="126,97 129,89 132,97" fill="#534AB7"/>
+  <rect x="150" y="250" width="164" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="232" y="261" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">that절 → campaigns 수식</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">그러나 플라스틱 산업은 이러한 우려에 빠르게 대응하여, 재활용을 우리 모든 문제의 해결책으로</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">제시하는 캠페인을 시작했다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>be quick to V</strong> = 재빨리 ~하다 (형용사 + to-V 구문). 같은 패턴: be ready to V, be willing to V, be eager to V. / <strong>, launching ~</strong> = 분사구문 (결과/부대상황, = and they launched). / <strong>that presented</strong> = 주격 관계사 (campaigns 수식). / <strong>present A as B</strong> = A를 B로 제시하다 (전치사 as).</div>
     <div class="s-meaning"><span class="bracket">【반격】</span>쉽게 말하면 <strong>"산업이 재활용 캠페인으로 역공 — '재활용이 답!'"</strong>. <span class="star-line">★ 글의 핵심 반전 — 표면적 해결책.</span></div>
   </div>
 </div>
 
 <!-- S7 -->
-<div class="s-card grammar" data-text="They pushed the idea that pollution was the fault of consumers, not the corporations flooding the market with plastic.">
+<div class="s-card grammar has-sd" data-text="They pushed the idea that pollution was the fault of consumers, not the corporations flooding the market with plastic.">
   <div class="card-top">
     <span class="s-num">07</span>
     <div class="s-en"><span class="ref">They</span> <span class="gm">pushed the idea</span> <span class="gm">that</span> <span class="hl">pollution</span> was the <span class="hl">fault</span> of consumers, not the <span class="hl">corporations</span> <span class="gm">flooding</span> the market with plastic.</div>
@@ -603,6 +833,59 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">그들<span class="pr">(= 플라스틱 산업·기업)</span>은 <strong>오염이 소비자의 잘못이지, 시장을 플라스틱으로 뒤덮는 기업들의 잘못이 아니라는 생각을 밀어붙였다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">push the idea</span><span class="vocab-kr">주장을 밀어붙이다</span><span class="vocab-en">pollution</span><span class="vocab-kr">오염</span><span class="vocab-en">fault</span><span class="vocab-kr">잘못</span><span class="vocab-en">flood</span><span class="vocab-kr">뒤덮다</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 412" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">They</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들은 (S, = plastics industry)</text>
+  <rect x="82" y="10" width="79" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="121" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">pushed</text>
+  <text x="121" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">밀어붙였다</text>
+  <rect x="169" y="10" width="96" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="217" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the idea</text>
+  <text x="217" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그 생각을 (O)</text>
+  <rect x="10" y="89" width="453" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="236" y="88" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">동격 that절 (= the idea 내용)</text>
+  <text x="39" y="113" font-size="14" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="Georgia,serif">that</text>
+  <text x="39" y="146" font-size="12" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">~라는</text>
+  <rect x="70" y="96" width="104" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="122" y="115" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">pollution</text>
+  <text x="122" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">오염이</text>
+  <rect x="182" y="96" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="214" y="115" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">was</text>
+  <text x="214" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다</text>
+  <rect x="254" y="96" width="193" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="350" y="115" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the fault of consumers</text>
+  <text x="350" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">소비자의 잘못 (C)</text>
+  <rect x="10" y="178" width="70" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="45" y="197" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">, not</text>
+  <text x="45" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">~가 아니라</text>
+  <rect x="88" y="178" width="156" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="166" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the corporations</text>
+  <text x="166" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">기업들</text>
+  <rect x="10" y="257" width="371" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="195" y="256" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">분사구 (corporations 수식)</text>
+  <rect x="16" y="264" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="64" y="283" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">flooding</text>
+  <text x="64" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">뒤덮는 (현재분사, 능동)</text>
+  <rect x="120" y="264" width="113" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="176" y="283" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">the market</text>
+  <text x="176" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">시장을</text>
+  <rect x="241" y="264" width="124" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="303" y="283" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">with plastic</text>
+  <text x="303" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">플라스틱으로</text>
+  <path d="M 236,125 C 236,164 217,164 217,38" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="214,18 217,10 220,18" fill="#534AB7"/>
+  <rect x="137" y="166" width="178" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="226" y="177" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">동격 that절 → the idea 내용</text>
+  <path d="M 195,293 C 195,332 166,332 166,206" fill="none" stroke="#633806" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="163,186 166,178 169,186" fill="#633806"/>
+  <rect x="70" y="334" width="220" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="180" y="345" font-size="11" font-weight="500" fill="#633806" text-anchor="middle" font-family="sans-serif">flooding ~ → corporations 수식</text>
+  <line x1="10" y1="342" x2="950" y2="342" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="362" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">그들은 오염이 소비자의 잘못이지, 시장을 플라스틱으로 뒤덮는 기업들의 잘못이 아니라는 생각을</text>
+  <text x="10" y="382" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">밀어붙였다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>the idea that S V</strong> = <u>동격 that</u> (명사 = 내용). 관계사 that과 구분 — 뒤가 <em>완전한 절</em>이면 동격. / <strong>flooding the market</strong> = 현재분사구 (corporations 수식, 능동, = which are flooding). 기업이 <em>뒤덮는</em> 능동 주체. / <strong>, not ~</strong> = 대조 병렬 (의미상 부정).</div>
     <div class="s-meaning"><span class="bracket">【책임 전가】</span>쉽게 말하면 <strong>"'문제는 너희 소비자 탓' — 산업의 책임 회피 논리"</strong>. <span class="star-line">★ 글의 비판적 결론 — 누가 진짜 잘못인가?</span></div>
   </div>
@@ -2023,7 +2306,7 @@ function buildPenTools(){
     penLayer.style.width=w+'px';
   };
   sync();
-  if(window.ResizeObserver){let _roPending=false;new ResizeObserver(()=>{if(_roPending)return;_roPending=true;requestAnimationFrame(()=>{_roPending=false;sync();});}).observe(document.body);}
+  if(window.ResizeObserver)new ResizeObserver(sync).observe(document.body);
   window.addEventListener('resize',sync);
   setInterval(sync,2000);
 }

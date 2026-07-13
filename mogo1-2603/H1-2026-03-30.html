@@ -306,8 +306,8 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 /* ── 공통 행동 CSS ── */
 /* 1. 호버 펼치기 완전 제거 */
 @media(hover:hover) and (pointer:fine){
-  .s-card:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
-  .s-card.grammar:not(.pinned):not(.tapped):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
+  .s-card.grammar:not(.pinned):not(.tapped):not(.vocab-only):hover .s-kr-wrap{max-height:0!important;opacity:0!important;}
 }
 /* 2. 단어 가로 칩 배열 */
 .s-card.vocab-only .s-kr-wrap,
@@ -330,6 +330,14 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   display:inline-flex!important;flex-wrap:wrap!important;align-items:center;gap:4px 6px;
   max-width:100%;overflow-wrap:break-word;word-break:break-word;
 }
+/* 2-B. 인카드 문장 구조도 (v2.0) */
+.s-structure{padding:6px 14px 8px 42px;border-top:1px dashed rgba(46,117,182,0.15);background:#FBFCFF;}
+.s-card.grammar .s-structure{border-top-color:rgba(91,45,142,0.15);}
+.s-structure-label{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;color:#993C1D;margin-bottom:5px;}
+.s-structure svg{width:100%;display:block;background:white;border:1px solid rgba(0,0,0,0.07);border-radius:8px;padding:8px 10px;box-sizing:border-box;}
+.s-card.vocab-only .s-structure{display:none;}
+.s-card.pinned .s-structure,.s-card.tapped .s-structure{width:100%;flex-basis:100%;order:0;padding:4px 0 2px!important;border-top:none;background:transparent;}
+.s-card.has-sd.pinned .s-kr-wrap,.s-card.has-sd.tapped .s-kr-wrap{max-height:2600px;}
 /* 3. 문장구조도 탭·패널 */
 .tab-sd{background:white;color:#993C1D;border-color:rgba(153,60,29,0.25);}
 .tab-sd.active{background:#993C1D;color:white;border-color:#993C1D;}
@@ -497,7 +505,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="cards" id="cards">
 
 <!-- S1 -->
-<div class="s-card grammar" data-text="The principal transportation mode in the developing world, even in large cities, is still walking because of constraints on the resources needed to operate extensive transit systems.">
+<div class="s-card grammar has-sd" data-text="The principal transportation mode in the developing world, even in large cities, is still walking because of constraints on the resources needed to operate extensive transit systems.">
   <div class="card-top">
     <span class="s-num">01</span>
     <div class="s-en">The <span class="hl">principal</span> <span class="hl">transportation</span> mode in the <span class="hl">developing world</span>, even in large cities, is still walking <span class="gm">because of</span> <span class="hl">constraints</span> on the <span class="hl">resources</span> <span class="gm">needed to operate</span> <span class="hl">extensive</span> <span class="hl">transit systems</span>.</div>
@@ -507,13 +515,60 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr"><strong>개발도상국</strong>에서는 <strong>대도시에서조차 주요 교통 수단이 여전히 걷기</strong>인데, 그 이유는 <strong>광범위한 대중교통 체계를 운영하는 데 필요한 자원에 제약이 있기 때문</strong>이다.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">principal</span><span class="vocab-kr">주요한</span><span class="vocab-en">constraint</span><span class="vocab-kr">제약</span><span class="vocab-en">extensive</span><span class="vocab-kr">광범위한</span><span class="vocab-en">transit system</span><span class="vocab-kr">대중교통 체계</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 412" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="275" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="147" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">The principal transportation mode</text>
+  <text x="147" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">주요 교통 수단 (S)</text>
+  <rect x="293" y="10" width="200" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="393" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">in the developing world</text>
+  <text x="393" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">개발도상국에서</text>
+  <rect x="501" y="10" width="200" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="601" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">, even in large cities,</text>
+  <text x="601" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">(삽입: 대도시에서조차)</text>
+  <rect x="10" y="94" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="42" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="42" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다 (V)</text>
+  <rect x="82" y="94" width="70" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="117" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">still</text>
+  <text x="117" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">여전히</text>
+  <rect x="160" y="94" width="87" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="203" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">walking</text>
+  <text x="203" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">걷기 (C, 동명사)</text>
+  <text x="58" y="197" font-size="14" font-weight="500" fill="#085041" text-anchor="middle" font-family="Georgia,serif">because of</text>
+  <text x="58" y="230" font-size="12" font-weight="400" fill="#085041" text-anchor="middle" font-family="sans-serif">~때문에 (전치사구)</text>
+  <rect x="115" y="178" width="116" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="173" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">constraints</text>
+  <text x="173" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">제약</text>
+  <rect x="239" y="178" width="156" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="317" y="197" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">on the resources</text>
+  <text x="317" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">자원에 대한</text>
+  <rect x="10" y="257" width="445" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="232" y="256" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">과거분사구 (resources 수식)</text>
+  <rect x="16" y="264" width="79" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="55" y="283" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">needed</text>
+  <text x="55" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">필요한 (수동 p.p.)</text>
+  <rect x="103" y="264" width="113" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="159" y="283" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to operate</text>
+  <text x="159" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">운영하기 위해 (부사적 용법)</text>
+  <rect x="224" y="264" width="215" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="331" y="283" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">extensive transit systems</text>
+  <text x="331" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">광범위한 대중교통 체계를</text>
+  <path d="M 232,293 C 232,332 173,332 173,206" fill="none" stroke="#633806" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="170,186 173,178 176,186" fill="#633806"/>
+  <rect x="120" y="334" width="164" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="202" y="345" font-size="11" font-weight="500" fill="#633806" text-anchor="middle" font-family="sans-serif">과거분사구 → resources 수식</text>
+  <line x1="10" y1="342" x2="950" y2="342" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="362" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">개발도상국에서는 대도시에서조차 주요 교통 수단이 여전히 걷기인데, 이는 광범위한 대중교통</text>
+  <text x="10" y="382" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">체계를 운영하는 데 필요한 자원에 제약이 있기 때문이다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>because of + N</strong> = 전치사구(이유). because는 접속사 → 뒤에 절. / <strong>needed to operate ~</strong> = 과거분사구, resources 수식 (<em>필요한</em> 자원). / <strong>to operate</strong> = to부정사의 부사적 용법(목적).</div>
     <div class="s-meaning"><span class="bracket">【개도국 현실】</span>쉽게 말하면 <strong>"돈·자원이 없어서 버스/지하철 못 깔고 걸어다닐 수밖에 없다"</strong>. <span class="star-line">★ 도입 — 개도국 맥락 설정.</span></div>
   </div>
 </div>
 
 <!-- S2 -->
-<div class="s-card grammar" data-text="People cover long distances on foot every day and expend human energy that they can hardly spare.">
+<div class="s-card grammar has-sd" data-text="People cover long distances on foot every day and expend human energy that they can hardly spare.">
   <div class="card-top">
     <span class="s-num">02</span>
     <div class="s-en">People <span class="gm">cover</span> long <span class="hl">distances</span> on foot every day <span class="gm">and</span> <span class="hl">expend</span> human energy <span class="gm">that</span> they can <span class="hl">hardly</span> <span class="hl">spare</span>.</div>
@@ -523,12 +578,55 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">사람들은 매일 <strong>먼 거리를 걸어서 이동하며</strong>, <strong>거의 아낄 수 없는 인간 에너지를 소비한다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">cover (a distance)</span><span class="vocab-kr">(거리를) 이동하다</span><span class="vocab-en">expend</span><span class="vocab-kr">쓰다, 소비하다</span><span class="vocab-en">hardly</span><span class="vocab-kr">거의 ~않다</span><span class="vocab-en">spare</span><span class="vocab-kr">아끼다, 여분으로 두다</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 308" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="79" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="49" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">People</text>
+  <text x="49" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사람들은 (S)</text>
+  <rect x="97" y="10" width="70" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="132" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">cover</text>
+  <text x="132" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이동한다 (V1)</text>
+  <rect x="175" y="10" width="140" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="245" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">long distances</text>
+  <text x="245" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">먼 거리를 (O1)</text>
+  <rect x="323" y="10" width="164" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="405" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">on foot every day</text>
+  <text x="405" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">매일 걸어서</text>
+  <rect x="10" y="94" width="64" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="42" y="113" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="42" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="82" y="94" width="79" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="121" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">expend</text>
+  <text x="121" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">소비한다 (V2, 병렬)</text>
+  <rect x="169" y="94" width="124" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="231" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">human energy</text>
+  <text x="231" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">인간 에너지를 (O2)</text>
+  <rect x="10" y="173" width="339" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="179" y="172" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">that절 (energy 수식, 목적격)</text>
+  <text x="39" y="197" font-size="14" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="Georgia,serif">that</text>
+  <text x="39" y="230" font-size="12" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">~을</text>
+  <rect x="70" y="180" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="102" y="199" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">they</text>
+  <text x="102" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들이</text>
+  <rect x="142" y="180" width="113" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="198" y="199" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">can hardly</text>
+  <text x="198" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">거의 ~할 수 없는</text>
+  <rect x="263" y="180" width="70" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="298" y="199" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">spare</text>
+  <text x="298" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">아낄 (spare의 O = energy)</text>
+  <path d="M 179,209 C 179,248 231,248 231,122" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="228,102 231,94 234,102" fill="#534AB7"/>
+  <rect x="130" y="250" width="150" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="205" y="261" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">that절 → energy 수식</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">사람들은 매일 먼 거리를 걸어서 이동하며, 거의 아낄 수 없는 인간 에너지를 소비한다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>cover ~ and expend ~</strong> = 병렬 동사 2개 (주어 People 공유). / <strong>that they can hardly spare</strong> = 목적격 관계대명사절 (선행사 energy, spare의 O 자리). <em>hardly</em>는 '거의 ~않다'(준부정어) — 이미 부정 의미라 not과 함께 쓰지 않음.</div>
   </div>
 </div>
 
 <!-- S3 -->
-<div class="s-card grammar" data-text="Walking under those conditions is an unavoidable burden that consumes productive capability.">
+<div class="s-card grammar has-sd" data-text="Walking under those conditions is an unavoidable burden that consumes productive capability.">
   <div class="card-top">
     <span class="s-num">03</span>
     <div class="s-en">Walking under <span class="ref">those</span> <span class="hl">conditions</span> <span class="gm">is</span> an <span class="hl">unavoidable</span> <span class="hl">burden</span> <span class="gm">that</span> <span class="hl">consumes</span> <span class="hl">productive</span> <span class="hl">capability</span>.</div>
@@ -538,13 +636,44 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">그러한 상황<span class="pr">(= 자원이 부족해 먼 거리를 걸어야 하는 개발도상국 상황)</span>에서의 걷기는 <strong>생산적 능력을 소모시키는 피할 수 없는 부담</strong>이다.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">unavoidable</span><span class="vocab-kr">피할 수 없는</span><span class="vocab-en">burden</span><span class="vocab-kr">부담</span><span class="vocab-en">consume</span><span class="vocab-kr">소비하다</span><span class="vocab-en">capability</span><span class="vocab-kr">능력</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 308" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="87" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="53" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Walking</text>
+  <text x="53" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">걷기 (S, 동명사)</text>
+  <rect x="105" y="10" width="193" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="201" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">under those conditions</text>
+  <text x="201" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그러한 상황에서의</text>
+  <rect x="10" y="94" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="42" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="42" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다 (V, 동명사 주어 → 단수)</text>
+  <rect x="82" y="94" width="185" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="174" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">an unavoidable burden</text>
+  <text x="174" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">피할 수 없는 부담 (C)</text>
+  <rect x="10" y="173" width="365" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="192" y="172" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">that절 (burden 수식, 주격)</text>
+  <text x="39" y="197" font-size="14" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="Georgia,serif">that</text>
+  <text x="39" y="230" font-size="12" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">~인</text>
+  <rect x="70" y="180" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="118" y="199" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">consumes</text>
+  <text x="118" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">소모시키는 (3인칭 단수)</text>
+  <rect x="174" y="180" width="185" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="266" y="199" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">productive capability</text>
+  <text x="266" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">생산적 능력을</text>
+  <path d="M 192,209 C 192,248 174,248 174,122" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="171,102 174,94 177,102" fill="#534AB7"/>
+  <rect x="108" y="250" width="150" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="183" y="261" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">that절 → burden 수식</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">그러한 상황에서의 걷기는 생산적 능력을 소모시키는 피할 수 없는 부담이다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>Walking ~ is</strong>: 동명사 주어 → 단수 동사 is. / <strong>that consumes ~</strong> = 주격 관계대명사절 (선행사 burden). 선행사 단수 → <em>consumes</em>(3인칭 단수).</div>
     <div class="s-meaning"><span class="bracket">【개도국 평가】</span>걷기 = <strong>"피할 수 없는 부담 + 생산 에너지 낭비"</strong>. 즉 개도국에서 걷기는 <u>부정적</u>. <span class="star-line">★ 개도국 시각 요약.</span></div>
   </div>
 </div>
 
 <!-- S4 -->
-<div class="s-card grammar" data-text="In North America and Western Europe, however, the attitude and policies are just the opposite: walking is efficient, healthful, and natural.">
+<div class="s-card grammar has-sd" data-text="In North America and Western Europe, however, the attitude and policies are just the opposite: walking is efficient, healthful, and natural.">
   <div class="card-top">
     <span class="s-num">04</span>
     <div class="s-en">In North America and Western Europe, <span class="gm">however</span>, the <span class="hl">attitude</span> and <span class="hl">policies</span> <span class="gm">are</span> just the <span class="hl">opposite</span>: walking is <span class="hl">efficient</span>, <span class="hl">healthful</span>, and <span class="hl">natural</span>.</div>
@@ -554,13 +683,45 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">그러나 <strong>북미와 서유럽</strong>에서는 <strong>태도와 정책이 정반대</strong>다: 걷기는 <strong>효율적이고, 건강에 좋으며, 자연스럽다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">attitude</span><span class="vocab-kr">태도</span><span class="vocab-en">opposite</span><span class="vocab-kr">반대</span><span class="vocab-en">efficient</span><span class="vocab-kr">효율적인</span><span class="vocab-en">healthful</span><span class="vocab-kr">건강에 좋은</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="290" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="155" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">In North America and Western Europe</text>
+  <text x="155" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">북미와 서유럽에서는</text>
+  <rect x="308" y="10" width="113" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="364" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">, however,</text>
+  <text x="364" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">(삽입: 그러나)</text>
+  <rect x="429" y="10" width="215" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="536" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the attitude and policies</text>
+  <text x="536" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">태도와 정책이 (S, 병렬)</text>
+  <rect x="10" y="94" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="42" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are</text>
+  <text x="42" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다 (V — 복수 주어)</text>
+  <rect x="82" y="94" width="164" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="164" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">just the opposite</text>
+  <text x="164" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">정반대 (C)</text>
+  <text x="25" y="197" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">:</text>
+  <text x="25" y="230" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">(부연)</text>
+  <rect x="48" y="178" width="87" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="91" y="197" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">walking</text>
+  <text x="91" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">걷기는 (S)</text>
+  <rect x="143" y="178" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="175" y="197" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is</text>
+  <text x="175" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이다</text>
+  <rect x="215" y="178" width="275" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="352" y="197" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">efficient, healthful, and natural</text>
+  <text x="352" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">효율적·건강·자연스러운 (C, 3개 병렬)</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">그러나 북미와 서유럽에서는 태도와 정책이 정반대다: 걷기는 효율적이고 건강에 좋으며</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">자연스럽다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>the attitude and policies are</strong>: <u>복수 주어</u>(attitude + policies) → are. / <strong>: walking is C1, C2, and C3</strong> = 콜론 뒤 부연, 형용사 3개 병렬 (oxford comma 포함).</div>
     <div class="s-meaning"><span class="bracket">【대조 전환】</span>쉽게 말하면 <strong>"선진국에서는 걷기가 오히려 좋은 것으로 평가된다"</strong>. <span class="star-line">★ 핵심 대조 — however로 반전.</span></div>
   </div>
 </div>
 
 <!-- S5 -->
-<div class="s-card grammar" data-text="We should do more of it. Almost everybody agrees. And some of the current trends should be reversed.">
+<div class="s-card grammar has-sd" data-text="We should do more of it. Almost everybody agrees. And some of the current trends should be reversed.">
   <div class="card-top">
     <span class="s-num">05</span>
     <div class="s-en">We should do more of <span class="ref">it</span>&mdash;almost everybody <span class="hl">agrees</span>&mdash;and some of the <span class="hl">current</span> <span class="hl">trends</span> <span class="gm">should be reversed</span>.</div>
@@ -570,12 +731,39 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr">우리는 <strong>걷기를 더 많이 해야 한다</strong> — 거의 모두가 동의한다 — 그리고 <strong>현재 경향의 일부는 뒤집혀야 한다</strong>.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">agree</span><span class="vocab-kr">동의하다</span><span class="vocab-en">current</span><span class="vocab-kr">현재의</span><span class="vocab-en">trend</span><span class="vocab-kr">경향, 추세</span><span class="vocab-en">reverse</span><span class="vocab-kr">뒤집다</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 328" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">We</text>
+  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리는 (S)</text>
+  <rect x="82" y="10" width="104" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="134" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">should do</text>
+  <text x="134" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">해야 한다 (V)</text>
+  <rect x="194" y="10" width="113" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="250" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">more of it</text>
+  <text x="250" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그것을 더 (= 걷기)</text>
+  <rect x="10" y="94" width="215" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="117" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">—almost everybody agrees—</text>
+  <text x="117" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">(삽입절: 거의 모두가 동의한다)</text>
+  <rect x="10" y="178" width="64" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="42" y="197" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">and</text>
+  <text x="42" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그리고</text>
+  <rect x="82" y="178" width="223" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="193" y="197" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">some of the current trends</text>
+  <text x="193" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">현재 경향의 일부가 (S)</text>
+  <rect x="313" y="178" width="172" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="399" y="197" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">should be reversed</text>
+  <text x="399" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">뒤집혀야 한다 (수동태)</text>
+  <line x1="10" y1="258" x2="950" y2="258" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="278" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">우리는 걷기를 더 많이 해야 한다 — 거의 모두가 동의한다 — 그리고 현재의 일부 경향은</text>
+  <text x="10" y="298" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">뒤집혀야 한다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>em dash — 절 —</strong>: 주절 중간에 삽입된 설명문(<em>almost everybody agrees</em>)을 — — 로 감쌈. / <strong>should be reversed</strong> = 조동사 should + 수동태 (경향이 <em>뒤집혀야 한다</em>).</div>
   </div>
 </div>
 
 <!-- S6 -->
-<div class="s-card grammar" data-text="Ironically, among the most popular exercise machines in health clubs and in homes are treadmills that simulate walking, which could be otherwise accomplished with a transport purpose on the street.">
+<div class="s-card grammar has-sd" data-text="Ironically, among the most popular exercise machines in health clubs and in homes are treadmills that simulate walking, which could be otherwise accomplished with a transport purpose on the street.">
   <div class="card-top">
     <span class="s-num">06</span>
     <div class="s-en"><span class="hl">Ironically</span>, <span class="gm">among the most popular</span> <span class="hl">exercise</span> <span class="hl">machines</span> in health clubs and in homes <span class="gm">are</span> <span class="hl">tread-mills</span> <span class="gm">that</span> <span class="hl">simulate</span> walking, <span class="gm">which</span> could be <span class="gm">otherwise</span> <span class="hl">accomplished</span> with a <span class="hl">transport</span> <span class="hl">purpose</span> on the street.</div>
@@ -585,6 +773,57 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-kr"><strong>역설적으로</strong>, 헬스클럽과 가정에서 <strong>가장 인기 있는 운동기구 중에는 걷기를 모방하는 러닝머신이 있는데</strong>, <strong>그 걷기는 거리에서 이동 목적으로 다르게 완수될 수도 있는 것</strong>이다.</div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">ironically</span><span class="vocab-kr">역설적으로</span><span class="vocab-en">treadmill</span><span class="vocab-kr">러닝머신</span><span class="vocab-en">simulate</span><span class="vocab-kr">모방하다</span><span class="vocab-en">otherwise</span><span class="vocab-kr">다르게</span><span class="vocab-en">accomplish</span><span class="vocab-kr">완수하다</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 496" xmlns="http://www.w3.org/2000/svg">
+  <text x="62" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">Ironically,</text>
+  <text x="62" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">역설적으로</text>
+  <rect x="123" y="10" width="328" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="287" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">among the most popular exercise machines</text>
+  <text x="287" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">가장 인기 있는 운동기구 중에 (장소구 — 문두)</text>
+  <rect x="10" y="94" width="238" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="129" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">in health clubs and in homes</text>
+  <text x="129" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">헬스클럽과 가정에서</text>
+  <rect x="10" y="178" width="64" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="42" y="197" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are</text>
+  <text x="42" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">있다 (V — 도치!)</text>
+  <rect x="82" y="178" width="113" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="138" y="197" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">treadmills</text>
+  <text x="138" y="230" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">러닝머신 (S — 도치된 주어)</text>
+  <rect x="10" y="257" width="267" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="143" y="256" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">that절 (treadmills 수식, 주격)</text>
+  <text x="39" y="281" font-size="14" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="Georgia,serif">that</text>
+  <text x="39" y="314" font-size="12" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">~하는</text>
+  <rect x="70" y="264" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="118" y="283" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">simulate</text>
+  <text x="118" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">모방하는</text>
+  <rect x="174" y="264" width="87" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="217" y="283" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">walking</text>
+  <text x="217" y="314" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">걷기를</text>
+  <rect x="10" y="341" width="717" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="368" y="340" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">, which 계속적 용법 (walking 수식)</text>
+  <text x="51" y="365" font-size="14" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="Georgia,serif">, which</text>
+  <text x="51" y="398" font-size="12" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">그런데 그것은</text>
+  <rect x="95" y="348" width="260" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="225" y="367" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">could be otherwise accomplished</text>
+  <text x="225" y="398" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">다르게는 완수될 수 있는 (조동사 + 수동)</text>
+  <rect x="363" y="348" width="208" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="467" y="367" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">with a transport purpose</text>
+  <text x="467" y="398" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이동 목적으로</text>
+  <rect x="579" y="348" width="132" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="645" y="367" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">on the street</text>
+  <text x="645" y="398" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">거리에서</text>
+  <path d="M 143,293 C 143,332 138,332 138,206" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="135,186 138,178 141,186" fill="#534AB7"/>
+  <rect x="55" y="334" width="171" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="140" y="345" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">that절 → treadmills 수식</text>
+  <path d="M 368,377 C 368,416 143,416 143,293" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="140,265 143,257 146,265" fill="#534AB7"/>
+  <rect x="121" y="418" width="269" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="255" y="429" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">, which → walking 수식 (앞 절의 walking)</text>
+  <line x1="10" y1="426" x2="950" y2="426" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="446" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">역설적으로, 헬스클럽과 가정에서 가장 인기 있는 운동 기구 중에는 걷기를 모방하는 러닝머신이</text>
+  <text x="10" y="466" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">있는데, 이 걷기는 다르게는 거리에서 이동 목적으로 완수될 수 있는 것이다.</text>
+</svg></div>
     <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>Among ~ are treadmills</strong> = <u>★ 장소 전치사구 도치</u>! 원래 어순은 <em>Treadmills are among ~</em>. 장소구가 문두에 오면 V-S 도치. / <strong>that simulate walking</strong> = 주격 관계대명사절 (treadmills 수식). / <strong>, which could be ~</strong> = 계속적 용법 (앞의 walking 수식). / <strong>could be otherwise accomplished</strong> = 조동사 + 수동태.</div>
     <div class="s-meaning"><span class="bracket">【아이러니 결론】</span>쉽게 말하면 <strong>"밖에서 걸어갈 수 있는데 헬스장에서 돈 내고 러닝머신으로 걷는다"</strong>. 이게 바로 저자가 꼬집는 <u>역설</u>. <span class="star-line">★ 글의 핵심 풍자 — 낱말 추론 유형에서 어휘·반어 파악이 관건.</span></div>
   </div>
@@ -1961,7 +2200,7 @@ function buildPenTools(){
     penLayer.style.width=w+'px';
   };
   sync();
-  if(window.ResizeObserver){let _roPending=false;new ResizeObserver(()=>{if(_roPending)return;_roPending=true;requestAnimationFrame(()=>{_roPending=false;sync();});}).observe(document.body);}
+  if(window.ResizeObserver)new ResizeObserver(sync).observe(document.body);
   window.addEventListener('resize',sync);
   setInterval(sync,2000);
 }
