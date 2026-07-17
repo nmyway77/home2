@@ -332,6 +332,36 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
   #penToolbar .pen-color{width:26px;height:26px;}
 }
 
+
+/* ===== 드래그 배열영작 UI ===== */
+.dnd-wrap{margin:16px 0 4px}
+.dnd-answer{min-height:52px;background:#FFF8E1;border:2px dashed var(--gold);border-radius:6px;padding:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;transition:background .2s}
+.dnd-answer.over{background:#FFF0C4}
+.dnd-answer:empty::before{content:"여기에 단어를 순서대로 배열하세요";color:var(--gold);opacity:.6;font-size:13px;padding:6px 4px;width:100%;text-align:center;font-family:'Pretendard Variable',sans-serif}
+.dnd-pool{min-height:52px;background:var(--slate-50);border:2px dashed var(--slate-300);border-radius:6px;padding:10px;margin-top:8px;display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;transition:background .2s}
+.dnd-pool.over{background:var(--slate-100)}
+.dnd-chip{display:inline-flex;align-items:center;gap:5px;background:var(--warm-white);border:1.5px solid var(--navy-700);border-radius:6px;padding:7px 13px;font-family:'Pretendard Variable',sans-serif;font-size:14px;font-weight:600;color:var(--navy-950);cursor:grab;user-select:none;touch-action:manipulation;box-shadow:0 1px 2px rgba(10,30,58,.08);transition:transform .1s,box-shadow .1s}
+.dnd-chip:active{cursor:grabbing}
+.dnd-answer .dnd-chip{background:#FFFDF7;border-color:var(--gold)}
+.dnd-chip.sortable-ghost{opacity:.4}
+.dnd-chip.sortable-chosen{box-shadow:0 3px 10px rgba(10,30,58,.2);transform:scale(1.04)}
+.dnd-chip.sortable-drag{opacity:.9}
+.dnd-tf{font-size:9.5px;font-weight:800;letter-spacing:.05em;color:#fff;background:var(--rose-600);padding:2px 5px;border-radius:3px;font-family:'Pretendard Variable',sans-serif}
+.dnd-note{margin-top:8px;font-size:12px;color:var(--slate-600);background:var(--amber-50);border-left:3px solid var(--amber-600);padding:7px 11px;border-radius:0 4px 4px 0;line-height:1.5}
+.dnd-note b{color:var(--rose-600)}
+.dnd-controls{margin-top:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dnd-btn{font-family:'Pretendard Variable',sans-serif;font-size:12.5px;font-weight:800;letter-spacing:.03em;padding:7px 15px;border-radius:5px;border:1.5px solid;cursor:pointer;transition:all .15s}
+.dnd-check{background:var(--emerald-600);color:#fff;border-color:var(--emerald-700)}
+.dnd-check:hover{background:var(--emerald-700)}
+.dnd-reset{background:#fff;color:var(--slate-600);border-color:var(--slate-300)}
+.dnd-reset:hover{background:var(--slate-100)}
+.dnd-result{font-size:13px;font-weight:800;padding:3px 0}
+.dnd-result.ok{color:var(--emerald-600)}
+.dnd-result.no{color:var(--rose-600)}
+.dnd-answer.correct{background:var(--emerald-50);border-color:var(--emerald-600);border-style:solid}
+.dnd-answer.wrong{background:var(--rose-50);border-color:var(--rose-600)}
+@media print{.dnd-controls{display:none}.dnd-pool{display:none}}
+
 </style>
 </head>
 <body>
@@ -400,7 +430,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">01</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">친구들과 공부하는 것은 결과적으로 종종 학습보다는 더 많은 사회화를 낳는다.</div>
-<div class="wordbank">( with / often results in / friends / studying )</div>
+<div class="dnd-wrap" data-dnd="dnd1">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="with">with</span><span class="dnd-chip" data-token="often results in">often results in</span><span class="dnd-chip" data-token="friends">friends</span><span class="dnd-chip" data-token="studying">studying</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U1-01 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">Studying with friends</span> often results in more socializing than learning.</div>
@@ -411,7 +450,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">02</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">동물들과 일주일 내내 보내는 것은 잊을 수 없는 경험이었다.</div>
-<div class="wordbank">( was / the animals / the whole week / spending / with )</div>
+<div class="dnd-wrap" data-dnd="dnd2">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="was">was</span><span class="dnd-chip" data-token="the animals">the animals</span><span class="dnd-chip" data-token="the whole week">the whole week</span><span class="dnd-chip" data-token="spending">spending</span><span class="dnd-chip" data-token="with">with</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U1-02 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">Spending the whole week with the animals</span> was an unforgettable experience.</div>
@@ -422,7 +470,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">03</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">목격자가 진실을 말하고 있었는지는 수수께끼로 남았다.</div>
-<div class="wordbank">( the truth / the witness / whether / was telling )</div>
+<div class="dnd-wrap" data-dnd="dnd3">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="the truth">the truth</span><span class="dnd-chip" data-token="the witness">the witness</span><span class="dnd-chip" data-token="whether">whether</span><span class="dnd-chip" data-token="was telling">was telling</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U1-03 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">Whether the witness was telling the truth</span> remained a mystery.</div>
@@ -433,7 +490,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">04</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">그들이 회의 중에 제안한 것은 혁신적인 해결책으로 이어졌다.</div>
-<div class="wordbank">( they / led to / what / an innovative solution / during the meeting / suggested )</div>
+<div class="dnd-wrap" data-dnd="dnd4">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="they">they</span><span class="dnd-chip" data-token="led to">led to</span><span class="dnd-chip" data-token="what">what</span><span class="dnd-chip" data-token="an innovative solution">an innovative solution</span><span class="dnd-chip" data-token="during the meeting">during the meeting</span><span class="dnd-chip" data-token="suggested">suggested</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U1-04 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">What they suggested during the meeting</span> led to an innovative solution.</div>
@@ -446,7 +512,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">05</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">여러분이 학교를 졸업한 후 적절한 직업을 선택하는 것은 중요하다.<span class="wc-tag">6단어~</span></div>
-<div class="wordbank">( the right career / <b>be</b> / important / <b>choose</b> )</div>
+<div class="dnd-wrap" data-dnd="dnd5">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="the right career">the right career</span><span class="dnd-chip" data-token="be">be<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="important">important</span><span class="dnd-chip" data-token="choose">choose<span class="dnd-tf">변형</span></span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 필요시 밑줄 친 단어를 변형할 것 &nbsp;· 주어진 단어 수에 맞게 쓸 것 (주절 6단어)</div>
 <details class="ans"><summary>U1-05 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -458,7 +533,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">06</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">고대 문명에 대한 역사 소설을 읽는 것은 문화적 통찰력을 제공한다.<span class="wc-tag">7단어</span></div>
-<div class="wordbank">( historical novels / <b>read</b> / ancient civilizations / <b>provide</b> / about )</div>
+<div class="dnd-wrap" data-dnd="dnd6">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="historical novels">historical novels</span><span class="dnd-chip" data-token="read">read<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="ancient civilizations">ancient civilizations</span><span class="dnd-chip" data-token="provide">provide<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="about">about</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 필요시 밑줄 친 단어를 변형할 것 &nbsp;· 주어진 단어 수에 맞게 쓸 것 (7단어)</div>
 <details class="ans"><summary>U1-06 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -470,7 +554,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">07</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">우리가 자금을 받는지는 그 연구 프로젝트의 미래를 결정한다.</div>
-<div class="wordbank">( funding / we / the future / get / <b>determine</b> )</div>
+<div class="dnd-wrap" data-dnd="dnd7">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="funding">funding</span><span class="dnd-chip" data-token="we">we</span><span class="dnd-chip" data-token="the future">the future</span><span class="dnd-chip" data-token="get">get</span><span class="dnd-chip" data-token="determine">determine<span class="dnd-tf">변형</span></span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 접속사 또는 관계대명사를 추가할 것 &nbsp;· 필요시 밑줄 친 단어를 변형할 것</div>
 <details class="ans"><summary>U1-07 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -482,7 +575,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">08</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">그 회사가 직원들에게 제공하는 것은 원격 근무 선택권을 포함한다.</div>
-<div class="wordbank">( the company / remote work options / <b>include</b> / its employees / offers )</div>
+<div class="dnd-wrap" data-dnd="dnd8">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="the company">the company</span><span class="dnd-chip" data-token="remote work options">remote work options</span><span class="dnd-chip" data-token="include">include<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="its employees">its employees</span><span class="dnd-chip" data-token="offers">offers</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 접속사 또는 관계대명사를 추가할 것 &nbsp;· 필요시 밑줄 친 단어를 변형할 것</div>
 <details class="ans"><summary>U1-08 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -529,7 +631,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">01</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">일과 개인 생활 사이에서 균형을 찾는 것은 중요하다.</div>
-<div class="wordbank">( find / between / a balance / to / work and personal life )</div>
+<div class="dnd-wrap" data-dnd="dnd9">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="find">find</span><span class="dnd-chip" data-token="between">between</span><span class="dnd-chip" data-token="a balance">a balance</span><span class="dnd-chip" data-token="to">to</span><span class="dnd-chip" data-token="work and personal life">work and personal life</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U2-01 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">It is important to find a balance</span> between work and personal life.</div>
@@ -540,7 +651,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">02</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">회사들이 변화하는 시장들에 빠르게 적응하는 것은 필수적이다.</div>
-<div class="wordbank">( adapt quickly / companies / is / for / necessary / it / to )</div>
+<div class="dnd-wrap" data-dnd="dnd10">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="adapt quickly">adapt quickly</span><span class="dnd-chip" data-token="companies">companies</span><span class="dnd-chip" data-token="is">is</span><span class="dnd-chip" data-token="for">for</span><span class="dnd-chip" data-token="necessary">necessary</span><span class="dnd-chip" data-token="it">it</span><span class="dnd-chip" data-token="to">to</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U2-02 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">It is necessary <span class="key">for companies to adapt quickly</span> to changing markets.</div>
@@ -551,7 +671,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">03</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">아무도 그 소설 속 오류를 알아차리지 못했다는 것은 이상하다.</div>
-<div class="wordbank">( noticed / strange / is / the error / it / nobody / that )</div>
+<div class="dnd-wrap" data-dnd="dnd11">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="noticed">noticed</span><span class="dnd-chip" data-token="strange">strange</span><span class="dnd-chip" data-token="is">is</span><span class="dnd-chip" data-token="the error">the error</span><span class="dnd-chip" data-token="it">it</span><span class="dnd-chip" data-token="nobody">nobody</span><span class="dnd-chip" data-token="that">that</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U2-03 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">It is strange <span class="key">that nobody noticed the error</span> in the novel.</div>
@@ -562,7 +691,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">04</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">기술이 계속해서 발전하는 것은 흥미롭다.</div>
-<div class="wordbank">( advance / it / continues to / that / exciting / is / technology )</div>
+<div class="dnd-wrap" data-dnd="dnd12">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="advance">advance</span><span class="dnd-chip" data-token="it">it</span><span class="dnd-chip" data-token="continues to">continues to</span><span class="dnd-chip" data-token="that">that</span><span class="dnd-chip" data-token="exciting">exciting</span><span class="dnd-chip" data-token="is">is</span><span class="dnd-chip" data-token="technology">technology</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U2-04 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">It is exciting <span class="key">that technology continues to advance</span>.</div>
@@ -575,7 +713,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">05</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">당신의 평상시 일과 바깥에서 새로운 취미들을 탐색하는 것은 재미있다.</div>
-<div class="wordbank">( new hobbies / fun / explore )</div>
+<div class="dnd-wrap" data-dnd="dnd13">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="new hobbies">new hobbies</span><span class="dnd-chip" data-token="fun">fun</span><span class="dnd-chip" data-token="explore">explore</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 「가주어 it – 진주어 to부정사구」 구문으로 쓸 것 &nbsp;· 필요시 의미상 주어를 쓸 것</div>
 <details class="ans"><summary>U2-05 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -586,7 +733,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">06</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">우리의 모든 정보에 대해 소셜 미디어에 의존하는 것은 좋지 않은 생각이다.</div>
-<div class="wordbank">( social media / depend on / a bad idea )</div>
+<div class="dnd-wrap" data-dnd="dnd14">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="social media">social media</span><span class="dnd-chip" data-token="depend on">depend on</span><span class="dnd-chip" data-token="a bad idea">a bad idea</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 「가주어 it – 진주어 to부정사구」 구문으로 쓸 것</div>
 <details class="ans"><summary>U2-06 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -597,7 +753,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">07</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">더위 속에서 어린이들이 충분한 물을 마시는 것은 필수적이다.</div>
-<div class="wordbank">( drink / essential / children / enough water )</div>
+<div class="dnd-wrap" data-dnd="dnd15">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="drink">drink</span><span class="dnd-chip" data-token="essential">essential</span><span class="dnd-chip" data-token="children">children</span><span class="dnd-chip" data-token="enough water">enough water</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 「가주어 it – 진주어 to부정사구」 구문으로 쓸 것 &nbsp;· 필요시 의미상 주어를 쓸 것</div>
 <details class="ans"><summary>U2-07 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -609,7 +774,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">08</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">그들이 지역 병원 기금에 큰 액수의 돈을 기부한 것은 관대했다.</div>
-<div class="wordbank">( them / of money / generous / a large amount / donate )</div>
+<div class="dnd-wrap" data-dnd="dnd16">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="them">them</span><span class="dnd-chip" data-token="of money">of money</span><span class="dnd-chip" data-token="generous">generous</span><span class="dnd-chip" data-token="a large amount">a large amount</span><span class="dnd-chip" data-token="donate">donate</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 「가주어 it – 진주어 to부정사구」 구문으로 쓸 것 &nbsp;· 필요시 의미상 주어를 쓸 것</div>
 <details class="ans"><summary>U2-08 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -672,7 +846,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">06</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">그녀가 여행 동안 경험한 것은 삶에 대한 그녀의 시각을 바꿨다.</div>
-<div class="wordbank">( her trip / what / experienced / she / during )</div>
+<div class="dnd-wrap" data-dnd="dnd17">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="her trip">her trip</span><span class="dnd-chip" data-token="what">what</span><span class="dnd-chip" data-token="experienced">experienced</span><span class="dnd-chip" data-token="she">she</span><span class="dnd-chip" data-token="during">during</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T1-06 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">What she experienced during her trip</span> changed her perspective on life.</div>
@@ -683,7 +866,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">07</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">중요한 과제를 앞두고 클래식 음악을 듣는 것은 집중력을 향상시킬 수 있다.</div>
-<div class="wordbank">( concentration / listening to / enhance / classical music / can )</div>
+<div class="dnd-wrap" data-dnd="dnd18">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="concentration">concentration</span><span class="dnd-chip" data-token="listening to">listening to</span><span class="dnd-chip" data-token="enhance">enhance</span><span class="dnd-chip" data-token="classical music">classical music</span><span class="dnd-chip" data-token="can">can</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T1-07 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">Listening to classical music can enhance</span> concentration before an important task.</div>
@@ -694,7 +886,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">08</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">폭풍우 동안 그 지역의 주민들이 밖에 나가 있는 것은 위험하다.</div>
-<div class="wordbank">( of the area / the residents / dangerous / is / stay outside / to / it / for )</div>
+<div class="dnd-wrap" data-dnd="dnd19">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="of the area">of the area</span><span class="dnd-chip" data-token="the residents">the residents</span><span class="dnd-chip" data-token="dangerous">dangerous</span><span class="dnd-chip" data-token="is">is</span><span class="dnd-chip" data-token="stay outside">stay outside</span><span class="dnd-chip" data-token="to">to</span><span class="dnd-chip" data-token="it">it</span><span class="dnd-chip" data-token="for">for</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T1-08 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">It is dangerous <span class="key">for the residents of the area to stay outside</span> during the storm.</div>
@@ -705,7 +906,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">09</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">원래 건물의 색이 노란색이었는지는 확실하지 않다.</div>
-<div class="wordbank">( of the original building / was / the color / whether / yellow )</div>
+<div class="dnd-wrap" data-dnd="dnd20">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="of the original building">of the original building</span><span class="dnd-chip" data-token="was">was</span><span class="dnd-chip" data-token="the color">the color</span><span class="dnd-chip" data-token="whether">whether</span><span class="dnd-chip" data-token="yellow">yellow</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T1-09 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">Whether the color of the original building was yellow</span> is uncertain.</div>
@@ -716,7 +926,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">10</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">사람들 앞에서 말하는 것은 준비와 많은 연습을 요구한다.</div>
-<div class="wordbank">( practice / preparation / and / demands / lots of / speaking in public )</div>
+<div class="dnd-wrap" data-dnd="dnd21">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="practice">practice</span><span class="dnd-chip" data-token="preparation">preparation</span><span class="dnd-chip" data-token="and">and</span><span class="dnd-chip" data-token="demands">demands</span><span class="dnd-chip" data-token="lots of">lots of</span><span class="dnd-chip" data-token="speaking in public">speaking in public</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T1-10 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">Speaking in public demands</span> preparation and lots of practice.</div>
@@ -727,7 +946,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">11</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">작은 기기가 그렇게 많은 데이터를 저장할 수 있다는 것은 놀랍다.</div>
-<div class="wordbank">( a tiny device / amazing / is / store / that / so much data / it / can )</div>
+<div class="dnd-wrap" data-dnd="dnd22">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="a tiny device">a tiny device</span><span class="dnd-chip" data-token="amazing">amazing</span><span class="dnd-chip" data-token="is">is</span><span class="dnd-chip" data-token="store">store</span><span class="dnd-chip" data-token="that">that</span><span class="dnd-chip" data-token="so much data">so much data</span><span class="dnd-chip" data-token="it">it</span><span class="dnd-chip" data-token="can">can</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T1-11 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">It is amazing <span class="key">that a tiny device can store so much data</span>.</div>
@@ -740,7 +968,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">12</div><div class="q-type gram">변형</div></div>
 <div class="q-ko">온 가족을 위해 건강한 식사를 요리하는 것은 우리를 더 가까워지게 해 준다.<span class="wc-tag">8단어</span></div>
-<div class="wordbank">( <b>bring</b> / the whole family / for / healthy meals / <b>cook</b> )</div>
+<div class="dnd-wrap" data-dnd="dnd23">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="bring">bring<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="the whole family">the whole family</span><span class="dnd-chip" data-token="for">for</span><span class="dnd-chip" data-token="healthy meals">healthy meals</span><span class="dnd-chip" data-token="cook">cook<span class="dnd-tf">변형</span></span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T1-12 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">Cooking healthy meals for the whole family brings</span> us closer.</div>
@@ -750,7 +987,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">13</div><div class="q-type gram">변형</div></div>
 <div class="q-ko">당신이 온라인에 게시하는 것은 당신이 예상할 수도 있는 것보다 당신의 평판에 더 영향을 미친다.<span class="wc-tag">7단어</span></div>
-<div class="wordbank">( online / <b>affect</b> / you / your reputation / post / what )</div>
+<div class="dnd-wrap" data-dnd="dnd24">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="online">online</span><span class="dnd-chip" data-token="affect">affect<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="you">you</span><span class="dnd-chip" data-token="your reputation">your reputation</span><span class="dnd-chip" data-token="post">post</span><span class="dnd-chip" data-token="what">what</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T1-13 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">What you post online affects your reputation</span> more than you might expect.</div>
@@ -761,7 +1007,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">14</div><div class="q-type gram">추가</div></div>
 <div class="q-ko">그가 손을 들지 않고 그녀의 발표를 중단시킨 것은 무례했다.<span class="wc-tag">9단어</span></div>
-<div class="wordbank">( him / interrupt / was / her presentation / to / rude / it )</div>
+<div class="dnd-wrap" data-dnd="dnd25">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="him">him</span><span class="dnd-chip" data-token="interrupt">interrupt</span><span class="dnd-chip" data-token="was">was</span><span class="dnd-chip" data-token="her presentation">her presentation</span><span class="dnd-chip" data-token="to">to</span><span class="dnd-chip" data-token="rude">rude</span><span class="dnd-chip" data-token="it">it</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T1-14 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">It was rude <span class="key">of him</span> to interrupt her presentation without raising his hand.</div>
@@ -771,7 +1026,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">15</div><div class="q-type gram">추가</div></div>
 <div class="q-ko">학생들이 시험 전에 모든 것을 외우는 것은 불가능하다.<span class="wc-tag">8단어</span></div>
-<div class="wordbank">( to / everything / impossible / it / memorize / students / is )</div>
+<div class="dnd-wrap" data-dnd="dnd26">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="to">to</span><span class="dnd-chip" data-token="everything">everything</span><span class="dnd-chip" data-token="impossible">impossible</span><span class="dnd-chip" data-token="it">it</span><span class="dnd-chip" data-token="memorize">memorize</span><span class="dnd-chip" data-token="students">students</span><span class="dnd-chip" data-token="is">is</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T1-15 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">It is impossible <span class="key">for students</span> to memorize everything before an exam.</div>
@@ -781,7 +1045,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">16</div><div class="q-type gram">변형</div></div>
 <div class="q-ko">우산 없이 빗속을 걷는 것은 그의 새 신발을 엉망으로 만들었다.<span class="wc-tag">11단어</span></div>
-<div class="wordbank">( ruined / in the rain / his new shoes / <b>walk</b> / without an umbrella )</div>
+<div class="dnd-wrap" data-dnd="dnd27">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="ruined">ruined</span><span class="dnd-chip" data-token="in the rain">in the rain</span><span class="dnd-chip" data-token="his new shoes">his new shoes</span><span class="dnd-chip" data-token="walk">walk<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="without an umbrella">without an umbrella</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T1-16 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">Walking in the rain without an umbrella</span> ruined his new shoes.</div>
@@ -791,7 +1064,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">17</div><div class="q-type gram">추가</div></div>
 <div class="q-ko">자연 속에서 시간을 보내는 것이 스트레스 수준을 줄여 준다는 것은 명백하다.<span class="wc-tag">11단어</span></div>
-<div class="wordbank">( reduces / it / stress levels / spending / in nature / is / time / clear )</div>
+<div class="dnd-wrap" data-dnd="dnd28">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="reduces">reduces</span><span class="dnd-chip" data-token="it">it</span><span class="dnd-chip" data-token="stress levels">stress levels</span><span class="dnd-chip" data-token="spending">spending</span><span class="dnd-chip" data-token="in nature">in nature</span><span class="dnd-chip" data-token="is">is</span><span class="dnd-chip" data-token="time">time</span><span class="dnd-chip" data-token="clear">clear</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T1-17 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">It is clear <span class="key">that</span> spending time in nature reduces stress levels.</div>
@@ -803,7 +1085,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">18</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">그 교사가 학생들이 준비될 때까지 시험을 늦춘 것은 현명했다.</div>
-<div class="wordbank">( the test / the teacher / delay / wise )</div>
+<div class="dnd-wrap" data-dnd="dnd29">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="the test">the test</span><span class="dnd-chip" data-token="the teacher">the teacher</span><span class="dnd-chip" data-token="delay">delay</span><span class="dnd-chip" data-token="wise">wise</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 「가주어 it – 진주어 to부정사구」 구문으로 쓸 것</div>
 <details class="ans"><summary>T1-18 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -815,7 +1106,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">19</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">연구자들이 연구 결과를 정확하게 보고하는 것은 필수적이다.</div>
-<div class="wordbank">( necessary / their findings / report / researchers )</div>
+<div class="dnd-wrap" data-dnd="dnd30">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="necessary">necessary</span><span class="dnd-chip" data-token="their findings">their findings</span><span class="dnd-chip" data-token="report">report</span><span class="dnd-chip" data-token="researchers">researchers</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 「가주어 it – 진주어 to부정사구」 구문으로 쓸 것</div>
 <details class="ans"><summary>T1-19 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -826,7 +1126,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">20</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">매일 채소를 먹는 것은 장기적으로 당신의 면역 체계를 증진시킨다.</div>
-<div class="wordbank">( vegetables / your immune system / <b>eat</b> / <b>improve</b> / every day )</div>
+<div class="dnd-wrap" data-dnd="dnd31">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="vegetables">vegetables</span><span class="dnd-chip" data-token="your immune system">your immune system</span><span class="dnd-chip" data-token="eat">eat<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="improve">improve<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="every day">every day</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 필요시 밑줄 친 단어를 변형할 것 &nbsp;· 8단어로 쓸 것</div>
 <details class="ans"><summary>T1-20 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -837,7 +1146,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">21</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">연습 중에 코치가 말하는 것은 선수들이 더 잘 경기하도록 동기를 부여한다.</div>
-<div class="wordbank">( <b>motivate</b> / says / the players / during practice / the coach )</div>
+<div class="dnd-wrap" data-dnd="dnd32">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="motivate">motivate<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="says">says</span><span class="dnd-chip" data-token="the players">the players</span><span class="dnd-chip" data-token="during practice">during practice</span><span class="dnd-chip" data-token="the coach">the coach</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 관계대명사 what을 추가할 것 &nbsp;· 필요시 밑줄 친 단어를 변형할 것</div>
 <details class="ans"><summary>T1-21 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -848,7 +1166,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">22</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">몇몇 동물들이 지진이 발생하기 전에 지진을 느낄 수 있다는 것은 흥미롭다.</div>
-<div class="wordbank">( can sense / interesting / happen / earthquakes / they / before / some animals )</div>
+<div class="dnd-wrap" data-dnd="dnd33">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="can sense">can sense</span><span class="dnd-chip" data-token="interesting">interesting</span><span class="dnd-chip" data-token="happen">happen</span><span class="dnd-chip" data-token="earthquakes">earthquakes</span><span class="dnd-chip" data-token="they">they</span><span class="dnd-chip" data-token="before">before</span><span class="dnd-chip" data-token="some animals">some animals</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 「가주어 it – 진주어 that절」 구문으로 쓸 것</div>
 <details class="ans"><summary>T1-22 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -871,7 +1198,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">24</div><div class="q-type gram">조건 영작</div></div>
 <div class="q-ko">윗글의 밑줄 친 우리말 의미에 맞도록 〈조건〉에 맞게 문장을 완성하시오.</div>
-<div class="wordbank">( establish / essential / is / the author / a positive relationship )</div>
+<div class="dnd-wrap" data-dnd="dnd34">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="establish">establish</span><span class="dnd-chip" data-token="essential">essential</span><span class="dnd-chip" data-token="is">is</span><span class="dnd-chip" data-token="the author">the author</span><span class="dnd-chip" data-token="a positive relationship">a positive relationship</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>1. 「가주어 it – 진주어 to부정사구」 구문으로 쓸 것 &nbsp;2. 다음 말을 모두 활용하여 총 11단어로 쓸 것</div>
 <details class="ans"><summary>T1-24 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -885,7 +1221,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">25</div><div class="q-type gram">조건 영작</div></div>
 <div class="q-ko">윗글의 밑줄 친 우리말 의미에 맞도록 〈조건〉에 맞게 문장을 완성하시오.</div>
-<div class="wordbank">( their life choices / has become / <b>have</b> / over / desirable / greater control )</div>
+<div class="dnd-wrap" data-dnd="dnd35">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="their life choices">their life choices</span><span class="dnd-chip" data-token="has become">has become</span><span class="dnd-chip" data-token="have">have<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="over">over</span><span class="dnd-chip" data-token="desirable">desirable</span><span class="dnd-chip" data-token="greater control">greater control</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>1. 동명사를 포함할 것 &nbsp;2. 다음 말을 모두 활용하고 필요시 단어를 변형할 것</div>
 <details class="ans"><summary>T1-25 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -948,7 +1293,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">01</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">나는 그의 첫 번째 영화를 본 이후로 그 배우의 엄청난 팬이었다.</div>
-<div class="wordbank">( a huge fan / been / I / have / of the actor )</div>
+<div class="dnd-wrap" data-dnd="dnd36">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="a huge fan">a huge fan</span><span class="dnd-chip" data-token="been">been</span><span class="dnd-chip" data-token="I">I</span><span class="dnd-chip" data-token="have">have</span><span class="dnd-chip" data-token="of the actor">of the actor</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U3-01 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">I have been a huge fan of the actor</span> since I watched his first movie.</div>
@@ -959,7 +1313,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">02</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">20년 동안 우리는 집을 잃은 동물들에게 새집을 제공해 왔다.</div>
-<div class="wordbank">( lost animals / have / we / new homes / with / provided )</div>
+<div class="dnd-wrap" data-dnd="dnd37">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="lost animals">lost animals</span><span class="dnd-chip" data-token="have">have</span><span class="dnd-chip" data-token="we">we</span><span class="dnd-chip" data-token="new homes">new homes</span><span class="dnd-chip" data-token="with">with</span><span class="dnd-chip" data-token="provided">provided</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U3-02 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">We have provided lost animals with new homes</span> for 20 years.</div>
@@ -970,7 +1333,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">03</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">나의 할아버지는 유명한 예술가가 만들었던 아름다운 꽃병을 샀다.</div>
-<div class="wordbank">( had / bought / a famous artist / made / a beautiful vase )</div>
+<div class="dnd-wrap" data-dnd="dnd38">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="had">had</span><span class="dnd-chip" data-token="bought">bought</span><span class="dnd-chip" data-token="a famous artist">a famous artist</span><span class="dnd-chip" data-token="made">made</span><span class="dnd-chip" data-token="a beautiful vase">a beautiful vase</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U3-03 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">My grandfather <span class="key">bought a beautiful vase that a famous artist had made</span>.</div>
@@ -981,7 +1353,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">04</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">Jamie는 이제 거의 3년째 피아노 치는 것을 배우는 중이다.</div>
-<div class="wordbank">( learning / for nearly three years / Jamie / to play / has / the piano / been )</div>
+<div class="dnd-wrap" data-dnd="dnd39">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="learning">learning</span><span class="dnd-chip" data-token="for nearly three years">for nearly three years</span><span class="dnd-chip" data-token="Jamie">Jamie</span><span class="dnd-chip" data-token="to play">to play</span><span class="dnd-chip" data-token="has">has</span><span class="dnd-chip" data-token="the piano">the piano</span><span class="dnd-chip" data-token="been">been</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U3-04 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">Jamie <span class="key">has been learning to play the piano</span> for nearly three years now.</div>
@@ -994,7 +1375,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">05</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">더욱 최근에, 사람들은 채식 식단에 관심을 가지게 되었다.</div>
-<div class="wordbank">( vegetarian diets / <b>become</b> / people / interested in )</div>
+<div class="dnd-wrap" data-dnd="dnd40">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="vegetarian diets">vegetarian diets</span><span class="dnd-chip" data-token="become">become<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="people">people</span><span class="dnd-chip" data-token="interested in">interested in</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 완료시제 또는 완료진행시제로 쓸 것 &nbsp;· 필요시 밑줄 친 단어를 변형할 것</div>
 <details class="ans"><summary>U3-05 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -1005,7 +1395,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">06</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">그 교수는 지난 5년 동안 학생들에게 공학을 가르쳤다.</div>
-<div class="wordbank">( <b>teach</b> / engineering / the professor / students )</div>
+<div class="dnd-wrap" data-dnd="dnd41">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="teach">teach<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="engineering">engineering</span><span class="dnd-chip" data-token="the professor">the professor</span><span class="dnd-chip" data-token="students">students</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 완료시제 또는 완료진행시제로 쓸 것 &nbsp;· 필요시 밑줄 친 단어를 변형할 것</div>
 <details class="ans"><summary>U3-06 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -1016,7 +1415,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">07</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">그는 이전에 그런 폭우를 경험했던 적이 없다고 말했다.</div>
-<div class="wordbank">( such heavy rain / <b>never experience</b> / he )</div>
+<div class="dnd-wrap" data-dnd="dnd42">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="such heavy rain">such heavy rain</span><span class="dnd-chip" data-token="never experience">never experience<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="he">he</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 완료시제 또는 완료진행시제로 쓸 것 &nbsp;· 필요시 밑줄 친 단어를 변형할 것</div>
 <details class="ans"><summary>U3-07 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -1027,7 +1435,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">08</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">그녀는 항공편이 취소되기 전에 공항에서 몇 시간째 기다리고 있었다.</div>
-<div class="wordbank">( <b>wait</b> / <b>be</b> / she / for hours )</div>
+<div class="dnd-wrap" data-dnd="dnd43">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="wait">wait<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="be">be<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="she">she</span><span class="dnd-chip" data-token="for hours">for hours</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 완료시제 또는 완료진행시제로 쓸 것 &nbsp;· 필요시 밑줄 친 단어를 변형할 것</div>
 <details class="ans"><summary>U3-08 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -1074,7 +1491,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">01</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">그녀가 그 긴 소설을 단 하루 만에 다 읽었을 리가 없다.</div>
-<div class="wordbank">( that long novel / she / finished / have / can't )</div>
+<div class="dnd-wrap" data-dnd="dnd44">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="that long novel">that long novel</span><span class="dnd-chip" data-token="she">she</span><span class="dnd-chip" data-token="finished">finished</span><span class="dnd-chip" data-token="have">have</span><span class="dnd-chip" data-token="can't">can't</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U4-01 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">She <span class="key">can't have finished</span> that long novel in just one day.</div>
@@ -1085,7 +1511,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">02</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">그 의사는 그 환자가 매 식사 후에 약을 먹어야 한다고 제안했다.</div>
-<div class="wordbank">( suggested / take / the patient / that / the doctor / the medicine )</div>
+<div class="dnd-wrap" data-dnd="dnd45">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="suggested">suggested</span><span class="dnd-chip" data-token="take">take</span><span class="dnd-chip" data-token="the patient">the patient</span><span class="dnd-chip" data-token="that">that</span><span class="dnd-chip" data-token="the doctor">the doctor</span><span class="dnd-chip" data-token="the medicine">the medicine</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U4-02 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">The doctor suggested that the patient <span class="key">take</span> the medicine after every meal.</div>
@@ -1096,7 +1531,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">03</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">우리는 바닷가에서 휴가를 보내곤 했지만, 이제 산으로 여행하는 것을 선호한다.</div>
-<div class="wordbank">( at / spend / we / to / our vacations / the beach / used )</div>
+<div class="dnd-wrap" data-dnd="dnd46">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="at">at</span><span class="dnd-chip" data-token="spend">spend</span><span class="dnd-chip" data-token="we">we</span><span class="dnd-chip" data-token="to">to</span><span class="dnd-chip" data-token="our vacations">our vacations</span><span class="dnd-chip" data-token="the beach">the beach</span><span class="dnd-chip" data-token="used">used</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U4-03 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">We <span class="key">used to spend</span> our vacations at the beach, but now we prefer traveling to the mountains.</div>
@@ -1107,7 +1551,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">04</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">나의 할머니는 매 주말마다 대가족을 위해 요리하는 것에 익숙하시다.</div>
-<div class="wordbank">( for a large family / my grandmother / used to / cooking / is )</div>
+<div class="dnd-wrap" data-dnd="dnd47">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="for a large family">for a large family</span><span class="dnd-chip" data-token="my grandmother">my grandmother</span><span class="dnd-chip" data-token="used to">used to</span><span class="dnd-chip" data-token="cooking">cooking</span><span class="dnd-chip" data-token="is">is</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U4-04 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">My grandmother <span class="key">is used to cooking</span> for a large family every single weekend.</div>
@@ -1120,7 +1573,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">05</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">우리는 오늘 소풍을 갈 수 있었을 것이지만, 날씨가 안 좋아졌다.</div>
-<div class="wordbank">( we / today / <b>have</b> / a picnic )</div>
+<div class="dnd-wrap" data-dnd="dnd48">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="we">we</span><span class="dnd-chip" data-token="today">today</span><span class="dnd-chip" data-token="have">have<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="a picnic">a picnic</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 「조동사+have p.p.」를 포함할 것 &nbsp;· 필요시 밑줄 친 단어를 변형할 것</div>
 <details class="ans"><summary>U4-05 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -1131,7 +1593,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">06</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">그들이 시간표를 확인하지 않았기 때문에 그들은 잘못된 기차를 탔을지도 모른다.</div>
-<div class="wordbank">( they / the wrong train / <b>take</b> )</div>
+<div class="dnd-wrap" data-dnd="dnd49">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="they">they</span><span class="dnd-chip" data-token="the wrong train">the wrong train</span><span class="dnd-chip" data-token="take">take<span class="dnd-tf">변형</span></span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 「조동사+have p.p.」를 포함할 것 &nbsp;· 필요시 밑줄 친 단어를 변형할 것</div>
 <details class="ans"><summary>U4-06 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -1142,7 +1613,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">07</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">내가 전화기에서 전화기 케이스를 뺐을 때, 그것이 바닥으로 떨어졌음이 틀림없다.</div>
-<div class="wordbank">( <b>fall</b> / onto the floor / it )</div>
+<div class="dnd-wrap" data-dnd="dnd50">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="fall">fall<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="onto the floor">onto the floor</span><span class="dnd-chip" data-token="it">it</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 「조동사+have p.p.」를 포함할 것 &nbsp;· 필요시 밑줄 친 단어를 변형할 것</div>
 <details class="ans"><summary>U4-07 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -1153,7 +1633,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">08</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">그녀는 계약서에서 취소 정책에 관한 부분들을 읽었어야 했다.</div>
-<div class="wordbank">( she / the parts / <b>read</b> / the cancellation policy / about )</div>
+<div class="dnd-wrap" data-dnd="dnd51">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="she">she</span><span class="dnd-chip" data-token="the parts">the parts</span><span class="dnd-chip" data-token="read">read<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="the cancellation policy">the cancellation policy</span><span class="dnd-chip" data-token="about">about</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 「조동사+have p.p.」를 포함할 것 &nbsp;· 필요시 밑줄 친 단어를 변형할 것</div>
 <details class="ans"><summary>U4-08 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -1215,7 +1704,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">06</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">줄거리가 혼란스러워서 나는 그 영화를 세 번 보았다.</div>
-<div class="wordbank">( that movie / have / I / three times / watched )</div>
+<div class="dnd-wrap" data-dnd="dnd52">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="that movie">that movie</span><span class="dnd-chip" data-token="have">have</span><span class="dnd-chip" data-token="I">I</span><span class="dnd-chip" data-token="three times">three times</span><span class="dnd-chip" data-token="watched">watched</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T2-06 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">I have watched that movie three times</span> because the plot is confusing.</div>
@@ -1226,7 +1724,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">07</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">나는 전에 그녀를 만났던 적이 없어서 그녀를 알아보지 못했다.</div>
-<div class="wordbank">( I / had / recognize / because / her / didn't / never / her / I / met )</div>
+<div class="dnd-wrap" data-dnd="dnd53">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="I">I</span><span class="dnd-chip" data-token="had">had</span><span class="dnd-chip" data-token="recognize">recognize</span><span class="dnd-chip" data-token="because">because</span><span class="dnd-chip" data-token="her">her</span><span class="dnd-chip" data-token="didn't">didn't</span><span class="dnd-chip" data-token="never">never</span><span class="dnd-chip" data-token="her">her</span><span class="dnd-chip" data-token="I">I</span><span class="dnd-chip" data-token="met">met</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T2-07 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">I didn't recognize her <span class="key">because I had never met her</span> before.</div>
@@ -1237,7 +1744,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">08</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">산호초에서 발견되는 어떤 유기체들은 암과 같은 질병들을 치료하는 데 사용된다.</div>
-<div class="wordbank">( in coral reefs / treat / to / are / some organisms / diseases / found / used )</div>
+<div class="dnd-wrap" data-dnd="dnd54">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="in coral reefs">in coral reefs</span><span class="dnd-chip" data-token="treat">treat</span><span class="dnd-chip" data-token="to">to</span><span class="dnd-chip" data-token="are">are</span><span class="dnd-chip" data-token="some organisms">some organisms</span><span class="dnd-chip" data-token="diseases">diseases</span><span class="dnd-chip" data-token="found">found</span><span class="dnd-chip" data-token="used">used</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T2-08 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">Some organisms found in coral reefs <span class="key">are used to treat</span> diseases like cancer.</div>
@@ -1248,7 +1764,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">09</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">그는 공항에 도착하기 전에 우리에게 전화했어야 했다.</div>
-<div class="wordbank">( called / at the airport / arriving / have / he / before / should / us )</div>
+<div class="dnd-wrap" data-dnd="dnd55">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="called">called</span><span class="dnd-chip" data-token="at the airport">at the airport</span><span class="dnd-chip" data-token="arriving">arriving</span><span class="dnd-chip" data-token="have">have</span><span class="dnd-chip" data-token="he">he</span><span class="dnd-chip" data-token="before">before</span><span class="dnd-chip" data-token="should">should</span><span class="dnd-chip" data-token="us">us</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T2-09 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">He <span class="key">should have called</span> us before arriving at the airport.</div>
@@ -1259,7 +1784,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">10</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">그는 진찰을 받으러 가기 전 며칠 동안 아팠었다.</div>
-<div class="wordbank">( for days / before / he / had / went to / feeling / see the doctor / been / he / sick )</div>
+<div class="dnd-wrap" data-dnd="dnd56">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="for days">for days</span><span class="dnd-chip" data-token="before">before</span><span class="dnd-chip" data-token="he">he</span><span class="dnd-chip" data-token="had">had</span><span class="dnd-chip" data-token="went to">went to</span><span class="dnd-chip" data-token="feeling">feeling</span><span class="dnd-chip" data-token="see the doctor">see the doctor</span><span class="dnd-chip" data-token="been">been</span><span class="dnd-chip" data-token="he">he</span><span class="dnd-chip" data-token="sick">sick</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T2-10 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">He <span class="key">had been feeling sick</span> for days before he went to see the doctor.</div>
@@ -1270,7 +1804,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">11</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">직원들은 CEO가 회사의 평판을 지키기 위해 사임해야 한다고 요구했다.</div>
-<div class="wordbank">( to protect / demanded / the company's reputation / resign / the employees / the CEO / that )</div>
+<div class="dnd-wrap" data-dnd="dnd57">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="to protect">to protect</span><span class="dnd-chip" data-token="demanded">demanded</span><span class="dnd-chip" data-token="the company's reputation">the company's reputation</span><span class="dnd-chip" data-token="resign">resign</span><span class="dnd-chip" data-token="the employees">the employees</span><span class="dnd-chip" data-token="the CEO">the CEO</span><span class="dnd-chip" data-token="that">that</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T2-11 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">The employees demanded that the CEO <span class="key">resign</span> to protect the company's reputation.</div>
@@ -1283,7 +1826,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">12</div><div class="q-type gram">변형·추가</div></div>
 <div class="q-ko">그들의 모든 사진들에 근거하여, 그들은 축제에서 아주 좋은 시간을 보냈음이 틀림없다.</div>
-<div class="wordbank">( <b>have</b> / a great time / at / must / the festival / they )</div>
+<div class="dnd-wrap" data-dnd="dnd58">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="have">have<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="a great time">a great time</span><span class="dnd-chip" data-token="at">at</span><span class="dnd-chip" data-token="must">must</span><span class="dnd-chip" data-token="the festival">the festival</span><span class="dnd-chip" data-token="they">they</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T2-12 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">They <span class="key">must have had</span> a great time at the festival, based on all their pictures.</div>
@@ -1293,7 +1845,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">13</div><div class="q-type gram">변형·추가</div></div>
 <div class="q-ko">내 친구는 이전에 그 박물관을 몇 번 방문했던 적이 있어서 가장 좋은 부분들을 알았다.</div>
-<div class="wordbank">( <b>visit</b> / before / my friend / that museum / several times )</div>
+<div class="dnd-wrap" data-dnd="dnd59">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="visit">visit<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="before">before</span><span class="dnd-chip" data-token="my friend">my friend</span><span class="dnd-chip" data-token="that museum">that museum</span><span class="dnd-chip" data-token="several times">several times</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T2-13 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">My friend <span class="key">had visited</span> that museum several times before, so he knew the best parts.</div>
@@ -1303,7 +1864,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">14</div><div class="q-type gram">변형·추가</div></div>
 <div class="q-ko">우리는 그 고객에게 연락하려고 노력하는 중이지만, 그녀는 아직 답을 하지 않았다.</div>
-<div class="wordbank">( contact / <b>try to</b> / we / <b>be</b> / the customer )</div>
+<div class="dnd-wrap" data-dnd="dnd60">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="contact">contact</span><span class="dnd-chip" data-token="try to">try to<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="we">we</span><span class="dnd-chip" data-token="be">be<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="the customer">the customer</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T2-14 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">We <span class="key">have been trying</span> to contact the customer, but she hasn't responded yet.</div>
@@ -1313,7 +1883,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">15</div><div class="q-type gram">변형·추가</div></div>
 <div class="q-ko">그녀는 누군가에게 말하기 전에 자신의 일을 그만두는 것에 대해 생각해 왔다.</div>
-<div class="wordbank">( <b>think about</b> / she / <b>be</b> / quitting / her job )</div>
+<div class="dnd-wrap" data-dnd="dnd61">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="think about">think about<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="she">she</span><span class="dnd-chip" data-token="be">be<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="quitting">quitting</span><span class="dnd-chip" data-token="her job">her job</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T2-15 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">She <span class="key">had been thinking</span> about quitting her job before she told anyone.</div>
@@ -1323,7 +1902,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">16</div><div class="q-type gram">변형·추가</div></div>
 <div class="q-ko">우리가 그곳에 도착했을 때 기차는 역을 이미 떠났다.</div>
-<div class="wordbank">( got / already / <b>leave</b> / the station / the train / we / when )</div>
+<div class="dnd-wrap" data-dnd="dnd62">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="got">got</span><span class="dnd-chip" data-token="already">already</span><span class="dnd-chip" data-token="leave">leave<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="the station">the station</span><span class="dnd-chip" data-token="the train">the train</span><span class="dnd-chip" data-token="we">we</span><span class="dnd-chip" data-token="when">when</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T2-16 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">The train <span class="key">had already left</span> the station when we got there.</div>
@@ -1333,7 +1921,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">17</div><div class="q-type gram">변형·추가</div></div>
 <div class="q-ko">우리가 이곳에 이사 온 이후로 그 시설들은 형편없는 상태로 있다.</div>
-<div class="wordbank">( since / in terrible condition / moved / the facilities / <b>be</b> / we )</div>
+<div class="dnd-wrap" data-dnd="dnd63">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="since">since</span><span class="dnd-chip" data-token="in terrible condition">in terrible condition</span><span class="dnd-chip" data-token="moved">moved</span><span class="dnd-chip" data-token="the facilities">the facilities</span><span class="dnd-chip" data-token="be">be<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="we">we</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T2-17 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">The facilities <span class="key">have been</span> in terrible condition since we moved here.</div>
@@ -1345,7 +1942,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">18</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">그 아이들은 오후 내내 바깥에서 놀고 있는 중이다.</div>
-<div class="wordbank">( <b>play</b> / <b>be</b> / outside / the children )</div>
+<div class="dnd-wrap" data-dnd="dnd64">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="play">play<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="be">be<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="outside">outside</span><span class="dnd-chip" data-token="the children">the children</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 완료진행시제로 쓸 것 &nbsp;· 필요시 밑줄 친 단어 변형 및 단어 추가</div>
 <details class="ans"><summary>T2-18 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -1356,7 +1962,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">19</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">그 전문가는 학교가 학생들에게 더 많은 예술 교육을 제공해야 한다고 제안했다.</div>
-<div class="wordbank">( more art education / that / suggested / the school / the expert / <b>offer</b> )</div>
+<div class="dnd-wrap" data-dnd="dnd65">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="more art education">more art education</span><span class="dnd-chip" data-token="that">that</span><span class="dnd-chip" data-token="suggested">suggested</span><span class="dnd-chip" data-token="the school">the school</span><span class="dnd-chip" data-token="the expert">the expert</span><span class="dnd-chip" data-token="offer">offer<span class="dnd-tf">변형</span></span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 10단어로 쓸 것 &nbsp;· 필요시 밑줄 친 단어 변형</div>
 <details class="ans"><summary>T2-19 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -1367,7 +1982,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">20</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">나의 부모님은 작년에 은퇴하신 이후로 열 곳의 다른 나라로 여행하셨다.</div>
-<div class="wordbank">( my parents / ten different countries / <b>travel to</b> )</div>
+<div class="dnd-wrap" data-dnd="dnd66">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="my parents">my parents</span><span class="dnd-chip" data-token="ten different countries">ten different countries</span><span class="dnd-chip" data-token="travel to">travel to<span class="dnd-tf">변형</span></span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 완료시제로 쓸 것 &nbsp;· 필요시 밑줄 친 단어 변형 및 단어 추가</div>
 <details class="ans"><summary>T2-20 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -1378,7 +2002,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">21</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">그들은 여름휴가를 위해 더 많은 돈을 저축했어야 했다.</div>
-<div class="wordbank">( <b>save</b> / for their summer vacation / they / more money )</div>
+<div class="dnd-wrap" data-dnd="dnd67">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="save">save<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="for their summer vacation">for their summer vacation</span><span class="dnd-chip" data-token="they">they</span><span class="dnd-chip" data-token="more money">more money</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 조동사를 추가할 것 &nbsp;· 필요시 밑줄 친 단어 변형 및 단어 추가</div>
 <details class="ans"><summary>T2-21 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -1389,7 +2022,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">22</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">침실 조명을 끄기 전에 그녀는 (책) 몇 쪽을 읽었다.</div>
-<div class="wordbank">( turned off / a few pages / she / <b>read</b> / she / before )</div>
+<div class="dnd-wrap" data-dnd="dnd68">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="turned off">turned off</span><span class="dnd-chip" data-token="a few pages">a few pages</span><span class="dnd-chip" data-token="she">she</span><span class="dnd-chip" data-token="read">read<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="she">she</span><span class="dnd-chip" data-token="before">before</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 완료시제로 쓸 것 &nbsp;· 필요시 밑줄 친 단어 변형 및 단어 추가</div>
 <details class="ans"><summary>T2-22 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -1412,7 +2054,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">24</div><div class="q-type gram">조건 영작</div></div>
 <div class="q-ko">윗글의 밑줄 친 우리말 의미에 맞도록 〈조건〉에 맞게 문장을 완성하시오.</div>
-<div class="wordbank">( about food waste / for freshness / <b>raise</b> / the demand / concerns )</div>
+<div class="dnd-wrap" data-dnd="dnd69">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="about food waste">about food waste</span><span class="dnd-chip" data-token="for freshness">for freshness</span><span class="dnd-chip" data-token="raise">raise<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="the demand">the demand</span><span class="dnd-chip" data-token="concerns">concerns</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>1. 현재완료시제로 쓸 것 &nbsp;2. 다음 말을 모두 활용하고 총 10단어로 쓸 것 (필요시 단어 변형 및 단어 추가)</div>
 <details class="ans"><summary>T2-24 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -1427,7 +2078,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">25</div><div class="q-type gram">조건 영작</div></div>
 <div class="q-ko">윗글의 밑줄 친 우리말 의미에 맞도록 〈조건〉에 맞게 영작하시오.</div>
-<div class="wordbank">( <b>notice</b> / how / she / I / feeling / was )</div>
+<div class="dnd-wrap" data-dnd="dnd70">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="notice">notice<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="how">how</span><span class="dnd-chip" data-token="she">she</span><span class="dnd-chip" data-token="I">I</span><span class="dnd-chip" data-token="feeling">feeling</span><span class="dnd-chip" data-token="was">was</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>1. 조동사를 추가할 것 &nbsp;2. 다음 말을 모두 활용하고 총 8단어로 쓸 것 (필요시 단어 변형 및 단어 추가)</div>
 <details class="ans"><summary>T2-25 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -1488,7 +2148,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">01</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">몇몇 나라들에서 드론과 로봇은 물품들을 배달하는 데 사용된다.</div>
-<div class="wordbank">( to deliver / are / items / used / drones and robots )</div>
+<div class="dnd-wrap" data-dnd="dnd71">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="to deliver">to deliver</span><span class="dnd-chip" data-token="are">are</span><span class="dnd-chip" data-token="items">items</span><span class="dnd-chip" data-token="used">used</span><span class="dnd-chip" data-token="drones and robots">drones and robots</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U5-01 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">Drones and robots <span class="key">are used to deliver</span> items in some countries.</div>
@@ -1499,7 +2168,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">02</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">우리는 뉴스에서 한 건물이 지진에 의해 파괴되어진 것을 보았다.</div>
-<div class="wordbank">( a building / an earthquake / been / by / destroyed / had )</div>
+<div class="dnd-wrap" data-dnd="dnd72">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="a building">a building</span><span class="dnd-chip" data-token="an earthquake">an earthquake</span><span class="dnd-chip" data-token="been">been</span><span class="dnd-chip" data-token="by">by</span><span class="dnd-chip" data-token="destroyed">destroyed</span><span class="dnd-chip" data-token="had">had</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U5-02 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">We saw on the news that a building <span class="key">had been destroyed</span> by an earthquake.</div>
@@ -1510,7 +2188,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">03</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">국가의 문화유산을 지키기 위해 많은 역사적인 건물들이 보존되어 왔다.</div>
-<div class="wordbank">( have / preserved / been / many historic buildings )</div>
+<div class="dnd-wrap" data-dnd="dnd73">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="have">have</span><span class="dnd-chip" data-token="preserved">preserved</span><span class="dnd-chip" data-token="been">been</span><span class="dnd-chip" data-token="many historic buildings">many historic buildings</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U5-03 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">Many historic buildings have been preserved</span> to maintain the country's cultural heritage.</div>
@@ -1521,7 +2208,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">04</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">이 약은 어떤 부작용도 일으키지 않고 통증을 줄여 준다고 말해진다.</div>
-<div class="wordbank">( pain / is / reduces / this medicine / that / it / said )</div>
+<div class="dnd-wrap" data-dnd="dnd74">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="pain">pain</span><span class="dnd-chip" data-token="is">is</span><span class="dnd-chip" data-token="reduces">reduces</span><span class="dnd-chip" data-token="this medicine">this medicine</span><span class="dnd-chip" data-token="that">that</span><span class="dnd-chip" data-token="it">it</span><span class="dnd-chip" data-token="said">said</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U5-04 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">It is said that this medicine reduces pain</span> without causing any side effects.</div>
@@ -1534,7 +2230,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">05</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">도난당한 그림들은 수사 후 경찰에 의해 되찾아졌다.<span class="wc-tag">8단어</span></div>
-<div class="wordbank">( the police / <b>recover</b> / the stolen paintings )</div>
+<div class="dnd-wrap" data-dnd="dnd75">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="the police">the police</span><span class="dnd-chip" data-token="recover">recover<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="the stolen paintings">the stolen paintings</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 밑줄 친 동사를 변형하여 수동태로 쓸 것 &nbsp;· 주어진 단어 수에 맞게 쓸 것 (8단어)</div>
 <details class="ans"><summary>U5-05 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -1545,7 +2250,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">06</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">환경을 개선하기 위해 많은 나무들이 도시 주변에 심어져 왔다.<span class="wc-tag">8단어</span></div>
-<div class="wordbank">( <b>plant</b> / many trees / around the city / have )</div>
+<div class="dnd-wrap" data-dnd="dnd76">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="plant">plant<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="many trees">many trees</span><span class="dnd-chip" data-token="around the city">around the city</span><span class="dnd-chip" data-token="have">have</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 밑줄 친 동사를 변형하여 수동태로 쓸 것 &nbsp;· 주어진 단어 수에 맞게 쓸 것 (8단어)</div>
 <details class="ans"><summary>U5-06 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -1556,7 +2270,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">07</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">고대 사람들은 방대한 거리를 항해하기 위해 별들을 사용했다고 믿어진다.<span class="wc-tag">9단어</span></div>
-<div class="wordbank">( the stars / it / ancient people / that / <b>believe</b> / used )</div>
+<div class="dnd-wrap" data-dnd="dnd77">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="the stars">the stars</span><span class="dnd-chip" data-token="it">it</span><span class="dnd-chip" data-token="ancient people">ancient people</span><span class="dnd-chip" data-token="that">that</span><span class="dnd-chip" data-token="believe">believe<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="used">used</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 밑줄 친 동사를 변형하여 수동태로 쓸 것 &nbsp;· 주어진 단어 수에 맞게 쓸 것 (9단어)</div>
 <details class="ans"><summary>U5-07 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -1567,7 +2290,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">08</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">그 회사는 사이버 공격으로 인해 수백만 달러를 잃은 것으로 보고된다.<span class="wc-tag">10단어</span></div>
-<div class="wordbank">( it / <b>report</b> / millions of dollars / lost / the company / that )</div>
+<div class="dnd-wrap" data-dnd="dnd78">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="it">it</span><span class="dnd-chip" data-token="report">report<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="millions of dollars">millions of dollars</span><span class="dnd-chip" data-token="lost">lost</span><span class="dnd-chip" data-token="the company">the company</span><span class="dnd-chip" data-token="that">that</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 밑줄 친 동사를 변형하여 수동태로 쓸 것 &nbsp;· 주어진 단어 수에 맞게 쓸 것 (10단어)</div>
 <details class="ans"><summary>U5-08 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -1622,7 +2354,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">01</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">이 영화는 많은 예술 평론가들에 의해 명작으로 여겨진다.</div>
-<div class="wordbank">( a masterpiece / is / this movie / considered )</div>
+<div class="dnd-wrap" data-dnd="dnd79">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="a masterpiece">a masterpiece</span><span class="dnd-chip" data-token="is">is</span><span class="dnd-chip" data-token="this movie">this movie</span><span class="dnd-chip" data-token="considered">considered</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U6-01 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">This movie <span class="key">is considered a masterpiece</span> by many art critics.</div>
@@ -1633,7 +2374,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">02</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">그 문은 부주의한 보안 요원에 의해 밤새 열린 채로 있었다.</div>
-<div class="wordbank">( open / was / the door / all night / left )</div>
+<div class="dnd-wrap" data-dnd="dnd80">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="open">open</span><span class="dnd-chip" data-token="was">was</span><span class="dnd-chip" data-token="the door">the door</span><span class="dnd-chip" data-token="all night">all night</span><span class="dnd-chip" data-token="left">left</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U6-02 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">The door <span class="key">was left open</span> all night by the careless security guard.</div>
@@ -1644,7 +2394,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">03</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">마라톤 참가자들은 30분 일찍 도착해 달라고 요청받았다.</div>
-<div class="wordbank">( to / marathon participants / arrive / were / asked )</div>
+<div class="dnd-wrap" data-dnd="dnd81">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="to">to</span><span class="dnd-chip" data-token="marathon participants">marathon participants</span><span class="dnd-chip" data-token="arrive">arrive</span><span class="dnd-chip" data-token="were">were</span><span class="dnd-chip" data-token="asked">asked</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U6-03 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">Marathon participants <span class="key">were asked to arrive</span> thirty minutes early.</div>
@@ -1655,7 +2414,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">04</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">나는 상사에 의해 다음 달 뉴욕으로의 여행을 취소하게 되었다.</div>
-<div class="wordbank">( made / cancel / I / my trip to New York / was / to )</div>
+<div class="dnd-wrap" data-dnd="dnd82">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="made">made</span><span class="dnd-chip" data-token="cancel">cancel</span><span class="dnd-chip" data-token="I">I</span><span class="dnd-chip" data-token="my trip to New York">my trip to New York</span><span class="dnd-chip" data-token="was">was</span><span class="dnd-chip" data-token="to">to</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>U6-04 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">I <span class="key">was made to cancel</span> my trip to New York next month by my boss.</div>
@@ -1668,7 +2436,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">05</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">승객들은 비행기가 멈출 때까지 앉아 있어 달라고 들었다.<span class="wc-tag">7단어</span></div>
-<div class="wordbank">( <b>tell</b> / the passengers / seated / stay )</div>
+<div class="dnd-wrap" data-dnd="dnd83">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="tell">tell<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="the passengers">the passengers</span><span class="dnd-chip" data-token="seated">seated</span><span class="dnd-chip" data-token="stay">stay</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 밑줄 친 동사를 변형하여 수동태로 쓸 것 &nbsp;· 주어진 단어 수에 맞게 쓸 것 (7단어)</div>
 <details class="ans"><summary>U6-05 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -1679,7 +2456,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">06</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">수족관의 모든 방문객들은 온라인으로 표를 구매하도록 요구받는다.<span class="wc-tag">11단어</span></div>
-<div class="wordbank">( purchase / to the aquarium / <b>require</b> / a ticket / all visitors )</div>
+<div class="dnd-wrap" data-dnd="dnd84">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="purchase">purchase</span><span class="dnd-chip" data-token="to the aquarium">to the aquarium</span><span class="dnd-chip" data-token="require">require<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="a ticket">a ticket</span><span class="dnd-chip" data-token="all visitors">all visitors</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 밑줄 친 동사를 변형하여 수동태로 쓸 것 &nbsp;· 주어진 단어 수에 맞게 쓸 것 (11단어)</div>
 <details class="ans"><summary>U6-06 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -1690,7 +2476,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">07</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">사람들은 그 오래된 성에 들어가기 전 긴 줄에서 기다리게 되었다.<span class="wc-tag">9단어</span></div>
-<div class="wordbank">( wait / people / in a long line / <b>make</b> )</div>
+<div class="dnd-wrap" data-dnd="dnd85">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="wait">wait</span><span class="dnd-chip" data-token="people">people</span><span class="dnd-chip" data-token="in a long line">in a long line</span><span class="dnd-chip" data-token="make">make<span class="dnd-tf">변형</span></span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 밑줄 친 동사를 변형하여 수동태로 쓸 것 &nbsp;· 주어진 단어 수에 맞게 쓸 것 (9단어)</div>
 <details class="ans"><summary>U6-07 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -1702,7 +2497,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">08</div><div class="q-type gram">조건</div></div>
 <div class="q-ko">어제 저녁 그 용의자가 상점에서 달아나는 것이 목격되었다.<span class="wc-tag">10단어</span></div>
-<div class="wordbank">( <b>see</b> / from the store / the suspect / run away )</div>
+<div class="dnd-wrap" data-dnd="dnd86">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="see">see<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="from the store">from the store</span><span class="dnd-chip" data-token="the suspect">the suspect</span><span class="dnd-chip" data-token="run away">run away</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <div class="cond-box"><div class="cond-title">조건</div>· 밑줄 친 동사를 변형하여 수동태로 쓸 것 &nbsp;· 주어진 단어 수에 맞게 쓸 것 (10단어)</div>
 <details class="ans"><summary>U6-08 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
@@ -1764,7 +2568,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">06</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">그녀는 밤새 공부한 후 도서관에서 자고 있는 채로 발견되었다.</div>
-<div class="wordbank">( sleeping / was / in the library / she / found )</div>
+<div class="dnd-wrap" data-dnd="dnd87">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="sleeping">sleeping</span><span class="dnd-chip" data-token="was">was</span><span class="dnd-chip" data-token="in the library">in the library</span><span class="dnd-chip" data-token="she">she</span><span class="dnd-chip" data-token="found">found</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T3-06 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">She <span class="key">was found sleeping</span> in the library after studying all night.</div>
@@ -1775,7 +2588,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">07</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">환자들은 회복 기간 동안 규칙적으로 운동하라고 권장받는다.</div>
-<div class="wordbank">( exercise regularly / encouraged / patients / to / are )</div>
+<div class="dnd-wrap" data-dnd="dnd88">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="exercise regularly">exercise regularly</span><span class="dnd-chip" data-token="encouraged">encouraged</span><span class="dnd-chip" data-token="patients">patients</span><span class="dnd-chip" data-token="to">to</span><span class="dnd-chip" data-token="are">are</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T3-07 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">Patients <span class="key">are encouraged to exercise</span> regularly during their recovery.</div>
@@ -1786,7 +2608,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">08</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">John은 지난달 영업부 관리자로 임명되었다.</div>
-<div class="wordbank">( appointed / of the sales department / John / was / manager )</div>
+<div class="dnd-wrap" data-dnd="dnd89">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="appointed">appointed</span><span class="dnd-chip" data-token="of the sales department">of the sales department</span><span class="dnd-chip" data-token="John">John</span><span class="dnd-chip" data-token="was">was</span><span class="dnd-chip" data-token="manager">manager</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T3-08 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">John <span class="key">was appointed manager</span> of the sales department last month.</div>
@@ -1797,7 +2628,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">09</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">최신 스마트폰들은 이 진열장에 전시된다.</div>
-<div class="wordbank">( this showcase / are / in / displayed / the latest smartphones )</div>
+<div class="dnd-wrap" data-dnd="dnd90">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="this showcase">this showcase</span><span class="dnd-chip" data-token="are">are</span><span class="dnd-chip" data-token="in">in</span><span class="dnd-chip" data-token="displayed">displayed</span><span class="dnd-chip" data-token="the latest smartphones">the latest smartphones</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T3-09 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">The latest smartphones are displayed</span> in this showcase.</div>
@@ -1808,7 +2648,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">10</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">그들의 집은 긴 휴가 동안 비어 있는 채로 남겨졌다.</div>
-<div class="wordbank">( empty / during / their house / left / the long vacation / was )</div>
+<div class="dnd-wrap" data-dnd="dnd91">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="empty">empty</span><span class="dnd-chip" data-token="during">during</span><span class="dnd-chip" data-token="their house">their house</span><span class="dnd-chip" data-token="left">left</span><span class="dnd-chip" data-token="the long vacation">the long vacation</span><span class="dnd-chip" data-token="was">was</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T3-10 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">Their house <span class="key">was left empty</span> during the long vacation.</div>
@@ -1819,7 +2668,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">11</div><div class="q-type gram">배열</div></div>
 <div class="q-ko">컴퓨터는 과학 분야를 바꿔 놓았다고 말해질 수 있다.</div>
-<div class="wordbank">( the field of science / transformed / that / computers / can / said / be / have / it )</div>
+<div class="dnd-wrap" data-dnd="dnd92">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="the field of science">the field of science</span><span class="dnd-chip" data-token="transformed">transformed</span><span class="dnd-chip" data-token="that">that</span><span class="dnd-chip" data-token="computers">computers</span><span class="dnd-chip" data-token="can">can</span><span class="dnd-chip" data-token="said">said</span><span class="dnd-chip" data-token="be">be</span><span class="dnd-chip" data-token="have">have</span><span class="dnd-chip" data-token="it">it</span></div>
+
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T3-11 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">It can be said that computers have transformed</span> the field of science.</div>
@@ -1832,7 +2690,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">12</div><div class="q-type gram">변형·추가</div></div>
 <div class="q-ko">모든 시민들은 연말까지 세금을 납부하도록 요구받는다.<span class="wc-tag">8단어</span></div>
-<div class="wordbank">( all citizens / their taxes / <b>require</b> / pay )</div>
+<div class="dnd-wrap" data-dnd="dnd93">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="all citizens">all citizens</span><span class="dnd-chip" data-token="their taxes">their taxes</span><span class="dnd-chip" data-token="require">require<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="pay">pay</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T3-12 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">All citizens are required to pay their taxes</span> by the end of the year.</div>
@@ -1842,7 +2709,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">13</div><div class="q-type gram">변형·추가</div></div>
 <div class="q-ko">최근 몇 년 동안, 첨단 기술이 해양 동물들을 구하는 데 사용되어 왔다.<span class="wc-tag">9단어</span></div>
-<div class="wordbank">( marine animals / to save / <b>use</b> / advanced technology / <b>have</b> )</div>
+<div class="dnd-wrap" data-dnd="dnd94">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="marine animals">marine animals</span><span class="dnd-chip" data-token="to save">to save</span><span class="dnd-chip" data-token="use">use<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="advanced technology">advanced technology</span><span class="dnd-chip" data-token="have">have<span class="dnd-tf">변형</span></span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T3-13 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en">In recent years, <span class="key">advanced technology has been used to save marine animals</span>.</div>
@@ -1852,7 +2728,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">14</div><div class="q-type gram">변형·추가</div></div>
 <div class="q-ko">지난달 새로운 구독 서비스들이 소비자들에게 제공되었다.<span class="wc-tag">7단어</span></div>
-<div class="wordbank">( to / new subscription services / consumers / <b>provide</b> )</div>
+<div class="dnd-wrap" data-dnd="dnd95">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="to">to</span><span class="dnd-chip" data-token="new subscription services">new subscription services</span><span class="dnd-chip" data-token="consumers">consumers</span><span class="dnd-chip" data-token="provide">provide<span class="dnd-tf">변형</span></span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T3-14 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">New subscription services were provided to consumers</span> last month.</div>
@@ -1862,7 +2747,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">15</div><div class="q-type gram">변형·추가</div></div>
 <div class="q-ko">작년에 백만 명이 넘는 사람들이 그 도시를 방문한 것으로 추정된다.<span class="wc-tag">11단어</span></div>
-<div class="wordbank">( that / over one million people / <b>estimate</b> / it / the city / visited )</div>
+<div class="dnd-wrap" data-dnd="dnd96">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="that">that</span><span class="dnd-chip" data-token="over one million people">over one million people</span><span class="dnd-chip" data-token="estimate">estimate<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="it">it</span><span class="dnd-chip" data-token="the city">the city</span><span class="dnd-chip" data-token="visited">visited</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T3-15 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">It is estimated that over one million people visited the city</span> last year.</div>
@@ -1872,7 +2766,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">16</div><div class="q-type gram">변형·추가</div></div>
 <div class="q-ko">공장이 문을 닫은 후 노동자들은 강제로 새로운 일을 찾게 되었다.<span class="wc-tag">11단어</span></div>
-<div class="wordbank">( <b>force</b> / the factory / new jobs / shut down / after / find )</div>
+<div class="dnd-wrap" data-dnd="dnd97">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="force">force<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="the factory">the factory</span><span class="dnd-chip" data-token="new jobs">new jobs</span><span class="dnd-chip" data-token="shut down">shut down</span><span class="dnd-chip" data-token="after">after</span><span class="dnd-chip" data-token="find">find</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T3-16 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">The workers were forced to find new jobs after the factory shut down</span>.</div>
@@ -1882,7 +2785,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <article class="q-card">
 <div class="q-head"><div class="q-num">17</div><div class="q-type gram">변형·추가</div></div>
 <div class="q-ko">뒷자리에 있는 그 소녀는 배낭 안에 무언가를 숨기고 있는 것이 목격되었다.<span class="wc-tag">13단어</span></div>
-<div class="wordbank">( hiding / the girl / <b>see</b> / something / in the back seat / in her backpack )</div>
+<div class="dnd-wrap" data-dnd="dnd98">
+<div class="dnd-answer" data-role="answer"></div>
+<div class="dnd-pool" data-role="pool"><span class="dnd-chip" data-token="hiding">hiding</span><span class="dnd-chip" data-token="the girl">the girl</span><span class="dnd-chip" data-token="see">see<span class="dnd-tf">변형</span></span><span class="dnd-chip" data-token="something">something</span><span class="dnd-chip" data-token="in the back seat">in the back seat</span><span class="dnd-chip" data-token="in her backpack">in her backpack</span></div>
+<div class="dnd-note">💡 <b>변형</b> 표시된 단어는 문장에 맞게 형태를 바꿔야 해요 (칩은 원형 그대로 배치)</div>
+<div class="dnd-controls">
+<button class="dnd-btn dnd-check" type="button">✓ 확인</button>
+<button class="dnd-btn dnd-reset" type="button">↺ 초기화</button>
+<span class="dnd-result" data-role="result"></span>
+</div>
+</div>
 <details class="ans"><summary>T3-17 정답 &amp; 해설 펼치기</summary><div class="ans-body">
 <span class="ans-label">ANSWER · 정답</span>
 <div class="ans-en"><span class="key">The girl in the back seat was seen hiding something in her backpack</span>.</div>
@@ -2025,5 +2937,103 @@ if(document.readyState==='loading'){
 }
 
 </script>
+
+<!-- ===== 드래그 배열영작 엔진 ===== -->
+<script>
+/*! Sortable 1.15.7 - MIT | git://github.com/SortableJS/Sortable.git */
+!function(t,e){"object"==typeof exports&&"undefined"!=typeof module?module.exports=e():"function"==typeof define&&define.amd?define(e):(t=t||self).Sortable=e()}(this,function(){"use strict";function o(t,e){(null==e||e>t.length)&&(e=t.length);for(var n=0,o=Array(e);n<e;n++)o[n]=t[n];return o}function i(t,e,n){return(e=function(t){t=function(t,e){if("object"!=typeof t||!t)return t;var n=t[Symbol.toPrimitive];if(void 0===n)return("string"===e?String:Number)(t);e=n.call(t,e||"default");if("object"!=typeof e)return e;throw new TypeError("@@toPrimitive must return a primitive value.")}(t,"string");return"symbol"==typeof t?t:t+""}(e))in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}function a(){return(a=Object.assign?Object.assign.bind():function(t){for(var e=1;e<arguments.length;e++){var n,o=arguments[e];for(n in o)!{}.hasOwnProperty.call(o,n)||(t[n]=o[n])}return t}).apply(null,arguments)}function r(e,t){var n,o=Object.keys(e);return Object.getOwnPropertySymbols&&(n=Object.getOwnPropertySymbols(e),t&&(n=n.filter(function(t){return Object.getOwnPropertyDescriptor(e,t).enumerable})),o.push.apply(o,n)),o}function I(e){for(var t=1;t<arguments.length;t++){var n=null!=arguments[t]?arguments[t]:{};t%2?r(Object(n),!0).forEach(function(t){i(e,t,n[t])}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(n)):r(Object(n)).forEach(function(t){Object.defineProperty(e,t,Object.getOwnPropertyDescriptor(n,t))})}return e}function l(t,e){if(null==t)return{};var n,o=function(t,e){if(null==t)return{};var n,o={};for(n in t)if({}.hasOwnProperty.call(t,n)){if(-1!==e.indexOf(n))continue;o[n]=t[n]}return o}(t,e);if(Object.getOwnPropertySymbols)for(var i=Object.getOwnPropertySymbols(t),r=0;r<i.length;r++)n=i[r],-1===e.indexOf(n)&&{}.propertyIsEnumerable.call(t,n)&&(o[n]=t[n]);return o}function e(t){return function(t){if(Array.isArray(t))return o(t)}(t)||function(t){if("undefined"!=typeof Symbol&&null!=t[Symbol.iterator]||null!=t["@@iterator"])return Array.from(t)}(t)||function(t,e){if(t){if("string"==typeof t)return o(t,e);var n={}.toString.call(t).slice(8,-1);return"Map"===(n="Object"===n&&t.constructor?t.constructor.name:n)||"Set"===n?Array.from(t):"Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)?o(t,e):void 0}}(t)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function s(t){return(s="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function t(t){if("undefined"!=typeof window&&window.navigator)return!!navigator.userAgent.match(t)}var y=t(/(?:Trident.*rv[ :]?11\.|msie|iemobile|Windows Phone)/i),w=t(/Edge/i),c=t(/firefox/i),u=t(/safari/i)&&!t(/chrome/i)&&!t(/android/i),d=t(/iP(ad|od|hone)/i),n=t(/chrome/i)&&t(/android/i),h={capture:!1,passive:!1};function f(t,e,n){t.addEventListener(e,n,!y&&h)}function p(t,e,n){t.removeEventListener(e,n,!y&&h)}function g(t,e){if(e&&(">"===e[0]&&(e=e.substring(1)),t))try{if(t.matches)return t.matches(e);if(t.msMatchesSelector)return t.msMatchesSelector(e);if(t.webkitMatchesSelector)return t.webkitMatchesSelector(e)}catch(t){return}}function m(t){return t.host&&t!==document&&t.host.nodeType&&t.host!==t?t.host:t.parentNode}function P(t,e,n,o){if(t){n=n||document;do{if(null!=e&&(">"!==e[0]||t.parentNode===n)&&g(t,e)||o&&t===n)return t}while(t!==n&&(t=m(t)))}return null}var v,b=/\s+/g;function k(t,e,n){var o;t&&e&&(t.classList?t.classList[n?"add":"remove"](e):(o=(" "+t.className+" ").replace(b," ").replace(" "+e+" "," "),t.className=(o+(n?" "+e:"")).replace(b," ")))}function R(t,e,n){var o=t&&t.style;if(o){if(void 0===n)return document.defaultView&&document.defaultView.getComputedStyle?n=document.defaultView.getComputedStyle(t,""):t.currentStyle&&(n=t.currentStyle),void 0===e?n:n[e];o[e=!(e in o||-1!==e.indexOf("webkit"))?"-webkit-"+e:e]=n+("string"==typeof n?"":"px")}}function D(t,e){var n="";if("string"==typeof t)n=t;else do{var o=R(t,"transform")}while(o&&"none"!==o&&(n=o+" "+n),!e&&(t=t.parentNode));var i=window.DOMMatrix||window.WebKitCSSMatrix||window.CSSMatrix||window.MSCSSMatrix;return i&&new i(n)}function E(t,e,n){if(t){var o=t.getElementsByTagName(e),i=0,r=o.length;if(n)for(;i<r;i++)n(o[i],i);return o}return[]}function O(){var t=document.scrollingElement;return t||document.documentElement}function X(t,e,n,o,i){if(t.getBoundingClientRect||t===window){var r,a,l,s,c,u,d=t!==window&&t.parentNode&&t!==O()?(a=(r=t.getBoundingClientRect()).top,l=r.left,s=r.bottom,c=r.right,u=r.height,r.width):(l=a=0,s=window.innerHeight,c=window.innerWidth,u=window.innerHeight,window.innerWidth);if((e||n)&&t!==window&&(i=i||t.parentNode,!y))do{if(i&&i.getBoundingClientRect&&("none"!==R(i,"transform")||n&&"static"!==R(i,"position"))){var h=i.getBoundingClientRect();a-=h.top+parseInt(R(i,"border-top-width")),l-=h.left+parseInt(R(i,"border-left-width")),s=a+r.height,c=l+r.width;break}}while(i=i.parentNode);return o&&t!==window&&(o=(e=D(i||t))&&e.a,t=e&&e.d,e&&(s=(a/=t)+(u/=t),c=(l/=o)+(d/=o))),{top:a,left:l,bottom:s,right:c,width:d,height:u}}}function Y(t,e,n){for(var o=M(t,!0),i=X(t)[e];o;){var r=X(o)[n];if(!("top"===n||"left"===n?r<=i:i<=r))return o;if(o===O())break;o=M(o,!1)}return!1}function B(t,e,n,o){for(var i=0,r=0,a=t.children;r<a.length;){if("none"!==a[r].style.display&&a[r]!==Ht.ghost&&(o||a[r]!==Ht.dragged)&&P(a[r],n.draggable,t,!1)){if(i===e)return a[r];i++}r++}return null}function F(t,e){for(var n=t.lastElementChild;n&&(n===Ht.ghost||"none"===R(n,"display")||e&&!g(n,e));)n=n.previousElementSibling;return n||null}function j(t,e){var n=0;if(!t||!t.parentNode)return-1;for(;t=t.previousElementSibling;)"TEMPLATE"===t.nodeName.toUpperCase()||t===Ht.clone||e&&!g(t,e)||n++;return n}function S(t){var e=0,n=0,o=O();if(t)do{var i=D(t),r=i.a,i=i.d}while(e+=t.scrollLeft*r,n+=t.scrollTop*i,t!==o&&(t=t.parentNode));return[e,n]}function M(t,e){if(!t||!t.getBoundingClientRect)return O();var n=t,o=!1;do{if(n.clientWidth<n.scrollWidth||n.clientHeight<n.scrollHeight){var i=R(n);if(n.clientWidth<n.scrollWidth&&("auto"==i.overflowX||"scroll"==i.overflowX)||n.clientHeight<n.scrollHeight&&("auto"==i.overflowY||"scroll"==i.overflowY)){if(!n.getBoundingClientRect||n===document.body)return O();if(o||e)return n;o=!0}}}while(n=n.parentNode);return O()}function _(t,e){return Math.round(t.top)===Math.round(e.top)&&Math.round(t.left)===Math.round(e.left)&&Math.round(t.height)===Math.round(e.height)&&Math.round(t.width)===Math.round(e.width)}function C(e,n){return function(){var t;v||(1===(t=arguments).length?e.call(this,t[0]):e.apply(this,t),v=setTimeout(function(){v=void 0},n))}}function H(t,e,n){t.scrollLeft+=e,t.scrollTop+=n}function T(t){var e=window.Polymer,n=window.jQuery||window.Zepto;return e&&e.dom?e.dom(t).cloneNode(!0):n?n(t).clone(!0)[0]:t.cloneNode(!0)}function x(t,e){R(t,"position","absolute"),R(t,"top",e.top),R(t,"left",e.left),R(t,"width",e.width),R(t,"height",e.height)}function A(t){R(t,"position",""),R(t,"top",""),R(t,"left",""),R(t,"width",""),R(t,"height","")}function L(n,o,i){var r={};return Array.from(n.children).forEach(function(t){var e;P(t,o.draggable,n,!1)&&!t.animated&&t!==i&&(e=X(t),r.left=Math.min(null!==(t=r.left)&&void 0!==t?t:1/0,e.left),r.top=Math.min(null!==(t=r.top)&&void 0!==t?t:1/0,e.top),r.right=Math.max(null!==(t=r.right)&&void 0!==t?t:-1/0,e.right),r.bottom=Math.max(null!==(t=r.bottom)&&void 0!==t?t:-1/0,e.bottom))}),r.width=r.right-r.left,r.height=r.bottom-r.top,r.x=r.left,r.y=r.top,r}var K="Sortable"+(new Date).getTime();function N(){var e,o=[];return{captureAnimationState:function(){o=[],this.options.animation&&[].slice.call(this.el.children).forEach(function(t){var e,n;"none"!==R(t,"display")&&t!==Ht.ghost&&(o.push({target:t,rect:X(t)}),e=I({},o[o.length-1].rect),!t.thisAnimationDuration||(n=D(t,!0))&&(e.top-=n.f,e.left-=n.e),t.fromRect=e)})},addAnimationState:function(t){o.push(t)},removeAnimationState:function(t){o.splice(function(t,e){for(var n in t)if(t.hasOwnProperty(n))for(var o in e)if(e.hasOwnProperty(o)&&e[o]===t[n][o])return Number(n);return-1}(o,{target:t}),1)},animateAll:function(t){var c=this;if(!this.options.animation)return clearTimeout(e),void("function"==typeof t&&t());var u=!1,d=0;o.forEach(function(t){var e=0,n=t.target,o=n.fromRect,i=X(n),r=n.prevFromRect,a=n.prevToRect,l=t.rect,s=D(n,!0);s&&(i.top-=s.f,i.left-=s.e),n.toRect=i,n.thisAnimationDuration&&_(r,i)&&!_(o,i)&&(l.top-i.top)/(l.left-i.left)==(o.top-i.top)/(o.left-i.left)&&(t=l,s=r,r=a,a=c.options,e=Math.sqrt(Math.pow(s.top-t.top,2)+Math.pow(s.left-t.left,2))/Math.sqrt(Math.pow(s.top-r.top,2)+Math.pow(s.left-r.left,2))*a.animation),_(i,o)||(n.prevFromRect=o,n.prevToRect=i,e=e||c.options.animation,c.animate(n,l,i,e)),e&&(u=!0,d=Math.max(d,e),clearTimeout(n.animationResetTimer),n.animationResetTimer=setTimeout(function(){n.animationTime=0,n.prevFromRect=null,n.fromRect=null,n.prevToRect=null,n.thisAnimationDuration=null},e),n.thisAnimationDuration=e)}),clearTimeout(e),u?e=setTimeout(function(){"function"==typeof t&&t()},d):"function"==typeof t&&t(),o=[]},animate:function(t,e,n,o){var i,r;o&&(R(t,"transition",""),R(t,"transform",""),i=(r=D(this.el))&&r.a,r=r&&r.d,i=(e.left-n.left)/(i||1),r=(e.top-n.top)/(r||1),t.animatingX=!!i,t.animatingY=!!r,R(t,"transform","translate3d("+i+"px,"+r+"px,0)"),this.forRepaintDummy=t.offsetWidth,R(t,"transition","transform "+o+"ms"+(this.options.easing?" "+this.options.easing:"")),R(t,"transform","translate3d(0,0,0)"),"number"==typeof t.animated&&clearTimeout(t.animated),t.animated=setTimeout(function(){R(t,"transition",""),R(t,"transform",""),t.animated=!1,t.animatingX=!1,t.animatingY=!1},o))}}}var W=[],z={initializeByDefault:!0},G={mount:function(e){for(var t in z)!z.hasOwnProperty(t)||t in e||(e[t]=z[t]);W.forEach(function(t){if(t.pluginName===e.pluginName)throw"Sortable: Cannot mount plugin ".concat(e.pluginName," more than once")}),W.push(e)},pluginEvent:function(e,n,o){var t=this;this.eventCanceled=!1,o.cancel=function(){t.eventCanceled=!0};var i=e+"Global";W.forEach(function(t){n[t.pluginName]&&(n[t.pluginName][i]&&n[t.pluginName][i](I({sortable:n},o)),n.options[t.pluginName]&&n[t.pluginName][e]&&n[t.pluginName][e](I({sortable:n},o)))})},initializePlugins:function(n,o,i,t){for(var e in W.forEach(function(t){var e=t.pluginName;(n.options[e]||t.initializeByDefault)&&((t=new t(n,o,n.options)).sortable=n,t.options=n.options,n[e]=t,a(i,t.defaults))}),n.options){var r;n.options.hasOwnProperty(e)&&(void 0!==(r=this.modifyOption(n,e,n.options[e]))&&(n.options[e]=r))}},getEventProperties:function(e,n){var o={};return W.forEach(function(t){"function"==typeof t.eventProperties&&a(o,t.eventProperties.call(n[t.pluginName],e))}),o},modifyOption:function(e,n,o){var i;return W.forEach(function(t){e[t.pluginName]&&t.optionListeners&&"function"==typeof t.optionListeners[n]&&(i=t.optionListeners[n].call(e[t.pluginName],o))}),i}};function U(t){var e=t.sortable,n=t.rootEl,o=t.name,i=t.targetEl,r=t.cloneEl,a=t.toEl,l=t.fromEl,s=t.oldIndex,c=t.newIndex,u=t.oldDraggableIndex,d=t.newDraggableIndex,h=t.originalEvent,f=t.putSortable,p=t.extraEventProperties;if(e=e||n&&n[K]){var g,m=e.options,t="on"+o.charAt(0).toUpperCase()+o.substr(1);!window.CustomEvent||y||w?(g=document.createEvent("Event")).initEvent(o,!0,!0):g=new CustomEvent(o,{bubbles:!0,cancelable:!0}),g.to=a||n,g.from=l||n,g.item=i||n,g.clone=r,g.oldIndex=s,g.newIndex=c,g.oldDraggableIndex=u,g.newDraggableIndex=d,g.originalEvent=h,g.pullMode=f?f.lastPutMode:void 0;var v,b=I(I({},p),G.getEventProperties(o,e));for(v in b)g[v]=b[v];n&&n.dispatchEvent(g),m[t]&&m[t].call(e,g)}}function q(t,e){var n=(o=2<arguments.length&&void 0!==arguments[2]?arguments[2]:{}).evt,o=l(o,V);G.pluginEvent.bind(Ht)(t,e,I({dragEl:$,parentEl:Q,ghostEl:J,rootEl:tt,nextEl:et,lastDownEl:nt,cloneEl:ot,cloneHidden:it,dragStarted:vt,putSortable:ut,activeSortable:Ht.active,originalEvent:n,oldIndex:rt,oldDraggableIndex:lt,newIndex:at,newDraggableIndex:st,hideGhostForTarget:Yt,unhideGhostForTarget:Bt,cloneNowHidden:function(){it=!0},cloneNowShown:function(){it=!1},dispatchSortableEvent:function(t){Z({sortable:e,name:t,originalEvent:n})}},o))}var V=["evt"];function Z(t){U(I({putSortable:ut,cloneEl:ot,targetEl:$,rootEl:tt,oldIndex:rt,oldDraggableIndex:lt,newIndex:at,newDraggableIndex:st},t))}var $,Q,J,tt,et,nt,ot,it,rt,at,lt,st,ct,ut,dt,ht,ft,pt,gt,mt,vt,bt,yt,wt,Dt,Et=!1,St=!1,_t=[],Ct=!1,Tt=!1,xt=[],Ot=!1,Mt=[],At="undefined"!=typeof document,Nt=d,It=w||y?"cssFloat":"float",Pt=At&&!n&&!d&&"draggable"in document.createElement("div"),kt=function(){if(At){if(y)return!1;var t=document.createElement("x");return t.style.cssText="pointer-events:auto","auto"===t.style.pointerEvents}}(),Rt=function(t,e){var n=R(t),o=parseInt(n.width)-parseInt(n.paddingLeft)-parseInt(n.paddingRight)-parseInt(n.borderLeftWidth)-parseInt(n.borderRightWidth),i=B(t,0,e),r=B(t,1,e),a=i&&R(i),l=r&&R(r),s=a&&parseInt(a.marginLeft)+parseInt(a.marginRight)+X(i).width,t=l&&parseInt(l.marginLeft)+parseInt(l.marginRight)+X(r).width;if("flex"===n.display)return"column"===n.flexDirection||"column-reverse"===n.flexDirection?"vertical":"horizontal";if("grid"===n.display)return n.gridTemplateColumns.split(" ").length<=1?"vertical":"horizontal";if(i&&a.float&&"none"!==a.float){e="left"===a.float?"left":"right";return!r||"both"!==l.clear&&l.clear!==e?"horizontal":"vertical"}return i&&("block"===a.display||"flex"===a.display||"table"===a.display||"grid"===a.display||o<=s&&"none"===n[It]||r&&"none"===n[It]&&o<s+t)?"vertical":"horizontal"},Xt=function(t){function l(r,a){return function(t,e,n,o){var i=t.options.group.name&&e.options.group.name&&t.options.group.name===e.options.group.name;if(null==r&&(a||i))return!0;if(null==r||!1===r)return!1;if(a&&"clone"===r)return r;if("function"==typeof r)return l(r(t,e,n,o),a)(t,e,n,o);e=(a?t:e).options.group.name;return!0===r||"string"==typeof r&&r===e||r.join&&-1<r.indexOf(e)}}var e={},n=t.group;n&&"object"==s(n)||(n={name:n}),e.name=n.name,e.checkPull=l(n.pull,!0),e.checkPut=l(n.put),e.revertClone=n.revertClone,t.group=e},Yt=function(){!kt&&J&&R(J,"display","none")},Bt=function(){!kt&&J&&R(J,"display","")};At&&!n&&document.addEventListener("click",function(t){if(St)return t.preventDefault(),t.stopPropagation&&t.stopPropagation(),t.stopImmediatePropagation&&t.stopImmediatePropagation(),St=!1},!0);function Ft(t){if($){t=t.touches?t.touches[0]:t;var e=(i=t.clientX,r=t.clientY,_t.some(function(t){var e=t[K].options.emptyInsertThreshold;if(e&&!F(t)){var n=X(t),o=i>=n.left-e&&i<=n.right+e,e=r>=n.top-e&&r<=n.bottom+e;return o&&e?a=t:void 0}}),a);if(e){var n,o={};for(n in t)t.hasOwnProperty(n)&&(o[n]=t[n]);o.target=o.rootEl=e,o.preventDefault=void 0,o.stopPropagation=void 0,e[K]._onDragOver(o)}}var i,r,a}function jt(t){$&&$.parentNode[K]._isOutsideThisEl(t.target)}function Ht(t,e){if(!t||!t.nodeType||1!==t.nodeType)throw"Sortable: `el` must be an HTMLElement, not ".concat({}.toString.call(t));this.el=t,this.options=e=a({},e),t[K]=this;var n,o,i={group:null,sort:!0,disabled:!1,store:null,handle:null,draggable:/^[uo]l$/i.test(t.nodeName)?">li":">*",swapThreshold:1,invertSwap:!1,invertedSwapThreshold:null,removeCloneOnHide:!0,direction:function(){return Rt(t,this.options)},ghostClass:"sortable-ghost",chosenClass:"sortable-chosen",dragClass:"sortable-drag",ignore:"a, img",filter:null,preventOnFilter:!0,animation:0,easing:null,setData:function(t,e){t.setData("Text",e.textContent)},dropBubble:!1,dragoverBubble:!1,dataIdAttr:"data-id",delay:0,delayOnTouchOnly:!1,touchStartThreshold:(Number.parseInt?Number:window).parseInt(window.devicePixelRatio,10)||1,forceFallback:!1,fallbackClass:"sortable-fallback",fallbackOnBody:!1,fallbackTolerance:0,fallbackOffset:{x:0,y:0},supportPointer:!1!==Ht.supportPointer&&"PointerEvent"in window&&(!u||d),emptyInsertThreshold:5};for(n in G.initializePlugins(this,t,i),i)n in e||(e[n]=i[n]);for(o in Xt(e),this)"_"===o.charAt(0)&&"function"==typeof this[o]&&(this[o]=this[o].bind(this));this.nativeDraggable=!e.forceFallback&&Pt,this.nativeDraggable&&(this.options.touchStartThreshold=1),e.supportPointer?f(t,"pointerdown",this._onTapStart):(f(t,"mousedown",this._onTapStart),f(t,"touchstart",this._onTapStart)),this.nativeDraggable&&(f(t,"dragover",this),f(t,"dragenter",this)),_t.push(this.el),e.store&&e.store.get&&this.sort(e.store.get(this)||[]),a(this,N())}function Lt(t,e,n,o,i,r,a,l){var s,c,u=t[K],d=u.options.onMove;return!window.CustomEvent||y||w?(s=document.createEvent("Event")).initEvent("move",!0,!0):s=new CustomEvent("move",{bubbles:!0,cancelable:!0}),s.to=e,s.from=t,s.dragged=n,s.draggedRect=o,s.related=i||e,s.relatedRect=r||X(e),s.willInsertAfter=l,s.originalEvent=a,t.dispatchEvent(s),c=d?d.call(u,s,a):c}function Kt(t){t.draggable=!1}function Wt(){Ot=!1}function zt(t){return setTimeout(t,0)}function Gt(t){return clearTimeout(t)}Ht.prototype={constructor:Ht,_isOutsideThisEl:function(t){this.el.contains(t)||t===this.el||(bt=null)},_getDirection:function(t,e){return"function"==typeof this.options.direction?this.options.direction.call(this,t,e,$):this.options.direction},_onTapStart:function(e){if(e.cancelable){var n=this,o=this.el,t=this.options,i=t.preventOnFilter,r=e.type,a=e.touches&&e.touches[0]||e.pointerType&&"touch"===e.pointerType&&e,l=(a||e).target,s=e.target.shadowRoot&&(e.path&&e.path[0]||e.composedPath&&e.composedPath()[0])||l,c=t.filter;if(!function(t){Mt.length=0;var e=t.getElementsByTagName("input"),n=e.length;for(;n--;){var o=e[n];o.checked&&Mt.push(o)}}(o),!$&&!(/mousedown|pointerdown/.test(r)&&0!==e.button||t.disabled)&&!s.isContentEditable&&(this.nativeDraggable||!u||!l||"SELECT"!==l.tagName.toUpperCase())&&!((l=P(l,t.draggable,o,!1))&&l.animated||nt===l)){if(rt=j(l),lt=j(l,t.draggable),"function"==typeof c){if(c.call(this,e,l,this))return Z({sortable:n,rootEl:s,name:"filter",targetEl:l,toEl:o,fromEl:o}),q("filter",n,{evt:e}),void(i&&e.preventDefault())}else if(c=c&&c.split(",").some(function(t){if(t=P(s,t.trim(),o,!1))return Z({sortable:n,rootEl:t,name:"filter",targetEl:l,fromEl:o,toEl:o}),q("filter",n,{evt:e}),!0}))return void(i&&e.preventDefault());t.handle&&!P(s,t.handle,o,!1)||this._prepareDragStart(e,a,l)}}},_prepareDragStart:function(t,e,n){var o,i=this,r=i.el,a=i.options,l=r.ownerDocument;n&&!$&&n.parentNode===r&&(o=X(n),tt=r,Q=($=n).parentNode,et=$.nextSibling,nt=n,ct=a.group,dt={target:Ht.dragged=$,clientX:(e||t).clientX,clientY:(e||t).clientY},gt=dt.clientX-o.left,mt=dt.clientY-o.top,this._lastX=(e||t).clientX,this._lastY=(e||t).clientY,$.style["will-change"]="all",o=function(){q("delayEnded",i,{evt:t}),Ht.eventCanceled?i._onDrop():(i._disableDelayedDragEvents(),!c&&i.nativeDraggable&&($.draggable=!0),i._triggerDragStart(t,e),Z({sortable:i,name:"choose",originalEvent:t}),k($,a.chosenClass,!0))},a.ignore.split(",").forEach(function(t){E($,t.trim(),Kt)}),f(l,"dragover",Ft),f(l,"mousemove",Ft),f(l,"touchmove",Ft),a.supportPointer?(f(l,"pointerup",i._onDrop),this.nativeDraggable||f(l,"pointercancel",i._onDrop)):(f(l,"mouseup",i._onDrop),f(l,"touchend",i._onDrop),f(l,"touchcancel",i._onDrop)),c&&this.nativeDraggable&&(this.options.touchStartThreshold=4,$.draggable=!0),q("delayStart",this,{evt:t}),!a.delay||a.delayOnTouchOnly&&!e||this.nativeDraggable&&(w||y)?o():Ht.eventCanceled?this._onDrop():(a.supportPointer?(f(l,"pointerup",i._disableDelayedDrag),f(l,"pointercancel",i._disableDelayedDrag)):(f(l,"mouseup",i._disableDelayedDrag),f(l,"touchend",i._disableDelayedDrag),f(l,"touchcancel",i._disableDelayedDrag)),f(l,"mousemove",i._delayedDragTouchMoveHandler),f(l,"touchmove",i._delayedDragTouchMoveHandler),a.supportPointer&&f(l,"pointermove",i._delayedDragTouchMoveHandler),i._dragStartTimer=setTimeout(o,a.delay)))},_delayedDragTouchMoveHandler:function(t){t=t.touches?t.touches[0]:t;Math.max(Math.abs(t.clientX-this._lastX),Math.abs(t.clientY-this._lastY))>=Math.floor(this.options.touchStartThreshold/(this.nativeDraggable&&window.devicePixelRatio||1))&&this._disableDelayedDrag()},_disableDelayedDrag:function(){$&&Kt($),clearTimeout(this._dragStartTimer),this._disableDelayedDragEvents()},_disableDelayedDragEvents:function(){var t=this.el.ownerDocument;p(t,"mouseup",this._disableDelayedDrag),p(t,"touchend",this._disableDelayedDrag),p(t,"touchcancel",this._disableDelayedDrag),p(t,"pointerup",this._disableDelayedDrag),p(t,"pointercancel",this._disableDelayedDrag),p(t,"mousemove",this._delayedDragTouchMoveHandler),p(t,"touchmove",this._delayedDragTouchMoveHandler),p(t,"pointermove",this._delayedDragTouchMoveHandler)},_triggerDragStart:function(t,e){e=e||"touch"==t.pointerType&&t,!this.nativeDraggable||e?this.options.supportPointer?f(document,"pointermove",this._onTouchMove):f(document,e?"touchmove":"mousemove",this._onTouchMove):(f($,"dragend",this),f(tt,"dragstart",this._onDragStart));try{document.selection?zt(function(){document.selection.empty()}):window.getSelection().removeAllRanges()}catch(t){}},_dragStarted:function(t,e){var n;Et=!1,tt&&$?(q("dragStarted",this,{evt:e}),this.nativeDraggable&&f(document,"dragover",jt),n=this.options,t||k($,n.dragClass,!1),k($,n.ghostClass,!0),Ht.active=this,t&&this._appendGhost(),Z({sortable:this,name:"start",originalEvent:e})):this._nulling()},_emulateDragOver:function(){if(ht){this._lastX=ht.clientX,this._lastY=ht.clientY,Yt();for(var t=document.elementFromPoint(ht.clientX,ht.clientY),e=t;t&&t.shadowRoot&&(t=t.shadowRoot.elementFromPoint(ht.clientX,ht.clientY))!==e;)e=t;if($.parentNode[K]._isOutsideThisEl(t),e)do{if(e[K])if(e[K]._onDragOver({clientX:ht.clientX,clientY:ht.clientY,target:t,rootEl:e})&&!this.options.dragoverBubble)break}while(e=m(t=e));Bt()}},_onTouchMove:function(t){if(dt){var e=this.options,n=e.fallbackTolerance,o=e.fallbackOffset,i=t.touches?t.touches[0]:t,r=J&&D(J,!0),a=J&&r&&r.a,l=J&&r&&r.d,e=Nt&&Dt&&S(Dt),a=(i.clientX-dt.clientX+o.x)/(a||1)+(e?e[0]-xt[0]:0)/(a||1),l=(i.clientY-dt.clientY+o.y)/(l||1)+(e?e[1]-xt[1]:0)/(l||1);if(!Ht.active&&!Et){if(n&&Math.max(Math.abs(i.clientX-this._lastX),Math.abs(i.clientY-this._lastY))<n)return;this._onDragStart(t,!0)}J&&(r?(r.e+=a-(ft||0),r.f+=l-(pt||0)):r={a:1,b:0,c:0,d:1,e:a,f:l},r="matrix(".concat(r.a,",").concat(r.b,",").concat(r.c,",").concat(r.d,",").concat(r.e,",").concat(r.f,")"),R(J,"webkitTransform",r),R(J,"mozTransform",r),R(J,"msTransform",r),R(J,"transform",r),ft=a,pt=l,ht=i),t.cancelable&&t.preventDefault()}},_appendGhost:function(){if(!J){var t=this.options.fallbackOnBody?document.body:tt,e=X($,!0,Nt,!0,t),n=this.options;if(Nt){for(Dt=t;"static"===R(Dt,"position")&&"none"===R(Dt,"transform")&&Dt!==document;)Dt=Dt.parentNode;Dt!==document.body&&Dt!==document.documentElement?(Dt===document&&(Dt=O()),e.top+=Dt.scrollTop,e.left+=Dt.scrollLeft):Dt=O(),xt=S(Dt)}k(J=$.cloneNode(!0),n.ghostClass,!1),k(J,n.fallbackClass,!0),k(J,n.dragClass,!0),R(J,"transition",""),R(J,"transform",""),R(J,"box-sizing","border-box"),R(J,"margin",0),R(J,"top",e.top),R(J,"left",e.left),R(J,"width",e.width),R(J,"height",e.height),R(J,"opacity","0.8"),R(J,"position",Nt?"absolute":"fixed"),R(J,"zIndex","100000"),R(J,"pointerEvents","none"),Ht.ghost=J,t.appendChild(J),R(J,"transform-origin",gt/parseInt(J.style.width)*100+"% "+mt/parseInt(J.style.height)*100+"%")}},_onDragStart:function(t,e){var n=this,o=t.dataTransfer,i=n.options;q("dragStart",this,{evt:t}),Ht.eventCanceled?this._onDrop():(q("setupClone",this),Ht.eventCanceled||((ot=T($)).removeAttribute("id"),ot.draggable=!1,ot.style["will-change"]="",this._hideClone(),k(ot,this.options.chosenClass,!1),Ht.clone=ot),n.cloneId=zt(function(){q("clone",n),Ht.eventCanceled||(n.options.removeCloneOnHide||tt.insertBefore(ot,$),n._hideClone(),Z({sortable:n,name:"clone"}))}),e||k($,i.dragClass,!0),e?(St=!0,n._loopId=setInterval(n._emulateDragOver,50)):(p(document,"mouseup",n._onDrop),p(document,"touchend",n._onDrop),p(document,"touchcancel",n._onDrop),o&&(o.effectAllowed="move",i.setData&&i.setData.call(n,o,$)),f(document,"drop",n),R($,"transform","translateZ(0)")),Et=!0,n._dragStartId=zt(n._dragStarted.bind(n,e,t)),f(document,"selectstart",n),vt=!0,window.getSelection().removeAllRanges(),u&&R(document.body,"user-select","none"))},_onDragOver:function(n){var o,i,r,t,e,a=this.el,l=n.target,s=this.options,c=s.group,u=Ht.active,d=ct===c,h=s.sort,f=ut||u,p=this,g=!1;if(!Ot){if(void 0!==n.preventDefault&&n.cancelable&&n.preventDefault(),l=P(l,s.draggable,a,!0),O("dragOver"),Ht.eventCanceled)return g;if($.contains(n.target)||l.animated&&l.animatingX&&l.animatingY||p._ignoreWhileAnimating===l)return A(!1);if(St=!1,u&&!s.disabled&&(d?h||(i=Q!==tt):ut===this||(this.lastPutMode=ct.checkPull(this,u,$,n))&&c.checkPut(this,u,$,n))){if(r="vertical"===this._getDirection(n,l),o=X($),O("dragOverValid"),Ht.eventCanceled)return g;if(i)return Q=tt,M(),this._hideClone(),O("revert"),Ht.eventCanceled||(et?tt.insertBefore($,et):tt.appendChild($)),A(!0);var m=F(a,s.draggable);if(m&&(S=n,c=r,x=X(F((E=this).el,E.options.draggable)),E=L(E.el,E.options,J),!(c?S.clientX>E.right+10||S.clientY>x.bottom&&S.clientX>x.left:S.clientY>E.bottom+10||S.clientX>x.right&&S.clientY>x.top)||m.animated)){if(m&&(t=n,e=r,C=X(B((_=this).el,0,_.options,!0)),_=L(_.el,_.options,J),e?t.clientX<_.left-10||t.clientY<C.top&&t.clientX<C.right:t.clientY<_.top-10||t.clientY<C.bottom&&t.clientX<C.left)){var v=B(a,0,s,!0);if(v===$)return A(!1);if(D=X(l=v),!1!==Lt(tt,a,$,o,l,D,n,!1))return M(),a.insertBefore($,v),Q=a,N(),A(!0)}else if(l.parentNode===a){var b,y,w,D=X(l),E=$.parentNode!==a,S=(S=$.animated&&$.toRect||o,x=l.animated&&l.toRect||D,_=(e=r)?S.left:S.top,t=e?S.right:S.bottom,C=e?S.width:S.height,v=e?x.left:x.top,S=e?x.right:x.bottom,x=e?x.width:x.height,!(_===v||t===S||_+C/2===v+x/2)),_=r?"top":"left",C=Y(l,"top","top")||Y($,"top","top"),v=C?C.scrollTop:void 0;if(bt!==l&&(y=D[_],Ct=!1,Tt=!S&&s.invertSwap||E),0!==(b=function(t,e,n,o,i,r,a,l){var s=o?t.clientY:t.clientX,c=o?n.height:n.width,t=o?n.top:n.left,o=o?n.bottom:n.right,n=!1;if(!a)if(l&&wt<c*i){if(Ct=!Ct&&(1===yt?t+c*r/2<s:s<o-c*r/2)?!0:Ct)n=!0;else if(1===yt?s<t+wt:o-wt<s)return-yt}else if(t+c*(1-i)/2<s&&s<o-c*(1-i)/2)return function(t){return j($)<j(t)?1:-1}(e);if((n=n||a)&&(s<t+c*r/2||o-c*r/2<s))return t+c/2<s?1:-1;return 0}(n,l,D,r,S?1:s.swapThreshold,null==s.invertedSwapThreshold?s.swapThreshold:s.invertedSwapThreshold,Tt,bt===l)))for(var T=j($);(w=Q.children[T-=b])&&("none"===R(w,"display")||w===J););if(0===b||w===l)return A(!1);yt=b;var x=(bt=l).nextElementSibling,E=!1,S=Lt(tt,a,$,o,l,D,n,E=1===b);if(!1!==S)return 1!==S&&-1!==S||(E=1===S),Ot=!0,setTimeout(Wt,30),M(),E&&!x?a.appendChild($):l.parentNode.insertBefore($,E?x:l),C&&H(C,0,v-C.scrollTop),Q=$.parentNode,void 0===y||Tt||(wt=Math.abs(y-X(l)[_])),N(),A(!0)}}else{if(m===$)return A(!1);if((l=m&&a===n.target?m:l)&&(D=X(l)),!1!==Lt(tt,a,$,o,l,D,n,!!l))return M(),m&&m.nextSibling?a.insertBefore($,m.nextSibling):a.appendChild($),Q=a,N(),A(!0)}if(a.contains($))return A(!1)}return!1}function O(t,e){q(t,p,I({evt:n,isOwner:d,axis:r?"vertical":"horizontal",revert:i,dragRect:o,targetRect:D,canSort:h,fromSortable:f,target:l,completed:A,onMove:function(t,e){return Lt(tt,a,$,o,t,X(t),n,e)},changed:N},e))}function M(){O("dragOverAnimationCapture"),p.captureAnimationState(),p!==f&&f.captureAnimationState()}function A(t){return O("dragOverCompleted",{insertion:t}),t&&(d?u._hideClone():u._showClone(p),p!==f&&(k($,(ut||u).options.ghostClass,!1),k($,s.ghostClass,!0)),ut!==p&&p!==Ht.active?ut=p:p===Ht.active&&ut&&(ut=null),f===p&&(p._ignoreWhileAnimating=l),p.animateAll(function(){O("dragOverAnimationComplete"),p._ignoreWhileAnimating=null}),p!==f&&(f.animateAll(),f._ignoreWhileAnimating=null)),(l===$&&!$.animated||l===a&&!l.animated)&&(bt=null),s.dragoverBubble||n.rootEl||l===document||($.parentNode[K]._isOutsideThisEl(n.target),t||Ft(n)),!s.dragoverBubble&&n.stopPropagation&&n.stopPropagation(),g=!0}function N(){at=j($),st=j($,s.draggable),Z({sortable:p,name:"change",toEl:a,newIndex:at,newDraggableIndex:st,originalEvent:n})}},_ignoreWhileAnimating:null,_offMoveEvents:function(){p(document,"mousemove",this._onTouchMove),p(document,"touchmove",this._onTouchMove),p(document,"pointermove",this._onTouchMove),p(document,"dragover",Ft),p(document,"mousemove",Ft),p(document,"touchmove",Ft)},_offUpEvents:function(){var t=this.el.ownerDocument;p(t,"mouseup",this._onDrop),p(t,"touchend",this._onDrop),p(t,"pointerup",this._onDrop),p(t,"pointercancel",this._onDrop),p(t,"touchcancel",this._onDrop),p(document,"selectstart",this)},_onDrop:function(t){var e=this.el,n=this.options;at=j($),st=j($,n.draggable),q("drop",this,{evt:t}),Q=$&&$.parentNode,at=j($),st=j($,n.draggable),Ht.eventCanceled||(Ct=Tt=Et=!1,clearInterval(this._loopId),clearTimeout(this._dragStartTimer),Gt(this.cloneId),Gt(this._dragStartId),this.nativeDraggable&&(p(document,"drop",this),p(e,"dragstart",this._onDragStart)),this._offMoveEvents(),this._offUpEvents(),u&&R(document.body,"user-select",""),R($,"transform",""),t&&(vt&&(t.cancelable&&t.preventDefault(),n.dropBubble||t.stopPropagation()),J&&J.parentNode&&J.parentNode.removeChild(J),(tt===Q||ut&&"clone"!==ut.lastPutMode)&&ot&&ot.parentNode&&ot.parentNode.removeChild(ot),$&&(this.nativeDraggable&&p($,"dragend",this),Kt($),$.style["will-change"]="",vt&&!Et&&k($,(ut||this).options.ghostClass,!1),k($,this.options.chosenClass,!1),Z({sortable:this,name:"unchoose",toEl:Q,newIndex:null,newDraggableIndex:null,originalEvent:t}),tt!==Q?(0<=at&&(Z({rootEl:Q,name:"add",toEl:Q,fromEl:tt,originalEvent:t}),Z({sortable:this,name:"remove",toEl:Q,originalEvent:t}),Z({rootEl:Q,name:"sort",toEl:Q,fromEl:tt,originalEvent:t}),Z({sortable:this,name:"sort",toEl:Q,originalEvent:t})),ut&&ut.save()):at!==rt&&0<=at&&(Z({sortable:this,name:"update",toEl:Q,originalEvent:t}),Z({sortable:this,name:"sort",toEl:Q,originalEvent:t})),Ht.active&&(null!=at&&-1!==at||(at=rt,st=lt),Z({sortable:this,name:"end",toEl:Q,originalEvent:t}),this.save())))),this._nulling()},_nulling:function(){q("nulling",this),tt=$=Q=J=et=ot=nt=it=dt=ht=vt=at=st=rt=lt=bt=yt=ut=ct=Ht.dragged=Ht.ghost=Ht.clone=Ht.active=null;var e=this.el;Mt.forEach(function(t){e.contains(t)&&(t.checked=!0)}),Mt.length=ft=pt=0},handleEvent:function(t){switch(t.type){case"drop":case"dragend":this._onDrop(t);break;case"dragenter":case"dragover":$&&(this._onDragOver(t),function(t){t.dataTransfer&&(t.dataTransfer.dropEffect="move");t.cancelable&&t.preventDefault()}(t));break;case"selectstart":t.preventDefault()}},toArray:function(){for(var t,e=[],n=this.el.children,o=0,i=n.length,r=this.options;o<i;o++)P(t=n[o],r.draggable,this.el,!1)&&e.push(t.getAttribute(r.dataIdAttr)||function(t){var e=t.tagName+t.className+t.src+t.href+t.textContent,n=e.length,o=0;for(;n--;)o+=e.charCodeAt(n);return o.toString(36)}(t));return e},sort:function(t,e){var n={},o=this.el;this.toArray().forEach(function(t,e){e=o.children[e];P(e,this.options.draggable,o,!1)&&(n[t]=e)},this),e&&this.captureAnimationState(),t.forEach(function(t){n[t]&&(o.removeChild(n[t]),o.appendChild(n[t]))}),e&&this.animateAll()},save:function(){var t=this.options.store;t&&t.set&&t.set(this)},closest:function(t,e){return P(t,e||this.options.draggable,this.el,!1)},option:function(t,e){var n=this.options;if(void 0===e)return n[t];var o=G.modifyOption(this,t,e);n[t]=void 0!==o?o:e,"group"===t&&Xt(n)},destroy:function(){q("destroy",this);var t=this.el;t[K]=null,p(t,"mousedown",this._onTapStart),p(t,"touchstart",this._onTapStart),p(t,"pointerdown",this._onTapStart),this.nativeDraggable&&(p(t,"dragover",this),p(t,"dragenter",this)),Array.prototype.forEach.call(t.querySelectorAll("[draggable]"),function(t){t.removeAttribute("draggable")}),this._onDrop(),this._disableDelayedDragEvents(),_t.splice(_t.indexOf(this.el),1),this.el=t=null},_hideClone:function(){it||(q("hideClone",this),Ht.eventCanceled||(R(ot,"display","none"),this.options.removeCloneOnHide&&ot.parentNode&&ot.parentNode.removeChild(ot),it=!0))},_showClone:function(t){"clone"===t.lastPutMode?it&&(q("showClone",this),Ht.eventCanceled||($.parentNode!=tt||this.options.group.revertClone?et?tt.insertBefore(ot,et):tt.appendChild(ot):tt.insertBefore(ot,$),this.options.group.revertClone&&this.animate($,ot),R(ot,"display",""),it=!1)):this._hideClone()}},At&&f(document,"touchmove",function(t){(Ht.active||Et)&&t.cancelable&&t.preventDefault()}),Ht.utils={on:f,off:p,css:R,find:E,is:function(t,e){return!!P(t,e,t,!1)},extend:function(t,e){if(t&&e)for(var n in e)e.hasOwnProperty(n)&&(t[n]=e[n]);return t},throttle:C,closest:P,toggleClass:k,clone:T,index:j,nextTick:zt,cancelNextTick:Gt,detectDirection:Rt,getChild:B,expando:K},Ht.get=function(t){return t[K]},Ht.mount=function(){for(var t=arguments.length,e=new Array(t),n=0;n<t;n++)e[n]=arguments[n];(e=e[0].constructor===Array?e[0]:e).forEach(function(t){if(!t.prototype||!t.prototype.constructor)throw"Sortable: Mounted plugin must be a constructor function, not ".concat({}.toString.call(t));t.utils&&(Ht.utils=I(I({},Ht.utils),t.utils)),G.mount(t)})},Ht.create=function(t,e){return new Ht(t,e)};var Ut,qt,Vt,Zt,$t,Qt,Jt=[],te=!(Ht.version="1.15.7");function ee(){Jt.forEach(function(t){clearInterval(t.pid)}),Jt=[]}function ne(){clearInterval(Qt)}var oe,ie=C(function(n,t,e,o){if(t.scroll){var i,r=(n.touches?n.touches[0]:n).clientX,a=(n.touches?n.touches[0]:n).clientY,l=t.scrollSensitivity,s=t.scrollSpeed,c=O(),u=!1;qt!==e&&(qt=e,ee(),Ut=t.scroll,i=t.scrollFn,!0===Ut&&(Ut=M(e,!0)));var d=0,h=Ut;do{var f=h,p=X(f),g=p.top,m=p.bottom,v=p.left,b=p.right,y=p.width,w=p.height,D=void 0,E=void 0,S=f.scrollWidth,_=f.scrollHeight,C=R(f),T=f.scrollLeft,p=f.scrollTop,E=f===c?(D=y<S&&("auto"===C.overflowX||"scroll"===C.overflowX||"visible"===C.overflowX),w<_&&("auto"===C.overflowY||"scroll"===C.overflowY||"visible"===C.overflowY)):(D=y<S&&("auto"===C.overflowX||"scroll"===C.overflowX),w<_&&("auto"===C.overflowY||"scroll"===C.overflowY)),T=D&&(Math.abs(b-r)<=l&&T+y<S)-(Math.abs(v-r)<=l&&!!T),p=E&&(Math.abs(m-a)<=l&&p+w<_)-(Math.abs(g-a)<=l&&!!p);if(!Jt[d])for(var x=0;x<=d;x++)Jt[x]||(Jt[x]={});Jt[d].vx==T&&Jt[d].vy==p&&Jt[d].el===f||(Jt[d].el=f,Jt[d].vx=T,Jt[d].vy=p,clearInterval(Jt[d].pid),0==T&&0==p||(u=!0,Jt[d].pid=setInterval(function(){o&&0===this.layer&&Ht.active._onTouchMove($t);var t=Jt[this.layer].vy?Jt[this.layer].vy*s:0,e=Jt[this.layer].vx?Jt[this.layer].vx*s:0;"function"==typeof i&&"continue"!==i.call(Ht.dragged.parentNode[K],e,t,n,$t,Jt[this.layer].el)||H(Jt[this.layer].el,e,t)}.bind({layer:d}),24))),d++}while(t.bubbleScroll&&h!==c&&(h=M(h,!1)));te=u}},30),n=function(t){var e=t.originalEvent,n=t.putSortable,o=t.dragEl,i=t.activeSortable,r=t.dispatchSortableEvent,a=t.hideGhostForTarget,t=t.unhideGhostForTarget;e&&(i=n||i,a(),e=e.changedTouches&&e.changedTouches.length?e.changedTouches[0]:e,e=document.elementFromPoint(e.clientX,e.clientY),t(),i&&!i.el.contains(e)&&(r("spill"),this.onSpill({dragEl:o,putSortable:n})))};function re(){}function ae(){}re.prototype={startIndex:null,dragStart:function(t){t=t.oldDraggableIndex;this.startIndex=t},onSpill:function(t){var e=t.dragEl,n=t.putSortable;this.sortable.captureAnimationState(),n&&n.captureAnimationState();t=B(this.sortable.el,this.startIndex,this.options);t?this.sortable.el.insertBefore(e,t):this.sortable.el.appendChild(e),this.sortable.animateAll(),n&&n.animateAll()},drop:n},a(re,{pluginName:"revertOnSpill"}),ae.prototype={onSpill:function(t){var e=t.dragEl,t=t.putSortable||this.sortable;t.captureAnimationState(),e.parentNode&&e.parentNode.removeChild(e),t.animateAll()},drop:n},a(ae,{pluginName:"removeOnSpill"});var le,se,ce,ue,de,he=[],fe=[],pe=!1,ge=!1,me=!1;function ve(n,o){fe.forEach(function(t,e){e=o.children[t.sortableIndex+(n?Number(e):0)];e?o.insertBefore(t,e):o.appendChild(t)})}function be(){he.forEach(function(t){t!==ce&&t.parentNode&&t.parentNode.removeChild(t)})}return Ht.mount(new function(){function t(){for(var t in this.defaults={scroll:!0,forceAutoScrollFallback:!1,scrollSensitivity:30,scrollSpeed:10,bubbleScroll:!0},this)"_"===t.charAt(0)&&"function"==typeof this[t]&&(this[t]=this[t].bind(this))}return t.prototype={dragStarted:function(t){t=t.originalEvent;this.sortable.nativeDraggable?f(document,"dragover",this._handleAutoScroll):this.options.supportPointer?f(document,"pointermove",this._handleFallbackAutoScroll):t.touches?f(document,"touchmove",this._handleFallbackAutoScroll):f(document,"mousemove",this._handleFallbackAutoScroll)},dragOverCompleted:function(t){t=t.originalEvent;this.options.dragOverBubble||t.rootEl||this._handleAutoScroll(t)},drop:function(){this.sortable.nativeDraggable?p(document,"dragover",this._handleAutoScroll):(p(document,"pointermove",this._handleFallbackAutoScroll),p(document,"touchmove",this._handleFallbackAutoScroll),p(document,"mousemove",this._handleFallbackAutoScroll)),ne(),ee(),clearTimeout(v),v=void 0},nulling:function(){$t=qt=Ut=te=Qt=Vt=Zt=null,Jt.length=0},_handleFallbackAutoScroll:function(t){this._handleAutoScroll(t,!0)},_handleAutoScroll:function(e,n){var o,i=this,r=(e.touches?e.touches[0]:e).clientX,a=(e.touches?e.touches[0]:e).clientY,t=document.elementFromPoint(r,a);$t=e,n||this.options.forceAutoScrollFallback||w||y||u?(ie(e,this.options,t,n),o=M(t,!0),!te||Qt&&r===Vt&&a===Zt||(Qt&&ne(),Qt=setInterval(function(){var t=M(document.elementFromPoint(r,a),!0);t!==o&&(o=t,ee()),ie(e,i.options,t,n)},10),Vt=r,Zt=a)):this.options.bubbleScroll&&M(t,!0)!==O()?ie(e,this.options,M(t,!1),!1):ee()}},a(t,{pluginName:"scroll",initializeByDefault:!0})}),Ht.mount(ae,re),Ht.mount(new function(){function t(){this.defaults={swapClass:"sortable-swap-highlight"}}return t.prototype={dragStart:function(t){t=t.dragEl;oe=t},dragOverValid:function(t){var e=t.completed,n=t.target,o=t.onMove,i=t.activeSortable,r=t.changed,a=t.cancel;i.options.swap&&(t=this.sortable.el,i=this.options,n&&n!==t&&(t=oe,oe=!1!==o(n)?(k(n,i.swapClass,!0),n):null,t&&t!==oe&&k(t,i.swapClass,!1)),r(),e(!0),a())},drop:function(t){var e,n,o=t.activeSortable,i=t.putSortable,r=t.dragEl,a=i||this.sortable,l=this.options;oe&&k(oe,l.swapClass,!1),oe&&(l.swap||i&&i.options.swap)&&r!==oe&&(a.captureAnimationState(),a!==o&&o.captureAnimationState(),n=oe,t=(e=r).parentNode,l=n.parentNode,t&&l&&!t.isEqualNode(n)&&!l.isEqualNode(e)&&(i=j(e),r=j(n),t.isEqualNode(l)&&i<r&&r++,t.insertBefore(n,t.children[i]),l.insertBefore(e,l.children[r])),a.animateAll(),a!==o&&o.animateAll())},nulling:function(){oe=null}},a(t,{pluginName:"swap",eventProperties:function(){return{swapItem:oe}}})}),Ht.mount(new function(){function t(o){for(var t in this)"_"===t.charAt(0)&&"function"==typeof this[t]&&(this[t]=this[t].bind(this));o.options.avoidImplicitDeselect||(o.options.supportPointer?f(document,"pointerup",this._deselectMultiDrag):(f(document,"mouseup",this._deselectMultiDrag),f(document,"touchend",this._deselectMultiDrag))),f(document,"keydown",this._checkKeyDown),f(document,"keyup",this._checkKeyUp),this.defaults={selectedClass:"sortable-selected",multiDragKey:null,avoidImplicitDeselect:!1,setData:function(t,e){var n="";he.length&&se===o?he.forEach(function(t,e){n+=(e?", ":"")+t.textContent}):n=e.textContent,t.setData("Text",n)}}}return t.prototype={multiDragKeyDown:!1,isMultiDrag:!1,delayStartGlobal:function(t){t=t.dragEl;ce=t},delayEnded:function(){this.isMultiDrag=~he.indexOf(ce)},setupClone:function(t){var e=t.sortable,t=t.cancel;if(this.isMultiDrag){for(var n=0;n<he.length;n++)fe.push(T(he[n])),fe[n].sortableIndex=he[n].sortableIndex,fe[n].draggable=!1,fe[n].style["will-change"]="",k(fe[n],this.options.selectedClass,!1),he[n]===ce&&k(fe[n],this.options.chosenClass,!1);e._hideClone(),t()}},clone:function(t){var e=t.sortable,n=t.rootEl,o=t.dispatchSortableEvent,t=t.cancel;this.isMultiDrag&&(this.options.removeCloneOnHide||he.length&&se===e&&(ve(!0,n),o("clone"),t()))},showClone:function(t){var e=t.cloneNowShown,n=t.rootEl,t=t.cancel;this.isMultiDrag&&(ve(!1,n),fe.forEach(function(t){R(t,"display","")}),e(),de=!1,t())},hideClone:function(t){var e=this,n=(t.sortable,t.cloneNowHidden),t=t.cancel;this.isMultiDrag&&(fe.forEach(function(t){R(t,"display","none"),e.options.removeCloneOnHide&&t.parentNode&&t.parentNode.removeChild(t)}),n(),de=!0,t())},dragStartGlobal:function(t){t.sortable;!this.isMultiDrag&&se&&se.multiDrag._deselectMultiDrag(),he.forEach(function(t){t.sortableIndex=j(t)}),he=he.sort(function(t,e){return t.sortableIndex-e.sortableIndex}),me=!0},dragStarted:function(t){var e,n=this,t=t.sortable;this.isMultiDrag&&(this.options.sort&&(t.captureAnimationState(),this.options.animation&&(he.forEach(function(t){t!==ce&&R(t,"position","absolute")}),e=X(ce,!1,!0,!0),he.forEach(function(t){t!==ce&&x(t,e)}),pe=ge=!0)),t.animateAll(function(){pe=ge=!1,n.options.animation&&he.forEach(function(t){A(t)}),n.options.sort&&be()}))},dragOver:function(t){var e=t.target,n=t.completed,t=t.cancel;ge&&~he.indexOf(e)&&(n(!1),t())},revert:function(t){var n,o,e=t.fromSortable,i=t.rootEl,r=t.sortable,a=t.dragRect;1<he.length&&(he.forEach(function(t){r.addAnimationState({target:t,rect:ge?X(t):a}),A(t),t.fromRect=a,e.removeAnimationState(t)}),ge=!1,n=!this.options.removeCloneOnHide,o=i,he.forEach(function(t,e){e=o.children[t.sortableIndex+(n?Number(e):0)];e?o.insertBefore(t,e):o.appendChild(t)}))},dragOverCompleted:function(t){var e,n=t.sortable,o=t.isOwner,i=t.insertion,r=t.activeSortable,a=t.parentEl,l=t.putSortable,t=this.options;i&&(o&&r._hideClone(),pe=!1,t.animation&&1<he.length&&(ge||!o&&!r.options.sort&&!l)&&(e=X(ce,!1,!0,!0),he.forEach(function(t){t!==ce&&(x(t,e),a.appendChild(t))}),ge=!0),o||(ge||be(),1<he.length?(o=de,r._showClone(n),r.options.animation&&!de&&o&&fe.forEach(function(t){r.addAnimationState({target:t,rect:ue}),t.fromRect=ue,t.thisAnimationDuration=null})):r._showClone(n)))},dragOverAnimationCapture:function(t){var e=t.dragRect,n=t.isOwner,t=t.activeSortable;he.forEach(function(t){t.thisAnimationDuration=null}),t.options.animation&&!n&&t.multiDrag.isMultiDrag&&(ue=a({},e),e=D(ce,!0),ue.top-=e.f,ue.left-=e.e)},dragOverAnimationComplete:function(){ge&&(ge=!1,be())},drop:function(t){var o,i,r,a,n,e,l,s=t.originalEvent,c=t.rootEl,u=t.parentEl,d=t.sortable,h=t.dispatchSortableEvent,f=t.oldIndex,t=t.putSortable,p=t||this.sortable;s&&(o=this.options,i=u.children,me||(o.multiDragKey&&!this.multiDragKeyDown&&this._deselectMultiDrag(),k(ce,o.selectedClass,!~he.indexOf(ce)),~he.indexOf(ce)?(he.splice(he.indexOf(ce),1),le=null,U({sortable:d,rootEl:c,name:"deselect",targetEl:ce,originalEvent:s})):(he.push(ce),U({sortable:d,rootEl:c,name:"select",targetEl:ce,originalEvent:s}),s.shiftKey&&le&&d.el.contains(le)?(r=j(le),a=j(ce),~r&&~a&&r!==a&&function(){for(var e,t=r<a?(e=r,a):(e=a,r+1),n=o.filter;e<t;e++)~he.indexOf(i[e])||P(i[e],o.draggable,u,!1)&&(n&&("function"==typeof n?n.call(d,s,i[e],d):n.split(",").some(function(t){return P(i[e],t.trim(),u,!1)}))||(k(i[e],o.selectedClass,!0),he.push(i[e]),U({sortable:d,rootEl:c,name:"select",targetEl:i[e],originalEvent:s})))}()):le=ce,se=p)),me&&this.isMultiDrag&&(ge=!1,(u[K].options.sort||u!==c)&&1<he.length&&(n=X(ce),e=j(ce,":not(."+this.options.selectedClass+")"),!pe&&o.animation&&(ce.thisAnimationDuration=null),p.captureAnimationState(),pe||(o.animation&&(ce.fromRect=n,he.forEach(function(t){var e;t.thisAnimationDuration=null,t!==ce&&(e=ge?X(t):n,t.fromRect=e,p.addAnimationState({target:t,rect:e}))})),be(),he.forEach(function(t){i[e]?u.insertBefore(t,i[e]):u.appendChild(t),e++}),f===j(ce)&&(l=!1,he.forEach(function(t){t.sortableIndex!==j(t)&&(l=!0)}),l&&(h("update"),h("sort")))),he.forEach(function(t){A(t)}),p.animateAll()),se=p),(c===u||t&&"clone"!==t.lastPutMode)&&fe.forEach(function(t){t.parentNode&&t.parentNode.removeChild(t)}))},nullingGlobal:function(){this.isMultiDrag=me=!1,fe.length=0},destroyGlobal:function(){this._deselectMultiDrag(),p(document,"pointerup",this._deselectMultiDrag),p(document,"mouseup",this._deselectMultiDrag),p(document,"touchend",this._deselectMultiDrag),p(document,"keydown",this._checkKeyDown),p(document,"keyup",this._checkKeyUp)},_deselectMultiDrag:function(t){if(!(void 0!==me&&me||se!==this.sortable||t&&P(t.target,this.options.draggable,this.sortable.el,!1)||t&&0!==t.button))for(;he.length;){var e=he[0];k(e,this.options.selectedClass,!1),he.shift(),U({sortable:this.sortable,rootEl:this.sortable.el,name:"deselect",targetEl:e,originalEvent:t})}},_checkKeyDown:function(t){t.key===this.options.multiDragKey&&(this.multiDragKeyDown=!0)},_checkKeyUp:function(t){t.key===this.options.multiDragKey&&(this.multiDragKeyDown=!1)}},a(t,{pluginName:"multiDrag",utils:{select:function(t){var e=t.parentNode[K];e&&e.options.multiDrag&&!~he.indexOf(t)&&(se&&se!==e&&(se.multiDrag._deselectMultiDrag(),se=e),k(t,e.options.selectedClass,!0),he.push(t))},deselect:function(t){var e=t.parentNode[K],n=he.indexOf(t);e&&e.options.multiDrag&&~n&&(k(t,e.options.selectedClass,!1),he.splice(n,1))}},eventProperties:function(){var n=this,o=[],i=[];return he.forEach(function(t){var e;o.push({multiDragElement:t,index:t.sortableIndex}),e=ge&&t!==ce?-1:ge?j(t,":not(."+n.options.selectedClass+")"):j(t),i.push({multiDragElement:t,index:e})}),{items:e(he),clones:[].concat(fe),oldIndicies:o,newIndicies:i}},optionListeners:{multiDragKey:function(t){return"ctrl"===(t=t.toLowerCase())?t="Control":1<t.length&&(t=t.charAt(0).toUpperCase()+t.substr(1)),t}}})}),Ht});
+</script>
+<script>
+(function(){
+  const PROBLEM_DATA = {"dnd1": {"correct": ["studying", "with", "friends", "often results in"], "has_transform": false}, "dnd2": {"correct": ["spending", "the whole week", "with", "the animals", "was"], "has_transform": false}, "dnd3": {"correct": ["whether", "the witness", "was telling", "the truth"], "has_transform": false}, "dnd4": {"correct": ["what", "they", "suggested", "during the meeting", "led to", "an innovative solution"], "has_transform": false}, "dnd5": {"correct": ["choose", "the right career", "be", "important"], "has_transform": true}, "dnd6": {"correct": ["read", "historical novels", "about", "ancient civilizations", "provide"], "has_transform": true}, "dnd7": {"correct": ["we", "get", "funding", "determine", "the future"], "has_transform": true}, "dnd8": {"correct": ["the company", "offers", "its employees", "include", "remote work options"], "has_transform": true}, "dnd9": {"correct": ["to", "find", "a balance", "between", "work and personal life"], "has_transform": false}, "dnd10": {"correct": ["it", "is", "necessary", "for", "companies", "to", "adapt quickly"], "has_transform": false}, "dnd11": {"correct": ["it", "is", "strange", "that", "nobody", "noticed", "the error"], "has_transform": false}, "dnd12": {"correct": ["it", "is", "exciting", "that", "technology", "continues to", "advance"], "has_transform": false}, "dnd13": {"correct": ["fun", "explore", "new hobbies"], "has_transform": false}, "dnd14": {"correct": ["a bad idea", "depend on", "social media"], "has_transform": false}, "dnd15": {"correct": ["essential", "children", "drink", "enough water"], "has_transform": false}, "dnd16": {"correct": ["generous", "them", "donate", "a large amount", "of money"], "has_transform": false}, "dnd17": {"correct": ["what", "she", "experienced", "during", "her trip"], "has_transform": false}, "dnd18": {"correct": ["listening to", "classical music", "can", "enhance", "concentration"], "has_transform": false}, "dnd19": {"correct": ["it", "is", "dangerous", "for", "the residents", "of the area", "to", "stay outside"], "has_transform": false}, "dnd20": {"correct": ["whether", "the color", "of the original building", "was", "yellow"], "has_transform": false}, "dnd21": {"correct": ["speaking in public", "demands", "preparation", "and", "lots of", "practice"], "has_transform": false}, "dnd22": {"correct": ["it", "is", "amazing", "that", "a tiny device", "can", "store", "so much data"], "has_transform": false}, "dnd23": {"correct": ["cook", "healthy meals", "for", "the whole family", "bring"], "has_transform": true}, "dnd24": {"correct": ["what", "you", "post", "online", "affect", "your reputation"], "has_transform": true}, "dnd25": {"correct": ["it", "was", "rude", "him", "to", "interrupt", "her presentation"], "has_transform": false}, "dnd26": {"correct": ["it", "is", "impossible", "students", "to", "memorize", "everything"], "has_transform": false}, "dnd27": {"correct": ["walk", "in the rain", "without an umbrella", "ruined", "his new shoes"], "has_transform": true}, "dnd28": {"correct": ["it", "is", "clear", "spending", "time", "in nature", "reduces", "stress levels"], "has_transform": false}, "dnd29": {"correct": ["wise", "the teacher", "delay", "the test"], "has_transform": false}, "dnd30": {"correct": ["necessary", "researchers", "report", "their findings"], "has_transform": false}, "dnd31": {"correct": ["eat", "vegetables", "every day", "improve", "your immune system"], "has_transform": true}, "dnd32": {"correct": ["the coach", "says", "during practice", "motivate", "the players"], "has_transform": true}, "dnd33": {"correct": ["interesting", "some animals", "can sense", "earthquakes", "before", "they", "happen"], "has_transform": false}, "dnd34": {"correct": ["is", "essential", "the author", "establish", "a positive relationship"], "has_transform": false}, "dnd35": {"correct": ["have", "greater control", "over", "their life choices", "has become", "desirable"], "has_transform": true}, "dnd36": {"correct": ["I", "have", "been", "a huge fan", "of the actor"], "has_transform": false}, "dnd37": {"correct": ["we", "have", "provided", "lost animals", "with", "new homes"], "has_transform": false}, "dnd38": {"correct": ["bought", "a beautiful vase", "a famous artist", "had", "made"], "has_transform": false}, "dnd39": {"correct": ["Jamie", "has", "been", "learning", "to play", "the piano", "for nearly three years"], "has_transform": false}, "dnd40": {"correct": ["people", "become", "interested in", "vegetarian diets"], "has_transform": true}, "dnd41": {"correct": ["the professor", "teach", "students", "engineering"], "has_transform": true}, "dnd42": {"correct": ["he", "never experience", "such heavy rain"], "has_transform": true}, "dnd43": {"correct": ["she", "be", "wait", "for hours"], "has_transform": true}, "dnd44": {"correct": ["she", "can't", "have", "finished", "that long novel"], "has_transform": false}, "dnd45": {"correct": ["the doctor", "suggested", "that", "the patient", "take", "the medicine"], "has_transform": false}, "dnd46": {"correct": ["we", "used", "to", "spend", "our vacations", "at", "the beach"], "has_transform": false}, "dnd47": {"correct": ["my grandmother", "is", "used to", "cooking", "for a large family"], "has_transform": false}, "dnd48": {"correct": ["we", "have", "a picnic", "today"], "has_transform": true}, "dnd49": {"correct": ["they", "take", "the wrong train"], "has_transform": true}, "dnd50": {"correct": ["it", "fall", "onto the floor"], "has_transform": true}, "dnd51": {"correct": ["she", "read", "the parts", "about", "the cancellation policy"], "has_transform": true}, "dnd52": {"correct": ["I", "have", "watched", "that movie", "three times"], "has_transform": false}, "dnd53": {"correct": ["I", "didn't", "recognize", "her", "because", "I", "had", "never", "met", "her"], "has_transform": false}, "dnd54": {"correct": ["some organisms", "found", "in coral reefs", "are", "used", "to", "treat", "diseases"], "has_transform": false}, "dnd55": {"correct": ["he", "should", "have", "called", "us", "before", "arriving", "at the airport"], "has_transform": false}, "dnd56": {"correct": ["he", "had", "been", "feeling", "sick", "for days", "before", "he", "went to", "see the doctor"], "has_transform": false}, "dnd57": {"correct": ["the employees", "demanded", "that", "the CEO", "resign", "to protect", "the company's reputation"], "has_transform": false}, "dnd58": {"correct": ["they", "must", "have", "a great time", "at", "the festival"], "has_transform": true}, "dnd59": {"correct": ["my friend", "visit", "that museum", "several times", "before"], "has_transform": true}, "dnd60": {"correct": ["we", "be", "try to", "contact", "the customer"], "has_transform": true}, "dnd61": {"correct": ["she", "be", "think about", "quitting", "her job"], "has_transform": true}, "dnd62": {"correct": ["the train", "already", "leave", "the station", "when", "we", "got"], "has_transform": true}, "dnd63": {"correct": ["the facilities", "be", "in terrible condition", "since", "we", "moved"], "has_transform": true}, "dnd64": {"correct": ["the children", "be", "play", "outside"], "has_transform": true}, "dnd65": {"correct": ["the expert", "suggested", "that", "the school", "offer", "more art education"], "has_transform": true}, "dnd66": {"correct": ["my parents", "travel to", "ten different countries"], "has_transform": true}, "dnd67": {"correct": ["they", "save", "more money", "for their summer vacation"], "has_transform": true}, "dnd68": {"correct": ["she", "read", "a few pages", "before", "she", "turned off"], "has_transform": true}, "dnd69": {"correct": ["the demand", "for freshness", "raise", "concerns", "about food waste"], "has_transform": true}, "dnd70": {"correct": ["she", "notice", "how", "I", "was", "feeling"], "has_transform": true}, "dnd71": {"correct": ["drones and robots", "are", "used", "to deliver", "items"], "has_transform": false}, "dnd72": {"correct": ["a building", "had", "been", "destroyed", "by", "an earthquake"], "has_transform": false}, "dnd73": {"correct": ["many historic buildings", "have", "been", "preserved"], "has_transform": false}, "dnd74": {"correct": ["it", "is", "said", "that", "this medicine", "reduces", "pain"], "has_transform": false}, "dnd75": {"correct": ["the stolen paintings", "recover", "the police"], "has_transform": true}, "dnd76": {"correct": ["many trees", "have", "plant", "around the city"], "has_transform": true}, "dnd77": {"correct": ["it", "believe", "that", "ancient people", "used", "the stars"], "has_transform": true}, "dnd78": {"correct": ["it", "report", "that", "the company", "lost", "millions of dollars"], "has_transform": true}, "dnd79": {"correct": ["this movie", "is", "considered", "a masterpiece"], "has_transform": false}, "dnd80": {"correct": ["the door", "was", "left", "open", "all night"], "has_transform": false}, "dnd81": {"correct": ["marathon participants", "were", "asked", "to", "arrive"], "has_transform": false}, "dnd82": {"correct": ["I", "was", "made", "to", "cancel", "my trip to New York"], "has_transform": false}, "dnd83": {"correct": ["the passengers", "tell", "stay", "seated"], "has_transform": true}, "dnd84": {"correct": ["all visitors", "to the aquarium", "require", "purchase", "a ticket"], "has_transform": true}, "dnd85": {"correct": ["people", "make", "wait", "in a long line"], "has_transform": true}, "dnd86": {"correct": ["the suspect", "see", "run away", "from the store"], "has_transform": true}, "dnd87": {"correct": ["she", "was", "found", "sleeping", "in the library"], "has_transform": false}, "dnd88": {"correct": ["patients", "are", "encouraged", "to", "exercise regularly"], "has_transform": false}, "dnd89": {"correct": ["John", "was", "appointed", "manager", "of the sales department"], "has_transform": false}, "dnd90": {"correct": ["the latest smartphones", "are", "displayed", "in", "this showcase"], "has_transform": false}, "dnd91": {"correct": ["their house", "was", "left", "empty", "during", "the long vacation"], "has_transform": false}, "dnd92": {"correct": ["it", "can", "be", "said", "that", "computers", "have", "transformed", "the field of science"], "has_transform": false}, "dnd93": {"correct": ["all citizens", "require", "pay", "their taxes"], "has_transform": true}, "dnd94": {"correct": ["advanced technology", "have", "use", "to save", "marine animals"], "has_transform": true}, "dnd95": {"correct": ["new subscription services", "provide", "to", "consumers"], "has_transform": true}, "dnd96": {"correct": ["it", "estimate", "that", "over one million people", "visited", "the city"], "has_transform": true}, "dnd97": {"correct": ["force", "find", "new jobs", "after", "the factory", "shut down"], "has_transform": true}, "dnd98": {"correct": ["the girl", "in the back seat", "see", "hiding", "something", "in her backpack"], "has_transform": true}};
+
+  function norm(s){return s.replace(/\s+/g,' ').trim().toLowerCase();}
+
+  function getAnswer(wrap){
+    const area=wrap.querySelector('[data-role="answer"]');
+    return Array.from(area.querySelectorAll('.dnd-chip')).map(c=>c.dataset.token);
+  }
+
+  function checkAnswer(wrap){
+    const id=wrap.dataset.dnd;
+    const data=PROBLEM_DATA[id];
+    if(!data)return;
+    const current=getAnswer(wrap);
+    const correct=data.correct;
+    const area=wrap.querySelector('[data-role="answer"]');
+    const result=wrap.querySelector('[data-role="result"]');
+
+    // 순서 비교 (대소문자·공백 무시, 변형 단어는 원형으로 비교)
+    let ok = current.length===correct.length &&
+             current.every((t,i)=>norm(t)===norm(correct[i]));
+
+    area.classList.remove('correct','wrong');
+    if(ok){
+      area.classList.add('correct');
+      result.textContent = data.has_transform ? '✓ 어순 정답! (변형형 확인은 정답보기)' : '✓ 정답입니다!';
+      result.className='dnd-result ok';
+    }else{
+      area.classList.add('wrong');
+      result.textContent='✗ 다시 시도해 보세요';
+      result.className='dnd-result no';
+    }
+  }
+
+  function resetProblem(wrap){
+    const pool=wrap.querySelector('[data-role="pool"]');
+    const area=wrap.querySelector('[data-role="answer"]');
+    const result=wrap.querySelector('[data-role="result"]');
+    // 모든 칩을 pool로 되돌리기 (원래 순서로)
+    Array.from(area.querySelectorAll('.dnd-chip')).forEach(c=>pool.appendChild(c));
+    area.classList.remove('correct','wrong');
+    result.textContent='';
+    result.className='dnd-result';
+  }
+
+  function initDnd(){
+    document.querySelectorAll('.dnd-wrap').forEach(wrap=>{
+      const pool=wrap.querySelector('[data-role="pool"]');
+      const area=wrap.querySelector('[data-role="answer"]');
+      const group='g_'+wrap.dataset.dnd;
+      const opts={
+        group:group, animation:160,
+        ghostClass:'sortable-ghost', chosenClass:'sortable-chosen', dragClass:'sortable-drag',
+        forceFallback:true, fallbackOnBody:true, fallbackTolerance:4,
+        supportPointer:true, delay:100, delayOnTouchOnly:true, touchStartThreshold:5,
+        scroll:true, scrollSensitivity:80, bubbleScroll:true,
+        onStart:e=>{e.item._d=true;},
+        onEnd:e=>{setTimeout(()=>{e.item._d=false;},400);
+          const w=wrap.querySelector('[data-role="answer"]');
+          w.classList.remove('correct','wrong');
+          wrap.querySelector('[data-role="result"]').textContent='';}
+      };
+      new Sortable(pool,opts);
+      new Sortable(area,opts);
+
+      // 탭/클릭으로 이동
+      wrap.addEventListener('click',e=>{
+        const chip=e.target.closest('.dnd-chip');
+        if(!chip||chip._d)return;
+        const inPool=chip.parentElement.dataset.role==='pool';
+        if(inPool){area.appendChild(chip);}else{pool.appendChild(chip);}
+        area.classList.remove('correct','wrong');
+        wrap.querySelector('[data-role="result"]').textContent='';
+      });
+
+      wrap.querySelector('.dnd-check').addEventListener('click',()=>checkAnswer(wrap));
+      wrap.querySelector('.dnd-reset').addEventListener('click',()=>resetProblem(wrap));
+    });
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',initDnd);
+  }else{initDnd();}
+})();
+</script>
+
+<!-- 보호 마커 -->
+<!-- 본 자료는 목동서로영어학원의 제작물입니다. 무단 복제·배포 금지. (0505.co.kr) -->
+<!-- © 목동서로영어학원 · https://0505.co.kr -->
+
 </body>
 </html>
