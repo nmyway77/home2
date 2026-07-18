@@ -61,7 +61,7 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 .cards{display:flex;flex-direction:column;gap:13px;}
 .s-card{border-radius:10px;border-left:4px solid var(--blue-border);background:var(--blue-card);box-shadow:0 3px 14px var(--shadow);overflow:hidden;cursor:pointer;transition:box-shadow 0.25s,transform 0.2s;animation:slideIn 0.4s ease both;position:relative;}
 .s-card.grammar{border-left-color:var(--purple-border);background:var(--purple-card);}
-@media(hover:hover) and (pointer:fine){.s-card:hover{box-shadow:0 6px 28px rgba(31,56,100,0.18);transform:translateX(3px);}}
+@media(hover:hover) and (pointer:fine){.s-card:hover{box-shadow:0 6px 28px rgba(31,56,100,0.18);}}
 .s-card.playing{box-shadow:0 0 0 3px rgba(46,117,182,0.4),0 6px 28px var(--shadow);}
 .s-card.grammar.playing{box-shadow:0 0 0 3px rgba(91,45,142,0.4),0 6px 28px var(--shadow);}
 @keyframes slideIn{from{opacity:0;transform:translateX(-14px);}to{opacity:1;transform:translateX(0);}}
@@ -85,7 +85,7 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 
 /* KR WRAP */
 .s-kr-wrap{max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1),opacity 0.3s;opacity:0;background:rgba(255,255,255,0.6);border-top:1px dashed transparent;}
-@media(hover:hover) and (pointer:fine){.s-card:hover .s-kr-wrap{max-height:800px;opacity:1;border-top-color:rgba(46,117,182,0.2);}.s-card.grammar:hover .s-kr-wrap{border-top-color:rgba(91,45,142,0.2);}}
+@media(hover:hover) and (pointer:fine){.s-card:not(.vocab-only):hover .s-kr-wrap{max-height:800px;opacity:1;border-top-color:rgba(46,117,182,0.2);}.s-card.grammar:not(.vocab-only):hover .s-kr-wrap{border-top-color:rgba(91,45,142,0.2);}}
 .s-card.pinned .s-kr-wrap,.s-card.tapped .s-kr-wrap{max-height:800px;opacity:1;border-top-color:rgba(46,117,182,0.2);}
 .s-card.grammar.pinned .s-kr-wrap,.s-card.grammar.tapped .s-kr-wrap{border-top-color:rgba(91,45,142,0.2);}
 .s-card.vocab-only .s-kr-wrap{max-height:800px;opacity:1;border-top-color:rgba(46,117,182,0.2);}
@@ -142,7 +142,7 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 .answer-zone:empty::before{content:'여기에 단어를 놓으세요';color:rgba(46,117,182,0.35);font-size:12px;font-style:italic;display:flex;align-items:center;height:28px;}
 .word-pool{display:flex;flex-wrap:wrap;gap:7px;min-height:44px;padding:10px;background:#f8f8f8;border-radius:8px;border:2px dashed #ddd;margin-bottom:12px;transition:border-color 0.2s,background 0.2s;}
 .word-pool.drag-over{border-color:var(--gold);background:#fff9e6;}
-.word-chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:6px;font-family:Georgia,serif;font-size:13.5px;cursor:grab;user-select:none;transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;background:var(--blue-card);border:1.5px solid var(--blue-border);color:var(--navy);font-weight:600;white-space:nowrap;}
+.word-chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:6px;font-family:Georgia,serif;font-size:13.5px;cursor:grab;user-select:none;transition:transform 0.15s,box-shadow 0.15s,opacity 0.15s;background:var(--blue-card);border:1.5px solid var(--blue-border);color:var(--navy);font-weight:600;white-space:nowrap;touch-action:none;}
 .word-chip:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(46,117,182,0.25);}
 .word-chip.dragging{opacity:0.35;transform:scale(0.93);cursor:grabbing;}
 .word-chip.ok-chip{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20;}
@@ -330,6 +330,11 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   display:inline-flex!important;flex-wrap:wrap!important;align-items:center;gap:4px 6px;
   max-width:100%;overflow-wrap:break-word;word-break:break-word;
 }
+/* 2-C. 문단 구분 배지 (para-div) */
+.para-div{display:flex;align-items:center;gap:10px;margin:22px 2px 10px;}
+.para-badge{width:26px;height:26px;border-radius:50%;background:#1F3864;color:#fff;font-weight:700;font-size:14px;font-family:'JetBrains Mono',monospace;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 6px rgba(31,56,100,0.25);}
+.para-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.para-line{flex:1;height:1px;background:linear-gradient(to right,rgba(31,56,100,0.35),transparent);}
 /* 2-B. 인카드 문장 구조도 (v2.0) */
 .s-structure{padding:6px 14px 8px 42px;border-top:1px dashed rgba(46,117,182,0.15);background:#FBFCFF;}
 .s-card.grammar .s-structure{border-top-color:rgba(91,45,142,0.15);}
@@ -425,13 +430,45 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   body.psd .sd-vocab-chip{font-size:10px!important;padding:2px 7px!important;}
 }
 
+
+
+/* ══ 펜 필기 모드 v1.0 ══ */
+#penToolbar{position:fixed;bottom:20px;right:20px;z-index:10000;display:flex;flex-direction:row;gap:8px;background:rgba(255,255,255,0.96);padding:8px;border-radius:30px;box-shadow:0 4px 20px rgba(0,0,0,0.18);backdrop-filter:blur(10px);align-items:center;}
+#penToolbar .pen-btn{width:42px;height:42px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-btn:hover{background:#e0e0e0;}
+#penToolbar .pen-btn.active{background:#2E75B6;color:white;}
+#penToolbar .pen-main{background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;font-size:20px;}
+#penToolbar .pen-main.active{background:linear-gradient(135deg,#dc2626,#ef4444);transform:scale(1.05);}
+#penToolbar .pen-tools{display:none;flex-direction:row;gap:6px;align-items:center;padding-left:8px;border-left:1px solid #ddd;margin-left:4px;}
+#penToolbar .pen-tools.show{display:flex;}
+#penToolbar .pen-color{width:30px;height:30px;border:2px solid white;border-radius:50%;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.2);transition:transform 0.15s;padding:0;}
+#penToolbar .pen-color:hover{transform:scale(1.1);}
+#penToolbar .pen-color.selected{border:2px solid #333;transform:scale(1.18);box-shadow:0 2px 6px rgba(0,0,0,0.3);}
+#penToolbar .pen-width{width:34px;height:34px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
+#penToolbar .pen-width:hover{background:#e0e0e0;}
+#penToolbar .pen-width span{background:#333;border-radius:50%;display:inline-block;}
+#penToolbar .pen-width.selected{background:#1F3864;}
+#penToolbar .pen-width.selected span{background:white !important;}
+#penLayer{position:absolute;top:0;left:0;pointer-events:none;z-index:998;overflow:visible;}
+#penLayer.active{pointer-events:auto;touch-action:none;cursor:crosshair;}
+@media print{#penToolbar{display:none !important;}#penLayer{display:none !important;}}
+@media (max-width:600px){
+  #penToolbar{bottom:10px;right:10px;padding:6px;gap:4px;}
+  #penToolbar .pen-btn,#penToolbar .pen-width{width:38px;height:38px;}
+  #penToolbar .pen-color{width:26px;height:26px;}
+}
+
+.tab-summary{background:white;color:#00695C;border-color:rgba(0,105,92,0.25);}
+.tab-summary.active{background:#00695C;color:white;border-color:#00695C;}
+.summary-view{display:none;}
+@media print{.summary-view{display:none!important;}}
 </style>
 </head>
 <body>
 <div class="print-brand print-brand-top">✦ 목동서로영어학원 제작 &nbsp;|&nbsp; www.0505.co.kr</div>
 <div class="print-brand print-brand-bot">✦ 목동서로영어학원 제작 &nbsp;|&nbsp; www.0505.co.kr</div>
 <nav class="top-nav">
-  <a class="home-btn" href="mock_march_2026_g2.html">← 목록</a>
+  <a class="home-btn" href="https://0505.co.kr/mock_h2_hub.html">← 목록</a>
   <span class="nav-title-bar">2026 · 3월 · 고2 · 36번</span>
   <span class="nav-badge">✦ Growing Demand, Shrinking Farmland</span>
 </nav>
@@ -448,6 +485,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
   <div class="view-tabs">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
+    <button class="view-tab tab-summary" id="tabSum" onclick="switchSummary()">📄 요약</button>
     <button class="view-tab tab-sd"             id="tabSD" onclick="switchSD()">📐 문장구조도</button>
     <button class="view-tab tab-ga"             id="tabGA" onclick="switchGA()">📊 문법분석</button>
     <button class="view-tab tab-arrange"        id="tabA" onclick="switchView('arrange')">✏️ 배열영작</button>
@@ -472,214 +510,272 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
       <button class="ctrl-btn" id="btnAll"   onclick="speakAll()">🔊 전체 읽기</button>
     </div>
     <div class="cards" id="cards">
+<!-- ═══ 단락 ⓐ ═══ -->
+<div class="para-div"><span class="para-badge">ⓐ</span><span class="para-line"></span></div>
 <div class="s-card grammar has-sd" data-text="Archaeological evidence suggests that various crops were being cultivated as early as 9500 BC in the Levant.">
   <div class="card-top"><span class="s-num">01</span><div class="s-en"><span class="hl">Archaeological</span> <span class="hl">evidence</span> suggests that various crops were being <span class="hl">cultivated</span> as early as 9500 BC in the Levant.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr"><strong>고고학적</strong> 증거는 기원전 9500년이라는 이른 시기에 다양한 작물이 <strong>재배</strong>되고 있었음을 시사한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">archaeological</span><span class="vocab-kr">고고학적인</span><span class="vocab-en">evidence</span><span class="vocab-kr">증거</span><span class="vocab-en">cultivated</span><span class="vocab-kr">재배된</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
-<svg viewBox="0 0 960 160" xmlns="http://www.w3.org/2000/svg">
-  <rect x="10" y="10" width="200" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
-  <text x="110" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Archaeological evidence</text>
-  <text x="110" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">고고학적 증거는 (S)</text>
-  <rect x="218" y="10" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
-  <text x="266" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">suggests</text>
-  <text x="266" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">시사한다 (V)</text>
-  <rect x="322" y="5" width="589" height="36" rx="5" fill="none" stroke="#6A1B9A" stroke-width="1.5" stroke-dasharray="5,3"/>
-  <text x="616" y="4" font-size="10" font-weight="400" fill="#6A1B9A" text-anchor="middle" font-family="sans-serif">that절</text>
-  <text x="351" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">that</text>
-  <text x="351" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">~라고</text>
-  <rect x="382" y="12" width="132" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
-  <text x="448" y="31" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">various crops</text>
-  <text x="448" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">다양한 작물이</text>
-  <rect x="522" y="12" width="185" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
-  <text x="614" y="31" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">were being cultivated</text>
-  <text x="614" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">재배되고 있었다 (과거 진행 수동)</text>
-  <rect x="715" y="12" width="180" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
-  <text x="805" y="31" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">as early as 9500 BC</text>
-  <text x="805" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">기원전 9500년이라는 이른 시기에</text>
-  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">고고학적 증거는 레반트에서 기원전 9500년이라는 이른 시기에 다양한 작물이 재배되고 있었음을</text>
-  <text x="10" y="130" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">시사한다.</text>
+  <div class="s-kr-wrap"><div class="s-kr"><strong>고고학적</strong> 증거는 기원전 9500년이라는 이른 시기에 다양한 작물이 <strong>재배</strong>되고 있었음을 시사한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">archaeological</span><span class="vocab-kr">고고학적인</span><span class="vocab-en">evidence</span><span class="vocab-kr">증거</span><span class="vocab-en">cultivated</span><span class="vocab-kr">재배된</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 258" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="206" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="113" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Archaeological evidence</text>
+  <text x="113" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">고고학적 증거는 (S)</text>
+  <rect x="224" y="10" width="83" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="265" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">suggests</text>
+  <text x="265" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">시사한다 (V)</text>
+  <rect x="315" y="10" width="56" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="343" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">that</text>
+  <text x="343" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">~라고</text>
+  <rect x="379" y="10" width="124" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="441" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">various crops</text>
+  <text x="441" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">다양한 작물이</text>
+  <rect x="511" y="10" width="190" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="606" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">were being cultivated</text>
+  <text x="606" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">재배되고 있었다 (과거 진행 수동)</text>
+  <rect x="709" y="10" width="183" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="800" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">as early as 9500 BC</text>
+  <text x="800" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">기원전 9500년이라는 이른 시기에</text>
+  <rect x="10" y="82" width="124" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="72" y="101" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">in the Levant</text>
+  <text x="72" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">레반트에서 (장소)</text>
+  <path d="M 343,38 C 343,160 265,160 265,45" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="261,51 265,43 269,51" fill="#534AB7"/>
+  <path d="M 72,110 C 72,160 606,160 606,45" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="602,51 606,43 610,51" fill="#534AB7"/>
+  <rect x="383" y="170" width="194" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="480" y="181" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">that 명사절 = suggests의 목적어</text>
+  <rect x="383" y="190" width="194" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="480" y="201" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">in the Levant → 재배 장소 수식</text>
+  <line x1="10" y1="218" x2="950" y2="218" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="240" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">고고학적 증거는 레반트에서 기원전 9500년이라는 이른 시기에 다양한 작물이 재배되고 있었음을 시사한다.</text>
 </svg></div>
-<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>were being cultivated</strong> = 과거 진행 수동. were + being + p.p. <strong>as early as</strong> = ~라는 이른 시기에.</div></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>were being cultivated</strong> = 과거 진행 수동. were + being + p.p. <strong>as early as</strong> = ~라는 이른 시기에.</div><div class="s-meaning"><span class="bracket">【농업의 시작】</span> 기원전 9500년 레반트에서 이미 작물 재배 — 농업의 역사는 매우 길다. <span class="star-line">★ 도입 = 농업의 오랜 기원!</span></div></div>
 </div>
 <div class="s-card grammar has-sd" data-text="Over the millennia, continuous innovations have boosted agricultural productivity while reducing manual labor.">
   <div class="card-top"><span class="s-num">02</span><div class="s-en">Over the <span class="hl">millennia</span>, <span class="hl">continuous</span> <span class="hl">innovations</span> have <span class="hl">boosted</span> <span class="hl">agricultural</span> <span class="hl">productivity</span> while reducing <span class="hl">manual</span> <span class="hl">labor</span>.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">수천 년에 걸쳐, 지속적 <strong>혁신</strong>이 <strong>수작업</strong>을 줄이면서 농업 <strong>생산성</strong>을 높여 왔다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">millennia</span><span class="vocab-kr">수천 년</span><span class="vocab-en">continuous</span><span class="vocab-kr">지속적인</span><span class="vocab-en">innovation</span><span class="vocab-kr">혁신</span><span class="vocab-en">boosted</span><span class="vocab-kr">높인</span><span class="vocab-en">agricultural</span><span class="vocab-kr">농업의</span><span class="vocab-en">productivity</span><span class="vocab-kr">생산성</span><span class="vocab-en">manual</span><span class="vocab-kr">수작업의</span><span class="vocab-en">labor</span><span class="vocab-kr">노동</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
-<svg viewBox="0 0 960 224" xmlns="http://www.w3.org/2000/svg">
-  <rect x="10" y="10" width="172" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
-  <text x="96" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">Over the millennia</text>
-  <text x="96" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수천 년에 걸쳐 (부사구)</text>
-  <rect x="190" y="10" width="193" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
-  <text x="286" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">continuous innovations</text>
-  <text x="286" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">지속적인 혁신이 (S)</text>
-  <rect x="391" y="10" width="124" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
-  <text x="453" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">have boosted</text>
-  <text x="453" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">높여 왔다 (V·현재완료)</text>
-  <rect x="523" y="10" width="215" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
-  <text x="630" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">agricultural productivity</text>
-  <text x="630" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">농업 생산성을 (O)</text>
-  <rect x="10" y="94" width="230" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
-  <text x="125" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">while reducing manual labor</text>
-  <text x="125" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수작업을 줄이면서 (while+분사구문)</text>
-  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">수천 년에 걸쳐, 지속적인 혁신이 수작업을 줄이면서 농업 생산성을 높여 왔다.</text>
+  <div class="s-kr-wrap"><div class="s-kr">수천 년에 걸쳐, 지속적 <strong>혁신</strong>이 <strong>수작업</strong>을 줄이면서 농업 <strong>생산성</strong>을 높여 왔다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">millennia</span><span class="vocab-kr">수천 년</span><span class="vocab-en">continuous</span><span class="vocab-kr">지속적인</span><span class="vocab-en">innovation</span><span class="vocab-kr">혁신</span><span class="vocab-en">boosted</span><span class="vocab-kr">높인</span><span class="vocab-en">agricultural</span><span class="vocab-kr">농업의</span><span class="vocab-en">productivity</span><span class="vocab-kr">생산성</span><span class="vocab-en">manual</span><span class="vocab-kr">수작업의</span><span class="vocab-en">labor</span><span class="vocab-kr">노동</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 238" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="165" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="92" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">Over the millennia</text>
+  <text x="92" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수천 년에 걸쳐 (부사구)</text>
+  <rect x="183" y="10" width="198" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="282" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">continuous innovations</text>
+  <text x="282" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">지속적인 혁신이 (S)</text>
+  <rect x="389" y="10" width="133" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="455" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">have boosted</text>
+  <text x="455" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">높여 왔다 (V·현재완료)</text>
+  <rect x="530" y="10" width="222" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="641" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">agricultural productivity</text>
+  <text x="641" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">농업 생산성을 (O)</text>
+  <rect x="10" y="82" width="239" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="129" y="101" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">while reducing manual labor</text>
+  <text x="129" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수작업을 줄이면서 (while+분사구문)</text>
+  <path d="M 129,110 C 129,160 455,160 455,45" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="451,51 455,43 459,51" fill="#534AB7"/>
+  <rect x="405" y="170" width="151" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="480" y="181" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">while 분사구문 → 동시 상황</text>
+  <line x1="10" y1="198" x2="950" y2="198" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="220" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">수천 년에 걸쳐, 지속적인 혁신이 수작업을 줄이면서 농업 생산성을 높여 왔다.</text>
 </svg></div>
-<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>have boosted</strong> = 현재완료. <strong>while reducing</strong> = while + 분사구문 (~하면서).</div></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>have boosted</strong> = 현재완료. <strong>while reducing</strong> = while + 분사구문 (~하면서).</div><div class="s-meaning"><span class="bracket">【혁신의 효과】</span> 수천 년의 지속적 혁신 → <strong>생산성↑ + 수작업↓</strong>. <span class="star-line">★ 혁신 = 더 적은 노동으로 더 많은 생산!</span></div></div>
 </div>
 <div class="s-card has-sd" data-text="However, the growing global population will always demand more food.">
   <div class="card-top"><span class="s-num">03</span><div class="s-en">However, the growing global <span class="hl">population</span> will always demand more food.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">그러나, 증가하는 세계 <strong>인구</strong>는 항상 더 많은 식량을 요구할 것이다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">population</span><span class="vocab-kr">인구</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
-<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
-  <rect x="10" y="10" width="87" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
-  <text x="53" y="29" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">However</text>
-  <text x="53" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그러나 (전환)</text>
-  <rect x="105" y="10" width="245" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
-  <text x="227" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the growing global population</text>
-  <text x="227" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">증가하는 세계 인구는 (S)</text>
-  <rect x="358" y="10" width="172" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <div class="s-kr-wrap"><div class="s-kr">그러나, 증가하는 세계 <strong>인구</strong>는 항상 더 많은 식량을 요구할 것이다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">population</span><span class="vocab-kr">인구</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 166" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="81" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="50" y="29" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">However</text>
+  <text x="50" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그러나 (전환)</text>
+  <rect x="99" y="10" width="255" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="226" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the growing global population</text>
+  <text x="226" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">증가하는 세계 인구는 (S)</text>
+  <rect x="362" y="10" width="165" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
   <text x="444" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">will always demand</text>
-  <text x="444" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">항상 요구할 것이다 (V)</text>
-  <rect x="538" y="10" width="104" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="444" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">항상 요구할 것이다 (V)</text>
+  <rect x="535" y="10" width="111" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
   <text x="590" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">more food</text>
-  <text x="590" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">더 많은 식량을 (O)</text>
-  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">그러나, 증가하는 세계 인구는 항상 더 많은 식량을 요구할 것이다.</text>
+  <text x="590" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">더 많은 식량을 (O)</text>
+  <path d="M 590,38 C 590,88 444,88 444,45" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="440,51 444,43 448,51" fill="#534AB7"/>
+  <rect x="383" y="98" width="194" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="480" y="109" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">demand → more food (V-O)</text>
+  <line x1="10" y1="126" x2="950" y2="126" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="148" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">그러나, 증가하는 세계 인구는 항상 더 많은 식량을 요구할 것이다.</text>
 </svg></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>growing</strong>: 현재분사 — population 수식 (증가하는). / <strong>will always demand</strong>: 조동사 + 빈도부사 위치 (will과 demand 사이).</div><div class="s-meaning"><span class="bracket">【그러나 인구↑】</span> 세계 인구 증가 → 식량 수요는 계속 늘어난다. <span class="star-line">★ 전환(However) — 수요 압박 등장!</span></div></div>
 </div>
-</div>
+<!-- ═══ 단락 ⓑ ═══ -->
+<div class="para-div"><span class="para-badge">ⓑ</span><span class="para-line"></span></div>
 <div class="s-card grammar has-sd" data-text="It is projected that by 2050, the world's population will increase to 9.7 billion, which will require global food production to rise by at least 70% to meet demand.">
   <div class="card-top"><span class="s-num">04</span><div class="s-en">It is projected that by 2050, the world's population will increase to 9.7 billion, which will require global food production to rise by at least 70% to <span class="hl">meet</span> demand.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">2050년까지 세계 인구가 97억으로 증가할 것으로 예상되며, 수요를 <strong>충족</strong>하기 위해 식량 생산이 최소 70% 증가해야 한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">meet</span><span class="vocab-kr">충족시키다</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
-<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
-  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
-  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">It</text>
-  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그것은 (가주어)</text>
-  <rect x="82" y="10" width="124" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
-  <text x="144" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is projected</text>
-  <text x="144" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">예상된다 (V·수동)</text>
-  <rect x="214" y="5" width="610" height="36" rx="5" fill="none" stroke="#6A1B9A" stroke-width="1.5" stroke-dasharray="5,3"/>
-  <text x="519" y="4" font-size="10" font-weight="400" fill="#6A1B9A" text-anchor="middle" font-family="sans-serif">that절 (진주어)</text>
-  <text x="243" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">that</text>
-  <text x="243" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">~라고</text>
-  <rect x="274" y="12" width="87" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
-  <text x="317" y="31" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">by 2050</text>
-  <text x="317" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">2050년까지</text>
-  <rect x="369" y="12" width="193" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
-  <text x="465" y="31" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the world's population</text>
-  <text x="465" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">세계 인구가</text>
-  <rect x="570" y="12" width="238" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
-  <text x="689" y="31" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">will increase to 9.7 billion</text>
-  <text x="689" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">97억으로 증가할 것</text>
-  <rect x="10" y="89" width="589" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
-  <text x="304" y="88" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">, which절 (부연)</text>
-  <text x="43" y="113" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">which</text>
-  <text x="43" y="146" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">이는 (계속적)</text>
-  <rect x="78" y="96" width="124" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
-  <text x="140" y="115" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">will require</text>
-  <text x="140" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">요구할 것이다</text>
-  <rect x="210" y="96" width="373" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
-  <text x="396" y="115" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">global food production to rise by at least 70%</text>
-  <text x="396" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">세계 식량 생산이 최소 70% 증가하도록 (require O to V)</text>
-  <rect x="607" y="94" width="140" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
-  <text x="677" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to meet demand</text>
-  <text x="677" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수요 충족을 위해 (to V)</text>
-  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">2050년까지 세계 인구가 97억으로 증가할 것으로 예상되며, 이는 수요를 충족하기 위해 세계</text>
-  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">식량 생산이 최소 70% 증가해야 할 것이다.</text>
+  <div class="s-kr-wrap"><div class="s-kr">2050년까지 세계 인구가 97억으로 증가할 것으로 예상되며, 수요를 <strong>충족</strong>하기 위해 식량 생산이 최소 70% 증가해야 한다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">meet</span><span class="vocab-kr">충족시키다</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 278" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="92" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="56" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">It</text>
+  <text x="56" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그것은 (가주어)</text>
+  <rect x="110" y="10" width="116" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="168" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is projected</text>
+  <text x="168" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">예상된다 (V·수동)</text>
+  <rect x="234" y="10" width="56" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="262" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">that</text>
+  <text x="262" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">~라고</text>
+  <rect x="298" y="10" width="75" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="335" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">by 2050</text>
+  <text x="335" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">2050년까지</text>
+  <rect x="381" y="10" width="198" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="480" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the world's population</text>
+  <text x="480" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">세계 인구가</text>
+  <rect x="587" y="10" width="247" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="710" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">will increase to 9.7 billion</text>
+  <text x="710" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">97억으로 증가할 것</text>
+  <rect x="842" y="10" width="81" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="882" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">which</text>
+  <text x="882" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이는 (계속적)</text>
+  <rect x="10" y="82" width="116" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="68" y="101" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">will require</text>
+  <text x="68" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">요구할 것이다</text>
+  <rect x="134" y="82" width="395" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="331" y="101" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">global food production to rise by at least 70%</text>
+  <text x="331" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">세계 식량 생산이 최소 70% 증가하도록 (require O to V)</text>
+  <rect x="537" y="82" width="140" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="607" y="101" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to meet demand</text>
+  <text x="607" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수요 충족을 위해 (to V)</text>
+  <path d="M 882,38 C 882,160 710,160 710,45" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="706,51 710,43 714,51" fill="#534AB7"/>
+  <path d="M 331,110 C 331,160 68,160 68,117" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="64,123 68,115 72,123" fill="#534AB7"/>
+  <rect x="390" y="170" width="180" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="480" y="181" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">which 계속적 관계절 → 앞 절 부연</text>
+  <rect x="405" y="190" width="151" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="480" y="201" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">require + O + to V</text>
+  <line x1="10" y1="218" x2="950" y2="218" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="240" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">2050년까지 세계 인구가 97억으로 증가할 것으로 예상되며, 이는 수요를 충족하기 위해 세계 식량 생산이 최소 70%</text>
+  <text x="10" y="260" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">증가해야 할 것이다.</text>
 </svg></div>
 <div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>It is projected that ~</strong> = ~라고 예상된다 (가주어-진주어·수동). <strong>, which will require</strong> = 계속적 관계대명사. <strong>require O to V</strong> = O가 V하도록 요구하다 (5형식).</div><div class="s-meaning"><span class="bracket">【핵심】</span> 농업의 역설! 혁신으로 생산성↑ → 그러나 인구 증가(97억)로 식량 70%↑ 필요 → 근데 적합한 토지는 소량+제한+감소 중! <span class="star-line">★ 식량 수요↑ vs 농업 토지↓ — 미래 농업의 핵심 과제!</span></div></div>
 </div>
 <div class="s-card grammar has-sd" data-text="Despite this need, only a small portion of the Earth's surface is suitable for farming due to limitations such as climate, topography, soil quality, and technology.">
   <div class="card-top"><span class="s-num">05</span><div class="s-en">Despite this need, only a small <span class="hl">portion</span> of the Earth's surface is <span class="hl">suitable</span> for farming due to limitations such as climate, <span class="hl">topography</span>, soil quality, and technology.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">이 필요에도 불구하고, 기후·<strong>지형</strong>·토양·기술 등의 제한 때문에 지구 표면의 작은 <strong>부분</strong>만이 농업에 <strong>적합</strong>하다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">portion</span><span class="vocab-kr">부분</span><span class="vocab-en">suitable</span><span class="vocab-kr">적합한</span><span class="vocab-en">topography</span><span class="vocab-kr">지형</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
-<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
-  <rect x="10" y="10" width="164" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
-  <text x="92" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">Despite this need</text>
-  <text x="92" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이 필요에도 불구하고 (전치사)</text>
-  <rect x="182" y="10" width="350" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
-  <text x="357" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">only a small portion of the Earth's surface</text>
-  <text x="357" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">지구 표면의 작은 부분만이 (S)</text>
-  <rect x="540" y="10" width="148" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
-  <text x="614" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is suitable for</text>
-  <text x="614" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">적합하다 (V)</text>
-  <rect x="696" y="10" width="87" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
-  <text x="739" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">farming</text>
-  <text x="739" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">농업에 (O)</text>
-  <rect x="10" y="94" width="598" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
-  <text x="309" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">due to limitations such as climate, topography, soil quality, and technology</text>
-  <text x="309" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">기후·지형·토양·기술 등의 제한 때문에 (부사구)</text>
-  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">이러한 필요에도 불구하고, 기후, 지형, 토양 품질, 기술 등의 제한 때문에 지구 표면의 작은</text>
-  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">부분만이 농업에 적합하다.</text>
+  <div class="s-kr-wrap"><div class="s-kr">이 필요에도 불구하고, 기후·<strong>지형</strong>·토양·기술 등의 제한 때문에 지구 표면의 작은 <strong>부분</strong>만이 농업에 <strong>적합</strong>하다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">portion</span><span class="vocab-kr">부분</span><span class="vocab-en">suitable</span><span class="vocab-kr">적합한</span><span class="vocab-en">topography</span><span class="vocab-kr">지형</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 278" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="171" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="95" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">Despite this need</text>
+  <text x="95" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이 필요에도 불구하고 (전치사)</text>
+  <rect x="189" y="10" width="370" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="374" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">only a small portion of the Earth's surface</text>
+  <text x="374" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">지구 표면의 작은 부분만이 (S)</text>
+  <rect x="567" y="10" width="140" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="637" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is suitable for</text>
+  <text x="637" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">적합하다 (V)</text>
+  <rect x="715" y="10" width="75" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="752" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">farming</text>
+  <text x="752" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">농업에 (O)</text>
+  <rect x="10" y="82" width="641" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="330" y="101" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">due to limitations such as climate, topography, soil quality, and technology</text>
+  <text x="330" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">기후·지형·토양·기술 등의 제한 때문에 (부사구)</text>
+  <path d="M 330,110 C 330,160 637,160 637,45" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="633,51 637,43 641,51" fill="#534AB7"/>
+  <path d="M 95,38 C 95,160 637,160 637,45" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="633,51 637,43 641,51" fill="#534AB7"/>
+  <rect x="408" y="170" width="144" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="480" y="181" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">due to ~ → 이유 부사구</text>
+  <rect x="405" y="190" width="151" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="480" y="201" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">despite 양보 → 주절 대비</text>
+  <line x1="10" y1="218" x2="950" y2="218" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="240" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">이러한 필요에도 불구하고, 기후, 지형, 토양 품질, 기술 등의 제한 때문에 지구 표면의 작은 부분만이 농업에</text>
+  <text x="10" y="260" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">적합하다.</text>
 </svg></div>
-<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>Despite</strong> = ~에도 불구하고 (전치사). <strong>due to</strong> = ~ 때문에 (전치사). <strong>such as</strong> = ~와 같은 (예시).</div></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>Despite</strong> = ~에도 불구하고 (전치사). <strong>due to</strong> = ~ 때문에 (전치사). <strong>such as</strong> = ~와 같은 (예시).</div><div class="s-meaning"><span class="bracket">【적합 토지는 한정】</span> 기후·지형·토양·기술 제약 → 지구 표면 중 농사 가능한 땅은 <strong>일부뿐</strong>. <span class="star-line">★ 공급(농지)은 제한적!</span></div></div>
 </div>
+<!-- ═══ 단락 ⓒ ═══ -->
+<div class="para-div"><span class="para-badge">ⓒ</span><span class="para-line"></span></div>
 <div class="s-card grammar has-sd" data-text="Political and economic factors, including land ownership patterns, environmental laws, and population density, also influence agricultural land use.">
   <div class="card-top"><span class="s-num">06</span><div class="s-en"><span class="hl">Political</span> and economic factors, including land <span class="hl">ownership</span> patterns, environmental laws, and population <span class="hl">density</span>, also <span class="hl">influence</span> agricultural land use.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">토지 <strong>소유</strong>·환경법·인구 <strong>밀도</strong>를 포함한 정치적·경제적 요인도 농업 토지 사용에 <strong>영향</strong>을 미친다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">political</span><span class="vocab-kr">정치적인</span><span class="vocab-en">ownership</span><span class="vocab-kr">소유</span><span class="vocab-en">density</span><span class="vocab-kr">밀도</span><span class="vocab-en">influence</span><span class="vocab-kr">영향을 미치다</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
-<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
-  <rect x="10" y="10" width="253" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
-  <text x="136" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Political and economic factors</text>
-  <text x="136" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">정치적·경제적 요인도 (S)</text>
-  <rect x="271" y="10" width="605" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
-  <text x="573" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">including land ownership patterns, environmental laws, and population density</text>
-  <text x="573" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">토지 소유·환경법·인구 밀도 포함 (삽입)</text>
-  <rect x="10" y="94" width="140" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
-  <text x="80" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">also influence</text>
-  <text x="80" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">또한 영향을 미친다 (V)</text>
-  <rect x="158" y="94" width="185" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
-  <text x="250" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">agricultural land use</text>
-  <text x="250" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">농업 토지 사용에 (O)</text>
-  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">토지 소유 패턴, 환경법, 인구 밀도를 포함한 정치적·경제적 요인도 농업 토지 사용에 영향을</text>
-  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">미친다.</text>
+  <div class="s-kr-wrap"><div class="s-kr">토지 <strong>소유</strong>·환경법·인구 <strong>밀도</strong>를 포함한 정치적·경제적 요인도 농업 토지 사용에 <strong>영향</strong>을 미친다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">political</span><span class="vocab-kr">정치적인</span><span class="vocab-en">ownership</span><span class="vocab-kr">소유</span><span class="vocab-en">density</span><span class="vocab-kr">밀도</span><span class="vocab-en">influence</span><span class="vocab-kr">영향을 미치다</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 238" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="263" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="141" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Political and economic factors</text>
+  <text x="141" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">정치적·경제적 요인도 (S)</text>
+  <rect x="281" y="10" width="649" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="605" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">including land ownership patterns, environmental laws, and population density</text>
+  <text x="605" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">토지 소유·환경법·인구 밀도 포함 (삽입)</text>
+  <rect x="10" y="82" width="133" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="76" y="101" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">also influence</text>
+  <text x="76" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">또한 영향을 미친다 (V)</text>
+  <rect x="151" y="82" width="190" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="246" y="101" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">agricultural land use</text>
+  <text x="246" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">농업 토지 사용에 (O)</text>
+  <path d="M 605,38 C 605,160 141,160 141,45" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="137,51 141,43 145,51" fill="#534AB7"/>
+  <rect x="369" y="170" width="223" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="480" y="181" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">including ~ → factors 수식(삽입)</text>
+  <line x1="10" y1="198" x2="950" y2="198" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="220" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">토지 소유 패턴, 환경법, 인구 밀도를 포함한 정치적·경제적 요인도 농업 토지 사용에 영향을 미친다.</text>
 </svg></div>
-<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>, including ~,</strong> = ~을 포함한 (삽입·분사). <strong>also influence</strong> = 주어-동사 거리! factors(S) ~ influence(V). 복수 → influence.</div></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>, including ~,</strong> = ~을 포함한 (삽입·분사). <strong>also influence</strong> = 주어-동사 거리! factors(S) ~ influence(V). 복수 → influence.</div><div class="s-meaning"><span class="bracket">【사회적 요인도】</span> 토지 소유·환경법·인구 밀도 같은 정치·경제 요인도 농지 사용을 좌우. <span class="star-line">★ 자연 조건 + 사회 조건 이중 제약!</span></div></div>
 </div>
 <div class="s-card grammar has-sd" data-text="In fact, the amount of land used for agriculture has been declining.">
   <div class="card-top"><span class="s-num">07</span><div class="s-en">In fact, the amount of land used for agriculture has been declining.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">사실, 농업에 사용되는 토지의 양은 감소해 왔다.</div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
-<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
-  <rect x="10" y="10" width="87" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
-  <text x="53" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">In fact</text>
-  <text x="53" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사실 (부사)</text>
-  <rect x="105" y="10" width="320" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
-  <text x="265" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the amount of land used for agriculture</text>
-  <text x="265" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">농업에 사용되는 토지의 양은 (S)</text>
-  <rect x="433" y="10" width="172" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
-  <text x="519" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">has been declining</text>
-  <text x="519" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">감소해 왔다 (V·현재완료 진행)</text>
-  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">사실, 농업에 사용되는 토지의 양은 감소해 왔다.</text>
+  <div class="s-kr-wrap"><div class="s-kr">사실, 농업에 사용되는 토지의 양은 감소해 왔다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">amount</span><span class="vocab-kr">양</span><span class="vocab-en">decline</span><span class="vocab-kr">감소하다</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 166" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="75" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="47" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">In fact</text>
+  <text x="47" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사실 (부사)</text>
+  <rect x="93" y="10" width="337" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="261" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the amount of land used for agriculture</text>
+  <text x="261" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">농업에 사용되는 토지의 양은 (S)</text>
+  <rect x="438" y="10" width="172" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="524" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">has been declining</text>
+  <text x="524" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">감소해 왔다 (V·현재완료 진행)</text>
+  <path d="M 261,38 C 261,88 524,88 524,45" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="520,51 524,43 528,51" fill="#534AB7"/>
+  <rect x="376" y="98" width="209" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="480" y="109" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">단수 주어(the amount) ↔ V 수 일치</text>
+  <line x1="10" y1="126" x2="950" y2="126" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="148" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">사실, 농업에 사용되는 토지의 양은 감소해 왔다.</text>
 </svg></div>
-<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>land used for agriculture</strong> = 과거분사 후치수식 (사용되는 토지). <strong>has been declining</strong> = 현재완료 진행 (감소해 오고 있다). <strong>the amount of ~ has</strong> = amount = 단수 → has.</div></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>land used for agriculture</strong> = 과거분사 후치수식 (사용되는 토지). <strong>has been declining</strong> = 현재완료 진행 (감소해 오고 있다). <strong>the amount of ~ has</strong> = amount = 단수 → has.</div><div class="s-meaning"><span class="bracket">【농지는 오히려 감소】</span> 실제로 농업용 토지 면적은 줄어드는 중. <span class="star-line">★ 역설 — 수요↑ vs 농지↓!</span></div></div>
 </div>
 <div class="s-card grammar has-sd" data-text="In 2013, around 18.6 million square miles was used for food production, compared to 19.5 million square miles in 1991.">
   <div class="card-top"><span class="s-num">08</span><div class="s-en">In 2013, around 18.6 million <span class="hl">square</span> miles was used for food production, <span class="hl">compared to</span> 19.5 million square miles in 1991.</div><span class="speak-icon">🔊</span><div class="wave"><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="s-kr-wrap"><div class="s-kr">2013년에 약 1,860만 <strong>평방</strong>마일이 식량 생산에 사용되었는데, 1991년 1,950만과 <strong>비교</strong>된다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">square</span><span class="vocab-kr">평방</span><span class="vocab-en">compared to</span><span class="vocab-kr">~와 비교하여</span></div>    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
-<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
-  <rect x="10" y="10" width="87" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
-  <text x="53" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">In 2013</text>
-  <text x="53" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">2013년에 (부사구)</text>
-  <rect x="105" y="10" width="268" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
-  <text x="239" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">around 18.6 million square miles</text>
-  <text x="239" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">약 1,860만 평방마일이 (S)</text>
-  <rect x="381" y="10" width="124" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
-  <text x="443" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">was used for</text>
-  <text x="443" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사용되었다 (V·수동)</text>
-  <rect x="513" y="10" width="148" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
-  <text x="587" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">food production</text>
-  <text x="587" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">식량 생산에 (O)</text>
-  <rect x="10" y="94" width="365" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
-  <text x="192" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">compared to 19.5 million square miles in 1991</text>
-  <text x="192" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">1991년 1,950만 평방마일과 비교하여 (분사구문)</text>
-  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">2013년에는 약 1,860만 평방마일이 식량 생산에 사용되었는데, 1991년의 1,950만</text>
-  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">평방마일과 비교된다.</text>
+  <div class="s-kr-wrap"><div class="s-kr">2013년에 약 1,860만 <strong>평방</strong>마일이 식량 생산에 사용되었는데, 1991년 1,950만과 <strong>비교</strong>된다.</div><div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">square</span><span class="vocab-kr">평방</span><span class="vocab-en">compared to</span><span class="vocab-kr">~와 비교하여</span></div>
+    <div class="s-structure"><span class="s-structure-label">📐 문장 구조도</span>
+<svg viewBox="0 0 960 238" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="106" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="63" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">In 2013</text>
+  <text x="63" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">2013년에 (부사구)</text>
+  <rect x="124" y="10" width="280" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="264" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">around 18.6 million square miles</text>
+  <text x="264" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">약 1,860만 평방마일이 (S)</text>
+  <rect x="412" y="10" width="116" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="470" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">was used for</text>
+  <text x="470" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사용되었다 (V·수동)</text>
+  <rect x="536" y="10" width="140" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="606" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">food production</text>
+  <text x="606" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">식량 생산에 (O)</text>
+  <rect x="10" y="82" width="386" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="203" y="101" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">compared to 19.5 million square miles in 1991</text>
+  <text x="203" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">1991년 1,950만 평방마일과 비교하여 (분사구문)</text>
+  <path d="M 203,110 C 203,160 470,160 470,45" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="466,51 470,43 474,51" fill="#534AB7"/>
+  <rect x="376" y="170" width="209" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="480" y="181" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">compared to ~ 분사구문 → 비교 부연</text>
+  <line x1="10" y1="198" x2="950" y2="198" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="220" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">2013년에는 약 1,860만 평방마일이 식량 생산에 사용되었는데, 1991년의 1,950만 평방마일과 비교된다.</text>
 </svg></div>
-<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>compared to</strong> = ~와 비교하여 (분사구문). <strong>was used</strong> = 수동태. 18.6 million square miles = 단수 취급(하나의 양) → was.</div></div>
+<div class="s-grammar"><span class="grammar-label">✏️ 문법</span><strong>compared to</strong> = ~와 비교하여 (분사구문). <strong>was used</strong> = 수동태. 18.6 million square miles = 단수 취급(하나의 양) → was.</div><div class="s-meaning"><span class="bracket">【수치 근거】</span> 1991년 1,950만 → 2013년 1,860만 평방마일로 감소. <span class="star-line">★ 통계로 확인되는 농지 감소!</span></div></div>
 </div>
 </div><!-- /cards -->
-    <div class="summary-wrap"><div class="summary-header">📖 줄거리 &amp; 핵심 정리</div><div class="summary-body">
+  </div><!-- /readingView -->
+
+<div class="summary-view" id="summaryView">
+<div class="summary-wrap"><div class="summary-header">📖 줄거리 &amp; 핵심 정리</div><div class="summary-body">
 <div style="background:linear-gradient(135deg,#1F3864,#2E7D32);border-radius:12px;padding:18px 22px;margin-bottom:20px;text-align:center;"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.6);margin-bottom:8px;">CORE MESSAGE</div><div style="font-size:15px;font-weight:700;color:white;line-height:1.6;">식량 수요↑ vs <span style="color:#f0d070;">농업 토지↓</span> — 미래 농업의 핵심 과제!</div><div style="font-size:12px;color:rgba(255,255,255,0.65);margin-top:8px;">= Food demand rises while agricultural land shrinks — the challenge ahead.</div></div>
 <div style="background:#fff8e6;border-left:4px solid #f0d070;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:20px;"><div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:#a07800;margin-bottom:10px;">💡 쉬운 비유로 이해하기</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12.5px;"><div style="background:white;border-radius:8px;padding:12px 14px;border:1px solid #faedb0;"><div style="font-weight:700;color:#2E7D32;margin-bottom:6px;">📈 수요 측 (증가)</div><div style="color:#444;line-height:1.8;">인구: 2050년 97억<br>식량 생산: 최소 70%↑ 필요<br>→ 끊임없는 수요 증가!</div></div><div style="background:white;border-radius:8px;padding:12px 14px;border:1px solid #faedb0;"><div style="font-weight:700;color:#C62828;margin-bottom:6px;">📉 공급 측 (감소)</div><div style="color:#444;line-height:1.8;">적합한 토지: 소량만<br>기후·지형·토양·기술 제한<br>농업 토지: 감소 중!<br>(1991: 1950만 → 2013: 1860만)</div></div></div></div>
 <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--blue-border);margin-bottom:12px;">📐 글의 흐름 단계별로</div><div style="display:flex;flex-direction:column;gap:0;margin-bottom:20px;">
@@ -694,7 +790,8 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #5B2D8E;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">while V-ing (동시)</div><div style="color:#555;">V하면서</div></div>
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #C55A11;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">has been declining (현재완료 진행)</div><div style="color:#555;">감소해 오고 있다</div></div>
 <div style="background:white;border-radius:7px;padding:9px 12px;border-left:3px solid #C55A11;"><div style="font-family:Georgia,serif;font-weight:700;color:#1F3864;margin-bottom:3px;">compared to (분사구문)</div><div style="color:#555;">~와 비교하여</div></div></div></div></div></div>
-  </div>
+</div>
+
   <div class="ga-panel" id="panelGA">
 
 <div class="ga-legend"><div class="ga-leg"><div class="ga-leg-dot" style="background:#C62828;"></div><strong>Tier 1</strong> 어법 핵심</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#E65100;"></div><strong>Tier 2</strong> 어법</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#1565C0;"></div><strong>Tier 3</strong> 어휘·대명사</div><div class="ga-leg"><div class="ga-leg-dot" style="background:#2E7D32;"></div><strong>Tier 4</strong> 혼동 어휘</div></div>
@@ -710,206 +807,247 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 
 <div class="sd-card">
 <div class="sd-hdr" style="background:#3d3d3d;color:white;">01 &nbsp;·&nbsp; Archaeological evidence suggests that various crops were being cultivated as early as 9500 BC in the Levant.</div>
-<svg viewBox="0 0 960 160" xmlns="http://www.w3.org/2000/svg">
-  <rect x="10" y="10" width="200" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
-  <text x="110" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Archaeological evidence</text>
-  <text x="110" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">고고학적 증거는 (S)</text>
-  <rect x="218" y="10" width="96" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
-  <text x="266" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">suggests</text>
-  <text x="266" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">시사한다 (V)</text>
-  <rect x="322" y="5" width="589" height="36" rx="5" fill="none" stroke="#6A1B9A" stroke-width="1.5" stroke-dasharray="5,3"/>
-  <text x="616" y="4" font-size="10" font-weight="400" fill="#6A1B9A" text-anchor="middle" font-family="sans-serif">that절</text>
-  <text x="351" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">that</text>
-  <text x="351" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">~라고</text>
-  <rect x="382" y="12" width="132" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
-  <text x="448" y="31" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">various crops</text>
-  <text x="448" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">다양한 작물이</text>
-  <rect x="522" y="12" width="185" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
-  <text x="614" y="31" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">were being cultivated</text>
-  <text x="614" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">재배되고 있었다 (과거 진행 수동)</text>
-  <rect x="715" y="12" width="180" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
-  <text x="805" y="31" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">as early as 9500 BC</text>
-  <text x="805" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">기원전 9500년이라는 이른 시기에</text>
-  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">고고학적 증거는 레반트에서 기원전 9500년이라는 이른 시기에 다양한 작물이 재배되고 있었음을</text>
-  <text x="10" y="130" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">시사한다.</text>
+<svg viewBox="0 0 960 258" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="206" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="113" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Archaeological evidence</text>
+  <text x="113" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">고고학적 증거는 (S)</text>
+  <rect x="224" y="10" width="83" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="265" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">suggests</text>
+  <text x="265" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">시사한다 (V)</text>
+  <rect x="315" y="10" width="56" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="343" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">that</text>
+  <text x="343" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">~라고</text>
+  <rect x="379" y="10" width="124" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="441" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">various crops</text>
+  <text x="441" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">다양한 작물이</text>
+  <rect x="511" y="10" width="190" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="606" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">were being cultivated</text>
+  <text x="606" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">재배되고 있었다 (과거 진행 수동)</text>
+  <rect x="709" y="10" width="183" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="800" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">as early as 9500 BC</text>
+  <text x="800" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">기원전 9500년이라는 이른 시기에</text>
+  <rect x="10" y="82" width="124" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="72" y="101" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">in the Levant</text>
+  <text x="72" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">레반트에서 (장소)</text>
+  <path d="M 343,38 C 343,160 265,160 265,45" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="261,51 265,43 269,51" fill="#534AB7"/>
+  <path d="M 72,110 C 72,160 606,160 606,45" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="602,51 606,43 610,51" fill="#534AB7"/>
+  <rect x="383" y="170" width="194" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="480" y="181" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">that 명사절 = suggests의 목적어</text>
+  <rect x="383" y="190" width="194" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="480" y="201" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">in the Levant → 재배 장소 수식</text>
+  <line x1="10" y1="218" x2="950" y2="218" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="240" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">고고학적 증거는 레반트에서 기원전 9500년이라는 이른 시기에 다양한 작물이 재배되고 있었음을 시사한다.</text>
 </svg>
 <div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">archaeological</span><span class="sd-chip-kr">고고학적인</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">evidence</span><span class="sd-chip-kr">증거</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">cultivated</span><span class="sd-chip-kr">재배된</span></span></div>
 </div>
 
 <div class="sd-card">
 <div class="sd-hdr" style="background:#3d3d3d;color:white;">02 &nbsp;·&nbsp; Over the millennia, continuous innovations have boosted agricultural productivity while reducing manual labor.</div>
-<svg viewBox="0 0 960 224" xmlns="http://www.w3.org/2000/svg">
-  <rect x="10" y="10" width="172" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
-  <text x="96" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">Over the millennia</text>
-  <text x="96" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수천 년에 걸쳐 (부사구)</text>
-  <rect x="190" y="10" width="193" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
-  <text x="286" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">continuous innovations</text>
-  <text x="286" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">지속적인 혁신이 (S)</text>
-  <rect x="391" y="10" width="124" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
-  <text x="453" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">have boosted</text>
-  <text x="453" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">높여 왔다 (V·현재완료)</text>
-  <rect x="523" y="10" width="215" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
-  <text x="630" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">agricultural productivity</text>
-  <text x="630" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">농업 생산성을 (O)</text>
-  <rect x="10" y="94" width="230" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
-  <text x="125" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">while reducing manual labor</text>
-  <text x="125" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수작업을 줄이면서 (while+분사구문)</text>
-  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">수천 년에 걸쳐, 지속적인 혁신이 수작업을 줄이면서 농업 생산성을 높여 왔다.</text>
+<svg viewBox="0 0 960 238" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="165" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="92" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">Over the millennia</text>
+  <text x="92" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수천 년에 걸쳐 (부사구)</text>
+  <rect x="183" y="10" width="198" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="282" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">continuous innovations</text>
+  <text x="282" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">지속적인 혁신이 (S)</text>
+  <rect x="389" y="10" width="133" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="455" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">have boosted</text>
+  <text x="455" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">높여 왔다 (V·현재완료)</text>
+  <rect x="530" y="10" width="222" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="641" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">agricultural productivity</text>
+  <text x="641" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">농업 생산성을 (O)</text>
+  <rect x="10" y="82" width="239" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="129" y="101" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">while reducing manual labor</text>
+  <text x="129" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수작업을 줄이면서 (while+분사구문)</text>
+  <path d="M 129,110 C 129,160 455,160 455,45" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="451,51 455,43 459,51" fill="#534AB7"/>
+  <rect x="405" y="170" width="151" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="480" y="181" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">while 분사구문 → 동시 상황</text>
+  <line x1="10" y1="198" x2="950" y2="198" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="220" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">수천 년에 걸쳐, 지속적인 혁신이 수작업을 줄이면서 농업 생산성을 높여 왔다.</text>
 </svg>
 <div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">millennia</span><span class="sd-chip-kr">수천 년</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">continuous</span><span class="sd-chip-kr">지속적인</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">innovation</span><span class="sd-chip-kr">혁신</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">boosted</span><span class="sd-chip-kr">높인</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">agricultural</span><span class="sd-chip-kr">농업의</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">productivity</span><span class="sd-chip-kr">생산성</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">manual</span><span class="sd-chip-kr">수작업의</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">labor</span><span class="sd-chip-kr">노동</span></span></div>
 </div>
 
 <div class="sd-card">
 <div class="sd-hdr" style="background:#3d3d3d;color:white;">03 &nbsp;·&nbsp; However, the growing global population will always demand more food.</div>
-<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
-  <rect x="10" y="10" width="87" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
-  <text x="53" y="29" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">However</text>
-  <text x="53" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그러나 (전환)</text>
-  <rect x="105" y="10" width="245" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
-  <text x="227" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the growing global population</text>
-  <text x="227" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">증가하는 세계 인구는 (S)</text>
-  <rect x="358" y="10" width="172" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+<svg viewBox="0 0 960 166" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="81" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="50" y="29" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" font-family="Georgia,serif">However</text>
+  <text x="50" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그러나 (전환)</text>
+  <rect x="99" y="10" width="255" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="226" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the growing global population</text>
+  <text x="226" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">증가하는 세계 인구는 (S)</text>
+  <rect x="362" y="10" width="165" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
   <text x="444" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">will always demand</text>
-  <text x="444" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">항상 요구할 것이다 (V)</text>
-  <rect x="538" y="10" width="104" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="444" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">항상 요구할 것이다 (V)</text>
+  <rect x="535" y="10" width="111" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
   <text x="590" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">more food</text>
-  <text x="590" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">더 많은 식량을 (O)</text>
-  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">그러나, 증가하는 세계 인구는 항상 더 많은 식량을 요구할 것이다.</text>
+  <text x="590" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">더 많은 식량을 (O)</text>
+  <path d="M 590,38 C 590,88 444,88 444,45" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="440,51 444,43 448,51" fill="#534AB7"/>
+  <rect x="383" y="98" width="194" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="480" y="109" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">demand → more food (V-O)</text>
+  <line x1="10" y1="126" x2="950" y2="126" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="148" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">그러나, 증가하는 세계 인구는 항상 더 많은 식량을 요구할 것이다.</text>
 </svg>
 <div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">population</span><span class="sd-chip-kr">인구</span></span></div>
 </div>
 
 <div class="sd-card">
-<div class="sd-hdr" style="background:#3d3d3d;color:white;">04 &nbsp;·&nbsp; It is projected that by 2050, the world’s population will increase to 9.7 billion, which will require global food production to rise by at least 70% to meet demand.</div>
-<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
-  <rect x="10" y="10" width="64" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
-  <text x="42" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">It</text>
-  <text x="42" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그것은 (가주어)</text>
-  <rect x="82" y="10" width="124" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
-  <text x="144" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is projected</text>
-  <text x="144" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">예상된다 (V·수동)</text>
-  <rect x="214" y="5" width="610" height="36" rx="5" fill="none" stroke="#6A1B9A" stroke-width="1.5" stroke-dasharray="5,3"/>
-  <text x="519" y="4" font-size="10" font-weight="400" fill="#6A1B9A" text-anchor="middle" font-family="sans-serif">that절 (진주어)</text>
-  <text x="243" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">that</text>
-  <text x="243" y="62" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">~라고</text>
-  <rect x="274" y="12" width="87" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
-  <text x="317" y="31" font-size="13" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">by 2050</text>
-  <text x="317" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">2050년까지</text>
-  <rect x="369" y="12" width="193" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
-  <text x="465" y="31" font-size="13" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the world's population</text>
-  <text x="465" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">세계 인구가</text>
-  <rect x="570" y="12" width="238" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
-  <text x="689" y="31" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">will increase to 9.7 billion</text>
-  <text x="689" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">97억으로 증가할 것</text>
-  <rect x="10" y="89" width="589" height="36" rx="5" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="5,3"/>
-  <text x="304" y="88" font-size="10" font-weight="400" fill="#534AB7" text-anchor="middle" font-family="sans-serif">, which절 (부연)</text>
-  <text x="43" y="113" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">which</text>
-  <text x="43" y="146" font-size="12" font-weight="400" fill="#993556" text-anchor="middle" font-family="sans-serif">이는 (계속적)</text>
-  <rect x="78" y="96" width="124" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
-  <text x="140" y="115" font-size="13" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">will require</text>
-  <text x="140" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">요구할 것이다</text>
-  <rect x="210" y="96" width="373" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
-  <text x="396" y="115" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">global food production to rise by at least 70%</text>
-  <text x="396" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">세계 식량 생산이 최소 70% 증가하도록 (require O to V)</text>
-  <rect x="607" y="94" width="140" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2" stroke-dasharray="4,3"/>
-  <text x="677" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to meet demand</text>
-  <text x="677" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수요 충족을 위해 (to V)</text>
-  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">2050년까지 세계 인구가 97억으로 증가할 것으로 예상되며, 이는 수요를 충족하기 위해 세계</text>
-  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">식량 생산이 최소 70% 증가해야 할 것이다.</text>
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">04 &nbsp;·&nbsp; It is projected that by 2050, the world's population will increase to 9.7 billion, which will require global food production to rise by at least 70% to meet demand.</div>
+<svg viewBox="0 0 960 278" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="92" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="56" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">It</text>
+  <text x="56" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그것은 (가주어)</text>
+  <rect x="110" y="10" width="116" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="168" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is projected</text>
+  <text x="168" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">예상된다 (V·수동)</text>
+  <rect x="234" y="10" width="56" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="262" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">that</text>
+  <text x="262" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">~라고</text>
+  <rect x="298" y="10" width="75" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="335" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">by 2050</text>
+  <text x="335" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">2050년까지</text>
+  <rect x="381" y="10" width="198" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="480" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the world's population</text>
+  <text x="480" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">세계 인구가</text>
+  <rect x="587" y="10" width="247" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="710" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">will increase to 9.7 billion</text>
+  <text x="710" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">97억으로 증가할 것</text>
+  <rect x="842" y="10" width="81" height="28" rx="3" fill="#FBEAF0" stroke="#F4C0D1" stroke-width="1.5"/>
+  <text x="882" y="29" font-size="14" font-weight="500" fill="#993556" text-anchor="middle" font-family="Georgia,serif">which</text>
+  <text x="882" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이는 (계속적)</text>
+  <rect x="10" y="82" width="116" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="68" y="101" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">will require</text>
+  <text x="68" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">요구할 것이다</text>
+  <rect x="134" y="82" width="395" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="331" y="101" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">global food production to rise by at least 70%</text>
+  <text x="331" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">세계 식량 생산이 최소 70% 증가하도록 (require O to V)</text>
+  <rect x="537" y="82" width="140" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="607" y="101" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">to meet demand</text>
+  <text x="607" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">수요 충족을 위해 (to V)</text>
+  <path d="M 882,38 C 882,160 710,160 710,45" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="706,51 710,43 714,51" fill="#534AB7"/>
+  <path d="M 331,110 C 331,160 68,160 68,117" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="64,123 68,115 72,123" fill="#534AB7"/>
+  <rect x="390" y="170" width="180" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="480" y="181" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">which 계속적 관계절 → 앞 절 부연</text>
+  <rect x="405" y="190" width="151" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="480" y="201" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">require + O + to V</text>
+  <line x1="10" y1="218" x2="950" y2="218" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="240" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">2050년까지 세계 인구가 97억으로 증가할 것으로 예상되며, 이는 수요를 충족하기 위해 세계 식량 생산이 최소 70%</text>
+  <text x="10" y="260" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">증가해야 할 것이다.</text>
 </svg>
 <div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">meet</span><span class="sd-chip-kr">충족시키다</span></span></div>
 </div>
 
 <div class="sd-card">
-<div class="sd-hdr" style="background:#3d3d3d;color:white;">05 &nbsp;·&nbsp; Despite this need, only a small portion of the Earth’s surface is suitable for farming due to limitations such as climate, topography, soil quality, and technology.</div>
-<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
-  <rect x="10" y="10" width="164" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
-  <text x="92" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">Despite this need</text>
-  <text x="92" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이 필요에도 불구하고 (전치사)</text>
-  <rect x="182" y="10" width="350" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
-  <text x="357" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">only a small portion of the Earth's surface</text>
-  <text x="357" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">지구 표면의 작은 부분만이 (S)</text>
-  <rect x="540" y="10" width="148" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
-  <text x="614" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is suitable for</text>
-  <text x="614" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">적합하다 (V)</text>
-  <rect x="696" y="10" width="87" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
-  <text x="739" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">farming</text>
-  <text x="739" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">농업에 (O)</text>
-  <rect x="10" y="94" width="598" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
-  <text x="309" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">due to limitations such as climate, topography, soil quality, and technology</text>
-  <text x="309" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">기후·지형·토양·기술 등의 제한 때문에 (부사구)</text>
-  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">이러한 필요에도 불구하고, 기후, 지형, 토양 품질, 기술 등의 제한 때문에 지구 표면의 작은</text>
-  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">부분만이 농업에 적합하다.</text>
+<div class="sd-hdr" style="background:#3d3d3d;color:white;">05 &nbsp;·&nbsp; Despite this need, only a small portion of the Earth's surface is suitable for farming due to limitations such as climate, topography, soil quality, and technology.</div>
+<svg viewBox="0 0 960 278" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="171" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="95" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">Despite this need</text>
+  <text x="95" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">이 필요에도 불구하고 (전치사)</text>
+  <rect x="189" y="10" width="370" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="374" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">only a small portion of the Earth's surface</text>
+  <text x="374" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">지구 표면의 작은 부분만이 (S)</text>
+  <rect x="567" y="10" width="140" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="637" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">is suitable for</text>
+  <text x="637" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">적합하다 (V)</text>
+  <rect x="715" y="10" width="75" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="752" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">farming</text>
+  <text x="752" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">농업에 (O)</text>
+  <rect x="10" y="82" width="641" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="330" y="101" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">due to limitations such as climate, topography, soil quality, and technology</text>
+  <text x="330" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">기후·지형·토양·기술 등의 제한 때문에 (부사구)</text>
+  <path d="M 330,110 C 330,160 637,160 637,45" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="633,51 637,43 641,51" fill="#534AB7"/>
+  <path d="M 95,38 C 95,160 637,160 637,45" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="633,51 637,43 641,51" fill="#534AB7"/>
+  <rect x="408" y="170" width="144" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="480" y="181" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">due to ~ → 이유 부사구</text>
+  <rect x="405" y="190" width="151" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="480" y="201" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">despite 양보 → 주절 대비</text>
+  <line x1="10" y1="218" x2="950" y2="218" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="240" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">이러한 필요에도 불구하고, 기후, 지형, 토양 품질, 기술 등의 제한 때문에 지구 표면의 작은 부분만이 농업에</text>
+  <text x="10" y="260" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">적합하다.</text>
 </svg>
 <div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">portion</span><span class="sd-chip-kr">부분</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">suitable</span><span class="sd-chip-kr">적합한</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">topography</span><span class="sd-chip-kr">지형</span></span></div>
 </div>
 
 <div class="sd-card">
 <div class="sd-hdr" style="background:#3d3d3d;color:white;">06 &nbsp;·&nbsp; Political and economic factors, including land ownership patterns, environmental laws, and population density, also influence agricultural land use.</div>
-<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
-  <rect x="10" y="10" width="253" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
-  <text x="136" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Political and economic factors</text>
-  <text x="136" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">정치적·경제적 요인도 (S)</text>
-  <rect x="271" y="10" width="605" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4,3"/>
-  <text x="573" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">including land ownership patterns, environmental laws, and population density</text>
-  <text x="573" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">토지 소유·환경법·인구 밀도 포함 (삽입)</text>
-  <rect x="10" y="94" width="140" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
-  <text x="80" y="113" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">also influence</text>
-  <text x="80" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">또한 영향을 미친다 (V)</text>
-  <rect x="158" y="94" width="185" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
-  <text x="250" y="113" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">agricultural land use</text>
-  <text x="250" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">농업 토지 사용에 (O)</text>
-  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">토지 소유 패턴, 환경법, 인구 밀도를 포함한 정치적·경제적 요인도 농업 토지 사용에 영향을</text>
-  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">미친다.</text>
+<svg viewBox="0 0 960 238" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="263" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="141" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Political and economic factors</text>
+  <text x="141" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">정치적·경제적 요인도 (S)</text>
+  <rect x="281" y="10" width="649" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="605" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">including land ownership patterns, environmental laws, and population density</text>
+  <text x="605" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">토지 소유·환경법·인구 밀도 포함 (삽입)</text>
+  <rect x="10" y="82" width="133" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="76" y="101" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">also influence</text>
+  <text x="76" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">또한 영향을 미친다 (V)</text>
+  <rect x="151" y="82" width="190" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="246" y="101" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">agricultural land use</text>
+  <text x="246" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">농업 토지 사용에 (O)</text>
+  <path d="M 605,38 C 605,160 141,160 141,45" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="137,51 141,43 145,51" fill="#534AB7"/>
+  <rect x="369" y="170" width="223" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="480" y="181" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">including ~ → factors 수식(삽입)</text>
+  <line x1="10" y1="198" x2="950" y2="198" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="220" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">토지 소유 패턴, 환경법, 인구 밀도를 포함한 정치적·경제적 요인도 농업 토지 사용에 영향을 미친다.</text>
 </svg>
 <div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">political</span><span class="sd-chip-kr">정치적인</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">ownership</span><span class="sd-chip-kr">소유</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">density</span><span class="sd-chip-kr">밀도</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">influence</span><span class="sd-chip-kr">영향을 미치다</span></span></div>
 </div>
 
 <div class="sd-card">
 <div class="sd-hdr" style="background:#3d3d3d;color:white;">07 &nbsp;·&nbsp; In fact, the amount of land used for agriculture has been declining.</div>
-<svg viewBox="0 0 960 140" xmlns="http://www.w3.org/2000/svg">
-  <rect x="10" y="10" width="87" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
-  <text x="53" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">In fact</text>
-  <text x="53" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사실 (부사)</text>
-  <rect x="105" y="10" width="320" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
-  <text x="265" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the amount of land used for agriculture</text>
-  <text x="265" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">농업에 사용되는 토지의 양은 (S)</text>
-  <rect x="433" y="10" width="172" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
-  <text x="519" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">has been declining</text>
-  <text x="519" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">감소해 왔다 (V·현재완료 진행)</text>
-  <line x1="10" y1="90" x2="950" y2="90" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="10" y="110" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">사실, 농업에 사용되는 토지의 양은 감소해 왔다.</text>
+<svg viewBox="0 0 960 166" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="75" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="47" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">In fact</text>
+  <text x="47" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사실 (부사)</text>
+  <rect x="93" y="10" width="337" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="261" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">the amount of land used for agriculture</text>
+  <text x="261" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">농업에 사용되는 토지의 양은 (S)</text>
+  <rect x="438" y="10" width="172" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="524" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">has been declining</text>
+  <text x="524" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">감소해 왔다 (V·현재완료 진행)</text>
+  <path d="M 261,38 C 261,88 524,88 524,45" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="520,51 524,43 528,51" fill="#534AB7"/>
+  <rect x="376" y="98" width="209" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="480" y="109" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">단수 주어(the amount) ↔ V 수 일치</text>
+  <line x1="10" y1="126" x2="950" y2="126" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="148" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">사실, 농업에 사용되는 토지의 양은 감소해 왔다.</text>
 </svg>
 <div class="sd-vocab-row"></div>
 </div>
 
 <div class="sd-card">
 <div class="sd-hdr" style="background:#3d3d3d;color:white;">08 &nbsp;·&nbsp; In 2013, around 18.6 million square miles was used for food production, compared to 19.5 million square miles in 1991.</div>
-<svg viewBox="0 0 960 244" xmlns="http://www.w3.org/2000/svg">
-  <rect x="10" y="10" width="87" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
-  <text x="53" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">In 2013</text>
-  <text x="53" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">2013년에 (부사구)</text>
-  <rect x="105" y="10" width="268" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
-  <text x="239" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">around 18.6 million square miles</text>
-  <text x="239" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">약 1,860만 평방마일이 (S)</text>
-  <rect x="381" y="10" width="124" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
-  <text x="443" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">was used for</text>
-  <text x="443" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사용되었다 (V·수동)</text>
-  <rect x="513" y="10" width="148" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
-  <text x="587" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">food production</text>
-  <text x="587" y="62" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">식량 생산에 (O)</text>
-  <rect x="10" y="94" width="365" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
-  <text x="192" y="113" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">compared to 19.5 million square miles in 1991</text>
-  <text x="192" y="146" font-size="12" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">1991년 1,950만 평방마일과 비교하여 (분사구문)</text>
-  <line x1="10" y1="174" x2="950" y2="174" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="10" y="194" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">2013년에는 약 1,860만 평방마일이 식량 생산에 사용되었는데, 1991년의 1,950만</text>
-  <text x="10" y="214" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">평방마일과 비교된다.</text>
+<svg viewBox="0 0 960 238" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="106" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="63" y="29" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">In 2013</text>
+  <text x="63" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">2013년에 (부사구)</text>
+  <rect x="124" y="10" width="280" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
+  <text x="264" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">around 18.6 million square miles</text>
+  <text x="264" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">약 1,860만 평방마일이 (S)</text>
+  <rect x="412" y="10" width="116" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="470" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">was used for</text>
+  <text x="470" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">사용되었다 (V·수동)</text>
+  <rect x="536" y="10" width="140" height="28" rx="3" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.2"/>
+  <text x="606" y="29" font-size="14" font-weight="500" fill="#633806" text-anchor="middle" font-family="Georgia,serif">food production</text>
+  <text x="606" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">식량 생산에 (O)</text>
+  <rect x="10" y="82" width="386" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="203" y="101" font-size="14" font-weight="500" fill="#444" text-anchor="middle" font-family="Georgia,serif">compared to 19.5 million square miles in 1991</text>
+  <text x="203" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">1991년 1,950만 평방마일과 비교하여 (분사구문)</text>
+  <path d="M 203,110 C 203,160 470,160 470,45" fill="none" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <polygon points="466,51 470,43 474,51" fill="#534AB7"/>
+  <rect x="376" y="170" width="209" height="16" rx="3" fill="#EEEDFE"/>
+  <text x="480" y="181" font-size="11" font-weight="500" fill="#534AB7" text-anchor="middle" font-family="sans-serif">compared to ~ 분사구문 → 비교 부연</text>
+  <line x1="10" y1="198" x2="950" y2="198" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="10" y="220" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">2013년에는 약 1,860만 평방마일이 식량 생산에 사용되었는데, 1991년의 1,950만 평방마일과 비교된다.</text>
 </svg>
 <div class="sd-vocab-row"><span class="sd-vocab-chip"><span class="sd-chip-en">square</span><span class="sd-chip-kr">평방</span></span><span class="sd-vocab-chip"><span class="sd-chip-en">compared to</span><span class="sd-chip-kr">~와 비교하여</span></span></div>
 </div>
@@ -1084,6 +1222,12 @@ function readNext(){if(!allPlaying||allIdx>=allQueue.length){if(currentCard)curr
 
 /* ══ 배열영작 ══ */
 let scores={},dragSrc=null,clickSelectedChip=null;
+/* ── 터치 드래그 지원 (태블릿/모바일) v1.7 ── */
+let tChip=null,tClone=null,tStartX=0,tStartY=0,tOffX=0,tOffY=0,tMoved=false,tDragEnd=0;
+const T_DRAG_THRESHOLD=10;
+function arrTouchStart(e){const chip=e.target.closest('.word-chip');if(!chip)return;tChip=chip;const r=chip.getBoundingClientRect();const t=e.touches[0];tStartX=t.clientX;tStartY=t.clientY;tOffX=t.clientX-r.left;tOffY=t.clientY-r.top;tMoved=false;}
+function arrTouchMove(e){if(!tChip)return;if(e.cancelable)e.preventDefault();const t=e.touches[0];const dx=t.clientX-tStartX,dy=t.clientY-tStartY;if(!tMoved){if(Math.hypot(dx,dy)<T_DRAG_THRESHOLD)return;tMoved=true;const r=tChip.getBoundingClientRect();tClone=tChip.cloneNode(true);Object.assign(tClone.style,{position:'fixed',left:r.left+'px',top:r.top+'px',width:r.width+'px',zIndex:9999,pointerEvents:'none',opacity:0.9,transform:'scale(1.08)',boxShadow:'0 8px 24px rgba(0,0,0,0.3)',transition:'none'});document.body.appendChild(tClone);tChip.classList.add('dragging');}tClone.style.left=(t.clientX-tOffX)+'px';tClone.style.top=(t.clientY-tOffY)+'px';tClone.style.display='none';const tg=document.elementFromPoint(t.clientX,t.clientY);tClone.style.display='';const z=tg&&tg.closest('.answer-zone, .word-pool');document.querySelectorAll('.answer-zone.drag-over, .word-pool.drag-over').forEach(el=>el.classList.remove('drag-over'));if(z)z.classList.add('drag-over');}
+function arrTouchEnd(e){if(!tChip)return;if(!tMoved){tChip=null;return;}const t=e.changedTouches[0];if(tClone)tClone.style.display='none';const tg=document.elementFromPoint(t.clientX,t.clientY);const z=tg&&tg.closest('.answer-zone, .word-pool');if(z){const chips=Array.from(z.querySelectorAll('.word-chip')).filter(c=>c!==tChip);if(chips.length===0){z.appendChild(tChip);}else{let bestC=null,bestB=true,bestD=Infinity;for(const c of chips){const r=c.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const d=Math.hypot(t.clientX-cx,t.clientY-cy);if(d<bestD){bestD=d;bestC=c;bestB=t.clientX<cx;}}if(bestB)z.insertBefore(tChip,bestC);else z.insertBefore(tChip,bestC.nextSibling);}tChip.classList.remove('ok-chip');const idx=tChip.dataset.idx;const r=document.getElementById('res-'+idx);if(r)r.className='arr-result';}if(tClone){tClone.remove();tClone=null;}tChip.classList.remove('dragging');document.querySelectorAll('.answer-zone.drag-over, .word-pool.drag-over').forEach(el=>el.classList.remove('drag-over'));tChip=null;tDragEnd=Date.now();e.preventDefault();}
 function buildArrangeCards(){
   const box=document.getElementById('arrCards');box.innerHTML='';
   const hint=document.createElement('div');hint.className='touch-hint';hint.innerHTML='💡 단어 클릭 → 즉시 이동 &nbsp;|&nbsp; 드래그도 가능';box.appendChild(hint);
@@ -1092,14 +1236,15 @@ function buildArrangeCards(){
     const card=document.createElement('div');card.className='arr-card';card.style.animationDelay=(idx*60)+'ms';
     card.innerHTML=`<div class="arr-header"><span class="arr-num">${item.num}</span><div class="arr-kr">${item.kr}</div></div><div class="arr-body"><div class="answer-zone" id="zone-${idx}"></div><div class="word-pool" id="pool-${idx}">${shuffled.map(w=>`<div class="word-chip" draggable="true" data-word="${w}" data-idx="${idx}">${w}</div>`).join('')}</div><div class="arr-result" id="res-${idx}"></div><div class="ans-reveal" id="ans-${idx}"><strong>정답:</strong> ${item.ans}.</div><div class="arr-btns"><button class="arr-check" onclick="checkAns(${idx})">✓ 확인</button><button class="arr-reset" onclick="resetCard(${idx})">↺ 초기화</button><button class="arr-show-ans" onclick="toggleAns(${idx})">👁 정답 보기</button></div></div>`;
     box.appendChild(card);
-    ['zone-'+idx,'pool-'+idx].forEach(zid=>{const z=document.getElementById(zid);z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(!dragSrc)return;z.appendChild(dragSrc);dragSrc.classList.remove('dragging','ok-chip');document.getElementById('res-'+idx).className='arr-result';dragSrc=null;});});
+    ['zone-'+idx,'pool-'+idx].forEach(zid=>{const z=document.getElementById(zid);z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(!dragSrc)return;const chips=Array.from(z.querySelectorAll('.word-chip')).filter(c=>c!==dragSrc);if(chips.length===0){z.appendChild(dragSrc);}else{let bestC=null,bestB=true,bestD=Infinity;for(const c of chips){const r=c.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const d=Math.hypot(e.clientX-cx,e.clientY-cy);if(d<bestD){bestD=d;bestC=c;bestB=e.clientX<cx;}}if(bestB)z.insertBefore(dragSrc,bestC);else z.insertBefore(dragSrc,bestC.nextSibling);}dragSrc.classList.remove('dragging','ok-chip');document.getElementById('res-'+idx).className='arr-result';dragSrc=null;});});
     setTimeout(()=>{document.getElementById('pool-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});document.getElementById('zone-'+idx).querySelectorAll('.word-chip').forEach(chip=>{chip.addEventListener('click',()=>chipClick(chip,idx));});},0);
   });
   box.addEventListener('dragstart',e=>{if(!e.target.classList.contains('word-chip'))return;dragSrc=e.target;e.target.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
   box.addEventListener('dragend',e=>{if(e.target.classList.contains('word-chip'))e.target.classList.remove('dragging');dragSrc=null;});
+  box.addEventListener('touchstart',arrTouchStart,{passive:true});box.addEventListener('touchmove',arrTouchMove,{passive:false});box.addEventListener('touchend',arrTouchEnd);box.addEventListener('touchcancel',arrTouchEnd);
   updateScore();
 }
-function chipClick(chip,idx){const inZone=chip.parentElement.id==='zone-'+idx;const target=document.getElementById(inZone?'pool-'+idx:'zone-'+idx);chip.classList.remove('ok-chip');target.appendChild(chip);chip.addEventListener('click',()=>chipClick(chip,idx),{once:true});document.getElementById('res-'+idx).className='arr-result';}
+function chipClick(chip,idx){if(Date.now()-tDragEnd<500)return;const inZone=chip.parentElement.id==='zone-'+idx;const target=document.getElementById(inZone?'pool-'+idx:'zone-'+idx);chip.classList.remove('ok-chip');target.appendChild(chip);document.getElementById('res-'+idx).className='arr-result';}
 function checkAns(idx){const zone=document.getElementById('zone-'+idx);const chips=Array.from(zone.querySelectorAll('.word-chip'));const userAns=chips.map(c=>c.dataset.word).join(' ');const correct=ARRANGE[idx].ans;const ok=userAns.trim().toLowerCase()===correct.trim().toLowerCase();const res=document.getElementById('res-'+idx);res.className='arr-result show '+(ok?'ok':'ng');res.innerHTML=ok?'🎉 정답입니다!':'❌ 다시 확인해 보세요. ('+chips.length+'/'+correct.split(' ').length+'개 배치됨)';if(ok)chips.forEach(c=>c.classList.add('ok-chip'));scores[idx]=ok?1:0;updateScore();}
 function resetCard(idx){const zone=document.getElementById('zone-'+idx);const pool=document.getElementById('pool-'+idx);Array.from(zone.querySelectorAll('.word-chip')).forEach(c=>{c.classList.remove('ok-chip');pool.appendChild(c);});document.getElementById('res-'+idx).className='arr-result';document.getElementById('ans-'+idx).className='ans-reveal';delete scores[idx];updateScore();}
 function toggleAns(idx){document.getElementById('ans-'+idx).classList.toggle('show');}
@@ -1195,6 +1340,132 @@ function buildMeaningQuiz(box){
 }
 function checkMeaning(i,btn){const card=btn.closest('.quiz-card');const correct=card.dataset.answer;const isOk=btn.dataset.val===correct;card.querySelectorAll('.choice-btn').forEach(b=>{b.onclick=null;if(b.dataset.val===correct)b.classList.add('ok');else if(b===btn&&!isOk)b.classList.add('ng');});const fb=document.getElementById('mc-fb-'+i);fb.className='quiz-fb show '+(isOk?'ok':'ng');fb.innerHTML=isOk?'🎉 정답!':'❌ 정답: <strong>'+correct+'</strong>';vocabScores.meaning[i]=isOk?1:0;const done=Object.keys(vocabScores.meaning).length;const ok=Object.values(vocabScores.meaning).filter(v=>v===1).length;const sc=document.getElementById('meaning-score');if(sc)sc.textContent=`${ok} / ${done} 정답`;}
 function resetMeaning(){vocabScores.meaning={};buildVocab(2);}
+
+
+/* ══ 펜 필기 모드 (자유 필기) v1.0 ══ */
+const PEN_COLORS=['#dc2626','#1F3864','#0f9d58','#f59e0b','#000000'];
+const PEN_WIDTHS=[2,4,7];
+let penEnabled=false,penColor='#dc2626',penWidth=4,penEraser=false;
+let penLayer=null,penPath=null,penPts=[];
+
+function buildPenTools(){
+  if(document.getElementById('penLayer'))return;
+  penLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  penLayer.id='penLayer';
+  document.body.appendChild(penLayer);
+  const tb=document.createElement('div');
+  tb.id='penToolbar';
+  let html='<button class="pen-btn pen-main" id="penToggle" title="펜 ON/OFF">✏️</button><div class="pen-tools" id="penTools">';
+  PEN_COLORS.forEach(c=>html+='<button class="pen-color" data-color="'+c+'" style="background:'+c+';" title="색상"></button>');
+  PEN_WIDTHS.forEach(w=>html+='<button class="pen-width" data-width="'+w+'" title="굵기"><span style="width:'+(w*2)+'px;height:'+(w*2)+'px;"></span></button>');
+  html+='<button class="pen-btn pen-eraser" id="penEraserBtn" title="개별 지우개">🧹</button><button class="pen-btn pen-clear" id="penClearBtn" title="전체 지우기">🗑️</button></div>';
+  tb.innerHTML=html;
+  document.body.appendChild(tb);
+  document.querySelector('.pen-color[data-color="'+penColor+'"]').classList.add('selected');
+  document.querySelector('.pen-width[data-width="'+penWidth+'"]').classList.add('selected');
+  document.getElementById('penToggle').addEventListener('click',togglePen);
+  document.querySelectorAll('.pen-color').forEach(b=>b.addEventListener('click',e=>{
+    const c=e.currentTarget.dataset.color;
+    penColor=c;penEraser=false;
+    document.querySelectorAll('.pen-color').forEach(x=>x.classList.toggle('selected',x.dataset.color===c));
+    document.getElementById('penEraserBtn').classList.remove('active');
+  }));
+  document.querySelectorAll('.pen-width').forEach(b=>b.addEventListener('click',e=>{
+    const w=+e.currentTarget.dataset.width;
+    penWidth=w;
+    document.querySelectorAll('.pen-width').forEach(x=>x.classList.toggle('selected',+x.dataset.width===w));
+  }));
+  document.getElementById('penEraserBtn').addEventListener('click',()=>{
+    penEraser=!penEraser;
+    document.getElementById('penEraserBtn').classList.toggle('active',penEraser);
+  });
+  document.getElementById('penClearBtn').addEventListener('click',()=>{
+    if(confirm('모든 필기를 지우시겠습니까?'))penLayer.innerHTML='';
+  });
+  penLayer.addEventListener('pointerdown',penDown);
+  penLayer.addEventListener('pointermove',penMove);
+  penLayer.addEventListener('pointerup',penUp);
+  penLayer.addEventListener('pointercancel',penUp);
+  penLayer.addEventListener('pointerleave',penUp);
+  const sync=()=>{
+    penLayer.style.height='0px';penLayer.style.width='0px';
+    const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
+    const w=Math.max(document.body.scrollWidth,document.documentElement.scrollWidth);
+    penLayer.setAttribute('width',w);
+    penLayer.setAttribute('height',h);
+    penLayer.style.height=h+'px';
+    penLayer.style.width=w+'px';
+  };
+  sync();
+  if(window.ResizeObserver)new ResizeObserver(sync).observe(document.body);
+  window.addEventListener('resize',sync);
+  setInterval(sync,2000);
+}
+function togglePen(){
+  penEnabled=!penEnabled;
+  document.getElementById('penToggle').classList.toggle('active',penEnabled);
+  document.getElementById('penTools').classList.toggle('show',penEnabled);
+  penLayer.classList.toggle('active',penEnabled);
+}
+function getPenPt(e){
+  return {x:e.clientX+window.scrollX,y:e.clientY+window.scrollY};
+}
+function penDown(e){
+  if(!penEnabled)return;
+  e.preventDefault();
+  try{penLayer.setPointerCapture(e.pointerId);}catch(_){}
+  if(penEraser){eraseAt(e);return;}
+  const pt=getPenPt(e);
+  penPath=document.createElementNS('http://www.w3.org/2000/svg','path');
+  penPath.setAttribute('d','M '+pt.x+' '+pt.y);
+  penPath.setAttribute('stroke',penColor);
+  penPath.setAttribute('stroke-width',penWidth);
+  penPath.setAttribute('fill','none');
+  penPath.setAttribute('stroke-linecap','round');
+  penPath.setAttribute('stroke-linejoin','round');
+  penLayer.appendChild(penPath);
+  penPts=[pt];
+}
+function penMove(e){
+  if(!penEnabled)return;
+  if(penEraser&&e.buttons){eraseAt(e);return;}
+  if(!penPath)return;
+  e.preventDefault();
+  const pt=getPenPt(e);
+  const last=penPts[penPts.length-1];
+  if(Math.hypot(pt.x-last.x,pt.y-last.y)<1.5)return;
+  penPts.push(pt);
+  let d='M '+penPts[0].x+' '+penPts[0].y;
+  for(let i=1;i<penPts.length-1;i++){
+    const c=penPts[i],n=penPts[i+1];
+    const mx=(c.x+n.x)/2,my=(c.y+n.y)/2;
+    d+=' Q '+c.x+' '+c.y+' '+mx+' '+my;
+  }
+  if(penPts.length>=2){
+    const lp=penPts[penPts.length-1];
+    d+=' L '+lp.x+' '+lp.y;
+  }
+  penPath.setAttribute('d',d);
+}
+function penUp(e){
+  if(penPath){penPath=null;penPts=[];}
+}
+function eraseAt(e){
+  const pt=getPenPt(e);
+  const r=20;
+  const paths=Array.from(penLayer.querySelectorAll('path'));
+  for(const p of paths){
+    const bb=p.getBBox();
+    if(pt.x>=bb.x-r&&pt.x<=bb.x+bb.width+r&&pt.y>=bb.y-r&&pt.y<=bb.y+bb.height+r){
+      p.remove();
+    }
+  }
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',buildPenTools);
+}else{
+  setTimeout(buildPenTools,100);
+}
 </script>
 <script>
 // ── 문장구조도 탭 전환 ──
@@ -1324,6 +1595,33 @@ document.addEventListener("DOMContentLoaded",function(){
 });
 // 즉시 실행 (DOMContentLoaded 전에도 안전하게)
 (function(){hideQPanels();})();
+</script>
+<script>
+/* ══ 요약 전용 탭 v1.0 ══ */
+(function(){
+  function hideSummary(){
+    var sv=document.getElementById('summaryView');if(sv)sv.style.display='none';
+    var ts=document.getElementById('tabSum');if(ts)ts.classList.remove('active');
+  }
+  window.switchSummary=function(){
+    var rv=document.getElementById('readingView');if(rv)rv.style.display='none';
+    ['arrangeView','grammarView','vocabView'].forEach(function(id){
+      var el=document.getElementById(id);if(el)el.classList.remove('active');});
+    if(typeof hideAllExtra==='function')hideAllExtra();
+    document.querySelectorAll('.view-tab').forEach(function(t){t.classList.remove('active');});
+    var sv=document.getElementById('summaryView');if(sv)sv.style.display='block';
+    var ts=document.getElementById('tabSum');if(ts)ts.classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  /* 다른 모든 전환 함수가 요약뷰를 숨기도록 래핑 */
+  ['switchView','switchSD','switchGA','switchQ','switchVocab'].forEach(function(fn){
+    if(typeof window[fn]!=='function')return;
+    var orig=window[fn];
+    window[fn]=function(){hideSummary();return orig.apply(this,arguments);};
+  });
+  document.addEventListener('DOMContentLoaded',hideSummary);
+  hideSummary();
+})();
 </script>
 </body>
 </html>
