@@ -420,7 +420,7 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 #penToolbar button.on{outline:2px solid #B8862F}
 #penToolbar .sw{width:26px;height:26px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #ccc;cursor:pointer}
 #penToolbar .sw.on{box-shadow:0 0 0 2px #B8862F}
-#inkCanvas{position:absolute;left:0;top:0;pointer-events:none;z-index:9000}
+#inkCanvas{position:fixed;left:0;top:0;pointer-events:none;z-index:9000}
 body.pen-on #inkCanvas{pointer-events:auto;cursor:crosshair}
 @media print{#penToolbar{display:none}}
 </style>
@@ -440,15 +440,15 @@ body.pen-on #inkCanvas{pointer-events:auto;cursor:crosshair}
 (function(){
   const cv=document.getElementById('inkCanvas'),ctx=cv.getContext('2d');
   let on=false,color='#D7263D',eraser=false,strokes=[],cur=null,drawing=false;
-  function size(){const w=document.documentElement.scrollWidth,h=document.documentElement.scrollHeight;
-    if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h;redraw();}}
-  function redraw(){ctx.clearRect(0,0,cv.width,cv.height);for(const s of strokes)draw(s);}
-  function draw(s){ctx.save();ctx.lineCap='round';ctx.lineJoin='round';
+  function size(){const w=window.innerWidth,h=window.innerHeight;
+    if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h;}redraw();}
+  function redraw(){ctx.clearRect(0,0,cv.width,cv.height);for(const s of strokes)draw(s);if(cur)draw(cur);}
+  function draw(s){const ox=window.scrollX,oy=window.scrollY;ctx.save();ctx.lineCap='round';ctx.lineJoin='round';
     if(s.eraser){ctx.globalCompositeOperation='destination-out';ctx.lineWidth=18;}else{ctx.strokeStyle=s.color;ctx.lineWidth=2.4;}
-    ctx.beginPath();s.pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke();ctx.restore();}
+    ctx.beginPath();s.pts.forEach((p,i)=>i?ctx.lineTo(p.x-ox,p.y-oy):ctx.moveTo(p.x-ox,p.y-oy));ctx.stroke();ctx.restore();}
   function pos(e){const t=e.touches?e.touches[0]:e;return{x:t.pageX,y:t.pageY};}
   function down(e){if(!on)return;drawing=true;cur={color,eraser,pts:[pos(e)]};e.preventDefault();}
-  function move(e){if(!drawing)return;cur.pts.push(pos(e));redraw();draw(cur);e.preventDefault();}
+  function move(e){if(!drawing)return;cur.pts.push(pos(e));redraw();e.preventDefault();}
   function up(){if(!drawing)return;drawing=false;strokes.push(cur);cur=null;redraw();}
   cv.addEventListener('mousedown',down);cv.addEventListener('mousemove',move);window.addEventListener('mouseup',up);
   cv.addEventListener('touchstart',down,{passive:false});cv.addEventListener('touchmove',move,{passive:false});window.addEventListener('touchend',up);
@@ -459,7 +459,7 @@ body.pen-on #inkCanvas{pointer-events:auto;cursor:crosshair}
   document.getElementById('penEraser').onclick=function(){eraser=!eraser;this.classList.toggle('on',eraser);};
   document.getElementById('penUndo').onclick=()=>{strokes.pop();redraw();};
   document.getElementById('penClear').onclick=()=>{strokes=[];redraw();};
-  new ResizeObserver(size).observe(document.body);window.addEventListener('load',size);size();
+  window.addEventListener('resize',size);window.addEventListener('scroll',redraw,{passive:true});window.addEventListener('load',size);size();
 })();
 </script>
 
