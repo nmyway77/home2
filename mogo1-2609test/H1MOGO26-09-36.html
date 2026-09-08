@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>신목고 스타일 문제집 · H1MOGO26-09-36 · If You Can Do Sudoku</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --cream:#FAF6EE;
+  --cream-dark:#F0E9D8;
+  --warm-white:#FEFBF5;
+  --navy-950:#0A1E3A;
+  --navy-900:#112546;
+  --navy-700:#2C3E63;
+  --gold:#C99B4E;
+  --gold-light:#E4C589;
+  --slate-700:#334155;
+  --slate-600:#475569;
+  --slate-500:#64748B;
+  --slate-300:#CBD5E1;
+  --slate-200:#E2E8F0;
+  --slate-100:#F1F5F9;
+  --slate-50:#F8FAFC;
+  --emerald-700:#047857;
+  --emerald-600:#059669;
+  --emerald-50:#ECFDF5;
+  --rose-600:#DC2626;
+  --rose-50:#FEF2F2;
+  --amber-600:#D97706;
+  --amber-50:#FEF3C7;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased}
+
+body{
+  margin:0;background:var(--cream);color:var(--slate-700);
+  font-family:'Pretendard Variable',-apple-system,sans-serif;
+  font-size:15px;line-height:1.65;
+  letter-spacing:-0.005em;
+}
+
+.container{max-width:900px;margin:0 auto;padding:0 32px}
+
+/* ===== Header ===== */
+header.top{
+  background:var(--navy-950);color:var(--cream);
+  padding:48px 0 56px;position:relative;overflow:hidden;
+  border-bottom:4px solid var(--gold);
+}
+header.top::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent 0%,var(--gold) 50%,transparent 100%);
+}
+.brand-row{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:28px;padding-bottom:22px;
+  border-bottom:1px solid rgba(228,197,137,0.2);
+}
+.brand{
+  font-family:'Playfair Display',serif;font-style:italic;font-weight:500;
+  font-size:15px;color:var(--gold-light);letter-spacing:0.02em;
+}
+.brand b{font-weight:700;color:var(--gold);margin-left:6px}
+.brand .kor{
+  display:block;font-family:'Pretendard Variable',sans-serif;font-style:normal;
+  font-size:12px;color:var(--slate-300);letter-spacing:0.14em;margin-top:3px;font-weight:500;
+}
+.vol-tag{
+  font-family:'Playfair Display',serif;font-size:12px;font-weight:700;
+  letter-spacing:0.24em;color:var(--gold);text-transform:uppercase;
+}
+.book-title{
+  font-family:'Playfair Display',serif;font-weight:900;font-style:italic;
+  font-size:clamp(34px,5vw,48px);letter-spacing:-0.02em;color:var(--cream);
+  line-height:1.1;margin-bottom:10px;
+}
+.book-title em{
+  font-style:italic;color:var(--gold);font-weight:700;
+}
+.book-subtitle{
+  font-family:'Pretendard Variable',sans-serif;font-weight:500;font-size:16px;
+  color:#D3CABA;letter-spacing:-0.01em;margin-bottom:24px;line-height:1.5;
+}
+.meta-strip{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  padding-top:22px;border-top:1px solid rgba(228,197,137,0.2);
+}
+.meta-item{
+  padding:0 20px;border-right:1px solid rgba(228,197,137,0.15);
+}
+.meta-item:first-child{padding-left:0}
+.meta-item:last-child{border-right:none;padding-right:0}
+.meta-lbl{
+  font-size:10px;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--gold);font-weight:700;margin-bottom:6px;
+}
+.meta-val{
+  font-family:'Playfair Display',serif;font-size:22px;font-weight:700;
+  color:var(--cream);letter-spacing:-0.01em;
+}
+.meta-val .u{
+  font-family:'Pretendard Variable',sans-serif;font-style:normal;
+  font-size:13px;color:var(--slate-300);margin-left:4px;font-weight:500;
+}
+
+/* ===== Main ===== */
+main{padding:64px 0 80px}
+
+.section-divider{
+  text-align:center;margin:56px 0 40px;position:relative;
+}
+.section-divider::before{
+  content:'';position:absolute;top:50%;left:0;right:0;height:1px;
+  background:var(--slate-300);
+}
+.section-divider span{
+  position:relative;background:var(--cream);padding:0 28px;
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:20px;font-weight:700;color:var(--navy-950);
+  letter-spacing:-0.01em;
+}
+.section-divider span .kor{
+  display:block;font-family:'Pretendard Variable',sans-serif;font-style:normal;
+  font-size:11px;letter-spacing:0.14em;color:var(--slate-500);
+  text-transform:uppercase;font-weight:700;margin-top:4px;
+}
+
+/* ===== Passage ===== */
+.passage-card{
+  background:var(--warm-white);border:1px solid var(--slate-200);
+  padding:clamp(28px,4vw,44px);margin-bottom:40px;
+  box-shadow:0 1px 0 rgba(10,30,58,0.04), 0 20px 50px -24px rgba(10,30,58,0.08);
+}
+.passage-head{
+  display:flex;align-items:center;gap:12px;margin-bottom:20px;
+  padding-bottom:16px;border-bottom:2px solid var(--navy-950);
+}
+.passage-badge{
+  font-family:'Pretendard Variable',sans-serif;font-size:11px;font-weight:800;
+  letter-spacing:0.2em;text-transform:uppercase;
+  padding:6px 14px;background:var(--navy-950);color:var(--cream);
+}
+.passage-meta{font-size:13px;color:var(--slate-600);font-weight:600}
+.passage-body{
+  font-family:'Playfair Display',serif;font-size:16px;line-height:2.0;
+  color:var(--slate-800);
+}
+.passage-body .hl{
+  background:linear-gradient(180deg,transparent 60%,rgba(201,155,78,0.25) 60%);
+  padding:0 2px;font-weight:500;
+}
+
+/* ===== Question Card ===== */
+.q-card{
+  background:var(--warm-white);border:1px solid var(--slate-200);
+  padding:clamp(24px,3vw,36px);margin-bottom:28px;
+  box-shadow:0 1px 0 rgba(10,30,58,0.03);
+}
+.q-head{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px;
+  padding-bottom:16px;border-bottom:1px solid var(--slate-200);
+}
+.q-num{
+  font-family:'Playfair Display',serif;font-weight:800;font-style:italic;
+  font-size:24px;color:var(--navy-950);letter-spacing:-0.02em;
+  padding-right:14px;border-right:2px solid var(--slate-200);
+}
+.q-type{
+  font-size:11px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;
+  padding:5px 11px;background:var(--navy-950);color:var(--gold-light);
+  border-radius:2px;
+}
+.q-type.written{background:var(--navy-950)}
+.q-type.choice{background:var(--slate-700)}
+.q-pts{
+  font-size:11px;font-weight:700;color:var(--slate-500);
+  padding:4px 10px;background:var(--slate-50);border:1px solid var(--slate-200);
+  border-radius:999px;margin-left:auto;letter-spacing:0.04em;
+}
+.q-prompt{
+  font-size:15.5px;font-weight:700;color:var(--navy-950);
+  margin-bottom:18px;line-height:1.6;letter-spacing:-0.01em;
+}
+.q-prompt b{color:var(--rose-600);font-weight:800}
+.q-passage{
+  font-family:'Playfair Display',serif;font-size:14.5px;line-height:1.95;
+  color:var(--slate-700);padding:20px 24px;background:var(--cream);
+  border-left:3px solid var(--slate-300);margin-bottom:16px;
+  border-radius:0 3px 3px 0;
+}
+.q-passage .blank{
+  display:inline-block;padding:2px 14px;min-width:36px;
+  background:var(--navy-950);color:var(--gold-light);
+  font-family:'Pretendard Variable',sans-serif;font-size:12px;font-weight:800;
+  letter-spacing:0.08em;border-radius:2px;vertical-align:baseline;
+}
+.q-passage .blank.num{background:var(--gold);color:var(--navy-950)}
+.q-passage .circle{
+  display:inline-block;width:20px;height:20px;border-radius:50%;
+  background:var(--navy-950);color:var(--gold-light);font-weight:800;
+  font-size:11px;text-align:center;line-height:20px;font-style:normal;
+  font-family:'Pretendard Variable',sans-serif;letter-spacing:0;
+  margin:0 3px;
+}
+.q-passage mark{
+  background:#FFF3C4;padding:1px 4px;font-style:normal;font-weight:600;
+  font-family:'Pretendard Variable',sans-serif;font-size:13.5px;color:var(--navy-900);
+}
+.q-passage mark.diff{
+  background:#FECACA;border-bottom:2px solid var(--rose-600);
+  color:var(--rose-600);
+}
+.q-passage mark.ref{
+  background:rgba(201,155,78,0.18);border-bottom:2px solid var(--gold);
+}
+
+.q-condition{
+  padding:16px 20px;background:#FFF8E1;border-left:3px solid var(--gold);
+  border-radius:0 3px 3px 0;margin-bottom:18px;
+  font-size:13.5px;line-height:1.7;color:var(--slate-700);
+}
+.q-condition .c-head{
+  font-weight:800;color:var(--navy-900);margin-bottom:8px;letter-spacing:-0.01em;
+}
+.q-condition ol{margin:0;padding-left:20px}
+.q-condition li{margin-bottom:4px}
+.q-condition .boxlist{
+  font-family:'Playfair Display',serif;font-style:italic;font-size:13px;
+  color:var(--slate-600);padding:8px 12px;background:var(--warm-white);
+  border:1px dashed var(--slate-300);margin-top:6px;display:inline-block;
+}
+
+.q-choices{
+  display:flex;flex-direction:column;gap:5px;margin-bottom:18px;
+}
+.q-choices .c{
+  display:block;padding:8px 14px;font-size:14px;line-height:1.7;
+  color:var(--slate-700);border-radius:2px;transition:background 0.15s;
+}
+.q-choices .c .num{
+  display:inline-block;font-weight:800;margin-right:8px;color:var(--navy-900);
+}
+.q-answer-inline{
+  font-family:'Playfair Display',serif;font-size:15px;font-weight:600;font-style:italic;
+  color:var(--slate-600);padding:12px 18px;background:var(--slate-50);
+  border-left:3px solid var(--slate-300);border-radius:0 3px 3px 0;
+  margin-bottom:14px;
+}
+.q-answer-inline .arr{color:var(--gold);font-weight:800;margin:0 8px}
+
+/* ===== Details (정답 펼치기) ===== */
+details.ans{
+  margin-top:18px;background:var(--navy-950);color:var(--cream);
+  border-radius:0;overflow:hidden;
+}
+details.ans[open]{background:var(--navy-950)}
+details.ans summary{
+  cursor:pointer;padding:14px 22px;
+  font-family:'Pretendard Variable',sans-serif;font-size:12px;
+  font-weight:800;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--gold-light);list-style:none;
+  display:flex;align-items:center;justify-content:space-between;
+  user-select:none;
+}
+details.ans summary::-webkit-details-marker{display:none}
+details.ans summary::after{
+  content:'▾';font-size:14px;color:var(--gold);
+  transition:transform 0.2s;
+}
+details.ans[open] summary::after{transform:rotate(180deg)}
+details.ans summary:hover{background:rgba(201,155,78,0.08)}
+.ans-body{
+  padding:20px 24px 24px;font-size:14px;line-height:1.8;color:#D3CABA;
+  border-top:1px solid rgba(228,197,137,0.2);
+}
+.ans-body .ans-label{
+  display:inline-block;font-family:'Playfair Display',serif;font-style:italic;
+  font-size:12px;font-weight:800;letter-spacing:0.1em;
+  color:var(--gold);margin-bottom:8px;
+}
+.ans-body .ans-main{
+  font-size:16px;font-weight:700;color:var(--cream);margin-bottom:12px;
+  letter-spacing:-0.01em;line-height:1.55;
+}
+.ans-body .ans-main .en{
+  font-family:'Playfair Display',serif;font-style:italic;font-weight:600;
+}
+.ans-body .ans-detail{
+  font-size:13.5px;line-height:1.75;color:#B8B0A2;
+  padding-top:12px;border-top:1px dashed rgba(228,197,137,0.15);
+}
+.ans-body b{color:var(--gold-light);font-weight:700}
+.ans-body .note{
+  margin-top:10px;padding:10px 14px;background:rgba(201,155,78,0.08);
+  border-left:2px solid var(--gold);font-size:13px;color:#C9BFAD;
+}
+.ans-body .trans-h{
+  display:block;margin:14px 0 6px;color:var(--gold-light);
+  font-weight:700;font-size:13px;letter-spacing:0.4px;
+}
+.ans-body .trans-h:first-child{margin-top:0}
+.ans-body .trans-box{
+  margin-bottom:6px;padding:11px 15px;
+  background:rgba(232,205,148,0.08);
+  border-left:3px solid var(--gold);
+  border-radius:3px;
+  font-size:13.5px;line-height:1.85;color:#D8CFB7;
+}
+.ans-body .trans-box ol{margin:0;padding-left:0;list-style:none;counter-reset:tc}
+.ans-body .trans-box ol li{
+  margin-bottom:4px;padding-left:24px;position:relative;
+}
+.ans-body .trans-box ol li::before{
+  content:counter(tc,decimal) '.';counter-increment:tc;
+  position:absolute;left:0;top:0;color:var(--gold-light);font-weight:700;
+}
+.ans-body .trans-box .circle-list li::before{
+  content:'';
+}
+.ans-body .reason-h{
+  display:block;margin:14px 0 6px;color:var(--gold-light);
+  font-weight:700;font-size:13px;letter-spacing:0.4px;
+  padding-top:12px;border-top:1px dashed rgba(228,197,137,0.18);
+}
+
+/* ===== Footer ===== */
+footer{
+  background:var(--navy-950);color:#9BA39B;
+  padding:40px 0;margin-top:80px;
+  font-size:13px;line-height:1.7;
+}
+footer .foot-grid{
+  display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;
+}
+footer .foot-brand{
+  font-family:'Playfair Display',serif;font-size:20px;font-weight:700;
+  color:var(--cream);letter-spacing:-0.01em;
+}
+footer .foot-brand .kor{
+  display:block;font-family:'Pretendard Variable',sans-serif;font-size:13px;
+  font-weight:500;color:var(--gold-light);margin-top:4px;letter-spacing:0.04em;
+}
+footer .foot-meta{
+  text-align:right;font-size:12px;color:var(--slate-500);letter-spacing:0.04em;
+  line-height:1.8;
+}
+footer .foot-meta b{color:var(--gold);font-weight:700}
+
+/* ===== Print ===== */
+@media print{
+  body{background:white;font-size:12px}
+  header.top{background:white;color:var(--navy-950);border-bottom:3px solid var(--navy-950);padding:20px 0}
+  header.top .brand,header.top .brand .kor,header.top .book-subtitle,
+  header.top .meta-lbl{color:var(--slate-600) !important}
+  header.top .brand b,header.top .vol-tag,header.top .book-title em,header.top .meta-val{color:var(--navy-950) !important}
+  header.top .book-title,header.top .meta-val{color:var(--navy-950) !important}
+  .passage-card,.q-card{box-shadow:none;break-inside:avoid}
+  details.ans{background:white !important;color:var(--navy-950) !important;border:1px solid var(--slate-300)}
+  details.ans[open]{background:white !important}
+  details.ans summary{color:var(--navy-900) !important}
+  details.ans summary::after{display:none}
+  .ans-body{color:var(--slate-700) !important;border-top-color:var(--slate-300) !important}
+  .ans-body .ans-label{color:var(--emerald-700) !important}
+  .ans-body .ans-main{color:var(--navy-950) !important}
+  .ans-body .ans-detail{color:var(--slate-600) !important;border-top-color:var(--slate-300) !important}
+  .ans-body b{color:var(--navy-900) !important}
+  .ans-body .note{background:var(--slate-50) !important;color:var(--slate-700) !important}
+  details.ans[open]{page-break-inside:avoid}
+  details.ans{break-inside:avoid}
+  details.ans summary::after{display:none}
+  details.ans:not([open]) .ans-body{display:block !important}
+  details.ans:not([open]){background:white !important;color:var(--navy-950) !important}
+  footer{background:white;color:var(--slate-600);border-top:1px solid var(--slate-300);padding:20px 0;margin-top:40px}
+  footer .foot-brand,footer .foot-brand .kor,footer .foot-meta b{color:var(--navy-950) !important}
+}
+
+/* ===== Responsive ===== */
+@media (max-width:720px){
+  .container{padding:0 20px}
+  .meta-strip{grid-template-columns:repeat(2,1fr);gap:16px 0;row-gap:20px}
+  .meta-item{padding:0 12px;border-right:none}
+  .meta-item:nth-child(2n){padding-right:0}
+  .brand-row{flex-direction:column;align-items:flex-start;gap:12px}
+}
+
+/* ===== Pen annotation ===== */
+#penbar{position:fixed;right:16px;bottom:16px;z-index:9999;display:flex;gap:6px;align-items:center;background:var(--navy-950);color:var(--cream);padding:8px 10px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.25);font-size:12px}
+#penbar button{border:1px solid var(--gold-light);background:transparent;color:var(--cream);padding:4px 8px;border-radius:6px;cursor:pointer;font-size:12px}
+#penbar button.on{background:var(--gold);color:var(--navy-950);font-weight:700}
+#penbar .sw{width:18px;height:18px;border-radius:50%;border:2px solid #fff;cursor:pointer;display:inline-block}
+#pencanvas{position:absolute;top:0;left:0;pointer-events:none;z-index:9000;touch-action:none}
+#pencanvas.active{pointer-events:auto;cursor:crosshair}
+@media print{#penbar{display:none}}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="top"><div class="container">
+  <div class="brand-row"><div class="brand">Mokdong Seoro <b>English Academy</b><span class="kor">목동서로영어학원 · 신목고·목운중·목동중 전문</span></div>
+  <div class="vol-tag">H1MOGO 26-09-36</div></div>
+  <h1 class="book-title"><em>Sinmokgo</em>-Style<br>Worksheet Collection</h1>
+  <div class="book-subtitle">2026 고1 9월 전국연합 36번(순서 배열) 변형 · 신목고 1등급 최상 난이도 풀 세트 (서답형 7 · 선택형 13)<br>Topic — If You Can Do Sudoku: 패턴으로서의 수학</div>
+  <div class="meta-strip">
+    <div class="meta-item"><div class="meta-lbl">Total Items</div><div class="meta-val">20<span class="u">문항 · 68점</span></div></div>
+    <div class="meta-item"><div class="meta-lbl">Written</div><div class="meta-val">7<span class="u">서답형 · 28점</span></div></div>
+    <div class="meta-item"><div class="meta-lbl">Multiple Choice</div><div class="meta-val">13<span class="u">선택형 · 40점</span></div></div>
+    <div class="meta-item"><div class="meta-lbl">Source</div><div class="meta-val">36<span class="u">번 지문 · 순서배열</span></div></div>
+  </div>
+</div></header>
+<main><div class="container">
+<div class="section-divider"><span>Reading Passage<span class="kor">2026 고1 9월 · Grade 1 · No.36 (정렬 완성본)</span></span></div>
+<div class="passage-card"><div class="passage-head"><span class="passage-badge">■ 지문 36</span><span class="passage-meta">Topic: Mathematics · Pattern · Sudoku</span></div>
+<div class="passage-body">The central concerns of mathematics are <span class="hl">not numbers, but patterns, structures, symmetries and connections</span>. Take, for example, the Sudoku puzzles that appear daily in newspapers. The objective is to complete a 9 × 9 grid, starting from a few given numbers or clues, while ensuring that each row, each column and each 3 × 3 block contains all the digits from 1 to 9 <span class="hl">once and only once</span>. But <span class="hl">the numerical values of the digits are irrelevant</span>; what is important is that there are <span class="hl">nine distinct symbols</span>. They could be nine letters or nine shapes. <span class="hl">It's the pattern that matters</span>. One Irish daily paper publishes these puzzles with the statement '<span class="hl">There's no maths involved</span>, simply use reasoning and logic!' It seems that even the idea that something might be spoiled by mathematics is enough to <span class="hl">scare off potential solvers</span>! Could you imagine the promotion of an exhibition in the National Gallery with the slogan '<span class="hl">No art involved, just painting and sculpture</span>'? <span class="hl">If you can do Sudoku, you can do maths</span>!</div></div>
+<div class="section-divider"><span>Part I · Written Response<span class="kor">서답형 7문항 · 총 28점</span></span></div>
+<article class="q-card">
+<div class="q-head"><div class="q-num">36-서1</div><div class="q-type written">빈칸 영작 · 신규 지문</div><div class="q-pts">(1),(2) 각 1점 · (3) 2점 · 총 4점</div></div>
+<div class="q-prompt">윗글을 바탕으로 아래 '퍼즐 앱' 일화의 빈칸 (1)~(3)을 &lt;조건&gt;에 맞게 채우시오.</div>
+<div class="q-passage"><b style="font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:14px;color:var(--navy-900)">[The 'No Math' Puzzle App]</b><br>
+My cousin, who says she "hates math," downloaded a puzzle app because its ad promised "no math required." She solved forty grids in a week. When I pointed out that the digits were <span class="blank num">(1)</span> — the app could have used fruits or flags instead — she shrugged: "So what? I just look for where each thing has to go." I told her that was exactly the point. She had been doing mathematics the whole time, because in every grid <span class="blank num">(3)</span> — not the numbers, and the <span class="blank num">(2)</span> was all she had ever been chasing.</div>
+<div class="q-condition"><div class="c-head">&lt;조건&gt;</div><ol>
+<li>(1)과 (2)는 윗글에서 찾아 <b>그대로 한 단어</b>로 쓸 것 (어형 변형 불가)</li>
+<li>(3)은 아래 [보기]의 표현을 <b>모두 한 번씩만</b> 사용하여 6단어로 쓸 것 (※필요한 경우 문맥과 어법에 맞게 동사 형태를 변형할 것)</li></ol>
+<div class="boxlist">[보기] it &nbsp;/&nbsp; be &nbsp;/&nbsp; the pattern &nbsp;/&nbsp; that &nbsp;/&nbsp; matter</div></div>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-label">ANSWER · 정답</span><div class="ans-main">(1) <b>irrelevant</b> &nbsp;·&nbsp; (2) <b>pattern</b> &nbsp;·&nbsp; (3) <span class="en">it is the pattern that matters</span></div><div class="ans-detail">
+<span class="trans-h">📖 문제 해석</span><div class="trans-box">윗글을 바탕으로 신규 일화의 빈칸을 채워라.</div>
+<span class="trans-h">📖 신규 지문(The 'No Math' Puzzle App) 해석</span><div class="trans-box">"'수학을 싫어한다'는 사촌이 '수학 필요 없음'이라는 광고를 보고 퍼즐 앱을 받았다. 일주일에 40판을 풀었다. 숫자들이 <b>(1) 무관하다(irrelevant)</b>고 — 앱은 과일이나 국기를 대신 쓸 수도 있었다고 — 지적하자 사촌은 어깨를 으쓱했다: '그래서? 난 그냥 각각이 어디에 가야 하는지 찾을 뿐인데.' 나는 바로 그것이 요점이라고 말했다. 사촌은 내내 수학을 하고 있었던 것이다, 모든 판에서 <b>(3) 중요한 것은 패턴이지</b> — 숫자가 아니며, 그 <b>(2) 패턴(pattern)</b>이야말로 사촌이 줄곧 좇아 온 전부였으니까."</div>
+<span class="trans-h">📖 조건 해석</span><div class="trans-box">① (1)(2) 본문 한 단어 그대로 ② (3)은 [보기] 5개 전부 6단어(the pattern 2단어) — It is ~ that 강조구문: be→is, matter→matters(강조 대상 the pattern 단수).</div>
+<span class="reason-h">✦ 정답 도출 + 오답 함정 분석</span><div>(1) 본문 "the numerical values of the digits are <b>irrelevant</b>"의 형용사 — 일화의 '과일이나 국기를 쓸 수도 있었다'가 본문 'nine letters or nine shapes'와 대응. 'distinct'는 반대로 '중요한 것'을 설명하는 단어. (2) "It's the <b>pattern</b> that matters" — 'the ___ was all she had been chasing'의 명사 자리. 'structure'도 본문에 있으나 스도쿠 설명에서 반복 강조된 핵심어는 pattern. (3) 강조구문 It is [the pattern] that matters: that절 동사는 강조된 명사(단수)에 일치 → matters. 'it matters the pattern'처럼 배열하면 강조구문 붕괴.</div>
+</div></div></details></article>
+<article class="q-card">
+<div class="q-head"><div class="q-num">36-서2</div><div class="q-type written">우리말 영작 · 2문장</div><div class="q-pts">각 2점 · 총 4점</div></div>
+<div class="q-prompt">윗글의 내용이 되도록 &lt;조건&gt;에 맞게 다음 우리말을 영작하시오.</div>
+<div class="q-passage"><div style="font-family:'Pretendard Variable',sans-serif;font-style:normal">
+<b>(1)</b> 그러나 숫자들의 수치는 무관하다; 중요한 것은 아홉 개의 서로 다른 기호가 있다는 것이다.<br>
+<span class="boxlist">[보기 1] but / the numerical values / of the digits / be / irrelevant / what / be / important / be / that / there / be / nine distinct symbols</span><br><br>
+<b>(2)</b> 무언가가 수학에 의해 망쳐질지도 모른다는 생각조차 잠재적 풀이자들을 겁주어 쫓아 버리기에 충분하다.<br>
+<span class="boxlist">[보기 2] even / the idea / that / something / might / be / spoil / by mathematics / be / enough / to scare off / potential solvers</span></div></div>
+<div class="q-condition"><div class="c-head">&lt;조건&gt;</div><ol>
+<li>[보기]의 표현을 <b>모두 한 번씩만</b> 사용할 것 (단어 추가 금지)</li>
+<li>반드시 어형을 변형해야 하는 단어가 있음 — (1)은 4곳(be 4개), (2)는 2곳</li></ol></div>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-label">ANSWER · 정답</span><div class="ans-main">(1) <span class="en">But the numerical values of the digits are irrelevant; what is important is that there are nine distinct symbols.</span><br>(2) <span class="en">Even the idea that something might be spoiled by mathematics is enough to scare off potential solvers.</span></div><div class="ans-detail">
+<span class="trans-h">📖 문제 해석</span><div class="trans-box">[보기] 전부 사용, 지정 개수 변형으로 영작하라.</div>
+<span class="trans-h">📖 [보기]·조건 해석</span><div class="trans-box">(1) 네 개의 be가 각각 다른 주어를 만난다: the numerical values(복수) → <b>are</b> · what(관계대명사절 주어, 단수 취급) → <b>is</b> important · 주절 동사 → <b>is</b> that · there ___ nine symbols(복수) → <b>are</b>.<br>(2) the idea <b>that</b> ~(동격의 that절) · might be <b>spoiled</b>(수동) · 주어 the idea(단수) → <b>is</b> enough to.</div>
+<span class="reason-h">✦ 정답 도출 + 오답 함정 분석</span><div>(1) 네 be의 수를 각각 결정하는 것이 전부: 특히 'what is important is that ~'에서 what절은 <b>단수</b>이고 there 뒤는 뒤에 오는 명사(symbols 복수)에 맞춘다 — 'what are important'·'there is nine'이 최다 오답. 세미콜론은 마침표로 대체 가능. (2) 동격 that절 안의 수동(be spoiled)과 문장 전체의 주어가 'the idea'(that절 전체를 포함한 긴 주어)임을 파악해 is enough로 받는 것이 변별점 — 'solvers'에 끌려 are로 쓰면 오답.</div>
+</div></div></details></article>
+<article class="q-card">
+<div class="q-head"><div class="q-num">36-서3</div><div class="q-type written">영어 Q&amp;A · 단답</div><div class="q-pts">각 2점 · 총 4점</div></div>
+<div class="q-prompt">윗글을 읽고 다음 두 질문에 &lt;조건&gt;에 맞게 영어로 답하시오.</div>
+<div class="q-passage"><div style="font-family:'Pretendard Variable',sans-serif;font-style:normal">
+<b>Q1.</b> According to the writer, what are the central concerns of mathematics?<br>
+<span class="boxlist">A1. Not numbers, but <span class="blank num">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</span><br><br>
+<b>Q2.</b> How many times must each digit from 1 to 9 appear in each row, column and block of a Sudoku grid?<br>
+<span class="boxlist">A2. <span class="blank num">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</span></div></div>
+<div class="q-condition"><div class="c-head">&lt;조건&gt;</div><ol>
+<li>A1의 빈칸은 <b>다섯 단어</b>(and 포함)로 쓸 것. 답란에 이미 인쇄된 표현을 다시 쓰면 감점</li>
+<li>A2의 빈칸은 <b>네 단어</b>로 본문 표현 그대로 쓸 것</li></ol></div>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-label">ANSWER · 정답</span><div class="ans-main">A1. <b>patterns, structures, symmetries and connections</b> &nbsp;·&nbsp; A2. <b>once and only once</b></div><div class="ans-detail">
+<span class="trans-h">📖 문제 해석</span><div class="trans-box">Q1: 수학의 중심 관심사는? / Q2: 1~9의 각 숫자는 각 행·열·블록에 몇 번 나타나야 하는가?</div>
+<span class="trans-h">📖 근거 문장 해석</span><div class="trans-box">Q1 ← "The central concerns of mathematics are not numbers, but <b>patterns, structures, symmetries and connections</b>." / Q2 ← "contains all the digits from 1 to 9 <b>once and only once</b>"(한 번, 그리고 오직 한 번만)</div>
+<span class="trans-h">📖 조건 해석</span><div class="trans-box">① A1 정확히 5단어: 네 명사 + and — 하나라도 빠지면 조건 위반, 'not numbers, but' 중복 금지 ② A2 정확히 4단어, 본문 관용 표현 그대로('once' 1단어는 부족, 'exactly once'는 본문 표현 아님).</div>
+<span class="reason-h">✦ 정답 도출 + 오답 함정 분석</span><div>Q1은 열거 네 항목의 <b>완전 추출</b>이 요구된다 — 'patterns and structures'처럼 일부만 쓰면 0점. 복수형(patterns)도 채점 대상. Q2는 'once and only once'라는 강조 관용구를 그대로 옮겨야 한다; 'only once'(2단어)·'one time'은 단어 수·표현 조건 위반.</div>
+</div></div></details></article>
+<article class="q-card">
+<div class="q-head"><div class="q-num">36-서4</div><div class="q-type written">패러프레이징 영작 · 구조 전환</div><div class="q-pts">각 2점 · 총 4점</div></div>
+<div class="q-prompt">윗글의 밑줄 친 (1), (2)와 <b>같은 뜻이 되도록</b> &lt;조건&gt;에 맞게 다시 쓰시오.</div>
+<div class="q-passage">They could be nine letters or nine shapes. (1) <u>It's the pattern that matters.</u> (...) (2) <u>If you can do Sudoku, you can do maths!</u></div>
+<div class="q-condition"><div class="c-head">&lt;조건&gt;</div><ol>
+<li>(1)의 강조구문(It ~ that)을 <b>관계대명사 what을 사용한 문장</b>으로 바꾸어 쓸 것. [보기 1]을 모두 사용하고 필요시 변형할 것<br><span class="boxlist">[보기 1] the pattern / be / what / matter</span></li>
+<li>(2)의 If절을 <b>'Anyone who ~'로 시작하는 한 문장</b>으로 바꾸어 쓸 것. [보기 2]를 모두 사용할 것<br><span class="boxlist">[보기 2] anyone / who / can / do / Sudoku / can / do / maths</span></li></ol></div>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-label">ANSWER · 정답</span><div class="ans-main">(1) <span class="en">The pattern is what matters.</span><br>(2) <span class="en">Anyone who can do Sudoku can do maths.</span></div><div class="ans-detail">
+<span class="trans-h">📖 문제 해석</span><div class="trans-box">(1) It is X that V → X is what V, (2) If you can ~, you can ~ → Anyone who can ~ can ~.</div>
+<span class="trans-h">📖 원문 해석</span><div class="trans-box">(1) 중요한 것은 패턴이다. (2) 스도쿠를 할 수 있다면 수학도 할 수 있다!</div>
+<span class="trans-h">📖 조건·보기 해석</span><div class="trans-box">(1) 강조구문을 풀면 'The pattern matters'; 조건이 what을 요구하므로 'The pattern <b>is what matters</b>'(패턴이 중요한 것이다) — be→is, matter→<b>matters</b>(what절 단수 동사). (2) 조건절의 일반 주어 you → 'Anyone who can do Sudoku'(관계사절이 주어를 한정), 주절 동사 can do maths — 변형 없음.</div>
+<span class="reason-h">✦ 정답 도출 + 오답 함정 분석</span><div>(1) 'what matters'는 선행사를 포함한 관계대명사절 = '중요한 것'; 'The pattern is that matters'는 선행사 없는 that으로 비문(선4·서5의 that/what 판별과 교차). matters의 3인칭 단수 -s를 놓치는 것이 최다 감점. (2) 'If you can ~, you can ~'는 조건 = 주어 한정으로 바꿀 수 있다: Anyone who can do Sudoku can do maths — 'Anyone can do Sudoku who can do maths'처럼 관계사절을 분리하면 의미(조건 방향)가 뒤집혀 오답.</div>
+</div></div></details></article>
+<article class="q-card">
+<div class="q-head"><div class="q-num">36-서5</div><div class="q-type written">어법 수정 · 2곳</div><div class="q-pts">각 2점 · 총 4점</div></div>
+<div class="q-prompt">다음 글의 밑줄 친 ⓐ~ⓕ 중 <b>어법상 틀린 것 두 개</b>를 찾아 기호를 쓰고 바르게 고치시오.</div>
+<div class="q-passage">The central concerns of mathematics ⓐ <u>are</u> not numbers, but patterns, structures, symmetries and connections. Take, for example, the Sudoku puzzles ⓑ <u>that appear</u> daily in newspapers. The objective is to complete a 9 × 9 grid, starting from a few given numbers or clues, while ensuring that each row, each column and each 3 × 3 block ⓒ <u>contains</u> all the digits from 1 to 9 once and only once. But the numerical values of the digits are irrelevant; what is important is ⓓ <u>what</u> there are nine distinct symbols. They could be nine letters or nine shapes. It's the pattern ⓔ <u>that matters</u>. One Irish daily paper publishes these puzzles with the statement 'There's no maths involved, simply use reasoning and logic!' It seems that even the idea ⓕ <u>which</u> something might be spoiled by mathematics is enough to scare off potential solvers! Could you imagine the promotion of an exhibition in the National Gallery with the slogan 'No art involved, just painting and sculpture'? If you can do Sudoku, you can do maths!</div>
+<div class="q-condition"><div class="c-head">&lt;조건&gt;</div><ol><li>기호와 고친 표현을 함께 쓸 것 (예: ⓧ ___ → ___)</li><li>두 개 모두 고쳐야 만점(각 2점). 기호 3개 이상 기재 시 0점</li></ol></div>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-label">ANSWER · 정답</span><div class="ans-main">ⓓ what → <b>that</b> &nbsp;·&nbsp; ⓕ which → <b>that</b></div><div class="ans-detail">
+<span class="trans-h">📖 문제 해석</span><div class="trans-box">밑줄 ⓐ~ⓕ 중 어법상 틀린 두 개를 골라 고쳐라.</div>
+<span class="trans-h">📖 밑줄별 어법 포인트 매핑</span><div class="trans-box"><b>ⓐ are</b> ○ — 주어 concerns(복수)<br>
+<b>ⓑ that appear</b> ○ — 선행사 puzzles(복수) + 주격 관계대명사 + 복수 동사<br>
+<b>ⓒ contains</b> ○ — 'each row, each column and each block': each로 묶인 주어는 <b>단수</b> 취급<br>
+<b>ⓓ what</b> ✗ — 뒤 'there are nine distinct symbols'는 <b>완전한 절</b> → 접속사 <b>that</b>(is의 보어절)<br>
+<b>ⓔ that matters</b> ○ — It is ~ that 강조구문<br>
+<b>ⓕ which</b> ✗ — 'the idea'의 내용을 설명하는 완전한 절 → <b>동격의 that</b>; which(관계대명사)는 절 안에 빈자리가 있어야 함</div>
+<span class="reason-h">✦ 정답 도출 + 오답 함정 분석</span><div>두 오류 모두 <b>'완전한 절 앞에는 that'</b> 원칙: ⓓ는 보어 명사절(what은 불완전한 절만), ⓕ는 동격절(which는 관계대명사로 불완전한 절만). 같은 원칙이 다른 위치에서 두 번 적용되어, 하나를 맞히고 하나를 놓치는 학생을 변별한다. 정상형 함정 ⓒ: 'row, column and block' 세 항목이 and로 이어져 복수 동사로 고치고 싶어지지만, each가 각 항목에 붙으면 <b>단수</b>(선4③ 교차 점검). ⓔ의 강조구문 that은 정상.</div>
+</div></div></details></article>
+<article class="q-card">
+<div class="q-head"><div class="q-num">36-서6</div><div class="q-type written">요약문 빈칸 · 본문 추출</div><div class="q-pts">(A)(B) 각 2점 · 총 4점</div></div>
+<div class="q-prompt">다음은 윗글을 요약한 것이다. 빈칸 (A), (B)에 들어갈 말을 &lt;조건&gt;에 맞게 쓰시오.</div>
+<div class="q-passage"><div style="font-family:'Pretendard Variable',sans-serif;font-style:normal;background:var(--slate-50);padding:12px 16px;border-left:3px solid var(--gold)">
+Mathematics is really about <span class="blank num">(A)</span> rather than numbers: in Sudoku the digits could be any nine different <span class="blank num">(B)</span>, and it is their arrangement that counts — so anyone who can solve a grid is already doing maths, whatever a newspaper's 'no maths' slogan may claim.</div></div>
+<div class="q-condition"><div class="c-head">&lt;조건&gt;</div><ol><li>(A), (B) 모두 윗글에서 찾아 <b>한 단어씩 그대로</b> 쓸 것 (어형 변형 금지)</li><li>철자 오류는 0점</li></ol></div>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-label">ANSWER · 정답</span><div class="ans-main">(A) <b>patterns</b> &nbsp;·&nbsp; (B) <b>symbols</b></div><div class="ans-detail">
+<span class="trans-h">📖 문제 해석</span><div class="trans-box">요약문 빈칸을 본문 단어 그대로 채워라.</div>
+<span class="trans-h">📖 요약문 해석</span><div class="trans-box">"수학은 사실 숫자가 아니라 <b>(A) 패턴(patterns)</b>에 관한 것이다: 스도쿠에서 숫자는 어떤 아홉 개의 서로 다른 <b>(B) 기호(symbols)</b>여도 되고 중요한 것은 그 배열이다 — 그러므로 판을 풀 수 있는 사람은 누구든, 신문의 '수학 없음' 구호가 뭐라 하든, 이미 수학을 하고 있는 것이다."</div>
+<span class="trans-h">📖 조건 해석</span><div class="trans-box">(A)는 'about ___ rather than numbers'의 명사 — 첫 문장 'not numbers, but patterns' 대응(복수 그대로), (B)는 'nine different ___' — 본문 'nine distinct symbols'.</div>
+<span class="reason-h">✦ 정답 도출 + 오답 함정 분석</span><div>(A) 첫 문장 열거의 첫 항목이자 S6에서 재강조된 핵심어 <b>patterns</b>(복수형 그대로; 'pattern' 단수는 변형 위반). 'structures'도 열거에 있으나 요약문 뒤 'it is their arrangement that counts'가 S6 'It's the pattern that matters'와 대응하므로 patterns가 우선. (B) 'nine different ___'는 본문 'nine distinct symbols'의 distinct→different 환언 — 'digits'를 넣으면 '숫자는 아홉 개의 숫자여도 된다'로 동어반복, 'letters·shapes'는 예시일 뿐 총칭이 아님.</div>
+</div></div></details></article>
+<article class="q-card">
+<div class="q-head"><div class="q-num">36-서7</div><div class="q-type written">요약문 빈칸 · 어형 변형</div><div class="q-pts">(A)(B) 각 2점 · 총 4점</div></div>
+<div class="q-prompt">다음은 윗글을 요약한 것이다. 괄호 안에 주어진 단어를 <b>어법에 맞게 변형하여</b> 빈칸 (A), (B)를 채우시오.</div>
+<div class="q-passage"><div style="font-family:'Pretendard Variable',sans-serif;font-style:normal;background:var(--slate-50);padding:12px 16px;border-left:3px solid var(--gold)">
+<span class="blank num">(A)</span> (frighten) by the mere mention of mathematics, many puzzle fans never realize that Sudoku — which calls for nothing but <span class="blank num">(B)</span> (reason) and logic — is mathematics itself.</div></div>
+<div class="q-condition"><div class="c-head">&lt;조건&gt;</div><ol><li>괄호 안 단어를 반드시 변형할 것 (원형 그대로 쓰면 0점)</li><li>각 빈칸은 <b>한 단어</b></li></ol></div>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-label">ANSWER · 정답</span><div class="ans-main">(A) <b>Frightened</b> &nbsp;·&nbsp; (B) <b>reasoning</b></div><div class="ans-detail">
+<span class="trans-h">📖 문제 해석</span><div class="trans-box">괄호 안 단어를 변형해 요약문을 완성하라.</div>
+<span class="trans-h">📖 요약문 해석</span><div class="trans-box">"수학이라는 말만 들어도 <b>(A) 겁을 먹은(Frightened)</b> 채, 많은 퍼즐 애호가들은 스도쿠 — <b>(B) 추론(reasoning)</b>과 논리 외에는 아무것도 요구하지 않는 — 가 수학 그 자체임을 결코 깨닫지 못한다."</div>
+<span class="trans-h">📖 변형 포인트</span><div class="trans-box">(A) 주어 many puzzle fans가 '겁을 먹는' 감정 상태 → 감정동사의 <b>과거분사</b> Frightened(분사구문, 문두 대문자; 본문 'scare off'의 환언). (B) 'nothing but ___ and logic'에서 명사 logic과 병렬 → 동사 reason의 <b>명사형</b> reasoning(본문 'reasoning and logic' 그대로).</div>
+<span class="reason-h">✦ 정답 도출 + 오답 함정 분석</span><div>(A) 'Frightening'(현재분사)은 퍼즐 애호가들이 남을 겁준다는 뜻이 되어 오류 — 감정동사 태 판별(35번 concerned와 동일 원리, 다른 어휘). (B) reasoning은 동명사가 아니라 '추론'이라는 <b>명사</b>로 굳어진 형태 — 'reasons'(이유들)는 뜻이 달라지고, 'reason'을 그대로 두면 0점. 인용문 'simply use reasoning and logic!'이 본문 근거.</div>
+</div></div></details></article>
+<div class="section-divider"><span>Part II · Multiple Choice<span class="kor">선택형 13문항 · 총 40점</span></span></div>
+<article class="q-card">
+<div class="q-head"><div class="q-num">36-1</div><div class="q-type choice">제목</div><div class="q-pts">3점</div></div>
+<div class="q-prompt">다음 글의 제목으로 가장 적절한 것은?</div>
+<div class="q-passage">The central concerns of mathematics are not numbers, but patterns, structures, symmetries and connections. Take, for example, the Sudoku puzzles that appear daily in newspapers. The objective is to complete a 9 × 9 grid, starting from a few given numbers or clues, while ensuring that each row, each column and each 3 × 3 block contains all the digits from 1 to 9 once and only once. But the numerical values of the digits are irrelevant; what is important is that there are nine distinct symbols. They could be nine letters or nine shapes. It's the pattern that matters. One Irish daily paper publishes these puzzles with the statement 'There's no maths involved, simply use reasoning and logic!' It seems that even the idea that something might be spoiled by mathematics is enough to scare off potential solvers! Could you imagine the promotion of an exhibition in the National Gallery with the slogan 'No art involved, just painting and sculpture'? If you can do Sudoku, you can do maths!</div>
+<div class="q-choices"><span class="c"><span class="num">①</span>How Newspapers Turned Sudoku into a Global Craze</span><span class="c"><span class="num">②</span>Why Numbers Are the Beating Heart of Mathematics</span><span class="c"><span class="num">③</span>Sudoku Is Maths: It's the Pattern, Not the Numbers, That Counts</span><span class="c"><span class="num">④</span>Nine Letters or Nine Shapes: Redesigning the Classic Grid</span><span class="c"><span class="num">⑤</span>No Maths Involved: The Secret to Enjoying Puzzles</span></div>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-label">ANSWER · 정답</span><div class="ans-main">③</div><div class="ans-detail">
+<span class="trans-h">📖 문제 해석</span><div class="trans-box">글의 제목으로 가장 적절한 것을 고르라.</div>
+<span class="trans-h">📖 지문 핵심 해석</span><div class="trans-box">수학의 중심은 숫자가 아니라 패턴·구조·대칭·연결 → 예: 스도쿠 — 숫자의 수치는 무관하고 아홉 개의 서로 다른 기호(문자·도형도 가능)와 <b>패턴</b>이 중요 → 한 아일랜드 신문의 '수학 없음' 문구 = 수학이 겁을 준다는 통념 → 미술관에 '미술 없음' 구호를 상상해 보라(풍자) → <b>스도쿠를 할 수 있으면 수학도 할 수 있다</b>.</div>
+<span class="trans-h">📖 선택지 해석</span><div class="trans-box">① 신문은 어떻게 스도쿠를 세계적 열풍으로 만들었나 ② 숫자가 수학의 심장인 이유 ③ 스도쿠는 수학이다: 중요한 것은 숫자가 아니라 패턴 ④ 아홉 글자 혹은 아홉 도형: 고전 격자의 재설계 ⑤ 수학 없음: 퍼즐을 즐기는 비결</div>
+<span class="reason-h">✦ 정답 도출 + 오답 함정 분석</span><div>정답 ③: 주제문(패턴 > 숫자)과 결론(Sudoku = maths)을 함께 압축. ① 신문은 예시의 배경일 뿐 열풍 서사 없음(무관). ② 첫 문장 'not numbers'와 <b>정반대</b>. ④ '문자나 도형이어도 된다'는 수치 무관성의 논거이지 재설계 제안이 아님(범위 축소·왜곡). ⑤ 필자가 <b>풍자한</b> 신문 문구를 제목으로 삼은 방향 반전 — 최강 함정.</div>
+</div></div></details></article>
+<article class="q-card">
+<div class="q-head"><div class="q-num">36-2</div><div class="q-type choice">주제 · 속담</div><div class="q-pts">3점</div></div>
+<div class="q-prompt">다음 글의 요지를 가장 잘 나타내는 속담은?</div>
+<div class="q-passage">The central concerns of mathematics are not numbers, but patterns, structures, symmetries and connections. Take, for example, the Sudoku puzzles that appear daily in newspapers. The objective is to complete a 9 × 9 grid, starting from a few given numbers or clues, while ensuring that each row, each column and each 3 × 3 block contains all the digits from 1 to 9 once and only once. But the numerical values of the digits are irrelevant; what is important is that there are nine distinct symbols. They could be nine letters or nine shapes. It's the pattern that matters. One Irish daily paper publishes these puzzles with the statement 'There's no maths involved, simply use reasoning and logic!' It seems that even the idea that something might be spoiled by mathematics is enough to scare off potential solvers! Could you imagine the promotion of an exhibition in the National Gallery with the slogan 'No art involved, just painting and sculpture'? If you can do Sudoku, you can do maths!</div>
+<div class="q-choices"><span class="c"><span class="num">①</span>Don't judge a book by its cover.</span><span class="c"><span class="num">②</span>A rose by any other name would smell as sweet.</span><span class="c"><span class="num">③</span>Practice makes perfect.</span><span class="c"><span class="num">④</span>Two heads are better than one.</span><span class="c"><span class="num">⑤</span>Necessity is the mother of invention.</span></div>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-label">ANSWER · 정답</span><div class="ans-main">②</div><div class="ans-detail">
+<span class="trans-h">📖 문제 해석</span><div class="trans-box">글의 요지를 가장 잘 담은 속담을 고르라.</div>
+<span class="trans-h">📖 요지 재확인</span><div class="trans-box">'수학 없음'이라는 <b>이름표를 떼어도</b> 스도쿠는 여전히 수학이다 — 이름·표지가 바뀌어도 본질은 그대로.</div>
+<span class="trans-h">📖 선택지 해석</span><div class="trans-box">① 표지로 책을 판단하지 말라 ② 장미는 다른 이름으로 불려도 똑같이 향기롭다(이름이 바뀌어도 본질은 같다) ③ 연습이 완벽을 만든다 ④ 두 사람의 머리가 하나보다 낫다 ⑤ 필요는 발명의 어머니</div>
+<span class="reason-h">✦ 정답 도출 + 오답 함정 분석</span><div>정답 ②: 글의 풍자 핵심은 신문이 스도쿠에서 '수학'이라는 <b>이름을 지운 것</b>이고, 필자는 이름을 지워도(no maths involved) 그것이 수학임은 변하지 않는다고 말한다 — '다른 이름으로 불려도 같은 것'이라는 교훈과 정확히 대응. <b>최강 함정 ①</b>: '수학이라는 겉모습에 겁먹지 말라'로 읽으면 통하는 듯하지만, 이 속담은 '겉모습이 나빠도 속은 좋을 수 있다'는 <b>판단 유보</b>의 교훈인 반면 본문은 '이름을 바꿔 부르는 행위'에 대한 풍자이며 판단(스도쿠 = 수학)을 유보하지 않고 단언한다. ③~⑤는 논지 무관.</div>
+</div></div></details></article>
+<article class="q-card">
+<div class="q-head"><div class="q-num">36-3</div><div class="q-type choice">내용 일치 · 불일치 고르기</div><div class="q-pts">3점</div></div>
+<div class="q-prompt">다음 글의 내용과 일치하지 <b>않는</b> 것은?</div>
+<div class="q-passage">The central concerns of mathematics are not numbers, but patterns, structures, symmetries and connections. Take, for example, the Sudoku puzzles that appear daily in newspapers. The objective is to complete a 9 × 9 grid, starting from a few given numbers or clues, while ensuring that each row, each column and each 3 × 3 block contains all the digits from 1 to 9 once and only once. But the numerical values of the digits are irrelevant; what is important is that there are nine distinct symbols. They could be nine letters or nine shapes. It's the pattern that matters. One Irish daily paper publishes these puzzles with the statement 'There's no maths involved, simply use reasoning and logic!' It seems that even the idea that something might be spoiled by mathematics is enough to scare off potential solvers! Could you imagine the promotion of an exhibition in the National Gallery with the slogan 'No art involved, just painting and sculpture'? If you can do Sudoku, you can do maths!</div>
+<div class="q-choices"><span class="c"><span class="num">①</span>필자는 수학의 중심 관심사가 숫자가 아니라 패턴·구조·대칭·연결이라고 본다.</span><span class="c"><span class="num">②</span>스도쿠의 목표는 각 행·열·3×3 블록에 1~9가 한 번씩만 들어가도록 9×9 격자를 완성하는 것이다.</span><span class="c"><span class="num">③</span>스도쿠에서는 숫자의 수치가 핵심이므로 문자나 도형으로 대체할 수 없다.</span><span class="c"><span class="num">④</span>한 아일랜드 일간지는 '수학은 전혀 없고 추론과 논리만 쓰면 된다'는 문구와 함께 스도쿠를 싣는다.</span><span class="c"><span class="num">⑤</span>필자는 '미술 없음, 그림과 조각만'이라는 전시 홍보 문구를 상상해 보라고 반문한다.</span></div>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-label">ANSWER · 정답</span><div class="ans-main">③</div><div class="ans-detail">
+<span class="trans-h">📖 문제 해석</span><div class="trans-box">본문과 일치하지 않는 선지를 고르라.</div>
+<span class="trans-h">📖 본문 ↔ 선지 매핑</span><div class="trans-box">① ← "not numbers, but patterns, structures, symmetries and connections" ○<br>② ← "complete a 9 × 9 grid ... each row, each column and each 3 × 3 block contains all the digits from 1 to 9 once and only once" ○<br>③ ← "the numerical values of the digits are <b>irrelevant</b> ... They <b>could be</b> nine letters or nine shapes" → '핵심·대체 불가' ✗<br>④ ← "One Irish daily paper publishes these puzzles with the statement 'There's no maths involved, simply use reasoning and logic!'" ○<br>⑤ ← "Could you imagine ... with the slogan 'No art involved, just painting and sculpture'?" ○</div>
+<span class="reason-h">✦ 정답 도출 + 오답 함정 분석</span><div>정답 ③: 본문은 수치가 '무관(irrelevant)'하며 '문자나 도형이어도 된다(could be)'고 했는데, 선지는 두 지점을 모두 <b>정반대</b>로 뒤집었다. '스도쿠'·'숫자'·'문자나 도형'이라는 본문 요소가 모두 들어 있어 표면 일치도가 높다. ②는 규칙의 세 요소(행·열·블록, 1~9, 한 번씩)를 정확히 옮긴 정당 재진술.</div>
+</div></div></details></article>
+<article class="q-card">
+<div class="q-head"><div class="q-num">36-4</div><div class="q-type choice">어법 · 틀린 것</div><div class="q-pts">3점</div></div>
+<div class="q-prompt">다음 글의 밑줄 친 부분 중, 어법상 <b>틀린</b> 것은?</div>
+<div class="q-passage">The central concerns of mathematics are not numbers, ① <u>but</u> patterns, structures, symmetries and connections. Take, for example, the Sudoku puzzles ② <u>that appear</u> daily in newspapers. The objective is to complete a 9 × 9 grid, starting from a few given numbers or clues, while ensuring that each row, each column and each 3 × 3 block ③ <u>contain</u> all the digits from 1 to 9 once and only once. But the numerical values of the digits are irrelevant; what is important is that there are nine distinct symbols. ④ <u>They</u> could be nine letters or nine shapes. It's the pattern that matters. One Irish daily paper publishes these puzzles with the statement 'There's no maths involved, simply use reasoning and logic!' It seems that even the idea that something might be spoiled by mathematics ⑤ <u>is</u> enough to scare off potential solvers! Could you imagine the promotion of an exhibition in the National Gallery with the slogan 'No art involved, just painting and sculpture'? If you can do Sudoku, you can do maths!</div>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-label">ANSWER · 정답</span><div class="ans-main">③</div><div class="ans-detail">
+<span class="trans-h">📖 문제 해석</span><div class="trans-box">밑줄 ①~⑤ 중 어법상 틀린 하나를 고르라.</div>
+<span class="trans-h">📖 밑줄별 어법 포인트 매핑</span><div class="trans-box">① <b>but</b> ○ — not A but B<br>② <b>that appear</b> ○ — puzzles(복수) + 주격 관계대명사 + 복수 동사<br>③ <b>contain</b> ✗ — 주어 'each row, each column and each 3 × 3 block': 각 항목에 each가 붙은 주어는 <b>단수</b> → contains<br>④ <b>They</b> ○ — = nine distinct symbols(복수)<br>⑤ <b>is</b> ○ — 주어 the idea(단수); 'that something might be spoiled by mathematics'는 동격절</div>
+<span class="reason-h">✦ 정답 도출 + 오답 함정 분석</span><div>정답 ③: 'each A, each B and each C'는 세 항목이 and로 연결되어도 <b>each가 각각을 단수로 한정</b>하므로 단수 동사(contains). 'A, B and C'의 형태 때문에 복수로 보이는 것이 함정 — 서5ⓒ의 정상형과 교차 점검. 정상형 함정 ⑤: 주어와 동사 사이에 긴 동격절(that something might be spoiled by mathematics)이 끼어 'mathematics'나 'solvers'에 끌릴 수 있으나 주어는 the idea(단수).</div>
+</div></div></details></article>
+<article class="q-card">
+<div class="q-head"><div class="q-num">36-5</div><div class="q-type choice">어휘 · 문맥상 부적절</div><div class="q-pts">3점</div></div>
+<div class="q-prompt">다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 <b>않은</b> 것은?</div>
+<div class="q-passage">The ① <u>central</u> concerns of mathematics are not numbers, but patterns, structures, symmetries and connections. Take, for example, the Sudoku puzzles that appear ② <u>daily</u> in newspapers. The objective is to complete a 9 × 9 grid, starting from a few given numbers or clues, while ensuring that each row, each column and each 3 × 3 block contains all the digits from 1 to 9 once and only once. But the numerical values of the digits are irrelevant; what is important is that there are nine ③ <u>similar</u> symbols. They could be nine letters or nine shapes. It's the pattern that matters. One Irish daily paper publishes these puzzles with the statement 'There's no maths involved, simply use reasoning and logic!' It seems that even the idea that something might be ④ <u>spoiled</u> by mathematics is enough to scare off ⑤ <u>potential</u> solvers! Could you imagine the promotion of an exhibition in the National Gallery with the slogan 'No art involved, just painting and sculpture'? If you can do Sudoku, you can do maths!</div>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-label">ANSWER · 정답</span><div class="ans-main">③</div><div class="ans-detail">
+<span class="trans-h">📖 문제 해석</span><div class="trans-box">문맥에 맞지 않는 낱말을 고르라.</div>
+<span class="trans-h">📖 밑줄 어휘 의미·해당 문장 해석</span><div class="trans-box">① central(중심적인): 수학의 중심 관심사 ○<br>② daily(매일): 신문에 매일 실리는 ○<br>③ similar(비슷한) ✗ → <b>distinct</b>(서로 다른): "중요한 것은 아홉 개의 <b>서로 다른</b> 기호가 있다는 것"<br>④ spoiled(망쳐진): 수학에 의해 망쳐질지도 모른다는 생각 ○<br>⑤ potential(잠재적인): 잠재적 풀이자들을 겁주어 쫓다 ○</div>
+<span class="reason-h">✦ 정답 도출 + 오답 함정 분석</span><div>정답 ③: 스도쿠 규칙 'all the digits from 1 to 9 once and only once'(아홉 개가 각각 한 번씩)는 기호들이 <b>서로 구별</b>되어야 성립하며, 다음 문장 'nine letters or nine shapes'도 아홉 개의 <b>다른</b> 문자·도형을 뜻한다. similar(비슷한)는 그 구별 가능성을 무너뜨려 규칙 자체가 성립하지 않는다. 'nine similar symbols'는 어구 자체는 자연스러워 앞 문장의 규칙과 대조해야 판별되는 <b>인접 개념 치환</b>. ④ spoiled는 'scare off'와 정방향(수학이 재미를 망친다는 통념)으로 호응.</div>
+</div></div></details></article>
+<article class="q-card">
+<div class="q-head"><div class="q-num">36-6</div><div class="q-type choice">빈칸 추론</div><div class="q-pts">3점</div></div>
+<div class="q-prompt">다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+<div class="q-passage">The central concerns of mathematics are not numbers, but patterns, structures, symmetries and connections. Take, for example, the Sudoku puzzles that appear daily in newspapers. The objective is to complete a 9 × 9 grid, starting from a few given numbers or clues, while ensuring that each row, each column and each 3 × 3 block contains all the digits from 1 to 9 once and only once. But the numerical values of the digits are irrelevant; what is important is that <span class="blank" style="min-width:220px">&nbsp;</span>. They could be nine letters or nine shapes. It's the pattern that matters. One Irish daily paper publishes these puzzles with the statement 'There's no maths involved, simply use reasoning and logic!' It seems that even the idea that something might be spoiled by mathematics is enough to scare off potential solvers! Could you imagine the promotion of an exhibition in the National Gallery with the slogan 'No art involved, just painting and sculpture'? If you can do Sudoku, you can do maths!</div>
+<div class="q-choices"><span class="c"><span class="num">①</span>there are nine marks that can be told apart from one another</span><span class="c"><span class="num">②</span>the digits add up to the same total in every row</span><span class="c"><span class="num">③</span>each number keeps its usual arithmetic value</span><span class="c"><span class="num">④</span>the clues are always given in ascending order</span><span class="c"><span class="num">⑤</span>solvers manage to avoid using any mathematics</span></div>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-label">ANSWER · 정답</span><div class="ans-main">①</div><div class="ans-detail">
+<span class="trans-h">📖 문제 해석</span><div class="trans-box">'the numerical values are irrelevant; what is important is that ___'의 빈칸 — 수치와 <b>대조</b>되는 진짜 중요 요소.</div>
+<span class="trans-h">📖 빈칸 앞뒤 흐름</span><div class="trans-box">앞: 1~9가 각각 한 번씩 → 그러나 수치는 무관; 중요한 것은 (무엇) → 뒤: <b>They</b>(=빈칸의 것)는 아홉 개의 문자나 도형일 수도 있다 → 패턴이 중요.</div>
+<span class="trans-h">📖 선택지 해석</span><div class="trans-box">① 서로 구별할 수 있는 아홉 개의 표시가 있다는 것 ② 숫자들이 모든 행에서 같은 합이 된다는 것 ③ 각 숫자가 통상의 산술적 값을 유지한다는 것 ④ 단서가 항상 오름차순으로 주어진다는 것 ⑤ 풀이자들이 어떤 수학도 쓰지 않을 수 있다는 것</div>
+<span class="reason-h">✦ 정답 도출 + 오답 함정 분석</span><div>정답 ①: 원문 "there are nine distinct symbols"의 <b>2단계 패러프레이즈</b>(distinct → can be told apart, symbols → marks). 뒤 문장의 'They could be nine letters or nine shapes'에서 They가 받을 <b>복수 명사</b>가 빈칸에 있어야 하고, 문자·도형으로 바꿀 수 있다는 것은 '구별만 되면 무엇이든'의 논리. ②는 스도쿠 규칙 오해(합은 무관)이자 '수치 무관'과 충돌하는 <b>산술 함정</b>, ③은 'irrelevant'와 정면 반대, ④는 본문에 없는 규칙, ⑤는 신문 문구의 논리로 필자가 풍자하는 대상.</div>
+</div></div></details></article>
+<article class="q-card">
+<div class="q-head"><div class="q-num">36-7</div><div class="q-type choice">복수 정답 · 불일치 모두 고르기</div><div class="q-pts">3점</div></div>
+<div class="q-prompt">다음 글의 내용과 일치하지 <b>않는</b> 것을 있는 대로 고른 것은? (부분점수 없음)</div>
+<div class="q-passage">The central concerns of mathematics are not numbers, but patterns, structures, symmetries and connections. Take, for example, the Sudoku puzzles that appear daily in newspapers. The objective is to complete a 9 × 9 grid, starting from a few given numbers or clues, while ensuring that each row, each column and each 3 × 3 block contains all the digits from 1 to 9 once and only once. But the numerical values of the digits are irrelevant; what is important is that there are nine distinct symbols. They could be nine letters or nine shapes. It's the pattern that matters. One Irish daily paper publishes these puzzles with the statement 'There's no maths involved, simply use reasoning and logic!' It seems that even the idea that something might be spoiled by mathematics is enough to scare off potential solvers! Could you imagine the promotion of an exhibition in the National Gallery with the slogan 'No art involved, just painting and sculpture'? If you can do Sudoku, you can do maths!</div>
+<div class="q-passage" style="font-style:normal;font-size:14px">ⓐ For the writer, mathematics is concerned with structure more than with numbers.<br>ⓑ Solving a Sudoku requires adding up the digits in each row to check the answer.<br>ⓒ The digits in a Sudoku grid could be replaced by any nine different symbols.<br>ⓓ The Irish paper's slogan proves that Sudoku has nothing to do with mathematics.<br>ⓔ The writer believes people would welcome an art show advertised as involving no art.</div>
+<div class="q-choices"><span class="c"><span class="num">①</span>ⓐ, ⓒ</span><span class="c"><span class="num">②</span>ⓑ, ⓓ</span><span class="c"><span class="num">③</span>ⓑ, ⓓ, ⓔ</span><span class="c"><span class="num">④</span>ⓒ, ⓓ, ⓔ</span><span class="c"><span class="num">⑤</span>ⓐ, ⓒ, ⓔ</span></div>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-label">ANSWER · 정답</span><div class="ans-main">③</div><div class="ans-detail">
+<span class="trans-h">📖 문제 해석</span><div class="trans-box">본문과 일치하지 않는 진술을 <b>모두</b> 고른 조합을 선택하라.</div>
+<span class="trans-h">📖 진술 해석·판정</span><div class="trans-box">ⓐ 필자에게 수학은 숫자보다 구조에 관한 것이다 — 'not numbers, but patterns, structures' <b>일치</b><br>
+ⓑ 스도쿠를 풀려면 각 행의 숫자를 <b>더해</b> 답을 확인해야 한다 — 'numerical values ... are irrelevant' <b>불일치</b>(산술 날조)<br>
+ⓒ 스도쿠의 숫자는 어떤 아홉 개의 다른 기호로도 대체될 수 있다 — 'They could be nine letters or nine shapes' <b>일치</b><br>
+ⓓ 아일랜드 신문의 문구는 스도쿠가 수학과 무관함을 <b>증명한다</b> — 필자는 그 문구를 <b>풍자</b>하며 반대 결론 <b>불일치</b><br>
+ⓔ 필자는 사람들이 '미술 없음'이라 광고된 전시를 <b>환영할</b> 것이라 본다 — 반어적 반문(Could you imagine ...?)의 취지와 반대 <b>불일치</b></div>
+<span class="reason-h">✦ 정답 도출 + 오답 함정 분석</span><div>정답 ③ (ⓑ, ⓓ, ⓔ): ⓑ는 본문이 명시적으로 부정한 '수치'를 규칙으로 날조, ⓓ는 필자가 비판하는 문구를 '증명'으로 격상(방향 반전), ⓔ는 <b>수사의문문의 반어</b>(상상할 수 있겠는가 = 없다)를 문자 그대로 읽은 오독. ⓐ·ⓒ는 어휘를 바꾼 일치 진술. ②는 ⓔ의 반어를 놓친 부분 정답, ④는 ⓒ를 불일치로 오판(문자·도형 대체 가능성을 규칙 위반으로 착각).</div>
+</div></div></details></article>
+<article class="q-card">
+<div class="q-head"><div class="q-num">36-8</div><div class="q-type choice">보기 단어 배치</div><div class="q-pts">3점</div></div>
+<div class="q-prompt">다음 글의 빈칸 ⓐ~ⓒ에 들어갈 말을 [보기]에서 골라 바르게 짝지은 것은?</div>
+<div class="q-passage">But the numerical values of the digits are <span class="blank num">ⓐ</span>; what is important is that there are nine <span class="blank num">ⓑ</span> symbols. They could be nine letters or nine shapes. It's the pattern that matters. (...) It seems that even the idea that something might be spoiled by mathematics is enough to <span class="blank num">ⓒ</span> off potential solvers!</div>
+<div class="q-condition"><div class="boxlist">[보기] distinct &nbsp;/&nbsp; identical &nbsp;/&nbsp; irrelevant &nbsp;/&nbsp; scare</div></div>
+<div class="q-choices"><span class="c"><span class="num">①</span>ⓐ irrelevant – ⓑ identical – ⓒ scare</span><span class="c"><span class="num">②</span>ⓐ distinct – ⓑ irrelevant – ⓒ scare</span><span class="c"><span class="num">③</span>ⓐ irrelevant – ⓑ distinct – ⓒ identical</span><span class="c"><span class="num">④</span>ⓐ irrelevant – ⓑ distinct – ⓒ scare</span><span class="c"><span class="num">⑤</span>ⓐ identical – ⓑ distinct – ⓒ scare</span></div>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-label">ANSWER · 정답</span><div class="ans-main">④</div><div class="ans-detail">
+<span class="trans-h">📖 문제 해석</span><div class="trans-box">[보기] 네 단어 중 세 개를 배치하라 — 하나는 미끼.</div>
+<span class="trans-h">📖 [보기] 어휘 의미</span><div class="trans-box">distinct(서로 다른) · identical(똑같은 — <b>미끼</b>) · irrelevant(무관한) · scare(겁주다; scare off 겁주어 쫓다)</div>
+<span class="trans-h">📖 해당 문장 해석</span><div class="trans-box">ⓐ 숫자의 수치는 <b>무관하다</b> / ⓑ 아홉 개의 <b>서로 다른</b> 기호 / ⓒ 잠재적 풀이자들을 <b>겁주어</b> 쫓아 버리기에 충분하다</div>
+<span class="reason-h">✦ 정답 도출 + 오답 함정 분석</span><div>정답 ④: ⓐ는 'But ... values are ___; what is important is'의 대조 → irrelevant. ⓑ는 규칙(각 숫자가 한 번씩)이 요구하는 성질 → distinct. ⓒ는 'scare off'의 구동사. 미끼 identical은 ⓑ에서 형태상 완벽하지만 '아홉 개의 똑같은 기호'는 스도쿠 규칙 붕괴 — ①이 이 한 자리만 다른 최종 변별 선지. ②·⑤는 ⓐ에 distinct·identical을 넣어 '수치가 서로 다르다/똑같다'로 대조 논리 붕괴, ③은 ⓒ에 형용사를 넣은 비문.</div>
+</div></div></details></article>
+<article class="q-card">
+<div class="q-head"><div class="q-num">36-9</div><div class="q-type choice">요약문 일치 판별</div><div class="q-pts">3점</div></div>
+<div class="q-prompt">다음은 윗글을 요약한 것이다. 밑줄 친 ①~⑤ 중 윗글의 내용과 일치하지 <b>않는</b> 것은?</div>
+<div class="q-passage">The central concerns of mathematics are not numbers, but patterns, structures, symmetries and connections. Take, for example, the Sudoku puzzles that appear daily in newspapers. The objective is to complete a 9 × 9 grid, starting from a few given numbers or clues, while ensuring that each row, each column and each 3 × 3 block contains all the digits from 1 to 9 once and only once. But the numerical values of the digits are irrelevant; what is important is that there are nine distinct symbols. They could be nine letters or nine shapes. It's the pattern that matters. One Irish daily paper publishes these puzzles with the statement 'There's no maths involved, simply use reasoning and logic!' It seems that even the idea that something might be spoiled by mathematics is enough to scare off potential solvers! Could you imagine the promotion of an exhibition in the National Gallery with the slogan 'No art involved, just painting and sculpture'? If you can do Sudoku, you can do maths!</div>
+<div class="q-passage" style="background:var(--slate-50);border-left:3px solid var(--gold)">Maths, the writer argues, is ① <u>about pattern and structure rather than number</u>. Sudoku proves it: ② <u>the digits could be any nine different symbols</u>, because ③ <u>only their arrangement matters</u>. Yet ④ <u>the writer himself markets the puzzles as involving no maths</u>, and he mocks such fear ⑤ <u>by imagining an art show promoted as containing no art</u>.</div>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-label">ANSWER · 정답</span><div class="ans-main">④</div><div class="ans-detail">
+<span class="trans-h">📖 문제 해석</span><div class="trans-box">요약문 밑줄 중 본문과 어긋나는 곳을 찾으라.</div>
+<span class="trans-h">📖 요약문 해석</span><div class="trans-box">필자는 수학이 ① <b>숫자가 아니라 패턴과 구조에 관한 것</b>이라고 주장한다. 스도쿠가 이를 증명한다: ② <b>숫자는 어떤 아홉 개의 다른 기호여도 되는데</b>, ③ <b>오직 배열만이 중요하기</b> 때문이다. 그러나 ④ <b>필자 자신이 그 퍼즐을 수학이 없는 것으로 홍보하고</b>, 그는 그런 두려움을 ⑤ <b>미술이 없다고 홍보되는 전시를 상상하게 함으로써</b> 조롱한다.</div>
+<span class="trans-h">📖 본문 ↔ 밑줄 매핑표</span><div class="trans-box">① ← "not numbers, but patterns, structures" ○<br>② ← "They could be nine letters or nine shapes" ○<br>③ ← "It's the pattern that matters" ○<br>④ ← "<b>One Irish daily paper</b> publishes these puzzles with the statement 'There's no maths involved'" → 주체가 필자가 아니라 <b>신문</b> ✗ <b>주체 교체</b><br>⑤ ← "Could you imagine ... 'No art involved, just painting and sculpture'?" ○</div>
+<span class="reason-h">✦ 정답 도출 + 오답 함정 분석</span><div>정답 ④: '수학 없음' 문구를 내건 주체는 <b>한 아일랜드 일간지</b>이고 필자는 그것을 비판하는 쪽이다. 요약문은 이를 'the writer himself'로 <b>주체를 교체</b>해 필자를 자기모순에 빠뜨렸다 — 요약문 안에서도 ④와 ⑤('he mocks such fear')가 충돌해 검산 단서가 된다. 'markets ... as involving no maths'라는 내용 자체는 본문과 일치해 주체만 확인하면 잡히는 설계. ①~③·⑤는 정당 환언.</div>
+</div></div></details></article>
+<article class="q-card">
+<div class="q-head"><div class="q-num">36-10</div><div class="q-type choice">문장 삽입 · 양보형</div><div class="q-pts">3점</div></div>
+<div class="q-prompt">글의 흐름으로 보아, 주어진 문장이 들어가기에 가장 적절한 곳은?</div>
+<div class="q-condition"><div class="c-head">[주어진 문장]</div><div style="font-family:Georgia,serif;font-size:14.5px;color:var(--navy-950)">Even so, this claim can sound strange to anyone taught that maths means arithmetic.</div></div>
+<div class="q-passage">The central concerns of mathematics are not numbers, but patterns, structures, symmetries and connections. ( ① ) Take, for example, the Sudoku puzzles that appear daily in newspapers. ( ② ) The objective is to complete a 9 × 9 grid, starting from a few given numbers or clues, while ensuring that each row, each column and each 3 × 3 block contains all the digits from 1 to 9 once and only once. ( ③ ) But the numerical values of the digits are irrelevant; what is important is that there are nine distinct symbols. ( ④ ) They could be nine letters or nine shapes. ( ⑤ ) It's the pattern that matters.</div>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-label">ANSWER · 정답</span><div class="ans-main">①</div><div class="ans-detail">
+<span class="trans-h">📖 문제 해석</span><div class="trans-box">주어진 문장이 들어갈 위치를 고르라.</div>
+<span class="trans-h">📖 주어진 문장 해석</span><div class="trans-box">"<b>그렇다 해도</b>, <b>이 주장</b>은 수학이 곧 산수라고 배운 사람에게는 이상하게 들릴 수 있다." — Even so + this claim(직전에 '주장'이 있어야 함) + 뒤에는 그 주장을 납득시키는 <b>예시</b>가 필요.</div>
+<span class="trans-h">📖 본문 ①~⑤ 흐름 요약</span><div class="trans-box">① 앞: <b>주장</b>(수학의 중심은 숫자가 아니다) / ① 뒤: <b>Take, for example, Sudoku</b>(예시 도입) / ②·③: 규칙 설명 / ④·⑤: 수치 무관·패턴</div>
+<span class="reason-h">✦ 정답 도출 + 오답 함정 분석</span><div>정답 ①: 'this claim'은 첫 문장의 주장(수학 ≠ 숫자)을 받고, '이상하게 들릴 수 있다'는 양보 뒤에 그것을 납득시키기 위한 'Take, for example, the Sudoku puzzles'가 이어지는 것이 자연스러운 논증 순서(주장 → 낯섦 인정 → 예시). <b>함정 ③</b>: 규칙 설명 뒤 'But the numerical values are irrelevant'가 주장의 재진술이라 그 앞에 넣고 싶어지지만, 그 시점의 'this claim'은 스도쿠 규칙을 가리키게 되어 어색하고, 예시가 이미 시작된 뒤에 '이상하게 들린다'는 양보가 오면 흐름이 끊긴다.</div>
+</div></div></details></article>
+<article class="q-card">
+<div class="q-head"><div class="q-num">36-11</div><div class="q-type choice">문장 삽입 · 지시어형</div><div class="q-pts">3점</div></div>
+<div class="q-prompt">글의 흐름으로 보아, 주어진 문장이 들어가기에 가장 적절한 곳은?</div>
+<div class="q-condition"><div class="c-head">[주어진 문장]</div><div style="font-family:Georgia,serif;font-size:14.5px;color:var(--navy-950)">Such a warning would sound absurd in almost any other field.</div></div>
+<div class="q-passage">They could be nine letters or nine shapes. ( ① ) It's the pattern that matters. ( ② ) One Irish daily paper publishes these puzzles with the statement 'There's no maths involved, simply use reasoning and logic!' ( ③ ) It seems that even the idea that something might be spoiled by mathematics is enough to scare off potential solvers! ( ④ ) Could you imagine the promotion of an exhibition in the National Gallery with the slogan 'No art involved, just painting and sculpture'? ( ⑤ ) If you can do Sudoku, you can do maths!</div>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-label">ANSWER · 정답</span><div class="ans-main">④</div><div class="ans-detail">
+<span class="trans-h">📖 문제 해석</span><div class="trans-box">주어진 문장이 들어갈 위치를 고르라.</div>
+<span class="trans-h">📖 주어진 문장 해석</span><div class="trans-box">"<b>그러한 경고</b>는 거의 다른 어떤 분야에서도 <b>터무니없게</b> 들릴 것이다." — Such a warning(직전에 '수학 없음'이라는 경고성 문구와 그 해석이 나와야 함) + any other field(직후에 <b>다른 분야의 예</b> = 미술관 구호가 와야 함).</div>
+<span class="trans-h">📖 본문 ①~⑤ 흐름 요약</span><div class="trans-box">①·②: 패턴 논의 / ③ 앞: 신문 문구(경고) / ④ 앞: 그 문구가 겁주기 방지용임을 해석 / ④ 뒤: <b>National Gallery 'No art involved'</b>(다른 분야의 터무니없는 예) / ⑤: 결론</div>
+<span class="reason-h">✦ 정답 도출 + 오답 함정 분석</span><div>정답 ④: 'Such a warning'은 ③ 앞의 신문 문구와 ④ 앞의 해석(수학이 겁준다는 생각)을 함께 받고, 'absurd in any other field'는 직후 미술관 구호의 상상(Could you imagine ...?)으로 즉시 구체화된다. <b>함정 ③</b>: 문구 바로 뒤도 'Such a warning'을 받을 수 있지만, 그러면 다음 문장 'It seems that even the idea ... scare off'가 '터무니없다'는 평가 뒤에 다시 문구의 취지를 설명하는 셈이 되어 순서(문구 → 취지 → 평가 → 다른 분야 예)가 어긋난다. ⑤는 예시 뒤라 예고 기능 상실.</div>
+</div></div></details></article>
+<article class="q-card">
+<div class="q-head"><div class="q-num">36-12</div><div class="q-type choice">불규칙 복수 · 수일치 (신규 지문)</div><div class="q-pts">4점</div></div>
+<div class="q-prompt">다음 글의 밑줄 친 ⓐ~ⓓ 중 어법상 <b>틀린</b> 것을 있는 대로 고른 것은?</div>
+<div class="q-passage"><b style="font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:14px;color:var(--navy-900)">[Research Note: What Makes a Grid Valid]</b><br>
+A team of mathematicians studied 5,000 published Sudoku grids. The ⓐ <u>criteria for a valid grid is</u> simple: one solution only. Each ⓑ <u>matrix</u> was checked by computer, and the symbols were rotated along several ⓒ <u>axes</u> to test whether the pattern still held. The team reports that ⓓ <u>this hypotheses</u> — that letters work as well as digits — was confirmed in every case.</div>
+<div class="q-choices"><span class="c"><span class="num">①</span>ⓐ</span><span class="c"><span class="num">②</span>ⓐ, ⓓ</span><span class="c"><span class="num">③</span>ⓑ, ⓒ</span><span class="c"><span class="num">④</span>ⓒ, ⓓ</span><span class="c"><span class="num">⑤</span>ⓐ, ⓑ, ⓓ</span></div>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-label">ANSWER · 정답</span><div class="ans-main">②</div><div class="ans-detail">
+<span class="trans-h">📖 문제 해석</span><div class="trans-box">신규 연구 소개문의 밑줄 중 어법상 틀린 것을 모두 고르라.</div>
+<span class="trans-h">📖 신규 지문 해석</span><div class="trans-box">한 수학자 팀이 발표된 스도쿠 5,000판을 연구했다. 유효한 판의 <b>기준</b>은 단순하다: 유일한 해. 각 <b>행렬</b>이 컴퓨터로 검사되었고, 패턴이 유지되는지 시험하기 위해 기호들이 여러 <b>축</b>을 따라 회전되었다. 팀은 문자도 숫자만큼 잘 작동한다는 이 <b>가설</b>이 모든 경우에 확인되었다고 보고한다.</div>
+<span class="trans-h">📖 밑줄별 단·복수 판단 포인트</span><div class="trans-box">ⓐ <b>criteria ... is</b> ✗ — criterion의 복수 criteria → <b>are</b> (또는 The criterion ... is)<br>ⓑ <b>matrix</b> ○ — Each + 단수형(복수 matrices)<br>ⓒ <b>axes</b> ○ — several + axis의 복수<br>ⓓ <b>this hypotheses</b> ✗ — this(단수 지시) + <b>hypothesis</b>; hypotheses는 복수</div>
+<span class="reason-h">✦ 정답 도출 + 오답 함정 분석</span><div>정답 ② (ⓐ, ⓓ): ⓐ criteria는 -a로 끝나 단수처럼 보이지만 복수(criterion의 복수)이므로 is와 불일치. ⓓ는 지시형용사 this가 단수를 강제하는데 복수형 hypotheses가 왔다(뒤의 동사 was는 단수 — 즉 명사를 단수로 고치는 것이 정답). ⓑ Each + matrix, ⓒ several + axes(-is→-es)는 정상형. ⑤는 ⓑ를 잘못 고른 오답, ①은 ⓓ를 놓친 부분 정답.</div>
+</div></div></details></article>
+<article class="q-card">
+<div class="q-head"><div class="q-num">36-13</div><div class="q-type choice">형태 유사 어휘 · 3페어</div><div class="q-pts">3점</div></div>
+<div class="q-prompt">다음 글의 (A), (B), (C)의 각 네모 안에서 문맥에 맞는 낱말로 가장 적절한 것은?</div>
+<div class="q-passage"><b style="font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:14px;color:var(--navy-900)">[Commentary]</b><br>
+The writer's trick is to strip Sudoku of its (A) [<b>numerical</b> / <b>numerous</b>] disguise: swap the digits for shapes and the puzzle is unchanged, because what the solver actually exercises is (B) [<b>logical</b> / <b>logistic</b>] reasoning about position. The nine symbols need only be (C) [<b>distinct</b> / <b>distinctive</b>] from one another — nothing about them needs to be memorable or special.</div>
+<div class="q-choices"><span class="c"><span class="num">①</span>(A) numerical – (B) logical – (C) distinct</span><span class="c"><span class="num">②</span>(A) numerous – (B) logical – (C) distinct</span><span class="c"><span class="num">③</span>(A) numerical – (B) logistic – (C) distinctive</span><span class="c"><span class="num">④</span>(A) numerical – (B) logical – (C) distinctive</span><span class="c"><span class="num">⑤</span>(A) numerous – (B) logistic – (C) distinct</span></div>
+<details class="ans"><summary>정답 &amp; 해설 펼치기</summary><div class="ans-body">
+<span class="ans-label">ANSWER · 정답</span><div class="ans-main">①</div><div class="ans-detail">
+<span class="trans-h">📖 문제 해석</span><div class="trans-box">형태 유사 두 낱말 중 문맥에 맞는 것을 세 곳에서 골라 조합하라.</div>
+<span class="trans-h">📖 신규 지문 해석</span><div class="trans-box">필자의 비결은 스도쿠에서 <b>(A) 숫자의(numerical)</b> 가면을 벗기는 것이다: 숫자를 도형으로 바꿔도 퍼즐은 그대로인데, 풀이자가 실제로 훈련하는 것은 위치에 대한 <b>(B) 논리적(logical)</b> 추론이기 때문이다. 아홉 기호는 서로 <b>(C) 구별되기만(distinct)</b> 하면 된다 — 그것들에 관해 기억할 만하거나 특별할 것은 아무것도 없다.</div>
+<span class="trans-h">📖 3페어 의미 변별표</span><div class="trans-box">(A) <b>numerical</b>(숫자의·수치의 — 본문 'numerical values') vs numerous(수많은) / (B) <b>logical</b>(논리적인 — 본문 'reasoning and logic') vs logistic(물류의) / (C) <b>distinct</b>(서로 다른·구별되는 — 본문 'nine distinct symbols') vs distinctive(독특한·특징적인)</div>
+<span class="reason-h">✦ 정답 도출 + 오답 함정 분석</span><div>정답 ①: (A) 'disguise'(가면)를 수식하는 것은 '숫자라는' 성질 → numerical; numerous(수많은 가면)는 의미 이탈. (B) 'reasoning about position' → logical; logistic은 물류·병참으로 어근 착시. (C) 뒤 문장 'nothing about them needs to be memorable or special'이 결정적 단서 — <b>distinctive</b>(독특한·눈에 띄는)는 부정되고, '서로 구별된다'는 <b>distinct</b>만 필요. ④는 (C) 한 곳만 다른 최종 변별 선지(본문 단어 distinct를 distinctive로 착각), ②는 (A)만 다른 선지.</div>
+</div></div></details></article>
+
+</div></main>
+<footer><div class="container"><div class="foot-grid">
+  <div class="foot-brand">Mokdong Seoro <b>English Academy</b><span class="kor">목동서로영어학원 · 학원 내부 교육용</span></div>
+  <div class="foot-meta"><b>H1MOGO 26-09-36</b> · 2026 고1 9월 전국연합 36번 변형<br>서답형 7 (28점) · 선택형 13 (40점) · 4단 해설 수록<br>원문 변형·재구성 · 무단 전재·배포 금지 · 0505.co.kr</div>
+</div></div></footer>
+
+<!-- ===== Pen annotation widget ===== -->
+<div id="penbar">
+  <button id="pen-toggle">✎ 필기</button>
+  <span class="sw" data-c="#DC2626" style="background:#DC2626"></span>
+  <span class="sw" data-c="#112546" style="background:#112546"></span>
+  <span class="sw" data-c="#047857" style="background:#047857"></span>
+  <button id="pen-eraser">지우개</button>
+  <button id="pen-undo">되돌리기</button>
+  <button id="pen-clear">전체 지움</button>
+</div>
+<canvas id="pencanvas"></canvas>
+<script>
+(function(){
+  const cv=document.getElementById('pencanvas'),ctx=cv.getContext('2d');
+  let on=false,drawing=false,color='#DC2626',eraser=false,strokes=[],cur=null;
+  function size(){const w=document.documentElement.scrollWidth,h=document.documentElement.scrollHeight;
+    if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h;redraw();}}
+  function redraw(){ctx.clearRect(0,0,cv.width,cv.height);for(const s of strokes)draw(s);}
+  function draw(s){ctx.save();ctx.lineCap='round';ctx.lineJoin='round';ctx.lineWidth=s.eraser?22:2.4;
+    ctx.globalCompositeOperation=s.eraser?'destination-out':'source-over';ctx.strokeStyle=s.color;ctx.beginPath();
+    s.pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke();ctx.restore();}
+  function pos(e){return{x:e.pageX,y:e.pageY};}
+  cv.addEventListener('pointerdown',e=>{if(!on)return;drawing=true;cur={color,eraser,pts:[pos(e)]};strokes.push(cur);cv.setPointerCapture(e.pointerId);e.preventDefault();});
+  cv.addEventListener('pointermove',e=>{if(!drawing)return;cur.pts.push(pos(e));draw(cur);e.preventDefault();});
+  ['pointerup','pointercancel'].forEach(t=>cv.addEventListener(t,()=>{drawing=false;cur=null;}));
+  document.getElementById('pen-toggle').onclick=function(){on=!on;cv.classList.toggle('active',on);this.classList.toggle('on',on);};
+  document.querySelectorAll('#penbar .sw').forEach(s=>s.onclick=()=>{color=s.dataset.c;eraser=false;document.getElementById('pen-eraser').classList.remove('on');});
+  document.getElementById('pen-eraser').onclick=function(){eraser=!eraser;this.classList.toggle('on',eraser);};
+  document.getElementById('pen-undo').onclick=()=>{strokes.pop();redraw();};
+  document.getElementById('pen-clear').onclick=()=>{strokes=[];redraw();};
+  new ResizeObserver(size).observe(document.body);window.addEventListener('load',size);size();
+})();
+</script>
+</body>
+</html>
