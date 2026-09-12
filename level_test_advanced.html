@@ -391,10 +391,11 @@ function rLQ(){const w=document.getElementById('lQ');w.innerHTML='';LD.forEach((
 
 function sA(sec,qi,oi,el){ans[sec][qi]=oi;const c=document.getElementById(sec+'_q'+qi);c.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');c.classList.add('answered');
   // ★ 듣기 답 선택 시 TTS 즉시 중단
-  if(sec==='l'&&'speechSynthesis' in window)window.speechSynthesis.cancel();}
+  if(sec==='l'&&curAu){try{curAu.pause();}catch(e){}curAu=null;}}
 
-function pA(i){if(pc[i]>=1)return;pc[i]++;document.getElementById('pc'+i).textContent=`재생: ${pc[i]}/1`;const b=document.getElementById('pb'+i);if(pc[i]>=1){b.disabled=true;b.innerHTML='⏹ 재생 완료';}b.disabled=true;if('speechSynthesis' in window){window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(LD[i].au);u.lang='en-US';u.rate=1.0;const vs=window.speechSynthesis.getVoices(),ev=vs.find(v=>v.lang.startsWith('en-US'))||vs.find(v=>v.lang.startsWith('en'));if(ev)u.voice=ev;u.onstart=()=>{b.innerHTML='🔊 재생 중...';};u.onend=()=>{b.disabled=true;b.innerHTML='⏹ 재생 완료';};u.onerror=()=>{if(pc[i]>0)pc[i]--;document.getElementById('pc'+i).textContent=`재생: ${pc[i]}/1`;b.disabled=false;b.innerHTML='▶ 음성 재생';};window.speechSynthesis.speak(u);}}
-if('speechSynthesis' in window){window.speechSynthesis.onvoiceschanged=()=>{};window.speechSynthesis.getVoices();}
+const AUDIO_DIR='audio/';let curAu=null;
+function pA(i){if(pc[i]>=1)return;pc[i]++;document.getElementById('pc'+i).textContent=`재생: ${pc[i]}/1`;const b=document.getElementById('pb'+i);b.disabled=true;if(curAu){try{curAu.pause();}catch(e){}}const a=new Audio(AUDIO_DIR+'A'+(i+1)+'.mp3');curAu=a;a.onplay=()=>{b.innerHTML='🔊 재생 중...';};a.onended=()=>{b.disabled=true;b.innerHTML='⏹ 재생 완료';curAu=null;};a.onerror=()=>{pc[i]--;document.getElementById('pc'+i).textContent=`재생: ${pc[i]}/1`;b.disabled=false;b.innerHTML='▶ 음성 재생';alert('음성 파일을 불러올 수 없습니다. audio 폴더가 같은 위치에 있는지 확인하세요.');curAu=null;};a.play().catch(()=>{a.onerror();});}
+
 
 function cS(data,sec){let c=0,dt=[];data.forEach((it,i)=>{const ua=ans[sec][i],ok=ua===it.a;if(ok)c++;dt.push({i,q:it.q,ua,ca:it.a,ok,d:it.d,e:it.e,o:it.o,t:it.t});});return{c,tt:data.length,p:Math.round(c/data.length*100),dt};}
 function gL(p){if(p>=90)return{n:'Advanced',k:'고급(상위권)',cl:'#6a0dad',ds:'영어 전 영역에서 높은 수준입니다. 수능 1등급 도달이 가능합니다.'};if(p>=75)return{n:'Upper-Intermediate',k:'중상급',cl:'#1a7a4a',ds:'대부분의 상황에서 자신감 있게 소통 가능하며, 상위권 진입이 가능합니다.'};if(p>=55)return{n:'Intermediate',k:'중급',cl:'#1f4e79',ds:'기본 의사소통은 가능하나, 복잡한 표현과 고급 어휘 학습이 필요합니다.'};if(p>=35)return{n:'Elementary',k:'초중급',cl:'#b88a20',ds:'체계적 학습을 시작할 단계입니다. 꾸준한 학습으로 빠른 성장이 가능합니다.'};return{n:'Beginner',k:'초급(기초)',cl:'#c0392b',ds:'기초부터 탄탄하게 쌓으면 빠르게 성장할 수 있습니다.'};}
@@ -519,7 +520,7 @@ function scoreWrit(){
 
 function showResults(){
   // ★ TTS 즉시 중단
-  if('speechSynthesis' in window)window.speechSynthesis.cancel();
+  if(curAu){try{curAu.pause();}catch(e){}curAu=null;}
   Object.keys(ti).forEach(k=>clearInterval(ti[k]));
 
   const vr=cS(VD,'v'),gr=cS(GD,'g'),rr=cS(RD,'r'),lr=cS(LD,'l'),wr=scoreWrit();
