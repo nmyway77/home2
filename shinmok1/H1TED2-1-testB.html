@@ -424,7 +424,7 @@ ol.choices li:nth-child(4)::before{content:"④"}ol.choices li:nth-child(5)::bef
 
 </style>
 
-<body>
+<body style="position:relative">
 
 <header class="top">
   <div class="container">
@@ -748,4 +748,140 @@ ol.choices li:nth-child(4)::before{content:"④"}ol.choices li:nth-child(5)::bef
   <div class="foot-brand">Mokdong Seoro English Academy<span class="kor">목동서로영어학원 · 0505.co.kr</span></div>
   <div class="foot-meta">신목고·목운중·목동중 전문 영어학원<br><b>TED2-1 How Blood Pressure Works · {TITLE2}</b><br>Issued 2026.09.04 · 학원 내부 배포용</div>
 </div></div></footer>
+<!-- ===== PEN LAYER · 펜쓰기 기능 (목동서로영어학원 공통 모듈) ===== -->
+<style>
+#penLayer{position:absolute;left:0;top:0;width:100%;pointer-events:none;z-index:9000;touch-action:none}
+body.pen-on #penLayer{pointer-events:auto;cursor:crosshair}
+body.pen-on.pen-eraser #penLayer{cursor:cell}
+#pbToggle{position:fixed;right:26px;bottom:26px;z-index:9200;width:64px;height:64px;border-radius:50%;border:none;cursor:pointer;background:#fff;box-shadow:0 8px 24px rgba(10,30,58,.28);display:flex;align-items:center;justify-content:center;padding:0;transition:transform .15s}
+#pbToggle::before{content:'';width:44px;height:44px;border-radius:50%;background:#0A1E3A;position:absolute}
+#pbToggle span{position:relative;font-size:22px;line-height:1;transform:rotate(-8deg)}
+#pbToggle:hover{transform:scale(1.06)}
+#pbToggle.active::before{background:#C99B4E}
+#penBar{position:fixed;right:26px;bottom:100px;z-index:9100;display:flex;flex-direction:column;gap:6px;background:#0A1E3A;border:1px solid #C99B4E;border-radius:14px;padding:10px 8px;box-shadow:0 10px 30px rgba(10,30,58,.35);font-family:'Pretendard Variable',-apple-system,sans-serif;user-select:none;-webkit-user-select:none;transform-origin:bottom center;transition:opacity .18s,transform .18s}
+#penBar.collapsed{opacity:0;transform:translateY(12px) scale(.96);pointer-events:none}
+#penBar button{width:40px;height:40px;border:none;border-radius:10px;background:rgba(255,255,255,.08);color:#E4C589;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
+#penBar button:hover{background:rgba(201,155,78,.25)}
+#penBar button.active{background:#C99B4E;color:#0A1E3A}
+#penBar .pb-sep{height:1px;background:rgba(228,197,137,.25);margin:2px 2px}
+#penBar .pb-color{width:40px;height:26px;border-radius:8px;border:2px solid transparent;cursor:pointer}
+#penBar .pb-color.active{border-color:#fff;box-shadow:0 0 0 2px #C99B4E}
+#penBar .pb-size{display:flex;flex-direction:column;gap:4px;align-items:center}
+#penBar input[type=range]{width:40px;height:70px;-webkit-appearance:slider-vertical;writing-mode:vertical-lr;direction:rtl;accent-color:#C99B4E}
+#penBar .pb-lbl{font-size:9px;color:#9BA39B;letter-spacing:.06em;text-align:center}
+#penHint{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9100;background:#0A1E3A;color:#E4C589;font-size:12px;padding:7px 14px;border-radius:999px;border:1px solid #C99B4E;opacity:0;transition:opacity .25s;pointer-events:none;font-family:'Pretendard Variable',sans-serif}
+#penHint.show{opacity:1}
+@media print{#penBar,#penHint,#pbToggle{display:none!important}}
+@media (max-width:720px){#pbToggle{right:16px;bottom:16px;width:56px;height:56px}#pbToggle::before{width:38px;height:38px}#penBar{right:16px;bottom:82px;padding:8px 6px;max-height:calc(100vh - 100px);overflow-y:auto}#penBar button{width:36px;height:36px;font-size:15px}#penBar .pb-color{width:36px}}
+</style>
+<canvas id="penLayer"></canvas>
+<button id="pbToggle" title="펜쓰기 켜기/끄기 (P)"><span>✏️</span></button>
+<div id="penBar">
+  <button id="pbPen" class="active" title="펜">🖊️</button>
+  <button id="pbHl" title="형광펜">🖍️</button>
+  <button id="pbEraser" title="지우개 (E)">🧽</button>
+  <div class="pb-sep"></div>
+  <div class="pb-color active" data-c="#DC2626" style="background:#DC2626" title="빨강"></div>
+  <div class="pb-color" data-c="#1D4ED8" style="background:#1D4ED8" title="파랑"></div>
+  <div class="pb-color" data-c="#0A1E3A" style="background:#0A1E3A;border-color:#334155" title="남색"></div>
+  <div class="pb-color" data-c="#047857" style="background:#047857" title="초록"></div>
+  <div class="pb-color" data-c="#F59E0B" style="background:#F59E0B" title="주황"></div>
+  <div class="pb-sep"></div>
+  <div class="pb-size"><input type="range" id="pbSize" min="1" max="24" value="3" title="굵기"><span class="pb-lbl" id="pbSizeLbl">3px</span></div>
+  <div class="pb-sep"></div>
+  <button id="pbUndo" title="실행취소 (Ctrl+Z)">↶</button>
+  <button id="pbRedo" title="다시실행 (Ctrl+Y)">↷</button>
+  <button id="pbClear" title="전체 지우기">🗑️</button>
+  <button id="pbHide" title="필기 숨기기/보이기">👁️</button>
+  <button id="pbSave" title="필기 포함 이미지 저장">💾</button>
+</div>
+<div id="penHint"></div>
+<script>
+(function(){
+  const cv=document.getElementById('penLayer'),ctx=cv.getContext('2d');
+  const bar=document.getElementById('penBar'),hint=document.getElementById('penHint');
+  const KEY='pen:'+location.pathname.split('/').pop();
+  let strokes=[],redoStack=[],cur=null,tool='pen',color='#DC2626',size=3,penOn=false,hidden=false,dpr=1;
+  try{strokes=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){strokes=[]}
+
+  function showHint(t){hint.textContent=t;hint.classList.add('show');clearTimeout(hint._t);hint._t=setTimeout(()=>hint.classList.remove('show'),1600)}
+  function docH(){return Math.max(document.documentElement.scrollHeight,document.body.scrollHeight)}
+  function resize(){
+    dpr=window.devicePixelRatio||1;
+    const w=document.documentElement.clientWidth,h=docH();
+    if(cv.width===Math.round(w*dpr)&&cv.height===Math.round(h*dpr))return;
+    cv.style.width=w+'px';cv.style.height=h+'px';cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);
+    redraw();
+  }
+  function drawStroke(s){
+    if(s.pts.length<1)return;
+    ctx.save();ctx.scale(dpr,dpr);
+    ctx.lineCap='round';ctx.lineJoin='round';
+    if(s.tool==='eraser'){ctx.globalCompositeOperation='destination-out';ctx.strokeStyle='#000';ctx.lineWidth=s.size*3}
+    else if(s.tool==='hl'){ctx.globalCompositeOperation='multiply';ctx.strokeStyle=s.color;ctx.globalAlpha=.35;ctx.lineWidth=s.size*4;ctx.lineCap='butt'}
+    else{ctx.globalCompositeOperation='source-over';ctx.strokeStyle=s.color;ctx.lineWidth=s.size}
+    ctx.beginPath();const p=s.pts;ctx.moveTo(p[0][0],p[0][1]);
+    if(p.length===1)ctx.lineTo(p[0][0]+.1,p[0][1]+.1);
+    for(let i=1;i<p.length-1;i++){const mx=(p[i][0]+p[i+1][0])/2,my=(p[i][1]+p[i+1][1])/2;ctx.quadraticCurveTo(p[i][0],p[i][1],mx,my)}
+    if(p.length>1){const l=p[p.length-1];ctx.lineTo(l[0],l[1])}
+    ctx.stroke();ctx.restore();
+  }
+  function redraw(){ctx.clearRect(0,0,cv.width,cv.height);if(hidden)return;strokes.forEach(drawStroke)}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(strokes))}catch(e){}}
+  function pos(e){return [e.clientX+window.scrollX,e.clientY+window.scrollY]}
+
+  cv.addEventListener('pointerdown',e=>{
+    if(!penOn)return; if(e.pointerType==='touch'&&e.isPrimary===false)return;
+    e.preventDefault();cv.setPointerCapture(e.pointerId);
+    cur={tool,color,size,pts:[pos(e)]};strokes.push(cur);redoStack=[];drawStroke(cur);
+  });
+  cv.addEventListener('pointermove',e=>{
+    if(!cur)return;e.preventDefault();
+    const evs=e.getCoalescedEvents?e.getCoalescedEvents():[e];
+    evs.forEach(ev=>cur.pts.push(pos(ev)));
+    // 증분 그리기: 마지막 구간만
+    const n=cur.pts.length;if(n<2)return;
+    ctx.save();ctx.scale(dpr,dpr);ctx.lineCap=cur.tool==='hl'?'butt':'round';ctx.lineJoin='round';
+    if(cur.tool==='eraser'){ctx.globalCompositeOperation='destination-out';ctx.strokeStyle='#000';ctx.lineWidth=cur.size*3}
+    else if(cur.tool==='hl'){ctx.globalCompositeOperation='multiply';ctx.strokeStyle=cur.color;ctx.globalAlpha=.35;ctx.lineWidth=cur.size*4}
+    else{ctx.strokeStyle=cur.color;ctx.lineWidth=cur.size}
+    ctx.beginPath();ctx.moveTo(cur.pts[n-2][0],cur.pts[n-2][1]);ctx.lineTo(cur.pts[n-1][0],cur.pts[n-1][1]);ctx.stroke();ctx.restore();
+  });
+  const end=e=>{if(!cur)return;cur=null;redraw();save()};
+  cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);cv.addEventListener('pointerleave',end);
+
+  // 도구 모음
+  const $=id=>document.getElementById(id);
+  function setTool(t){tool=t;document.body.classList.toggle('pen-eraser',t==='eraser');['pbPen','pbHl','pbEraser'].forEach(i=>$(i).classList.remove('active'));$({pen:'pbPen',hl:'pbHl',eraser:'pbEraser'}[t]).classList.add('active');if(!penOn)togglePen(true)}
+  function togglePen(force){penOn=force===undefined?!penOn:force;document.body.classList.toggle('pen-on',penOn);$('pbToggle').classList.toggle('active',penOn);bar.classList.toggle('collapsed',!penOn);showHint(penOn?'펜쓰기 ON — 화면을 드래그해 필기하세요 (다시 누르면 스크롤 모드)':'스크롤 모드 — 필기는 유지됩니다')}
+  $('pbToggle').onclick=()=>togglePen();
+  $('pbPen').onclick=()=>setTool('pen');$('pbHl').onclick=()=>setTool('hl');$('pbEraser').onclick=()=>setTool('eraser');
+  bar.querySelectorAll('.pb-color').forEach(el=>el.onclick=()=>{color=el.dataset.c;bar.querySelectorAll('.pb-color').forEach(x=>x.classList.remove('active'));el.classList.add('active');if(tool==='eraser')setTool('pen')});
+  $('pbSize').oninput=e=>{size=+e.target.value;$('pbSizeLbl').textContent=size+'px'};
+  $('pbUndo').onclick=()=>{if(strokes.length){redoStack.push(strokes.pop());redraw();save()}};
+  $('pbRedo').onclick=()=>{if(redoStack.length){strokes.push(redoStack.pop());redraw();save()}};
+  $('pbClear').onclick=()=>{if(!strokes.length)return;if(confirm('필기를 전부 지울까요?')){strokes=[];redoStack=[];redraw();save()}};
+  $('pbHide').onclick=()=>{hidden=!hidden;$('pbHide').classList.toggle('active',hidden);redraw();showHint(hidden?'필기 숨김':'필기 표시')};
+  $('pbSave').onclick=()=>{
+    // 화면(뷰포트) 영역 스냅샷: 배경+필기 합성은 브라우저 보안상 불가 → 필기 레이어만 PNG 저장 + 안내
+    const a=document.createElement('a');a.download=(document.title||'pen')+'_필기.png';a.href=cv.toDataURL('image/png');a.click();showHint('필기 레이어를 PNG로 저장했습니다 (인쇄는 Ctrl+P: 필기 포함)')
+  };
+  document.addEventListener('keydown',e=>{
+    if(e.target.matches('input,textarea'))return;
+    if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();$('pbUndo').click()}
+    else if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='y'){e.preventDefault();$('pbRedo').click()}
+    else if(e.key.toLowerCase()==='p'&&!e.ctrlKey&&!e.metaKey){togglePen()}
+    else if(e.key.toLowerCase()==='e'&&!e.ctrlKey&&!e.metaKey){setTool(tool==='eraser'?'pen':'eraser')}
+  });
+
+  // 문서 높이 변화(정답 펼치기 등) 추적 → 캔버스 재조정
+  window.addEventListener('resize',resize);
+  if(window.ResizeObserver){new ResizeObserver(()=>resize()).observe(document.body)}
+  document.querySelectorAll('details').forEach(d=>d.addEventListener('toggle',()=>setTimeout(resize,50)));
+  window.addEventListener('load',()=>{resize();setTimeout(resize,600)});
+  bar.classList.add('collapsed');resize();
+})();
+</script>
+<!-- ===== /PEN LAYER ===== -->
+
 </body></html>
