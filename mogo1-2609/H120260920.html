@@ -2408,5 +2408,174 @@ document.addEventListener("DOMContentLoaded",function(){
   hideSummary();
 })();
 </script>
+<!-- KO_TTS:BEGIN v1.0 · 구조도 구간 더빙 · 본문 데이터 무변경 -->
+<style id="kd-style">
+.kd-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:6px 0 2px;}
+.kd-btn{font:600 12px/1 'Noto Sans KR',sans-serif;padding:6px 10px;border-radius:14px;border:1px solid #c9c4f0;background:#f4f3ff;color:#3d359c;cursor:pointer;}
+.kd-btn:hover{background:#e9e7ff;}
+.kd-btn.on{background:#534AB7;color:#fff;border-color:#534AB7;}
+.kd-sel{font-size:12px;padding:4px 6px;border-radius:8px;border:1px solid #d5d5d5;background:#fff;color:#444;}
+.kd-now{font-size:12px;color:#534AB7;min-height:16px;flex-basis:100%;}
+.kd-all{margin:0 0 10px 8px;}
+svg .kd-hot{stroke:#E8590C!important;stroke-width:3!important;}
+svg text.kd-hot-t{fill:#C2410C!important;font-weight:700!important;stroke:none!important;}
+@media print{.kd-bar,.kd-all{display:none!important;}}
+body.psd .kd-bar,body.psd .kd-all{display:none!important;}
+</style>
+<script id="kd-script">
+(function(){
+  if(!('speechSynthesis' in window)||window.__KO_TTS)return;
+  window.__KO_TTS='1.0';
+  var SS=window.speechSynthesis, session=0, activeBtn=null, hot=[], chain=false, cur=null;
+  var MODE='chunk', RATE=0.9;
+  try{MODE=localStorage.getItem('kd_mode')||MODE;RATE=+(localStorage.getItem('kd_rate')||RATE);}catch(e){}
+
+  function voice(prefix){
+    var v=SS.getVoices();
+    return v.find(function(x){return x.lang.replace('_','-').indexOf(prefix)===0&&/Google/.test(x.name);})
+        || v.find(function(x){return x.lang.replace('_','-').indexOf(prefix)===0;})||null;
+  }
+  /* 읽기용 정리: (S)(V)(what절 보어)·[문법 태그]·~·따옴표 제거 — 화면 표시는 그대로 */
+  function cleanKo(t){
+    return t.replace(/\[[^\]]*\]/g,' ').replace(/\([^)]*\)/g,' ').replace(/[~∼→]/g,' ')
+            .replace(/[‘’'“”"]/g,'').replace(/\s+/g,' ').trim();
+  }
+  function cleanEn(t){return t.replace(/[‘’]/g,"'").replace(/[“”]/g,'"').replace(/\s+/g,' ').trim();}
+  /* 긴 전체 해석은 쉼표·마침표 단위로 나눠 읽는다(크롬 장문 끊김 예방) */
+  function pieces(t){
+    if(t.length<=70)return [t];
+    var m=t.match(/[^,.;?!]+[,.;?!]*\s*/g)||[t], out=[], buf='';
+    m.forEach(function(p){if((buf+p).length>70&&buf){out.push(buf.trim());buf=p;}else buf+=p;});
+    if(buf.trim())out.push(buf.trim());
+    return out;
+  }
+
+  /* §2 짝 규칙 — retrofit_ko_tts.py 의 parse_svg() 와 동일해야 한다
+     영어 구간 = font-family 에 Georgia 가 든 <text>
+     한글 풀이 = 같은 x(±3), 영어보다 8~40 아래에 있는 Georgia 아닌 <text> 중 가장 가까운 것
+     전체 해석 = text-anchor="start" · fill="#333" 인 <text> (여러 줄이면 y 순으로 이어 붙임) */
+  function parse(svg){
+    var T=[].slice.call(svg.querySelectorAll('text')).map(function(t){
+      return {el:t,x:+t.getAttribute('x'),y:+t.getAttribute('y'),fam:t.getAttribute('font-family')||'',
+              fill:t.getAttribute('fill'),anc:t.getAttribute('text-anchor'),s:t.textContent};
+    });
+    var en=T.filter(function(t){return /Georgia/.test(t.fam);});
+    var rest=T.filter(function(t){return !/Georgia/.test(t.fam)&&t.anc!=='start';});
+    var rects=[].slice.call(svg.querySelectorAll('rect'));
+    en.sort(function(a,b){return a.y-b.y||a.x-b.x;});
+    var chunks=en.map(function(e){
+      var k=rest.filter(function(c){var d=c.y-e.y;return Math.abs(c.x-e.x)<3&&d>8&&d<40;})
+                .sort(function(a,b){return a.y-b.y;})[0];
+      var r=rects.filter(function(q){var x=+q.getAttribute('x'),y=+q.getAttribute('y'),w=+q.getAttribute('width'),h=+q.getAttribute('height');
+        return e.x>=x&&e.x<=x+w&&e.y>=y&&e.y<=y+h;})[0];
+      return {en:cleanEn(e.s),ko:k?cleanKo(k.s):'',rect:r||null,tEn:e.el,tKo:k?k.el:null};
+    });
+    var fe=T.filter(function(t){return t.anc==='start'&&t.fill==='#333';}).sort(function(a,b){return a.y-b.y;});
+    return {chunks:chunks,full:cleanKo(fe.map(function(t){return t.s;}).join(' ')),fullEls:fe.map(function(t){return t.el;})};
+  }
+  function unhot(){hot.forEach(function(el){el.classList.remove('kd-hot','kd-hot-t');});hot=[];}
+  function mark(els,cls){els.forEach(function(el){if(el){el.classList.add(cls);hot.push(el);}});}
+
+  function stop(){
+    session++;chain=false;SS.cancel();unhot();cur=null;
+    if(activeBtn){activeBtn.classList.remove('on');activeBtn.textContent=activeBtn.dataset.label;
+      var n=activeBtn.parentNode.querySelector('.kd-now');if(n)n.textContent='';activeBtn=null;}
+    var ab=document.getElementById('kdAll');if(ab){ab.classList.remove('on');ab.textContent=ab.dataset.label;}
+  }
+  function say(text,lang,my,before,done){
+    if(my!==session)return;
+    if(!text){done();return;}
+    var u=new SpeechSynthesisUtterance(text), fired=false;
+    u.lang=lang;u.rate=(lang==='ko-KR'?Math.min(RATE+0.1,1.15):RATE);
+    var v=voice(lang.slice(0,2));if(v)u.voice=v;
+    u.onstart=function(){if(my===session&&before)before();};
+    u.onend=u.onerror=function(){if(fired)return;fired=true;if(my===session)setTimeout(done,lang==='ko-KR'?350:150);};
+    cur=u;                       /* 참조 유지(크롬 GC로 onend 누락 방지) */
+    SS.speak(u);
+  }
+  function play(btn,onFinish){
+    var host=btn.closest('.s-structure,.sd-card'), svg=host&&host.querySelector('svg');
+    if(!svg)return;
+    if(typeof stopSpeech==='function')stopSpeech();
+    var keep=chain;stop();chain=keep;
+    var my=session, P=parse(svg), now=btn.parentNode.querySelector('.kd-now');
+    activeBtn=btn;btn.classList.add('on');btn.textContent='⏹ 정지';
+    var card=btn.closest('.s-card'), hdr=host.querySelector('.sd-hdr');
+    var fullEn=card?card.dataset.text:(hdr?hdr.textContent.replace(/^\s*\d+\s*·\s*/,''):'');
+    var steps=[];
+    if(MODE==='full')steps.push({t:cleanEn(fullEn||''),l:'en-US',b:function(){if(now)now.textContent='🔊 전체 영어';}});
+    P.chunks=P.chunks.filter(function(c){return /[A-Za-z0-9]/.test(c.en);});   /* 문장부호만 있는 박스는 읽지 않음 */
+    P.chunks.forEach(function(c,i){
+      var tag='('+(i+1)+'/'+P.chunks.length+') ';
+      if(MODE!=='ko')steps.push({t:c.en,l:'en-US',b:function(){unhot();mark([c.rect],'kd-hot');mark([c.tEn],'kd-hot-t');if(now)now.textContent=tag+c.en;}});
+      if(c.ko)steps.push({t:c.ko,l:'ko-KR',b:function(){unhot();mark([c.rect],'kd-hot');mark([c.tKo],'kd-hot-t');if(now)now.textContent=tag+c.en+' → '+c.ko;}});
+    });
+    pieces(P.full).forEach(function(p){
+      steps.push({t:p,l:'ko-KR',b:function(){unhot();mark(P.fullEls,'kd-hot-t');if(now)now.textContent='🇰🇷 전체 해석';}});
+    });
+    var i=0;
+    (function next(){
+      if(my!==session)return;
+      if(i>=steps.length){var k=chain;chain=false;stop();if(k&&onFinish){chain=true;onFinish();}return;}
+      var s=steps[i++];say(s.t,s.l,my,s.b,next);
+    })();
+    setTimeout(function(){
+      if(my===session&&SS.getVoices().length&&!voice('ko')&&now)now.textContent+='  ⚠ 이 기기에 한국어 음성이 없어 한글 부분이 재생되지 않을 수 있습니다.';
+    },800);
+  }
+
+  function bar(svg){
+    var d=document.createElement('div');d.className='kd-bar';
+    d.innerHTML='<button type="button" class="kd-btn kd-play" data-label="🎧 구간 더빙 (영→한)">🎧 구간 더빙 (영→한)</button><span class="kd-now"></span>';
+    svg.parentNode.insertBefore(d,svg.nextSibling);
+  }
+  function init(){
+    document.querySelectorAll('.s-structure svg, .sd-card svg').forEach(bar);
+    var panel=document.getElementById('panelSD');
+    if(panel){
+      var w=document.createElement('span');w.className='kd-all';
+      w.innerHTML='<button type="button" class="kd-btn" id="kdAll" data-label="🎧 전체 구조도 연속 더빙">🎧 전체 구조도 연속 더빙</button> '
+        +'<select class="kd-sel" id="kdMode"><option value="chunk">구간 영→한 + 전체 해석</option><option value="full">전체 영어 → 구간 영→한 → 전체 해석</option><option value="ko">한글만 (구간 + 전체)</option></select> '
+        +'<select class="kd-sel" id="kdRate"><option value="0.75">느리게</option><option value="0.9">보통</option><option value="1.05">빠르게</option></select>';
+      var pb=panel.querySelector('.sd-print-btn');
+      if(pb)pb.parentNode.insertBefore(w,pb.nextSibling);else panel.insertBefore(w,panel.firstChild);
+      var ms=document.getElementById('kdMode'),rs=document.getElementById('kdRate');
+      if(ms)ms.value=MODE;if(rs){rs.value=String(RATE);if(!rs.value){rs.value='0.9';RATE=0.9;}}
+    }
+  }
+  /* s-card 의 capture 리스너(stopImmediatePropagation)보다 먼저 받기 위해 document capture 사용 */
+  document.addEventListener('click',function(e){
+    var t=e.target.closest&&e.target.closest('.kd-bar,.kd-all');
+    if(!t)return;
+    e.stopPropagation();e.stopImmediatePropagation();
+    var b=e.target.closest('.kd-play');
+    if(b){if(activeBtn===b){stop();}else{chain=false;play(b);}return;}
+    if(e.target.id==='kdAll'){
+      var ab=e.target;
+      if(ab.classList.contains('on')){stop();return;}
+      var list=[].slice.call(document.querySelectorAll('#panelSD .sd-card .kd-play')),k=0;
+      stop();chain=true;
+      (function go(){
+        if(k>=list.length){stop();return;}
+        var btn=list[k++];btn.closest('.sd-card').scrollIntoView({behavior:'smooth',block:'center'});
+        play(btn,function(){ab.classList.add('on');ab.textContent='⏹ 연속 더빙 정지';setTimeout(go,500);});
+        ab.classList.add('on');ab.textContent='⏹ 연속 더빙 정지';
+      })();
+    }
+  },true);
+  document.addEventListener('dblclick',function(e){if(e.target.closest&&e.target.closest('.kd-bar,.kd-all')){e.stopPropagation();e.stopImmediatePropagation();}},true);
+  document.addEventListener('change',function(e){
+    if(e.target.id==='kdMode'){MODE=e.target.value;try{localStorage.setItem('kd_mode',MODE);}catch(x){}stop();}
+    if(e.target.id==='kdRate'){RATE=+e.target.value;try{localStorage.setItem('kd_rate',String(RATE));}catch(x){}stop();}
+  });
+  /* 기존 영어 읽기(🔊·전체 읽기)를 누르면 더빙 중단 */
+  document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.speak-icon,.wave,#btnAll'))stop();},true);
+  window.addEventListener('beforeunload',function(){SS.cancel();});
+  SS.getVoices();
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+  window.__kdParse=parse;
+})();
+</script>
+<!-- KO_TTS:END -->
 </body>
 </html>
