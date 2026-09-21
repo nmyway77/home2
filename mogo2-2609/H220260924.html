@@ -2024,5 +2024,304 @@ document.addEventListener("DOMContentLoaded",function(){
   hideSummary();
 })();
 </script>
+<!-- KO_TTS:BEGIN v1.0 · 구조도 구간 더빙 · 본문 데이터 무변경 -->
+<style id="kd-style">
+.kd-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:6px 0 2px;}
+.kd-btn{font:600 12px/1 'Noto Sans KR',sans-serif;padding:6px 10px;border-radius:14px;border:1px solid #c9c4f0;background:#f4f3ff;color:#3d359c;cursor:pointer;}
+.kd-btn:hover{background:#e9e7ff;}
+.kd-btn.on{background:#534AB7;color:#fff;border-color:#534AB7;}
+.kd-sel{font-size:12px;padding:4px 6px;border-radius:8px;border:1px solid #d5d5d5;background:#fff;color:#444;}
+.kd-now{font-size:12px;color:#534AB7;min-height:16px;flex-basis:100%;}
+.kd-all{margin:0 0 10px 8px;}
+svg .kd-hot{stroke:#E8590C!important;stroke-width:3!important;}
+svg text.kd-hot-t{fill:#C2410C!important;font-weight:700!important;stroke:none!important;}
+@media print{.kd-bar,.kd-all{display:none!important;}}
+body.psd .kd-bar,body.psd .kd-all{display:none!important;}
+</style>
+<script id="kd-script">
+(function(){
+  if(!('speechSynthesis' in window)||window.__KO_TTS)return;
+  window.__KO_TTS='1.0';
+  var SS=window.speechSynthesis, session=0, activeBtn=null, hot=[], chain=false, cur=null;
+  var MODE='chunk', RATE=0.9;
+  try{MODE=localStorage.getItem('kd_mode')||MODE;RATE=+(localStorage.getItem('kd_rate')||RATE);}catch(e){}
+
+  function voice(prefix){
+    var v=SS.getVoices();
+    return v.find(function(x){return x.lang.replace('_','-').indexOf(prefix)===0&&/Google/.test(x.name);})
+        || v.find(function(x){return x.lang.replace('_','-').indexOf(prefix)===0;})||null;
+  }
+  /* 읽기용 정리: (S)(V)(what절 보어)·[문법 태그]·~·따옴표 제거 — 화면 표시는 그대로 */
+  function cleanKo(t){
+    return t.replace(/\[[^\]]*\]/g,' ').replace(/\([^)]*\)/g,' ').replace(/[~∼→]/g,' ')
+            .replace(/[‘’'“”"]/g,'').replace(/\s+/g,' ').trim();
+  }
+  function cleanEn(t){return t.replace(/[‘’]/g,"'").replace(/[“”]/g,'"').replace(/\s+/g,' ').trim();}
+  /* 긴 전체 해석은 쉼표·마침표 단위로 나눠 읽는다(크롬 장문 끊김 예방) */
+  function pieces(t){
+    if(t.length<=70)return [t];
+    var m=t.match(/[^,.;?!]+[,.;?!]*\s*/g)||[t], out=[], buf='';
+    m.forEach(function(p){if((buf+p).length>70&&buf){out.push(buf.trim());buf=p;}else buf+=p;});
+    if(buf.trim())out.push(buf.trim());
+    return out;
+  }
+
+  /* §2 짝 규칙 — retrofit_ko_tts.py 의 parse_svg() 와 동일해야 한다
+     영어 구간 = font-family 에 Georgia 가 든 <text>
+     한글 풀이 = 같은 x(±3), 영어보다 8~40 아래에 있는 Georgia 아닌 <text> 중 가장 가까운 것
+     전체 해석 = text-anchor="start" · fill="#333" 인 <text> (여러 줄이면 y 순으로 이어 붙임) */
+  function parse(svg){
+    var T=[].slice.call(svg.querySelectorAll('text')).map(function(t){
+      return {el:t,x:+t.getAttribute('x'),y:+t.getAttribute('y'),fam:t.getAttribute('font-family')||'',
+              fill:t.getAttribute('fill'),anc:t.getAttribute('text-anchor'),s:t.textContent};
+    });
+    var en=T.filter(function(t){return /Georgia/.test(t.fam);});
+    var rest=T.filter(function(t){return !/Georgia/.test(t.fam)&&t.anc!=='start';});
+    var rects=[].slice.call(svg.querySelectorAll('rect'));
+    en.sort(function(a,b){return a.y-b.y||a.x-b.x;});
+    var chunks=en.map(function(e){
+      var k=rest.filter(function(c){var d=c.y-e.y;return Math.abs(c.x-e.x)<3&&d>8&&d<40;})
+                .sort(function(a,b){return a.y-b.y;})[0];
+      var r=rects.filter(function(q){var x=+q.getAttribute('x'),y=+q.getAttribute('y'),w=+q.getAttribute('width'),h=+q.getAttribute('height');
+        return e.x>=x&&e.x<=x+w&&e.y>=y&&e.y<=y+h;})[0];
+      return {en:cleanEn(e.s),ko:k?cleanKo(k.s):'',rect:r||null,tEn:e.el,tKo:k?k.el:null};
+    });
+    var fe=T.filter(function(t){return t.anc==='start'&&t.fill==='#333';}).sort(function(a,b){return a.y-b.y;});
+    return {chunks:chunks,full:cleanKo(fe.map(function(t){return t.s;}).join(' ')),fullEls:fe.map(function(t){return t.el;})};
+  }
+  function unhot(){hot.forEach(function(el){el.classList.remove('kd-hot','kd-hot-t');});hot=[];}
+  function mark(els,cls){els.forEach(function(el){if(el){el.classList.add(cls);hot.push(el);}});}
+
+  function stop(){
+    session++;chain=false;SS.cancel();unhot();cur=null;
+    if(activeBtn){activeBtn.classList.remove('on');activeBtn.textContent=activeBtn.dataset.label;
+      var n=activeBtn.parentNode.querySelector('.kd-now');if(n)n.textContent='';activeBtn=null;}
+    var ab=document.getElementById('kdAll');if(ab){ab.classList.remove('on');ab.textContent=ab.dataset.label;}
+  }
+  function say(text,lang,my,before,done){
+    if(my!==session)return;
+    if(!text){done();return;}
+    var u=new SpeechSynthesisUtterance(text), fired=false;
+    u.lang=lang;u.rate=(lang==='ko-KR'?Math.min(RATE+0.1,1.15):RATE);
+    var v=voice(lang.slice(0,2));if(v)u.voice=v;
+    u.onstart=function(){if(my===session&&before)before();};
+    u.onend=u.onerror=function(){if(fired)return;fired=true;if(my===session)setTimeout(done,lang==='ko-KR'?350:150);};
+    cur=u;                       /* 참조 유지(크롬 GC로 onend 누락 방지) */
+    SS.speak(u);
+  }
+  function play(btn,onFinish){
+    var host=btn.closest('.s-structure,.sd-card'), svg=host&&host.querySelector('svg');
+    if(!svg)return;
+    if(typeof stopSpeech==='function')stopSpeech();
+    var keep=chain;stop();chain=keep;
+    var my=session, P=parse(svg), now=btn.parentNode.querySelector('.kd-now');
+    activeBtn=btn;btn.classList.add('on');btn.textContent='⏹ 정지';
+    var card=btn.closest('.s-card'), hdr=host.querySelector('.sd-hdr');
+    var fullEn=card?card.dataset.text:(hdr?hdr.textContent.replace(/^\s*\d+\s*·\s*/,''):'');
+    var steps=[];
+    if(MODE==='full')steps.push({t:cleanEn(fullEn||''),l:'en-US',b:function(){if(now)now.textContent='🔊 전체 영어';}});
+    P.chunks=P.chunks.filter(function(c){return /[A-Za-z0-9]/.test(c.en);});   /* 문장부호만 있는 박스는 읽지 않음 */
+    P.chunks.forEach(function(c,i){
+      var tag='('+(i+1)+'/'+P.chunks.length+') ';
+      if(MODE!=='ko')steps.push({t:c.en,l:'en-US',b:function(){unhot();mark([c.rect],'kd-hot');mark([c.tEn],'kd-hot-t');if(now)now.textContent=tag+c.en;}});
+      if(c.ko)steps.push({t:c.ko,l:'ko-KR',b:function(){unhot();mark([c.rect],'kd-hot');mark([c.tKo],'kd-hot-t');if(now)now.textContent=tag+c.en+' → '+c.ko;}});
+    });
+    pieces(P.full).forEach(function(p){
+      steps.push({t:p,l:'ko-KR',b:function(){unhot();mark(P.fullEls,'kd-hot-t');if(now)now.textContent='🇰🇷 전체 해석';}});
+    });
+    var i=0;
+    (function next(){
+      if(my!==session)return;
+      if(i>=steps.length){var k=chain;chain=false;stop();if(k&&onFinish){chain=true;onFinish();}return;}
+      var s=steps[i++];say(s.t,s.l,my,s.b,next);
+    })();
+    setTimeout(function(){
+      if(my===session&&SS.getVoices().length&&!voice('ko')&&now)now.textContent+='  ⚠ 이 기기에 한국어 음성이 없어 한글 부분이 재생되지 않을 수 있습니다.';
+    },800);
+  }
+
+  function bar(svg){
+    var d=document.createElement('div');d.className='kd-bar';
+    d.innerHTML='<button type="button" class="kd-btn kd-play" data-label="🎧 구간 더빙 (영→한)">🎧 구간 더빙 (영→한)</button><span class="kd-now"></span>';
+    svg.parentNode.insertBefore(d,svg.nextSibling);
+  }
+  function init(){
+    document.querySelectorAll('.s-structure svg, .sd-card svg').forEach(bar);
+    var panel=document.getElementById('panelSD');
+    if(panel){
+      var w=document.createElement('span');w.className='kd-all';
+      w.innerHTML='<button type="button" class="kd-btn" id="kdAll" data-label="🎧 전체 구조도 연속 더빙">🎧 전체 구조도 연속 더빙</button> '
+        +'<select class="kd-sel" id="kdMode"><option value="chunk">구간 영→한 + 전체 해석</option><option value="full">전체 영어 → 구간 영→한 → 전체 해석</option><option value="ko">한글만 (구간 + 전체)</option></select> '
+        +'<select class="kd-sel" id="kdRate"><option value="0.75">느리게</option><option value="0.9">보통</option><option value="1.05">빠르게</option></select>';
+      var pb=panel.querySelector('.sd-print-btn');
+      if(pb)pb.parentNode.insertBefore(w,pb.nextSibling);else panel.insertBefore(w,panel.firstChild);
+      var ms=document.getElementById('kdMode'),rs=document.getElementById('kdRate');
+      if(ms)ms.value=MODE;if(rs){rs.value=String(RATE);if(!rs.value){rs.value='0.9';RATE=0.9;}}
+    }
+  }
+  /* s-card 의 capture 리스너(stopImmediatePropagation)보다 먼저 받기 위해 document capture 사용 */
+  document.addEventListener('click',function(e){
+    var t=e.target.closest&&e.target.closest('.kd-bar,.kd-all');
+    if(!t)return;
+    e.stopPropagation();e.stopImmediatePropagation();
+    var b=e.target.closest('.kd-play');
+    if(b){if(activeBtn===b){stop();}else{chain=false;play(b);}return;}
+    if(e.target.id==='kdAll'){
+      var ab=e.target;
+      if(ab.classList.contains('on')){stop();return;}
+      var list=[].slice.call(document.querySelectorAll('#panelSD .sd-card .kd-play')),k=0;
+      stop();chain=true;
+      (function go(){
+        if(k>=list.length){stop();return;}
+        var btn=list[k++];btn.closest('.sd-card').scrollIntoView({behavior:'smooth',block:'center'});
+        play(btn,function(){ab.classList.add('on');ab.textContent='⏹ 연속 더빙 정지';setTimeout(go,500);});
+        ab.classList.add('on');ab.textContent='⏹ 연속 더빙 정지';
+      })();
+    }
+  },true);
+  document.addEventListener('dblclick',function(e){if(e.target.closest&&e.target.closest('.kd-bar,.kd-all')){e.stopPropagation();e.stopImmediatePropagation();}},true);
+  document.addEventListener('change',function(e){
+    if(e.target.id==='kdMode'){MODE=e.target.value;try{localStorage.setItem('kd_mode',MODE);}catch(x){}stop();}
+    if(e.target.id==='kdRate'){RATE=+e.target.value;try{localStorage.setItem('kd_rate',String(RATE));}catch(x){}stop();}
+  });
+  /* 기존 영어 읽기(🔊·전체 읽기)를 누르면 더빙 중단 */
+  document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.speak-icon,.wave,#btnAll'))stop();},true);
+  window.addEventListener('beforeunload',function(){SS.cancel();});
+  SS.getVoices();
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+  window.__kdParse=parse;
+})();
+</script>
+<!-- KO_TTS:END -->
+<!-- VOCAB_TEST:BEGIN v1.0 · 단어장 A4 시험지(철자쓰기·뜻쓰기) · 본문 데이터 무변경 -->
+<style id="vt-style">
+.vt-ctrl{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:4px 0 14px;padding:12px 14px;border:1.5px solid rgba(106,27,154,0.2);border-radius:10px;background:#faf7fc;font-size:13px;color:#444;}
+.vt-ctrl label{display:inline-flex;align-items:center;gap:4px;cursor:pointer;}
+.vt-ctrl select{font-size:13px;padding:5px 8px;border-radius:6px;border:1px solid #cfc3d8;background:#fff;}
+.vt-btn{font-size:12px;font-weight:700;padding:8px 14px;border-radius:6px;border:1.5px solid #6A1B9A;background:#6A1B9A;color:#fff;cursor:pointer;}
+.vt-btn.sub{background:#fff;color:#6A1B9A;}
+.vt-preview{background:#e9e9ee;padding:16px;border-radius:10px;overflow-x:auto;}
+.vt-sheet{box-sizing:border-box;width:186mm;min-height:262mm;margin:0 auto;background:#fff;color:#111;padding:0;font-family:'Noto Sans KR','Malgun Gothic',sans-serif;}
+.vt-preview .vt-sheet{padding:10mm 8mm;width:202mm;box-shadow:0 2px 10px rgba(0,0,0,0.15);}
+.vt-head{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid #111;padding-bottom:2mm;}
+.vt-title{font-size:13pt;font-weight:800;letter-spacing:-0.3px;}
+.vt-kind{font-size:10pt;font-weight:700;margin-left:6px;padding:1px 7px;border:1.2px solid #111;border-radius:3px;white-space:nowrap;}
+.vt-info{display:flex;gap:6mm;font-size:9.5pt;margin:2.5mm 0 1.5mm;justify-content:flex-end;}
+.vt-info span b{display:inline-block;min-width:24mm;border-bottom:1px solid #555;margin-left:2mm;}
+.vt-info span.sc b{min-width:12mm;}
+.vt-guide{font-size:8.5pt;color:#444;margin-bottom:1.5mm;}
+.vt-cols{display:flex;gap:5mm;}
+.vt-col{flex:1;min-width:0;border-top:1px solid #999;}
+.vt-row{display:flex;align-items:center;border-bottom:1px solid #bbb;box-sizing:border-box;overflow:hidden;}
+.vt-n{flex:0 0 7mm;font-size:8pt;color:#666;text-align:center;font-family:'JetBrains Mono',monospace;}
+.vt-q{flex:0 0 41%;padding-right:2mm;line-height:1.25;word-break:keep-all;overflow:hidden;max-height:100%;}
+.vt-q.en{font-family:Georgia,serif;font-weight:700;}
+.vt-q small{font-size:0.78em;color:#777;font-weight:400;font-family:sans-serif;margin-left:2px;}
+.vt-a{flex:1;min-width:0;align-self:stretch;display:flex;align-items:flex-end;border-left:1px dotted #aaa;padding:0 1.5mm 1.2mm 2mm;}
+.vt-a .vt-hint{font-family:Georgia,serif;color:#999;letter-spacing:1px;}
+.vt-a .vt-ans{color:#C2185B;font-weight:700;line-height:1.2;}
+.vt-a .vt-ans.en{font-family:Georgia,serif;}
+.vt-tag{font-size:0.7em;color:#333;border:1px solid #555;border-radius:2px;padding:0 3px;margin-right:3px;font-family:sans-serif;font-weight:700;vertical-align:1px;}
+.vt-foot{margin-top:2mm;font-size:8pt;color:#888;text-align:center;font-family:'JetBrains Mono',monospace;}
+#vtPrint{display:none;}
+@page vtp{size:A4 portrait;margin:10mm 12mm;}
+@media print{
+  body.pvt>*:not(#vtPrint){display:none!important;}
+  body.pvt{background:#fff!important;margin:0!important;padding:0!important;}
+  body.pvt #vtPrint{display:block!important;page:vtp;}
+  body.pvt .vt-sheet{break-inside:avoid;page-break-inside:avoid;}
+}
+</style>
+<script id="vt-script">
+(function(){
+  if(window.__VOCAB_TEST||typeof VOCAB==='undefined')return;
+  window.__VOCAB_TEST='1.0';
+  var ST={kind:'spell',shuffle:false,hint:false,answer:false,order:null};
+  var AREA_MM=222;                         /* 문항 영역 높이(머리말·꼬리말 제외) — A4 한 장 보장용 */
+
+  function esc(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function baseOrder(){return VOCAB.map(function(_,i){return i;});}
+  function shuffled(){var a=baseOrder();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+  function order(){if(!ST.shuffle)return baseOrder();if(!ST.order)ST.order=shuffled();return ST.order;}
+  function hintOf(en){return en.split(/\s+/).map(function(w){return /^[A-Za-z]/.test(w)&&w.length>1?w.charAt(0)+'_'.repeat(Math.min(w.length-1,8)):w;}).join('  ');}
+  function title(){return (document.title.split('—')[0]||document.title).replace(/\|.*$/,'').trim();}
+  function fit(len,base){return base*(len>30?0.74:len>22?0.82:len>15?0.9:1);}
+
+  function sheetHTML(){
+    var ord=order(), n=ord.length, rows=Math.ceil(n/2);
+    var rowH=Math.max(6.2,Math.min(12.5,AREA_MM/rows)), base=Math.min(10.5,rowH*0.92);
+    var kindName={spell:'철자 쓰기',mean:'뜻 쓰기',mix:'철자·뜻 혼합'}[ST.kind];
+    var guide={spell:'우리말 뜻을 보고 알맞은 영어 단어(어구)를 쓰시오.',mean:'영어 단어(어구)를 보고 우리말 뜻을 쓰시오.',
+               mix:'[철자] 우리말 뜻을 보고 영어로, [뜻] 영어를 보고 우리말 뜻을 쓰시오.'}[ST.kind];
+    function row(idx,k){
+      var v=VOCAB[idx], type=ST.kind==='mix'?(k%2===0?'spell':'mean'):ST.kind;
+      var tag=ST.kind==='mix'?'<span class="vt-tag">'+(type==='spell'?'철자':'뜻')+'</span>':'';
+      var q,a;
+      if(type==='spell'){
+        q='<div class="vt-q" style="font-size:'+fit(v.kr.length,base).toFixed(2)+'pt">'+tag+esc(v.kr)+'<small>'+esc(v.pos)+'</small></div>';
+        a=ST.answer?'<span class="vt-ans en" style="font-size:'+fit(v.en.length*0.7,base).toFixed(2)+'pt">'+esc(v.en)+'</span>'
+                   :(ST.hint?'<span class="vt-hint" style="font-size:'+(base*0.95).toFixed(2)+'pt">'+esc(hintOf(v.en))+'</span>':'');
+      }else{
+        q='<div class="vt-q en" style="font-size:'+fit(v.en.length*0.75,base).toFixed(2)+'pt">'+tag+esc(v.en)+'<small>'+esc(v.pos)+'</small></div>';
+        a=ST.answer?'<span class="vt-ans" style="font-size:'+fit(v.kr.length,base*0.95).toFixed(2)+'pt">'+esc(v.kr)+'</span>':'';
+      }
+      return '<div class="vt-row" style="height:'+rowH.toFixed(2)+'mm"><div class="vt-n">'+(k+1)+'</div>'+q+'<div class="vt-a">'+a+'</div></div>';
+    }
+    var L='',R='';ord.forEach(function(idx,k){if(k<rows)L+=row(idx,k);else R+=row(idx,k);});
+    return '<div class="vt-sheet"><div class="vt-head"><div><span class="vt-title">'+esc(title())+' · 단어 시험</span><span class="vt-kind">'+kindName+(ST.answer?' · 정답':'')+'</span></div></div>'
+      +'<div class="vt-info"><span>반<b>&nbsp;</b></span><span>이름<b>&nbsp;</b></span><span>날짜<b>&nbsp;</b></span><span class="sc">점수<b>&nbsp;</b>/ '+n+'</span></div>'
+      +'<div class="vt-guide">※ '+guide+'</div>'
+      +'<div class="vt-cols"><div class="vt-col">'+L+'</div><div class="vt-col">'+R+'</div></div>'
+      +'<div class="vt-foot">✦ 목동서로영어학원 제작 | www.0505.co.kr</div></div>';
+  }
+  function render(){
+    var box=document.getElementById('vocabContent');if(!box)return;
+    box.innerHTML='<div class="vt-ctrl">'
+      +'<select id="vtKind"><option value="spell">✏️ 철자 쓰기 (뜻 → 영어)</option><option value="mean">🔤 뜻 쓰기 (영어 → 뜻)</option><option value="mix">🔀 혼합 (철자·뜻 번갈아)</option></select>'
+      +'<label><input type="checkbox" id="vtShuf"> 순서 섞기</label>'
+      +'<button type="button" class="vt-btn sub" id="vtRe">다시 섞기</button>'
+      +'<label><input type="checkbox" id="vtHint"> 첫 글자 힌트(철자)</label>'
+      +'<label><input type="checkbox" id="vtAns"> 정답지</label>'
+      +'<button type="button" class="vt-btn" id="vtGo">🖨️ 시험지 인쇄 (A4 한 장)</button>'
+      +'</div><div class="vt-preview" id="vtPrev"></div>';
+    document.getElementById('vtKind').value=ST.kind;
+    document.getElementById('vtShuf').checked=ST.shuffle;document.getElementById('vtHint').checked=ST.hint;document.getElementById('vtAns').checked=ST.answer;
+    document.getElementById('vtPrev').innerHTML=sheetHTML();
+  }
+  function openTab(){
+    [0,1,2].forEach(function(i){var t=document.getElementById('vtab'+i);if(t)t.classList.remove('active');});
+    var me=document.getElementById('vtabP');if(me)me.classList.add('active');
+    render();
+  }
+  function doPrint(){
+    var p=document.getElementById('vtPrint');
+    if(!p){p=document.createElement('div');p.id='vtPrint';document.body.appendChild(p);}
+    p.innerHTML=sheetHTML();
+    document.body.classList.add('pvt');
+    window.onafterprint=function(){document.body.classList.remove('pvt');p.innerHTML='';window.onafterprint=null;};
+    window.print();
+  }
+  function init(){
+    var tabs=document.querySelector('#vocabView .vocab-tabs');if(!tabs||document.getElementById('vtabP'))return;
+    var b=document.createElement('button');b.className='vocab-tab';b.id='vtabP';b.type='button';b.textContent='🖨️ 시험지 (A4)';
+    tabs.appendChild(b);
+    b.addEventListener('click',openTab);
+    [0,1,2].forEach(function(i){var t=document.getElementById('vtab'+i);if(t)t.addEventListener('click',function(){b.classList.remove('active');});});
+    document.addEventListener('change',function(e){
+      var id=e.target.id;
+      if(id==='vtKind'){ST.kind=e.target.value;}else if(id==='vtShuf'){ST.shuffle=e.target.checked;}
+      else if(id==='vtHint'){ST.hint=e.target.checked;}else if(id==='vtAns'){ST.answer=e.target.checked;}else return;
+      render();
+    });
+    document.addEventListener('click',function(e){
+      if(e.target.id==='vtGo')doPrint();
+      if(e.target.id==='vtRe'){ST.order=shuffled();ST.shuffle=true;render();}
+    });
+  }
+  window.__vtState=ST;window.__vtSheet=sheetHTML;
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+<!-- VOCAB_TEST:END -->
 </body>
 </html>
