@@ -446,6 +446,43 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .tab-summary.active{background:#00695C;color:white;border-color:#00695C;}
 .summary-view{display:none;}
 @media print{.summary-view{display:none!important;}}
+
+/* 10. 단어장 인쇄 */
+#vocabPrint{display:none;}
+#vocabPrint table{width:100%;border-collapse:collapse;font-size:12px;}
+#vocabPrint th{background:#1F3864;color:white;padding:6px 9px;text-align:left;font-size:11.5px;}
+#vocabPrint td{padding:5px 9px;border-bottom:1px solid #ddd;vertical-align:top;}
+#vocabPrint tr{break-inside:avoid;page-break-inside:avoid;}
+#vocabPrint tr:nth-child(even) td{background:#f5f7fb;}
+@media print{
+  body.pv #vocabPrint{display:block!important;}
+  body.pv .top-nav,body.pv .page-header,body.pv .watermark,body.pv .cover-plate,body.pv #secNav,body.pv .view-tabs,body.pv #readingView,body.pv .summary-view,body.pv .ga-panel,body.pv .sd-panel,body.pv .arrange-view,body.pv .grammar-view,body.pv .vocab-view,body.pv .q-panel,body.pv footer{display:none!important;}
+  body.pv .passage{padding:8mm 0 6mm!important;max-width:100%!important;}
+}
+
+/* 11. 단어 테스트 모달 (v4.2) */
+#vtModal{display:none;position:fixed;inset:0;z-index:5000;background:rgba(20,25,40,0.55);overflow:auto;padding:24px 12px;}
+#vtModal .vt-box{max-width:920px;margin:0 auto;background:white;border-radius:12px;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,0.35);}
+#vtCtrl{padding:12px 18px;border-bottom:1px solid #e3e6ee;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;background:#fbfcfe;font-size:13px;color:#334;}
+#vtCtrl select{font-family:inherit;font-size:12.5px;padding:5px 8px;border:1px solid #c9d2e3;border-radius:6px;background:white;color:#1F3864;}
+#vtCtrl label{display:inline-flex;align-items:center;gap:4px;cursor:pointer;font-size:12.5px;}
+#vtCtrl .vt-btn{font-family:inherit;font-size:12.5px;font-weight:700;padding:7px 16px;border-radius:18px;border:1px solid #c9d2e3;background:white;color:#1F3864;cursor:pointer;}
+#vtCtrl .vt-btn.vt-primary{background:#1F3864;border-color:#1F3864;color:white;}
+#vtSheet{padding:20px 26px 26px;}
+#vtSheet table{width:100%;border-collapse:collapse;font-size:12px;}
+#vtSheet th{background:#f0f2f7;color:#222;border:1px solid #444;padding:6px 8px;font-size:11.5px;font-weight:700;}
+#vtSheet td{border:1px solid #444;padding:7px 8px;vertical-align:middle;}
+#vtSheet .vt-cols{display:flex;gap:14px;align-items:flex-start;}
+#vtSheet .vt-cols>div{flex:1;min-width:0;}
+#vtSheet tr{break-inside:avoid;page-break-inside:avoid;}
+@media print{
+  body.pvt .passage,body.pvt .top-nav,body.pvt footer{display:none!important;}
+  body.pvt #vtModal{display:block!important;position:static!important;background:white!important;padding:0!important;overflow:visible!important;}
+  body.pvt #vtModal .vt-box{box-shadow:none!important;border-radius:0!important;max-width:100%!important;}
+  body.pvt #vtCtrl{display:none!important;}
+  body.pvt #vtSheet{padding:8mm 0 6mm!important;}
+}
+@media (max-width:600px){#vtSheet .vt-cols{flex-direction:column;}}
 </style>
 </head>
 <body>
@@ -1672,6 +1709,10 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="gtype-final"><button class="gtype-final-btn fi-btn" onclick="checkAllFill()">✓ 서답형 최종 확인</button><span class="gtype-final-score" id="fi-final-score"></span></div>
   </div>
   <div class="vocab-view" id="vocabView">
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-bottom:14px;flex-wrap:wrap;">
+      <button class="g-print-btn" style="margin:0;background:#6A1B9A;" onclick="printV(false)">🖨️ 단어장 인쇄 (A4)</button>
+      <button class="g-print-btn" style="margin:0;background:#7B3F00;" onclick="vtOpen()">📝 단어 테스트 만들기</button>
+    </div>
     <div class="vocab-tabs">
       <button class="vocab-tab active" id="vtab0" onclick="switchVocab(0)">📖 단어카드</button>
       <button class="vocab-tab"        id="vtab1" onclick="switchVocab(1)">✏️ 철자 퀴즈</button>
@@ -1700,6 +1741,24 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
 </div>
 
+  </div>
+</div>
+<div id="vtModal">
+  <div class="vt-box">
+    <div id="vtCtrl">
+      <b style="font-size:15px;color:#1F3864;margin-right:6px;">📝 단어 테스트</b>
+      유형 <select id="vtType" onchange="vtBuild()"><option value="e2k">영어 → 뜻 쓰기</option><option value="k2e">뜻 → 영어 쓰기</option></select>
+      문항 <select id="vtCount" onchange="vtBuild()"><option value="10">10</option><option value="20" selected>20</option><option value="30">30</option><option value="all">전체</option></select>
+      범위 <select id="vtScope" onchange="vtBuild()"><option value="all">단어 + 숙어·공식</option><option value="word">단어만</option><option value="phrase">숙어·공식만</option></select>
+      <label><input type="checkbox" id="vtShuffle" checked onchange="vtBuild()"> 무작위</label>
+      <label><input type="checkbox" id="vtAnswer" checked onchange="vtBuild()"> 정답지 포함</label>
+      <button class="vt-btn" onclick="vtBuild()">다시 생성</button>
+      <span style="margin-left:auto;display:inline-flex;gap:8px;">
+        <button class="vt-btn vt-primary" onclick="vtPrint()">🖨 인쇄</button>
+        <button class="vt-btn" onclick="vtClose()">닫기</button>
+      </span>
+    </div>
+    <div id="vtSheet"></div>
   </div>
 </div>
 <footer style="text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(31,56,100,0.25);letter-spacing:1px;">✦ 구문 PATTERN 46 · 분사구문이 나온 경우 · 0505.co.kr ✦</footer>
@@ -2326,6 +2385,103 @@ document.addEventListener("DOMContentLoaded",function(){
 });
 // 즉시 실행 (DOMContentLoaded 전에도 안전하게)
 (function(){hideQPanels();})();
+// ── 단어장 인쇄 (v4.2) ──
+function buildVocabPrint(test){
+  var el=document.getElementById("vocabPrint");
+  if(!el){el=document.createElement("div");el.id="vocabPrint";document.querySelector(".passage").appendChild(el);}
+  var t=document.querySelector(".page-title");
+  var head='<div style="font-size:16px;font-weight:800;color:#1F3864;margin:4px 0 6px;">📚 단어장'+(test?" — 시험지":"")+' · '+(t?t.textContent:"")+' <span style="font-weight:400;font-size:12px;color:#888;">('+VOCAB.length+' words)</span></div>';
+  if(test)head+='<div style="font-size:12.5px;color:#444;margin-bottom:8px;">이름: ______________________ &nbsp;&nbsp;&nbsp; 점수: ________ / '+VOCAB.length+'</div>';
+  var rows=VOCAB.map(function(v,i){
+    var kr=test?"":v.kr;
+    var extra="";
+    if(!test){
+      if(v.syn&&v.syn.length)extra+=' <span style="color:#1565C0;font-size:11px;">≒ '+v.syn.join(", ")+'</span>';
+      if(v.ant&&v.ant.length)extra+=' <span style="color:#B71C1C;font-size:11px;">↔ '+v.ant.join(", ")+'</span>';
+    }
+    return '<tr><td style="width:5%;color:#888;">'+(i+1)+'</td><td style="width:32%;font-family:Georgia,serif;font-weight:700;color:#1F3864;">'+v.en+'</td><td style="width:9%;color:#999;font-size:11px;">'+v.pos+'</td><td>'+kr+extra+'</td></tr>';
+  }).join("");
+  el.innerHTML=head+'<table><tr><th>#</th><th>단어 · 숙어</th><th>품사</th><th>뜻</th></tr>'+rows+'</table>';
+}
+function printV(test){
+  buildVocabPrint(test);
+  document.body.classList.add("pv");
+  window.onafterprint=function(){document.body.classList.remove("pv");window.onafterprint=null;};
+  window.print();
+}
+// ── 단어 테스트 생성기 (v4.2 · 대치동식 2단 시험지) ──
+function vtPool(){
+  var pool=[],seen={};
+  VOCAB.forEach(function(v){
+    var ph=(v.pos||"").indexOf("phr")>=0||v.en.indexOf(" ")>=0;
+    pool.push({en:v.en,kr:v.kr,ph:ph});seen[v.en.toLowerCase()]=1;
+  });
+  document.querySelectorAll(".s-vocab").forEach(function(sv){
+    var ens=sv.querySelectorAll(".vocab-en"),krs=sv.querySelectorAll(".vocab-kr");
+    for(var i=0;i<ens.length;i++){
+      var e=ens[i].textContent.trim(),k=krs[i]?krs[i].textContent.trim():"";
+      if(!e||!k||seen[e.toLowerCase()])continue;
+      seen[e.toLowerCase()]=1;
+      pool.push({en:e,kr:k,ph:true});
+    }
+  });
+  return pool;
+}
+function vtHalfTable(items,start,mode,answer){
+  var head=answer?"<tr><th style=\"width:11%;\">No.</th><th style=\"width:42%;\">"+(mode==="k2e"?"뜻":"단어")+"</th><th>"+(mode==="k2e"?"단어":"뜻")+"</th></tr>"
+                 :"<tr><th style=\"width:11%;\">No.</th><th style=\"width:44%;\">문제</th><th>답</th></tr>";
+  var rows=items.map(function(it,i){
+    var q=mode==="k2e"?it.kr:it.en, a=mode==="k2e"?it.en:it.kr;
+    var qs=mode==="k2e"?"":"font-family:Georgia,serif;";
+    if(answer)return "<tr><td style=\"text-align:center;color:#666;\">"+(start+i+1)+"</td><td style=\"font-weight:700;"+qs+"\">"+q+"</td><td>"+a+"</td></tr>";
+    return "<tr><td style=\"text-align:center;color:#666;\">"+(start+i+1)+"</td><td style=\"font-weight:700;"+qs+"\">"+q+"</td><td style=\"height:26px;\"></td></tr>";
+  }).join("");
+  return "<table>"+head+rows+"</table>";
+}
+function vtTwoCol(items,mode,answer){
+  var half=Math.ceil(items.length/2);
+  var L=items.slice(0,half),R=items.slice(half);
+  return "<div class=\"vt-cols\"><div>"+vtHalfTable(L,0,mode,answer)+"</div><div>"+(R.length?vtHalfTable(R,half,mode,answer):"")+"</div></div>";
+}
+function vtBuild(){
+  var mode=document.getElementById("vtType").value;
+  var cnt=document.getElementById("vtCount").value;
+  var scope=document.getElementById("vtScope").value;
+  var shuffle=document.getElementById("vtShuffle").checked;
+  var withAns=document.getElementById("vtAnswer").checked;
+  var pool=vtPool();
+  if(scope==="word")pool=pool.filter(function(v){return !v.ph;});
+  else if(scope==="phrase")pool=pool.filter(function(v){return v.ph;});
+  if(shuffle)pool=pool.slice().sort(function(){return Math.random()-0.5;});
+  var items=(cnt==="all")?pool:pool.slice(0,Math.min(parseInt(cnt,10),pool.length));
+  var t=document.querySelector(".page-title");
+  var title=(t?t.textContent.split("—")[0].trim():"단어장");
+  var badge=document.querySelector(".nav-title-bar");
+  var typeLabel=(mode==="k2e"?"뜻 → 영어":"영어 → 뜻");
+  var scopeLabel=(scope==="word"?"단어":scope==="phrase"?"숙어·공식":"단어+숙어·공식");
+  var html="";
+  html+="<div style=\"display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:2px solid #1F3864;padding-bottom:8px;margin-bottom:12px;\">";
+  html+="<div style=\"font-size:17px;font-weight:800;color:#111;\">"+(badge?badge.textContent.trim()+" · ":"")+title+" 단어테스트</div>";
+  html+="<div style=\"font-size:11px;color:#888;\">"+typeLabel+" · "+scopeLabel+" · "+items.length+"문항 · 목동서로영어학원</div></div>";
+  html+="<div style=\"display:flex;gap:26px;font-size:12.5px;color:#333;margin-bottom:12px;flex-wrap:wrap;\">";
+  html+="<span>이름 &nbsp;______________</span><span>날짜 &nbsp;______________</span><span>점수 &nbsp;__________ / "+items.length+"</span></div>";
+  html+=vtTwoCol(items,mode,false);
+  if(withAns){
+    html+="<div style=\"margin:22px 0 8px;padding-left:9px;border-left:4px solid #1F3864;font-size:14px;font-weight:800;color:#111;page-break-before:always;break-before:page;\">정답 · "+title+" 단어테스트 ("+typeLabel+")</div>";
+    html+=vtTwoCol(items,mode,true);
+  }
+  document.getElementById("vtSheet").innerHTML=html;
+}
+function vtOpen(){
+  document.getElementById("vtModal").style.display="block";
+  if(!document.getElementById("vtSheet").innerHTML)vtBuild();
+}
+function vtClose(){document.getElementById("vtModal").style.display="none";}
+function vtPrint(){
+  document.body.classList.add("pvt");
+  window.onafterprint=function(){document.body.classList.remove("pvt");window.onafterprint=null;};
+  window.print();
+}
 </script>
 
 <script>
