@@ -1,32 +1,16 @@
 <!DOCTYPE html>
 <!--
 ========================================================================
-  ANSWER-KEY WORKBOOK · MASTER HTML TEMPLATE
+  3300제 상세풀이 · build_3300.py 로 생성된 파일 (직접 수정하지 말고 데이터 파일을 고쳐 다시 빌드)
   목동서로영어학원 · Mokdong Seoro English Academy · 0505.co.kr
-========================================================================
-  사용법:
-    1. 이 파일 통째로 복사
-    2. 고교 3300제 · 제3장 대명사 · 상세풀이집, {{HEADER_*}} 등의 플레이스홀더를 시험 정보로 채움
-    3. <main><div class="container"> 안에 정답표 + 문항들 삽입
-    4. 각 문항은 10_ANSWERKEY_QUESTION_PATTERNS.md의 스니펫 사용
-
-  통합 CSS:
-    - 모의고사용 클래스 (.dialogue, .price-table, .chart-box, .info-box, .picture-box)
-    - 학교 내신용 클래스 (.spec-box, .cond-box, .compare-table, .matrix-table, .seodap-header)
-    - 양쪽 공통 (.q-card, .passage, .q-choices, details.ans 등)
-
-  변경 절대 금지:
-    - 색상 변수 (--navy-950, --gold, --cream)
-    - 폰트 패밀리 (Pretendard, Playfair Display)
-    - .home-btn 위치/스타일
-    - footer 학원 명기
+  변경 절대 금지: 색상 변수 / 폰트 패밀리 / .home-btn 위치·스타일 / footer 학원 명기
 ========================================================================
 -->
-<html lang="ko">
+<html lang="ko" class="no-js">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>고교 3300제 · 제3장 대명사 · 상세풀이집</title>
+<title>고교 내신수능 1등급 영문법연습 3300제 · 제3장 대명사 · 어법 해설 &amp; 상세풀이</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
@@ -261,6 +245,7 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
   .brand-row{flex-direction:column;align-items:flex-start;gap:12px}
 }
 
+
 /* ===== 드릴형 문항(EXERCISE 묶음) ===== */
 .drill{margin-bottom:4px}
 .drill ol{margin:0;padding-left:26px}
@@ -268,6 +253,7 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 .drill li .ko{font-family:'Pretendard Variable',sans-serif;color:var(--slate-500);font-size:13px}
 .drill .blk{display:inline-block;min-width:74px;border-bottom:1.4px solid var(--slate-500);margin:0 3px;vertical-align:baseline}
 .drill .paren{font-family:'Pretendard Variable',sans-serif;color:var(--navy-900);font-weight:600}
+/* 접힌 해설 안 정답 목록 */
 .ans-list{margin:6px 0 0;padding-left:26px;font-family:'Pretendard Variable',sans-serif}
 .ans-list li{margin:6px 0;line-height:1.7;font-size:13.5px;color:#C9BFAD}
 .ans-list li .a{color:var(--gold-light);font-weight:800;font-family:'Playfair Display',serif;font-style:italic}
@@ -301,16 +287,126 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
   #penToolbar .pen-btn,#penToolbar .pen-width{width:38px;height:38px;}
   #penToolbar .pen-color{width:26px;height:26px;}
 }
+/* ===== UNIT NAV (v2 재구성) ===== */
+.unit-nav{position:sticky;top:0;z-index:999;background:var(--navy-950);border-bottom:1px solid rgba(228,197,137,0.35);box-shadow:0 6px 18px rgba(10,30,58,0.18)}
+.unit-nav .container{display:flex;flex-direction:column;gap:0}
+.un-row{display:flex;gap:0;align-items:stretch}
+.un-tab{flex:1;display:flex;align-items:baseline;gap:10px;padding:13px 18px 11px;background:transparent;border:0;border-bottom:3px solid transparent;border-right:1px solid rgba(228,197,137,0.14);color:#B8B0A2;cursor:pointer;font-family:'Pretendard Variable',sans-serif;text-align:left;transition:background .15s,color .15s}
+.un-tab:first-child{border-left:1px solid rgba(228,197,137,0.14)}
+.un-tab .un-no{font-family:'Playfair Display',serif;font-style:italic;font-weight:800;font-size:26px;line-height:1;color:var(--slate-400);letter-spacing:-0.02em}
+.un-tab .un-name{font-size:13.5px;font-weight:700;letter-spacing:-0.01em}
+.un-tab .un-sub{display:block;font-size:10.5px;font-weight:600;color:var(--slate-500);letter-spacing:0.08em;margin-bottom:2px}
+.un-tab:hover{background:rgba(201,155,78,0.08);color:var(--cream)}
+.un-tab.active{border-bottom-color:var(--gold);color:var(--cream);background:rgba(201,155,78,0.10)}
+.un-tab.active .un-no{color:var(--gold)}
+.un-tab.active .un-sub{color:var(--gold-light)}
+.mode-row{display:flex;gap:8px;padding:9px 0 10px;align-items:center;border-top:1px solid rgba(228,197,137,0.14)}
+.mode-row .mode-cur{font-size:12px;color:var(--gold-light);font-weight:700;margin-right:6px;white-space:nowrap}
+.mode-btn{padding:7px 18px;border-radius:999px;border:1px solid rgba(228,197,137,0.4);background:transparent;color:#D3CABA;font-family:'Pretendard Variable',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s}
+.mode-btn:hover{border-color:var(--gold);color:var(--cream)}
+.mode-btn.active{background:var(--gold);border-color:var(--gold);color:var(--navy-950)}
+.un-tab:focus-visible,.mode-btn:focus-visible,.pf-btn:focus-visible,.tool-btn:focus-visible{outline:2px solid var(--gold-light);outline-offset:2px}
+@media(max-width:1180px){.unit-nav .container{padding-right:140px}}
+@media(max-width:720px){
+  .unit-nav .container{padding-right:64px}
+  .un-tab{flex-direction:column;gap:2px;padding:9px 10px 8px;align-items:flex-start}
+  .un-tab .un-no{font-size:20px}
+  .un-tab .un-name{font-size:11.5px}
+  .un-tab .un-sub{display:none}
+  .mode-row .mode-cur{display:none}
+  .mode-btn{padding:6px 14px;font-size:12.5px}
+}
 
+/* ===== PANELS ===== */
+main{padding-top:36px}
+html.js .panel{display:none}
+html.js .panel.active{display:block}
+.panel-head{display:flex;align-items:flex-end;gap:20px;padding-bottom:18px;margin-bottom:26px;border-bottom:2px solid var(--navy-950)}
+.panel-head .ph-no{font-family:'Playfair Display',serif;font-style:italic;font-weight:900;font-size:clamp(54px,9vw,84px);line-height:0.85;color:var(--navy-950);letter-spacing:-0.04em}
+.panel-head .ph-no small{display:block;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:11px;font-weight:800;letter-spacing:0.2em;color:var(--gold);margin-bottom:8px}
+.panel-head .ph-txt{flex:1;padding-bottom:4px}
+.panel-head .ph-title{font-size:clamp(20px,3vw,26px);font-weight:800;color:var(--navy-950);letter-spacing:-0.02em;line-height:1.25;margin:0}
+.panel-head .ph-mode{font-size:13px;color:var(--slate-500);font-weight:600;margin-top:4px}
+.panel-head .ph-mode b{color:var(--gold);font-weight:800}
+.tool-row{display:flex;justify-content:flex-end;margin:-10px 0 18px}
+.tool-btn{padding:7px 14px;border:1px solid var(--slate-300);background:var(--warm-white);color:var(--navy-900);font-family:'Pretendard Variable',sans-serif;font-size:12.5px;font-weight:700;cursor:pointer;border-radius:2px}
+.tool-btn:hover{border-color:var(--navy-950)}
+.panel-foot{display:flex;gap:12px;flex-wrap:wrap;margin-top:40px;padding-top:24px;border-top:1px solid var(--slate-300)}
+.pf-btn{flex:1;min-width:200px;padding:16px 20px;border:1px solid var(--navy-950);background:var(--warm-white);color:var(--navy-950);font-family:'Pretendard Variable',sans-serif;font-size:14px;font-weight:800;cursor:pointer;text-align:left;line-height:1.4}
+.pf-btn small{display:block;font-size:11.5px;font-weight:600;color:var(--slate-500);margin-bottom:2px}
+.pf-btn.primary{background:var(--navy-950);color:var(--cream)}
+.pf-btn.primary small{color:var(--gold-light)}
+.pf-btn:hover{box-shadow:0 4px 14px rgba(10,30,58,0.18)}
+
+/* ===== 어법 해설 ===== */
+.g-intro{padding:14px 18px;background:var(--cream-dark);border-left:3px solid var(--gold);font-size:14px;color:var(--slate-700);margin-bottom:24px}
+.g-sec{background:var(--warm-white);border:1px solid var(--slate-200);padding:clamp(22px,3vw,34px);margin-bottom:22px}
+.g-h{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 16px;padding-bottom:14px;border-bottom:1px solid var(--slate-200);font-size:18.5px;font-weight:800;color:var(--navy-950);letter-spacing:-0.02em;line-height:1.35}
+.g-n{font-family:'Playfair Display',serif;font-style:italic;font-weight:800;font-size:26px;color:var(--gold);line-height:1;min-width:20px}
+.g-badge{font-size:11px;font-weight:800;padding:3px 9px;background:var(--rose-50);color:var(--rose-600);border:1px solid #FECACA;border-radius:999px;letter-spacing:0}
+.g-p{margin:0 0 14px;font-size:14.5px;line-height:1.8;color:var(--slate-700)}
+.g-p.g-sub{font-weight:800;color:var(--navy-950);margin:22px 0 8px;font-size:14.5px}
+.g-sec b{color:var(--navy-950);font-weight:800}
+.g-sec .e{font-family:'Playfair Display',serif;font-size:14.5px;color:var(--navy-900)}
+.g-sec .e b{color:var(--rose-600);font-weight:700}
+.g-sec .e.x{text-decoration:line-through;text-decoration-color:var(--rose-600);color:var(--slate-500)}
+.g-rule{margin:0 0 16px;padding:16px 20px;background:var(--navy-950);color:#D3CABA;font-size:14.5px;line-height:1.85}
+.g-rule b{color:var(--gold-light)}
+.g-ex{margin:0 0 16px;padding:14px 20px;background:var(--cream);border-left:3px solid var(--slate-400)}
+.g-ex p{margin:8px 0;line-height:1.6}
+.g-ex .e{display:block;font-size:15px}
+.g-ex .k{display:block;font-size:13px;color:var(--slate-500);margin-top:1px}
+.g-warn{margin:0 0 16px;padding:14px 18px;background:var(--rose-50);border-left:3px solid var(--rose-600);font-size:14px;line-height:1.8;color:var(--slate-700)}
+.g-warn>b:first-child,.g-warn br+b{color:var(--rose-600)}
+.g-list{margin:0 0 16px;padding-left:20px}
+.g-list li{margin:8px 0;font-size:14.5px;line-height:1.8}
+.g-ol{margin:0 0 16px;padding-left:22px}
+.g-ol li{margin:7px 0;font-size:14.5px;line-height:1.8}
+.g-sec .compare-table{margin:0 0 16px;font-size:13.5px}
+.g-sec .compare-table td{line-height:1.65}
+.g-sec .compare-table td.num{width:auto;min-width:40px}
+.g-check{background:var(--cream-dark);border-color:var(--gold)}
+.g-check .g-h{border-bottom-color:var(--gold)}
+.g-tablewrap{overflow-x:auto}
+@media(max-width:720px){.g-tablewrap .compare-table{min-width:540px}}
+
+/* ===== 상세 해설(펼치기) 보강 ===== */
+.ans-body .sec-t{display:block;margin:18px 0 8px;font-size:12px;font-weight:800;color:var(--gold);letter-spacing:0.06em}
+.ans-body .ans-detail .sec-t{margin-top:0}
+.ans-body .ans-detail{color:#C9BFAD}
+.ans-body .step{display:flex;gap:10px;margin:8px 0;padding:2px 0 2px 12px;color:#D3CABA;font-size:13.5px;line-height:1.75}
+.ans-body .step .sn{flex:none;font-family:'Playfair Display',serif;font-style:italic;font-weight:800;color:var(--gold)}
+.opt-list{list-style:none;margin:0;padding:0}
+.opt-list li{display:flex;gap:10px;padding:8px 12px;margin:4px 0;font-size:13.5px;line-height:1.7;color:#C9BFAD;background:rgba(255,255,255,0.03);border-left:2px solid rgba(220,38,38,0.55)}
+.opt-list li.ok{border-left-color:#34D399;background:rgba(52,211,153,0.08);color:var(--cream)}
+.opt-list .on{flex:none;min-width:34px;font-weight:800;color:var(--gold-light)}
+.opt-list .mk{flex:none;width:16px;font-weight:800;color:#F87171}
+.opt-list li.ok .mk{color:#34D399}
+.opt-list i{font-family:'Playfair Display',serif;color:var(--cream)}
+.ans-list.rich{padding-left:0;list-style:none;counter-reset:al;margin-top:14px}
+.ans-list.rich>li{counter-increment:al;position:relative;margin:0;padding:14px 0 14px 38px;border-top:1px dashed rgba(228,197,137,0.18)}
+.ans-list.rich>li::before{content:counter(al);position:absolute;left:0;top:13px;width:26px;height:26px;border:1px solid rgba(228,197,137,0.45);border-radius:50%;text-align:center;line-height:24px;font-family:'Playfair Display',serif;font-weight:700;font-size:13px;color:var(--gold-light)}
+.ans-list.rich .al-top{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline}
+.ans-list.rich .a{font-size:16px}
+.ans-list.rich .full{font-family:'Playfair Display',serif;font-size:13.5px;color:#A9A294}
+.ans-list.rich .why{display:block;margin-top:6px;font-size:13.5px;line-height:1.75;color:#C9BFAD}
+.ans-list.rich .why i{font-family:'Playfair Display',serif;color:var(--cream)}
+.ans-list.rich .tr{display:block;margin-top:5px;font-size:12.5px;color:#8F98A8}
+.ans-list.rich .tr::before{content:'해석  ';color:var(--gold);font-weight:800;font-size:11px;white-space:pre}
+@media print{
+  .unit-nav,.panel-foot,.tool-row{display:none!important}
+  html.js .panel{display:block!important}
+  .panel{break-before:page}
+  .g-rule{background:white!important;color:var(--navy-950)!important;border:1px solid var(--navy-950)}
+  .g-rule b{color:var(--navy-950)!important}
+  .opt-list li,.ans-list.rich .why,.ans-list.rich .full,.ans-list.rich .tr,.ans-body .step{color:var(--slate-700)!important}
+  .opt-list i,.ans-list.rich .why i,.ans-list li .a{color:var(--navy-950)!important}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
+<script>document.documentElement.className="js";</script>
 </head>
 <body>
-
-<!-- ========== Home Button (절대 변경 금지) ========== -->
-<a href="https://0505.co.kr" class="home-btn" title="목동서로영어학원 홈페이지">
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg>
-  <span class="label">Home</span>
-</a>
 
 <!-- ========== Header (책 표지) ========== -->
 <header class="top"><div class="container">
@@ -318,8 +414,8 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
     <div class="brand">Mokdong Seoro <b>English Academy</b><span class="kor">목동서로영어학원 · 신목고·목운중·목동중 전문</span></div>
     <div class="vol-tag">3300제 · Chapter III</div>
   </div>
-  <h1 class="book-title"><em>Pronoun</em> · 제3장 대명사<br>Complete Answer Key</h1>
-  <div class="book-subtitle">고교 내신수능 1등급 영문법연습 3300제 · 제3장 대명사 · 전문항 상세풀이<br>Unit 06 인칭대명사 · Unit 07 부정대명사 · Unit 08 기타대명사와 부분부정 · 기출응용문제</div>
+  <h1 class="book-title"><em>Pronoun</em> · 제3장 대명사<br>Grammar Notes &amp; Answer Key</h1>
+  <div class="book-subtitle">고교 내신수능 1등급 영문법연습 3300제 · 제3장 대명사<br>유니트별 어법 해설 + 전문항 상세 풀이 · Unit 06 인칭대명사 · Unit 07 부정대명사 · Unit 08 기타대명사와 부분부정 · 기출응용문제</div>
   <div class="meta-strip">
     <div class="meta-item"><div class="meta-lbl">CHAPTER</div><div class="meta-val">III<span class="u">대명사</span></div></div>
     <div class="meta-item"><div class="meta-lbl">UNIT</div><div class="meta-val">06–08<span class="u"></span></div></div>
@@ -328,22 +424,119 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
   </div>
 </div></header>
 
+<!-- ========== Unit Navigation: 상단 유니트 번호 + 어법 해설 / 문제 풀이 ========== -->
+<nav class="unit-nav" id="unitNav" aria-label="유니트 이동"><div class="container">
+  <div class="un-row"><button type="button" class="un-tab" data-unit="u1"><span class="un-no">06</span><span><span class="un-sub">Unit</span><span class="un-name">인칭대명사</span></span></button><button type="button" class="un-tab" data-unit="u2"><span class="un-no">07</span><span><span class="un-sub">Unit</span><span class="un-name">부정대명사</span></span></button><button type="button" class="un-tab" data-unit="u3"><span class="un-no">08</span><span><span class="un-sub">Unit</span><span class="un-name">기타대명사와 부분부정</span></span></button><button type="button" class="un-tab" data-unit="gi"><span class="un-no">기출</span><span><span class="un-sub">Chapter III</span><span class="un-name">기출응용문제</span></span></button></div>
+  <div class="mode-row"><span class="mode-cur" id="modeCur"></span>
+    <button type="button" class="mode-btn" data-mode="g">어법 해설</button>
+    <button type="button" class="mode-btn" data-mode="q">문제 풀이</button>
+  </div>
+</div></nav>
+
+<!-- ========== Home Button (절대 변경 금지) ========== -->
+<a href="https://0505.co.kr" class="home-btn" title="목동서로영어학원 홈페이지">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg>
+  <span class="label">Home</span>
+</a>
+
 <main><div class="container">
 
-<!-- ====================================================== -->
-<!-- 정답표 영역: 09_BUILD_PROTOCOL.md Step 2 참고            -->
-<!-- ====================================================== -->
-<div class="section-divider"><span>Answer Key<span class="kor">정답 일람표 · 펼쳐서 확인</span></span></div>
+<section class="panel" id="p-u1-g" data-unit="u1" data-mode="g">
+<div class="panel-head"><div class="ph-no"><small>UNIT</small>06</div><div class="ph-txt"><h2 class="ph-title">인칭대명사</h2><div class="ph-mode"><b>어법 해설</b> · EXERCISE A~B · 18문항</div></div></div>
+<div class="g-intro">Unit 06은 <b>인칭대명사의 격 → It의 여러 쓰임(가주어, It seems that, It takes, It is time) → It ~ that 강조구문</b> 순서입니다. EXERCISE B는 문장 전환 문제이므로 공식을 그대로 외워 두는 것이 가장 빠릅니다.</div>
 
-<details class="ans" style="margin-top:0"><summary>기출응용문제 정답 일람표 펼치기 (스포일러 주의)</summary><div class="ans-body"><div class="ans-detail" style="margin-bottom:10px">아래 표는 <b>기출응용문제 1~23</b>의 정답 요약입니다. EXERCISE(Unit 06~08)의 정답은 각 문항 카드의 해설을 펼쳐 확인하세요.</div><table class="answer-sheet"><tr class="hdr-row"><td>기출</td><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>③</td><td style="font-size:9px;color:var(--rose-600)">those</td><td>④</td><td>①</td><td>④</td><td>②</td><td style="font-size:9px;color:var(--rose-600)">that</td><td>④</td></tr><tr class="hdr-row"><td>기출</td><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td style="font-size:9px;color:var(--rose-600)">yourself what you want</td><td>②</td><td>②</td><td>④</td><td>⑤</td><td style="font-size:9px;color:var(--rose-600)">that</td><td>⑤</td><td>⑤</td></tr><tr class="hdr-row"><td>기출</td><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>③</td><td>①</td><td>②</td><td>③</td><td style="font-size:9px;color:var(--rose-600)">goals</td><td>②</td><td>②</td></tr></table></div></details>
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">1</span>인칭대명사의 격</h3>
+<p class="g-p">대명사는 문장에서 맡은 자리에 따라 형태가 달라집니다. <b>빈칸 바로 뒤에 무엇이 오는지</b>를 보면 격이 정해집니다.</p>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>격</th><th>자리</th><th>형태</th><th>예문</th></tr>
+<tr><td class="col-head">주격</td><td>동사 앞(주어)</td><td><span class="e">I, you, he, she, it, we, they</span></td><td><span class="e">Where does <b>he</b> live?</span></td></tr>
+<tr><td class="col-head">소유격</td><td>명사 앞</td><td><span class="e">my, your, his, her, its, our, their</span></td><td><span class="e">asked my sister <b>my</b> address</span></td></tr>
+<tr><td class="col-head">목적격</td><td>동사·전치사 뒤</td><td><span class="e">me, you, him, her, it, us, them</span></td><td><span class="e">I like <b>him</b> very much.</span></td></tr>
+<tr><td class="col-head">소유대명사</td><td>혼자 쓰임<br>(= 소유격 + 명사)</td><td><span class="e">mine, yours, his, hers, ours, theirs</span></td><td><span class="e">That bike is not <b>yours</b>, but <b>mine</b>.</span></td></tr>
+</table></div>
+<ul class="g-list">
+<li><b>소유격 뒤에는 반드시 명사</b>가 옵니다. 뒤에 명사가 없으면 소유대명사를 씁니다. <span class="e">your bike = <b>yours</b></span>, <span class="e">my bike = <b>mine</b></span></li>
+<li><b>own 앞에는 소유격</b>을 씁니다. <span class="e">Every day has <b>its</b> own meaning.</span></li>
+<li>대명사의 <b>수는 가리키는 명사와 일치</b>시킵니다. <span class="e">Hamsters … <b>They</b> run very fast.</span></li>
+</ul>
+<div class="g-warn"><b>함정</b> <span class="e">its</span>는 it의 소유격(그것의)이고, <span class="e">it's</span>는 it is 또는 it has의 줄임말입니다. 뒤에 명사가 오면 its입니다. <span class="e"><b>Its</b> name is Spot.</span> / <span class="e x">It's name is Spot.</span></div>
+</section>
 
-<!-- ====================================================== -->
-<!-- 문항 영역: 10_QUESTION_PATTERNS.md 의 스니펫 사용         -->
-<!-- 각 article은 하나의 문항 또는 묶음 문항 (예: Q41-42)     -->
-<!-- 섹션 구분선(.section-divider)으로 카테고리 분리          -->
-<!-- ====================================================== -->
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">2</span>가주어 It <span class="g-badge">내신 빈출</span></h3>
+<p class="g-p">주어가 to부정사구·동명사구·that절처럼 길면 그 자리에 <b>It</b>을 대신 세우고 진짜 주어는 문장 뒤로 보냅니다. 이때 It은 뜻이 없으므로 '그것'이라고 해석하지 않습니다.</p>
+<div class="g-rule"><b>It</b>(가주어) + 동사 ~ + <b>to부정사 / 동명사 / that절</b>(진주어)</div>
+<div class="g-ex">
+<p><span class="e">To exercise every morning is good for your health.<br>= <b>It</b> is good for your health <b>to exercise</b> every morning.</span><span class="k">매일 아침 운동하는 것은 건강에 좋다.</span></p>
+<p><span class="e">Having a foreign pen pal seems very exciting.<br>= <b>It</b> seems very exciting <b>having</b> a foreign pen pal.</span><span class="k">외국인 펜팔이 있다는 것은 매우 신나는 일인 것 같다.</span></p>
+</div>
+<p class="g-p">be동사 문장뿐 아니라 <span class="e">seem, make</span> 같은 동사 앞에서도 똑같이 가주어 It을 씁니다. <span class="e"><b>It</b> made her embarrassed to see him again.</span></p>
+</section>
 
-<div class="section-divider"><span>Chapter III · Unit 06 <em>Personal Pronouns</em><span class="kor">제3장 대명사 · Unit 06 인칭대명사</span></span></div>
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">3</span>It seems(appears) that ~ <span class="g-badge">내신 빈출</span></h3>
+<div class="g-rule">주어 + seem(appear) + <b>to부정사</b> = <b>It</b> seems(appears) <b>that</b> + 주어 + 동사</div>
+<div class="g-ex">
+<p><span class="e">He appears to be disappointed. = <b>It</b> appears <b>that he is</b> disappointed.</span><span class="k">그는 실망한 것 같다.</span></p>
+<p><span class="e">There seemed to be more orphans. = <b>It</b> seemed <b>that there were</b> more orphans.</span><span class="k">고아가 더 많은 것 같았다.</span></p>
+</div>
+<ul class="g-list">
+<li>that절의 동사는 <b>seem(appear)의 시제에 맞춥니다.</b> appears(현재) → is, seemed(과거) → were.</li>
+<li>to부정사의 의미상 주어였던 말(He, There)이 that절의 주어 자리로 들어갑니다.</li>
+</ul>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">4</span>It takes ~ : 시간이 걸리다 <span class="g-badge">내신 빈출</span></h3>
+<p class="g-p">시간·거리·날씨·명암 등을 말할 때 쓰는 It을 비인칭 주어라고 합니다. '~하는 데 시간이 …걸리다'는 아래 두 가지 어순으로 씁니다.</p>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>어순</th><th>예문</th></tr>
+<tr><td class="col-head">It takes + <b>사람</b> + 시간 + to부정사</td><td><span class="e">It took <b>me</b> five minutes to eat the sandwich.</span></td></tr>
+<tr><td class="col-head">It takes + 시간 + <b>for 사람</b> + to부정사</td><td><span class="e">It took five minutes <b>for me</b> to eat the sandwich.</span></td></tr>
+</table></div>
+<div class="g-warn"><b>함정</b> 사람이 시간 <b>앞</b>에 오면 전치사 없이 목적격(me, him), 시간 <b>뒤</b>에 오면 for + 목적격입니다. 빈칸의 위치를 보고 for가 필요한지 판단합니다.</div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">5</span>It is time ~ : ~할 시간이다</h3>
+<div class="g-rule">It is time <b>for 사람 + to부정사</b><br>= It is time <b>that</b> + 주어 + <b>should + 동사원형</b><br>= It is time <b>that</b> + 주어 + <b>과거형 동사</b></div>
+<div class="g-ex">
+<p><span class="e">It is time for you to go to church.<br>= It is time that you <b>should go</b> to church. = It is time that you <b>went</b> to church.</span><span class="k">네가 교회에 갈 시간이다.</span></p>
+</div>
+<p class="g-p">that절에 과거형을 쓰는 것은 '진작 했어야 하는데 아직 안 했다'는 느낌을 나타내는 가정법 표현입니다. 과거의 일을 말하는 것이 아닙니다. 현재형 <span class="e x">It is time that you go</span>는 쓰지 않습니다.</p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">6</span>It ~ that 강조구문 <span class="g-badge">내신 빈출</span></h3>
+<div class="g-rule"><b>It is(was)</b> + 강조할 말 + <b>that</b> + 문장의 나머지</div>
+<p class="g-p">문장에서 강조하고 싶은 말(주어·목적어·부사구)을 It is(was)와 that 사이로 옮기고, 나머지는 that 뒤에 그대로 씁니다. '…한 것은 바로 ~이다'로 해석합니다.</p>
+<div class="g-ex">
+<p><span class="e">She went jogging <u>last night</u>. → <b>It was</b> last night <b>that</b> she went jogging.</span><span class="k">그녀가 조깅하러 간 것은 바로 어젯밤이었다.</span></p>
+<p><span class="e">Bill bought <u>a lot of candies</u> yesterday. → <b>It was</b> a lot of candies <b>that</b> he bought yesterday.</span><span class="k">Bill이 어제 산 것은 바로 많은 사탕이었다.</span></p>
+</div>
+<ul class="g-list">
+<li>be동사의 시제는 원래 문장의 시제에 맞춥니다(went, bought → was).</li>
+<li>강조하는 말이 복수(a lot of candies)여도 <b>It was</b>입니다. be동사는 It에 맞춥니다.</li>
+</ul>
+<p class="g-p g-sub">가주어 구문과 구별하기</p>
+<p class="g-p">It is(was)와 that을 지웠을 때 남은 말로 <b>완전한 문장이 만들어지면 강조구문</b>, 만들어지지 않으면 가주어 구문입니다.</p>
+</section>
+
+<section class="g-sec g-check"><h3 class="g-h">시험 직전 점검</h3>
+<ol class="g-ol">
+<li>명사 앞은 소유격, 뒤에 명사가 없으면 소유대명사(yours, mine). its(소유격) ≠ it's(it is).</li>
+<li>긴 주어(to부정사·동명사·that절) → 가주어 It.</li>
+<li>주어 + seem to ~ = It seems that + 주어 + 동사(시제 일치).</li>
+<li>It takes + 사람 + 시간 + to ~ = It takes + 시간 + for 사람 + to ~.</li>
+<li>It is time that + 주어 + should 동사원형 / 과거형.</li>
+<li>It was + 강조할 말 + that ~. 강조어가 복수여도 It was.</li>
+</ol></section>
+<div class="panel-foot"><button type="button" class="pf-btn primary" data-go="u1-q"><small>Unit 06</small>문제 풀이로 이동</button><button type="button" class="pf-btn" data-go="u2-g"><small>다음</small>Unit 07 부정대명사 · 어법 해설</button></div>
+</section>
+<section class="panel" id="p-u1-q" data-unit="u1" data-mode="q">
+<div class="panel-head"><div class="ph-no"><small>UNIT</small>06</div><div class="ph-txt"><h2 class="ph-title">인칭대명사</h2><div class="ph-mode"><b>문제 풀이</b> · EXERCISE A~B · 18문항</div></div></div>
+<div class="tool-row"><button type="button" class="tool-btn" data-toggle-all>해설 모두 펼치기</button></div>
 <article class="q-card">
 <div class="q-head"><div class="q-num">06-A</div><div class="q-type gram">격변화</div><div class="q-pts">EX</div></div>
 <div class="q-prompt"><b>A.</b> 다음 괄호 속에서 어법상 알맞은 단어를 고르세요.</div>
@@ -356,14 +549,19 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>Hamsters are very cute pets. (It, They) run very fast.</li>
 <li>That bike is not (your, yours), but (my, mine).</li>
 </ol></div>
-<details class="ans"><summary>06-A번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail">격에 맞게 선택: 주격(he)·소유격(my/its)·목적격(him)·소유대명사(yours/mine). its(소유격) vs it's(=it is) 구분.</div><ol class="ans-list">
-<li><span class="a">my</span> <span class="why">— 명사 address 수식 → 소유격</span></li>
-<li><span class="a">he</span> <span class="why">— 주어 자리 → 주격</span></li>
-<li><span class="a">its</span> <span class="why">— own 앞 소유격</span></li>
-<li><span class="a">Its</span> <span class="why">— name 수식 소유격(It's=it is 아님)</span></li>
-<li><span class="a">him</span> <span class="why">— like의 목적어 → 목적격</span></li>
-<li><span class="a">They</span> <span class="why">— Hamsters를 받음 → 복수 주격</span></li>
-<li><span class="a">yours / mine</span> <span class="why">— 소유대명사(= your bike / my bike)</span></li>
+<details class="ans"><summary>06-A 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① 빈칸 뒤를 본다.</b> 명사가 오면 소유격(my, its), 동사가 오면 주격(he, they), 동사·전치사 뒤 목적어 자리면 목적격(him).<br>
+<b>② 뒤에 명사가 없으면 소유대명사.</b> yours = your bike, mine = my bike.<br>
+<b>③ its는 소유격, it's는 it is의 줄임말.</b><br>
+<b>④ 대명사의 수는 가리키는 명사에 맞춘다.</b> Hamsters → They.</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">my</span><span class="full">The old man asked my sister my address.</span></div><span class="why">ask + 간접목적어(my sister) + 직접목적어(my address)의 4형식 문장이다. 괄호 뒤에 명사 address가 있으므로 명사를 꾸미는 소유격 my. 목적격 <i>me</i>는 뒤에 명사를 둘 수 없다.</span><span class="tr">그 노인은 내 여동생(누나)에게 내 주소를 물었다.</span></li>
+<li><div class="al-top"><span class="a">he</span><span class="full">Where does he live?</span></div><span class="why">does와 동사원형 live 사이는 주어 자리이므로 주격 he. 소유격 <i>his</i>는 뒤에 명사가 있어야 한다.</span><span class="tr">그는 어디에 사니?</span></li>
+<li><div class="al-top"><span class="a">its</span><span class="full">Every day has its own meaning.</span></div><span class="why">own(자신의) 앞에는 소유격을 쓴다. 주어 Every day가 단수 사물이므로 its. 목적격 <i>it</i>은 own 앞에 올 수 없다.</span><span class="tr">하루하루는 저마다의 의미가 있다.</span></li>
+<li><div class="al-top"><span class="a">Its</span><span class="full">I have a dog. Its name is Spot.</span></div><span class="why">뒤에 명사 name이 있으므로 소유격 Its(그것의). <i>It's</i>는 It is의 줄임말이어서 넣으면 It is name is Spot.이 되어 동사가 두 개가 된다.</span><span class="tr">나는 개가 한 마리 있다. 그 개의 이름은 Spot이다.</span></li>
+<li><div class="al-top"><span class="a">him</span><span class="full">I like him very much.</span></div><span class="why">동사 like의 목적어 자리이므로 목적격 him. his를 '그의 것'이라는 소유대명사로 볼 수도 있지만 앞에 가리킬 명사가 없어 뜻이 통하지 않는다.</span><span class="tr">나는 그를 매우 좋아한다.</span></li>
+<li><div class="al-top"><span class="a">They</span><span class="full">Hamsters are very cute pets. They run very fast.</span></div><span class="why">앞 문장의 복수명사 Hamsters를 가리키므로 복수 대명사 They. 동사 run에 -s가 없는 것도 주어가 복수라는 단서다.</span><span class="tr">햄스터는 매우 귀여운 애완동물이다. 그들은 매우 빨리 달린다.</span></li>
+<li><div class="al-top"><span class="a">yours / mine</span><span class="full">That bike is not yours, but mine.</span></div><span class="why">괄호 뒤에 명사가 없으므로 「소유격 + 명사」를 한 단어로 나타내는 소유대명사를 쓴다. yours = your bike, mine = my bike. not A but B는 'A가 아니라 B'.</span><span class="tr">저 자전거는 네 것이 아니라 내 것이다.</span></li>
 </ol></div></details>
 </article>
 <article class="q-card">
@@ -380,31 +578,145 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>It is time for you to go to church. = It is time that you <span class="blk"></span> to church.</li>
 <li>It is time for her to wash the dishes. = It is time that she <span class="blk"></span> <span class="blk"></span> the dishes.</li>
 </ol></div>
-<details class="ans"><summary>06-B1번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail"><b>가주어 It</b>(진주어 to부정사·동명사·that절), <b>It takes 사람 시간 to</b> = It takes 시간 for 사람 to, <b>It is time that + 주어 + should/과거</b>.</div><ol class="ans-list">
-<li><span class="a">It</span> <span class="why">— 가주어(진주어 to부정사)</span></li>
-<li><span class="a">It</span> <span class="why">— 가주어(진주어 동명사)</span></li>
-<li><span class="a">It</span> <span class="why">— 가주어</span></li>
-<li><span class="a">It</span> <span class="why">— It appears that ~</span></li>
-<li><span class="a">It</span> <span class="why">— It seemed that ~</span></li>
-<li><span class="a">It / for</span> <span class="why">— It took 시간 for 사람 to</span></li>
-<li><span class="a">him</span> <span class="why">— It takes 사람 시간 to</span></li>
-<li><span class="a">should go</span> <span class="why">— (= went) It is time that + should/과거</span></li>
-<li><span class="a">should wash</span> <span class="why">— (= washed)</span></li>
+<details class="ans"><summary>06-B1 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① 가주어 It</b>: 주어인 to부정사구·동명사구를 뒤로 보내고 그 자리에 It.<br>
+<b>② 주어 + seem(appear) to ~ = It seems(appears) that + 주어 + 동사.</b> that절 동사는 seem의 시제에 맞춘다.<br>
+<b>③ It takes + 사람 + 시간 + to ~ = It takes + 시간 + for 사람 + to ~.</b><br>
+<b>④ It is time for 사람 to ~ = It is time that + 주어 + should 동사원형(또는 과거형).</b></div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">It</span><span class="full">It is good for your health to exercise every morning.</span></div><span class="why">주어였던 to부정사구(To exercise every morning)가 문장 뒤로 갔으므로 빈 주어 자리에 가주어 It을 쓴다. <i>That</i>이나 <i>This</i>는 가주어로 쓰지 않는다.</span><span class="tr">매일 아침 운동하는 것은 건강에 좋다.</span></li>
+<li><div class="al-top"><span class="a">It</span><span class="full">It seems very exciting having a foreign pen pal.</span></div><span class="why">동명사구(having a foreign pen pal)가 진주어로 뒤에 놓였다. 진주어가 동명사구여도 가주어는 It이다.</span><span class="tr">외국인 펜팔이 있다는 것은 매우 신나는 일인 것 같다.</span></li>
+<li><div class="al-top"><span class="a">It</span><span class="full">It made her embarrassed to see him again.</span></div><span class="why">주어 Seeing him again이 to see him again으로 바뀌어 뒤로 갔다. make + 목적어 + 목적격보어 문장에서도 주어가 길면 가주어 It을 쓴다.</span><span class="tr">그를 다시 만난 것은 그녀를 당황하게 했다.</span></li>
+<li><div class="al-top"><span class="a">It</span><span class="full">It appears that he is disappointed.</span></div><span class="why">주어 + appear to ~ = It appears that + 주어 + 동사. appears가 현재이므로 that절 동사도 현재 is. 이 It은 that절을 대신하는 형식적인 주어다.</span><span class="tr">그는 실망한 것 같다.</span></li>
+<li><div class="al-top"><span class="a">It</span><span class="full">It seemed that there were more orphans in the city.</span></div><span class="why">There seemed to be ~ = It seemed that there were ~. seemed가 과거이므로 that절도 과거 were. 주어 자리에 <i>There</i>를 그대로 쓰면 뒤의 that절과 연결되지 않는다.</span><span class="tr">그 도시에는 고아가 더 많은 것 같았다.</span></li>
+<li><div class="al-top"><span class="a">It / for</span><span class="full">It took five minutes for me to eat the sandwich.</span></div><span class="why">It takes + 사람 + 시간 + to ~에서 사람을 시간 뒤로 옮기면 for + 목적격이 된다. 첫 빈칸은 시간을 나타내는 비인칭 주어 It, 둘째 빈칸은 me 앞의 for.</span><span class="tr">내가 그 샌드위치를 먹는 데 5분이 걸렸다.</span></li>
+<li><div class="al-top"><span class="a">him</span><span class="full">It takes him 15 minutes to prepare for hiking.</span></div><span class="why">6번과 반대 방향의 전환. for him이 시간 앞으로 오면 for 없이 목적격만 쓴다. takes 뒤이므로 주격 <i>he</i>는 오답.</span><span class="tr">그가 하이킹 준비를 하는 데 15분이 걸린다.</span></li>
+<li><div class="al-top"><span class="a">should go (= went)</span><span class="full">It is time that you should go to church.</span></div><span class="why">It is time that절에는 「should + 동사원형」 또는 가정법 과거형을 쓴다. 현재형 <i>go</i>만 쓰는 것은 오답. 구버전 풀이의 정답은 should go인데, 빈칸이 하나로 제시되어 있어 한 단어로 쓴다면 went가 된다.</span><span class="tr">네가 교회에 갈 시간이다.</span></li>
+<li><div class="al-top"><span class="a">should wash (= washed)</span><span class="full">It is time that she should wash the dishes.</span></div><span class="why">8번과 같은 구문. 빈칸이 둘이므로 should wash. 주어가 she라고 <i>washes</i>를 쓰지 않도록 주의한다. 한 단어로 쓰면 과거형 washed.</span><span class="tr">그녀가 설거지를 할 시간이다.</span></li>
 </ol></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">06-B2</div><div class="q-type gram">강조구문</div><div class="q-pts">EX</div></div>
 <div class="q-prompt"><b>B-2.</b> 밑줄 친 부분을 강조하는 문장으로 고칠 때 빈칸을 채우세요.</div>
 <div class="drill"><ol>
-<li>She went jogging last night. → <span class="blk"></span> was last night <span class="blk"></span> she went jogging.</li>
-<li>Bill bought a lot of candies yesterday. → <span class="blk"></span> was a lot of candies <span class="blk"></span> he bought yesterday.</li>
+<li>She went jogging <u>last night</u>. → <span class="blk"></span> was last night <span class="blk"></span> she went jogging.</li>
+<li>Bill bought <u>a lot of candies</u> yesterday. → <span class="blk"></span> was a lot of candies <span class="blk"></span> he bought yesterday.</li>
 </ol></div>
-<details class="ans"><summary>06-B2번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail"><b>It ~ that 강조구문</b>: 강조할 말을 It was와 that 사이에 둔다.</div><ol class="ans-list">
-<li><span class="a">It / that</span> <span class="why">— It was last night that ~</span></li>
-<li><span class="a">It / that</span> <span class="why">— It was a lot of candies that ~</span></li>
+<details class="ans"><summary>06-B2 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>It is(was) + 강조할 말 + that + 나머지.</b><br>
+<b>①</b> be동사의 시제는 원래 문장의 동사 시제에 맞춘다(went, bought → was).<br>
+<b>②</b> 강조하는 말이 복수여도 be동사는 It에 맞춰 단수(was).<br>
+<b>③</b> 강조한 말을 빼고 남은 부분을 that 뒤에 순서대로 쓴다.</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">It / that</span><span class="full">It was last night that she went jogging.</span></div><span class="why">부사구 last night을 강조한다. 강조할 말을 It was와 that 사이에 넣고 나머지(she went jogging)를 that 뒤에 쓴다. 때를 강조할 때는 that 대신 when도 가능하다.</span><span class="tr">그녀가 조깅하러 간 것은 바로 어젯밤이었다.</span></li>
+<li><div class="al-top"><span class="a">It / that</span><span class="full">It was a lot of candies that he bought yesterday.</span></div><span class="why">목적어 a lot of candies를 강조한다. candies가 복수여도 be동사는 주어 It에 맞춰 was다. <i>They were</i>로 시작하면 오답.</span><span class="tr">Bill이 어제 산 것은 바로 많은 사탕이었다.</span></li>
 </ol></div></details>
 </article>
-<div class="section-divider"><span>Chapter III · Unit 07 <em>Indefinite Pronouns</em><span class="kor">제3장 · Unit 07 부정대명사</span></span></div>
+<div class="panel-foot"><button type="button" class="pf-btn" data-go="u1-g"><small>Unit 06</small>어법 해설 다시 보기</button><button type="button" class="pf-btn primary" data-go="u2-g"><small>다음</small>Unit 07 부정대명사 · 어법 해설</button></div>
+</section>
+<section class="panel" id="p-u2-g" data-unit="u2" data-mode="g">
+<div class="panel-head"><div class="ph-no"><small>UNIT</small>07</div><div class="ph-txt"><h2 class="ph-title">부정대명사</h2><div class="ph-mode"><b>어법 해설</b> · EXERCISE A~B · 22문항</div></div></div>
+<div class="g-intro">Unit 07의 EXERCISE A는 <b>one / it, the other / another / others</b>의 구별, EXERCISE B는 <b>all · both · each · every · neither의 수 일치</b>를 다룹니다. 기출응용문제 23문항 중 8문항이 EXERCISE A의 내용에서 나옵니다.</div>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">1</span>one과 it <span class="g-badge">내신 빈출</span></h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>대명사</th><th>가리키는 것</th><th>예문</th></tr>
+<tr><td class="col-head">one<br>(복수 ones)</td><td>앞에 나온 명사와 <b>같은 종류의 불특정한 것</b><br>= a(n) + 명사</td><td><span class="e">I need a pencil. Do you have <b>one</b>?</span><br>(아무 연필이나 하나)</td></tr>
+<tr><td class="col-head">it<br>(복수 them)</td><td>앞에 나온 <b>바로 그것</b><br>= the + 명사</td><td><span class="e">I keep a cat. I play with <b>it</b>.</span><br>(내가 기르는 바로 그 고양이)</td></tr>
+</table></div>
+<ul class="g-list">
+<li>one 자리에 <span class="e">a + 명사</span>를, it 자리에 <span class="e">the + 명사</span>를 넣어 보면 구별됩니다.</li>
+<li>one(s)는 <b>형용사의 꾸밈을 받을 수 있습니다.</b> <span class="e">yellow <b>ones</b></span>(= yellow caps). it과 them은 형용사 뒤에 올 수 없습니다. <span class="e x">yellow them</span></li>
+</ul>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">2</span>one · another · the other · others <span class="g-badge">내신 빈출</span></h3>
+<p class="g-p">먼저 <b>전체가 몇 개인지</b>, 그다음 <b>나머지 전부를 가리키는지</b>를 확인합니다. 나머지 전부이면 the가 붙습니다.</p>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>전체</th><th>표현</th><th>예문</th></tr>
+<tr><td class="col-head">둘</td><td>one ~, <b>the other</b> ~</td><td><span class="e">I have two dictionaries. One is ~, and <b>the other</b> is ~.</span></td></tr>
+<tr><td class="col-head">셋</td><td>one ~, <b>another</b> ~, <b>the other</b> ~</td><td><span class="e">I've got three e-mails. One ~. <b>Another</b> ~. <b>The other</b> ~.</span></td></tr>
+<tr><td class="col-head">정해진 여럿</td><td>some ~, <b>the others</b> ~<br>(나머지 전부)</td><td><span class="e">Two of them are short, and <b>the others</b> are long.</span></td></tr>
+<tr><td class="col-head">정해지지 않은 여럿</td><td>some ~, <b>others</b> ~<br>(다른 일부)</td><td><span class="e">Some are resting and <b>others</b> are having lunch.</span></td></tr>
+</table></div>
+<div class="g-rule"><b>the</b>가 붙으면 '나머지 전부' — the other(나머지 하나), the others(나머지 모두)<br><b>the</b>가 없으면 '그 밖의 일부' — another(또 다른 하나), others(다른 몇몇)</div>
+<div class="g-warn"><b>함정</b> 손가락 문제(<span class="e">Two of them are short, and ( ) are long.</span>)처럼 전체 수가 정해져 있으면(손가락 다섯 개) 나머지 세 개는 '전부'이므로 <b>the others</b>입니다. 전체가 몇 명인지 알 수 없는 사람들을 나눌 때는 <b>others</b>입니다.</div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">3</span>other와 another의 형태</h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>형태</th><th>쓰임</th><th>예</th></tr>
+<tr><td class="col-head">another</td><td>대명사(또 다른 하나)<br>another + <b>단수명사</b></td><td><span class="e">Coffee is <b>another</b>. / another person</span></td></tr>
+<tr><td class="col-head">other</td><td>형용사로만 쓰임<br>other + <b>복수명사</b></td><td><span class="e">any <b>other</b> books</span></td></tr>
+<tr><td class="col-head">others</td><td>대명사(= other + 복수명사)<br>뒤에 명사가 오지 않음</td><td><span class="e"><b>others</b> wore yellow ones</span></td></tr>
+</table></div>
+<ul class="g-list">
+<li>another는 an + other에서 온 말이라서 뒤에 단수명사가 옵니다. <span class="e x">another books</span></li>
+<li>other는 혼자서 주어가 될 수 없습니다. 주어 자리에는 others를 씁니다. <span class="e x">Other are having lunch.</span></li>
+</ul>
+<p class="g-p g-sub">A is one thing, B is another.</p>
+<p class="g-p">'A와 B는 별개의 것이다'라는 관용 표현입니다. 둘을 말하고 있지만 the other가 아니라 <b>another</b>를 씁니다.</p>
+<div class="g-ex">
+<p><span class="e">To know is one thing; to teach is <b>another</b>.</span><span class="k">아는 것과 가르치는 것은 별개의 일이다.</span></p>
+</div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">4</span>all과 both의 수 일치</h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>대명사</th><th>뜻</th><th>동사</th><th>예문</th></tr>
+<tr><td class="col-head" rowspan="2">all</td><td>모든 사람들</td><td>복수</td><td><span class="e">All <b>are</b> excited about the movie.</span></td></tr>
+<tr><td>모든 것(= everything)</td><td>단수</td><td><span class="e">All that glitters <b>is</b> not gold.</span></td></tr>
+<tr><td class="col-head">both</td><td>둘 다</td><td>복수</td><td><span class="e">Both the men <b>like</b> you.</span></td></tr>
+</table></div>
+<p class="g-p"><span class="e">All that glitters is not gold.</span>는 '반짝이는 것이 모두 금은 아니다'라는 <b>부분부정</b>입니다. all과 not이 함께 쓰이면 '모두 ~인 것은 아니다'로 해석합니다(Unit 08).</p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">5</span>each · every · neither — 단수 <span class="g-badge">내신 빈출</span></h3>
+<div class="g-rule"><b>each / every</b> + <b>단수명사</b> + <b>단수동사</b>, 대명사로 받을 때도 단수(his, its)</div>
+<div class="g-ex">
+<p><span class="e">Solve each <b>question</b> in this math book.</span><span class="k">이 수학책의 각 문제를 풀어라.</span></p>
+<p><span class="e">Every <b>table has</b> four chairs.</span><span class="k">모든 식탁에는 의자가 네 개 있다.</span></p>
+<p><span class="e">Each boy has <b>his</b> own interests.</span><span class="k">소년들은 각자 자신만의 관심사가 있다.</span></p>
+</div>
+<p class="g-p g-sub">both와 neither</p>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>표현</th><th>뒤의 명사</th><th>뜻</th></tr>
+<tr><td class="col-head">both</td><td>복수명사 <span class="e">both parts</span></td><td>둘 다</td></tr>
+<tr><td class="col-head">either</td><td>단수명사 <span class="e">either part</span></td><td>둘 중 어느 한쪽</td></tr>
+<tr><td class="col-head">neither</td><td>단수명사 <span class="e">neither part</span></td><td>둘 중 어느 쪽도 ~아니다</td></tr>
+</table></div>
+<div class="g-warn"><b>함정</b> 우리말로는 '모든 ~들', '각각의 ~들'이라서 복수처럼 느껴지지만, each와 every는 하나하나를 따로 보는 말이므로 단수입니다. 동사 has가 이미 단수로 쓰여 있는지도 단서가 됩니다.</div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">6</span>every + 수사 : ~마다</h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>형태</th><th>예</th><th>뜻</th></tr>
+<tr><td class="col-head">every + <b>기수</b> + <b>복수명사</b></td><td><span class="e">every fifteen <b>days</b></span></td><td>15일마다</td></tr>
+<tr><td class="col-head">every + <b>서수</b> + <b>단수명사</b></td><td><span class="e">every seventh <b>day</b></span></td><td>7일째마다(= 7일마다)</td></tr>
+</table></div>
+<p class="g-p">every 뒤에는 원래 단수명사가 오지만, 기수(two, fifteen)가 끼어들면 그 수에 맞춰 복수명사를 씁니다. 서수(second, seventh)는 '~번째 하나'를 가리키므로 단수명사입니다.</p>
+</section>
+
+<section class="g-sec g-check"><h3 class="g-h">시험 직전 점검</h3>
+<ol class="g-ol">
+<li>one = a + 명사(불특정), it = the + 명사(바로 그것). 형용사 뒤에는 one(s).</li>
+<li>둘: one – the other / 셋: one – another – the other.</li>
+<li>some – others(다른 일부) / some – the others(나머지 전부).</li>
+<li>another + 단수명사, other + 복수명사, others는 단독. A is one thing, B is another.</li>
+<li>all(사람) 복수, all(사물) 단수, both 복수 / each·every + 단수명사 + 단수동사.</li>
+<li>every fifteen days = every fifteenth day. neither + 단수명사.</li>
+</ol></section>
+<div class="panel-foot"><button type="button" class="pf-btn primary" data-go="u2-q"><small>Unit 07</small>문제 풀이로 이동</button><button type="button" class="pf-btn" data-go="u3-g"><small>다음</small>Unit 08 기타대명사와 부분부정 · 어법 해설</button></div>
+</section>
+<section class="panel" id="p-u2-q" data-unit="u2" data-mode="q">
+<div class="panel-head"><div class="ph-no"><small>UNIT</small>07</div><div class="ph-txt"><h2 class="ph-title">부정대명사</h2><div class="ph-mode"><b>문제 풀이</b> · EXERCISE A~B · 22문항</div></div></div>
+<div class="tool-row"><button type="button" class="tool-btn" data-toggle-all>해설 모두 펼치기</button></div>
 <article class="q-card">
 <div class="q-head"><div class="q-num">07-A</div><div class="q-type gram">one·other·another</div><div class="q-pts">EX</div></div>
 <div class="q-prompt"><b>A.</b> 다음 괄호 속에서 어법상 알맞은 어구를 골라 ○표 하세요.</div>
@@ -422,19 +734,24 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>I've got three e-mails. One was from my parents. (Another, Other) is from my boyfriend. (Another, The other) is from Mr. Kim.</li>
 <li>We have a lot of things to drink. Coke is one thing. Coffee is (another, other).</li>
 </ol></div>
-<details class="ans"><summary>07-A번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail"><b>one</b>=같은 종류의 불특정, <b>it</b>=바로 그것. <b>one~the other</b>(둘), <b>one~another~the other</b>(셋), <b>some~others / the others</b>. A is one thing, B is another = 별개다.</div><ol class="ans-list">
-<li><span class="a">one</span> <span class="why">— 불특정 연필(a pencil)</span></li>
-<li><span class="a">one</span> <span class="why">— 불특정 별명</span></li>
-<li><span class="a">the other</span> <span class="why">— 둘 중 나머지</span></li>
-<li><span class="a">others</span> <span class="why">— 불특정 다른 사람들</span></li>
-<li><span class="a">another</span> <span class="why">— A is one thing; B is another</span></li>
-<li><span class="a">the other</span> <span class="why">— 둘 중 나머지</span></li>
-<li><span class="a">it</span> <span class="why">— 내가 기르는 바로 그 고양이</span></li>
-<li><span class="a">others / ones</span> <span class="why">— 다른 학생들 / caps=ones</span></li>
-<li><span class="a">the others</span> <span class="why">— 나머지 전부(특정)</span></li>
-<li><span class="a">other</span> <span class="why">— 복수 books 수식은 other</span></li>
-<li><span class="a">Another / The other</span> <span class="why">— 셋: One~Another~The other</span></li>
-<li><span class="a">another</span> <span class="why">— 별개(one thing~another)</span></li>
+<details class="ans"><summary>07-A 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① one</b>은 같은 종류의 불특정한 것(= a + 명사), <b>it</b>은 바로 그것(= the + 명사). 복수는 ones / them.<br>
+<b>② 둘</b>이면 one ~ the other, <b>셋</b>이면 one ~ another ~ the other.<br>
+<b>③ 여럿</b>을 나눌 때 나머지 전부면 the others, 다른 일부면 others.<br>
+<b>④</b> another + 단수명사, other + 복수명사. others는 뒤에 명사 없이 혼자 쓴다.</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">one</span><span class="full">I need a pencil. Do you have one?</span></div><span class="why">특정한 연필이 아니라 아무 연필이나 하나 있느냐는 뜻이므로 one(= a pencil). <i>it</i>을 쓰면 '내가 필요로 하는 바로 그 연필'이 되는데, 그런 연필은 아직 정해져 있지 않다.</span><span class="tr">연필이 하나 필요해. 너 하나 있니?</span></li>
+<li><div class="al-top"><span class="a">one</span><span class="full">They needed their own nicknames to play the game. So he made one up.</span></div><span class="why">복수 nicknames 중에서 자기 별명 '하나'를 새로 지었다는 뜻이므로 one(= a nickname). 앞의 nicknames는 복수라서 <i>it</i>으로 받을 수 없다. make up은 '지어내다'.</span><span class="tr">그들은 그 게임을 하기 위해 각자의 별명이 필요했다. 그래서 그는 하나를 지어냈다.</span></li>
+<li><div class="al-top"><span class="a">the other</span><span class="full">I have two dictionaries. One is an English-Korean dictionary, and the other is a Korean-English one.</span></div><span class="why">two dictionaries — 전체가 둘이다. 하나(One)를 말하고 남은 하나는 정해져 있으므로 the other. another는 셋 이상에서 '또 다른 하나'를 말할 때 쓴다.</span><span class="tr">나는 사전이 두 권 있다. 하나는 영한사전이고, 나머지 하나는 한영사전이다.</span></li>
+<li><div class="al-top"><span class="a">others</span><span class="full">Some are resting under the trees and others are having lunch.</span></div><span class="why">Some ~, others ~(어떤 사람들은 ~, 다른 사람들은 ~). 괄호 뒤에 명사 없이 바로 동사 are가 오므로 대명사 others. other는 형용사라서 혼자 주어가 될 수 없다.</span><span class="tr">어떤 사람들은 나무 아래에서 쉬고 있고, 다른 사람들은 점심을 먹고 있다.</span></li>
+<li><div class="al-top"><span class="a">another</span><span class="full">To know is one thing; to teach is another.</span></div><span class="why">A is one thing, B is another(A와 B는 별개다)라는 관용 표현. 둘을 말하지만 <i>the other</i>가 아니라 another를 쓴다.</span><span class="tr">아는 것과 가르치는 것은 별개의 일이다.</span></li>
+<li><div class="al-top"><span class="a">the other</span><span class="full">I told the two girls that one would cut the cake and the other would select whichever half she liked.</span></div><span class="why">the two girls — 전체가 둘이므로 one ~ the other. 뒤의 she(단수)도 한 명이라는 단서다. <i>others</i>는 복수여서 she와 맞지 않는다.</span><span class="tr">나는 두 소녀에게 한 명이 케이크를 자르고 다른 한 명이 마음에 드는 쪽 절반을 고르라고 말했다.</span></li>
+<li><div class="al-top"><span class="a">it</span><span class="full">I keep a cat. I play with it in the room.</span></div><span class="why">내가 기르는 '바로 그 고양이'와 논다는 뜻이므로 it(= the cat). <i>one</i>을 쓰면 '아무 고양이 한 마리'가 되어 앞 문장과 이어지지 않는다.</span><span class="tr">나는 고양이를 기른다. 나는 방에서 그 고양이와 논다.</span></li>
+<li><div class="al-top"><span class="a">others / ones</span><span class="full">Some students wore white caps, and others wore yellow ones.</span></div><span class="why">Some ~, others ~. 뒤에 명사 없이 동사 wore가 오므로 others. 둘째 괄호는 형용사 yellow 뒤이고 caps(복수)를 대신하므로 ones. <i>them</i>은 형용사의 꾸밈을 받을 수 없고, '흰 모자 그것들'을 가리키게 되어 뜻도 맞지 않는다.</span><span class="tr">어떤 학생들은 흰 모자를 썼고, 다른 학생들은 노란 모자를 썼다.</span></li>
+<li><div class="al-top"><span class="a">the others</span><span class="full">Look at your fingers. Two of them are short, and the others are long.</span></div><span class="why">손가락은 다섯 개로 전체 수가 정해져 있다. 둘을 뺀 나머지 셋 '전부'를 가리키므로 the others. <i>others</i>는 나머지 중 일부만 가리킬 때 쓴다.</span><span class="tr">네 손가락을 봐. 그중 둘은 짧고, 나머지는 길다.</span></li>
+<li><div class="al-top"><span class="a">other</span><span class="full">I've read the books you gave me. Do you have any other books that I can read?</span></div><span class="why">뒤에 복수명사 books가 있으므로 형용사 other. another는 an + other여서 단수명사 앞에만 쓴다.</span><span class="tr">네가 준 책은 다 읽었어. 내가 읽을 만한 다른 책이 있니?</span></li>
+<li><div class="al-top"><span class="a">Another / The other</span><span class="full">I've got three e-mails. One was from my parents. Another is from my boyfriend. The other is from Mr. Kim.</span></div><span class="why">three e-mails — 전체가 셋이다. 첫째 One, 둘째 Another(또 다른 하나), 마지막 남은 하나는 The other. 첫 괄호의 <i>Other</i>는 혼자 주어가 될 수 없고, 둘째 괄호에 <i>Another</i>를 쓰면 메일이 더 남아 있다는 뜻이 된다.</span><span class="tr">나는 이메일을 세 통 받았다. 하나는 부모님에게서 온 것이고, 또 하나는 남자친구에게서, 나머지 하나는 김 선생님에게서 온 것이다.</span></li>
+<li><div class="al-top"><span class="a">another</span><span class="full">We have a lot of things to drink. Coke is one thing. Coffee is another.</span></div><span class="why">마실 것이 많은(a lot of) 가운데 하나를 말하고 '또 다른 하나'를 말하므로 another. other는 뒤에 명사 없이 혼자 쓸 수 없다.</span><span class="tr">우리에게는 마실 것이 많다. 콜라가 하나이고, 커피가 또 하나이다.</span></li>
 </ol></div></details>
 </article>
 <article class="q-card">
@@ -452,20 +769,123 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>The newspaper is published every seventh (day, days).</li>
 <li>I'll take (both, neither) part.</li>
 </ol></div>
-<details class="ans"><summary>07-B번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail"><b>all</b>=사람이면 복수·사물(everything)이면 단수, <b>both</b>=복수, <b>each·every·either·neither</b>=단수 명사+단수 동사. every 기수+복수(fifteen days)=서수+단수(fifteenth day).</div><ol class="ans-list">
-<li><span class="a">are</span> <span class="why">— all=사람(복수)</span></li>
-<li><span class="a">is</span> <span class="why">— all that glitters=everything(단수)</span></li>
-<li><span class="a">like</span> <span class="why">— both=복수</span></li>
-<li><span class="a">question</span> <span class="why">— each+단수명사</span></li>
-<li><span class="a">table</span> <span class="why">— every+단수명사</span></li>
-<li><span class="a">his</span> <span class="why">— each boy=단수 → his</span></li>
-<li><span class="a">dog</span> <span class="why">— every+단수명사</span></li>
-<li><span class="a">days</span> <span class="why">— every 기수 + 복수(15일마다)</span></li>
-<li><span class="a">day</span> <span class="why">— every 서수 + 단수</span></li>
-<li><span class="a">neither</span> <span class="why">— take part(관용) → neither part</span></li>
+<details class="ans"><summary>07-B 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① all</b>: 사람을 뜻하면 복수동사, 사물(everything)을 뜻하면 단수동사. <b>both</b>는 항상 복수.<br>
+<b>② each / every + 단수명사 + 단수동사.</b> 대명사로 받을 때도 단수(his, its).<br>
+<b>③ every + 기수 + 복수명사 = every + 서수 + 단수명사</b>(~마다).<br>
+<b>④ both + 복수명사 / neither·either + 단수명사.</b></div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">are</span><span class="full">All are excited about the movie.</span></div><span class="why">영화 때문에 신이 난(excited) 것은 사람이다. all이 '모든 사람들'을 뜻하면 복수 취급하므로 are.</span><span class="tr">모두가 그 영화에 들떠 있다.</span></li>
+<li><div class="al-top"><span class="a">is</span><span class="full">All that glitters is not gold.</span></div><span class="why">여기서 All은 '모든 것(everything)'이라는 뜻의 사물이므로 단수 취급. 관계절의 동사 glitters에 -s가 붙은 것도 단수라는 단서다. all ~ not은 부분부정.</span><span class="tr">반짝이는 것이 모두 금은 아니다.</span></li>
+<li><div class="al-top"><span class="a">like</span><span class="full">Both the men like you.</span></div><span class="why">both는 '둘 다'이므로 항상 복수. 복수 주어에는 -s 없는 동사 like.</span><span class="tr">그 두 남자는 모두 너를 좋아한다.</span></li>
+<li><div class="al-top"><span class="a">question</span><span class="full">Solve each question in this math book.</span></div><span class="why">each 뒤에는 단수명사가 온다. 문제가 여러 개여도 하나하나를 따로 보는 말이기 때문이다. 복수형을 쓰려면 each of the questions.</span><span class="tr">이 수학책의 각 문제를 풀어라.</span></li>
+<li><div class="al-top"><span class="a">table</span><span class="full">Every table has four chairs.</span></div><span class="why">every + 단수명사. 동사 has가 단수형인 것도 단서다. <i>Every tables</i>는 틀린 형태.</span><span class="tr">모든 식탁에는 의자가 네 개씩 있다.</span></li>
+<li><div class="al-top"><span class="a">his</span><span class="full">Each boy has his own interests.</span></div><span class="why">Each boy는 단수이므로 소유격도 단수 his로 받는다. 동사 has도 단수형이다. 우리말 '소년들 각자'에 끌려 <i>their</i>를 고르지 않도록 한다.</span><span class="tr">소년들은 각자 자신만의 관심사가 있다.</span></li>
+<li><div class="al-top"><span class="a">dog</span><span class="full">Every dog has his day.</span></div><span class="why">every + 단수명사 + 단수동사(has). '쥐구멍에도 볕 들 날이 있다'에 해당하는 속담이다.</span><span class="tr">모든 개에게는 자신의 날이 있다. (누구에게나 좋은 때가 온다)</span></li>
+<li><div class="al-top"><span class="a">days</span><span class="full">The magazine is published every fifteen days.</span></div><span class="why">every + 기수(fifteen) + 복수명사 = ~마다. 기수 fifteen이 있으므로 days. every fifteenth day로 바꿔 쓸 수 있다.</span><span class="tr">그 잡지는 15일마다 발행된다.</span></li>
+<li><div class="al-top"><span class="a">day</span><span class="full">The newspaper is published every seventh day.</span></div><span class="why">every + 서수(seventh) + 단수명사. 서수는 '일곱 번째 하나'를 가리키므로 단수 day. 8번과 형태를 비교해 둔다.</span><span class="tr">그 신문은 7일마다 발행된다.</span></li>
+<li><div class="al-top"><span class="a">neither</span><span class="full">I'll take neither part.</span></div><span class="why">괄호 뒤의 명사 part가 단수다. both 뒤에는 복수명사(both parts)가 와야 하므로 단수명사와 쓰는 neither가 답이다. take part는 '편을 들다'.</span><span class="tr">나는 어느 편도 들지 않겠다.</span></li>
 </ol></div></details>
 </article>
-<div class="section-divider"><span>Chapter III · Unit 08 <em>Other Pronouns &amp; Partial Negation</em><span class="kor">제3장 · Unit 08 기타대명사와 부분부정</span></span></div>
+<div class="panel-foot"><button type="button" class="pf-btn" data-go="u2-g"><small>Unit 07</small>어법 해설 다시 보기</button><button type="button" class="pf-btn primary" data-go="u3-g"><small>다음</small>Unit 08 기타대명사와 부분부정 · 어법 해설</button></div>
+</section>
+<section class="panel" id="p-u3-g" data-unit="u3" data-mode="g">
+<div class="panel-head"><div class="ph-no"><small>UNIT</small>08</div><div class="ph-txt"><h2 class="ph-title">기타대명사와 부분부정</h2><div class="ph-mode"><b>어법 해설</b> · EXERCISE A~C · 23문항</div></div></div>
+<div class="g-intro">Unit 08은 <b>재귀대명사 → 지시대명사 that / those → 부분부정과 전체부정</b> 순서입니다. EXERCISE B의 that / those는 기출응용문제에서 일곱 번 다시 나옵니다.</div>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">1</span>재귀대명사의 형태</h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>인칭</th><th>단수</th><th>복수</th></tr>
+<tr><td class="col-head">1인칭</td><td><span class="e">myself</span></td><td><span class="e">ourselves</span></td></tr>
+<tr><td class="col-head">2인칭</td><td><span class="e">yourself</span></td><td><span class="e">yourselves</span></td></tr>
+<tr><td class="col-head">3인칭</td><td><span class="e">himself, herself, itself</span></td><td><span class="e">themselves</span></td></tr>
+</table></div>
+<p class="g-p">단수는 <b>-self</b>, 복수는 <b>-selves</b>입니다. <span class="e x">ourself</span>, <span class="e x">themself</span>는 없는 형태입니다. 어떤 재귀대명사를 쓸지는 <b>문장의 주어</b>(강조 용법이면 강조되는 말)를 보고 정합니다.</p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">2</span>재귀대명사의 두 가지 용법 <span class="g-badge">내신 빈출</span></h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>용법</th><th>설명</th><th>예문</th></tr>
+<tr><td class="col-head">재귀 용법</td><td>주어와 목적어가 <b>같은 대상</b>일 때 목적어 자리에 씀. 생략할 수 없음</td><td><span class="e">We should love <b>ourselves</b>.</span></td></tr>
+<tr><td class="col-head">강조 용법</td><td>명사 바로 뒤나 문장 끝에서 '<b>직접, 그 자체</b>'라는 뜻을 더함. 생략해도 문장이 성립</td><td><span class="e">Your presence <b>itself</b> was her happiness.</span></td></tr>
+</table></div>
+<div class="g-warn"><b>함정</b> 강조 용법에서는 <b>바로 앞의 명사</b>에 맞춥니다. <span class="e">Your presence itself</span>에서 강조되는 것은 your가 아니라 presence(단수 사물)이므로 yourself가 아니라 <b>itself</b>입니다.</div>
+<p class="g-p g-sub">be / seem + oneself</p>
+<p class="g-p">be동사나 seem 뒤에 재귀대명사가 오면 '평소의 자기 모습이다'라는 뜻입니다. <span class="e">He didn't seem quite <b>himself</b> this morning.</span> (오늘 아침 그는 평소 같지 않아 보였다.)</p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">3</span>재귀대명사 관용 표현 <span class="g-badge">내신 빈출</span></h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>표현</th><th>뜻</th><th>예문</th></tr>
+<tr><td><span class="e">for oneself</span></td><td>혼자 힘으로, 스스로</td><td><span class="e">You must make your own way <b>for yourself</b>.</span></td></tr>
+<tr><td><span class="e">by oneself</span></td><td>혼자서, 혼자 힘으로</td><td><span class="e">He finished the task <b>by himself</b>.</span></td></tr>
+<tr><td><span class="e">of itself</span></td><td>저절로</td><td><span class="e">The door closed <b>of itself</b>.</span></td></tr>
+<tr><td><span class="e">in itself</span></td><td>본질적으로, 그 자체로</td><td><span class="e">Love <b>in itself</b> is higher than friendship.</span></td></tr>
+<tr><td><span class="e">beside oneself</span></td><td>제정신이 아닌</td><td><span class="e">She was <b>beside herself</b> with joy.</span></td></tr>
+<tr><td><span class="e">make oneself at home</span></td><td>편히 있다</td><td><span class="e">Make <b>yourself</b> at home.</span></td></tr>
+<tr><td><span class="e">seat oneself</span></td><td>앉다</td><td><span class="e">She seated <b>herself</b> on the bench.</span></td></tr>
+<tr><td><span class="e">introduce oneself</span></td><td>자기소개를 하다</td><td><span class="e">He introduced <b>himself</b> to us.</span></td></tr>
+</table></div>
+<p class="g-p"><span class="e">Make yourself at home.</span> 같은 명령문은 주어 You가 생략된 것이므로 <b>yourself</b>를 씁니다. by oneself, beside oneself, seat oneself, introduce oneself는 EXERCISE에는 없고 기출응용문제(1·8·11번)에 나옵니다.</p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">4</span>that / those — 앞에 나온 명사 대신 쓰기 <span class="g-badge">내신 빈출</span></h3>
+<p class="g-p">비교 문장에서 같은 명사를 되풀이하지 않기 위해 <b>「the + 명사」</b>를 that이나 those로 바꿉니다. 뒤에는 보통 <span class="e">of ~</span>, <span class="e">in ~</span> 같은 수식어구가 붙습니다.</p>
+<div class="g-rule">단수명사 → <b>that</b> + of / in ~<br>복수명사 → <b>those</b> + of / in ~</div>
+<div class="g-ex">
+<p><span class="e"><u>The population</u> of Daegu is larger than <b>that</b> of Ulsan.</span><span class="k">대구의 인구는 울산의 인구보다 많다. (that = the population)</span></p>
+<p><span class="e"><u>The seasons</u> in Argentina are the reverse of <b>those</b> in Korea.</span><span class="k">아르헨티나의 계절은 한국의 계절과 정반대이다. (those = the seasons)</span></p>
+</div>
+<div class="g-warn"><b>함정</b> 가리키는 명사는 <b>of 뒤의 명사가 아니라 비교되는 앞의 명사</b>입니다. <span class="e">The population of Daegu</span>에서 that이 받는 것은 Daegu가 아니라 population입니다. 또 이 자리에 it / them은 쓸 수 없습니다. it과 them은 뒤에 수식어구(of ~)를 붙일 수 없기 때문입니다.</div>
+<p class="g-p g-sub">앞 내용 전체를 가리키는 that</p>
+<p class="g-p">that은 앞에 나온 구나 문장의 내용을 가리키기도 합니다. <span class="e">To be or not to be: <b>that</b> is the question.</span> (사느냐 죽느냐, 그것이 문제로다.)</p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">5</span>those = ~하는 사람들 <span class="g-badge">내신 빈출</span></h3>
+<p class="g-p">those는 뒤에 수식어구를 달고 <b>'~하는 사람들(people)'</b>이라는 뜻으로 쓰입니다. 복수이므로 복수동사로 받습니다.</p>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>형태</th><th>예</th><th>뜻</th></tr>
+<tr><td class="col-head">those who + 동사</td><td><span class="e"><b>Those who</b> like borrowing dislike paying.</span></td><td>빌리기를 좋아하는 사람들</td></tr>
+<tr><td class="col-head">those + 전치사구</td><td><span class="e"><b>those</b> around you / <b>Those</b> for minorities</span></td><td>네 주위의 사람들 / 소수자를 지지하는 사람들</td></tr>
+<tr><td class="col-head">those + 형용사·분사</td><td><span class="e"><b>Those</b> present / <b>those</b> resigned</span></td><td>참석한 사람들 / 사임한 사람들</td></tr>
+</table></div>
+<p class="g-p">전치사구나 형용사가 바로 오는 형태는 <span class="e">those (who are) ~</span>에서 who are가 생략된 것으로 이해하면 됩니다. 전치사 <span class="e">for</span>는 '찬성하는', <span class="e">against</span>는 '반대하는'이라는 뜻입니다.</p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">6</span>부분부정과 전체부정 <span class="g-badge">내신 빈출</span></h3>
+<p class="g-p"><b>not + all / both / every</b>는 전부를 부정하는 것이 아니라 <b>일부만 부정</b>합니다. '모두(둘 다) ~인 것은 아니다'로 해석합니다.</p>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>구분</th><th>대상이 둘</th><th>대상이 셋 이상</th></tr>
+<tr><td class="col-head">부분부정</td><td><span class="e">not both</span><br>둘 다 ~인 것은 아니다<br>= One ~, but the other … not</td><td><span class="e">not all / not every</span><br>모두 ~인 것은 아니다<br>= Some ~, but others … not</td></tr>
+<tr><td class="col-head">전체부정</td><td><span class="e">neither = not either</span><br>둘 다 ~아니다</td><td><span class="e">none, no one = not any</span><br>아무(것)도 ~아니다</td></tr>
+</table></div>
+<div class="g-ex">
+<p><span class="e"><b>Not both</b> of you are allowed to enter. = <b>One</b> of you is allowed, but <b>the other</b> isn't.</span><span class="k">너희 둘 다 입학이 허락되는 것은 아니다. = 한 명은 허락되지만, 다른 한 명은 아니다.</span></p>
+<p><span class="e"><b>Not everyone</b> watched the game. = <b>Some</b> people watched the game, but <b>others</b> didn't.</span><span class="k">모두가 그 경기를 본 것은 아니다. = 본 사람도 있고 안 본 사람도 있다.</span></p>
+</div>
+<p class="g-p">부분부정을 풀어 쓸 때는 Unit 07의 규칙이 그대로 적용됩니다. 둘이면 <b>one – the other</b>, 여럿이면 <b>some – others</b>입니다.</p>
+</section>
+
+<section class="g-sec g-check"><h3 class="g-h">시험 직전 점검</h3>
+<ol class="g-ol">
+<li>재귀대명사는 주어를 보고 정한다. 복수는 -selves(ourselves, themselves).</li>
+<li>강조 용법은 바로 앞 명사에 맞춘다: Your presence itself.</li>
+<li>for oneself(혼자 힘으로), of itself(저절로), in itself(본질적으로), beside oneself(제정신이 아닌).</li>
+<li>than / of 뒤에서 단수명사는 that, 복수명사는 those. it·them은 쓸 수 없다.</li>
+<li>those who ~, those + 전치사구·형용사 = ~하는 사람들(복수).</li>
+<li>not all·both·every = 부분부정. neither = not either = 전체부정.</li>
+</ol></section>
+<div class="panel-foot"><button type="button" class="pf-btn primary" data-go="u3-q"><small>Unit 08</small>문제 풀이로 이동</button><button type="button" class="pf-btn" data-go="gi-g"><small>다음</small>기출응용문제 · 어법 해설</button></div>
+</section>
+<section class="panel" id="p-u3-q" data-unit="u3" data-mode="q">
+<div class="panel-head"><div class="ph-no"><small>UNIT</small>08</div><div class="ph-txt"><h2 class="ph-title">기타대명사와 부분부정</h2><div class="ph-mode"><b>문제 풀이</b> · EXERCISE A~C · 23문항</div></div></div>
+<div class="tool-row"><button type="button" class="tool-btn" data-toggle-all>해설 모두 펼치기</button></div>
 <article class="q-card">
 <div class="q-head"><div class="q-num">08-A</div><div class="q-type gram">재귀대명사</div><div class="q-pts">EX</div></div>
 <div class="q-prompt"><b>A.</b> 다음 괄호 속에서 어법상 알맞은 단어를 고르세요.</div>
@@ -479,15 +899,20 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>The door closed of (itself, themselves).</li>
 <li>She says love in (themself, itself) is higher than friendship.</li>
 </ol></div>
-<details class="ans"><summary>08-A번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail">재귀대명사는 <b>주어와 동일 대상</b>을 받거나 관용표현에 쓰인다. of itself(저절로) · for oneself(혼자 힘으로) · in itself(본질적으로).</div><ol class="ans-list">
-<li><span class="a">itself</span> <span class="why">— Your presence 자체 → itself</span></li>
-<li><span class="a">ourselves</span> <span class="why">— we의 재귀 복수</span></li>
-<li><span class="a">himself</span> <span class="why">— seem oneself = 평소답다</span></li>
-<li><span class="a">yourself</span> <span class="why">— you → yourself</span></li>
-<li><span class="a">yourself</span> <span class="why">— Make yourself at home</span></li>
-<li><span class="a">mine</span> <span class="why">— from + 소유대명사</span></li>
-<li><span class="a">itself</span> <span class="why">— of itself = 저절로</span></li>
-<li><span class="a">itself</span> <span class="why">— in itself = 본질적으로</span></li>
+<details class="ans"><summary>08-A 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① 재귀대명사는 주어에 맞춘다.</b> we → ourselves, he → himself, you → yourself. 복수형은 -selves.<br>
+<b>② 강조 용법</b>은 바로 앞의 명사에 맞춘다(Your presence → itself).<br>
+<b>③ 관용 표현</b>: for oneself(혼자 힘으로), of itself(저절로), in itself(본질적으로), make oneself at home(편히 있다).<br>
+<b>④</b> 뒤에 명사가 없는 자리의 '~의 것'은 소유대명사(mine).</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">itself</span><span class="full">Your presence itself was her happiness.</span></div><span class="why">명사 바로 뒤에서 '~ 그 자체'라는 뜻을 더하는 강조 용법. 강조되는 말은 Your가 아니라 presence(단수 사물)이므로 itself. Your에 끌려 <i>yourself</i>를 고르면 오답.</span><span class="tr">네가 있다는 것 자체가 그녀의 행복이었다.</span></li>
+<li><div class="al-top"><span class="a">ourselves</span><span class="full">We should love ourselves.</span></div><span class="why">주어 We와 love의 목적어가 같은 대상이므로 재귀대명사. we는 복수이므로 -selves를 붙인 ourselves. <i>ourself</i>는 없는 형태.</span><span class="tr">우리는 우리 자신을 사랑해야 한다.</span></li>
+<li><div class="al-top"><span class="a">himself</span><span class="full">He didn't seem quite himself this morning.</span></div><span class="why">seem(be) oneself는 '평소의 자기 모습이다'. 목적격 <i>him</i>을 쓰면 He와 다른 사람을 가리키게 되어 뜻이 통하지 않는다.</span><span class="tr">오늘 아침 그는 평소 같지 않아 보였다.</span></li>
+<li><div class="al-top"><span class="a">yourself</span><span class="full">You must make your own way for yourself.</span></div><span class="why">for oneself는 '혼자 힘으로'. 주어가 You이고 앞에 your own도 있으므로 yourself. <i>ourselves</i>는 주어 we일 때 쓴다.</span><span class="tr">너는 혼자 힘으로 네 길을 개척해야 한다.</span></li>
+<li><div class="al-top"><span class="a">yourself</span><span class="full">Make yourself at home.</span></div><span class="why">명령문은 주어 You가 생략된 문장이므로 재귀대명사는 yourself. make oneself at home은 '(자기 집처럼) 편히 있다'.</span><span class="tr">편히 계세요.</span></li>
+<li><div class="al-top"><span class="a">mine</span><span class="full">Your point of view is different from mine.</span></div><span class="why">괄호 뒤에 명사가 없으므로 소유격 <i>my</i>는 쓸 수 없다. my point of view를 한 단어로 나타낸 소유대명사 mine. 재귀대명사 문제 사이에 섞인 격 문제다.</span><span class="tr">너의 관점은 나의 관점과 다르다.</span></li>
+<li><div class="al-top"><span class="a">itself</span><span class="full">The door closed of itself.</span></div><span class="why">of itself는 '저절로'. 주어 The door가 단수 사물이므로 itself. <i>themselves</i>는 복수 주어일 때 쓴다.</span><span class="tr">문이 저절로 닫혔다.</span></li>
+<li><div class="al-top"><span class="a">itself</span><span class="full">She says love in itself is higher than friendship.</span></div><span class="why">in itself는 '본질적으로, 그 자체로'. 가리키는 말 love가 단수이므로 itself. <i>themself</i>는 없는 형태다.</span><span class="tr">그녀는 사랑이 본질적으로 우정보다 고귀하다고 말한다.</span></li>
 </ol></div></details>
 </article>
 <article class="q-card">
@@ -506,18 +931,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>The man was among <span class="blk"></span> resigned.</li>
 <li>There is no power greater than <span class="blk"></span> of truth.</li>
 </ol></div>
-<details class="ans"><summary>08-B번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail"><b>that/those</b>=명사 반복 회피(단수 that, 복수 those). <b>those who ~</b>=~하는 사람들. those present=참석한 사람들.</div><ol class="ans-list">
-<li><span class="a">that</span> <span class="why">— the population(단수) 반복</span></li>
-<li><span class="a">Those</span> <span class="why">— those (who are) for ~ = 찬성하는 사람들</span></li>
-<li><span class="a">those</span> <span class="why">— the seasons(복수) 반복</span></li>
-<li><span class="a">Those</span> <span class="why">— Those who ~ = ~하는 사람들</span></li>
-<li><span class="a">those</span> <span class="why">— those around you = 주위 사람들</span></li>
-<li><span class="a">that</span> <span class="why">— that is the question</span></li>
-<li><span class="a">that</span> <span class="why">— the temperature(단수) 반복</span></li>
-<li><span class="a">Those</span> <span class="why">— Those who ~</span></li>
-<li><span class="a">Those</span> <span class="why">— those present = 참석자들</span></li>
-<li><span class="a">those</span> <span class="why">— those (who) resigned</span></li>
-<li><span class="a">that</span> <span class="why">— the power(단수) 반복</span></li>
+<details class="ans"><summary>08-B 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① 명사의 반복을 피할 때</b>: 앞의 명사가 단수면 that, 복수면 those. 비교되는 명사를 찾아 수를 확인한다.<br>
+<b>② ~하는 사람들</b>: those who ~ / those + 전치사구 / those + 형용사·분사. 복수 취급.<br>
+<b>③ 앞 내용 전체</b>를 가리킬 때는 that.</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">that</span><span class="full">The population of Daegu is larger than that of Ulsan.</span></div><span class="why">비교 대상은 대구의 '인구'와 울산의 '인구'. 반복되는 the population이 단수이므로 that. <i>it</i>은 뒤에 of Ulsan 같은 수식어구를 붙일 수 없다.</span><span class="tr">대구의 인구는 울산의 인구보다 많다.</span></li>
+<li><div class="al-top"><span class="a">Those</span><span class="full">Those for minorities argue that poor people's right should be protected first of all.</span></div><span class="why">Those (who are) for ~ = ~에 찬성하는 사람들. 동사 argue에 -s가 없으므로 주어는 복수다. 단수 <i>That</i>이면 argues가 되어야 한다.</span><span class="tr">소수자를 지지하는 사람들은 가난한 사람들의 권리가 무엇보다 먼저 보호되어야 한다고 주장한다.</span></li>
+<li><div class="al-top"><span class="a">those</span><span class="full">The seasons in Argentina are the reverse of those in Korea.</span></div><span class="why">반복되는 the seasons가 복수이므로 those. 뒤의 in Korea가 those를 꾸민다. 기출응용 12번 ④에 그대로 나오는 문장이다.</span><span class="tr">아르헨티나의 계절은 한국의 계절과 정반대이다.</span></li>
+<li><div class="al-top"><span class="a">Those</span><span class="full">Those who like borrowing dislike paying.</span></div><span class="why">those who ~ = ~하는 사람들. 관계절 동사 like와 본동사 dislike가 모두 복수형이다.</span><span class="tr">빌리기를 좋아하는 사람들은 갚기를 싫어한다.</span></li>
+<li><div class="al-top"><span class="a">those</span><span class="full">You should try to make those around you happy.</span></div><span class="why">those around you = 네 주위에 있는 사람들. make + 목적어(those around you) + 목적격보어(happy) 구조.</span><span class="tr">너는 네 주위 사람들을 행복하게 하려고 노력해야 한다.</span></li>
+<li><div class="al-top"><span class="a">that</span><span class="full">To be or not to be: that is the question.</span></div><span class="why">앞에 나온 내용(To be or not to be) 전체를 가리키는 지시대명사 that. 동사 is가 단수라는 점도 단서다.</span><span class="tr">사느냐 죽느냐, 그것이 문제로다.</span></li>
+<li><div class="al-top"><span class="a">that</span><span class="full">The temperature here is lower than that of Taiwan.</span></div><span class="why">반복되는 the temperature가 단수이므로 that. 1번과 같은 구조다.</span><span class="tr">이곳의 기온은 대만의 기온보다 낮다.</span></li>
+<li><div class="al-top"><span class="a">Those</span><span class="full">Those who want to go home early may do so.</span></div><span class="why">those who ~ = ~하는 사람들. 관계절 동사 want가 복수형이다. do so는 go home early를 대신한다.</span><span class="tr">일찍 집에 가고 싶은 사람은 그렇게 해도 좋다.</span></li>
+<li><div class="al-top"><span class="a">Those</span><span class="full">Those present were all disappointed with the result.</span></div><span class="why">those present = 참석한 사람들. present는 '참석한'이라는 뜻일 때 명사 뒤에서 꾸민다. 동사 were와 all이 복수라는 단서.</span><span class="tr">참석한 사람들은 모두 그 결과에 실망했다.</span></li>
+<li><div class="al-top"><span class="a">those</span><span class="full">The man was among those resigned.</span></div><span class="why">among(~ 사이에, ~ 중에)은 셋 이상의 복수를 받으므로 those. those (who) resigned = 사임한 사람들.</span><span class="tr">그 남자는 사임한 사람들 가운데 있었다.</span></li>
+<li><div class="al-top"><span class="a">that</span><span class="full">There is no power greater than that of truth.</span></div><span class="why">반복되는 명사 power가 단수이므로 that. that of truth = the power of truth.</span><span class="tr">진실의 힘보다 더 큰 힘은 없다.</span></li>
 </ol></div></details>
 </article>
 <article class="q-card">
@@ -529,14 +958,106 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>Neither of them is permitted to go home. = <span class="blk"></span> <span class="blk"></span> of them is permitted to go home.</li>
 <li>Not everyone watched the soccer game last night. = <span class="blk"></span> people watched the soccer game last night, but <span class="blk"></span> didn't.</li>
 </ol></div>
-<details class="ans"><summary>08-C번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail"><b>부분부정</b>(not all/both/every) → 일부만 부정: Some ~, but others ~. <b>전체부정</b>: neither = not either.</div><ol class="ans-list">
-<li><span class="a">One / the other</span> <span class="why">— 둘 중 한쪽만 허용, 나머지는 불가</span></li>
-<li><span class="a">Some / other</span> <span class="why">— 일부는 나를 위한 것, 다른 것은 아님</span></li>
-<li><span class="a">Not either</span> <span class="why">— neither = not either (전체부정)</span></li>
-<li><span class="a">Some / others</span> <span class="why">— 일부만 시청, 다른 이들은 안 봄</span></li>
+<details class="ans"><summary>08-C 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① 부분부정</b>: not + all / both / every = 모두(둘 다) ~인 것은 아니다.<br>
+<b>② 풀어 쓰기</b>: 대상이 둘이면 One ~, but the other …not / 여럿이면 Some ~, but others …not.<br>
+<b>③ 전체부정</b>: neither = not either(둘 다 아니다).</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">One / the other</span><span class="full">One of you is allowed to enter the college, but the other isn't.</span></div><span class="why">Not both는 '둘 다 ~인 것은 아니다'라는 부분부정. 대상이 둘이므로 한 명(One)은 되고 나머지 한 명(the other)은 안 된다는 뜻이다. 빈칸 뒤 동사가 is / isn't로 단수인 것이 단서.</span><span class="tr">너희 둘 다 그 대학에 입학이 허락되는 것은 아니다. = 한 명은 허락되지만, 다른 한 명은 아니다.</span></li>
+<li><div class="al-top"><span class="a">Some / other</span><span class="full">Some of the presents were for me, but other presents weren't.</span></div><span class="why">Not all은 '모두 ~인 것은 아니다'. 여럿 중 일부(Some)는 그렇고 다른 것들은 아니라는 뜻이다. 둘째 빈칸은 뒤에 명사 presents가 있으므로 대명사 <i>others</i>가 아니라 형용사 other.</span><span class="tr">그 선물이 모두 내 것은 아니었다. = 일부는 내 것이었지만, 다른 선물들은 아니었다.</span></li>
+<li><div class="al-top"><span class="a">Not either</span><span class="full">Not either of them is permitted to go home.</span></div><span class="why">neither = not + either. 둘 다 아니라는 전체부정이다. 1번의 not both(부분부정)와 뜻을 구별한다.</span><span class="tr">그들 둘 다 집에 가는 것이 허락되지 않는다.</span></li>
+<li><div class="al-top"><span class="a">Some / others</span><span class="full">Some people watched the soccer game last night, but others didn't.</span></div><span class="why">Not everyone은 '모두가 ~한 것은 아니다'. 본 사람도 있고(Some) 안 본 사람도 있다(others). 둘째 빈칸은 뒤에 명사 없이 didn't가 오므로 대명사 others.</span><span class="tr">모두가 어젯밤 그 축구 경기를 본 것은 아니다. = 본 사람도 있지만, 안 본 사람도 있다.</span></li>
 </ol></div></details>
 </article>
-<div class="section-divider"><span>Chapter III · <em>Past Exam Applications</em><span class="kor">제3장 대명사 · 기출응용문제 1~23</span></span></div>
+<div class="panel-foot"><button type="button" class="pf-btn" data-go="u3-g"><small>Unit 08</small>어법 해설 다시 보기</button><button type="button" class="pf-btn primary" data-go="gi-g"><small>다음</small>기출응용문제 · 어법 해설</button></div>
+</section>
+<section class="panel" id="p-gi-g" data-unit="gi" data-mode="g">
+<div class="panel-head"><div class="ph-no"><small>CHAPTER III</small>기출</div><div class="ph-txt"><h2 class="ph-title">기출응용문제</h2><div class="ph-mode"><b>어법 해설 (출제 포인트)</b> · 1~23번 · 23문항</div></div></div>
+<div class="g-intro">기출응용문제 23문항은 Unit 06~08의 내용이 섞여 출제됩니다. 객관식 18문항, 서술형 5문항이며, <b>other 계열(7문항)</b>과 <b>that / those(7문항)</b>가 절반 이상을 차지합니다.</div>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">1</span>유형별 문항 분포</h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>유형</th><th>문항</th><th>문항 수</th><th>관련 Unit</th></tr>
+<tr><td class="col-head">the other · another · others</td><td>4, 5, 16, 17, 18, 22, 23</td><td class="num">7</td><td>Unit 07</td></tr>
+<tr><td class="col-head">that / those (명사 대신)</td><td>2, 7, 14, 15, 21</td><td class="num">5</td><td>Unit 08</td></tr>
+<tr><td class="col-head">those (~하는 사람들 / those days)</td><td>10, 13</td><td class="num">2</td><td>Unit 08</td></tr>
+<tr><td class="col-head">재귀대명사</td><td>1, 8, 9, 11</td><td class="num">4</td><td>Unit 08</td></tr>
+<tr><td class="col-head">인칭대명사의 격</td><td>6, 20</td><td class="num">2</td><td>Unit 06</td></tr>
+<tr><td class="col-head">one / it</td><td>19</td><td class="num">1</td><td>Unit 07</td></tr>
+<tr><td class="col-head">all of + 대명사</td><td>3</td><td class="num">1</td><td>Unit 07</td></tr>
+<tr><td class="col-head">어법 종합</td><td>12</td><td class="num">1</td><td>Unit 06~08</td></tr>
+</table></div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">2</span>other 계열 풀이 순서 <span class="g-badge">4·5·16·17·18·22·23번</span></h3>
+<ol class="g-ol">
+<li><b>빈칸 뒤에 명사가 있는지 봅니다.</b> 단수명사가 있으면 another(22번 <span class="e">another person's</span>), 명사 없이 동사가 오면 대명사 자리입니다.</li>
+<li><b>빈칸 뒤 동사의 수를 봅니다.</b> 복수동사(were, go, practice, didn't …)이면 단수인 another, the other, each는 탈락합니다.</li>
+<li><b>전체가 몇인지 봅니다.</b> two, 둘(Success and Failure)이면 one – the other. 수가 정해지지 않은 사람들이면 some – others.</li>
+<li><b>없는 형태를 지웁니다.</b> <span class="e x">anothers</span>는 없는 말이고, other는 혼자 주어가 될 수 없습니다.</li>
+</ol>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>번호</th><th>단서</th><th>정답</th></tr>
+<tr><td class="num">4</td><td>Success and Failure(둘) / say one thing and mean ~</td><td><span class="e">the other / another</span></td></tr>
+<tr><td class="num">5</td><td>two puppies, 동사 is</td><td><span class="e">the other</span></td></tr>
+<tr><td class="num">16</td><td>a lot of people, 동사 go · go · take</td><td><span class="e">Some – Others – Still others</span></td></tr>
+<tr><td class="num">17</td><td>Some people ~, 동사 practice</td><td><span class="e">Others</span></td></tr>
+<tr><td class="num">18</td><td>토론 수업의 학생들(수 불명)</td><td><span class="e">Some – others</span></td></tr>
+<tr><td class="num">22</td><td>빈칸 뒤 단수명사 person's</td><td><span class="e">another</span></td></tr>
+<tr><td class="num">23</td><td>Some were ~, 동사 were</td><td><span class="e">others</span></td></tr>
+</table></div>
+<p class="g-p">여럿을 세 무리 이상으로 나눌 때는 <b>Some ~, Others ~, Still others ~</b>라고 합니다(16번). still others는 '또 다른 사람들'이라는 뜻입니다.</p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">3</span>that / those 풀이 순서 <span class="g-badge">2·7·10·13·14·15·21번</span></h3>
+<ol class="g-ol">
+<li><b>빈칸 뒤에 of ~, in ~ 같은 수식어구가 있고 비교·대조 문장이면</b> 명사를 대신하는 that / those입니다.</li>
+<li><b>무엇과 무엇을 비교하는지 찾습니다.</b> 앞쪽에서 빈칸과 같은 자리에 있는 명사가 가리키는 말입니다.</li>
+<li><b>그 명사가 단수면 that, 복수면 those.</b></li>
+</ol>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>번호</th><th>반복되는 명사</th><th>수</th><th>정답</th></tr>
+<tr><td class="num">2</td><td><span class="e">the apples</span></td><td>복수</td><td><span class="e">those</span></td></tr>
+<tr><td class="num">7</td><td><span class="e">the climate</span></td><td>단수</td><td><span class="e">that</span></td></tr>
+<tr><td class="num">14</td><td><span class="e">each detail / life style</span></td><td>단수</td><td><span class="e">that</span></td></tr>
+<tr><td class="num">15</td><td><span class="e">seasons / the cultures</span></td><td>복수</td><td><span class="e">those</span></td></tr>
+<tr><td class="num">21</td><td><span class="e">goals</span></td><td>복수</td><td><span class="e">those</span></td></tr>
+</table></div>
+<ul class="g-list">
+<li><b>10번</b> — 빈칸 뒤에 전치사구(against the bill)가 오고 '~하는 사람들'이라는 뜻이면 Those.</li>
+<li><b>13번</b> — 빈칸 뒤에 복수명사 days가 오면 지시형용사입니다. 과거의 시절은 <span class="e">those days</span>, 요즈음은 <span class="e">these days</span>.</li>
+</ul>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">4</span>재귀대명사 풀이 순서 <span class="g-badge">1·8·9·11번</span></h3>
+<ol class="g-ol">
+<li><b>주어와 목적어가 같은 대상인지 봅니다.</b> 같으면 재귀대명사, 다르면 목적격.</li>
+<li><b>주어의 인칭과 수에 맞춥니다.</b> a new member → himself, She → herself, (You) ask → yourself.</li>
+<li><b>전치사 + 재귀대명사는 뜻을 확인합니다.</b> by oneself(혼자 힘으로) / beside oneself(제정신이 아닌).</li>
+</ol>
+<p class="g-p g-sub">9번 — 재귀대명사가 간접목적어인 문장</p>
+<p class="g-p"><span class="e">ask + 간접목적어 + 직접목적어</span> 구조에서 간접목적어가 주어와 같으면 재귀대명사를 씁니다. 직접목적어가 의문사절이면 <b>「의문사 + 주어 + 동사」</b> 어순입니다. <span class="e">ask <b>yourself what you want</b></span></p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">5</span>그 밖의 유형 <span class="g-badge">3·6·12·19·20번</span></h3>
+<ul class="g-list">
+<li><b>3번 (all of + 대명사)</b> — 대명사와 함께 쓸 때는 <span class="e">all of you / us / them</span>처럼 of + 목적격입니다. 명사와 쓸 때는 <span class="e">all (of) the students</span>처럼 of 뒤에 the나 소유격이 있어야 합니다.</li>
+<li><b>6·20번 (격)</b> — 빈칸 뒤가 명사(original state)나 최상급(highest)이면 소유격 its, 동사(were)이면 주격. its와 it's를 구별합니다.</li>
+<li><b>19번 (one / it)</b> — 잃어버린 '바로 그것'을 찾는다면 it, 새로 '하나' 사거나 빌린다면 one.</li>
+<li><b>12번 (종합)</b> — 제2장과 제3장의 내용이 함께 나옵니다: 수사-명사 형용사는 단수형(ten-story), 이중소유격(a friend of mine), 둘 중 나머지는 the other.</li>
+</ul>
+</section>
+<div class="panel-foot"><button type="button" class="pf-btn primary" data-go="gi-q"><small>기출응용문제</small>문제 풀이로 이동</button><button type="button" class="pf-btn" data-go="u1-g"><small>처음으로</small>Unit 06 인칭대명사 · 어법 해설</button></div>
+</section>
+<section class="panel" id="p-gi-q" data-unit="gi" data-mode="q">
+<div class="panel-head"><div class="ph-no"><small>CHAPTER III</small>기출</div><div class="ph-txt"><h2 class="ph-title">기출응용문제</h2><div class="ph-mode"><b>문제 풀이</b> · 1~23번 · 23문항</div></div></div>
+<div class="tool-row"><button type="button" class="tool-btn" data-toggle-all>해설 모두 펼치기</button></div>
+<details class="ans" style="margin:0 0 28px"><summary>기출응용문제 정답 일람표 펼치기 (스포일러 주의)</summary><div class="ans-body"><table class="answer-sheet"><tr class="hdr-row"><td>기출</td><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>③</td><td style="font-size:10px;color:var(--rose-600)">those</td><td>④</td><td>①</td><td>④</td><td>②</td><td style="font-size:10px;color:var(--rose-600)">that</td></tr><tr class="hdr-row"><td>기출</td><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>④</td><td style="font-size:10px;color:var(--rose-600)">yourself what you want</td><td>②</td><td>②</td><td>④</td><td>⑤</td><td style="font-size:10px;color:var(--rose-600)">that</td></tr><tr class="hdr-row"><td>기출</td><th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>⑤</td><td>⑤</td><td>③</td><td>①</td><td>②</td><td>③</td><td style="font-size:10px;color:var(--rose-600)">goals</td></tr><tr class="hdr-row"><td>기출</td><th>22</th><th>23</th><th></th><th></th><th></th><th></th><th></th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>②</td><td>②</td><td></td><td></td><td></td><td></td><td></td></tr></table></div></details>
 <article class="q-card">
 <div class="q-head"><div class="q-num">1</div><div class="q-type choice">재귀대명사</div><div class="q-pts">기출</div></div>
 <div class="q-prompt">1. 다음 문장의 빈칸에 들어갈 말을 고르세요.</div>
@@ -548,18 +1069,41 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> themselves</span>
 <span class="c"><span class="num">⑤</span> ourselves</span>
 </div>
-<details class="ans"><summary>1번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>1번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">③ <span class="en">himself</span></div>
-<div class="ans-detail">주어 a new member(3인칭 단수 남성)와 동일 대상 → <b>himself</b>.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>주어와 목적어가 <b>같은 대상</b>이면 목적어 자리에 재귀대명사를 쓴다. 재귀대명사의 인칭과 수는 주어에 맞춘다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>and로 연결된 두 동사 joined와 introduced의 주어는 모두 a new member.</span></div>
+<div class="step"><span class="sn">2</span><span>새 회원이 소개한 것은 자기 자신 → 재귀대명사(introduce oneself = 자기소개를 하다).</span></div>
+<div class="step"><span class="sn">3</span><span>주어 a new member는 3인칭 단수 → 선지 중 3인칭 단수는 <b>himself</b>뿐이다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>myself는 주어가 I일 때 쓴다.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>yourself는 주어가 you일 때 쓴다.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>3인칭 단수 주어 a new member와 일치.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>themselves는 복수. a new member는 단수다.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>ourselves는 주어가 we일 때 쓴다. 뒤의 to us에 끌리지 않도록 한다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>어제 새 회원 한 명이 우리 동아리에 가입해서 우리에게 자기소개를 했다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">2</div><div class="q-type blank">지시대명사</div><div class="q-pts">기출</div></div>
 <div class="q-prompt">2. 밑줄 친 부분을 올바른 지시대명사로 바꾸세요.</div>
 <div class="passage">The apples on this table are more popular than <u>the apples</u> on that table.</div>
-
-<details class="ans"><summary>2번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>2번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main"><span class="en">those</span></div>
-<div class="ans-detail">the apples(복수 명사 반복)를 <b>those</b>로 대신한다.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>비교 문장에서 반복되는 <b>「the + 복수명사」는 those</b>로, 「the + 단수명사」는 that으로 바꾼다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>밑줄 친 the apples는 앞의 The apples와 같은 명사의 반복이다.</span></div>
+<div class="step"><span class="sn">2</span><span>apples는 복수 → <b>those</b>.</span></div>
+<div class="step"><span class="sn">3</span><span>뒤의 on that table이 those를 꾸민다: those on that table = 저 탁자 위의 사과들.</span></div>
+<span class="sec-t">자주 나오는 오답</span>
+<ul class="opt-list">
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>that</i> — apples가 복수이므로 단수 that은 쓸 수 없다. 뒤의 that table에 끌리지 않도록 한다.</span></li>
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>them</i> — them은 뒤에 on that table 같은 수식어구를 붙일 수 없다.</span></li>
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>ones</i> — the ones라면 가능하지만 문제는 지시대명사를 요구한다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>이 탁자 위의 사과가 저 탁자 위의 사과보다 더 인기가 있다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">3</div><div class="q-type choice">all of</div><div class="q-pts">기출</div></div>
@@ -572,9 +1116,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> all of you</span>
 <span class="c"><span class="num">⑤</span> all of students</span>
 </div>
-<details class="ans"><summary>3번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>3번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">④ <span class="en">all of you</span></div>
-<div class="ans-detail">대명사 앞에서는 <b>all of + 목적격</b> → all of you.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>all을 인칭대명사와 함께 쓸 때는 <b>all of + 목적격</b>(all of you / us / them)으로 쓴다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>전치사 to 뒤이므로 목적어 역할을 하는 명사구가 와야 한다.</span></div>
+<div class="step"><span class="sn">2</span><span>인칭대명사 you 앞에는 관사를 붙일 수 없고(②), 소유격 뒤에 all을 두지 않는다(③).</span></div>
+<div class="step"><span class="sn">3</span><span>all of 뒤의 명사에는 the나 소유격이 필요하므로 ⑤도 탈락. → <b>all of you</b></span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>대명사와 쓸 때는 of가 필요하다. all you만으로는 쓰지 않는다(you all은 가능).</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>인칭대명사 you 앞에 the를 붙일 수 없다.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>your all은 '너희 모두'라는 뜻이 되지 않는다.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>all of + 목적격 대명사.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>all of 뒤의 명사는 한정되어야 한다 → all of the students 또는 all students.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>저는 여러분 모두에게 매우 감사드립니다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">4</div><div class="q-type choice">the other/another</div><div class="q-pts">기출</div></div>
@@ -587,9 +1144,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> the other - other</span>
 <span class="c"><span class="num">⑤</span> another - the others</span>
 </div>
-<details class="ans"><summary>4번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>4번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">① <span class="en">the other - another</span></div>
-<div class="ans-detail">(둘 중) one ~ the other. "say one thing and mean another"(별개다) → another.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>둘 중 나머지 하나는 the other</b>, <b>'(그것과는) 다른 것'은 another</b>. say one thing and mean another는 관용 표현이다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>첫 문장: Success and Failure — 전체가 둘이다. one(하나) 다음의 나머지 하나 → <b>the other</b>. ②③⑤ 탈락.</span></div>
+<div class="step"><span class="sn">2</span><span>둘째 문장: one thing과 짝을 이루는 '또 다른 것' → <b>another</b>.</span></div>
+<div class="step"><span class="sn">3</span><span>④의 other는 형용사라 뒤에 명사 없이 혼자 쓸 수 없다. → ①</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>둘 중 나머지 the other + 별개의 것 another.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>둘 중 나머지에 another를 쓸 수 없다. others는 복수라 one thing과 짝이 안 된다.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>other는 혼자 대명사로 쓸 수 없다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>첫 빈칸은 맞지만 둘째 빈칸의 other가 혼자 쓰일 수 없다.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>둘 다 틀렸다. the others는 '나머지 전부(복수)'.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>• 성공과 실패가 당신을 기다리고 있다. 하나는 행복으로, 다른 하나는 불행으로 이끈다. • 말과 속뜻이 다르게 하지 마라. (한 가지를 말하면서 다른 것을 뜻하지 마라)</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">5</div><div class="q-type choice">the other</div><div class="q-pts">기출</div></div>
@@ -602,9 +1172,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> the other</span>
 <span class="c"><span class="num">⑤</span> a second</span>
 </div>
-<details class="ans"><summary>5번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>5번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">④ <span class="en">the other</span></div>
-<div class="ans-detail">둘 중 하나는 One, 나머지 하나는 <b>the other</b>.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>둘</b> 중 하나는 one, 나머지 하나는 <b>the other</b>.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>two puppies — 전체가 둘이다.</span></div>
+<div class="step"><span class="sn">2</span><span>빈칸 뒤 동사가 is(단수) → 복수인 the others, others 탈락.</span></div>
+<div class="step"><span class="sn">3</span><span>하나(One)를 뺀 나머지 하나 → <b>the other</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>the others는 나머지 전부(복수). 동사 is와 맞지 않는다.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>others도 복수. 동사 is와 맞지 않는다.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>one을 다시 쓰면 나머지 하나라는 뜻이 되지 않는다.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>둘 중 나머지 하나.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>a second는 셋 이상을 차례로 셀 때의 '두 번째 것'. 둘뿐일 때는 the other.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>그는 강아지가 두 마리 있다. 하나는 흰색이고, 나머지 하나는 갈색이다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">6</div><div class="q-type choice">its/they</div><div class="q-pts">기출</div></div>
@@ -617,18 +1200,40 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> their - it</span>
 <span class="c"><span class="num">⑤</span> their - they</span>
 </div>
-<details class="ans"><summary>6번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>6번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">② <span class="en">its - they</span></div>
-<div class="ans-detail">building(단수)의 소유격 <b>its</b>, the enemies(복수)를 받는 주격 <b>they</b>.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>대명사는 <b>가리키는 명사의 수</b>와 <b>문장에서의 자리(격)</b>에 맞춘다. its(소유격)와 it's(it is)를 구별한다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>첫 빈칸: 뒤에 명사구 original state가 있다 → 소유격. 가리키는 말 That building은 단수 → <b>its</b>. ④⑤ 탈락.</span></div>
+<div class="step"><span class="sn">2</span><span>it's는 it is의 줄임말이므로 명사 앞에 올 수 없다. ③ 탈락.</span></div>
+<div class="step"><span class="sn">3</span><span>둘째 빈칸: 동사 were 앞의 주어 자리. 가리키는 말 the enemies는 복수 → <b>they</b>. ① 탈락.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>둘째 빈칸의 it은 단수라 were와 맞지 않는다.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>단수 소유격 its + 복수 주격 they.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>it's = it is. 명사 앞에는 소유격 its를 써야 한다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>building은 단수이므로 their가 아니고, it도 were와 맞지 않는다.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>첫 빈칸의 their가 단수 building과 맞지 않는다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>• 저 건물은 화재로 파괴되어서 원래 상태를 알기 어렵다. • 적들이 내 가까이에 있었기 때문에 나는 그들을 볼 수 있었다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">7</div><div class="q-type blank">지시대명사</div><div class="q-pts">기출</div></div>
 <div class="q-prompt">7. 빈칸에 들어갈 적절한 대명사를 쓰세요.</div>
 <div class="passage">The climate of Africa is hotter than ________ of Korea.</div>
-
-<details class="ans"><summary>7번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>7번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main"><span class="en">that</span></div>
-<div class="ans-detail">the climate(단수 명사 반복)를 <b>that</b>으로 대신한다.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>비교 문장에서 반복되는 <b>「the + 단수명사」는 that</b>으로 받는다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>비교 대상을 찾는다: 아프리카의 기후 vs 한국의 (기후).</span></div>
+<div class="step"><span class="sn">2</span><span>반복되는 명사 the climate는 단수 → <b>that</b>.</span></div>
+<div class="step"><span class="sn">3</span><span>that of Korea = the climate of Korea.</span></div>
+<span class="sec-t">자주 나오는 오답</span>
+<ul class="opt-list">
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>those</i> — climate는 단수이므로 복수 those는 쓸 수 없다.</span></li>
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>it</i> — it은 뒤에 of Korea 같은 수식어구를 붙일 수 없다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>아프리카의 기후는 한국의 기후보다 덥다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">8</div><div class="q-type choice">재귀·관계사</div><div class="q-pts">기출</div></div>
@@ -641,18 +1246,40 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> herself - which</span>
 <span class="c"><span class="num">⑤</span> herself - who</span>
 </div>
-<details class="ans"><summary>8번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>8번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">④ <span class="en">herself - which</span></div>
-<div class="ans-detail">(A) seat oneself(앉다) → herself. (B) 선행사 a breeze(사물) → 관계대명사 which.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>seat oneself = 앉다</b>(주어와 목적어가 같으면 재귀대명사). 선행사가 사물이고 관계절의 주어 자리이면 관계대명사 <b>which</b>.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>(A) seat은 '~를 앉히다'라는 타동사. 그녀가 앉힌 것은 자기 자신 → <b>herself</b>. ①③ 탈락.</span></div>
+<div class="step"><span class="sn">2</span><span>(B) 선행사 a breeze(산들바람)는 사물이고, 뒤에 주어 없이 동사 was가 온다 → 주격 관계대명사 <b>which</b>.</span></div>
+<div class="step"><span class="sn">3</span><span>what은 선행사를 포함하므로 앞에 선행사가 있으면 쓸 수 없고, who는 사람 선행사에 쓴다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>her는 주어 She와 다른 여자를 가리키게 된다. what은 선행사 뒤에 올 수 없다.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>(A)는 맞지만 what은 선행사 a breeze 뒤에 쓸 수 없다.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>(B)는 맞지만 (A)가 her.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>재귀대명사 herself + 사물 선행사의 which.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>who는 사람을 선행사로 한다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>• 그녀는 벤치에 앉았다. • 상쾌하고 시원한 산들바람이 불었다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">9</div><div class="q-type blank">재귀·어순</div><div class="q-pts">기출</div></div>
 <div class="q-prompt">9. 주어진 단어를 올바르게 배열하여 문장을 완성하세요.</div>
 <div class="passage">Before you remodel your kitchen, ask ________ in it. <span style="font-size:12px;color:var(--slate-500)">(what, want, yourself, you)</span></div>
-
-<details class="ans"><summary>9번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>9번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main"><span class="en">yourself what you want</span></div>
-<div class="ans-detail">ask + 간접목적어(yourself) + 직접목적어(what you want) 어순.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>ask + 간접목적어 + 직접목적어.</b> 명령문의 주어는 you이므로 간접목적어는 yourself. 직접목적어인 의문사절은 <b>「의문사 + 주어 + 동사」</b> 어순.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>ask 뒤에 '누구에게'(간접목적어)를 먼저 쓴다. 명령문의 주어 you와 같은 대상 → <b>yourself</b>.</span></div>
+<div class="step"><span class="sn">2</span><span>'무엇을'(직접목적어)은 의문사절: what + 주어 you + 동사 want.</span></div>
+<div class="step"><span class="sn">3</span><span>이어 붙이면 ask <b>yourself what you want</b> in it.</span></div>
+<span class="sec-t">자주 나오는 오답</span>
+<ul class="opt-list">
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>what you want yourself</i> — 간접목적어는 직접목적어 앞에 와야 한다.</span></li>
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>yourself what want you</i> — 간접의문문은 의문문 어순이 아니라 「주어 + 동사」 어순이다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>부엌을 리모델링하기 전에, 부엌에 무엇을 원하는지 스스로에게 물어보라.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">10</div><div class="q-type choice">those</div><div class="q-pts">기출</div></div>
@@ -665,9 +1292,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> This</span>
 <span class="c"><span class="num">⑤</span> The others</span>
 </div>
-<details class="ans"><summary>10번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>10번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">② <span class="en">Those</span></div>
-<div class="ans-detail">Those (who are) against the bill = 그 법안에 반대하는 사람들.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>those + 전치사구 = ~하는 사람들.</b> those (who are) against ~ = ~에 반대하는 사람들.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>문장의 동사는 appealed, 주어는 「빈칸 + against the bill」이다.</span></div>
+<div class="step"><span class="sn">2</span><span>시민들에게 도움을 호소하는 것은 사람 → '그 법안에 반대하는 사람들'.</span></div>
+<div class="step"><span class="sn">3</span><span>수식어구를 뒤에 달고 '~하는 사람들'을 뜻하는 대명사는 <b>Those</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>That은 단수이고 '사람들'이라는 뜻으로 쓰이지 않는다.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>Those (who are) against the bill.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>These는 이 용법으로 쓰지 않는다. '~하는 사람들'은 those로 굳어져 있다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>This는 단수이고 사람들을 뜻하지 않는다.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>The others는 앞에 언급된 집단의 '나머지'를 가리킨다. 앞에 그런 집단이 없다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>그 법안에 반대하는 사람들은 시민들에게 도움을 호소했다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">11</div><div class="q-type choice">관용</div><div class="q-pts">기출</div></div>
@@ -679,9 +1319,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> She shook hands with me and introduced <u>herself</u>.</span>
 <span class="c"><span class="num">⑤</span> This washing machine is out of order. I have to <u>get it fixed</u>.</span>
 </div>
-<details class="ans"><summary>11번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">② <span class="en">by himself</span></div>
-<div class="ans-detail">"혼자 힘으로"는 <b>by himself</b>. beside oneself는 "제정신이 아닌"이라 문맥에 안 맞는다.</div></div></details>
+<details class="ans"><summary>11번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">② <span class="en">beside himself</span> (✗) → by himself</div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>전치사 + 재귀대명사는 전치사에 따라 뜻이 달라진다. <b>by oneself</b>(혼자 힘으로) / <b>beside oneself</b>(제정신이 아닌).</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>②의 문맥: 그 일을 끝내는 데 성공했다 → '혼자 힘으로'라는 뜻이 어울린다.</span></div>
+<div class="step"><span class="sn">2</span><span>beside himself는 '제정신이 아닌'이라는 뜻이라 성공했다는 내용과 맞지 않는다.</span></div>
+<div class="step"><span class="sn">3</span><span>철자가 비슷한 <b>by himself</b>(또는 for himself)로 고쳐야 한다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>half a bottle. 「half + a(n) + 명사」 어순이 맞다.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>beside himself는 '제정신이 아닌'. by himself여야 한다.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>내가 기르는 바로 그 개 → it.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>주어 She와 목적어가 같은 대상 → herself.</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>get + 목적어 + 과거분사. 세탁기가 '수리되는' 것이므로 fixed.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 놀랍게도 그녀는 위스키 반 병을 단숨에 마셨다. ② 그는 혼자 힘으로 그 일을 끝내는 데 성공했다. ③ 나는 개를 기른다. 나는 종종 공원에서 그 개와 논다. ④ 그녀는 나와 악수하고 자기소개를 했다. ⑤ 이 세탁기는 고장 났다. 수리를 맡겨야 한다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">12</div><div class="q-type choice">대명사 종합</div><div class="q-pts">기출</div></div>
@@ -693,9 +1346,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> The seasons in Argentina are the reverse of those in Korea.</span>
 <span class="c"><span class="num">⑤</span> He has two apples. He ate one and gave the others to me.</span>
 </div>
-<details class="ans"><summary>12번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">④ <span class="en">the reverse of those</span></div>
-<div class="ans-detail">④ those=the seasons 정상. ①ten-story ②a friend of mine ③overslept(자동사, me 불필요) ⑤the other(둘 중 나머지).</div></div></details>
+<details class="ans"><summary>12번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">④ <span class="en">The seasons in Argentina are the reverse of those in Korea.</span></div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>명사·대명사 어법 종합. 수사-명사 형용사, 이중소유격, 재귀대명사, that / those, the other를 각각 확인한다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>① ten-stories, ② A my — 형태만 보고 바로 지울 수 있다.</span></div>
+<div class="step"><span class="sn">2</span><span>⑤ two apples(둘)에서 하나를 먹었으면 나머지는 하나 → the other. the others는 복수.</span></div>
+<div class="step"><span class="sn">3</span><span>④ those가 복수명사 the seasons를 받고 뒤에 in Korea가 붙었다. 어법에 맞다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>「수사-명사」가 명사를 꾸밀 때는 단수형 → a ten-story building.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>a와 소유격은 나란히 쓸 수 없다 → A friend of mine.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>oversleep은 목적격 me를 목적어로 취하지 않는다 → I overslept. (또는 overslept myself)</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>those = the seasons. Unit 08 EXERCISE B-3과 같은 문장.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>둘 중 나머지 하나 → the other.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 그의 아버지는 10층짜리 건물을 가지고 있다. ② 내 친구 한 명은 유명한 가수이다. ③ 이런! 나 늦잠 잤어. ④ 아르헨티나의 계절은 한국의 계절과 정반대이다. ⑤ 그는 사과가 두 개 있다. 그는 하나를 먹고 나머지 하나를 나에게 주었다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">13</div><div class="q-type choice">those</div><div class="q-pts">기출</div></div>
@@ -708,18 +1374,40 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> that</span>
 <span class="c"><span class="num">⑤</span> those</span>
 </div>
-<details class="ans"><summary>13번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>13번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">⑤ <span class="en">those</span></div>
-<div class="ans-detail">those days = 그 시절(복수 days 수식).</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>지시형용사는 뒤의 명사와 수를 맞춘다. 복수명사 days 앞에서 <b>과거의 시절은 those days</b>, 요즈음은 these days.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>빈칸 뒤에 복수명사 days가 있다 → 단수에 쓰는 that 탈락.</span></div>
+<div class="step"><span class="sn">2</span><span>가리키는 것은 앞 문장의 their good old days(옛 시절)이고 동사도 과거 was → 멀리 있는 것을 가리키는 <b>those</b>.</span></div>
+<div class="step"><span class="sn">3</span><span>what, whose를 넣으면 절이 되는데 뒤에 절을 이룰 주어·동사가 부족하다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>what days는 의문·감탄의 뜻이 되어 문장이 성립하지 않는다.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>whose는 소유격 관계대명사·의문사. 앞에 선행사가 없다.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>these days는 '요즈음'. 과거 시제 was, 옛 시절이라는 문맥과 맞지 않는다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>that은 단수명사 앞에 쓴다. days는 복수.</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>in those days = 그 시절에는.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>어렸을 때부터 나는 사람들이 백인들의 침략 이전의 좋았던 옛 시절에 대해 이야기하는 것을 들어 왔다. 그 시절의 상황은 매우 달랐다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">14</div><div class="q-type blank">that</div><div class="q-pts">기출</div></div>
 <div class="q-prompt">14. 다음 글의 밑줄 친 부분에 들어갈 단어를 쓰세요.</div>
 <div class="passage">Hey, John! Stop comparing each detail of Canadian life style with ________ of my country.</div>
-
-<details class="ans"><summary>14번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>14번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main"><span class="en">that</span></div>
-<div class="ans-detail">that = the life style(단수) 를 대신.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>비교·대조되는 <b>단수명사의 반복은 that</b>으로 받는다. compare A with B에서 A와 B는 같은 종류여야 한다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>compare A with B 구조: A = each detail of Canadian life style, B = ___ of my country.</span></div>
+<div class="step"><span class="sn">2</span><span>A에서 반복될 명사(detail, life style)는 어느 쪽으로 보아도 단수다.</span></div>
+<div class="step"><span class="sn">3</span><span>단수명사를 대신하고 뒤에 of ~를 붙일 수 있는 대명사 → <b>that</b>.</span></div>
+<span class="sec-t">자주 나오는 오답</span>
+<ul class="opt-list">
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>those</i> — each detail, life style 모두 단수이므로 복수 those는 맞지 않는다.</span></li>
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>it</i> — it은 뒤에 of my country 같은 수식어구를 붙일 수 없다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>이봐, John! 캐나다 생활 방식의 세세한 부분을 하나하나 우리나라의 것과 비교하는 건 그만해.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">15</div><div class="q-type choice">those</div><div class="q-pts">기출</div></div>
@@ -732,9 +1420,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> that</span>
 <span class="c"><span class="num">⑤</span> those</span>
 </div>
-<details class="ans"><summary>15번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>15번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">⑤ <span class="en">those</span></div>
-<div class="ans-detail">Seasons·the cultures 모두 <b>복수</b> 명사 반복 → those.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>비교·대조되는 <b>복수명사의 반복은 those</b>로 받는다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>첫 문장: Seasons below the Equator ↔ ___ north of it. 반복되는 명사 Seasons는 복수.</span></div>
+<div class="step"><span class="sn">2</span><span>둘째 문장: the cultures of Asia ↔ ___ of America. 반복되는 명사 cultures도 복수.</span></div>
+<div class="step"><span class="sn">3</span><span>복수명사를 대신하고 뒤에 수식어구를 붙일 수 있는 것 → <b>those</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>it은 단수이고 뒤에 수식어구를 붙일 수 없다.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>this는 단수이고 명사의 반복을 피하는 용법으로 쓰지 않는다.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>these는 복수지만 명사의 반복을 피하는 용법에는 those를 쓴다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>that은 단수명사를 받는다. Seasons, cultures는 복수.</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>those = the seasons / the cultures.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>• 적도 아래쪽의 계절은 적도 북쪽의 계절과 정반대이다. • 나는 아시아의 문화와 아메리카의 문화를 비교했다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">16</div><div class="q-type choice">some/others</div><div class="q-pts">기출</div></div>
@@ -747,9 +1448,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> Others - Some - The other</span>
 <span class="c"><span class="num">⑤</span> Some - Others - Still others</span>
 </div>
-<details class="ans"><summary>16번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>16번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">⑤ <span class="en">Some - Others - Still others</span></div>
-<div class="ans-detail">대다수 중 일부/또 다른 일부/또 다른 일부 → Some ~, Others ~, Still others ~.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>수가 정해지지 않은 여럿을 세 무리로 나눌 때는 <b>Some ~, Others ~, Still others ~</b>.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>전체는 a lot of people — 몇 명인지 정해지지 않은 다수다.</span></div>
+<div class="step"><span class="sn">2</span><span>세 빈칸 뒤의 동사가 go, go, take로 모두 복수형 → 단수인 One, The other가 들어간 ①②④ 탈락.</span></div>
+<div class="step"><span class="sn">3</span><span>③의 The others는 '나머지 전부'인데, 그 뒤에 또 다른 사람들(Still others)이 나올 수 없다. → ⑤</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>(C) The other는 단수라 take와 맞지 않는다.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>(A) One은 단수라 go와 맞지 않는다. (C)도 단수.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>(B) The others가 나머지 전부를 가리키면 (C)에 남는 사람이 없다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>Others로 시작할 수 없고, (C) The other도 단수.</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>일부는 ~, 다른 일부는 ~, 또 다른 일부는 ~.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>여름에 많은 사람들이 즐거운 시간을 보내기 위해 휴가를 간다. 어떤 사람들은 해변에 간다. 다른 사람들은 캠핑 여행을 간다. 또 다른 사람들은 외국으로 여행을 간다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">17</div><div class="q-type choice">others</div><div class="q-pts">기출</div></div>
@@ -762,9 +1476,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> One another</span>
 <span class="c"><span class="num">⑤</span> Other</span>
 </div>
-<details class="ans"><summary>17번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>17번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">③ <span class="en">Others</span></div>
-<div class="ans-detail">Some ~, <b>Others</b> ~ (일부는 이렇게, 다른 이들은 저렇게).</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>Some (people) ~, Others ~</b> = 어떤 사람들은 ~, 다른 사람들은 ~.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>앞 문장이 Some people로 시작한다 → 짝이 되는 표현을 찾는다.</span></div>
+<div class="step"><span class="sn">2</span><span>빈칸 뒤 동사 practice에 -s가 없다 → 주어는 복수. 단수인 The other, Another 탈락.</span></div>
+<div class="step"><span class="sn">3</span><span>뒤에 명사 없이 혼자 주어가 되는 복수 대명사 → <b>Others</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>The other는 단수. practices가 되어야 한다.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>Another도 단수.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>Some ~, Others ~.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>one another는 '서로'라는 뜻으로 주어 자리에 오지 않는다.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>Other는 형용사라 혼자 주어가 될 수 없다(Other people이면 가능).</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>사람들은 영어를 배우는 방식이 서로 다르다. 어떤 사람들은 단어와 문장을 외우고 써 보면서 영어를 배운다. 다른 사람들은 친구들과 영어로 이야기하면서 연습한다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">18</div><div class="q-type choice">some/others</div><div class="q-pts">기출</div></div>
@@ -777,9 +1504,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> Anothers - some</span>
 <span class="c"><span class="num">⑤</span> Some - another</span>
 </div>
-<details class="ans"><summary>18번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>18번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">① <span class="en">Some - others</span></div>
-<div class="ans-detail">일부는 동의, 다른 이들은 반대 → Some ~, others ~. (anothers는 없는 형태)</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>Some ~, but others ~</b>. another에는 복수형이 없으므로 anothers는 틀린 말이다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>토론 수업의 학생들 — 수가 정해지지 않은 여럿을 찬성·반대로 나눈다.</span></div>
+<div class="step"><span class="sn">2</span><span>없는 형태 anothers가 들어간 ②④ 탈락.</span></div>
+<div class="step"><span class="sn">3</span><span>앞에 가리킬 대상 없이 Others로 시작할 수 없고(③), another는 단수 한 명(⑤). → <b>Some – others</b></span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>일부는 동의했지만, 다른 사람들은 동의하지 않았다.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>anothers라는 말은 없다.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>others는 앞에 some이 먼저 나와야 '다른 사람들'이라는 뜻이 선다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>Anothers는 없는 형태.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>another는 '또 다른 한 명'. 일부와 대비되는 여러 사람을 나타내지 못한다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>나는 토론 수업에서 내 의견을 말했다. 어떤 사람들은 내 의견에 동의했지만, 다른 사람들은 그렇지 않았다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">19</div><div class="q-type choice">one/it</div><div class="q-pts">기출</div></div>
@@ -792,9 +1532,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> it - one - it</span>
 <span class="c"><span class="num">⑤</span> it - it - one</span>
 </div>
-<details class="ans"><summary>19번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>19번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">② <span class="en">one - one - it</span></div>
-<div class="ans-detail">아무 펜이나 one, 새 지갑(불특정) one, 잃어버린 <b>바로 그</b> 반지 it.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>one = a + 명사</b>(같은 종류의 아무것이나 하나), <b>it = the + 명사</b>(바로 그것).</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>첫 문장: 펜이 없다 → 아무 펜이나 하나 빌려 달라 → <b>one</b>(= a pen). ④⑤ 탈락.</span></div>
+<div class="step"><span class="sn">2</span><span>둘째 문장: 지갑을 잃어버렸다 → 새 지갑을 하나 사야 한다 → <b>one</b>(= a purse). 잃어버린 그 지갑은 살 수 없다. ③ 탈락.</span></div>
+<div class="step"><span class="sn">3</span><span>셋째 문장: 결혼반지를 잃어버렸다 → 바로 그 반지를 찾아야 한다 → <b>it</b>. ① 탈락.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>셋째가 one이면 아무 반지나 찾는다는 뜻이 된다.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>빌리는 펜(불특정), 새로 사는 지갑(불특정), 찾는 반지(특정).</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>둘째가 it이면 잃어버린 바로 그 지갑을 산다는 뜻이 된다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>첫째가 it이면 가리킬 특정한 펜이 없다.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>세 자리 모두 반대로 되어 있다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>• 나는 펜이 없어. 하나 빌려줄 수 있니? • 나는 지갑을 잃어버렸어. 하나 사야 해. • 나는 결혼반지를 잃어버렸어. 그것을 찾아야 해.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">20</div><div class="q-type choice">its</div><div class="q-pts">기출</div></div>
@@ -807,18 +1560,40 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> it's</span>
 <span class="c"><span class="num">⑤</span> your</span>
 </div>
-<details class="ans"><summary>20번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>20번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">③ <span class="en">its</span></div>
-<div class="ans-detail">the sun is at <b>its</b> highest = 태양이 가장 높이 있을 때(소유격).</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>소유격 + 최상급</b>. 한 대상의 상태가 가장 ~한 때를 말할 때 (at) its highest처럼 소유격을 쓴다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>빈칸 뒤는 최상급 highest. 최상급 앞에는 the나 소유격이 온다.</span></div>
+<div class="step"><span class="sn">2</span><span>누구의 가장 높은 상태인지 → 주어 the sun(단수 사물)의 → <b>its</b>.</span></div>
+<div class="step"><span class="sn">3</span><span>it's는 it is의 줄임말이라 is 뒤에 다시 올 수 없다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>one은 highest 앞에서 아무 뜻도 만들지 못한다.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>the other(나머지 하나)는 문맥과 무관하다.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>the sun의 소유격 its + 최상급. 보통 at its highest로 쓴다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>it's = it is. 동사 is가 겹친다.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>your는 the sun을 받을 수 없다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>태양이 가장 높이 떠 있는 때를 무엇이라고 부르나요?</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">21</div><div class="q-type blank">those 지칭</div><div class="q-pts">기출</div></div>
 <div class="q-prompt">21. 다음 문장에서 밑줄 친 those가 가리키는 한 단어를 찾아 쓰세요.</div>
 <div class="passage">Your goals and <u>those</u> of your friends are surely different. Your dream might be to become a teacher, but your friend might want to be a pilot.</div>
-
-<details class="ans"><summary>21번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>21번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main"><span class="en">goals</span></div>
-<div class="ans-detail">those = your <b>goals</b> 를 대신하는 복수 지시대명사.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>A and those of B에서 <b>those는 A의 복수명사</b>를 대신한다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>Your goals and those of your friends — and로 대등하게 이어진 구조.</span></div>
+<div class="step"><span class="sn">2</span><span>your에 대응하는 것이 of your friends이므로, those에 대응하는 것은 <b>goals</b>.</span></div>
+<div class="step"><span class="sn">3</span><span>those는 복수이므로 복수명사 goals와 수도 일치한다.</span></div>
+<span class="sec-t">자주 나오는 오답</span>
+<ul class="opt-list">
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>friends</i> — those of your friends에서 friends는 those를 꾸미는 말이지 those가 가리키는 말이 아니다.</span></li>
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>dream</i> — 뒤 문장의 dream은 단수이고, 지시대명사는 앞에 나온 명사를 받는다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>너의 목표와 네 친구들의 목표는 분명히 다르다. 너의 꿈은 교사가 되는 것일 수 있지만, 네 친구는 조종사가 되고 싶어 할 수도 있다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">22</div><div class="q-type choice">another</div><div class="q-pts">기출</div></div>
@@ -831,9 +1606,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> none</span>
 <span class="c"><span class="num">⑤</span> neither</span>
 </div>
-<details class="ans"><summary>22번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>22번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">② <span class="en">another</span></div>
-<div class="ans-detail">another + 단수명사(person) = 또 다른 한 사람의.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>another + 단수명사</b> = 또 다른 하나의 ~. 빈칸 뒤에 명사가 있으면 형용사 자리다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>빈칸 뒤에 단수명사 person's가 있다 → 명사를 꾸미는 말이 필요하다.</span></div>
+<div class="step"><span class="sn">2</span><span>One person과 짝을 이루는 '다른 한 사람' → <b>another</b> person.</span></div>
+<div class="step"><span class="sn">3</span><span>others, none은 대명사라 명사 앞에 올 수 없다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>others는 대명사. 뒤에 명사를 둘 수 없다.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>another + 단수명사 person.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>any person's는 '아무나의'. 하이파이브는 마주한 상대 한 사람과 한다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>none은 대명사라 명사 앞에 쓰지 않는다.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>neither person은 '둘 중 어느 쪽도 아닌'. 뜻이 맞지 않는다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>하이파이브 동작을 본 적 있나요? 한 사람이 손바닥을 위로 들어 다른 사람의 들어 올린 손바닥을 칩니다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">23</div><div class="q-type choice">others</div><div class="q-pts">기출</div></div>
@@ -846,22 +1634,35 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> each</span>
 <span class="c"><span class="num">⑤</span> every</span>
 </div>
-<details class="ans"><summary>23번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>23번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">② <span class="en">others</span></div>
-<div class="ans-detail">Some ~, <b>others</b> ~ (일부는 야구 얘기, 다른 이들은 휴식).</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>Some ~ and others ~</b>. 빈칸 뒤 동사의 수로 단수 대명사를 걸러 낸다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>문장이 Some were ~로 시작한다 → 짝은 others 또는 the others.</span></div>
+<div class="step"><span class="sn">2</span><span>빈칸 뒤 동사가 were(복수) → 단수인 another, the other, each 탈락.</span></div>
+<div class="step"><span class="sn">3</span><span>every는 형용사라 혼자 주어가 될 수 없다. → <b>others</b></span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>another는 단수. were와 맞지 않는다.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>Some ~, others ~.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>the other는 단수. were와 맞지 않는다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>each는 단수 취급.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>every는 뒤에 명사가 있어야 한다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>어떤 사람들은 야구 이야기를 하고 있었고, 다른 사람들은 쉬고 있었다.</div></div></details>
 </article>
-
+<div class="panel-foot"><button type="button" class="pf-btn" data-go="gi-g"><small>기출응용문제</small>어법 해설 다시 보기</button><button type="button" class="pf-btn primary" data-go="u1-g"><small>처음으로</small>Unit 06 인칭대명사 · 어법 해설</button></div>
+</section>
 
 </div></main>
 
 <!-- ========== Footer (학원 표기 절대 변경 금지) ========== -->
 <footer><div class="container"><div class="foot-grid">
   <div class="foot-brand">Mokdong Seoro English Academy<span class="kor">목동서로영어학원 · 0505.co.kr</span></div>
-  <div class="foot-meta">신목고·목운중·목동중 전문 영어학원<br><b>고교 3300제 · 제3장 대명사 · 완전판 상세풀이</b><br>본 자료는 학원 수강생 전용 교육 자료입니다. 무단 배포 금지.<br>Unit 06~08 · 기출응용문제 23문항</div>
+  <div class="foot-meta">신목고·목운중·목동중 전문 영어학원<br><b>고교 3300제 · 제3장 대명사 · 완전판 상세풀이</b><br>본 자료는 학원 수강생 전용 교육 자료입니다. 무단 배포 금지.<br>Unit 06 인칭대명사 · Unit 07 부정대명사 · Unit 08 기타대명사와 부분부정 · 기출응용문제 23문항</div>
 </div></div></footer>
 
 <script>
-
 /* ══ 펜 필기 모드 (자유 필기) v1.0 ══ */
 const PEN_COLORS=['#dc2626','#1F3864','#0f9d58','#f59e0b','#000000'];
 const PEN_WIDTHS=[2,4,7];
@@ -985,7 +1786,42 @@ if(document.readyState==='loading'){
 }else{
   setTimeout(buildPenTools,100);
 }
-
+/* ══ 유니트 / 모드 전환 ══ */
+(function(){
+  var UNIT_LABEL={u1:'Unit 06 인칭대명사',u2:'Unit 07 부정대명사',u3:'Unit 08 기타대명사와 부분부정',gi:'기출응용문제'};
+  var cur={unit:'u1',mode:'g'},penStore={};
+  var nav=document.getElementById('unitNav');
+  function parse(h){var m=/^#?(u1|u2|u3|gi)-(g|q)$/.exec(h||'');return m?{unit:m[1],mode:m[2]}:null;}
+  function syncPen(){try{
+    if(typeof penLayer!=='undefined'&&penLayer){
+      penLayer.setAttribute('height',0);penLayer.style.height='0px';penLayer.setAttribute('width',0);penLayer.style.width='0px';
+      var h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
+      penLayer.setAttribute('height',h);penLayer.style.height=h+'px';
+      var w=document.documentElement.clientWidth;penLayer.setAttribute('width',w);penLayer.style.width=w+'px';}}catch(_){}}
+  function show(unit,mode,scroll){
+    var key=unit+'-'+mode,old=cur.unit+'-'+cur.mode;
+    try{if(typeof penLayer!=='undefined'&&penLayer){penStore[old]=penLayer.innerHTML;penLayer.innerHTML=penStore[key]||'';}}catch(_){}
+    cur={unit:unit,mode:mode};
+    document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active',p.id==="p-"+key);});
+    document.querySelectorAll('.un-tab').forEach(function(b){var on=b.dataset.unit===unit;b.classList.toggle('active',on);b.setAttribute('aria-pressed',on);});
+    document.querySelectorAll('.mode-btn').forEach(function(b){var on=b.dataset.mode===mode;b.classList.toggle('active',on);b.setAttribute('aria-pressed',on);});
+    document.getElementById('modeCur').textContent=UNIT_LABEL[unit];
+    try{if(history.replaceState)history.replaceState(null,'','#'+key);}catch(_){}
+    if(scroll){var y=nav.getBoundingClientRect().top+window.scrollY;if(window.scrollY>y)window.scrollTo(0,y);}
+    setTimeout(syncPen,60);
+  }
+  document.querySelectorAll('.un-tab').forEach(function(b){b.addEventListener('click',function(){show(b.dataset.unit,'g',true);});});
+  document.querySelectorAll('.mode-btn').forEach(function(b){b.addEventListener('click',function(){show(cur.unit,b.dataset.mode,true);});});
+  document.querySelectorAll('.pf-btn').forEach(function(b){b.addEventListener('click',function(){var t=parse(b.dataset.go);show(t.unit,t.mode,true);});});
+  document.querySelectorAll('[data-toggle-all]').forEach(function(b){b.addEventListener('click',function(){
+    var ds=b.closest('.panel').querySelectorAll('article details.ans');
+    var open=!Array.prototype.every.call(ds,function(d){return d.open;});
+    ds.forEach(function(d){d.open=open;});
+    b.textContent=open?'해설 모두 접기':'해설 모두 펼치기';setTimeout(syncPen,60);});});
+  document.querySelectorAll('details.ans').forEach(function(d){d.addEventListener('toggle',function(){setTimeout(syncPen,60);});});
+  window.addEventListener('hashchange',function(){var t=parse(location.hash);if(t&&(t.unit!==cur.unit||t.mode!==cur.mode))show(t.unit,t.mode,true);});
+  var init=parse(location.hash)||cur;show(init.unit,init.mode,false);
+})();
 </script>
 </body>
 </html>

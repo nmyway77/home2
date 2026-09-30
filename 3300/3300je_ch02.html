@@ -1,32 +1,16 @@
 <!DOCTYPE html>
 <!--
 ========================================================================
-  ANSWER-KEY WORKBOOK · MASTER HTML TEMPLATE
+  3300제 상세풀이 · build_3300.py 로 생성된 파일 (직접 수정하지 말고 데이터 파일을 고쳐 다시 빌드)
   목동서로영어학원 · Mokdong Seoro English Academy · 0505.co.kr
-========================================================================
-  사용법:
-    1. 이 파일 통째로 복사
-    2. 고교 3300제 · 제2장 명사와 관사 · 상세풀이집, {{HEADER_*}} 등의 플레이스홀더를 시험 정보로 채움
-    3. <main><div class="container"> 안에 정답표 + 문항들 삽입
-    4. 각 문항은 10_ANSWERKEY_QUESTION_PATTERNS.md의 스니펫 사용
-
-  통합 CSS:
-    - 모의고사용 클래스 (.dialogue, .price-table, .chart-box, .info-box, .picture-box)
-    - 학교 내신용 클래스 (.spec-box, .cond-box, .compare-table, .matrix-table, .seodap-header)
-    - 양쪽 공통 (.q-card, .passage, .q-choices, details.ans 등)
-
-  변경 절대 금지:
-    - 색상 변수 (--navy-950, --gold, --cream)
-    - 폰트 패밀리 (Pretendard, Playfair Display)
-    - .home-btn 위치/스타일
-    - footer 학원 명기
+  변경 절대 금지: 색상 변수 / 폰트 패밀리 / .home-btn 위치·스타일 / footer 학원 명기
 ========================================================================
 -->
-<html lang="ko">
+<html lang="ko" class="no-js">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>고교 3300제 · 제2장 명사와 관사 · 상세풀이집</title>
+<title>고교 내신수능 1등급 영문법연습 3300제 · 제2장 명사와 관사 · 어법 해설 &amp; 상세풀이</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
@@ -261,6 +245,7 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
   .brand-row{flex-direction:column;align-items:flex-start;gap:12px}
 }
 
+
 /* ===== 드릴형 문항(EXERCISE 묶음) ===== */
 .drill{margin-bottom:4px}
 .drill ol{margin:0;padding-left:26px}
@@ -268,6 +253,7 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 .drill li .ko{font-family:'Pretendard Variable',sans-serif;color:var(--slate-500);font-size:13px}
 .drill .blk{display:inline-block;min-width:74px;border-bottom:1.4px solid var(--slate-500);margin:0 3px;vertical-align:baseline}
 .drill .paren{font-family:'Pretendard Variable',sans-serif;color:var(--navy-900);font-weight:600}
+/* 접힌 해설 안 정답 목록 */
 .ans-list{margin:6px 0 0;padding-left:26px;font-family:'Pretendard Variable',sans-serif}
 .ans-list li{margin:6px 0;line-height:1.7;font-size:13.5px;color:#C9BFAD}
 .ans-list li .a{color:var(--gold-light);font-weight:800;font-family:'Playfair Display',serif;font-style:italic}
@@ -301,16 +287,126 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
   #penToolbar .pen-btn,#penToolbar .pen-width{width:38px;height:38px;}
   #penToolbar .pen-color{width:26px;height:26px;}
 }
+/* ===== UNIT NAV (v2 재구성) ===== */
+.unit-nav{position:sticky;top:0;z-index:999;background:var(--navy-950);border-bottom:1px solid rgba(228,197,137,0.35);box-shadow:0 6px 18px rgba(10,30,58,0.18)}
+.unit-nav .container{display:flex;flex-direction:column;gap:0}
+.un-row{display:flex;gap:0;align-items:stretch}
+.un-tab{flex:1;display:flex;align-items:baseline;gap:10px;padding:13px 18px 11px;background:transparent;border:0;border-bottom:3px solid transparent;border-right:1px solid rgba(228,197,137,0.14);color:#B8B0A2;cursor:pointer;font-family:'Pretendard Variable',sans-serif;text-align:left;transition:background .15s,color .15s}
+.un-tab:first-child{border-left:1px solid rgba(228,197,137,0.14)}
+.un-tab .un-no{font-family:'Playfair Display',serif;font-style:italic;font-weight:800;font-size:26px;line-height:1;color:var(--slate-400);letter-spacing:-0.02em}
+.un-tab .un-name{font-size:13.5px;font-weight:700;letter-spacing:-0.01em}
+.un-tab .un-sub{display:block;font-size:10.5px;font-weight:600;color:var(--slate-500);letter-spacing:0.08em;margin-bottom:2px}
+.un-tab:hover{background:rgba(201,155,78,0.08);color:var(--cream)}
+.un-tab.active{border-bottom-color:var(--gold);color:var(--cream);background:rgba(201,155,78,0.10)}
+.un-tab.active .un-no{color:var(--gold)}
+.un-tab.active .un-sub{color:var(--gold-light)}
+.mode-row{display:flex;gap:8px;padding:9px 0 10px;align-items:center;border-top:1px solid rgba(228,197,137,0.14)}
+.mode-row .mode-cur{font-size:12px;color:var(--gold-light);font-weight:700;margin-right:6px;white-space:nowrap}
+.mode-btn{padding:7px 18px;border-radius:999px;border:1px solid rgba(228,197,137,0.4);background:transparent;color:#D3CABA;font-family:'Pretendard Variable',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s}
+.mode-btn:hover{border-color:var(--gold);color:var(--cream)}
+.mode-btn.active{background:var(--gold);border-color:var(--gold);color:var(--navy-950)}
+.un-tab:focus-visible,.mode-btn:focus-visible,.pf-btn:focus-visible,.tool-btn:focus-visible{outline:2px solid var(--gold-light);outline-offset:2px}
+@media(max-width:1180px){.unit-nav .container{padding-right:140px}}
+@media(max-width:720px){
+  .unit-nav .container{padding-right:64px}
+  .un-tab{flex-direction:column;gap:2px;padding:9px 10px 8px;align-items:flex-start}
+  .un-tab .un-no{font-size:20px}
+  .un-tab .un-name{font-size:11.5px}
+  .un-tab .un-sub{display:none}
+  .mode-row .mode-cur{display:none}
+  .mode-btn{padding:6px 14px;font-size:12.5px}
+}
 
+/* ===== PANELS ===== */
+main{padding-top:36px}
+html.js .panel{display:none}
+html.js .panel.active{display:block}
+.panel-head{display:flex;align-items:flex-end;gap:20px;padding-bottom:18px;margin-bottom:26px;border-bottom:2px solid var(--navy-950)}
+.panel-head .ph-no{font-family:'Playfair Display',serif;font-style:italic;font-weight:900;font-size:clamp(54px,9vw,84px);line-height:0.85;color:var(--navy-950);letter-spacing:-0.04em}
+.panel-head .ph-no small{display:block;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:11px;font-weight:800;letter-spacing:0.2em;color:var(--gold);margin-bottom:8px}
+.panel-head .ph-txt{flex:1;padding-bottom:4px}
+.panel-head .ph-title{font-size:clamp(20px,3vw,26px);font-weight:800;color:var(--navy-950);letter-spacing:-0.02em;line-height:1.25;margin:0}
+.panel-head .ph-mode{font-size:13px;color:var(--slate-500);font-weight:600;margin-top:4px}
+.panel-head .ph-mode b{color:var(--gold);font-weight:800}
+.tool-row{display:flex;justify-content:flex-end;margin:-10px 0 18px}
+.tool-btn{padding:7px 14px;border:1px solid var(--slate-300);background:var(--warm-white);color:var(--navy-900);font-family:'Pretendard Variable',sans-serif;font-size:12.5px;font-weight:700;cursor:pointer;border-radius:2px}
+.tool-btn:hover{border-color:var(--navy-950)}
+.panel-foot{display:flex;gap:12px;flex-wrap:wrap;margin-top:40px;padding-top:24px;border-top:1px solid var(--slate-300)}
+.pf-btn{flex:1;min-width:200px;padding:16px 20px;border:1px solid var(--navy-950);background:var(--warm-white);color:var(--navy-950);font-family:'Pretendard Variable',sans-serif;font-size:14px;font-weight:800;cursor:pointer;text-align:left;line-height:1.4}
+.pf-btn small{display:block;font-size:11.5px;font-weight:600;color:var(--slate-500);margin-bottom:2px}
+.pf-btn.primary{background:var(--navy-950);color:var(--cream)}
+.pf-btn.primary small{color:var(--gold-light)}
+.pf-btn:hover{box-shadow:0 4px 14px rgba(10,30,58,0.18)}
+
+/* ===== 어법 해설 ===== */
+.g-intro{padding:14px 18px;background:var(--cream-dark);border-left:3px solid var(--gold);font-size:14px;color:var(--slate-700);margin-bottom:24px}
+.g-sec{background:var(--warm-white);border:1px solid var(--slate-200);padding:clamp(22px,3vw,34px);margin-bottom:22px}
+.g-h{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 16px;padding-bottom:14px;border-bottom:1px solid var(--slate-200);font-size:18.5px;font-weight:800;color:var(--navy-950);letter-spacing:-0.02em;line-height:1.35}
+.g-n{font-family:'Playfair Display',serif;font-style:italic;font-weight:800;font-size:26px;color:var(--gold);line-height:1;min-width:20px}
+.g-badge{font-size:11px;font-weight:800;padding:3px 9px;background:var(--rose-50);color:var(--rose-600);border:1px solid #FECACA;border-radius:999px;letter-spacing:0}
+.g-p{margin:0 0 14px;font-size:14.5px;line-height:1.8;color:var(--slate-700)}
+.g-p.g-sub{font-weight:800;color:var(--navy-950);margin:22px 0 8px;font-size:14.5px}
+.g-sec b{color:var(--navy-950);font-weight:800}
+.g-sec .e{font-family:'Playfair Display',serif;font-size:14.5px;color:var(--navy-900)}
+.g-sec .e b{color:var(--rose-600);font-weight:700}
+.g-sec .e.x{text-decoration:line-through;text-decoration-color:var(--rose-600);color:var(--slate-500)}
+.g-rule{margin:0 0 16px;padding:16px 20px;background:var(--navy-950);color:#D3CABA;font-size:14.5px;line-height:1.85}
+.g-rule b{color:var(--gold-light)}
+.g-ex{margin:0 0 16px;padding:14px 20px;background:var(--cream);border-left:3px solid var(--slate-400)}
+.g-ex p{margin:8px 0;line-height:1.6}
+.g-ex .e{display:block;font-size:15px}
+.g-ex .k{display:block;font-size:13px;color:var(--slate-500);margin-top:1px}
+.g-warn{margin:0 0 16px;padding:14px 18px;background:var(--rose-50);border-left:3px solid var(--rose-600);font-size:14px;line-height:1.8;color:var(--slate-700)}
+.g-warn>b:first-child,.g-warn br+b{color:var(--rose-600)}
+.g-list{margin:0 0 16px;padding-left:20px}
+.g-list li{margin:8px 0;font-size:14.5px;line-height:1.8}
+.g-ol{margin:0 0 16px;padding-left:22px}
+.g-ol li{margin:7px 0;font-size:14.5px;line-height:1.8}
+.g-sec .compare-table{margin:0 0 16px;font-size:13.5px}
+.g-sec .compare-table td{line-height:1.65}
+.g-sec .compare-table td.num{width:auto;min-width:40px}
+.g-check{background:var(--cream-dark);border-color:var(--gold)}
+.g-check .g-h{border-bottom-color:var(--gold)}
+.g-tablewrap{overflow-x:auto}
+@media(max-width:720px){.g-tablewrap .compare-table{min-width:540px}}
+
+/* ===== 상세 해설(펼치기) 보강 ===== */
+.ans-body .sec-t{display:block;margin:18px 0 8px;font-size:12px;font-weight:800;color:var(--gold);letter-spacing:0.06em}
+.ans-body .ans-detail .sec-t{margin-top:0}
+.ans-body .ans-detail{color:#C9BFAD}
+.ans-body .step{display:flex;gap:10px;margin:8px 0;padding:2px 0 2px 12px;color:#D3CABA;font-size:13.5px;line-height:1.75}
+.ans-body .step .sn{flex:none;font-family:'Playfair Display',serif;font-style:italic;font-weight:800;color:var(--gold)}
+.opt-list{list-style:none;margin:0;padding:0}
+.opt-list li{display:flex;gap:10px;padding:8px 12px;margin:4px 0;font-size:13.5px;line-height:1.7;color:#C9BFAD;background:rgba(255,255,255,0.03);border-left:2px solid rgba(220,38,38,0.55)}
+.opt-list li.ok{border-left-color:#34D399;background:rgba(52,211,153,0.08);color:var(--cream)}
+.opt-list .on{flex:none;min-width:34px;font-weight:800;color:var(--gold-light)}
+.opt-list .mk{flex:none;width:16px;font-weight:800;color:#F87171}
+.opt-list li.ok .mk{color:#34D399}
+.opt-list i{font-family:'Playfair Display',serif;color:var(--cream)}
+.ans-list.rich{padding-left:0;list-style:none;counter-reset:al;margin-top:14px}
+.ans-list.rich>li{counter-increment:al;position:relative;margin:0;padding:14px 0 14px 38px;border-top:1px dashed rgba(228,197,137,0.18)}
+.ans-list.rich>li::before{content:counter(al);position:absolute;left:0;top:13px;width:26px;height:26px;border:1px solid rgba(228,197,137,0.45);border-radius:50%;text-align:center;line-height:24px;font-family:'Playfair Display',serif;font-weight:700;font-size:13px;color:var(--gold-light)}
+.ans-list.rich .al-top{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline}
+.ans-list.rich .a{font-size:16px}
+.ans-list.rich .full{font-family:'Playfair Display',serif;font-size:13.5px;color:#A9A294}
+.ans-list.rich .why{display:block;margin-top:6px;font-size:13.5px;line-height:1.75;color:#C9BFAD}
+.ans-list.rich .why i{font-family:'Playfair Display',serif;color:var(--cream)}
+.ans-list.rich .tr{display:block;margin-top:5px;font-size:12.5px;color:#8F98A8}
+.ans-list.rich .tr::before{content:'해석  ';color:var(--gold);font-weight:800;font-size:11px;white-space:pre}
+@media print{
+  .unit-nav,.panel-foot,.tool-row{display:none!important}
+  html.js .panel{display:block!important}
+  .panel{break-before:page}
+  .g-rule{background:white!important;color:var(--navy-950)!important;border:1px solid var(--navy-950)}
+  .g-rule b{color:var(--navy-950)!important}
+  .opt-list li,.ans-list.rich .why,.ans-list.rich .full,.ans-list.rich .tr,.ans-body .step{color:var(--slate-700)!important}
+  .opt-list i,.ans-list.rich .why i,.ans-list li .a{color:var(--navy-950)!important}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
+<script>document.documentElement.className="js";</script>
 </head>
 <body>
-
-<!-- ========== Home Button (절대 변경 금지) ========== -->
-<a href="https://0505.co.kr" class="home-btn" title="목동서로영어학원 홈페이지">
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg>
-  <span class="label">Home</span>
-</a>
 
 <!-- ========== Header (책 표지) ========== -->
 <header class="top"><div class="container">
@@ -318,32 +414,146 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
     <div class="brand">Mokdong Seoro <b>English Academy</b><span class="kor">목동서로영어학원 · 신목고·목운중·목동중 전문</span></div>
     <div class="vol-tag">3300제 · Chapter II</div>
   </div>
-  <h1 class="book-title"><em>Noun &amp; Article</em> · 제2장 명사와 관사<br>Complete Answer Key</h1>
-  <div class="book-subtitle">고교 내신수능 1등급 영문법연습 3300제 · 제2장 명사와 관사 · 전문항 상세풀이<br>Unit 03 명사의 종류 · Unit 04 명사의 관용적 용법 · Unit 05 관사 · 기출응용문제</div>
+  <h1 class="book-title"><em>Noun &amp; Article</em> · 제2장 명사와 관사<br>Grammar Notes &amp; Answer Key</h1>
+  <div class="book-subtitle">고교 내신수능 1등급 영문법연습 3300제 · 제2장 명사와 관사<br>유니트별 어법 해설 + 전문항 상세 풀이 · Unit 03 명사의 종류 · Unit 04 명사의 관용적 용법 · Unit 05 관사 · 기출응용문제</div>
   <div class="meta-strip">
-    <div class="meta-item"><div class="meta-lbl">CHAPTER</div><div class="meta-val">II<span class="u">명사·관사</span></div></div>
+    <div class="meta-item"><div class="meta-lbl">CHAPTER</div><div class="meta-val">II<span class="u">명사와 관사</span></div></div>
     <div class="meta-item"><div class="meta-lbl">UNIT</div><div class="meta-val">03–05<span class="u"></span></div></div>
     <div class="meta-item"><div class="meta-lbl">EXERCISE</div><div class="meta-val">86<span class="u">문항</span></div></div>
     <div class="meta-item"><div class="meta-lbl">기출응용</div><div class="meta-val">24<span class="u">문항</span></div></div>
   </div>
 </div></header>
 
+<!-- ========== Unit Navigation: 상단 유니트 번호 + 어법 해설 / 문제 풀이 ========== -->
+<nav class="unit-nav" id="unitNav" aria-label="유니트 이동"><div class="container">
+  <div class="un-row"><button type="button" class="un-tab" data-unit="u1"><span class="un-no">03</span><span><span class="un-sub">Unit</span><span class="un-name">명사의 종류</span></span></button><button type="button" class="un-tab" data-unit="u2"><span class="un-no">04</span><span><span class="un-sub">Unit</span><span class="un-name">명사의 관용적 용법</span></span></button><button type="button" class="un-tab" data-unit="u3"><span class="un-no">05</span><span><span class="un-sub">Unit</span><span class="un-name">관사</span></span></button><button type="button" class="un-tab" data-unit="gi"><span class="un-no">기출</span><span><span class="un-sub">Chapter II</span><span class="un-name">기출응용문제</span></span></button></div>
+  <div class="mode-row"><span class="mode-cur" id="modeCur"></span>
+    <button type="button" class="mode-btn" data-mode="g">어법 해설</button>
+    <button type="button" class="mode-btn" data-mode="q">문제 풀이</button>
+  </div>
+</div></nav>
+
+<!-- ========== Home Button (절대 변경 금지) ========== -->
+<a href="https://0505.co.kr" class="home-btn" title="목동서로영어학원 홈페이지">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg>
+  <span class="label">Home</span>
+</a>
+
 <main><div class="container">
 
-<!-- ====================================================== -->
-<!-- 정답표 영역: 09_BUILD_PROTOCOL.md Step 2 참고            -->
-<!-- ====================================================== -->
-<div class="section-divider"><span>Answer Key<span class="kor">정답 일람표 · 펼쳐서 확인</span></span></div>
+<section class="panel" id="p-u1-g" data-unit="u1" data-mode="g">
+<div class="panel-head"><div class="ph-no"><small>UNIT</small>03</div><div class="ph-txt"><h2 class="ph-title">명사의 종류</h2><div class="ph-mode"><b>어법 해설</b> · EXERCISE A · 34문항</div></div></div>
+<div class="g-intro">Unit 03의 EXERCISE A는 34문항 전부 <b>괄호 안에서 알맞은 형태 고르기</b>입니다. 묻는 것은 세 가지뿐입니다 — ① 셀 수 있는 명사인가 ② 단수인가 복수인가 ③ 동사를 단수로 받는가 복수로 받는가.</div>
 
-<details class="ans" style="margin-top:0"><summary>기출응용문제 정답 일람표 펼치기 (스포일러 주의)</summary><div class="ans-body"><div class="ans-detail" style="margin-bottom:10px">아래 표는 <b>기출응용문제 1~24</b>의 정답 요약입니다. EXERCISE(Unit 03~05)의 정답은 각 문항 카드의 해설을 펼쳐 확인하세요.</div><table class="answer-sheet"><tr class="hdr-row"><td>기출</td><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>④</td><td>③</td><td>③</td><td>④</td><td>⑤</td><td>④</td><td>②</td><td>⑤</td></tr><tr class="hdr-row"><td>기출</td><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>③</td><td>③</td><td>②</td><td>⑤</td><td>③</td><td>③</td><td>①</td><td>④</td></tr><tr class="hdr-row"><td>기출</td><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th><th>24</th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>②</td><td>④</td><td>④</td><td>①</td><td>④</td><td>①</td><td>③</td><td>③</td></tr></table></div></details>
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">1</span>셀 수 있는 명사와 셀 수 없는 명사</h3>
+<p class="g-p">명사 문제는 그 명사가 <b>셀 수 있는지</b>부터 판단합니다. 여기서 관사, 복수형, 수량 표현, 동사의 수가 모두 결정됩니다.</p>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>구분</th><th>셀 수 있는 명사(가산)</th><th>셀 수 없는 명사(불가산)</th></tr>
+<tr><td class="col-head">a / an</td><td>붙일 수 있음 <span class="e">a car</span></td><td>붙일 수 없음 <span class="e x">a money</span></td></tr>
+<tr><td class="col-head">복수형</td><td>있음 <span class="e">ideas, families</span></td><td>없음 <span class="e x">informations</span></td></tr>
+<tr><td class="col-head">단수형 단독 사용</td><td>불가 — 관사나 복수형이 필요<br><span class="e x">She likes dog.</span></td><td>가능 <span class="e">I need money.</span></td></tr>
+<tr><td class="col-head">동사</td><td>단수면 단수동사, 복수면 복수동사</td><td>항상 단수동사</td></tr>
+<tr><td class="col-head">수량 표현</td><td><span class="e">many, a few, a number of</span></td><td><span class="e">much, a little</span></td></tr>
+</table></div>
+<div class="g-ex">
+<p><span class="e">She likes <b>dogs</b>.</span><span class="k">그녀는 개를 좋아한다. (개 전체를 말할 때는 무관사 복수형)</span></p>
+<p><span class="e">He bought <b>a</b> new <b>car</b>.</span><span class="k">그는 새 차를 한 대 샀다. (a 뒤에는 단수형)</span></p>
+</div>
+</section>
 
-<!-- ====================================================== -->
-<!-- 문항 영역: 10_QUESTION_PATTERNS.md 의 스니펫 사용         -->
-<!-- 각 article은 하나의 문항 또는 묶음 문항 (예: Q41-42)     -->
-<!-- 섹션 구분선(.section-divider)으로 카테고리 분리          -->
-<!-- ====================================================== -->
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">2</span>셀 수 없는 명사 <span class="g-badge">내신 빈출</span></h3>
+<p class="g-p">이 연습에 나오는 셀 수 없는 명사는 아래와 같습니다. 우리말로는 '정보들', '가구들'처럼 셀 수 있을 것 같아서 틀리기 쉬운 단어들입니다.</p>
+<div class="g-rule"><b>money · information · knowledge · bread · harm · wood(목재) · milk · furniture · mail · news</b><br>→ a/an을 붙이지 않고, 복수형 -s를 만들지 않으며, 동사는 단수로 받습니다.</div>
+<div class="g-ex">
+<p><span class="e">I want to get as much <b>information</b> as I can.</span><span class="k">나는 가능한 한 많은 정보를 얻고 싶다.</span></p>
+<p><span class="e"><b>Knowledge</b> about genetics <b>will cause</b> plenty of ethical problems.</span><span class="k">유전학에 관한 지식은 많은 윤리적 문제를 일으킬 것이다.</span></p>
+<p><span class="e">No <b>news is</b> good news.</span><span class="k">무소식이 희소식이다.</span></p>
+</div>
+<div class="g-warn"><b>함정</b> <span class="e">news</span>는 -s로 끝나지만 복수형이 아니라 원래 형태가 news인 셀 수 없는 명사입니다. 동사는 <span class="e">is</span>입니다. 반대로 <span class="e">furniture, mail</span>은 여러 개를 가리켜도 단수형 그대로 씁니다.</div>
+<p class="g-p g-sub">셀 수 없는 명사를 세는 법 — 단위명사</p>
+<p class="g-p">셀 수 없는 명사는 담는 그릇이나 모양을 나타내는 단위명사로 셉니다. 복수로 만들 때는 <b>단위명사만</b> 복수형으로 바꿉니다.</p>
+<div class="g-ex">
+<p><span class="e">He drank two <b>glasses</b> of <b>milk</b> last night.</span><span class="k">그는 어젯밤 우유 두 잔을 마셨다. (glasses만 복수, milk는 그대로)</span></p>
+<p><span class="e">It's a <b>piece</b> of cake.</span><span class="k">그건 식은 죽 먹기야. (a piece of cake = 아주 쉬운 일)</span></p>
+</div>
+</section>
 
-<div class="section-divider"><span>Chapter II · Unit 03 <em>Kinds of Nouns</em><span class="kor">제2장 명사와 관사 · Unit 03 명사의 종류</span></span></div>
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">3</span>수량 표현과 명사의 짝</h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>수량 표현</th><th>뒤에 오는 명사</th><th>예문</th></tr>
+<tr><td class="col-head">many, a few, a number of<br>수사(two, twenty, a million)</td><td>셀 수 있는 명사의 <b>복수형</b></td><td><span class="e">a few wonderful <b>ideas</b> / many <b>families</b> / two <b>hairs</b> / a million <b>dollars</b></span></td></tr>
+<tr><td class="col-head">much, a little<br>How much ~?</td><td><b>셀 수 없는 명사</b></td><td><span class="e">How much <b>money</b> do you have? / <b>much</b> furniture</span></td></tr>
+<tr><td class="col-head">a lot of, some, any, enough</td><td>복수형과 셀 수 없는 명사 <b>둘 다</b></td><td><span class="e">a lot of <b>money</b> / some <b>bread</b> / any <b>mail</b> / enough <b>room</b></span></td></tr>
+</table></div>
+<div class="g-warn"><b>함정</b> <span class="e">a lot of, some, any, enough</span>는 양쪽에 다 쓰이므로 이 표현만 보고는 답을 정할 수 없습니다. 뒤의 명사가 셀 수 있는지를 직접 판단해야 합니다. <span class="e">a lot of <b>harm</b></span>, <span class="e">some <b>bread</b></span>가 그런 경우입니다.</div>
+<p class="g-p g-sub">a number of + 복수명사 → 복수동사</p>
+<p class="g-p"><span class="e">a number of</span>는 '많은(= many)'이라는 뜻의 수량 표현이므로 실제 주어는 뒤의 복수명사입니다.</p>
+<div class="g-ex">
+<p><span class="e">A number of <b>girls are</b> playing in the park.</span><span class="k">많은 소녀들이 공원에서 놀고 있다.</span></p>
+</div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">4</span>뜻에 따라 셀 수 있기도, 없기도 한 명사 <span class="g-badge">내신 빈출</span></h3>
+<p class="g-p">같은 단어라도 <b>물질·추상 개념</b>을 뜻하면 셀 수 없고, <b>낱개의 물건·구체적인 사람이나 사례</b>를 뜻하면 셀 수 있습니다. 앞뒤 문맥으로 뜻을 먼저 정해야 합니다.</p>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>명사</th><th>셀 수 없을 때</th><th>셀 수 있을 때</th></tr>
+<tr><td class="col-head">time</td><td>시간 <span class="e">Some <b>time</b> will be needed.</span></td><td>횟수·시대 <span class="e">three times</span></td></tr>
+<tr><td class="col-head">hair</td><td>머리털 전체 <span class="e">She has long hair.</span></td><td>머리카락 한 올 <span class="e">two <b>hairs</b> in the bowl</span></td></tr>
+<tr><td class="col-head">room</td><td>공간, 여지 <span class="e">enough <b>room</b></span></td><td>방 <span class="e">three rooms</span></td></tr>
+<tr><td class="col-head">wood</td><td>목재 <span class="e">made of <b>wood</b></span></td><td>숲 <span class="e">the woods</span></td></tr>
+<tr><td class="col-head">stone</td><td>석재 <span class="e">a house built of stone</span></td><td>돌멩이 <span class="e">He threw <b>a stone</b>.</span></td></tr>
+<tr><td class="col-head">success</td><td>성공 <span class="e">the key to success</span></td><td>성공한 사람·일 <span class="e">You are <b>a success</b>.</span></td></tr>
+<tr><td class="col-head">failure</td><td>실패 <span class="e">fear of failure</span></td><td>실패자·실패작 <span class="e">I'm not <b>a failure</b>.</span></td></tr>
+</table></div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">5</span>집합명사와 동사의 수 <span class="g-badge">내신 빈출</span></h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>유형</th><th>명사</th><th>동사</th><th>예문</th></tr>
+<tr><td class="col-head">단위로 보면 단수<br>구성원으로 보면 복수</td><td><span class="e">family</span></td><td>단수 / 복수</td><td><span class="e">My family <b>is</b> large.</span> (가족이라는 한 단위)<br><span class="e">My family members <b>were</b> deeply moved.</span> (구성원 각자)</td></tr>
+<tr><td class="col-head">형태는 단수, 항상 복수 취급</td><td><span class="e">people, police, cattle</span></td><td>복수</td><td><span class="e">The police <b>are</b> surrounding that building.</span><br><span class="e">Young cattle <b>are</b> called calves.</span></td></tr>
+<tr><td class="col-head">항상 복수형으로 쓰는 명사</td><td><span class="e">clothes, jeans</span></td><td>복수</td><td><span class="e">Your clothes <b>are</b> very dirty.</span></td></tr>
+</table></div>
+<ul class="g-list">
+<li><span class="e">family</span> 자체는 셀 수 있는 명사이므로 여러 가족을 말할 때는 <span class="e">many <b>families</b></span>로 복수형을 만듭니다.</li>
+<li><span class="e">people, police, cattle</span>은 -s가 없어도 복수입니다. <span class="e x">peoples, polices</span>로 쓰지 않고, <span class="e">twenty <b>people</b></span>처럼 그대로 수사 뒤에 씁니다.</li>
+<li><span class="e">jeans</span>처럼 두 부분이 한 쌍을 이루는 물건은 <span class="e">a <b>pair</b> of jeans</span>로 셉니다.</li>
+</ul>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">6</span>복수형에서 주의할 것</h3>
+<ul class="g-list">
+<li><b>불규칙 복수형</b> — <span class="e">foot → <b>feet</b></span> (<span class="e x">foots</span>)</li>
+<li><b>「수사-명사」가 형용사로 쓰일 때는 단수형</b> — 하이픈으로 묶여 뒤의 명사를 꾸미면 복수형을 쓰지 않습니다. <span class="e">a <b>three-story</b> building</span> (<span class="e x">three-stories</span>)</li>
+<li><b>명사가 다른 명사를 꾸밀 때도 앞 명사는 단수형</b> — <span class="e">a <b>pet</b> shop</span> (<span class="e x">a pets shop</span>)</li>
+<li><b>수사 뒤의 명사는 복수형</b> — <span class="e">a million <b>dollars</b></span>. a million은 '하나'가 아니라 100만이라는 수입니다.</li>
+<li><b>둘이 있어야 성립하는 동작은 복수형</b> — <span class="e">shake <b>hands</b> with ~</span> (악수하다). 두 사람의 손이 필요하기 때문입니다.</li>
+</ul>
+<p class="g-p g-sub">관용 표현</p>
+<div class="g-ex">
+<p><span class="e">Can you do me <b>a favor</b>?</span><span class="k">부탁 하나 들어줄래? (favor는 '호의를 베푸는 행동 하나'로 셀 수 있음)</span></p>
+</div>
+</section>
+
+<section class="g-sec g-check"><h3 class="g-h">시험 직전 점검</h3>
+<ol class="g-ol">
+<li>money, information, knowledge, bread, harm, furniture, mail, news, milk → a/an 없음, -s 없음, 단수동사.</li>
+<li>many·a few·a number of·수사 + 복수형 / much·a little + 셀 수 없는 명사 / a lot of·some·any·enough는 둘 다.</li>
+<li>people, police, cattle, clothes → 복수동사. family는 단위면 단수, 구성원이면 복수.</li>
+<li>time(시간)·room(공간)·wood(목재)는 셀 수 없고, hairs(머리카락 몇 올)·a stone(돌멩이)·a success·a failure(사람)는 셀 수 있음.</li>
+<li>three-story building, pet shop — 명사를 꾸미는 자리의 명사는 단수형.</li>
+</ol></section>
+<div class="panel-foot"><button type="button" class="pf-btn primary" data-go="u1-q"><small>Unit 03</small>문제 풀이로 이동</button><button type="button" class="pf-btn" data-go="u2-g"><small>다음</small>Unit 04 명사의 관용적 용법 · 어법 해설</button></div>
+</section>
+<section class="panel" id="p-u1-q" data-unit="u1" data-mode="q">
+<div class="panel-head"><div class="ph-no"><small>UNIT</small>03</div><div class="ph-txt"><h2 class="ph-title">명사의 종류</h2><div class="ph-mode"><b>문제 풀이</b> · EXERCISE A · 34문항</div></div></div>
+<div class="tool-row"><button type="button" class="tool-btn" data-toggle-all>해설 모두 펼치기</button></div>
 <article class="q-card">
 <div class="q-head"><div class="q-num">03-A</div><div class="q-type gram">명사의 종류</div><div class="q-pts">EX</div></div>
 <div class="q-prompt"><b>A.</b> 다음 괄호 안에서 어법에 맞는 단어를 골라 ○표 하세요.</div>
@@ -383,44 +593,158 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>The police (is, are) surrounding that building.</li>
 <li>This animal has four (foots, feet).</li>
 </ol></div>
-<details class="ans"><summary>03-A번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail">가산·불가산 구분이 핵심. <b>물질·추상명사</b>(money, information, knowledge, bread, harm, wood, milk, furniture, mail)는 불가산으로 <b>복수·a 불가</b>. 집합명사 family는 <b>단위=단수, 구성원=복수</b>, people·cattle·police는 <b>복수 취급</b>.</div><ol class="ans-list">
-<li><span class="a">dogs / pet</span> <span class="why">— 뒤 shop은 가산 단수 → a pet shop</span></li>
-<li><span class="a">money</span> <span class="why">— 불가산</span></li>
-<li><span class="a">car</span></li>
-<li><span class="a">three-story</span> <span class="why">— 복합형용사는 단수형(-story)</span></li>
-<li><span class="a">information</span> <span class="why">— 불가산</span></li>
-<li><span class="a">Knowledge</span> <span class="why">— 불가산 → 단수 취급</span></li>
-<li><span class="a">time</span> <span class="why">— 여기선 "시간(불가산)"</span></li>
-<li><span class="a">bread</span> <span class="why">— 불가산</span></li>
-<li><span class="a">harm</span> <span class="why">— 불가산</span></li>
-<li><span class="a">wood</span> <span class="why">— 재료(불가산)</span></li>
-<li><span class="a">money</span> <span class="why">— 불가산</span></li>
-<li><span class="a">hairs</span> <span class="why">— "머리카락 개수"=가산</span></li>
-<li><span class="a">ideas</span> <span class="why">— a few + 복수</span></li>
-<li><span class="a">room / people</span> <span class="why">— room=공간(불가산), people=복수</span></li>
-<li><span class="a">were</span> <span class="why">— members=구성원 강조 복수</span></li>
-<li><span class="a">is</span> <span class="why">— family=단위 단수</span></li>
-<li><span class="a">is</span> <span class="why">— news 불가산 단수</span></li>
-<li><span class="a">are</span> <span class="why">— a number of + 복수 → 복수</span></li>
-<li><span class="a">families</span> <span class="why">— many + 복수</span></li>
-<li><span class="a">are</span> <span class="why">— clothes 항상 복수</span></li>
-<li><span class="a">are</span> <span class="why">— cattle 복수 취급</span></li>
-<li><span class="a">milk</span> <span class="why">— glasses of milk, 불가산</span></li>
-<li><span class="a">a failure</span> <span class="why">— "실패자(사람)"=가산</span></li>
-<li><span class="a">pair</span> <span class="why">— a pair of jeans</span></li>
-<li><span class="a">hands</span> <span class="why">— shake hands (관용, 복수)</span></li>
-<li><span class="a">a stone</span> <span class="why">— 하나의 돌=가산</span></li>
-<li><span class="a">a success</span> <span class="why">— "성공한 사람"=가산</span></li>
-<li><span class="a">much</span> <span class="why">— furniture 불가산</span></li>
-<li><span class="a">piece</span> <span class="why">— a piece of cake</span></li>
-<li><span class="a">a favor</span> <span class="why">— do a favor</span></li>
-<li><span class="a">mail</span> <span class="why">— 불가산</span></li>
-<li><span class="a">dollars</span> <span class="why">— a million + 복수</span></li>
-<li><span class="a">are</span> <span class="why">— police 복수 취급</span></li>
-<li><span class="a">feet</span> <span class="why">— foot의 복수 feet</span></li>
+<details class="ans"><summary>03-A 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① 셀 수 없는 명사</b>(money, information, knowledge, bread, harm, wood, milk, furniture, mail, news)는 a/an과 복수형 -s를 쓰지 않고 단수동사로 받는다.<br>
+<b>② 수량 표현</b>: many·a few·a number of·수사 + 복수형 / much + 셀 수 없는 명사 / a lot of·some·any·enough는 양쪽 모두.<br>
+<b>③ 집합명사</b>: family는 한 단위로 보면 단수, 구성원을 말하면 복수. people·police·cattle·clothes는 항상 복수 취급.<br>
+<b>④ 같은 단어라도</b> 물질·추상 개념이면 셀 수 없고(time 시간, room 공간, wood 목재), 낱개·구체적인 사람이면 셀 수 있다(hairs, a stone, a success, a failure).</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">dogs / pet</span><span class="full">She likes dogs, and she works for a pet shop.</span></div><span class="why">dog는 셀 수 있는 명사이므로 관사 없이 단수형만 쓸 수 없다. 개 전체를 좋아한다는 뜻은 무관사 복수형 dogs로 나타낸다. 뒤 괄호는 shop을 꾸미는 자리인데, 명사가 다른 명사를 꾸밀 때는 단수형을 쓰므로 pet shop. 앞의 a는 shop에 걸린다.</span><span class="tr">그녀는 개를 좋아하고, 애완동물 가게에서 일한다.</span></li>
+<li><div class="al-top"><span class="a">money</span><span class="full">I need a lot of money.</span></div><span class="why">money는 셀 수 없는 명사라서 복수형이 없다. a lot of는 복수형과 셀 수 없는 명사 양쪽에 다 쓰이므로, a lot of를 보고 <i>moneys</i>를 고르면 안 된다.</span><span class="tr">나는 많은 돈이 필요하다.</span></li>
+<li><div class="al-top"><span class="a">car</span><span class="full">He bought a new car.</span></div><span class="why">부정관사 a는 '하나'를 뜻하므로 뒤에는 단수형이 온다. a + 복수형(<i>a new cars</i>)은 성립하지 않는다.</span><span class="tr">그는 새 차를 샀다.</span></li>
+<li><div class="al-top"><span class="a">three-story</span><span class="full">My cousin has a three-story building.</span></div><span class="why">「수사-명사」가 하이픈으로 묶여 뒤의 명사(building)를 꾸미는 형용사가 되면 명사를 단수형으로 쓴다. a five-year-old boy, a ten-dollar bill도 같은 원리. <i>three-stories</i>는 오답.</span><span class="tr">내 사촌은 3층짜리 건물을 가지고 있다.</span></li>
+<li><div class="al-top"><span class="a">information</span><span class="full">I want to get as much information as I can.</span></div><span class="why">information은 셀 수 없는 명사. 앞의 much가 셀 수 없는 명사와 짝이라는 점도 단서다. 우리말 '정보들'에 끌려 <i>informations</i>를 쓰지 않도록 한다.</span><span class="tr">나는 가능한 한 많은 정보를 얻고 싶다. (as ~ as one can = 가능한 한 ~)</span></li>
+<li><div class="al-top"><span class="a">Knowledge</span><span class="full">Knowledge about genetics will cause plenty of ethical problems.</span></div><span class="why">knowledge는 추상명사로 셀 수 없어 복수형이 없다. 주어 자리에서도 관사 없이 단수형 그대로 쓴다.</span><span class="tr">유전학에 관한 지식은 많은 윤리적 문제를 일으킬 것이다.</span></li>
+<li><div class="al-top"><span class="a">time</span><span class="full">Some time will be needed to finish it.</span></div><span class="why">'그것을 끝내는 데 필요한 시간'이라는 뜻이므로 셀 수 없는 명사 time. times는 '횟수, ~배, 시대'라는 뜻일 때 쓴다. some은 양쪽에 다 쓰이므로 뜻으로 판단해야 한다.</span><span class="tr">그것을 끝내려면 시간이 좀 필요할 것이다.</span></li>
+<li><div class="al-top"><span class="a">bread</span><span class="full">I'm going to buy some bread.</span></div><span class="why">bread는 물질명사로 셀 수 없다. 세려면 a loaf of bread, two slices of bread처럼 단위명사를 쓴다.</span><span class="tr">나는 빵을 좀 살 거야.</span></li>
+<li><div class="al-top"><span class="a">harm</span><span class="full">Too much pollution will do a lot of harm to the planet.</span></div><span class="why">harm(해, 피해)은 추상명사로 셀 수 없다. do harm to ~는 '~에 해를 끼치다'. a lot of 뒤라고 해서 복수형을 쓰는 것이 아니다.</span><span class="tr">지나친 오염은 지구에 많은 해를 끼칠 것이다.</span></li>
+<li><div class="al-top"><span class="a">wood</span><span class="full">This desk is made of wood.</span></div><span class="why">재료로서의 '목재'는 물질명사라 셀 수 없다. woods는 '숲'이라는 다른 뜻이 된다. be made of ~는 '~로 만들어지다'.</span><span class="tr">이 책상은 나무로 만들어졌다.</span></li>
+<li><div class="al-top"><span class="a">money</span><span class="full">How much money do you have?</span></div><span class="why">How much는 셀 수 없는 명사의 양을 묻는 표현이다. 셀 수 있는 명사의 수를 물을 때는 How many + 복수형.</span><span class="tr">너는 돈이 얼마나 있니?</span></li>
+<li><div class="al-top"><span class="a">hairs</span><span class="full">There are two hairs in the bowl.</span></div><span class="why">머리털 전체는 셀 수 없는 hair지만, 여기서는 그릇에 빠진 '머리카락 두 올'이므로 낱개로 셀 수 있다. 수사 two와 복수동사 are가 단서.</span><span class="tr">그릇에 머리카락이 두 올 들어 있다.</span></li>
+<li><div class="al-top"><span class="a">ideas</span><span class="full">I have a few wonderful ideas.</span></div><span class="why">a few는 '몇 개의'라는 뜻으로 셀 수 있는 명사의 복수형과 쓴다. a few의 a를 보고 단수형 <i>idea</i>를 고르면 오답.</span><span class="tr">나는 멋진 생각이 몇 가지 있다.</span></li>
+<li><div class="al-top"><span class="a">room / people</span><span class="full">There is enough room for twenty people.</span></div><span class="why">There is(단수동사) 뒤이고 '스무 명이 들어갈 공간'이라는 뜻이므로 셀 수 없는 room. '방'이라는 뜻이면 rooms가 되지만 동사 is와 맞지 않는다. people은 그 자체가 복수라서 -s를 붙이지 않는다. peoples는 '여러 민족'이라는 뜻.</span><span class="tr">스무 명이 들어갈 충분한 공간이 있다.</span></li>
+<li><div class="al-top"><span class="a">were</span><span class="full">My family members were deeply moved at the concert.</span></div><span class="why">주어의 중심은 family가 아니라 members(복수)다. 복수명사가 주어이므로 복수동사 were.</span><span class="tr">우리 가족들은 그 콘서트에서 깊이 감동했다.</span></li>
+<li><div class="al-top"><span class="a">is</span><span class="full">My family is large.</span></div><span class="why">large(규모가 크다)는 가족 구성원 각자가 아니라 가족이라는 하나의 단위에 대한 설명이다. 집합명사를 한 단위로 볼 때는 단수 취급.</span><span class="tr">우리 가족은 대가족이다.</span></li>
+<li><div class="al-top"><span class="a">is</span><span class="full">No news is good news.</span></div><span class="why">news는 -s로 끝나지만 셀 수 없는 명사이므로 단수동사로 받는다. 형태에 속아 <i>are</i>를 고르기 쉬운 문제.</span><span class="tr">무소식이 희소식이다.</span></li>
+<li><div class="al-top"><span class="a">are</span><span class="full">A number of girls are playing in the park.</span></div><span class="why">a number of는 many와 같은 뜻의 수량 표현이고 실제 주어는 girls(복수)다. 참고로 the number of ~(~의 수)는 number가 주어라서 단수동사를 쓴다.</span><span class="tr">많은 소녀들이 공원에서 놀고 있다.</span></li>
+<li><div class="al-top"><span class="a">families</span><span class="full">Many families went on a picnic last Sunday.</span></div><span class="why">many 뒤에는 복수형이 온다. family는 집합명사지만 '여러 가족'을 말할 때는 보통명사처럼 복수형 families를 만든다.</span><span class="tr">많은 가족들이 지난 일요일에 소풍을 갔다.</span></li>
+<li><div class="al-top"><span class="a">are</span><span class="full">Your clothes are very dirty.</span></div><span class="why">clothes(옷)는 항상 복수형으로 쓰는 명사여서 복수동사로 받는다. cloth(천)와는 다른 단어다.</span><span class="tr">네 옷이 아주 더럽구나.</span></li>
+<li><div class="al-top"><span class="a">are</span><span class="full">Young cattle are called calves.</span></div><span class="why">cattle(소 떼)은 형태는 단수지만 항상 복수 취급한다. 보어 calves(calf의 복수형)가 복수인 것도 단서다.</span><span class="tr">어린 소는 송아지라고 불린다.</span></li>
+<li><div class="al-top"><span class="a">milk</span><span class="full">He drank two glasses of milk last night.</span></div><span class="why">milk는 물질명사로 셀 수 없다. 두 잔을 말할 때는 단위명사 glass만 복수형 glasses로 바꾸고 milk는 그대로 둔다.</span><span class="tr">그는 어젯밤 우유 두 잔을 마셨다.</span></li>
+<li><div class="al-top"><span class="a">a failure</span><span class="full">I'm not a failure as I used to think.</span></div><span class="why">failure가 '실패'라는 추상 개념이면 셀 수 없지만, 주어 I를 설명하는 보어로 쓰여 '실패자'라는 사람을 뜻하면 셀 수 있는 명사가 되어 a가 필요하다.</span><span class="tr">나는 예전에 생각했던 것 같은 실패자가 아니다.</span></li>
+<li><div class="al-top"><span class="a">pair</span><span class="full">She gave me a pair of jeans.</span></div><span class="why">jeans는 다리 두 부분이 한 쌍을 이루는 옷이므로 a pair of로 센다. glasses(안경), scissors(가위), shoes도 같다. a piece of는 cake, paper, advice 등에 쓴다.</span><span class="tr">그녀는 나에게 청바지 한 벌을 주었다.</span></li>
+<li><div class="al-top"><span class="a">hands</span><span class="full">I shook hands with her.</span></div><span class="why">악수는 두 사람의 손이 있어야 하므로 복수형 hands를 쓴다(상호복수). make friends with, change trains도 같은 원리.</span><span class="tr">나는 그녀와 악수했다.</span></li>
+<li><div class="al-top"><span class="a">a stone</span><span class="full">He threw a stone at my dog.</span></div><span class="why">재료로서의 stone은 셀 수 없지만, 던지는 '돌멩이 하나'는 낱개의 물건이므로 셀 수 있다. 셀 수 있는 명사의 단수형은 관사 없이 쓸 수 없으므로 a stone.</span><span class="tr">그는 내 개에게 돌을 던졌다.</span></li>
+<li><div class="al-top"><span class="a">a success</span><span class="full">You are a success as an author.</span></div><span class="why">success가 주어 You를 설명하며 '성공한 사람'을 뜻하므로 셀 수 있는 명사다. 23번 a failure와 같은 원리.</span><span class="tr">당신은 작가로서 성공한 사람입니다.</span></li>
+<li><div class="al-top"><span class="a">much</span><span class="full">His new house has much furniture.</span></div><span class="why">furniture는 가구 전체를 가리키는 셀 수 없는 명사이므로 much와 쓴다. 가구를 세려면 a piece of furniture.</span><span class="tr">그의 새 집에는 가구가 많다.</span></li>
+<li><div class="al-top"><span class="a">piece</span><span class="full">Don't worry. It's a piece of cake.</span></div><span class="why">a piece of cake는 '아주 쉬운 일'이라는 관용 표현이다. a roll of는 두루마리 휴지처럼 말려 있는 것에 쓴다.</span><span class="tr">걱정 마. 그건 식은 죽 먹기야.</span></li>
+<li><div class="al-top"><span class="a">a favor</span><span class="full">Can you do me a favor?</span></div><span class="why">do + 사람 + a favor는 '~의 부탁을 들어주다'. 여기서 favor는 '호의를 베푸는 행동 하나'라서 셀 수 있고 a가 필요하다.</span><span class="tr">부탁 하나 들어줄래?</span></li>
+<li><div class="al-top"><span class="a">mail</span><span class="full">Did you get any mail from Jim?</span></div><span class="why">mail(우편물)은 셀 수 없는 명사다. 낱개를 말하려면 a letter, an e-mail을 쓴다. any는 양쪽에 다 쓰이므로 명사 자체로 판단한다.</span><span class="tr">Jim에게서 우편물 받은 것 있니?</span></li>
+<li><div class="al-top"><span class="a">dollars</span><span class="full">Do you have a million dollars?</span></div><span class="why">a million은 '100만'이라는 수이므로 뒤의 명사는 복수형이다. 앞의 a를 보고 단수형 <i>dollar</i>를 고르면 오답.</span><span class="tr">너 100만 달러 있니?</span></li>
+<li><div class="al-top"><span class="a">are</span><span class="full">The police are surrounding that building.</span></div><span class="why">the police는 경찰 조직의 사람들을 가리키며 항상 복수 취급한다. 경찰관 한 명은 a police officer.</span><span class="tr">경찰이 그 건물을 포위하고 있다.</span></li>
+<li><div class="al-top"><span class="a">feet</span><span class="full">This animal has four feet.</span></div><span class="why">foot의 복수형은 불규칙형 feet. tooth – teeth, goose – geese도 같은 방식으로 변한다.</span><span class="tr">이 동물은 발이 네 개다.</span></li>
 </ol></div></details>
 </article>
-<div class="section-divider"><span>Chapter II · Unit 04 <em>Idiomatic Nouns</em><span class="kor">제2장 · Unit 04 명사의 관용적 용법</span></span></div>
+<div class="panel-foot"><button type="button" class="pf-btn" data-go="u1-g"><small>Unit 03</small>어법 해설 다시 보기</button><button type="button" class="pf-btn primary" data-go="u2-g"><small>다음</small>Unit 04 명사의 관용적 용법 · 어법 해설</button></div>
+</section>
+<section class="panel" id="p-u2-g" data-unit="u2" data-mode="g">
+<div class="panel-head"><div class="ph-no"><small>UNIT</small>04</div><div class="ph-txt"><h2 class="ph-title">명사의 관용적 용법</h2><div class="ph-mode"><b>어법 해설</b> · EXERCISE A~B · 24문항</div></div></div>
+<div class="g-intro">Unit 04의 EXERCISE A는 <b>추상명사가 들어간 관용 표현</b>, EXERCISE B는 <b>관사가 붙으면서 명사의 성격이 바뀌는 경우</b>를 다룹니다. 대부분 표현을 알고 있어야 풀 수 있으므로 표를 통째로 익혀 두세요.</div>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">1</span>of + 추상명사 = 형용사 <span class="g-badge">내신 빈출</span></h3>
+<p class="g-p">「of + 추상명사」는 형용사처럼 명사를 뒤에서 꾸미거나 be동사 뒤에서 보어로 쓰입니다.</p>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>of + 추상명사</th><th>형용사</th><th>뜻</th></tr>
+<tr><td><span class="e">of wisdom</span></td><td><span class="e">wise</span></td><td>지혜로운</td></tr>
+<tr><td><span class="e">of learning</span></td><td><span class="e">learned</span></td><td>박식한, 학식 있는</td></tr>
+<tr><td><span class="e">of use</span></td><td><span class="e">useful</span></td><td>쓸모 있는</td></tr>
+<tr><td><span class="e">of no use</span></td><td><span class="e">useless</span></td><td>쓸모없는</td></tr>
+</table></div>
+<div class="g-ex">
+<p><span class="e">He is a man <b>of wisdom</b>. = He is a <b>wise</b> man.</span><span class="k">그는 지혜로운 사람이다.</span></p>
+<p><span class="e">This book is <b>of use</b> to me. = This book is <b>useful</b> to me.</span><span class="k">이 책은 나에게 쓸모가 있다.</span></p>
+</div>
+<div class="g-warn"><b>함정</b> 「of + 추상명사」는 명사 <b>뒤</b>에 오지만(a man of wisdom), 형용사로 바꾸면 명사 <b>앞</b>으로 갑니다(a wise man). 또 <span class="e">learned</span>는 '박식한'이라는 뜻의 형용사입니다. 동사 learn의 과거형과 철자는 같지만 다른 단어로 기억해 두세요.</div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">2</span>전치사 + 추상명사 = 부사 <span class="g-badge">내신 빈출</span></h3>
+<p class="g-p">어떤 전치사를 쓰는지는 명사마다 정해져 있습니다. EXERCISE A와 기출응용문제에 나오는 표현을 전치사별로 묶었습니다.</p>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>전치사</th><th>전치사 + 추상명사</th><th>부사</th><th>뜻</th></tr>
+<tr><td class="col-head" rowspan="4">with</td><td><span class="e">with ease</span></td><td><span class="e">easily</span></td><td>쉽게</td></tr>
+<tr><td><span class="e">with care</span></td><td><span class="e">carefully</span></td><td>조심스럽게</td></tr>
+<tr><td><span class="e">with patience</span></td><td><span class="e">patiently</span></td><td>참을성 있게</td></tr>
+<tr><td><span class="e">with fluency</span></td><td><span class="e">fluently</span></td><td>유창하게</td></tr>
+<tr><td class="col-head" rowspan="2">in</td><td><span class="e">in private</span></td><td><span class="e">privately</span></td><td>은밀히, 단둘이</td></tr>
+<tr><td><span class="e">in haste</span></td><td><span class="e">hastily</span></td><td>서둘러</td></tr>
+<tr><td class="col-head" rowspan="2">on</td><td><span class="e">on time</span></td><td><span class="e">punctually</span></td><td>정각에</td></tr>
+<tr><td><span class="e">on occasion</span></td><td><span class="e">occasionally</span></td><td>가끔</td></tr>
+<tr><td class="col-head" rowspan="2">by</td><td><span class="e">by accident</span></td><td><span class="e">accidentally</span></td><td>우연히</td></tr>
+<tr><td><span class="e">by luck</span></td><td><span class="e">luckily</span></td><td>운 좋게</td></tr>
+</table></div>
+<div class="g-rule"><b>with</b> — 어떤 태도·성질을 '가지고' (ease, care, patience, fluency)<br><b>in</b> — 어떤 상태 '안에서' (private, haste)<br><b>on</b> — 때에 맞추어 (time, occasion)<br><b>by</b> — 우연·운에 '의해' (accident, luck)</div>
+<div class="g-warn"><b>함정</b> <span class="e">with care</span>는 carefully(조심스럽게)입니다. 기출응용 1번은 이것을 <span class="e x">carelessly</span>(부주의하게)로 바꿔 놓고 묻습니다. 또 <span class="e">in private</span>의 private은 형용사처럼 보이지만 이 표현에서는 그대로 굳어진 형태입니다.</div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">3</span>추상명사 + itself / all + 명사 = very + 형용사</h3>
+<div class="g-rule"><b>추상명사 + itself</b> = <b>all + 추상명사(또는 복수명사)</b> = <b>very + 형용사</b></div>
+<div class="g-ex">
+<p><span class="e">She was very kind. = She was <b>kindness itself</b>.</span><span class="k">그녀는 매우 친절했다. (친절 그 자체였다)</span></p>
+<p><span class="e">The girl was very happy. = The girl was <b>all smiles</b>.</span><span class="k">그 소녀는 매우 기뻐했다. (얼굴 가득 웃음이었다)</span></p>
+</div>
+<p class="g-p">두 표현은 <b>어순이 반대</b>입니다. itself는 명사 뒤에, all은 명사 앞에 옵니다. 문제에서는 빈칸이 명사의 앞인지 뒤인지를 보고 구별합니다.</p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">4</span>종족 전체를 나타내는 세 가지 방법</h3>
+<p class="g-p">'고래는 포유류이다'처럼 어떤 종류 전체에 대해 말할 때 아래 세 가지 형태를 쓸 수 있습니다.</p>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>형태</th><th>예문</th><th>동사·보어</th></tr>
+<tr><td class="col-head">무관사 복수형</td><td><span class="e"><b>Whales</b> are mammals.</span></td><td>복수동사, 복수 보어</td></tr>
+<tr><td class="col-head">A(n) + 단수형</td><td><span class="e"><b>A</b> whale is a mammal.</span></td><td>단수동사, 단수 보어</td></tr>
+<tr><td class="col-head">The + 단수형</td><td><span class="e"><b>The</b> whale is a mammal.</span></td><td>단수동사, 단수 보어</td></tr>
+</table></div>
+<p class="g-p">빈칸 뒤의 <b>동사와 대명사</b>가 단서입니다. <span class="e">are / their owners</span>가 보이면 복수형, <span class="e">is / its owner</span>가 보이면 A 또는 The를 씁니다.</p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">5</span>the + 보통명사(단수) = 추상명사 <span class="g-badge">내신 빈출</span></h3>
+<p class="g-p">「the + 단수 보통명사」가 그 명사가 가진 <b>성질이나 역할</b>을 뜻하는 추상명사처럼 쓰일 때가 있습니다.</p>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>표현</th><th>뜻</th><th>예문</th></tr>
+<tr><td><span class="e">the mother</span></td><td>모성애</td><td><span class="e">She felt <b>the mother</b> rise in her heart.</span></td></tr>
+<tr><td><span class="e">the father</span></td><td>부성애</td><td><span class="e"><b>The father</b> in him wanted to scold his son.</span></td></tr>
+<tr><td><span class="e">the beggar</span></td><td>거지 근성</td><td><span class="e">When one is reduced to poverty, <b>the beggar</b> will come out.</span></td></tr>
+<tr><td><span class="e">the judge</span></td><td>판사로서의 본분</td><td><span class="e">He forgot <b>the judge</b> at the moment.</span></td></tr>
+<tr><td><span class="e">the pen / the sword</span></td><td>글의 힘 / 무력</td><td><span class="e"><b>The pen</b> is mightier than <b>the sword</b>.</span></td></tr>
+</table></div>
+<div class="g-warn"><b>함정</b> 이 용법은 <b>보통명사</b>(mother, beggar, pen)에 the가 붙어 추상적인 뜻이 되는 경우입니다. <span class="e">the courage of the soldier</span>처럼 원래 추상명사(courage)에 of구가 붙어 the를 쓴 것은 다른 용법입니다. 기출응용 6번이 이 차이를 묻습니다.</div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">6</span>고유명사에 관사가 붙는 경우 <span class="g-badge">내신 빈출</span></h3>
+<p class="g-p">사람 이름에는 원래 관사를 붙이지 않습니다. 관사가 붙으면 뜻이 달라집니다.</p>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>형태</th><th>뜻</th><th>예문</th></tr>
+<tr><td class="col-head">a(n) + 사람 이름</td><td>~라는 사람 (= a certain)</td><td><span class="e"><b>A</b> Mr. Cho came to meet you.</span><br>Cho 씨라는 분이 너를 만나러 왔어.</td></tr>
+<tr><td class="col-head">a(n) + 유명인 이름</td><td>~ 같은 사람</td><td><span class="e">His hope is to be <b>an</b> Einstein.</span><br>그의 희망은 Einstein 같은 과학자가 되는 것이다.</td></tr>
+<tr><td class="col-head">the + 성(姓)의 복수형</td><td>~ 씨 부부, ~ 가문</td><td><span class="e"><b>The</b> Browns watched the movie.</span><br>Brown 씨 부부는 그 영화를 봤다.</td></tr>
+<tr><td class="col-head">the + 유명인 이름 + of ~</td><td>~의 …와 같은 사람</td><td><span class="e">He is <b>the</b> Gogh of Korea.</span><br>그는 한국의 고흐이다.</td></tr>
+</table></div>
+<ul class="g-list">
+<li><b>a와 an</b>은 철자가 아니라 뒤따르는 단어의 첫 <b>발음</b>으로 정합니다. Einstein은 모음 발음으로 시작하므로 <span class="e">an Einstein</span>.</li>
+<li>'~ 같은 사람'이라는 뜻이라도 <b>of ~로 한정</b>되면 하나로 정해지므로 a가 아니라 <b>the</b>를 씁니다. <span class="e">an Einstein</span> / <span class="e">the Gogh <b>of Korea</b></span></li>
+<li><span class="e">The Browns</span>는 복수이므로 복수동사로 받습니다. <span class="e">The Johnsons <b>have</b> ~</span></li>
+</ul>
+</section>
+
+<section class="g-sec g-check"><h3 class="g-h">시험 직전 점검</h3>
+<ol class="g-ol">
+<li>of + 추상명사 = 형용사: of wisdom(wise), of learning(learned), of use(useful), of no use(useless).</li>
+<li>with ease·care·patience·fluency / in private·haste / on time·occasion / by accident·luck.</li>
+<li>kindness <b>itself</b> = <b>all</b> kindness = very kind. itself는 뒤, all은 앞.</li>
+<li>종족 대표: 복수형 / A + 단수 / The + 단수. 뒤의 동사 수로 구별.</li>
+<li>the mother(모성애), the beggar(거지 근성), the pen(글의 힘) — the + 보통명사 = 추상명사.</li>
+<li>a Mr. Cho(~라는 분), an Einstein(~ 같은 사람), the Browns(~ 씨 부부), the Gogh of Korea(of 한정 → the).</li>
+</ol></section>
+<div class="panel-foot"><button type="button" class="pf-btn primary" data-go="u2-q"><small>Unit 04</small>문제 풀이로 이동</button><button type="button" class="pf-btn" data-go="u3-g"><small>다음</small>Unit 05 관사 · 어법 해설</button></div>
+</section>
+<section class="panel" id="p-u2-q" data-unit="u2" data-mode="q">
+<div class="panel-head"><div class="ph-no"><small>UNIT</small>04</div><div class="ph-txt"><h2 class="ph-title">명사의 관용적 용법</h2><div class="ph-mode"><b>문제 풀이</b> · EXERCISE A~B · 24문항</div></div></div>
+<div class="tool-row"><button type="button" class="tool-btn" data-toggle-all>해설 모두 펼치기</button></div>
 <article class="q-card">
 <div class="q-head"><div class="q-num">04-A</div><div class="q-type gram">추상명사 관용</div><div class="q-pts">EX</div></div>
 <div class="q-prompt"><b>A.</b> 두 문장의 뜻이 같도록 빈칸에 알맞은 단어를 써 넣으세요.</div>
@@ -440,21 +764,25 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>She was very kind. = She was kindness <span class="blk"></span>.</li>
 <li>The girl was very happy. = The girl was <span class="blk"></span> smiles.</li>
 </ol></div>
-<details class="ans"><summary>04-A번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail"><b>of + 추상명사 = 형용사</b>(of wisdom=wise), <b>전치사 + 추상명사 = 부사</b>(with ease=easily, on time=punctually, by accident=accidentally, in private=privately, with care=carefully, in haste=hastily, on occasion=occasionally, with patience=patiently). <b>추상명사 itself / all + 추상명사 = 매우 ~한</b>.</div><ol class="ans-list">
-<li><span class="a">wise</span></li>
-<li><span class="a">learned</span> <span class="why">— 박식한</span></li>
-<li><span class="a">useless</span> <span class="why">— of no use</span></li>
-<li><span class="a">useful</span> <span class="why">— of use</span></li>
-<li><span class="a">with</span> <span class="why">— with ease = easily</span></li>
-<li><span class="a">on</span> <span class="why">— on time = punctually</span></li>
-<li><span class="a">by</span> <span class="why">— by accident</span></li>
-<li><span class="a">in</span> <span class="why">— in private</span></li>
-<li><span class="a">with</span> <span class="why">— with care</span></li>
-<li><span class="a">in</span> <span class="why">— in haste</span></li>
-<li><span class="a">on</span> <span class="why">— on occasion</span></li>
-<li><span class="a">with</span> <span class="why">— with patience</span></li>
-<li><span class="a">itself</span> <span class="why">— kindness itself = 매우 친절한</span></li>
-<li><span class="a">all</span> <span class="why">— all smiles = 매우 기쁜</span></li>
+<details class="ans"><summary>04-A 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① of + 추상명사 = 형용사.</b> of wisdom = wise, of learning = learned, of use = useful, of no use = useless.<br>
+<b>② 전치사 + 추상명사 = 부사.</b> 전치사는 명사마다 정해져 있다: with(ease, care, patience) / in(private, haste) / on(time, occasion) / by(accident).<br>
+<b>③ 추상명사 + itself = all + 명사 = very + 형용사.</b> itself는 명사 뒤, all은 명사 앞.</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">wise</span><span class="full">He is a wise man.</span></div><span class="why">of wisdom은 「of + 추상명사」로 형용사 wise와 같다. 형용사로 바꾸면 명사 뒤가 아니라 앞에 놓인다(a man of wisdom → a wise man).</span><span class="tr">그는 지혜로운 사람이다.</span></li>
+<li><div class="al-top"><span class="a">learned</span><span class="full">She looked like a learned woman.</span></div><span class="why">of learning = learned(박식한, 학식 있는). 추상명사 learning은 '학식'이라는 뜻이다. 현재분사처럼 보이는 <i>learning</i>을 그대로 쓰면 '배우고 있는'이라는 뜻이 되어 오답.</span><span class="tr">그녀는 박식한 여성처럼 보였다.</span></li>
+<li><div class="al-top"><span class="a">useless</span><span class="full">It was useless to consider the matter seriously.</span></div><span class="why">of use = useful이고, no가 붙은 of no use = useless(쓸모없는). no를 놓치고 <i>useful</i>을 쓰면 뜻이 반대가 된다. It은 가주어, to consider ~가 진주어.</span><span class="tr">그 문제를 심각하게 고민해 봐야 소용없었다.</span></li>
+<li><div class="al-top"><span class="a">useful</span><span class="full">This book is useful to me.</span></div><span class="why">of use = useful(쓸모 있는). 3번의 of no use와 짝으로 기억한다.</span><span class="tr">이 책은 나에게 쓸모가 있다.</span></li>
+<li><div class="al-top"><span class="a">with</span><span class="full">He solved the question with ease.</span></div><span class="why">easily = with ease. 태도나 성질을 나타내는 추상명사(ease, care, patience)는 with와 쓴다.</span><span class="tr">그는 그 문제를 쉽게 풀었다.</span></li>
+<li><div class="al-top"><span class="a">on</span><span class="full">He arrived at the restaurant on time.</span></div><span class="why">punctually(시간을 엄수하여) = on time(정각에). in time은 '시간 안에, 늦지 않게'라는 뜻으로 의미가 다르다.</span><span class="tr">그는 정각에 식당에 도착했다.</span></li>
+<li><div class="al-top"><span class="a">by</span><span class="full">I met him by accident.</span></div><span class="why">accidentally = by accident(우연히). 같은 뜻의 by chance, 반대말 on purpose(고의로)도 함께 기억한다.</span><span class="tr">나는 우연히 그를 만났다.</span></li>
+<li><div class="al-top"><span class="a">in</span><span class="full">Do you want to talk with me in private?</span></div><span class="why">privately = in private(남이 없는 데서, 단둘이). 반대말은 in public(공개적으로).</span><span class="tr">나와 단둘이 이야기하고 싶니?</span></li>
+<li><div class="al-top"><span class="a">with</span><span class="full">We should examine it with care.</span></div><span class="why">carefully = with care. 5번 with ease와 같은 구조다. 기출응용 1번은 이것을 carelessly로 바꿔 놓고 묻는다.</span><span class="tr">우리는 그것을 주의 깊게 조사해야 한다.</span></li>
+<li><div class="al-top"><span class="a">in</span><span class="full">They married in haste.</span></div><span class="why">hastily = in haste(서둘러). 같은 뜻의 in a hurry는 a가 붙지만 in haste는 관사가 없다.</span><span class="tr">그들은 서둘러 결혼했다.</span></li>
+<li><div class="al-top"><span class="a">on</span><span class="full">He continues to visit us on occasion.</span></div><span class="why">occasionally = on occasion(가끔). 6번 on time과 함께 on을 쓰는 표현으로 묶어 둔다.</span><span class="tr">그는 계속 가끔씩 우리를 찾아온다.</span></li>
+<li><div class="al-top"><span class="a">with</span><span class="full">You must work with patience.</span></div><span class="why">patiently = with patience(참을성 있게). ease, care와 마찬가지로 태도를 나타내는 추상명사이므로 with.</span><span class="tr">너는 참을성 있게 일해야 한다.</span></li>
+<li><div class="al-top"><span class="a">itself</span><span class="full">She was kindness itself.</span></div><span class="why">「추상명사 + itself」는 '~ 그 자체'라는 뜻으로 very + 형용사와 같다. 빈칸이 kindness <b>뒤</b>에 있으므로 itself. 앞에 빈칸이 있었다면 all(all kindness).</span><span class="tr">그녀는 매우 친절했다. (친절 그 자체였다)</span></li>
+<li><div class="al-top"><span class="a">all</span><span class="full">The girl was all smiles.</span></div><span class="why">「all + 명사」 = very + 형용사. 빈칸이 smiles <b>앞</b>에 있으므로 all. all smiles는 '얼굴 가득 웃음인, 매우 기뻐하는'. all ears(열심히 귀 기울이는), all eyes(눈을 떼지 않는)도 같은 형태.</span><span class="tr">그 소녀는 매우 기뻐했다.</span></li>
 </ol></div></details>
 </article>
 <article class="q-card">
@@ -472,64 +800,174 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>Johnson 가문은 그 도시에 많은 영향력을 갖고 있다. = <span class="blk"></span> Johnsons have a great influence on the city.</li>
 <li>그는 한국의 고흐와 같은 위대한 화가이다. = He is <span class="blk"></span> Gogh of Korea.</li>
 </ol></div>
-<details class="ans"><summary>04-B번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail">종족대표는 <b>복수 / a+단수 / the+단수</b> 세 방식. <b>the+보통명사=추상명사</b>(the mother=모성애, the beggar=거지근성). <b>a+사람이름=~같은 사람</b>(an Einstein), <b>the+성(姓)의 복수=~씨 부부·가족</b>(The Browns), <b>of 수식 있으면 the</b>(the Gogh of Korea).</div><ol class="ans-list">
-<li><span class="a">Whales / A / The</span> <span class="why">— 종족대표 3방식</span></li>
-<li><span class="a">Dogs / A / The</span> <span class="why">— 종족대표 3방식</span></li>
-<li><span class="a">the</span> <span class="why">— the mother = 모성애</span></li>
-<li><span class="a">the</span> <span class="why">— the beggar = 거지 근성</span></li>
-<li><span class="a">the</span> <span class="why">— the judge = 판사의 본분</span></li>
-<li><span class="a">A</span> <span class="why">— A Mr. Cho = ~라는 분</span></li>
-<li><span class="a">an</span> <span class="why">— an Einstein = ~같은 사람 (모음 → an)</span></li>
-<li><span class="a">The</span> <span class="why">— The Browns = Brown씨 부부</span></li>
-<li><span class="a">The</span> <span class="why">— The Johnsons = Johnson 가문</span></li>
-<li><span class="a">the</span> <span class="why">— of Korea 수식 → the Gogh</span></li>
+<details class="ans"><summary>04-B 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① 종족 대표</b>는 세 가지: 무관사 복수형(Whales are ~) / A + 단수(A whale is ~) / The + 단수(The whale is ~). 뒤의 동사가 are인지 is인지로 구별한다.<br>
+<b>② the + 단수 보통명사 = 추상명사.</b> the mother(모성애), the beggar(거지 근성), the judge(판사의 본분).<br>
+<b>③ 고유명사 + 관사</b>: a + 이름(~라는 사람 / ~ 같은 사람), the + 성의 복수형(~ 씨 부부, ~ 가문), of ~로 한정되면 the.</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">Whales / A / The</span><span class="full">Whales are mammals. = A whale is a mammal. = The whale is a mammal.</span></div><span class="why">종족 전체를 나타내는 세 가지 방법. 첫 문장은 동사가 are, 보어가 mammals이므로 복수형 Whales. 둘째·셋째 문장은 is와 a mammal이 쓰였으므로 단수형 앞에 A와 The를 넣는다(A와 The의 순서는 바뀌어도 된다).</span><span class="tr">고래는 포유류이다.</span></li>
+<li><div class="al-top"><span class="a">Dogs / A / The</span><span class="full">Dogs are loyal to their owners. = A dog is loyal to its owner. = The dog is loyal to its owner.</span></div><span class="why">1번과 같은 원리. are와 their owners가 있는 문장에는 복수형 Dogs, is와 its owner가 있는 문장에는 A / The. 대명사 their와 its도 주어의 수를 알려 주는 단서다.</span><span class="tr">개는 자신의 주인에게 충직하다.</span></li>
+<li><div class="al-top"><span class="a">the</span><span class="full">She felt the mother rise in her heart.</span></div><span class="why">the + 보통명사가 그 명사의 성질을 뜻하는 추상명사로 쓰인 경우. the mother = 모성애. <i>a mother</i>를 쓰면 '어떤 어머니 한 사람'이 되어 뜻이 통하지 않는다. feel + 목적어 + 동사원형(rise) 구조.</span><span class="tr">그녀는 마음속에서 모성애가 솟아나는 것을 느꼈다.</span></li>
+<li><div class="al-top"><span class="a">the</span><span class="full">When one is reduced to poverty, the beggar will come out.</span></div><span class="why">the beggar = 거지 근성. 실제 거지 한 사람이 아니라 사람 안에 있는 '거지 같은 성질'을 가리킨다. be reduced to ~는 '~한 처지가 되다'.</span><span class="tr">사람이 가난해지면 거지 근성이 나온다.</span></li>
+<li><div class="al-top"><span class="a">the</span><span class="full">He forgot the judge at the moment.</span></div><span class="why">the judge = 판사로서의 본분(직분). 3·4번과 같은 「the + 보통명사 = 추상명사」 용법.</span><span class="tr">그는 그 순간 판사로서의 본분을 잊어버렸다.</span></li>
+<li><div class="al-top"><span class="a">A</span><span class="full">A Mr. Cho came to meet you before long.</span></div><span class="why">사람 이름 앞의 a는 a certain의 뜻으로 '~라는 (내가 잘 모르는) 사람'을 나타낸다. <i>The Mr. Cho</i>는 쓰지 않는다. 문장 첫머리이므로 대문자 A.</span><span class="tr">Cho 씨라는 분이 얼마 전에 너를 만나러 오셨어.</span></li>
+<li><div class="al-top"><span class="a">an</span><span class="full">His hope is to be an Einstein.</span></div><span class="why">유명인 이름 앞의 a(n)은 '~ 같은 (훌륭한) 사람'이라는 뜻. Einstein은 모음 발음으로 시작하므로 a가 아니라 an. 10번처럼 of ~의 한정이 없으므로 the를 쓰지 않는다.</span><span class="tr">그의 희망은 Einstein과 같은 훌륭한 과학자가 되는 것이다.</span></li>
+<li><div class="al-top"><span class="a">The</span><span class="full">The Browns watched the movie yesterday.</span></div><span class="why">the + 성(姓)의 복수형 = ~ 씨 부부, ~ 씨 가족. 성에 -s가 붙어 있으면 앞에 The를 넣는다.</span><span class="tr">Brown 씨 부부는 어제 그 영화를 봤다.</span></li>
+<li><div class="al-top"><span class="a">The</span><span class="full">The Johnsons have a great influence on the city.</span></div><span class="why">8번과 같은 형태로 여기서는 '~ 가문'이라는 뜻. 복수이므로 동사도 has가 아니라 have다.</span><span class="tr">Johnson 가문은 그 도시에 큰 영향력을 갖고 있다.</span></li>
+<li><div class="al-top"><span class="a">the</span><span class="full">He is the Gogh of Korea.</span></div><span class="why">'~ 같은 사람'이라는 뜻이지만 뒤에 of Korea가 붙어 '한국의 고흐'로 하나로 한정되므로 a가 아니라 the를 쓴다. 7번 an Einstein과 비교.</span><span class="tr">그는 한국의 고흐와 같은 위대한 화가이다.</span></li>
 </ol></div></details>
 </article>
-<div class="section-divider"><span>Chapter II · Unit 05 <em>Articles</em><span class="kor">제2장 · Unit 05 관사</span></span></div>
+<div class="panel-foot"><button type="button" class="pf-btn" data-go="u2-g"><small>Unit 04</small>어법 해설 다시 보기</button><button type="button" class="pf-btn primary" data-go="u3-g"><small>다음</small>Unit 05 관사 · 어법 해설</button></div>
+</section>
+<section class="panel" id="p-u3-g" data-unit="u3" data-mode="g">
+<div class="panel-head"><div class="ph-no"><small>UNIT</small>05</div><div class="ph-txt"><h2 class="ph-title">관사</h2><div class="ph-mode"><b>어법 해설</b> · EXERCISE A~C · 28문항</div></div></div>
+<div class="g-intro">Unit 05는 <b>a(n)의 여섯 가지 뜻 → the의 아홉 가지 쓰임 → 관사 넣기 → 신체 부위와 전치사</b> 순서입니다. EXERCISE A와 B-1은 &lt;보기&gt;의 분류를 그대로 묻기 때문에 아래 표 두 개가 곧 정답의 기준입니다.</div>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">1</span>부정관사 a(n)의 여섯 가지 뜻 <span class="g-badge">내신 빈출</span></h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>번호</th><th>뜻</th><th>예문</th><th>해석</th></tr>
+<tr><td class="num">①</td><td>one (하나의)</td><td><span class="e">You didn't say <b>a</b> word.</span></td><td>한 마디도</td></tr>
+<tr><td class="num">②</td><td>a certain (어떤)</td><td><span class="e">Once there lived <b>a</b> stubborn old king.</span></td><td>어떤 왕이</td></tr>
+<tr><td class="num">③</td><td>some (약간의, 어느 정도의)</td><td><span class="e">He waited for <b>a</b> while.</span></td><td>잠시 동안</td></tr>
+<tr><td class="num">④</td><td>the same (같은)</td><td><span class="e">The girls were all of <b>an</b> age.</span></td><td>같은 나이</td></tr>
+<tr><td class="num">⑤</td><td>per (~마다, ~당)</td><td><span class="e">120km <b>an</b> hour</span></td><td>시간당</td></tr>
+<tr><td class="num">⑥</td><td>대표단수 (종족 전체)</td><td><span class="e"><b>A</b> cat is very cute.</span></td><td>고양이라는 동물은</td></tr>
+</table></div>
+<p class="g-p g-sub">구별하는 요령</p>
+<ul class="g-list">
+<li><b>of a(n) + 명사</b>가 보이면 ④ the same입니다. <span class="e">of an age</span>(동갑인), <span class="e">of a size</span>(같은 크기인), <span class="e">of a mind</span>(같은 생각인), <span class="e">Birds of a feather</span>(같은 깃털의 새).</li>
+<li><b>수량 + a(n) + 시간·단위</b>이면 ⑤ per입니다. <span class="e">120km an hour</span>, <span class="e">twice a week</span>, <span class="e">three times a day</span>.</li>
+<li><b>주어 자리</b>에서 그 종류 전체의 성질을 말하면 ⑥ 대표단수입니다. 'any(어떤 ~라도)'로 바꿔 뜻이 통하는지 확인합니다.</li>
+<li>이야기 도입부(<span class="e">Once there lived ~</span>)나 사람 이름 앞(<span class="e">A Mr. Kang</span>)의 a는 ② a certain입니다.</li>
+</ul>
+<p class="g-p g-sub">a와 an</p>
+<p class="g-p">뒤에 오는 단어의 첫 <b>발음</b>이 모음이면 an을 씁니다. 철자가 아니라 발음이 기준입니다. <span class="e"><b>an</b> hour</span>, <span class="e"><b>an</b> honest girl</span>은 h가 소리 나지 않아 모음 발음으로 시작합니다.</p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">2</span>정관사 the의 아홉 가지 쓰임 <span class="g-badge">내신 빈출</span></h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>번호</th><th>쓰임</th><th>예문</th></tr>
+<tr><td class="num">①</td><td>앞에 나온 명사를 다시 말할 때</td><td><span class="e">I went to a park. It was <b>the</b> park that ~</span></td></tr>
+<tr><td class="num">②</td><td>문맥·상황으로 무엇인지 알 수 있을 때</td><td><span class="e">Please pass me <b>the</b> salt.</span></td></tr>
+<tr><td class="num">③</td><td>세상에 하나뿐인 것</td><td><span class="e">around <b>the</b> world / in <b>the</b> sky</span></td></tr>
+<tr><td class="num">④</td><td>서수·최상급·only·very·same 앞</td><td><span class="e">on <b>the</b> same day / <b>the</b> third time</span></td></tr>
+<tr><td class="num">⑤</td><td>대표단수 (종족 전체)</td><td><span class="e"><b>The</b> cat is a cute animal.</span></td></tr>
+<tr><td class="num">⑥</td><td>기계·발명품·악기</td><td><span class="e">play <b>the</b> piano</span></td></tr>
+<tr><td class="num">⑦</td><td>시간·수량의 단위 (by the ~)</td><td><span class="e">sell tea by <b>the</b> pound</span></td></tr>
+<tr><td class="num">⑧</td><td>일부 고유명사 앞 (강 이름 등)</td><td><span class="e"><b>the</b> Han River</span></td></tr>
+<tr><td class="num">⑨</td><td>the + 형용사 = ~한 사람들</td><td><span class="e">Don't tease <b>the</b> weak.</span></td></tr>
+</table></div>
+<div class="g-warn"><b>함정</b> ①과 ②의 구별 — ①은 같은 명사가 <b>앞 문장에 a(n)과 함께 먼저 나온</b> 경우(a park → the park)이고, ②는 앞에 나온 적이 없어도 <b>말하는 상황에서 서로 아는 것</b>(식탁 위의 그 소금)입니다.<br><b>함정</b> ⑨ <span class="e">the weak</span>은 weak people과 같은 <b>복수</b> 명사구입니다. 주어로 쓰이면 복수동사로 받습니다. <span class="e">The rich <b>are</b> not always happy.</span></div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">3</span>of a(n) + 명사 = the same</h3>
+<p class="g-p">be동사 뒤나 명사 뒤에서 「of a(n) + 명사」는 '같은 ~의'라는 뜻입니다. 이때 a를 the로 바꾸면 틀립니다.</p>
+<div class="g-ex">
+<p><span class="e">We are all <b>of a mind</b>.</span><span class="k">우리는 모두 같은 생각이다.</span></p>
+<p><span class="e">These gloves are much <b>of a size</b>.</span><span class="k">이 장갑들은 크기가 거의 같다. (much = 거의)</span></p>
+<p><span class="e">The girls were all <b>of an age</b>.</span><span class="k">그 소녀들은 모두 동갑이었다.</span></p>
+</div>
+<div class="g-rule"><b>of a(n) + 명사</b> = <b>of the same + 명사</b><br>same을 쓰면 the, same이 없으면 a(n).</div>
+<div class="g-warn"><b>함정</b> <span class="e x">of the age</span>처럼 same 없이 the만 쓰는 형태는 없습니다. 기출응용 12번이 이것을 묻습니다.</div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">4</span>by the + 단위 / 수량 + a(n) + 단위</h3>
+<p class="g-p">단위를 나타내는 표현은 두 가지이고, 관사가 서로 다릅니다.</p>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>형태</th><th>뜻</th><th>예문</th></tr>
+<tr><td class="col-head">by <b>the</b> + 단위</td><td>~ 단위로</td><td><span class="e">They sell tea <b>by the pound</b>.</span> 파운드 단위로 판다</td></tr>
+<tr><td class="col-head">수량 + <b>a(n)</b> + 단위</td><td>~당, ~마다 (per)</td><td><span class="e">120km <b>an hour</b></span> 시간당 120km</td></tr>
+</table></div>
+<p class="g-p">전치사 by가 있으면 the, 전치사 없이 수량 뒤에 바로 오면 a(n)입니다.</p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">5</span>신체 부위 앞의 the와 전치사 <span class="g-badge">내신 빈출</span></h3>
+<p class="g-p">'누구의 어디를 ~하다'는 영어에서 <b>사람을 먼저 목적어로</b> 쓰고, 그 뒤에 <b>「전치사 + the + 신체 부위」</b>를 덧붙입니다. 신체 부위 앞에는 소유격(my, his)이 아니라 <b>the</b>를 씁니다.</p>
+<div class="g-rule">동사 + 사람 + <b>전치사 + the + 신체 부위</b></div>
+<div class="g-ex"><p><span class="e">He struck <b>me on the cheek</b>.</span><span class="k">그는 내 뺨을 때렸다. (my cheek을 목적어로 쓰기보다 사람을 먼저 쓴다)</span></p></div>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>전치사</th><th>동작의 성격</th><th>동사</th><th>예문</th></tr>
+<tr><td class="col-head">by</td><td>붙잡다, 끌다</td><td><span class="e">seize, pull, hold, catch, take</span></td><td><span class="e">She seized the child <b>by</b> the collar.</span><br><span class="e">She pulled me <b>by</b> the hand.</span></td></tr>
+<tr><td class="col-head">on</td><td>표면을 치다, 두드리다</td><td><span class="e">strike, hit, pat, slap, kiss</span></td><td><span class="e">He struck me <b>on</b> the cheek.</span><br><span class="e">He patted her <b>on</b> the shoulder.</span></td></tr>
+<tr><td class="col-head">in</td><td>들여다보다</td><td><span class="e">look</span></td><td><span class="e">I looked him <b>in</b> the eye.</span></td></tr>
+<tr><td class="col-head">through</td><td>관통하다</td><td><span class="e">shoot</span></td><td><span class="e">He was shot <b>through</b> the head.</span></td></tr>
+</table></div>
+<div class="g-warn"><b>함정</b> 전치사는 <b>동사의 뜻</b>으로 정합니다. 잡는 동작이면 by, 닿거나 치는 동작이면 on입니다. 기출응용 11번은 pat(토닥이다) 뒤에 through를 넣어 틀린 문장을 만들었습니다.</div>
+</section>
+
+<section class="g-sec g-check"><h3 class="g-h">시험 직전 점검</h3>
+<ol class="g-ol">
+<li>a(n)의 뜻: one / a certain / some / the same / per / 대표단수.</li>
+<li>of a(n) + 명사 = the same. of an age, of a size, of a mind, of a feather.</li>
+<li>the: 반복, 문맥, 유일물, 서수·최상급·same, 대표단수, 악기, by the + 단위, the Han River, the + 형용사.</li>
+<li>by <b>the</b> pound(단위로) / 120km <b>an</b> hour(~당).</li>
+<li>by(잡다) – on(치다·토닥이다) – in(look ~ in the eye) – through(관통). 신체 부위 앞은 the.</li>
+</ol></section>
+<div class="panel-foot"><button type="button" class="pf-btn primary" data-go="u3-q"><small>Unit 05</small>문제 풀이로 이동</button><button type="button" class="pf-btn" data-go="gi-g"><small>다음</small>기출응용문제 · 어법 해설</button></div>
+</section>
+<section class="panel" id="p-u3-q" data-unit="u3" data-mode="q">
+<div class="panel-head"><div class="ph-no"><small>UNIT</small>05</div><div class="ph-txt"><h2 class="ph-title">관사</h2><div class="ph-mode"><b>문제 풀이</b> · EXERCISE A~C · 28문항</div></div></div>
+<div class="tool-row"><button type="button" class="tool-btn" data-toggle-all>해설 모두 펼치기</button></div>
 <article class="q-card">
 <div class="q-head"><div class="q-num">05-A</div><div class="q-type gram">a/an의 의미</div><div class="q-pts">EX</div></div>
 <div class="q-prompt"><b>A.</b> 밑줄 친 a(n)의 올바른 의미를 &lt;보기&gt;에서 찾아 번호를 쓰세요.</div>
+<div class="cond-box"><div class="cond-title">보기</div>① one &nbsp;&nbsp; ② a certain &nbsp;&nbsp; ③ some &nbsp;&nbsp; ④ the same &nbsp;&nbsp; ⑤ per &nbsp;&nbsp; ⑥ 대표단수</div>
 <div class="drill"><ol>
-<li>The girls were all of an age. [ <span class="blk"></span> ]</li>
-<li>A week has 7 days. [ <span class="blk"></span> ]</li>
-<li>A cat is very cute. [ <span class="blk"></span> ]</li>
-<li>He waited for a while, and then he left there. [ <span class="blk"></span> ]</li>
-<li>My motorcycle can run at the speed of 120km an hour. [ <span class="blk"></span> ]</li>
-<li>Once there lived a stubborn old king in England. [ <span class="blk"></span> ]</li>
+<li>The girls were all of <u>an</u> age. [ <span class="blk"></span> ]</li>
+<li><u>A</u> week has 7 days. [ <span class="blk"></span> ]</li>
+<li><u>A</u> cat is very cute. [ <span class="blk"></span> ]</li>
+<li>He waited for <u>a</u> while, and then he left there. [ <span class="blk"></span> ]</li>
+<li>My motorcycle can run at the speed of 120km <u>an</u> hour. [ <span class="blk"></span> ]</li>
+<li>Once there lived <u>a</u> stubborn old king in England. [ <span class="blk"></span> ]</li>
 </ol></div>
-<details class="ans"><summary>05-A번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail"><보기> ①one ②a certain ③some ④the same ⑤per ⑥대표단수</div><ol class="ans-list">
-<li><span class="a">④ the same</span> <span class="why">— of an age = 같은 나이의</span></li>
-<li><span class="a">⑥ 대표단수</span> <span class="why">— 일주일 일반 진술</span></li>
-<li><span class="a">⑥ 대표단수</span> <span class="why">— 고양이 일반 진술</span></li>
-<li><span class="a">③ some</span> <span class="why">— a while = 잠시(약간의 시간)</span></li>
-<li><span class="a">⑤ per</span> <span class="why">— an hour = 시간당</span></li>
-<li><span class="a">② a certain</span> <span class="why">— 어떤 (옛날이야기 도입)</span></li>
+<details class="ans"><summary>05-A 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① of a(n) + 명사</b>가 보이면 the same(같은).<br>
+<b>② 수량 + a(n) + 시간·단위</b>이면 per(~당).<br>
+<b>③ 주어 자리에서 종류 전체</b>의 성질을 말하면 대표단수. any로 바꿔 뜻이 통하면 대표단수다.<br>
+<b>④ 이야기 도입부</b>에서 처음 등장하는 인물 앞의 a는 a certain(어떤). a while, a distance처럼 '어느 정도의'라는 뜻이면 some.</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">④ the same</span><span class="full">The girls were all of an age.</span></div><span class="why">「of a(n) + 명사」의 a(n)은 the same의 뜻이다. of an age = of the same age(같은 나이의). <i>① one</i>으로 보면 '한 살'이 되어 뜻이 통하지 않는다.</span><span class="tr">그 소녀들은 모두 동갑이었다.</span></li>
+<li><div class="al-top"><span class="a">⑥ 대표단수</span><span class="full">A week has 7 days.</span></div><span class="why">특정한 어느 한 주가 아니라 '일주일이라는 것'에 대한 일반적인 사실을 말하는 문장이므로 대표단수로 분류한다. 다만 이 문장은 '한(one) 주'로도 읽을 수 있어 ①과 혼동하기 쉽다. 구버전 풀이의 정답(⑥)을 그대로 실었으니 교재 정답지와 대조해 보기 바란다.</span><span class="tr">일주일은 7일이다.</span></li>
+<li><div class="al-top"><span class="a">⑥ 대표단수</span><span class="full">A cat is very cute.</span></div><span class="why">고양이 한 마리가 아니라 '고양이라는 동물'의 일반적인 성질을 말한다. Any cat is very cute.로 바꿔도 뜻이 통한다. 주어 자리의 「A + 단수명사 + 일반적 서술」은 대표단수.</span><span class="tr">고양이는 매우 귀엽다.</span></li>
+<li><div class="al-top"><span class="a">③ some</span><span class="full">He waited for a while, and then he left there.</span></div><span class="why">a while은 '얼마 동안, 잠시'. 여기서 a는 '어느 정도의(some)'라는 뜻이다. at a distance(어느 정도 떨어져서)도 같은 용법.</span><span class="tr">그는 잠시 기다렸다가 그곳을 떠났다.</span></li>
+<li><div class="al-top"><span class="a">⑤ per</span><span class="full">My motorcycle can run at the speed of 120km an hour.</span></div><span class="why">수량(120km) 뒤에 온 「a(n) + 단위」는 '~당(per)'의 뜻이다. hour는 h가 소리 나지 않아 모음 발음으로 시작하므로 an.</span><span class="tr">내 오토바이는 시속 120km로 달릴 수 있다.</span></li>
+<li><div class="al-top"><span class="a">② a certain</span><span class="full">Once there lived a stubborn old king in England.</span></div><span class="why">옛날이야기의 도입부에서 처음 소개되는 인물 앞의 a는 '어떤(a certain)'의 뜻이다. 듣는 사람이 아직 모르는 대상을 처음 꺼낼 때 쓴다.</span><span class="tr">옛날 영국에 어떤 고집 센 늙은 왕이 살았다.</span></li>
 </ol></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">05-B1</div><div class="q-type gram">the의 쓰임</div><div class="q-pts">EX</div></div>
 <div class="q-prompt"><b>B-1.</b> 밑줄 친 the의 쓰임을 &lt;보기&gt;에서 찾아 번호를 쓰세요.</div>
+<div class="cond-box"><div class="cond-title">보기</div>① 앞에 나온 명사의 반복 &nbsp;&nbsp; ② 문맥상 지칭 &nbsp;&nbsp; ③ 유일한 것<br>④ 서수·최상급·only·very·same 앞 &nbsp;&nbsp; ⑤ 대표단수 &nbsp;&nbsp; ⑥ 기계·발명품·악기<br>⑦ 시간·수량의 단위 &nbsp;&nbsp; ⑧ 고유명사 앞 &nbsp;&nbsp; ⑨ the + 형용사 = ~한 사람들</div>
 <div class="drill"><ol>
-<li>The girl traveled around the world. [ <span class="blk"></span> ]</li>
-<li>Please pass me the salt. [ <span class="blk"></span> ]</li>
-<li>On Sunday I went to a park. It was the park that I met a pretty girl, Mi-na. [ <span class="blk"></span> ]</li>
-<li>Romeo and Juliet died on the same day. [ <span class="blk"></span> ]</li>
-<li>You were playing the piano when I visited your house. [ <span class="blk"></span> ]</li>
-<li>Every morning I see the Han River. [ <span class="blk"></span> ]</li>
-<li>The cat is a cute animal. [ <span class="blk"></span> ]</li>
-<li>They sell tea by the pound. [ <span class="blk"></span> ]</li>
-<li>Don't tease the weak. [ <span class="blk"></span> ]</li>
+<li>The girl traveled around <u>the</u> world. [ <span class="blk"></span> ]</li>
+<li>Please pass me <u>the</u> salt. [ <span class="blk"></span> ]</li>
+<li>On Sunday I went to a park. It was <u>the</u> park that I met a pretty girl, Mi-na. [ <span class="blk"></span> ]</li>
+<li>Romeo and Juliet died on <u>the</u> same day. [ <span class="blk"></span> ]</li>
+<li>You were playing <u>the</u> piano when I visited your house. [ <span class="blk"></span> ]</li>
+<li>Every morning I see <u>the</u> Han River. [ <span class="blk"></span> ]</li>
+<li><u>The</u> cat is a cute animal. [ <span class="blk"></span> ]</li>
+<li>They sell tea by <u>the</u> pound. [ <span class="blk"></span> ]</li>
+<li>Don't tease <u>the</u> weak. [ <span class="blk"></span> ]</li>
 </ol></div>
-<details class="ans"><summary>05-B1번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail"><보기> ①반복 ②문맥상 지칭 ③유일한 것 ④서수·최상급·only·very·same 앞 ⑤대표단수 ⑥기계·발명품·악기 ⑦시간·수량 단위 ⑧고유명사 앞 ⑨the+형용사=~한 사람들</div><ol class="ans-list">
-<li><span class="a">③</span> <span class="why">— the world = 유일한 것</span></li>
-<li><span class="a">②</span> <span class="why">— 문맥상 그 소금</span></li>
-<li><span class="a">①</span> <span class="why">— a park → the park 반복</span></li>
-<li><span class="a">④</span> <span class="why">— same 앞</span></li>
-<li><span class="a">⑥</span> <span class="why">— 악기명 the piano</span></li>
-<li><span class="a">⑧</span> <span class="why">— 강 이름 the Han River</span></li>
-<li><span class="a">⑤</span> <span class="why">— 대표단수</span></li>
-<li><span class="a">⑦</span> <span class="why">— by the pound = 무게 단위</span></li>
-<li><span class="a">⑨</span> <span class="why">— the weak = 약한 사람들</span></li>
+<details class="ans"><summary>05-B1 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① 같은 명사가 앞 문장에 a(n)과 함께 나왔으면</b> 반복(①), 앞에 없어도 <b>상황상 서로 아는 것</b>이면 문맥상 지칭(②).<br>
+<b>② 뒤의 단어를 본다.</b> same·서수·최상급이면 ④, 악기면 ⑥, 강 이름이면 ⑧, 형용사만 있고 명사가 없으면 ⑨.<br>
+<b>③ by the + 단위</b>는 ⑦, 세상에 하나뿐인 것(world, sky, sun)은 ③, 주어 자리에서 종류 전체를 말하면 ⑤.</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">③</span><span class="full">The girl traveled around the world.</span></div><span class="why">world는 세상에 하나뿐인 것이므로 the를 붙인다. the sun, the moon, the sky, the earth도 같다.</span><span class="tr">그 소녀는 세계를 여행했다.</span></li>
+<li><div class="al-top"><span class="a">②</span><span class="full">Please pass me the salt.</span></div><span class="why">salt가 앞에 언급된 적은 없지만, 식탁에서 말하는 사람과 듣는 사람이 모두 '어느 소금'인지 아는 상황이다. 이처럼 상황으로 대상이 정해질 때 쓰는 the. ①(반복)과 구별할 것.</span><span class="tr">소금 좀 건네주세요.</span></li>
+<li><div class="al-top"><span class="a">①</span><span class="full">On Sunday I went to a park. It was the park that I met a pretty girl, Mi-na.</span></div><span class="why">앞 문장에서 a park로 처음 말한 공원을 다시 가리키므로 the park. 처음 말할 때 a, 다시 말할 때 the.</span><span class="tr">일요일에 나는 공원에 갔다. 내가 예쁜 소녀 미나를 만난 곳이 바로 그 공원이었다.</span></li>
+<li><div class="al-top"><span class="a">④</span><span class="full">Romeo and Juliet died on the same day.</span></div><span class="why">same 앞에는 항상 the를 쓴다. 서수(the first), 최상급(the highest), only, very(바로 그) 앞도 마찬가지.</span><span class="tr">로미오와 줄리엣은 같은 날 죽었다.</span></li>
+<li><div class="al-top"><span class="a">⑥</span><span class="full">You were playing the piano when I visited your house.</span></div><span class="why">'악기를 연주하다'라고 할 때 악기 이름 앞에 the를 쓴다. play the flute, play the violin. 운동 경기(play soccer)에는 관사를 쓰지 않는 것과 비교한다.</span><span class="tr">내가 너희 집에 갔을 때 너는 피아노를 치고 있었다.</span></li>
+<li><div class="al-top"><span class="a">⑧</span><span class="full">Every morning I see the Han River.</span></div><span class="why">고유명사에는 원래 관사를 붙이지 않지만 강·바다·산맥 이름에는 the를 붙인다. the Han River, the Pacific, the Alps.</span><span class="tr">매일 아침 나는 한강을 본다.</span></li>
+<li><div class="al-top"><span class="a">⑤</span><span class="full">The cat is a cute animal.</span></div><span class="why">특정한 고양이가 아니라 '고양이라는 동물'에 대해 말하는 대표단수. 보어 a cute animal이 종류를 설명하고 있다. A cat is ~ / Cats are ~로도 쓸 수 있다.</span><span class="tr">고양이는 귀여운 동물이다.</span></li>
+<li><div class="al-top"><span class="a">⑦</span><span class="full">They sell tea by the pound.</span></div><span class="why">「by the + 단위」는 '~ 단위로'. by the kilo, by the day, by the week, by the hour도 같은 형태다.</span><span class="tr">그들은 차를 파운드 단위로 판다.</span></li>
+<li><div class="al-top"><span class="a">⑨</span><span class="full">Don't tease the weak.</span></div><span class="why">the 뒤에 명사 없이 형용사만 있다. 「the + 형용사」 = ~한 사람들. the weak = weak people, the rich = rich people.</span><span class="tr">약한 사람들을 괴롭히지 마라.</span></li>
 </ol></div></details>
 </article>
 <article class="q-card">
@@ -543,13 +981,17 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>We can't see a star in <span class="blk"></span> sky.</li>
 <li>This is <span class="blk"></span> third time you have said <span class="blk"></span> same thing to me.</li>
 </ol></div>
-<details class="ans"><summary>05-B2번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><ol class="ans-list">
-<li><span class="a">a</span> <span class="why">— of a mind = 한마음의(같은)</span></li>
-<li><span class="a">A</span> <span class="why">— 속담 A stitch in time saves nine</span></li>
-<li><span class="a">the</span> <span class="why">— The king is dead</span></li>
-<li><span class="a">a</span> <span class="why">— of a size = 같은 크기의</span></li>
-<li><span class="a">the</span> <span class="why">— in the sky</span></li>
-<li><span class="a">the / the</span> <span class="why">— 서수 the third, same 앞 the</span></li>
+<details class="ans"><summary>05-B2 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① of + 빈칸 + 명사</b>이고 '같은'이라는 뜻이면 a(n). of a mind, of a size.<br>
+<b>② 하나뿐인 것</b>(sky)과 <b>서수·same</b> 앞에는 the.<br>
+<b>③ 상황상 누구인지 정해진 대상</b>(그 나라의 왕)에는 the, 속담에서 '하나의'라는 뜻이면 a.</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">a</span><span class="full">We are all of a mind.</span></div><span class="why">of a mind = of the same mind(같은 생각인). 「of a(n) + 명사」의 a는 the same의 뜻이다. same이 없으므로 <i>the</i>를 쓰면 오답.</span><span class="tr">우리는 모두 같은 생각이다.</span></li>
+<li><div class="al-top"><span class="a">A</span><span class="full">A stitch in time saves nine.</span></div><span class="why">'제때의 한 땀이 아홉 땀을 덜어 준다'는 속담. 뒤의 nine(아홉 땀)과 대비되는 '한(one) 땀'이라는 뜻의 a다. 문장 첫머리이므로 대문자.</span><span class="tr">제때의 한 땀이 아홉 땀을 덜어 준다. (호미로 막을 것을 가래로 막지 마라)</span></li>
+<li><div class="al-top"><span class="a">the</span><span class="full">Alas! The king is dead.</span></div><span class="why">'어떤 왕'이 아니라 말하는 사람과 듣는 사람이 모두 아는 '우리의 그 왕'이다. 상황으로 대상이 하나로 정해지므로 the. (Alas! 뒤에서 새 문장이 시작되므로 실제로는 대문자 The로 쓴다.)</span><span class="tr">아아! 왕이 돌아가셨다.</span></li>
+<li><div class="al-top"><span class="a">a</span><span class="full">These gloves are much of a size.</span></div><span class="why">of a size = of the same size(같은 크기인). 1번과 같은 용법이다. much는 '거의'라는 뜻으로 of a size를 꾸민다.</span><span class="tr">이 장갑들은 크기가 거의 같다.</span></li>
+<li><div class="al-top"><span class="a">the</span><span class="full">We can't see a star in the sky.</span></div><span class="why">sky는 하나뿐인 것이므로 the. 앞의 a star는 '별 하나(도)'라는 뜻이어서 a를 쓴 것과 대비된다.</span><span class="tr">하늘에 별이 하나도 보이지 않는다.</span></li>
+<li><div class="al-top"><span class="a">the / the</span><span class="full">This is the third time you have said the same thing to me.</span></div><span class="why">서수 third 앞에 the, same 앞에 the. 둘 다 '하나로 정해 주는 말'이라서 정관사와 함께 쓴다.</span><span class="tr">네가 나에게 같은 말을 한 게 이번이 세 번째야.</span></li>
 </ol></div></details>
 </article>
 <article class="q-card">
@@ -564,17 +1006,130 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>He patted her <span class="blk"></span> the shoulder.</li>
 <li>He was shot <span class="blk"></span> the head.</li>
 </ol></div>
-<details class="ans"><summary>05-C번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail">신체 일부 표시 the: <b>by</b>(붙잡다) · <b>on</b>(치다/때리다) · <b>in</b>(보다/쏘다) · <b>through</b>(관통).</div><ol class="ans-list">
-<li><span class="a">by</span> <span class="why">— seize ~ by the collar</span></li>
-<li><span class="a">by</span> <span class="why">— pull ~ by the hand</span></li>
-<li><span class="a">on</span> <span class="why">— strike ~ on the cheek</span></li>
-<li><span class="a">on</span> <span class="why">— hit ~ on the nose</span></li>
-<li><span class="a">in</span> <span class="why">— look ~ in the eye</span></li>
-<li><span class="a">on</span> <span class="why">— pat ~ on the shoulder</span></li>
-<li><span class="a">through</span> <span class="why">— shot through the head(관통)</span></li>
+<details class="ans"><summary>05-C 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>동사 + 사람 + 전치사 + the + 신체 부위.</b> 전치사는 동사의 뜻으로 정한다.<br>
+<b>① by</b> — 붙잡거나 끄는 동작(seize, pull, hold, catch)<br>
+<b>② on</b> — 표면을 치거나 닿는 동작(strike, hit, pat, slap, kiss)<br>
+<b>③ in</b> — look ~ in the eye / <b>through</b> — 관통(shoot)</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">by</span><span class="full">She seized the child by the collar.</span></div><span class="why">seize는 '붙잡다'. 붙잡는 동작은 그 부위를 '수단으로 삼아' 잡는 것이므로 by를 쓴다.</span><span class="tr">그녀는 그 아이의 멱살(옷깃)을 붙잡았다.</span></li>
+<li><div class="al-top"><span class="a">by</span><span class="full">She pulled me by the hand.</span></div><span class="why">pull(끌다)도 손을 잡고 끄는 동작이므로 by. <i>She pulled my hand.</i>보다 사람을 먼저 목적어로 쓰는 것이 영어다운 표현이다.</span><span class="tr">그녀는 내 손을 잡아끌었다.</span></li>
+<li><div class="al-top"><span class="a">on</span><span class="full">He struck me on the cheek.</span></div><span class="why">strike는 '치다'. 치는 동작은 신체의 표면에 닿으므로 on.</span><span class="tr">그는 내 뺨을 때렸다.</span></li>
+<li><div class="al-top"><span class="a">on</span><span class="full">The ball hit me on the nose.</span></div><span class="why">hit(맞히다)도 표면에 닿는 동작이므로 on. 3번과 같은 유형.</span><span class="tr">공이 내 코에 맞았다.</span></li>
+<li><div class="al-top"><span class="a">in</span><span class="full">I looked him in the eye.</span></div><span class="why">look + 사람 + in the eye(눈을 똑바로 쳐다보다). 눈 '안을' 들여다본다는 의미에서 in을 쓰는 굳어진 표현이다. in the face(얼굴을 똑바로)도 같다.</span><span class="tr">나는 그의 눈을 똑바로 쳐다보았다.</span></li>
+<li><div class="al-top"><span class="a">on</span><span class="full">He patted her on the shoulder.</span></div><span class="why">pat은 '가볍게 토닥이다'. 어깨 표면을 두드리는 동작이므로 on. 기출응용 11번에 그대로 출제된다.</span><span class="tr">그는 그녀의 어깨를 토닥였다.</span></li>
+<li><div class="al-top"><span class="a">through</span><span class="full">He was shot through the head.</span></div><span class="why">총알이 머리를 뚫고 지나갔다는 뜻이므로 through(관통). 수동태 문장이어서 사람(He)이 주어로 나갔다.</span><span class="tr">그는 머리를 관통하는 총상을 입었다.</span></li>
 </ol></div></details>
 </article>
-<div class="section-divider"><span>Chapter II · <em>Past Exam Applications</em><span class="kor">제2장 명사와 관사 · 기출응용문제 1~24</span></span></div>
+<div class="panel-foot"><button type="button" class="pf-btn" data-go="u3-g"><small>Unit 05</small>어법 해설 다시 보기</button><button type="button" class="pf-btn primary" data-go="gi-g"><small>다음</small>기출응용문제 · 어법 해설</button></div>
+</section>
+<section class="panel" id="p-gi-g" data-unit="gi" data-mode="g">
+<div class="panel-head"><div class="ph-no"><small>CHAPTER II</small>기출</div><div class="ph-txt"><h2 class="ph-title">기출응용문제</h2><div class="ph-mode"><b>어법 해설 (출제 포인트)</b> · 1~24번 · 24문항</div></div></div>
+<div class="g-intro">기출응용문제 24문항은 Unit 03~05의 내용이 섞여 출제됩니다. 24문항 중 16문항이 <b>관사</b>, 8문항이 <b>명사</b> 문제입니다. 유형별로 <b>무엇을 먼저 확인해야 하는지</b> 정리했습니다.</div>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">1</span>유형별 문항 분포</h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>유형</th><th>문항</th><th>문항 수</th><th>관련 Unit</th></tr>
+<tr><td class="col-head">the를 쓰는 경우<br>(최상급·서수·단위·문맥)</td><td>16, 17, 18, 19, 23</td><td class="num">5</td><td>Unit 05</td></tr>
+<tr><td class="col-head">a(n)의 뜻과 쓰임</td><td>12, 14, 15</td><td class="num">3</td><td>Unit 05</td></tr>
+<tr><td class="col-head">관사 고르기(짝짓기)</td><td>10, 13</td><td class="num">2</td><td>Unit 04·05</td></tr>
+<tr><td class="col-head">관사를 쓰지 않는 경우</td><td>21, 22, 24</td><td class="num">3</td><td>Unit 05</td></tr>
+<tr><td class="col-head">신체 부위와 전치사</td><td>11</td><td class="num">1</td><td>Unit 05</td></tr>
+<tr><td class="col-head">명사와 동사의 수 일치</td><td>3, 4, 20</td><td class="num">3</td><td>Unit 03</td></tr>
+<tr><td class="col-head">복수형·단위명사·소유격</td><td>5, 7, 8</td><td class="num">3</td><td>Unit 03</td></tr>
+<tr><td class="col-head">수량 형용사</td><td>9</td><td class="num">1</td><td>Unit 03</td></tr>
+<tr><td class="col-head">추상명사 관용 표현</td><td>1, 2</td><td class="num">2</td><td>Unit 04</td></tr>
+<tr><td class="col-head">the + 보통명사</td><td>6</td><td class="num">1</td><td>Unit 04</td></tr>
+</table></div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">2</span>관사 문제 풀이 순서 <span class="g-badge">10·12~19·23번</span></h3>
+<ol class="g-ol">
+<li><b>관사 바로 뒤의 단어를 봅니다.</b> 최상급(highest, best, hottest)·서수(first, second)·same이면 the입니다. 반대로 비교급(taller) 앞에는 the를 쓰지 않습니다.</li>
+<li><b>관사 앞의 전치사를 봅니다.</b> <span class="e">by + 단위</span>이면 the(by the pound, by the week), <span class="e">of + 명사</span>이고 '같은'이라는 뜻이면 a(n)(of an age, of a size).</li>
+<li><b>명사 뒤에 한정하는 말이 있는지 봅니다.</b> <span class="e">on the desk</span>, <span class="e">of Korea</span>처럼 뒤에서 범위를 정해 주면 the입니다.</li>
+<li><b>사람 이름 앞이면</b> — 관사 없음이 기본. a가 붙으면 '~라는 사람', the는 of ~로 한정될 때만 씁니다.</li>
+</ol>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>번호</th><th>문장의 핵심 부분</th><th>확인할 점</th><th>옳은 형태</th></tr>
+<tr><td class="num">10</td><td><span class="e">twice ( ) week</span></td><td>수량 + 단위 → per</td><td><span class="e">a week</span></td></tr>
+<tr><td class="num">12</td><td><span class="e">are of ( ) age</span></td><td>of a(n) = the same</td><td><span class="e">an age</span></td></tr>
+<tr><td class="num">13</td><td><span class="e">( ) Mr. Moon came</span></td><td>~라는 분</td><td><span class="e">A Mr. Moon</span></td></tr>
+<tr><td class="num">16</td><td><span class="e">with ( ) Mr. Kim</span></td><td>사람 이름 → 무관사</td><td><span class="e">Mr. Kim</span></td></tr>
+<tr><td class="num">17</td><td><span class="e">one of ( ) best known women</span></td><td>최상급</td><td><span class="e">the best known</span></td></tr>
+<tr><td class="num">18</td><td><span class="e">is ( ) taller than</span></td><td>비교급 → the 불가</td><td><span class="e">much taller</span></td></tr>
+<tr><td class="num">19</td><td><span class="e">paid by ( )</span></td><td>by the + 단위</td><td><span class="e">the week</span></td></tr>
+<tr><td class="num">23</td><td><span class="e">the hotter day of the year</span></td><td>of the year → 최상급</td><td><span class="e">the hottest</span></td></tr>
+</table></div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">3</span>관사를 쓰지 않는 경우 <span class="g-badge">14·17·21·22·24번</span></h3>
+<p class="g-p">Unit 05의 EXERCISE에는 나오지 않지만 기출응용문제에서 다섯 번 묻는 내용입니다.</p>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>경우</th><th>예</th><th>문항</th></tr>
+<tr><td class="col-head">by + 교통수단</td><td><span class="e">by train, by subway</span> (<span class="e x">by the train</span>)</td><td>14④, 21</td></tr>
+<tr><td class="col-head">운동 경기 이름</td><td><span class="e">Basketball was approved ~</span> (<span class="e x">The basketball</span>)</td><td>22</td></tr>
+<tr><td class="col-head">학문 이름</td><td><span class="e">the study of rhetoric</span> (<span class="e x">the rhetoric</span>)</td><td>24</td></tr>
+<tr><td class="col-head">하나뿐인 직책이 보어나<br>run for 뒤에 올 때</td><td><span class="e">run for president</span></td><td>17④</td></tr>
+</table></div>
+<div class="g-warn"><b>함정</b> 악기에는 the를 쓰고(play <b>the</b> flute) 운동 경기에는 쓰지 않습니다(play basketball). 또 24번에서 rhetoric(학문 이름)에는 관사가 없지만, 앞의 study는 of rhetoric이 뒤에서 한정하므로 the가 붙습니다. 관사는 <b>명사 하나하나</b>마다 따로 판단합니다.</div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">4</span>수 일치 문제 풀이 순서 <span class="g-badge">3·4·20번</span></h3>
+<ol class="g-ol">
+<li><b>진짜 주어를 찾습니다.</b> <span class="e">There is/are ~</span> 문장은 동사 뒤의 명사가 주어이고, <span class="e">a lot of / plenty of + 명사</span>는 뒤의 명사가 주어입니다.</li>
+<li><b>그 명사가 셀 수 없는 명사인지 확인합니다.</b> furniture, happiness, wood, time, salt, room(공간) → 단수동사.</li>
+<li><b>형태에 속지 않습니다.</b> people은 -s가 없어도 복수, Mathematics와 The United Nations는 -s가 있어도 단수.</li>
+</ol>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>주어</th><th>동사</th><th>이유</th></tr>
+<tr><td><span class="e">A lot of furniture</span></td><td>단수 <span class="e">is</span></td><td>furniture는 셀 수 없는 명사</td></tr>
+<tr><td><span class="e">plenty of people</span></td><td>복수 <span class="e">are</span></td><td>people은 항상 복수</td></tr>
+<tr><td><span class="e">Mathematics</span></td><td>단수 <span class="e">is</span></td><td>-s로 끝나는 학과 이름</td></tr>
+<tr><td><span class="e">The United Nations</span></td><td>단수 <span class="e">was</span></td><td>복수형이지만 하나의 기구 이름</td></tr>
+<tr><td><span class="e">The audience</span></td><td>단수 / 복수</td><td>구성원 각자를 말하면 복수 가능</td></tr>
+</table></div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">5</span>복수형 · 단위명사 · 소유격 <span class="g-badge">5·7·8번</span></h3>
+<p class="g-p g-sub">-f, -fe로 끝나는 명사의 복수형 (5·7번)</p>
+<div class="g-rule">원칙: f, fe → <b>ves</b> &nbsp; <b>leaf → leaves, loaf → loaves</b>, knife → knives, wife → wives<br>예외: 그대로 -s &nbsp; <b>roof → roofs</b>, belief → beliefs, chief → chiefs</div>
+<p class="g-p g-sub">단위명사 (7번)</p>
+<ul class="g-list">
+<li><span class="e">a bar of soap</span>, <span class="e">a loaf of bread</span>, <span class="e">a piece of information / advice / furniture</span></li>
+<li>복수는 단위명사만 바꿉니다: <span class="e">two <b>loaves</b> of bread</span>, <span class="e">two <b>pieces</b> of furniture</span></li>
+<li>형용사는 단위명사 앞에 둡니다: <span class="e">a <b>useful</b> piece of information</span>, <span class="e">a <b>good</b> piece of advice</span></li>
+</ul>
+<p class="g-p g-sub">소유격 (8번)</p>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>경우</th><th>형태</th><th>예</th></tr>
+<tr><td class="col-head">-s로 끝나는 복수명사</td><td>아포스트로피(')만</td><td><span class="e">Girls' High School</span> (<span class="e x">Girls's</span>)</td></tr>
+<tr><td class="col-head">-s로 끝나지 않는 복수명사</td><td>'s</td><td><span class="e">Men's coats</span></td></tr>
+<tr><td class="col-head">무생물</td><td>of + 명사</td><td><span class="e">one leg of the chair / the roof of my house</span></td></tr>
+<tr><td class="col-head">이중소유격</td><td>a + 명사 + of + 소유격</td><td><span class="e">a friend of my sister's</span></td></tr>
+</table></div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">6</span>그 밖의 유형 <span class="g-badge">1·2·6·9·11번</span></h3>
+<ul class="g-list">
+<li><b>1·2번 (추상명사 관용 표현)</b> — 「전치사 + 추상명사 = 부사」를 바꿔 쓴 말이 <b>반대말</b>로 되어 있지 않은지 확인합니다(with care ≠ carelessly). all smiles는 very happy.</li>
+<li><b>6번 (the + 보통명사)</b> — 밑줄 친 명사가 <b>사람·사물을 나타내는 보통명사</b>인데 성질을 뜻하면 같은 용법, <b>원래 추상명사</b>(courage)이면 다른 용법입니다.</li>
+<li><b>9번 (수량 형용사)</b> — 빈칸 뒤의 명사가 셀 수 없는 명사이면 several, many, a few는 들어갈 수 없습니다.</li>
+<li><b>11번 (신체 부위)</b> — 동사의 뜻을 먼저 봅니다. 치다·토닥이다 → on, 잡다 → by, look → in, shoot → through.</li>
+</ul>
+</section>
+<div class="panel-foot"><button type="button" class="pf-btn primary" data-go="gi-q"><small>기출응용문제</small>문제 풀이로 이동</button><button type="button" class="pf-btn" data-go="u1-g"><small>처음으로</small>Unit 03 명사의 종류 · 어법 해설</button></div>
+</section>
+<section class="panel" id="p-gi-q" data-unit="gi" data-mode="q">
+<div class="panel-head"><div class="ph-no"><small>CHAPTER II</small>기출</div><div class="ph-txt"><h2 class="ph-title">기출응용문제</h2><div class="ph-mode"><b>문제 풀이</b> · 1~24번 · 24문항</div></div></div>
+<div class="tool-row"><button type="button" class="tool-btn" data-toggle-all>해설 모두 펼치기</button></div>
+<details class="ans" style="margin:0 0 28px"><summary>기출응용문제 정답 일람표 펼치기 (스포일러 주의)</summary><div class="ans-body"><table class="answer-sheet"><tr class="hdr-row"><td>기출</td><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>④</td><td>③</td><td>③</td><td>④</td><td>⑤</td><td>④</td><td>②</td></tr><tr class="hdr-row"><td>기출</td><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>⑤</td><td>③</td><td>③</td><td>②</td><td>⑤</td><td>③</td><td>③</td></tr><tr class="hdr-row"><td>기출</td><th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>①</td><td>④</td><td>②</td><td>④</td><td>④</td><td>①</td><td>④</td></tr><tr class="hdr-row"><td>기출</td><th>22</th><th>23</th><th>24</th><th></th><th></th><th></th><th></th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>①</td><td>③</td><td>③</td><td></td><td></td><td></td><td></td></tr></table></div></details>
 <article class="q-card">
 <div class="q-head"><div class="q-num">1</div><div class="q-type choice">관용</div><div class="q-pts">기출</div></div>
 <div class="q-prompt">1. 밑줄 친 부분의 의미가 잘못된 것은?</div>
@@ -585,9 +1140,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> It needs to be handled <u>with care</u>. (= carelessly)</span>
 <span class="c"><span class="num">⑤</span> She spoke French and Spanish <u>with fluency</u>. (= fluently)</span>
 </div>
-<details class="ans"><summary>1번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">④ <span class="en">with care = carefully</span></div>
-<div class="ans-detail">with care는 <b>carefully(주의 깊게)</b>이지 carelessly(부주의하게)가 아니다. 나머지는 모두 올바른 대응.</div></div></details>
+<details class="ans"><summary>1번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">④ <span class="en">with care</span> = carefully (✗ carelessly)</div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>전치사 + 추상명사 = 부사</b>, <b>of + 추상명사 = 형용사</b>. 바꿔 쓴 말의 뜻이 원래 표현과 같은지 확인하는 문제다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>밑줄 친 표현을 하나씩 부사·형용사로 바꿔 본다: of wisdom → wise, on time → punctually, by luck → luckily, with care → carefully, with fluency → fluently.</span></div>
+<div class="step"><span class="sn">2</span><span>괄호 안의 말과 비교한다. ④만 carefully가 아니라 <b>carelessly</b>로 되어 있다.</span></div>
+<div class="step"><span class="sn">3</span><span>care<b>ful</b>ly(조심스럽게)와 care<b>less</b>ly(부주의하게)는 반대말이므로 ④가 잘못되었다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>of wisdom = wise(지혜로운). of + 추상명사 = 형용사.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>on time = punctually(정각에).</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>by luck = luckily(운 좋게). by accident와 같은 형태.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>with care는 carefully(조심스럽게)이다. carelessly는 정반대의 뜻.</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>with fluency = fluently(유창하게).</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 당신은 지혜로운 사람입니다. ② 버스가 오늘 정시에 도착했다. ③ 새로운 발견은 운 좋게 일어날 수 있다고들 한다. ④ 그것은 조심스럽게 다뤄져야 한다. ⑤ 그녀는 프랑스어와 스페인어를 유창하게 말했다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">2</div><div class="q-type choice">관용</div><div class="q-pts">기출</div></div>
@@ -600,9 +1168,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> complete laughter</span>
 <span class="c"><span class="num">⑤</span> innocent</span>
 </div>
-<details class="ans"><summary>2번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>2번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">③ <span class="en">very happy</span></div>
-<div class="ans-detail"><b>all + 추상명사</b> = 매우 ~한. all smiles = 매우 기뻐하는.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>all + 명사 = very + 형용사.</b> all smiles는 '얼굴 가득 웃음인', 즉 매우 기뻐하는 상태를 뜻한다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>was 뒤의 all smiles는 주어 My brother의 상태를 설명하는 보어다.</span></div>
+<div class="step"><span class="sn">2</span><span>all + 명사 = very + 형용사 공식에 넣으면 smile(미소) → 기뻐하는 → <b>very happy</b>.</span></div>
+<div class="step"><span class="sn">3</span><span>보어 자리이므로 형용사구여야 한다. 동사구(②)나 명사구(④)는 형태부터 맞지 않는다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>very loud(매우 시끄러운). 웃음소리를 연상시키는 함정이지만 뜻이 다르다.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>laughed at(비웃음을 당한). was laughed at이 되면 수동태로 전혀 다른 뜻이 된다.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>all smiles = very happy(매우 기쁜).</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>complete laughter(완전한 웃음). 사람의 상태를 설명하는 말이 아니다.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>innocent(순진한, 결백한). 관련이 없는 뜻.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>내 남동생(형)은 그 소식을 들었을 때 매우 기뻐했다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">3</div><div class="q-type choice">수 일치</div><div class="q-pts">기출</div></div>
@@ -614,9 +1195,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> Dolphins <u>are</u> very smart.</span>
 <span class="c"><span class="num">⑤</span> <u>Is</u> there enough room for us?</span>
 </div>
-<details class="ans"><summary>3번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">③ <span class="en">furniture ... is</span></div>
-<div class="ans-detail">furniture는 <b>불가산 단수</b>이므로 <b>is</b>. ① audience는 구성원 강조 시 복수 가능 ②④⑤ 정상.</div></div></details>
+<details class="ans"><summary>3번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">③ <span class="en">A lot of furniture are</span> (✗) → is</div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>셀 수 없는 명사는 단수동사</b>로 받는다. a lot of는 복수형과 셀 수 없는 명사 양쪽에 쓰이므로 뒤의 명사를 보고 동사의 수를 정한다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>각 문장의 주어를 찾는다: ① The audience ② Happiness ③ furniture ④ Dolphins ⑤ room.</span></div>
+<div class="step"><span class="sn">2</span><span>셀 수 없는 명사를 표시한다: happiness, furniture, room(공간) → 단수동사여야 한다.</span></div>
+<div class="step"><span class="sn">3</span><span>③은 furniture가 주어인데 are가 쓰였다. A lot of에 끌려 복수로 착각하게 만든 문제. → <b>is</b></span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>audience는 집합명사. 관중 한 사람 한 사람이 감동한 것이므로 복수동사 were를 쓸 수 있다.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>Happiness는 추상명사 → 단수동사 is.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>furniture는 셀 수 없는 명사이므로 is여야 한다.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>Dolphins는 복수명사 → are.</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>room이 '공간'이라는 뜻이면 셀 수 없는 명사 → Is there ~?</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 경기장의 관중들은 그 콘서트에 깊이 감동했다. ② 행복은 매우 상대적이다. ③ 많은 가구가 지금 판매 중이다. ④ 돌고래는 매우 영리하다. ⑤ 우리가 들어갈 충분한 공간이 있나요?</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">4</div><div class="q-type choice">수 일치</div><div class="q-pts">기출</div></div>
@@ -628,9 +1222,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> There <u>is</u> plenty of people in the square.</span>
 <span class="c"><span class="num">⑤</span> Salt <u>is</u> sold by the kilo in Korea.</span>
 </div>
-<details class="ans"><summary>4번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">④ <span class="en">people ... are</span></div>
-<div class="ans-detail">people은 <b>복수 취급</b>이므로 There <b>are</b> plenty of people. ①Mathematics·③time(불가산)·⑤Salt는 단수.</div></div></details>
+<details class="ans"><summary>4번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">④ <span class="en">There is plenty of people</span> (✗) → are</div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>There is/are 문장의 주어는 동사 뒤의 명사</b>다. people은 -s가 없어도 항상 복수 취급한다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>다섯 문장 모두 is가 쓰였으므로, 주어가 복수인 문장 하나를 찾으면 된다.</span></div>
+<div class="step"><span class="sn">2</span><span>① Mathematics(학과 이름) ② My chair ③ time ⑤ Salt → 모두 단수 취급.</span></div>
+<div class="step"><span class="sn">3</span><span>④ There is 뒤의 주어는 plenty of <b>people</b>. people은 복수이므로 <b>are</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>Mathematics는 -s로 끝나지만 학과 이름이라 단수 취급.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>My chair는 단수. be made of wood(나무로 만들어지다).</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>time(시간)은 셀 수 없는 명사 → is. 격언이라서 said 뒤에서도 현재시제를 쓴다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>plenty of 뒤의 people이 주어이고 복수이므로 There are여야 한다.</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>Salt는 물질명사 → is. by the kilo는 '킬로그램 단위로'.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 수학은 그녀가 가장 좋아하는 과목이다. ② 내 의자는 나무로 만들어졌다. ③ 할아버지는 시간이 돈이라고 말씀하셨다. ④ 광장에 많은 사람들이 있다. ⑤ 한국에서 소금은 킬로그램 단위로 팔린다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">5</div><div class="q-type choice">복수형</div><div class="q-pts">기출</div></div>
@@ -642,9 +1249,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> woman - women</span>
 <span class="c"><span class="num">⑤</span> leaf - leafs</span>
 </div>
-<details class="ans"><summary>5번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">⑤ <span class="en">leaf - leaves</span></div>
-<div class="ans-detail">-f/-fe로 끝나는 leaf는 <b>leaves</b>. roof는 예외로 roofs.</div></div></details>
+<details class="ans"><summary>5번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">⑤ <span class="en">leaf - leafs</span> (✗) → leaves</div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>-f, -fe로 끝나는 명사는 f(e)를 v로 바꾸고 -es</b>를 붙인다. 단, roof처럼 그대로 -s만 붙이는 예외가 있다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>불규칙 복수형부터 확인한다: tooth → teeth, woman → women. 둘 다 맞다.</span></div>
+<div class="step"><span class="sn">2</span><span>-f로 끝나는 명사 두 개(roof, leaf)를 비교한다. roof는 예외로 roofs.</span></div>
+<div class="step"><span class="sn">3</span><span>leaf는 원칙대로 <b>leaves</b>가 되어야 하므로 ⑤가 잘못 짝지어졌다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>month - months. 규칙 변화.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>tooth - teeth. 모음이 변하는 불규칙 복수형(foot - feet과 같은 방식).</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>roof - roofs. -f로 끝나지만 -s만 붙이는 예외.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>woman - women. man - men과 같은 방식.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>leaf의 복수형은 leaves. <i>leafs</i>는 틀린 형태.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 달 ② 이, 치아 ③ 지붕 ④ 여자 ⑤ 잎</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">6</div><div class="q-type choice">the 용법</div><div class="q-pts">기출</div></div>
@@ -656,9 +1276,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> I was surprised at <u>the courage</u> of the soldier.</span>
 <span class="c"><span class="num">⑤</span> When one is reduced to poverty, <u>the beggar</u> will come out.</span>
 </div>
-<details class="ans"><summary>6번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>6번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">④ <span class="en">the courage of the soldier</span></div>
-<div class="ans-detail">①②③⑤는 <b>the+보통명사 → 추상명사</b>(모성애·문(글)·부성애·거지 근성). ④는 of구 수식으로 특정된 <b>그 군인의 용기</b>로 용법이 다르다.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>the + 단수 보통명사 = 추상명사.</b> 사람·사물을 나타내는 명사가 the와 함께 그 성질이나 기능을 뜻하는지, 아니면 다른 이유로 the가 붙었는지 구별한다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>밑줄 친 명사가 보통명사인지 추상명사인지 본다: mother, pen, father, beggar는 보통명사 / courage는 원래 추상명사.</span></div>
+<div class="step"><span class="sn">2</span><span>①②③⑤는 보통명사가 the와 함께 성질을 뜻한다: 모성애, 글의 힘, 부성애, 거지 근성.</span></div>
+<div class="step"><span class="sn">3</span><span>④의 the는 뒤의 of the soldier가 courage를 한정하기 때문에 붙은 것이다. 용법이 다르다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>the mother = 모성애. the + 보통명사 = 추상명사.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>The pen = 글(언론)의 힘. 뒤의 the sword(무력)도 같은 용법.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>The father = 부성애. in him이 '그의 안에 있는'이라는 뜻으로 덧붙었다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>courage는 원래 추상명사. of the soldier로 한정되어 the가 붙은 것으로, 나머지와 용법이 다르다.</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>the beggar = 거지 근성.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 그 광경을 보면 네 안에서 모성애가 솟는 것을 느낄 것이다. ② 펜은 칼보다 강하다(문은 무보다 강하다). ③ 그의 안에 있는 부성애가 아들을 꾸짖고 싶어 했다. ④ 나는 그 군인의 용기에 놀랐다. ⑤ 사람이 가난해지면 거지 근성이 나온다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">7</div><div class="q-type choice">단위명사</div><div class="q-pts">기출</div></div>
@@ -670,9 +1303,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> He gave us <u>a good piece of advice</u>.</span>
 <span class="c"><span class="num">⑤</span> I bought <u>two pieces of furniture</u> yesterday.</span>
 </div>
-<details class="ans"><summary>7번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">② <span class="en">two loaves of bread</span></div>
-<div class="ans-detail">loaf의 복수는 <b>loaves</b> → two loaves of bread.</div></div></details>
+<details class="ans"><summary>7번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">② <span class="en">two loafs of bread</span> (✗) → two loaves of bread</div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>셀 수 없는 명사는 <b>단위명사</b>로 세고, 복수일 때는 단위명사를 복수형으로 바꾼다. loaf의 복수형은 <b>loaves</b>.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>단위명사와 명사의 짝이 맞는지 본다: bar – soap, loaf – bread, piece – information / advice / furniture. 모두 맞다.</span></div>
+<div class="step"><span class="sn">2</span><span>복수인 것(②, ⑤)의 단위명사 형태를 확인한다. pieces는 맞다.</span></div>
+<div class="step"><span class="sn">3</span><span>loaf는 -f로 끝나므로 복수형이 <b>loaves</b>. loafs는 틀린 형태다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>a bar of soap(비누 한 개).</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>loaf의 복수형은 loaves. 5번의 leaf – leaves와 같은 규칙.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>a piece of information. 형용사 useful은 단위명사 piece 앞에 둔다.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>a piece of advice. advice도 셀 수 없는 명사.</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>two pieces of furniture. 단위명사만 복수형으로.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 비누 한 개는 얼마나 오래 쓰나요? ② 나는 오늘 아침 빵 두 덩이를 만들었다. ③ 그것은 유용한 정보가 될 수 있다. ④ 그는 우리에게 좋은 충고를 하나 해 주었다. ⑤ 나는 어제 가구 두 점을 샀다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">8</div><div class="q-type choice">소유격</div><div class="q-pts">기출</div></div>
@@ -684,9 +1330,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> He is a friend of my sister's.</span>
 <span class="c"><span class="num">⑤</span> This is Daehan Girls's High School.</span>
 </div>
-<details class="ans"><summary>8번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">⑤ <span class="en">Daehan Girls' High School</span></div>
-<div class="ans-detail">-s로 끝나는 복수 소유격은 <b>아포스트로피(')만</b> 붙인다 → Girls'. ④ 이중소유격(a friend of my sister's)은 정상.</div></div></details>
+<details class="ans"><summary>8번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">⑤ <span class="en">Daehan Girls's High School</span> (✗) → Girls' </div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>-s로 끝나는 복수명사의 소유격은 아포스트로피(')만</b> 붙인다. -s로 끝나지 않는 복수명사(men)는 's를 붙인다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>소유 관계를 나타낸 방식을 분류한다: of(①③), 's(②⑤), 이중소유격(④).</span></div>
+<div class="step"><span class="sn">2</span><span>②와 ⑤를 비교한다. Men은 -s로 끝나지 않는 복수 → Men's가 맞다.</span></div>
+<div class="step"><span class="sn">3</span><span>Girls는 -s로 끝나는 복수 → s를 또 붙이지 않고 <b>Girls'</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>무생물(chair)의 소유는 of로 나타낸다. One leg of the chair.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>Men은 -s로 끝나지 않는 복수형이므로 's를 붙인다.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>무생물(house)의 소유 → The roof of my house.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>이중소유격. a와 소유격은 나란히 쓸 수 없어서 a friend of my sister's로 쓴다.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>-s로 끝나는 복수명사 Girls의 소유격은 Girls'.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 그 의자의 다리 하나가 부러졌다. ② 남성용 코트는 매우 비싸다. ③ 우리 집 지붕은 흰색이다. ④ 그는 내 여동생(누나)의 친구이다. ⑤ 이곳은 대한여자고등학교이다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">9</div><div class="q-type choice">수량형용사</div><div class="q-pts">기출</div></div>
@@ -699,9 +1358,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> much</span>
 <span class="c"><span class="num">⑤</span> a little</span>
 </div>
-<details class="ans"><summary>9번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>9번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">③ <span class="en">several</span></div>
-<div class="ans-detail">fruit를 <b>불가산</b>으로 볼 때 some·a lot of·much·a little은 가능하나, <b>several</b>은 가산 복수와만 쓰여 불가.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>several은 셀 수 있는 명사의 복수형</b>과만 쓴다. 빈칸 뒤의 fruit는 단수형으로 쓰인 셀 수 없는 명사다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>빈칸 뒤 명사를 본다. fruit가 -s 없이 쓰였다 → '과일' 전체를 가리키는 셀 수 없는 명사.</span></div>
+<div class="step"><span class="sn">2</span><span>선지를 분류한다: 셀 수 없는 명사와 쓰는 것(much, a little), 양쪽 모두(some, a lot of), 복수형과만 쓰는 것(several).</span></div>
+<div class="step"><span class="sn">3</span><span><b>several</b>은 several fruits처럼 복수형이 와야 하므로 들어갈 수 없다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>some은 복수형과 셀 수 없는 명사 양쪽에 쓴다.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>a lot of도 양쪽에 쓴다.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>several(몇몇의)은 복수형과만 쓴다. a few, many와 같은 부류.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>much는 셀 수 없는 명사와 쓴다.</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>a little은 셀 수 없는 명사와 쓴다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>나는 과일을 (조금 / 많이) 먹었다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">10</div><div class="q-type choice">관사 짝</div><div class="q-pts">기출</div></div>
@@ -714,9 +1386,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> the - the - A</span>
 <span class="c"><span class="num">⑤</span> the - a - The</span>
 </div>
-<details class="ans"><summary>10번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>10번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">③ <span class="en">a - the - The</span></div>
-<div class="ans-detail">(A) a week = ~당(per) (B) 최상급 the highest (C) 특정된 The dictionary on the desk.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>수량 + a(n) + 단위 = ~당(per)</b>, <b>최상급 앞 the</b>, <b>뒤에서 한정되는 명사 앞 the</b>.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>(A) twice ___ week: 횟수 뒤의 단위 → '일주일에(per)' → <b>a</b>. ④⑤ 탈락.</span></div>
+<div class="step"><span class="sn">2</span><span>(B) ___ highest mountain: 최상급 앞 → <b>the</b>. ① 탈락.</span></div>
+<div class="step"><span class="sn">3</span><span>(C) ___ dictionary on the desk: on the desk가 어느 사전인지 정해 준다 → <b>The</b>. ② 탈락.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>(B)가 a. 최상급 highest 앞에는 the.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>(C)가 A. on the desk로 한정된 사전이므로 The.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>a(per) – the(최상급) – The(한정).</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>(A)가 the, (C)가 A. 둘 다 틀렸다.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>(A)가 the, (B)가 a. 둘 다 틀렸다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>• 일주일에 두 번 전화할게. • 세계에서 가장 높은 산은 무엇이니? • 책상 위에 있는 사전은 매우 오래되었다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">11</div><div class="q-type choice">신체 the</div><div class="q-pts">기출</div></div>
@@ -728,9 +1413,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> I looked him <u>in the eyes</u>.</span>
 <span class="c"><span class="num">⑤</span> The ball hit me <u>on the head</u>.</span>
 </div>
-<details class="ans"><summary>11번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">② <span class="en">patted Jane on the back</span></div>
-<div class="ans-detail">pat(치다·토닥이다)은 <b>on</b>과 함께 → on the back. through는 관통(shot)에 쓴다.</div></div></details>
+<details class="ans"><summary>11번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">② <span class="en">patted Jane through the back</span> (✗) → on the back</div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>동사 + 사람 + 전치사 + the + 신체 부위.</b> 전치사는 동사의 뜻에 따라 by(잡다) / on(치다·닿다) / in(look) / through(관통).</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>각 문장의 동사를 본다: slap(때리다), pat(토닥이다), hold(잡다), look(보다), hit(맞히다).</span></div>
+<div class="step"><span class="sn">2</span><span>동작에 맞는 전치사를 대응시킨다: slap·pat·hit → on, hold → by, look → in.</span></div>
+<div class="step"><span class="sn">3</span><span>②는 pat인데 through(관통)가 쓰였다. 등을 뚫고 지나갈 수는 없으므로 <b>on the back</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>slap + 사람 + on the cheek. 표면을 치는 동작 → on.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>pat(토닥이다)은 on과 쓴다. through는 shoot처럼 관통하는 동작에 쓴다.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>hold + 사람 + by the sleeve. 붙잡는 동작 → by.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>look + 사람 + in the eye(s). 눈을 똑바로 쳐다보다.</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>hit + 사람 + on the head.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① John이 갑자기 입을 맞추자 그녀는 그의 뺨을 세게 때렸다. ② 나는 Jane의 등을 토닥였다. ③ 놀이공원을 돌아다니는 동안 여동생(누나)은 내 소매를 붙잡고 있었다. ④ 나는 그의 눈을 똑바로 쳐다보았다. ⑤ 공이 내 머리에 맞았다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">12</div><div class="q-type choice">of a/the</div><div class="q-pts">기출</div></div>
@@ -742,9 +1440,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> The dog is <u>a</u> faithful animal.</span>
 <span class="c"><span class="num">⑤</span> You and I are of <u>the</u> age.</span>
 </div>
-<details class="ans"><summary>12번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">⑤ <span class="en">of an age</span></div>
-<div class="ans-detail">of an age = 같은 나이의. <b>the</b>가 아니라 <b>an</b>을 써야 한다.</div></div></details>
+<details class="ans"><summary>12번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">⑤ <span class="en">of the age</span> (✗) → of an age</div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>of a(n) + 명사 = of the same + 명사.</b> same 없이 the만 쓰면 '같은'이라는 뜻이 되지 않는다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>①~④의 a는 모두 셀 수 있는 명사의 단수형(position, mistake, souvenir, animal) 앞에 쓰였다. 문제없다.</span></div>
+<div class="step"><span class="sn">2</span><span>⑤ You and I are of ___ age: '동갑이다'라는 뜻이므로 「of a(n) + 명사」 구문.</span></div>
+<div class="step"><span class="sn">3</span><span>age는 모음 발음으로 시작하므로 <b>an</b>. the를 쓰려면 of the <b>same</b> age여야 한다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>처음 말하는 불특정한 일자리 하나 → a position.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>a mistake(실수 하나).</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>buy + 사람 + a souvenir.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>주어 The dog는 대표단수, 보어는 a faithful animal. 보어 자리의 단수명사에는 a를 쓴다.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>of an age(동갑인)가 맞다. of the age로는 쓰지 않는다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 그녀는 뛰어난 영어 구사력을 요구하는 일자리를 찾고 있다. ② 그의 수학 공책에서 실수를 찾기는 어려웠다. ③ 그녀에게 기념품 사 주는 것 잊지 마. ④ 개는 충직한 동물이다. ⑤ 너와 나는 동갑이다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">13</div><div class="q-type choice">관사 짝</div><div class="q-pts">기출</div></div>
@@ -757,9 +1468,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> The - the - a</span>
 <span class="c"><span class="num">⑤</span> The - a - the</span>
 </div>
-<details class="ans"><summary>13번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>13번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">③ <span class="en">A - the - the</span></div>
-<div class="ans-detail">(A) A Mr. Moon = ~라는 분(a certain) (B) 특정 the window (C) 단위 by the pound.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>a + 사람 이름 = ~라는 사람</b>, <b>상황상 정해진 것 앞 the</b>, <b>by the + 단위</b>.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>(A) ___ Mr. Moon came to see you: 사람 이름 앞 → '문 씨라는 분' → <b>A</b>. ④⑤ 탈락.</span></div>
+<div class="step"><span class="sn">2</span><span>(B) open ___ window: 지금 있는 방의 그 창문. 상황으로 정해진다 → <b>the</b>. ① 탈락.</span></div>
+<div class="step"><span class="sn">3</span><span>(C) sold by ___ pound: by + 단위 → <b>the</b>. ② 탈락.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>(B)가 a. 말하는 장소의 창문은 상황상 정해져 있으므로 the.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>(C)가 a. by 뒤의 단위에는 the.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>A(~라는 분) – the(문맥상 지칭) – the(단위).</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>(A)가 The, (C)가 a. 사람 이름 앞에 The를 쓰지 않는다.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>(A)가 The, (B)가 a.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>• 문 씨라는 분이 아침에 당신을 만나러 왔어요. • 창문을 열어도 괜찮을까요? • 설탕은 파운드 단위로 팔린다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">14</div><div class="q-type choice">a/an</div><div class="q-pts">기출</div></div>
@@ -771,9 +1495,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> He goes to school by ________ subway.</span>
 <span class="c"><span class="num">⑤</span> He wants to be ________ Schweitzer of Korea.</span>
 </div>
-<details class="ans"><summary>14번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>14번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">③ <span class="en">an honest girl</span></div>
-<div class="ans-detail">③만 부정관사가 필요(honest는 모음발음 → <b>an</b>). ①복수 the ②악기 the ④교통수단 무관사 ⑤of수식 the.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>a(n)은 셀 수 있는 명사의 단수형 앞</b>에만 쓴다. 복수명사, 악기, by + 교통수단, of로 한정된 고유명사 앞에는 쓸 수 없다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>빈칸 뒤 명사가 복수인 것을 지운다: ① books.</span></div>
+<div class="step"><span class="sn">2</span><span>the가 필요한 것(② 악기, ⑤ of Korea로 한정)과 관사가 없는 것(④ by + 교통수단)을 지운다.</span></div>
+<div class="step"><span class="sn">3</span><span>③ honest girl은 셀 수 있는 명사의 단수형. honest는 h가 소리 나지 않으므로 <b>an</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>books는 복수이므로 a(n) 불가. on the desk로 한정되어 The가 들어간다.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>악기 앞에는 the → play the flute.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>보어 자리의 단수명사 → an honest girl.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>by + 교통수단은 관사 없이 쓴다 → by subway.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>of Korea로 한정되므로 the Schweitzer of Korea.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 책상 위의 책들은 내 것이다. ② 나는 플루트를 불고 있었다. ③ 그녀는 정직한 소녀이다. ④ 그는 지하철로 학교에 간다. ⑤ 그는 한국의 슈바이처가 되고 싶어 한다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">15</div><div class="q-type choice">a=same</div><div class="q-pts">기출</div></div>
@@ -786,9 +1523,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> You didn't say <u>a</u> word during the meeting.</span>
 <span class="c"><span class="num">⑤</span> <u>A</u> cat has nine lives.</span>
 </div>
-<details class="ans"><summary>15번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">① <span class="en">of a feather</span></div>
-<div class="ans-detail">of a size = <b>the same</b> size. ① of a feather = 같은 깃털(the same) 로 쓰임이 동일. ②a certain ③per ④one ⑤대표단수.</div></div></details>
+<details class="ans"><summary>15번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">① <span class="en">Birds of a feather flock together.</span></div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>of a(n) + 명사</b>의 a(n)은 <b>the same</b>의 뜻이다. 선지에서 같은 구조를 찾는다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>주어진 문장: of a size = of the same size → a는 '같은'.</span></div>
+<div class="step"><span class="sn">2</span><span>선지에서 「of a + 명사」 구조를 찾는다 → ① of a feather.</span></div>
+<div class="step"><span class="sn">3</span><span>나머지 a의 뜻을 확인한다: ② ~라는 ③ ~당 ④ 하나의 ⑤ 대표단수. 모두 다르다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>of a feather = of the same feather. 주어진 문장과 같은 쓰임.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>A Mr. Kang = 강 씨라는 분(a certain).</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>three times a day = 하루에(per).</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>a word = 한 마디(one).</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>A cat = 고양이라는 동물(대표단수).</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>이 장갑들은 크기가 같다. / ① 같은 깃털의 새끼리 모인다(유유상종). ② 강 씨라는 분이 당신을 만나러 왔어요. ③ 이 약을 하루에 세 번 드세요. ④ 너는 회의 내내 한 마디도 하지 않았다. ⑤ 고양이는 목숨이 아홉 개다(쉽게 죽지 않는다).</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">16</div><div class="q-type choice">the 오류</div><div class="q-pts">기출</div></div>
@@ -800,9 +1550,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> I have an appointment with <u>the Mr. Kim</u> this evening.</span>
 <span class="c"><span class="num">⑤</span> Will you pass me <u>the</u> salt, please?</span>
 </div>
-<details class="ans"><summary>16번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">④ <span class="en">with Mr. Kim</span></div>
-<div class="ans-detail">고유명사(사람 이름) 앞에는 <b>the를 쓰지 않는다</b> → with Mr. Kim.</div></div></details>
+<details class="ans"><summary>16번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">④ <span class="en">the Mr. Kim</span> (✗) → Mr. Kim</div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>사람 이름 앞에는 관사를 쓰지 않는다.</b> 나머지 선지는 the가 꼭 필요한 경우들이다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>①③⑤②의 the가 어떤 쓰임인지 확인한다: 신체 부위, 단위, 문맥상 지칭, the + 형용사.</span></div>
+<div class="step"><span class="sn">2</span><span>④는 누구인지 이미 아는 특정한 사람 Mr. Kim과의 약속이다.</span></div>
+<div class="step"><span class="sn">3</span><span>고유명사인 사람 이름은 그 자체로 특정되므로 the를 붙이지 않는다 → <b>with Mr. Kim</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>kiss + 사람 + on the cheek. 신체 부위 앞의 the.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>The rich = rich people. 복수 취급이므로 동사도 are.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>by the kilogram. by the + 단위.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>사람 이름 앞에는 the를 쓰지 않는다. (a Mr. Kim이면 '김 씨라는 분')</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>식탁 위의 그 소금. 상황으로 정해지는 the.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 그는 그녀의 딸 뺨에 입을 맞췄다. ② 부자들이 항상 행복한 것은 아니다. ③ 그들은 밤을 킬로그램 단위로 판다. ④ 나는 오늘 저녁 김 선생님과 약속이 있다. ⑤ 소금 좀 건네주시겠어요?</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">17</div><div class="q-type choice">the 최상급</div><div class="q-pts">기출</div></div>
@@ -815,9 +1578,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> president</span>
 <span class="c"><span class="num">⑤</span> a</span>
 </div>
-<details class="ans"><summary>17번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">② <span class="en">the best known</span></div>
-<div class="ans-detail">최상급 <b>best</b> 앞에는 the가 필요 → one of <b>the</b> best known women.</div></div></details>
+<details class="ans"><summary>17번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">② <span class="en">best</span> (✗) → the best</div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>one of the + 최상급 + 복수명사</b> = 가장 ~한 것들 중 하나. 최상급 앞에는 the가 필요하다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>one of ___ best known women: one of 뒤에 최상급(best known)과 복수명사(women)가 왔다.</span></div>
+<div class="step"><span class="sn">2</span><span>최상급 앞에는 정관사가 필요하다 → one of <b>the</b> best known women.</span></div>
+<div class="step"><span class="sn">3</span><span>나머지 확인: Few + 복수명사, the first(서수), run for president(직책은 무관사), a bank(처음 말하는 은행 하나).</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>Few + 복수명사 Americans. '거의 없는'이라는 부정의 뜻.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>최상급 best known 앞에 the가 빠졌다.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>서수 first 앞의 the.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>run for president. 하나뿐인 직책을 나타낼 때는 관사 없이 쓴다.</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>특정되지 않은 은행 하나 → a bank.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>그녀의 이름을 알아보는 미국인조차 거의 없다. 그러나 Victoria C. Woodhull은 한때 미국에서 가장 잘 알려진 여성 중 한 명이었다. 대통령에 출마한 최초의 여성이자 월스트리트에 은행을 연 최초의 여성이었다. (run for = ~에 출마하다)</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">18</div><div class="q-type choice">the 불가</div><div class="q-pts">기출</div></div>
@@ -829,9 +1605,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> She is ________ taller than any other girl in the class.</span>
 <span class="c"><span class="num">⑤</span> I visited the bookstore on ________ way home.</span>
 </div>
-<details class="ans"><summary>18번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">④ <span class="en">비교급 taller 앞</span></div>
-<div class="ans-detail">④는 비교급 taller를 수식하므로 the가 아니라 <b>much/far</b> 등이 와야 한다. ①The Second World War ②by the day ③the 2000's ⑤on the way.</div></div></details>
+<details class="ans"><summary>18번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">④ <span class="en">She is ___ taller than any other girl in the class.</span></div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>the는 최상급·서수 앞</b>에 쓰고, <b>than이 있는 비교급 앞에는 쓰지 않는다.</b> 비교급을 강조할 때는 much, far, even, still, a lot을 쓴다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>the가 반드시 들어가는 자리를 먼저 찾는다: 서수(①), by + 단위(②), 연대(③), on the way(⑤).</span></div>
+<div class="step"><span class="sn">2</span><span>④는 taller than ~, 즉 비교급 문장이다. 뜻은 최상급과 같지만 형태는 비교급이다.</span></div>
+<div class="step"><span class="sn">3</span><span>비교급 앞의 빈칸에는 the가 아니라 much, far 같은 강조 부사가 들어간다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>The Second World War. 서수 앞의 the.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>by the day(하루 단위로).</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>the 2000's(2000년대). 연대 앞에는 the.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>비교급 taller 앞에는 the를 쓸 수 없다. much / far taller는 가능.</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>on the way home(집에 오는 길에). 굳어진 표현.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 제2차 세계대전은 1945년에 끝났다. ② 그들은 하루 단위로 차를 빌렸다. ③ 우리는 2000년대에 살고 있다. ④ 그녀는 반의 다른 어떤 소녀보다 (훨씬) 키가 크다. ⑤ 나는 집에 오는 길에 서점에 들렀다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">19</div><div class="q-type choice">단위 the</div><div class="q-pts">기출</div></div>
@@ -844,9 +1633,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> the week</span>
 <span class="c"><span class="num">⑤</span> the weeks</span>
 </div>
-<details class="ans"><summary>19번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>19번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">④ <span class="en">the week</span></div>
-<div class="ans-detail">「by the + 단위」 = ~단위로 → paid by the week.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>by the + 단수 단위명사</b> = ~ 단위로. 관사는 the, 명사는 단수형이다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>get paid by ___: '~ 단위로 급여를 받다' → by + 단위.</span></div>
+<div class="step"><span class="sn">2</span><span>by 뒤의 단위에는 the가 필요하다 → ①②③ 탈락.</span></div>
+<div class="step"><span class="sn">3</span><span>단위명사는 단수형으로 쓴다 → ⑤ the weeks 탈락. <b>by the week</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>관사가 없다. by + 무관사는 by train처럼 수단을 나타낼 때의 형태.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>관사가 없고 복수형.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>a week는 twice a week처럼 by 없이 '~당'의 뜻으로 쓴다. by 뒤에는 the.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>by the week(주 단위로, 주급으로).</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>단위명사는 단수형으로 쓴다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>제가 주급으로 받나요?</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">20</div><div class="q-type choice">기관명</div><div class="q-pts">기출</div></div>
@@ -859,9 +1661,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> have</span>
 <span class="c"><span class="num">⑤</span> had</span>
 </div>
-<details class="ans"><summary>20번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>20번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">① <span class="en">was</span></div>
-<div class="ans-detail">The United Nations는 <b>단일 기관 → 단수 취급</b> → was born.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>복수형으로 된 기관·국가 이름은 단수 취급</b>한다. 또 '태어나다'는 항상 수동태 <b>be born</b>으로 쓴다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>빈칸 뒤가 born → be born(태어나다) 구문이므로 be동사가 필요하다. has / have / had 탈락.</span></div>
+<div class="step"><span class="sn">2</span><span>주어 The United Nations는 -s로 끝나지만 하나의 기구 이름 → 단수.</span></div>
+<div class="step"><span class="sn">3</span><span>단수 be동사 → <b>was</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>단수 취급 + be born.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>were는 복수동사. 기구 이름은 단수로 받는다.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>has born은 없는 형태. born은 be동사와 쓴다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>have born도 성립하지 않고, 수도 맞지 않는다.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>had born도 성립하지 않는다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>국제연합(UN)은 세계 대전 속에서도 살아남은 희망 속에서 탄생했다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">21</div><div class="q-type choice">교통수단</div><div class="q-pts">기출</div></div>
@@ -874,9 +1689,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> by train</span>
 <span class="c"><span class="num">⑤</span> in train</span>
 </div>
-<details class="ans"><summary>21번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>21번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">④ <span class="en">by train</span></div>
-<div class="ans-detail">「by + 교통수단」은 <b>무관사</b> → by train.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>by + 교통수단</b>은 관사 없이 쓴다. by train, by bus, by subway, by plane.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>'기차로'라는 교통수단을 나타내는 전치사는 by → ②③⑤ 탈락.</span></div>
+<div class="step"><span class="sn">2</span><span>by 뒤의 교통수단 명사에는 관사를 붙이지 않는다 → ① by the train 탈락.</span></div>
+<div class="step"><span class="sn">3</span><span><b>by train</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>by 뒤에 the를 쓰지 않는다.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>교통수단에 with를 쓰지 않는다.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>on을 쓰려면 on a train / on the train처럼 관사가 필요하다.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>by + 무관사 교통수단.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>in을 쓸 때도 관사가 필요하다. in train은 없는 형태.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>기차로 인도를 여행해 본 적 있나요?</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">22</div><div class="q-type choice">경기명</div><div class="q-pts">기출</div></div>
@@ -889,9 +1717,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> of</span>
 <span class="c"><span class="num">⑤</span> the extracurricular activities</span>
 </div>
-<details class="ans"><summary>22번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">① <span class="en">Basketball</span></div>
-<div class="ans-detail">운동 경기명은 <b>무관사</b> → the 없이 Basketball.</div></div></details>
+<details class="ans"><summary>22번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">① <span class="en">The basketball</span> (✗) → Basketball</div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>운동 경기 이름 앞에는 관사를 쓰지 않는다.</b> basketball, soccer, tennis, baseball.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>주어 basketball은 과외 활동의 하나로 승인된 '농구라는 운동'이다(농구공이 아니다).</span></div>
+<div class="step"><span class="sn">2</span><span>운동 경기 이름은 무관사 → <b>Basketball</b>.</span></div>
+<div class="step"><span class="sn">3</span><span>나머지 확인: was approved(수동태), as one of the + 복수명사. 모두 맞다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>운동 경기 이름에는 the를 붙이지 않는다.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>농구가 '승인된' 것이므로 수동태 was approved.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>as one(~ 중 하나로서).</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>one of ~의 of.</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>one of 뒤에는 the + 복수명사.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>농구는 과외 활동 중 하나로 승인되었다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">23</div><div class="q-type choice">최상급</div><div class="q-pts">기출</div></div>
@@ -904,9 +1745,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> of</span>
 <span class="c"><span class="num">⑤</span> the year</span>
 </div>
-<details class="ans"><summary>23번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">③ <span class="en">the hottest day</span></div>
-<div class="ans-detail">「the + 최상급」 → the hottest day of the year.</div></div></details>
+<details class="ans"><summary>23번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">③ <span class="en">the hotter</span> (✗) → the hottest</div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>범위를 나타내는 <b>of the year, in the world</b>가 있으면 <b>the + 최상급</b>이다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>뒤에 of the year(일 년 중에서)라는 범위가 있고 than이 없다 → 최상급 문장.</span></div>
+<div class="step"><span class="sn">2</span><span>the 뒤에 비교급 hotter가 쓰였다 → 최상급 <b>hottest</b>로 고친다.</span></div>
+<div class="step"><span class="sn">3</span><span>나머지 확인: hear that(접속사), today is, of the year. 모두 맞다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>hear의 목적어절을 이끄는 접속사 that.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>주어 today → 단수동사 is.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>of the year가 있으므로 최상급 the hottest여야 한다.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>최상급 뒤에서 범위를 나타내는 of.</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>the year(올해).</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>오늘이 올해 가장 더운 날이라는 거 들었어?</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">24</div><div class="q-type choice">추상명사 the</div><div class="q-pts">기출</div></div>
@@ -919,22 +1773,35 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> the study of the rhetoric</span>
 <span class="c"><span class="num">⑤</span> the study of a rhetoric</span>
 </div>
-<details class="ans"><summary>24번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>24번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">③ <span class="en">the study of rhetoric</span></div>
-<div class="ans-detail">of + 불가산 추상명사 rhetoric은 <b>무관사</b>, the study는 특정 → <b>the study of rhetoric</b>.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>of ~로 한정되는 명사 앞에는 the</b>, <b>학문 이름 앞에는 무관사</b>. 관사는 명사마다 따로 판단한다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>study: 뒤의 of rhetoric이 '무엇에 대한 연구인지' 한정한다 → <b>the</b> study. ①② 탈락.</span></div>
+<div class="step"><span class="sn">2</span><span>rhetoric: 학문 이름(수사학)은 셀 수 없고 관사 없이 쓴다 → ④⑤ 탈락.</span></div>
+<div class="step"><span class="sn">3</span><span><b>the study of rhetoric</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>of rhetoric으로 한정되는데 study 앞에 the가 없다.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>a study는 '연구 한 편(논문)'이라는 뜻. 고대 그리스에서 시작된 학문 활동 전체를 가리키지 못한다.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>the study(한정) + of + rhetoric(학문 이름, 무관사).</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>학문 이름 rhetoric 앞에 the를 쓰지 않는다.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>rhetoric은 셀 수 없는 명사라 a를 붙일 수 없다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>믿기지 않아! 수사학 연구가 고대 그리스에서 시작되었다고 들었어.</div></div></details>
 </article>
-
+<div class="panel-foot"><button type="button" class="pf-btn" data-go="gi-g"><small>기출응용문제</small>어법 해설 다시 보기</button><button type="button" class="pf-btn primary" data-go="u1-g"><small>처음으로</small>Unit 03 명사의 종류 · 어법 해설</button></div>
+</section>
 
 </div></main>
 
 <!-- ========== Footer (학원 표기 절대 변경 금지) ========== -->
 <footer><div class="container"><div class="foot-grid">
   <div class="foot-brand">Mokdong Seoro English Academy<span class="kor">목동서로영어학원 · 0505.co.kr</span></div>
-  <div class="foot-meta">신목고·목운중·목동중 전문 영어학원<br><b>고교 3300제 · 제2장 명사와 관사 · 완전판 상세풀이</b><br>본 자료는 학원 수강생 전용 교육 자료입니다. 무단 배포 금지.<br>Unit 03~05 · 기출응용문제 24문항</div>
+  <div class="foot-meta">신목고·목운중·목동중 전문 영어학원<br><b>고교 3300제 · 제2장 명사와 관사 · 완전판 상세풀이</b><br>본 자료는 학원 수강생 전용 교육 자료입니다. 무단 배포 금지.<br>Unit 03 명사의 종류 · Unit 04 명사의 관용적 용법 · Unit 05 관사 · 기출응용문제 24문항</div>
 </div></div></footer>
 
 <script>
-
 /* ══ 펜 필기 모드 (자유 필기) v1.0 ══ */
 const PEN_COLORS=['#dc2626','#1F3864','#0f9d58','#f59e0b','#000000'];
 const PEN_WIDTHS=[2,4,7];
@@ -1058,7 +1925,42 @@ if(document.readyState==='loading'){
 }else{
   setTimeout(buildPenTools,100);
 }
-
+/* ══ 유니트 / 모드 전환 ══ */
+(function(){
+  var UNIT_LABEL={u1:'Unit 03 명사의 종류',u2:'Unit 04 명사의 관용적 용법',u3:'Unit 05 관사',gi:'기출응용문제'};
+  var cur={unit:'u1',mode:'g'},penStore={};
+  var nav=document.getElementById('unitNav');
+  function parse(h){var m=/^#?(u1|u2|u3|gi)-(g|q)$/.exec(h||'');return m?{unit:m[1],mode:m[2]}:null;}
+  function syncPen(){try{
+    if(typeof penLayer!=='undefined'&&penLayer){
+      penLayer.setAttribute('height',0);penLayer.style.height='0px';penLayer.setAttribute('width',0);penLayer.style.width='0px';
+      var h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
+      penLayer.setAttribute('height',h);penLayer.style.height=h+'px';
+      var w=document.documentElement.clientWidth;penLayer.setAttribute('width',w);penLayer.style.width=w+'px';}}catch(_){}}
+  function show(unit,mode,scroll){
+    var key=unit+'-'+mode,old=cur.unit+'-'+cur.mode;
+    try{if(typeof penLayer!=='undefined'&&penLayer){penStore[old]=penLayer.innerHTML;penLayer.innerHTML=penStore[key]||'';}}catch(_){}
+    cur={unit:unit,mode:mode};
+    document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active',p.id==="p-"+key);});
+    document.querySelectorAll('.un-tab').forEach(function(b){var on=b.dataset.unit===unit;b.classList.toggle('active',on);b.setAttribute('aria-pressed',on);});
+    document.querySelectorAll('.mode-btn').forEach(function(b){var on=b.dataset.mode===mode;b.classList.toggle('active',on);b.setAttribute('aria-pressed',on);});
+    document.getElementById('modeCur').textContent=UNIT_LABEL[unit];
+    try{if(history.replaceState)history.replaceState(null,'','#'+key);}catch(_){}
+    if(scroll){var y=nav.getBoundingClientRect().top+window.scrollY;if(window.scrollY>y)window.scrollTo(0,y);}
+    setTimeout(syncPen,60);
+  }
+  document.querySelectorAll('.un-tab').forEach(function(b){b.addEventListener('click',function(){show(b.dataset.unit,'g',true);});});
+  document.querySelectorAll('.mode-btn').forEach(function(b){b.addEventListener('click',function(){show(cur.unit,b.dataset.mode,true);});});
+  document.querySelectorAll('.pf-btn').forEach(function(b){b.addEventListener('click',function(){var t=parse(b.dataset.go);show(t.unit,t.mode,true);});});
+  document.querySelectorAll('[data-toggle-all]').forEach(function(b){b.addEventListener('click',function(){
+    var ds=b.closest('.panel').querySelectorAll('article details.ans');
+    var open=!Array.prototype.every.call(ds,function(d){return d.open;});
+    ds.forEach(function(d){d.open=open;});
+    b.textContent=open?'해설 모두 접기':'해설 모두 펼치기';setTimeout(syncPen,60);});});
+  document.querySelectorAll('details.ans').forEach(function(d){d.addEventListener('toggle',function(){setTimeout(syncPen,60);});});
+  window.addEventListener('hashchange',function(){var t=parse(location.hash);if(t&&(t.unit!==cur.unit||t.mode!==cur.mode))show(t.unit,t.mode,true);});
+  var init=parse(location.hash)||cur;show(init.unit,init.mode,false);
+})();
 </script>
 </body>
 </html>
