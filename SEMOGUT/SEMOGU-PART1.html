@@ -472,6 +472,43 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .tab-summary.active{background:#00695C;color:white;border-color:#00695C;}
 .summary-view{display:none;}
 @media print{.summary-view{display:none!important;}}
+
+/* 10. 단어장 인쇄 */
+#vocabPrint{display:none;}
+#vocabPrint table{width:100%;border-collapse:collapse;font-size:12px;}
+#vocabPrint th{background:#1F3864;color:white;padding:6px 9px;text-align:left;font-size:11.5px;}
+#vocabPrint td{padding:5px 9px;border-bottom:1px solid #ddd;vertical-align:top;}
+#vocabPrint tr{break-inside:avoid;page-break-inside:avoid;}
+#vocabPrint tr:nth-child(even) td{background:#f5f7fb;}
+@media print{
+  body.pv #vocabPrint{display:block!important;}
+  body.pv .top-nav,body.pv .page-header,body.pv .watermark,body.pv .cover-plate,body.pv #secNav,body.pv .view-tabs,body.pv #readingView,body.pv .summary-view,body.pv .ga-panel,body.pv .sd-panel,body.pv .arrange-view,body.pv .grammar-view,body.pv .vocab-view,body.pv .q-panel,body.pv footer{display:none!important;}
+  body.pv .passage{padding:8mm 0 6mm!important;max-width:100%!important;}
+}
+
+/* 11. 단어 테스트 모달 (v4.2) */
+#vtModal{display:none;position:fixed;inset:0;z-index:5000;background:rgba(20,25,40,0.55);overflow:auto;padding:24px 12px;}
+#vtModal .vt-box{max-width:920px;margin:0 auto;background:white;border-radius:12px;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,0.35);}
+#vtCtrl{padding:12px 18px;border-bottom:1px solid #e3e6ee;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;background:#fbfcfe;font-size:13px;color:#334;}
+#vtCtrl select{font-family:inherit;font-size:12.5px;padding:5px 8px;border:1px solid #c9d2e3;border-radius:6px;background:white;color:#1F3864;}
+#vtCtrl label{display:inline-flex;align-items:center;gap:4px;cursor:pointer;font-size:12.5px;}
+#vtCtrl .vt-btn{font-family:inherit;font-size:12.5px;font-weight:700;padding:7px 16px;border-radius:18px;border:1px solid #c9d2e3;background:white;color:#1F3864;cursor:pointer;}
+#vtCtrl .vt-btn.vt-primary{background:#1F3864;border-color:#1F3864;color:white;}
+#vtSheet{padding:20px 26px 26px;}
+#vtSheet table{width:100%;border-collapse:collapse;font-size:12px;}
+#vtSheet th{background:#f0f2f7;color:#222;border:1px solid #444;padding:6px 8px;font-size:11.5px;font-weight:700;}
+#vtSheet td{border:1px solid #444;padding:7px 8px;vertical-align:middle;}
+#vtSheet .vt-cols{display:flex;gap:14px;align-items:flex-start;}
+#vtSheet .vt-cols>div{flex:1;min-width:0;}
+#vtSheet tr{break-inside:avoid;page-break-inside:avoid;}
+@media print{
+  body.pvt .passage,body.pvt .top-nav,body.pvt footer{display:none!important;}
+  body.pvt #vtModal{display:block!important;position:static!important;background:white!important;padding:0!important;overflow:visible!important;}
+  body.pvt #vtModal .vt-box{box-shadow:none!important;border-radius:0!important;max-width:100%!important;}
+  body.pvt #vtCtrl{display:none!important;}
+  body.pvt #vtSheet{padding:8mm 0 6mm!important;}
+}
+@media (max-width:600px){#vtSheet .vt-cols{flex-direction:column;}}
 </style>
 </head>
 <body>
@@ -511,7 +548,11 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="page-title">문장 구조의 기본 형태 — S + V</div>
     <div class="page-sub">주어와 동사만으로 이루어진 문장 (1형식) · EXERCISE 5문장</div>
   </div>
-  <div class="view-tabs">
+    <div id="secNav" style="display:flex;gap:10px;margin:2px 0 16px;">
+      <button id="navKey" onclick="switchView('reading');document.querySelector('.view-tabs').style.display='none';document.getElementById('keySec').style.display='';document.getElementById('lineSec').style.display='none';this.style.background='#1F3864';this.style.color='#fff';var b=document.getElementById('navLine');b.style.background='#fff';b.style.color='#1F3864';window.scrollTo(0,0);" style="flex:1;padding:12px 0;border:2px solid #1F3864;border-radius:9px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:0.5px;background:#1F3864;color:#fff;box-shadow:0 3px 10px rgba(31,56,100,0.25);">⚡ 키 해석법</button>
+      <button id="navLine" onclick="switchView('reading');document.querySelector('.view-tabs').style.display='flex';document.getElementById('lineSec').style.display='';document.getElementById('keySec').style.display='none';this.style.background='#1F3864';this.style.color='#fff';var b=document.getElementById('navKey');b.style.background='#fff';b.style.color='#1F3864';window.scrollTo(0,0);" style="flex:1;padding:12px 0;border:2px solid #1F3864;border-radius:9px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:0.5px;background:#fff;color:#1F3864;">📖 주요구문 한줄해석</button>
+    </div>
+  <div class="view-tabs" style="display:none;">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
     <button class="view-tab tab-summary" id="tabSum" onclick="switchSummary()">📄 요약</button>
     <button class="view-tab tab-ga"             id="tabGA" onclick="switchGA()">📊 문법분석</button>
@@ -522,6 +563,188 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <button class="view-tab tab-vocab"          id="tabV" onclick="switchView('vocab')">📚 단어장</button>
   </div>
   <div id="readingView">
+    <div id="keySec">
+    <div style="margin:4px 0 18px;border:1.5px solid #c7d3ec;border-radius:12px;overflow:hidden;box-shadow:0 3px 14px rgba(31,56,100,0.10);background:white;">
+      <div style="background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;padding:12px 16px;font-family:'Playfair Display',serif;font-size:15px;font-weight:700;letter-spacing:0.3px;">⚡ 키포인트 해석법 — 동사 「바로 뒤」를 봐라: 명사가 없으면 1형식(S + V)!</div>
+      <div style="padding:14px 16px 8px;font-size:13px;line-height:1.7;color:#333;">
+
+        <div style="text-align:center;background:#f7f8fc;border:1.5px dashed #2E75B6;border-radius:10px;padding:12px 10px;margin-bottom:12px;font-size:14.5px;font-weight:700;color:#1F3864;">
+          동사 뒤 <span style="background:#FDEEE2;color:#9A3D00;border-radius:4px;padding:1px 7px;">명사(목적어)</span> 있다 → 3형식 이상 &nbsp;/&nbsp; 동사 뒤 <span style="background:#EAF3DE;color:#27500A;border-radius:4px;padding:1px 7px;">전치사 · 부사 · 끝</span> → <span style="color:#C0392B;">1형식 — 「S가 V하다」로 해석 끝!</span>
+        </div>
+
+        <div style="background:#eef4fb;border-left:4px solid #0C447C;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#0C447C;margin-bottom:4px;">① 동사 뒤에 <b>명사가 없으면</b> 1형식 — 「S가 V하다」로 끝 <span style="font-weight:400;font-size:12px;color:#999;">→ 문1</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;">He <b>is standing</b> <span style="color:#0C447C;">near the gate</span>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 그는 문 근처에 서 있다.</div>
+          <div style="font-size:12px;color:#555;">🔍 standing 뒤 = 전치사(near) → 목적어 없음. 나머지는 전부 「어디·언제·어떻게」 수식어.</div>
+        </div>
+        <div style="background:#f6effc;border-left:4px solid #5B2D8E;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#5B2D8E;margin-bottom:4px;">② <b>There</b> + V + S — there는 주어가 아니다, 진짜 주어는 <b>동사 뒤</b> <span style="font-weight:400;font-size:12px;color:#999;">→ 문2 · 문3</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><b>There remain</b> <u>many problems</u>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 많은 문제가 남아 있다.</div>
+          <div style="font-size:12px;color:#555;">🔍 수일치도 동사 뒤 명사(problems·복수)에 맞춘다 → remain(remains ✗).</div>
+        </div>
+        <div style="background:#f0f6e8;border-left:4px solid #27500A;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#27500A;margin-bottom:4px;">③ 긴 문장은 <b>and · ;</b> 에서 절을 쪼개고, 절마다 S·V 하나씩 <span style="font-weight:400;font-size:12px;color:#999;">→ 문3 · 문5</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><u>Prices</u> <b>rose</b>, <span style="color:#C0392B;">and</span> <u>demand</u> <b>fell</b>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 물가는 올랐고, 수요는 떨어졌다.</div>
+          <div style="font-size:12px;color:#555;">🔍 접속사·세미콜론 = 새 S·V 가 시작된다는 신호. 각 동사 뒤를 따로 확인.</div>
+        </div>
+        <div style="background:#e8f5f2;border-left:4px solid #00695C;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#00695C;margin-bottom:4px;">④ 「숫자 + 단위 + <b>away</b> / ago / later」 부사구는 <b>뒤에서 앞으로</b> <span style="font-weight:400;font-size:12px;color:#999;">→ 문1</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;">He <b>stood</b> <span style="color:#00695C;">ten feet away from me</span>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 그는 나에게서 10피트 떨어져 서 있었다.</div>
+          <div style="font-size:12px;color:#555;">🔍 away 는 부사, ten feet 는 「얼마나」를 재는 정도 표현 → 「나에게서(from me) → 10피트(ten feet) → 떨어져(away)」.</div>
+        </div>
+        <div style="background:#fdf0ee;border-left:4px solid #C0392B;border-radius:6px;padding:10px 14px;margin-bottom:12px;">
+          <div style="font-size:14px;font-weight:800;color:#8a1a1a;margin-bottom:4px;">⑤ 최대 함정 — <b>자동사 + 전치사</b>(make for · come into ~): 뒤에 명사가 있어도 <b>목적어가 아니다</b> <span style="font-weight:400;font-size:12px;color:#999;">→ 문4 · 문5</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;">This <b style="color:#8a1a1a;">made for</b> a big change.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:4px;">▶ 이것이 큰 변화를 초래했다.</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:12px;">
+            <span style="background:#fff;border:1px solid #C0392B;border-radius:4px;padding:2px 9px;color:#C0392B;font-weight:700;">✗ made [a big change] = 목적어</span>
+            <span style="background:#fff;border:1px solid #1D5C2B;border-radius:4px;padding:2px 9px;color:#1D5C2B;font-weight:700;">○ made <u>for</u> [a big change] = 전치사구 → 1형식</span>
+          </div>
+          <div style="font-size:12px;color:#555;margin-top:4px;">🔍 뜻은 「~을 초래하다」(타동사 같음)지만, 명사 앞에 <b>전치사가 끼어 있으면</b> 그 명사는 전치사의 목적어 — 동사는 자동사.</div>
+        </div>
+
+        <div style="background:#fff8e6;border-left:4px solid #f0d070;border-radius:6px;padding:10px 14px;margin-bottom:10px;font-size:13px;">
+          <b style="color:#8B6914;">📌 기억법</b> &nbsp;—&nbsp; <b>동사 뒤를 봐라</b> · <b>There 는 주어 아님</b> · <b style="color:#C0392B;">전치사 낀 명사는 목적어 아님</b> · <b>「숫자 + away」는 뒤에서 앞으로</b>.
+        </div>
+
+        <div style="background:#fffaf0;border-left:4px solid #e8b64c;border-radius:6px;padding:10px 14px;margin-bottom:10px;font-size:13px;">
+          <b style="color:#7a3a00;">🔄 해석 3단계</b> &nbsp; <b>①</b> 동사를 찾는다 → <b>②</b> 동사 <b>바로 뒤</b>를 본다(명사면 목적어 · 전치사/부사/끝이면 1형식) → <b>③</b> 「S가 V하다」를 세우고 나머지 수식어를 앞에 붙인다.
+        </div>
+
+      </div>
+    </div>
+    <div style="margin:4px 0 18px;border:1.5px solid #d8c7ec;border-radius:12px;overflow:hidden;box-shadow:0 3px 14px rgba(91,58,142,0.10);background:white;">
+      <div style="background:linear-gradient(135deg,#5B3A8E,#7B54B8);color:white;padding:12px 18px;font-size:16px;font-weight:800;">📎 부록 — 1형식 필수 암기: 자동사 16 + 척도 부사구 6 <span style="font-weight:400;font-size:12.5px;opacity:0.85;">목적어 없이 끝나는 동사 · 뜻은 타동사 같은 자동사 · 자/타 혼동 짝 · 「숫자 + away」류 부사구 해석</span></div>
+      <div style="padding:14px 16px 8px;">
+        <div style="border:2px dashed #7B54B8;border-radius:8px;padding:10px 14px;margin-bottom:6px;background:#faf7ff;font-size:13px;">
+          <b style="color:#5B3A8E;">⚡ 공통 원리</b> — 동사의 한국어 뜻이 「~을 …하다」처럼 들려도, <b>영어에서 동사 바로 뒤에 목적어(명사)가 오지 않으면 자동사 = 1형식</b>이다. 판단 기준은 뜻이 아니라 <b style="color:#C0392B;">「동사 바로 뒤」</b>.
+        </div>
+        <div style="font-size:13.5px;font-weight:800;color:#0C447C;border-bottom:2px solid #0C447C;padding-bottom:3px;margin:12px 0 7px;">A. 「있다 · 일어나다 · 남다」 — 목적어를 절대 안 가지는 완전자동사</div>
+        <div style="background:#eef4fb;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#0C447C;">exist</b> <span style="color:#444;">— 존재하다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">Life cannot <b>exist</b> without water.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 물 없이는 생명이 존재할 수 없다.</div>
+        </div>
+        <div style="background:#eef4fb;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#0C447C;">happen · occur · take place</b> <span style="color:#444;">— 일어나다, 발생하다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">The accident <b>occurred</b> at midnight on the highway.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 그 사고는 자정에 고속도로에서 발생했다.</div>
+        </div>
+        <div style="background:#eef4fb;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#0C447C;">remain · stay</b> <span style="color:#444;">— 남아 있다, ~인 채로 있다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">Many questions still <b>remain</b> after the meeting.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 회의 후에도 많은 질문이 여전히 남아 있다.</div>
+        </div>
+        <div style="background:#eef4fb;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#0C447C;">appear · disappear · emerge</b> <span style="color:#444;">— 나타나다 · 사라지다 · 출현하다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">A new species <b>emerged</b> from the ancient forest.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 새로운 종이 고대 숲에서 출현했다.</div>
+        </div>
+        <div style="background:#eef4fb;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#0C447C;">rise · arise</b> <span style="color:#444;">— 오르다 · (문제가) 생기다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">Serious problems <b>arose</b> during the experiment.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 실험 도중 심각한 문제들이 생겼다.</div>
+        </div>
+        <div style="background:#eef4fb;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#0C447C;">lie</b> <span style="color:#444;">— 놓여 있다, 눕다 (lie–lay–lain)</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">The village <b>lies</b> at the foot of the mountain.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 그 마을은 산기슭에 놓여 있다.</div>
+        </div>
+        <div style="font-size:13.5px;font-weight:800;color:#9A3D00;border-bottom:2px solid #9A3D00;padding-bottom:3px;margin:12px 0 7px;">B. 「뜻은 타동사 같은」 자동사 — 함정 최다 구역</div>
+        <div style="background:#fdf6ee;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#9A3D00;">matter · count</b> <span style="color:#444;">— 중요하다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">What you do every day <b>matters</b> more than what you say.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 「~을 중요시하다」가 아니라 「(S가) 중요하다」 — 뒤에 목적어 없음.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 매일 하는 일이 말하는 것보다 더 중요하다.</div>
+        </div>
+        <div style="background:#fdf6ee;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#9A3D00;">work</b> <span style="color:#444;">— 효과가 있다, 작동하다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">The new medicine <b>worked</b> within a few hours.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 「일하다」로 읽지 말 것 — 사물 주어 + work = 효과·작동.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 새 약은 몇 시간 안에 효과가 있었다.</div>
+        </div>
+        <div style="background:#fdf6ee;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#9A3D00;">pay</b> <span style="color:#444;">— 수지가 맞다, 이익이 되다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">Honesty <b>pays</b> in the long run.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 「돈을 내다」(타동사)와 구별 — 목적어 없으면 「득이 된다」.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 정직은 결국 이익이 된다.</div>
+        </div>
+        <div style="background:#fdf6ee;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#9A3D00;">do</b> <span style="color:#444;">— 충분하다, 괜찮다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">Any chair will <b>do</b> for the moment.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 「하다」가 아니라 「족하다」 — will do = 충분하다.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 당장은 어떤 의자든 충분하다.</div>
+        </div>
+        <div style="background:#fdf6ee;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#9A3D00;">last</b> <span style="color:#444;">— 지속되다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">The storm <b>lasted</b> for three days.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 for three days 는 전치사구(M) — 목적어 아님.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 폭풍은 사흘 동안 지속되었다.</div>
+        </div>
+        <div style="background:#fdf6ee;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#9A3D00;">make for · consist of · belong to · depend on</b> <span style="color:#444;">— 초래하다 · ~로 이루어지다 · ~에 속하다 · ~에 달려 있다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">Success <b>depends on</b> effort, not luck.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 「자동사 + 전치사」 구동사 — 뒤의 명사는 <b>전치사의 목적어</b>. 형식은 1형식(문4 made for 와 동일).</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 성공은 운이 아니라 노력에 달려 있다.</div>
+        </div>
+        <div style="font-size:13.5px;font-weight:800;color:#8a1a1a;border-bottom:2px solid #8a1a1a;padding-bottom:3px;margin:12px 0 7px;">C. 자동사 ↔ 타동사 혼동 짝 — 뒤에 목적어가 있으면 타동사 형태를!</div>
+        <div style="background:#fdf0ee;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#8a1a1a;">lie(눕다·놓여 있다) ↔ lay(~을 눕히다·놓다)</b> <span style="color:#444;">— lie–lay–lain / lay–laid–laid</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">He <b>lay</b> on the grass. ↔ He <b>laid</b> the book on the desk.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 lay 뒤에 the book(목적어)이 있다 → 타동사 lay 의 과거 laid.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 그는 잔디 위에 누웠다(1형식). ↔ 그는 책을 책상 위에 놓았다(3형식).</div>
+        </div>
+        <div style="background:#fdf0ee;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#8a1a1a;">rise(오르다) ↔ raise(~을 올리다)</b> <span style="color:#444;">— rise–rose–risen / raise–raised–raised</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">Prices <b>rose</b> sharply. ↔ The company <b>raised</b> prices.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 raised 뒤에 prices(목적어) → 타동사.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 물가가 급등했다(1형식). ↔ 회사가 가격을 올렸다(3형식).</div>
+        </div>
+        <div style="background:#fdf0ee;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#8a1a1a;">sit(앉다) ↔ seat(~을 앉히다)</b> <span style="color:#444;">— sit–sat–sat / seat–seated–seated</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">She <b>sat</b> by the window. ↔ The usher <b>seated</b> us in the front row.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 seated 뒤에 us(목적어) → 타동사. (be seated = 앉아 있다)</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 그녀는 창가에 앉았다(1형식). ↔ 안내원이 우리를 앞줄에 앉혔다(3형식).</div>
+        </div>
+        <div style="background:#fdf0ee;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#8a1a1a;">arise(생기다) ↔ arouse(~을 불러일으키다)</b> <span style="color:#444;">— arise–arose–arisen / arouse–aroused–aroused</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">A problem <b>arose</b>. ↔ The news <b>aroused</b> public anger.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 aroused 뒤에 anger(목적어) → 타동사. 문4의 which aroused emotional sympathy 가 바로 이것.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 문제가 생겼다(1형식). ↔ 그 소식은 대중의 분노를 불러일으켰다(3형식 — 문4 aroused).</div>
+        </div>
+
+        <div style="font-size:13.5px;font-weight:800;color:#00695C;border-bottom:2px solid #00695C;padding-bottom:3px;margin:12px 0 7px;">D. 척도 부사구 — 「숫자·양 명사 + 부사」는 <u>뒤에서 앞으로</u> 해석</div>
+        <div style="background:#e8f5f2;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#00695C;">숫자 + 단위 + away (from ~)</b> <span style="color:#444;">— ~에서 …만큼 떨어져</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">The station is <b>two miles away</b> from here.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 two miles 가 부사 away(떨어져)의 정도를 잰다 — 「여기서(from here) → 2마일(two miles) → 떨어져(away)」 뒤에서 앞으로.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 역은 여기서 2마일 떨어져 있다.</div>
+        </div>
+        <div style="background:#e8f5f2;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#00695C;">숫자 + 단위 + ago / later / earlier</b> <span style="color:#444;">— …전에 / …후에</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">The war ended <b>a century ago</b>. / <b>Three years later</b>, she returned.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 ago·later 는 항상 「앞의 명사 + ago」 어순(ago a century ✗). ended·returned 뒤가 척도 부사구 → 목적어 없음 = 1형식.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 전쟁은 한 세기 전에 끝났다. / 3년 후에 그녀는 돌아왔다.</div>
+        </div>
+        <div style="background:#e8f5f2;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#00695C;">숫자 + 단위 + ahead / behind</b> <span style="color:#444;">— …앞에 / …뒤에</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">The finish line lay <b>a few yards ahead</b>.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 lay(놓여 있었다, lie 의 과거) 는 자동사 — a few yards ahead 는 「어디에」를 재는 M.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 결승선이 몇 야드 앞에 놓여 있었다.</div>
+        </div>
+        <div style="background:#e8f5f2;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#00695C;">거리 명사구 단독 — walk / run / travel + 숫자 + miles</b> <span style="color:#444;">— …마일을 (이동하다)</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">We <b>walked ten miles</b> that day.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 <b style="color:#C0392B;">함정</b>: walked 뒤 ten miles 가 목적어처럼 보이지만 「얼마나」를 재는 <b>거리 부사구</b> — 「10마일을 걷다」로 해석해도 형식은 1형식(walk 는 자동사).</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 우리는 그날 10마일을 걸었다.</div>
+        </div>
+        <div style="background:#e8f5f2;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#00695C;">시간 명사구 단독 — stay / wait / live + 숫자 + weeks</b> <span style="color:#444;">— …동안 (머물다)</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">She <b>stayed three weeks</b> in Paris.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 (for) three weeks 의 for 가 생략된 시간 부사구 — 목적어 아님. 「파리에(in Paris) 3주 동안(three weeks) 머물렀다」 뒤에서 앞으로.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 그녀는 파리에 3주 동안 머물렀다.</div>
+        </div>
+        <div style="background:#e8f5f2;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#00695C;">all the way / right / far + 부사구</b> <span style="color:#444;">— 내내 / 바로 / 멀리 (부사구 강조)</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">He ran <b>all the way home</b>. / She lives <b>far away from</b> the city.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 all the way·far 는 뒤의 부사(home·away)를 강조하는 정도 표현 — 「집까지(home) 내내(all the way)」, 「도시에서(from the city) 멀리(far) 떨어진 곳에(away)」.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 그는 집까지 내내 달렸다. / 그녀는 도시에서 멀리 떨어진 곳에 산다.</div>
+        </div>
+        <div style="background:#fff8e6;border-left:4px solid #f0d070;border-radius:6px;padding:10px 14px;margin:12px 0 10px;font-size:13px;">
+          <b style="color:#8B6914;">📌 최종 정리</b> — A 는 「있다·일어나다」로 끝나고, B 는 뜻에 속지 말고 뒤를 보고, C 는 <b>뒤에 목적어가 있으면 타동사 짝(lay·raise·seat·arouse)</b>을 고르고, D 의 「숫자 + away/ago/later」는 목적어가 아니라 <b>뒤에서 앞으로 읽는 부사구</b>다. 결국 <b style="color:#C0392B;">「동사 바로 뒤에 명사가 있는가」</b> 하나로 판별된다.
+        </div>
+      </div>
+    </div>
+    </div><!-- /keySec -->
+    <div id="lineSec" style="display:none;">
     <div class="hints">
       <div class="hint">🖱 PC: 클릭 → 발음 · 더블클릭 → 해석 고정</div>
       <div class="hint">📱 모바일: 탭 → 해석</div>
@@ -569,7 +792,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <text x="320" y="92" font-size="11" font-weight="700" fill="#C0392B" text-anchor="middle" font-family="sans-serif">the gate 뒤 수식(얼마나 가까운지)</text>
 </svg>
     </div>
-    <div class="s-kr">그는 나에게서 채 10피트도 떨어지지 않은 곳에서, 문 근처에 서 있었다<span class="pr">(= 아주 가까이 서 있었다)</span>.</div>
+    <div class="s-kr">그는 나에게서 채 10피트도 떨어지지 않은 곳에서, 문 근처에 서 있었다<span class="pr">(= 아주 가까이 서 있었다)</span>.<span class="s-extra" style="display:block;margin-top:7px;padding:8px 12px;background:#f3eefb;border-left:3px solid #8b6db8;border-radius:5px;font-size:12.5px;color:#4a3d5c;line-height:1.65;">💬 <strong>추가해설</strong> — <strong>not ten feet away from me</strong>: away 는 「떨어져」라는 <strong>부사</strong>, ten feet 는 얼마나 떨어졌는지 away 를 꾸미는 <strong>척도 명사구</strong>(명사가 부사 노릇), not 은 그 정도를 부정(채 10피트도 안 되게), from me 는 기준점. 구조 [not][ten feet][away][from me] → 한국어는 <strong>뒤에서 앞으로</strong> 「나에게서 → 10피트도 → 채 안 되게 → 떨어진 곳에」. 같은 틀: two miles away · three years later · an hour ago.</span></div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">He / was standing</span><span class="vocab-kr">주어(S) + 동사(V) — 1형식(과거진행)</span><span class="vocab-en">near the gate</span><span class="vocab-kr">문 근처에(장소 부사구)</span><span class="vocab-en">not ten feet away from ~</span><span class="vocab-kr">~에서 채 10피트도 떨어지지 않은</span></div>
     <div class="s-meaning">
       <span class="meaning-label">🧭 독해 방법 · HOW TO READ</span>
@@ -626,7 +849,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <text x="374" y="92" font-size="11" font-weight="700" fill="#C0392B" text-anchor="middle" font-family="sans-serif">to부정사 → issues 수식</text>
 </svg>
     </div>
-    <div class="s-kr">이 잘 알려지지 않은 마을의 가난하고 힘없는 사람들<span class="pr">(= the poor and helpless)</span>을 향한 그녀의 평생에 걸친 헌신 이후에도, 해결되어야 할 많은 문제들이 여전히 남아 있다.</div>
+    <div class="s-kr">이 잘 알려지지 않은 마을의 가난하고 힘없는 사람들<span class="pr">(= the poor and helpless)</span>을 향한 그녀의 평생에 걸친 헌신 이후에도, 해결되어야 할 많은 문제들이 여전히 남아 있다.<span class="s-extra" style="display:block;margin-top:7px;padding:8px 12px;background:#f3eefb;border-left:3px solid #8b6db8;border-radius:5px;font-size:12.5px;color:#4a3d5c;line-height:1.65;">💬 <strong>추가해설</strong> — <strong>There still remain many issues</strong>: there 는 자리만 채우는 유도부사, 진짜 주어는 동사 뒤 <strong>many issues</strong>(복수) → 동사도 복수 <strong>remain</strong>(remains ✗). <strong>to be resolved</strong> 는 issues 를 꾸미는 형용사적 to부정사(수동), even after ~ 는 긴 수식어(M). 뼈대 = issues remain(1형식).</span></div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">There remain + S</span><span class="vocab-kr">S가 남아 있다(유도부사 there 도치, 진주어=many issues)</span><span class="vocab-en">to be resolved</span><span class="vocab-kr">해결되어야 할(to부정사 수동, issues 수식)</span><span class="vocab-en">devotion to</span><span class="vocab-kr">~에 대한 헌신</span><span class="vocab-en">the poor and helpless</span><span class="vocab-kr">가난하고 힘없는 사람들(the+형용사)</span><span class="vocab-en">obscure</span><span class="vocab-kr">잘 알려지지 않은</span></div>
     <div class="s-meaning">
       <span class="meaning-label">🧭 독해 방법 · HOW TO READ</span>
@@ -680,7 +903,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <text x="371" y="164" font-size="11" font-weight="700" fill="#C0392B" text-anchor="middle" font-family="sans-serif">어떻게(M) → had grown 수식</text>
 </svg>
     </div>
-    <div class="s-kr">몇 주 동안 매일 밤 많은 설교와 노래, 기도, 외침이 있었고, 교회의 신도 수는 급속히 늘어났다.</div>
+    <div class="s-kr">몇 주 동안 매일 밤 많은 설교와 노래, 기도, 외침이 있었고, 교회의 신도 수는 급속히 늘어났다.<span class="s-extra" style="display:block;margin-top:7px;padding:8px 12px;background:#f3eefb;border-left:3px solid #8b6db8;border-radius:5px;font-size:12.5px;color:#4a3d5c;line-height:1.65;">💬 <strong>추가해설</strong> — 콤마 뒤 <strong>and</strong> 가 문장을 둘로 가른다. 앞 절 = There 도치(진주어 = -ing 명사 4개 preaching·singing·praying·shouting), 뒤 절 = 정상 어순 S(<strong>the membership</strong> of the church) + V(<strong>had grown</strong>) + M(by leaps and bounds). 두 절 모두 동사 뒤 목적어 없음 → 1형식 두 개의 연결.</span></div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">There had been + S</span><span class="vocab-kr">S가 있었다(유도부사 there + 과거완료)</span><span class="vocab-en">preach</span><span class="vocab-kr">설교하다 (preaching = 설교)</span><span class="vocab-en">membership</span><span class="vocab-kr">신도 수, 회원 수</span><span class="vocab-en">had grown</span><span class="vocab-kr">늘어났다(과거완료, 자동사)</span><span class="vocab-en">by leaps and bounds</span><span class="vocab-kr">급속히, 비약적으로</span></div>
     <div class="s-meaning">
       <span class="meaning-label">🧭 독해 방법 · HOW TO READ</span>
@@ -740,7 +963,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <text x="324" y="164" font-size="11" font-weight="700" fill="#C0392B" text-anchor="middle" font-family="sans-serif">which = violence → 되돌리지 말고 「그리고 그것이」로 순행</text>
 </svg>
     </div>
-    <div class="s-kr">늘어난 여가와 현대 도시 생활에서 폭력적 본능을 발산할 배출구의 부재는, 십 대들 사이에서 지식인들의 감정적 동정을 불러일으킨<span class="pr">(= which 이하 관계절)</span> 목적 없는 유형의 폭력을 초래했다.</div>
+    <div class="s-kr">늘어난 여가와 현대 도시 생활에서 폭력적 본능을 발산할 배출구의 부재는, 십 대들 사이에서 지식인들의 감정적 동정을 불러일으킨<span class="pr">(= which 이하 관계절)</span> 목적 없는 유형의 폭력을 초래했다.<span class="s-extra" style="display:block;margin-top:7px;padding:8px 12px;background:#f3eefb;border-left:3px solid #8b6db8;border-radius:5px;font-size:12.5px;color:#4a3d5c;line-height:1.65;">💬 <strong>추가해설</strong> — <strong>made for</strong> 뒤의 an aimless type of violence 를 목적어로 읽으면 ✗ — 전치사 <strong>for</strong> 가 있으므로 for 의 목적어. make for = 「~을 초래하다」(자동사 + 전치사) → 1형식. <strong>왜 1형식인가</strong>: ⓐ 동사 made 바로 뒤가 명사가 아니라 전치사 ⓑ 주어는 and 로 묶인 명사 2개(Increased leisure ‖ the lack of outlet …)로 길지만 동사는 made 하나 ⓒ <strong>which</strong> 의 선행사는 바로 앞 violence — 「그리고 그것이 ~을 불러일으켰다」로 순행.</span></div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">make for</span><span class="vocab-kr">~을 초래하다, ~로 이어지다(자동사구)</span><span class="vocab-en">outlet</span><span class="vocab-kr">배출구</span><span class="vocab-en">violent / instinct</span><span class="vocab-kr">폭력적인 / 본능</span><span class="vocab-en">aimless</span><span class="vocab-kr">목적 없는, 이유 없는</span><span class="vocab-en">which (관계대명사)</span><span class="vocab-kr">선행사 violence 수식(주격)</span><span class="vocab-en">arouse</span><span class="vocab-kr">불러일으키다</span></div>
     <div class="s-meaning">
       <span class="meaning-label">🧭 독해 방법 · HOW TO READ</span>
@@ -812,7 +1035,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <text x="253" y="92" font-size="11" font-weight="700" fill="#C0392B" text-anchor="middle" font-family="sans-serif">동명사구 S → 단수 V(is)</text>
 </svg>
     </div>
-    <div class="s-kr">소설의 출현을 연구하는 것은 인류라는 종의 출현에 관한 그런 역사적 기술 중 하나를 읽는 것과 약간 비슷하다. 온갖 위기일발의 상황이 발생하고, 발달의 막다른 길들은 점차 사그라들며, 그러고 나서 — 기적적으로 — 필요한 모든 요소가 하나로 모여 인간이 존재하게 된다.</div>
+    <div class="s-kr">소설의 출현을 연구하는 것은 인류라는 종의 출현에 관한 그런 역사적 기술 중 하나를 읽는 것과 약간 비슷하다. 온갖 위기일발의 상황이 발생하고, 발달의 막다른 길들은 점차 사그라들며, 그러고 나서 — 기적적으로 — 필요한 모든 요소가 하나로 모여 인간이 존재하게 된다.<span class="s-extra" style="display:block;margin-top:7px;padding:8px 12px;background:#f3eefb;border-left:3px solid #8b6db8;border-radius:5px;font-size:12.5px;color:#4a3d5c;line-height:1.65;">💬 <strong>추가해설</strong> — 세미콜론(;) = 「앞의 비유를 예시로 풀어 준다」는 신호. 뒤에는 <strong>S + V 덩어리 4개</strong>: near-misses <strong>occur</strong> / dead-ends <strong>peter out</strong> / ingredients <strong>come together</strong> / human beings <strong>come into being</strong> — 넷 다 동사 뒤가 콤마·and·마침표로 끝난다 = 목적어 없음. (대조: 세미콜론 앞 절 <em>is a little like ~</em> 은 보어가 있는 2형식.)</span></div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">emergence</span><span class="vocab-kr">출현, 발생</span><span class="vocab-en">be like V-ing</span><span class="vocab-kr">~하는 것과 같다</span><span class="vocab-en">account</span><span class="vocab-kr">기술, 설명</span><span class="vocab-en">near-miss</span><span class="vocab-kr">위기일발</span><span class="vocab-en">occur</span><span class="vocab-kr">발생하다(자동사, 1형식)</span><span class="vocab-en">dead-end</span><span class="vocab-kr">막다른 길</span><span class="vocab-en">peter out</span><span class="vocab-kr">점차 작아지다, 사그라들다</span><span class="vocab-en">come together / come into being</span><span class="vocab-kr">모이다 / 생겨나다(1형식)</span><span class="vocab-en">miraculously / ingredient</span><span class="vocab-kr">기적적으로 / 요소, 성분</span></div>
     <div class="s-meaning">
       <span class="meaning-label">🧭 독해 방법 · HOW TO READ</span>
@@ -827,6 +1050,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 </div>
 
     </div><!-- /cards -->
+    </div><!-- /lineSec -->
   </div><!-- /readingView -->
 
 
@@ -1044,6 +1268,10 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="gtype-final"><button class="gtype-final-btn fi-btn" onclick="checkAllFill()">✓ 서답형 최종 확인</button><span class="gtype-final-score" id="fi-final-score"></span></div>
   </div>
   <div class="vocab-view" id="vocabView">
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-bottom:14px;flex-wrap:wrap;">
+      <button class="g-print-btn" style="margin:0;background:#6A1B9A;" onclick="printV(false)">🖨️ 단어장 인쇄 (A4)</button>
+      <button class="g-print-btn" style="margin:0;background:#7B3F00;" onclick="vtOpen()">📝 단어 테스트 만들기</button>
+    </div>
     <div class="vocab-tabs">
       <button class="vocab-tab active" id="vtab0" onclick="switchVocab(0)">📖 단어카드</button>
       <button class="vocab-tab"        id="vtab1" onclick="switchVocab(1)">✏️ 철자 퀴즈</button>
@@ -1072,6 +1300,24 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
 </div>
 
+  </div>
+</div>
+<div id="vtModal">
+  <div class="vt-box">
+    <div id="vtCtrl">
+      <b style="font-size:15px;color:#1F3864;margin-right:6px;">📝 단어 테스트</b>
+      유형 <select id="vtType" onchange="vtBuild()"><option value="e2k">영어 → 뜻 쓰기</option><option value="k2e">뜻 → 영어 쓰기</option></select>
+      문항 <select id="vtCount" onchange="vtBuild()"><option value="10">10</option><option value="20" selected>20</option><option value="30">30</option><option value="all">전체</option></select>
+      범위 <select id="vtScope" onchange="vtBuild()"><option value="all">단어 + 숙어·공식</option><option value="word">단어만</option><option value="phrase">숙어·공식만</option></select>
+      <label><input type="checkbox" id="vtShuffle" checked onchange="vtBuild()"> 무작위</label>
+      <label><input type="checkbox" id="vtAnswer" checked onchange="vtBuild()"> 정답지 포함</label>
+      <button class="vt-btn" onclick="vtBuild()">다시 생성</button>
+      <span style="margin-left:auto;display:inline-flex;gap:8px;">
+        <button class="vt-btn vt-primary" onclick="vtPrint()">🖨 인쇄</button>
+        <button class="vt-btn" onclick="vtClose()">닫기</button>
+      </span>
+    </div>
+    <div id="vtSheet"></div>
   </div>
 </div>
 <footer style="text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(31,56,100,0.25);letter-spacing:1px;">✦ 구문 PATTERN 01 · S + V (1형식) · 0505.co.kr ✦</footer>
@@ -1697,6 +1943,103 @@ document.addEventListener("DOMContentLoaded",function(){
 });
 // 즉시 실행 (DOMContentLoaded 전에도 안전하게)
 (function(){hideQPanels();})();
+// ── 단어장 인쇄 (v4.2) ──
+function buildVocabPrint(test){
+  var el=document.getElementById("vocabPrint");
+  if(!el){el=document.createElement("div");el.id="vocabPrint";document.querySelector(".passage").appendChild(el);}
+  var t=document.querySelector(".page-title");
+  var head='<div style="font-size:16px;font-weight:800;color:#1F3864;margin:4px 0 6px;">📚 단어장'+(test?" — 시험지":"")+' · '+(t?t.textContent:"")+' <span style="font-weight:400;font-size:12px;color:#888;">('+VOCAB.length+' words)</span></div>';
+  if(test)head+='<div style="font-size:12.5px;color:#444;margin-bottom:8px;">이름: ______________________ &nbsp;&nbsp;&nbsp; 점수: ________ / '+VOCAB.length+'</div>';
+  var rows=VOCAB.map(function(v,i){
+    var kr=test?"":v.kr;
+    var extra="";
+    if(!test){
+      if(v.syn&&v.syn.length)extra+=' <span style="color:#1565C0;font-size:11px;">≒ '+v.syn.join(", ")+'</span>';
+      if(v.ant&&v.ant.length)extra+=' <span style="color:#B71C1C;font-size:11px;">↔ '+v.ant.join(", ")+'</span>';
+    }
+    return '<tr><td style="width:5%;color:#888;">'+(i+1)+'</td><td style="width:32%;font-family:Georgia,serif;font-weight:700;color:#1F3864;">'+v.en+'</td><td style="width:9%;color:#999;font-size:11px;">'+v.pos+'</td><td>'+kr+extra+'</td></tr>';
+  }).join("");
+  el.innerHTML=head+'<table><tr><th>#</th><th>단어 · 숙어</th><th>품사</th><th>뜻</th></tr>'+rows+'</table>';
+}
+function printV(test){
+  buildVocabPrint(test);
+  document.body.classList.add("pv");
+  window.onafterprint=function(){document.body.classList.remove("pv");window.onafterprint=null;};
+  window.print();
+}
+// ── 단어 테스트 생성기 (v4.2 · 대치동식 2단 시험지) ──
+function vtPool(){
+  var pool=[],seen={};
+  VOCAB.forEach(function(v){
+    var ph=(v.pos||"").indexOf("phr")>=0||v.en.indexOf(" ")>=0;
+    pool.push({en:v.en,kr:v.kr,ph:ph});seen[v.en.toLowerCase()]=1;
+  });
+  document.querySelectorAll(".s-vocab").forEach(function(sv){
+    var ens=sv.querySelectorAll(".vocab-en"),krs=sv.querySelectorAll(".vocab-kr");
+    for(var i=0;i<ens.length;i++){
+      var e=ens[i].textContent.trim(),k=krs[i]?krs[i].textContent.trim():"";
+      if(!e||!k||seen[e.toLowerCase()])continue;
+      seen[e.toLowerCase()]=1;
+      pool.push({en:e,kr:k,ph:true});
+    }
+  });
+  return pool;
+}
+function vtHalfTable(items,start,mode,answer){
+  var head=answer?"<tr><th style=\"width:11%;\">No.</th><th style=\"width:42%;\">"+(mode==="k2e"?"뜻":"단어")+"</th><th>"+(mode==="k2e"?"단어":"뜻")+"</th></tr>"
+                 :"<tr><th style=\"width:11%;\">No.</th><th style=\"width:44%;\">문제</th><th>답</th></tr>";
+  var rows=items.map(function(it,i){
+    var q=mode==="k2e"?it.kr:it.en, a=mode==="k2e"?it.en:it.kr;
+    var qs=mode==="k2e"?"":"font-family:Georgia,serif;";
+    if(answer)return "<tr><td style=\"text-align:center;color:#666;\">"+(start+i+1)+"</td><td style=\"font-weight:700;"+qs+"\">"+q+"</td><td>"+a+"</td></tr>";
+    return "<tr><td style=\"text-align:center;color:#666;\">"+(start+i+1)+"</td><td style=\"font-weight:700;"+qs+"\">"+q+"</td><td style=\"height:26px;\"></td></tr>";
+  }).join("");
+  return "<table>"+head+rows+"</table>";
+}
+function vtTwoCol(items,mode,answer){
+  var half=Math.ceil(items.length/2);
+  var L=items.slice(0,half),R=items.slice(half);
+  return "<div class=\"vt-cols\"><div>"+vtHalfTable(L,0,mode,answer)+"</div><div>"+(R.length?vtHalfTable(R,half,mode,answer):"")+"</div></div>";
+}
+function vtBuild(){
+  var mode=document.getElementById("vtType").value;
+  var cnt=document.getElementById("vtCount").value;
+  var scope=document.getElementById("vtScope").value;
+  var shuffle=document.getElementById("vtShuffle").checked;
+  var withAns=document.getElementById("vtAnswer").checked;
+  var pool=vtPool();
+  if(scope==="word")pool=pool.filter(function(v){return !v.ph;});
+  else if(scope==="phrase")pool=pool.filter(function(v){return v.ph;});
+  if(shuffle)pool=pool.slice().sort(function(){return Math.random()-0.5;});
+  var items=(cnt==="all")?pool:pool.slice(0,Math.min(parseInt(cnt,10),pool.length));
+  var t=document.querySelector(".page-title");
+  var title=(t?t.textContent.split("—")[0].trim():"단어장");
+  var badge=document.querySelector(".nav-title-bar");
+  var typeLabel=(mode==="k2e"?"뜻 → 영어":"영어 → 뜻");
+  var scopeLabel=(scope==="word"?"단어":scope==="phrase"?"숙어·공식":"단어+숙어·공식");
+  var html="";
+  html+="<div style=\"display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:2px solid #1F3864;padding-bottom:8px;margin-bottom:12px;\">";
+  html+="<div style=\"font-size:17px;font-weight:800;color:#111;\">"+(badge?badge.textContent.trim()+" · ":"")+title+" 단어테스트</div>";
+  html+="<div style=\"font-size:11px;color:#888;\">"+typeLabel+" · "+scopeLabel+" · "+items.length+"문항 · 목동서로영어학원</div></div>";
+  html+="<div style=\"display:flex;gap:26px;font-size:12.5px;color:#333;margin-bottom:12px;flex-wrap:wrap;\">";
+  html+="<span>이름 &nbsp;______________</span><span>날짜 &nbsp;______________</span><span>점수 &nbsp;__________ / "+items.length+"</span></div>";
+  html+=vtTwoCol(items,mode,false);
+  if(withAns){
+    html+="<div style=\"margin:22px 0 8px;padding-left:9px;border-left:4px solid #1F3864;font-size:14px;font-weight:800;color:#111;page-break-before:always;break-before:page;\">정답 · "+title+" 단어테스트 ("+typeLabel+")</div>";
+    html+=vtTwoCol(items,mode,true);
+  }
+  document.getElementById("vtSheet").innerHTML=html;
+}
+function vtOpen(){
+  document.getElementById("vtModal").style.display="block";
+  if(!document.getElementById("vtSheet").innerHTML)vtBuild();
+}
+function vtClose(){document.getElementById("vtModal").style.display="none";}
+function vtPrint(){
+  document.body.classList.add("pvt");
+  window.onafterprint=function(){document.body.classList.remove("pvt");window.onafterprint=null;};
+  window.print();
+}
 </script>
 
 <script>
