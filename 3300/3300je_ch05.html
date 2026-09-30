@@ -1,32 +1,16 @@
 <!DOCTYPE html>
 <!--
 ========================================================================
-  ANSWER-KEY WORKBOOK · MASTER HTML TEMPLATE
+  3300제 상세풀이 · build_3300.py 로 생성된 파일 (직접 수정하지 말고 데이터 파일을 고쳐 다시 빌드)
   목동서로영어학원 · Mokdong Seoro English Academy · 0505.co.kr
-========================================================================
-  사용법:
-    1. 이 파일 통째로 복사
-    2. 고교 3300제 · 제5장 형용사 · 상세풀이집, {{HEADER_*}} 등의 플레이스홀더를 시험 정보로 채움
-    3. <main><div class="container"> 안에 정답표 + 문항들 삽입
-    4. 각 문항은 10_ANSWERKEY_QUESTION_PATTERNS.md의 스니펫 사용
-
-  통합 CSS:
-    - 모의고사용 클래스 (.dialogue, .price-table, .chart-box, .info-box, .picture-box)
-    - 학교 내신용 클래스 (.spec-box, .cond-box, .compare-table, .matrix-table, .seodap-header)
-    - 양쪽 공통 (.q-card, .passage, .q-choices, details.ans 등)
-
-  변경 절대 금지:
-    - 색상 변수 (--navy-950, --gold, --cream)
-    - 폰트 패밀리 (Pretendard, Playfair Display)
-    - .home-btn 위치/스타일
-    - footer 학원 명기
+  변경 절대 금지: 색상 변수 / 폰트 패밀리 / .home-btn 위치·스타일 / footer 학원 명기
 ========================================================================
 -->
-<html lang="ko">
+<html lang="ko" class="no-js">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>고교 3300제 · 제5장 형용사 · 상세풀이집</title>
+<title>고교 내신수능 1등급 영문법연습 3300제 · 제5장 형용사 · 어법 해설 &amp; 상세풀이</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
@@ -261,6 +245,7 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
   .brand-row{flex-direction:column;align-items:flex-start;gap:12px}
 }
 
+
 /* ===== 드릴형 문항(EXERCISE 묶음) ===== */
 .drill{margin-bottom:4px}
 .drill ol{margin:0;padding-left:26px}
@@ -268,6 +253,7 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 .drill li .ko{font-family:'Pretendard Variable',sans-serif;color:var(--slate-500);font-size:13px}
 .drill .blk{display:inline-block;min-width:74px;border-bottom:1.4px solid var(--slate-500);margin:0 3px;vertical-align:baseline}
 .drill .paren{font-family:'Pretendard Variable',sans-serif;color:var(--navy-900);font-weight:600}
+/* 접힌 해설 안 정답 목록 */
 .ans-list{margin:6px 0 0;padding-left:26px;font-family:'Pretendard Variable',sans-serif}
 .ans-list li{margin:6px 0;line-height:1.7;font-size:13.5px;color:#C9BFAD}
 .ans-list li .a{color:var(--gold-light);font-weight:800;font-family:'Playfair Display',serif;font-style:italic}
@@ -301,16 +287,126 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
   #penToolbar .pen-btn,#penToolbar .pen-width{width:38px;height:38px;}
   #penToolbar .pen-color{width:26px;height:26px;}
 }
+/* ===== UNIT NAV (v2 재구성) ===== */
+.unit-nav{position:sticky;top:0;z-index:999;background:var(--navy-950);border-bottom:1px solid rgba(228,197,137,0.35);box-shadow:0 6px 18px rgba(10,30,58,0.18)}
+.unit-nav .container{display:flex;flex-direction:column;gap:0}
+.un-row{display:flex;gap:0;align-items:stretch}
+.un-tab{flex:1;display:flex;align-items:baseline;gap:10px;padding:13px 18px 11px;background:transparent;border:0;border-bottom:3px solid transparent;border-right:1px solid rgba(228,197,137,0.14);color:#B8B0A2;cursor:pointer;font-family:'Pretendard Variable',sans-serif;text-align:left;transition:background .15s,color .15s}
+.un-tab:first-child{border-left:1px solid rgba(228,197,137,0.14)}
+.un-tab .un-no{font-family:'Playfair Display',serif;font-style:italic;font-weight:800;font-size:26px;line-height:1;color:var(--slate-400);letter-spacing:-0.02em}
+.un-tab .un-name{font-size:13.5px;font-weight:700;letter-spacing:-0.01em}
+.un-tab .un-sub{display:block;font-size:10.5px;font-weight:600;color:var(--slate-500);letter-spacing:0.08em;margin-bottom:2px}
+.un-tab:hover{background:rgba(201,155,78,0.08);color:var(--cream)}
+.un-tab.active{border-bottom-color:var(--gold);color:var(--cream);background:rgba(201,155,78,0.10)}
+.un-tab.active .un-no{color:var(--gold)}
+.un-tab.active .un-sub{color:var(--gold-light)}
+.mode-row{display:flex;gap:8px;padding:9px 0 10px;align-items:center;border-top:1px solid rgba(228,197,137,0.14)}
+.mode-row .mode-cur{font-size:12px;color:var(--gold-light);font-weight:700;margin-right:6px;white-space:nowrap}
+.mode-btn{padding:7px 18px;border-radius:999px;border:1px solid rgba(228,197,137,0.4);background:transparent;color:#D3CABA;font-family:'Pretendard Variable',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s}
+.mode-btn:hover{border-color:var(--gold);color:var(--cream)}
+.mode-btn.active{background:var(--gold);border-color:var(--gold);color:var(--navy-950)}
+.un-tab:focus-visible,.mode-btn:focus-visible,.pf-btn:focus-visible,.tool-btn:focus-visible{outline:2px solid var(--gold-light);outline-offset:2px}
+@media(max-width:1180px){.unit-nav .container{padding-right:140px}}
+@media(max-width:720px){
+  .unit-nav .container{padding-right:64px}
+  .un-tab{flex-direction:column;gap:2px;padding:9px 10px 8px;align-items:flex-start}
+  .un-tab .un-no{font-size:20px}
+  .un-tab .un-name{font-size:11.5px}
+  .un-tab .un-sub{display:none}
+  .mode-row .mode-cur{display:none}
+  .mode-btn{padding:6px 14px;font-size:12.5px}
+}
 
+/* ===== PANELS ===== */
+main{padding-top:36px}
+html.js .panel{display:none}
+html.js .panel.active{display:block}
+.panel-head{display:flex;align-items:flex-end;gap:20px;padding-bottom:18px;margin-bottom:26px;border-bottom:2px solid var(--navy-950)}
+.panel-head .ph-no{font-family:'Playfair Display',serif;font-style:italic;font-weight:900;font-size:clamp(54px,9vw,84px);line-height:0.85;color:var(--navy-950);letter-spacing:-0.04em}
+.panel-head .ph-no small{display:block;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:11px;font-weight:800;letter-spacing:0.2em;color:var(--gold);margin-bottom:8px}
+.panel-head .ph-txt{flex:1;padding-bottom:4px}
+.panel-head .ph-title{font-size:clamp(20px,3vw,26px);font-weight:800;color:var(--navy-950);letter-spacing:-0.02em;line-height:1.25;margin:0}
+.panel-head .ph-mode{font-size:13px;color:var(--slate-500);font-weight:600;margin-top:4px}
+.panel-head .ph-mode b{color:var(--gold);font-weight:800}
+.tool-row{display:flex;justify-content:flex-end;margin:-10px 0 18px}
+.tool-btn{padding:7px 14px;border:1px solid var(--slate-300);background:var(--warm-white);color:var(--navy-900);font-family:'Pretendard Variable',sans-serif;font-size:12.5px;font-weight:700;cursor:pointer;border-radius:2px}
+.tool-btn:hover{border-color:var(--navy-950)}
+.panel-foot{display:flex;gap:12px;flex-wrap:wrap;margin-top:40px;padding-top:24px;border-top:1px solid var(--slate-300)}
+.pf-btn{flex:1;min-width:200px;padding:16px 20px;border:1px solid var(--navy-950);background:var(--warm-white);color:var(--navy-950);font-family:'Pretendard Variable',sans-serif;font-size:14px;font-weight:800;cursor:pointer;text-align:left;line-height:1.4}
+.pf-btn small{display:block;font-size:11.5px;font-weight:600;color:var(--slate-500);margin-bottom:2px}
+.pf-btn.primary{background:var(--navy-950);color:var(--cream)}
+.pf-btn.primary small{color:var(--gold-light)}
+.pf-btn:hover{box-shadow:0 4px 14px rgba(10,30,58,0.18)}
+
+/* ===== 어법 해설 ===== */
+.g-intro{padding:14px 18px;background:var(--cream-dark);border-left:3px solid var(--gold);font-size:14px;color:var(--slate-700);margin-bottom:24px}
+.g-sec{background:var(--warm-white);border:1px solid var(--slate-200);padding:clamp(22px,3vw,34px);margin-bottom:22px}
+.g-h{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 16px;padding-bottom:14px;border-bottom:1px solid var(--slate-200);font-size:18.5px;font-weight:800;color:var(--navy-950);letter-spacing:-0.02em;line-height:1.35}
+.g-n{font-family:'Playfair Display',serif;font-style:italic;font-weight:800;font-size:26px;color:var(--gold);line-height:1;min-width:20px}
+.g-badge{font-size:11px;font-weight:800;padding:3px 9px;background:var(--rose-50);color:var(--rose-600);border:1px solid #FECACA;border-radius:999px;letter-spacing:0}
+.g-p{margin:0 0 14px;font-size:14.5px;line-height:1.8;color:var(--slate-700)}
+.g-p.g-sub{font-weight:800;color:var(--navy-950);margin:22px 0 8px;font-size:14.5px}
+.g-sec b{color:var(--navy-950);font-weight:800}
+.g-sec .e{font-family:'Playfair Display',serif;font-size:14.5px;color:var(--navy-900)}
+.g-sec .e b{color:var(--rose-600);font-weight:700}
+.g-sec .e.x{text-decoration:line-through;text-decoration-color:var(--rose-600);color:var(--slate-500)}
+.g-rule{margin:0 0 16px;padding:16px 20px;background:var(--navy-950);color:#D3CABA;font-size:14.5px;line-height:1.85}
+.g-rule b{color:var(--gold-light)}
+.g-ex{margin:0 0 16px;padding:14px 20px;background:var(--cream);border-left:3px solid var(--slate-400)}
+.g-ex p{margin:8px 0;line-height:1.6}
+.g-ex .e{display:block;font-size:15px}
+.g-ex .k{display:block;font-size:13px;color:var(--slate-500);margin-top:1px}
+.g-warn{margin:0 0 16px;padding:14px 18px;background:var(--rose-50);border-left:3px solid var(--rose-600);font-size:14px;line-height:1.8;color:var(--slate-700)}
+.g-warn>b:first-child,.g-warn br+b{color:var(--rose-600)}
+.g-list{margin:0 0 16px;padding-left:20px}
+.g-list li{margin:8px 0;font-size:14.5px;line-height:1.8}
+.g-ol{margin:0 0 16px;padding-left:22px}
+.g-ol li{margin:7px 0;font-size:14.5px;line-height:1.8}
+.g-sec .compare-table{margin:0 0 16px;font-size:13.5px}
+.g-sec .compare-table td{line-height:1.65}
+.g-sec .compare-table td.num{width:auto;min-width:40px}
+.g-check{background:var(--cream-dark);border-color:var(--gold)}
+.g-check .g-h{border-bottom-color:var(--gold)}
+.g-tablewrap{overflow-x:auto}
+@media(max-width:720px){.g-tablewrap .compare-table{min-width:540px}}
+
+/* ===== 상세 해설(펼치기) 보강 ===== */
+.ans-body .sec-t{display:block;margin:18px 0 8px;font-size:12px;font-weight:800;color:var(--gold);letter-spacing:0.06em}
+.ans-body .ans-detail .sec-t{margin-top:0}
+.ans-body .ans-detail{color:#C9BFAD}
+.ans-body .step{display:flex;gap:10px;margin:8px 0;padding:2px 0 2px 12px;color:#D3CABA;font-size:13.5px;line-height:1.75}
+.ans-body .step .sn{flex:none;font-family:'Playfair Display',serif;font-style:italic;font-weight:800;color:var(--gold)}
+.opt-list{list-style:none;margin:0;padding:0}
+.opt-list li{display:flex;gap:10px;padding:8px 12px;margin:4px 0;font-size:13.5px;line-height:1.7;color:#C9BFAD;background:rgba(255,255,255,0.03);border-left:2px solid rgba(220,38,38,0.55)}
+.opt-list li.ok{border-left-color:#34D399;background:rgba(52,211,153,0.08);color:var(--cream)}
+.opt-list .on{flex:none;min-width:34px;font-weight:800;color:var(--gold-light)}
+.opt-list .mk{flex:none;width:16px;font-weight:800;color:#F87171}
+.opt-list li.ok .mk{color:#34D399}
+.opt-list i{font-family:'Playfair Display',serif;color:var(--cream)}
+.ans-list.rich{padding-left:0;list-style:none;counter-reset:al;margin-top:14px}
+.ans-list.rich>li{counter-increment:al;position:relative;margin:0;padding:14px 0 14px 38px;border-top:1px dashed rgba(228,197,137,0.18)}
+.ans-list.rich>li::before{content:counter(al);position:absolute;left:0;top:13px;width:26px;height:26px;border:1px solid rgba(228,197,137,0.45);border-radius:50%;text-align:center;line-height:24px;font-family:'Playfair Display',serif;font-weight:700;font-size:13px;color:var(--gold-light)}
+.ans-list.rich .al-top{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline}
+.ans-list.rich .a{font-size:16px}
+.ans-list.rich .full{font-family:'Playfair Display',serif;font-size:13.5px;color:#A9A294}
+.ans-list.rich .why{display:block;margin-top:6px;font-size:13.5px;line-height:1.75;color:#C9BFAD}
+.ans-list.rich .why i{font-family:'Playfair Display',serif;color:var(--cream)}
+.ans-list.rich .tr{display:block;margin-top:5px;font-size:12.5px;color:#8F98A8}
+.ans-list.rich .tr::before{content:'해석  ';color:var(--gold);font-weight:800;font-size:11px;white-space:pre}
+@media print{
+  .unit-nav,.panel-foot,.tool-row{display:none!important}
+  html.js .panel{display:block!important}
+  .panel{break-before:page}
+  .g-rule{background:white!important;color:var(--navy-950)!important;border:1px solid var(--navy-950)}
+  .g-rule b{color:var(--navy-950)!important}
+  .opt-list li,.ans-list.rich .why,.ans-list.rich .full,.ans-list.rich .tr,.ans-body .step{color:var(--slate-700)!important}
+  .opt-list i,.ans-list.rich .why i,.ans-list li .a{color:var(--navy-950)!important}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
+<script>document.documentElement.className="js";</script>
 </head>
 <body>
-
-<!-- ========== Home Button (절대 변경 금지) ========== -->
-<a href="https://0505.co.kr" class="home-btn" title="목동서로영어학원 홈페이지">
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg>
-  <span class="label">Home</span>
-</a>
 
 <!-- ========== Header (책 표지) ========== -->
 <header class="top"><div class="container">
@@ -318,8 +414,8 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
     <div class="brand">Mokdong Seoro <b>English Academy</b><span class="kor">목동서로영어학원 · 신목고·목운중·목동중 전문</span></div>
     <div class="vol-tag">3300제 · Chapter V</div>
   </div>
-  <h1 class="book-title"><em>Adjective</em> · 제5장 형용사<br>Complete Answer Key</h1>
-  <div class="book-subtitle">고교 내신수능 1등급 영문법연습 3300제 · 제5장 형용사 · 전문항 상세풀이<br>Unit 10 형용사의 쓰임과 어순 · Unit 11 수사와 부정수량형용사 · 기출응용문제</div>
+  <h1 class="book-title"><em>Adjective</em> · 제5장 형용사<br>Grammar Notes &amp; Answer Key</h1>
+  <div class="book-subtitle">고교 내신수능 1등급 영문법연습 3300제 · 제5장 형용사<br>유니트별 어법 해설 + 전문항 상세 풀이 · Unit 10 형용사의 쓰임과 어순 · Unit 11 수사와 부정수량형용사 · 기출응용문제</div>
   <div class="meta-strip">
     <div class="meta-item"><div class="meta-lbl">CHAPTER</div><div class="meta-val">V<span class="u">형용사</span></div></div>
     <div class="meta-item"><div class="meta-lbl">UNIT</div><div class="meta-val">10–11<span class="u"></span></div></div>
@@ -328,22 +424,119 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
   </div>
 </div></header>
 
+<!-- ========== Unit Navigation: 상단 유니트 번호 + 어법 해설 / 문제 풀이 ========== -->
+<nav class="unit-nav" id="unitNav" aria-label="유니트 이동"><div class="container">
+  <div class="un-row"><button type="button" class="un-tab" data-unit="u1"><span class="un-no">10</span><span><span class="un-sub">Unit</span><span class="un-name">형용사의 쓰임과 어순</span></span></button><button type="button" class="un-tab" data-unit="u2"><span class="un-no">11</span><span><span class="un-sub">Unit</span><span class="un-name">수사와 부정수량형용사</span></span></button><button type="button" class="un-tab" data-unit="gi"><span class="un-no">기출</span><span><span class="un-sub">Chapter V</span><span class="un-name">기출응용문제</span></span></button></div>
+  <div class="mode-row"><span class="mode-cur" id="modeCur"></span>
+    <button type="button" class="mode-btn" data-mode="g">어법 해설</button>
+    <button type="button" class="mode-btn" data-mode="q">문제 풀이</button>
+  </div>
+</div></nav>
+
+<!-- ========== Home Button (절대 변경 금지) ========== -->
+<a href="https://0505.co.kr" class="home-btn" title="목동서로영어학원 홈페이지">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg>
+  <span class="label">Home</span>
+</a>
+
 <main><div class="container">
 
-<!-- ====================================================== -->
-<!-- 정답표 영역: 09_BUILD_PROTOCOL.md Step 2 참고            -->
-<!-- ====================================================== -->
-<div class="section-divider"><span>Answer Key<span class="kor">정답 일람표 · 펼쳐서 확인</span></span></div>
+<section class="panel" id="p-u1-g" data-unit="u1" data-mode="g">
+<div class="panel-head"><div class="ph-no"><small>UNIT</small>10</div><div class="ph-txt"><h2 class="ph-title">형용사의 쓰임과 어순</h2><div class="ph-mode"><b>어법 해설</b> · EXERCISE A~C · 23문항</div></div></div>
+<div class="g-intro">Unit 10은 <b>형용사 찾기와 두 가지 용법(A) → the + 형용사(B) → 형용사의 어순(C)</b> 순서입니다. 기출응용문제 20문항 중 절반 이상이 이 유니트의 내용에서 나옵니다.</div>
 
-<details class="ans" style="margin-top:0"><summary>기출응용문제 정답 일람표 펼치기 (스포일러 주의)</summary><div class="ans-body"><div class="ans-detail" style="margin-bottom:10px">아래 표는 <b>기출응용문제 1~20</b>의 정답 요약입니다. 서술형(6·19) 및 EXERCISE(Unit 10~11) 정답은 각 문항 카드의 해설을 펼쳐 확인하세요.</div><table class="answer-sheet"><tr class="hdr-row"><td>기출</td><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>④</td><td>②</td><td>⑤</td><td>①</td><td>④</td><td style="font-size:9px;color:var(--rose-600)">서술</td><td>①</td></tr><tr class="hdr-row"><td>기출</td><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>④</td><td>③</td><td>①</td><td>①</td><td>①</td><td>④</td><td>④</td></tr><tr class="hdr-row"><td>기출</td><th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>⑤</td><td>③</td><td>⑤</td><td>③</td><td style="font-size:9px;color:var(--rose-600)">서술</td><td>①</td></tr></table></div></details>
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">1</span>형용사의 두 가지 용법</h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>용법</th><th>위치와 역할</th><th>예문</th></tr>
+<tr><td class="col-head">한정적 용법</td><td>명사 <b>앞</b>(또는 뒤)에서 명사를 직접 꾸밈</td><td><span class="e">one of the <b>main</b> characters / a <b>developing</b> country</span></td></tr>
+<tr><td class="col-head">서술적 용법</td><td>be동사·감각동사 뒤에서 <b>보어</b>로 주어나 목적어를 설명</td><td><span class="e">He was <b>proud</b> of his son.</span></td></tr>
+</table></div>
+<p class="g-p">문장에서 형용사를 찾을 때는 <b>명사 앞</b>과 <b>be동사 뒤</b>를 봅니다. 아래 두 종류도 형용사입니다.</p>
+<ul class="g-list">
+<li><b>수량을 나타내는 말</b> — <span class="e">many, few, much, little</span>은 명사의 수나 양을 나타내는 형용사입니다. <span class="e">a <b>few</b> mistakes</span>, <span class="e"><b>many</b> things</span></li>
+<li><b>분사에서 온 형용사</b> — 동사의 -ing형이나 과거분사가 명사를 꾸미면 형용사 역할을 합니다. <span class="e">a <b>developing</b> country</span>(개발도상국)</li>
+</ul>
+</section>
 
-<!-- ====================================================== -->
-<!-- 문항 영역: 10_QUESTION_PATTERNS.md 의 스니펫 사용         -->
-<!-- 각 article은 하나의 문항 또는 묶음 문항 (예: Q41-42)     -->
-<!-- 섹션 구분선(.section-divider)으로 카테고리 분리          -->
-<!-- ====================================================== -->
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">2</span>서술적 용법으로만 쓰는 형용사 <span class="g-badge">내신 빈출</span></h3>
+<p class="g-p"><b>a-로 시작하는 형용사</b>는 보어로만 쓰고 명사 앞에는 둘 수 없습니다. 명사를 꾸밀 때는 짝이 되는 다른 형용사를 씁니다.</p>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>서술적 용법만 (보어 자리)</th><th>명사 앞에 쓸 때</th><th>예</th></tr>
+<tr><td><span class="e">alive</span> 살아 있는</td><td><span class="e">live, living</span></td><td><span class="e">Is he still <b>alive</b>?</span></td></tr>
+<tr><td><span class="e">asleep</span> 잠든</td><td><span class="e">sleeping</span></td><td><span class="e">that <b>sleeping</b> baby</span></td></tr>
+<tr><td><span class="e">alone</span> 혼자인</td><td><span class="e">lonely</span></td><td><span class="e">a <b>lonely</b> life</span></td></tr>
+<tr><td><span class="e">afraid</span> 두려워하는</td><td><span class="e">frightened, scary</span> 등</td><td><span class="e">He was <b>afraid</b> of going there.</span></td></tr>
+</table></div>
+<div class="g-warn"><b>함정</b> <span class="e x">an alone life</span>, <span class="e x">an asleep man</span>, <span class="e x">the afraid news</span>처럼 「관사 + a-형용사 + 명사」가 보이면 틀린 표현입니다. 기출응용 9번과 12번이 이것을 묻습니다. 또 <span class="e">live</span>가 형용사일 때는 [laiv]로 읽고 명사 앞에만 씁니다.</div>
+<p class="g-p g-sub">형태가 비슷한 형용사</p>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>단어</th><th>뜻</th><th>쓰임</th></tr>
+<tr><td class="col-head">latter / later</td><td>(순서상) 뒤쪽의, 후자의 / (시간상) 더 늦은, 나중의</td><td><span class="e">the <b>latter</b> part of the play</span> 연극의 후반부</td></tr>
+<tr><td class="col-head">worth / worthy</td><td>~의 가치가 있는</td><td><span class="e"><b>worth</b> + 명사</span> / <span class="e"><b>worthy of</b> + 명사</span></td></tr>
+</table></div>
+<p class="g-p"><span class="e">worth</span>는 전치사처럼 뒤에 명사나 동명사가 바로 옵니다. <span class="e">He is not <b>worth</b> his salary.</span> worthy를 쓰려면 <span class="e">worthy <b>of</b> his salary</span>처럼 of가 필요합니다.</p>
+</section>
 
-<div class="section-divider"><span>Chapter V · Unit 10 <em>Adjective Use &amp; Order</em><span class="kor">제5장 형용사 · Unit 10 형용사의 쓰임과 어순</span></span></div>
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">3</span>the + 형용사 <span class="g-badge">내신 빈출</span></h3>
+<p class="g-p">「the + 형용사(분사)」는 명사처럼 쓰입니다. 세 가지 뜻이 있습니다.</p>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>뜻</th><th>수</th><th>예</th></tr>
+<tr><td class="col-head">~한 사람들<br>(= 형용사 + people)</td><td>복수 취급</td><td><span class="e"><b>the poor</b></span> = poor people<br><span class="e"><b>the young</b></span> = young people<br><span class="e"><b>the disabled</b></span> = disabled people</td></tr>
+<tr><td class="col-head">~한 사람<br>(한 명)</td><td>단수 취급</td><td><span class="e"><b>the accused</b></span> = an accused person (피고인)</td></tr>
+<tr><td class="col-head">~한 것<br>(추상적인 개념)</td><td>단수 취급</td><td><span class="e"><b>the unknown</b></span> = what is unknown (미지의 것)</td></tr>
+</table></div>
+<div class="g-ex">
+<p><span class="e"><b>The poor are</b> often generous to each other.</span><span class="k">가난한 사람들은 종종 서로에게 너그럽다. (복수동사 are)</span></p>
+</div>
+<p class="g-p">대부분은 '~한 사람들'이라는 복수의 뜻입니다. the accused(피고인), the deceased(고인)처럼 문맥상 한 사람을 가리키는 표현은 따로 기억해 둡니다. 부사가 앞에 붙을 수도 있습니다: <span class="e">the <b>severely</b> injured</span>(중상자들).</p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">4</span>-thing + 형용사 <span class="g-badge">내신 빈출</span></h3>
+<div class="g-rule"><b>-thing, -body, -one, -where</b>로 끝나는 말은 형용사가 <b>뒤</b>에서 꾸밉니다.<br>something / anything / nothing + <b>형용사</b></div>
+<div class="g-ex">
+<p><span class="e">I'd like to cook <b>something hot</b>.</span><span class="k">나는 따뜻한 것을 요리하고 싶다.</span></p>
+<p><span class="e">I can't find <b>anything wrong</b> with it.</span><span class="k">나는 그것에서 잘못된 점을 찾을 수 없다.</span></p>
+<p><span class="e"><b>Nothing strange</b> happened.</span><span class="k">이상한 일은 아무것도 일어나지 않았다.</span></p>
+</div>
+<div class="g-warn"><b>함정</b> 띄어 쓴 일반 명사 <span class="e">thing</span>은 보통의 명사이므로 형용사가 <b>앞</b>에 옵니다. <span class="e">a <b>strange</b> thing</span> (○) / <span class="e">something <b>strange</b></span> (○) / <span class="e x">strange something</span> (✗)</div>
+<p class="g-p">뒤에 to부정사까지 붙으면 「-thing + 형용사 + to부정사」 순서입니다. <span class="e">something hot <b>to drink</b></span></p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">5</span>형용사의 어순</h3>
+<p class="g-p">명사 앞에 여러 개의 말이 올 때는 아래 순서를 따릅니다.</p>
+<div class="g-rule"><b>all / both</b> → <b>the / these / 소유격</b> → <b>수사</b>(서수 → 기수) → <b>성질·상태</b> → <b>크기 → 색깔 → 국적·재료</b> → 명사</div>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>예</th><th>순서</th></tr>
+<tr><td><span class="e"><b>all these beautiful Korean</b> fans</span></td><td>all → 지시 → 성질 → 국적</td></tr>
+<tr><td><span class="e"><b>both the two</b> silver cases</span></td><td>both → the → 기수 → 재료</td></tr>
+<tr><td><span class="e">the <b>two cute</b> cats</span></td><td>the → 기수 → 성질</td></tr>
+<tr><td><span class="e">the <b>first two</b> sentences</span></td><td>the → 서수 → 기수</td></tr>
+<tr><td><span class="e">a <b>big black</b> hat</span></td><td>크기 → 색깔</td></tr>
+</table></div>
+<ul class="g-list">
+<li><b>all과 both는 the보다 앞</b>에 옵니다. <span class="e x">the all</span>, <span class="e x">the both</span>로 쓰지 않습니다.</li>
+<li><b>수사는 성질 형용사보다 앞</b>에 옵니다. <span class="e x">the cute two cats</span> (기출응용 20번)</li>
+</ul>
+</section>
+
+<section class="g-sec g-check"><h3 class="g-h">시험 직전 점검</h3>
+<ol class="g-ol">
+<li>alive, asleep, alone, afraid는 명사 앞에 쓸 수 없다 → living, sleeping, lonely.</li>
+<li>the latter part(후반부) / worth + 명사, worthy of + 명사.</li>
+<li>the + 형용사 = ~한 사람들(복수). the accused는 한 사람, the unknown은 '~한 것'.</li>
+<li>something hot, anything wrong, nothing strange — 형용사가 뒤. a strange thing은 앞.</li>
+<li>all / both → the / these → 수사 → 성질 → 색깔 → 국적·재료 → 명사.</li>
+</ol></section>
+<div class="panel-foot"><button type="button" class="pf-btn primary" data-go="u1-q"><small>Unit 10</small>문제 풀이로 이동</button><button type="button" class="pf-btn" data-go="u2-g"><small>다음</small>Unit 11 수사와 부정수량형용사 · 어법 해설</button></div>
+</section>
+<section class="panel" id="p-u1-q" data-unit="u1" data-mode="q">
+<div class="panel-head"><div class="ph-no"><small>UNIT</small>10</div><div class="ph-txt"><h2 class="ph-title">형용사의 쓰임과 어순</h2><div class="ph-mode"><b>문제 풀이</b> · EXERCISE A~C · 23문항</div></div></div>
+<div class="tool-row"><button type="button" class="tool-btn" data-toggle-all>해설 모두 펼치기</button></div>
 <article class="q-card">
 <div class="q-head"><div class="q-num">10-A1</div><div class="q-type gram">형용사 찾기</div><div class="q-pts">EX</div></div>
 <div class="q-prompt"><b>A-1.</b> 다음 문장에서 형용사를 찾아 괄호 속에 쓰세요.</div>
@@ -354,12 +547,16 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>We have many things to learn. [ <span class="blk"></span> ]</li>
 <li>Is Korea a developing country? [ <span class="blk"></span> ]</li>
 </ol></div>
-<details class="ans"><summary>10-A1번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><ol class="ans-list">
-<li><span class="a">proud</span> <span class="why">— 서술적 용법(보어)</span></li>
-<li><span class="a">few</span> <span class="why">— mistakes 수식</span></li>
-<li><span class="a">main</span> <span class="why">— characters 수식</span></li>
-<li><span class="a">many</span> <span class="why">— things 수식</span></li>
-<li><span class="a">developing</span> <span class="why">— country 수식(현재분사형 형용사)</span></li>
+<details class="ans"><summary>10-A1 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① 명사 바로 앞</b>에서 명사를 꾸미는 말을 찾는다(한정적 용법).<br>
+<b>② be동사 뒤</b>에서 주어를 설명하는 말을 찾는다(서술적 용법).<br>
+<b>③ 수량을 나타내는 few, many</b>와 <b>명사를 꾸미는 -ing형</b>도 형용사다.</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">proud</span><span class="full">He was proud of his son.</span></div><span class="why">be동사 was 뒤에서 주어 He의 상태를 설명하는 보어(서술적 용법). be proud of는 '~을 자랑스러워하다'. his는 소유격 대명사로 분류한다.</span><span class="tr">그는 아들을 자랑스러워했다.</span></li>
+<li><div class="al-top"><span class="a">few</span><span class="full">I made a few mistakes.</span></div><span class="why">명사 mistakes의 수를 나타내는 수량 형용사. a few는 '몇 개의'라는 뜻이고, a는 few와 묶여 쓰이는 말이다.</span><span class="tr">나는 실수를 몇 개 했다.</span></li>
+<li><div class="al-top"><span class="a">main</span><span class="full">You'll play one of the main characters.</span></div><span class="why">명사 characters를 앞에서 꾸미는 한정적 용법. main(주요한)은 명사 앞에서만 쓰고 보어로는 쓰지 않는 형용사다.</span><span class="tr">너는 주요 등장인물 중 한 명을 연기하게 될 것이다.</span></li>
+<li><div class="al-top"><span class="a">many</span><span class="full">We have many things to learn.</span></div><span class="why">명사 things의 수를 나타내는 수량 형용사. 뒤의 to learn도 things를 꾸미지만 to부정사구이지 형용사라는 품사는 아니다.</span><span class="tr">우리는 배울 것이 많다.</span></li>
+<li><div class="al-top"><span class="a">developing</span><span class="full">Is Korea a developing country?</span></div><span class="why">동사 develop의 현재분사가 명사 country를 꾸미는 형용사로 쓰였다. a developing country는 '개발도상국'. 앞에 be동사 Is가 있다고 진행형으로 보면 안 된다(진행형이면 관사 a가 끼어들 수 없다).</span><span class="tr">한국은 개발도상국인가요?</span></li>
 </ol></div></details>
 </article>
 <article class="q-card">
@@ -372,30 +569,38 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>Look at that (sleeping, asleep) baby.</li>
 <li>He is not (worth, worthy) his salary.</li>
 </ol></div>
-<details class="ans"><summary>10-A2번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail"><b>서술적 용법만</b>: alive, asleep, alone 등(a-형용사)은 명사 앞에서 수식 불가. 한정적일 땐 lonely·sleeping을 쓴다.</div><ol class="ans-list">
-<li><span class="a">a lonely</span> <span class="why">— alone은 서술적만, 명사 수식은 lonely</span></li>
-<li><span class="a">alive</span> <span class="why">— 서술적 용법</span></li>
-<li><span class="a">the latter</span> <span class="why">— 후자의/뒷부분(순서), later는 시간</span></li>
-<li><span class="a">sleeping</span> <span class="why">— 명사 수식은 sleeping(asleep은 서술적)</span></li>
-<li><span class="a">worth</span> <span class="why">— worth + 명사 (worthy of + 명사)</span></li>
+<details class="ans"><summary>10-A2 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① alive, asleep, alone</b>은 보어로만 쓴다. 명사 앞에는 living(live), sleeping, lonely.<br>
+<b>② 괄호 뒤에 명사가 있으면</b> 한정적 용법, <b>be동사 뒤에서 문장이 끝나면</b> 서술적 용법.<br>
+<b>③ latter</b>(순서상 뒤쪽) / later(시간상 나중), <b>worth + 명사</b> / worthy of + 명사.</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">a lonely</span><span class="full">He enjoys a lonely life in the country.</span></div><span class="why">괄호 뒤에 명사 life가 있으므로 명사를 꾸밀 수 있는 형용사가 필요하다. alone은 보어로만 쓰므로 <i>an alone life</i>는 틀린 표현이다.</span><span class="tr">그는 시골에서 고독한 생활을 즐긴다.</span></li>
+<li><div class="al-top"><span class="a">alive</span><span class="full">Is he still alive?</span></div><span class="why">be동사 뒤 보어 자리이고 뒤에 명사가 없으므로 서술적 용법의 alive. live는 형용사일 때 명사 앞에만 쓰고(a live fish), 동사 live로 보면 Is와 함께 쓸 수 없다.</span><span class="tr">그는 아직 살아 있니?</span></li>
+<li><div class="al-top"><span class="a">the latter</span><span class="full">Have you read the latter part of the play?</span></div><span class="why">연극의 '뒷부분(후반부)'은 순서를 말하므로 latter. later는 시간상 '더 늦은'이라는 뜻이어서 the later part라고 하지 않는다.</span><span class="tr">그 희곡의 후반부를 읽어 보았니?</span></li>
+<li><div class="al-top"><span class="a">sleeping</span><span class="full">Look at that sleeping baby.</span></div><span class="why">괄호 뒤에 명사 baby가 있다. asleep은 보어로만 쓰므로 명사 앞에는 sleeping. The baby is asleep.과 비교한다.</span><span class="tr">저 잠자는 아기를 봐.</span></li>
+<li><div class="al-top"><span class="a">worth</span><span class="full">He is not worth his salary.</span></div><span class="why">괄호 뒤에 명사구 his salary가 바로 온다. worth는 뒤에 명사를 바로 취하고, worthy는 <i>worthy of his salary</i>처럼 of가 있어야 한다.</span><span class="tr">그는 자기 월급만큼의 값어치를 못 한다.</span></li>
 </ol></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">10-B</div><div class="q-type gram">the+형용사</div><div class="q-pts">EX</div></div>
 <div class="q-prompt"><b>B.</b> 밑줄 친 부분을 같은 뜻의 어구로 바꿔 쓰세요.</div>
 <div class="drill"><ol>
-<li>Poor people are often generous to each other. [= <span class="blk"></span> ]</li>
-<li>Young people in spirit enjoy their lives. [= <span class="blk"></span> ]</li>
-<li>The judge asked an accused person to stand up. [= <span class="blk"></span> ]</li>
-<li>He always helped the disabled. [= <span class="blk"></span> ]</li>
-<li>Some people try to explore the unknown. [= <span class="blk"></span> ]</li>
+<li><u>Poor people</u> are often generous to each other. [= <span class="blk"></span> ]</li>
+<li><u>Young people</u> in spirit enjoy their lives. [= <span class="blk"></span> ]</li>
+<li>The judge asked <u>an accused person</u> to stand up. [= <span class="blk"></span> ]</li>
+<li>He always helped <u>the disabled</u>. [= <span class="blk"></span> ]</li>
+<li>Some people try to explore <u>the unknown</u>. [= <span class="blk"></span> ]</li>
 </ol></div>
-<details class="ans"><summary>10-B번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail"><b>the + 형용사</b> = ~한 사람들(복수보통명사) / ~한 사람(단수) / ~한 것(추상명사).</div><ol class="ans-list">
-<li><span class="a">The poor</span> <span class="why">— Poor people = the poor</span></li>
-<li><span class="a">The young</span> <span class="why">— Young people = the young</span></li>
-<li><span class="a">the accused</span> <span class="why">— an accused person = the accused</span></li>
-<li><span class="a">disabled people</span> <span class="why">— the disabled = disabled people</span></li>
-<li><span class="a">what is unknown</span> <span class="why">— the unknown = 미지의 것</span></li>
+<details class="ans"><summary>10-B 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① the + 형용사 = 형용사 + people</b>(~한 사람들, 복수 취급).<br>
+<b>② 한 사람</b>을 가리키는 경우도 있다: the accused = an accused person.<br>
+<b>③ the + 형용사 = what is + 형용사</b>(~한 것, 추상적인 개념).</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">The poor</span><span class="full">The poor are often generous to each other.</span></div><span class="why">형용사 + people = the + 형용사. Poor people → The poor. 복수 취급하므로 동사 are는 그대로다.</span><span class="tr">가난한 사람들은 종종 서로에게 너그럽다.</span></li>
+<li><div class="al-top"><span class="a">The young</span><span class="full">The young in spirit enjoy their lives.</span></div><span class="why">Young people → The young. 뒤의 in spirit은 그대로 이어져 the young in spirit(마음이 젊은 사람들)이 된다. 동사 enjoy도 복수형 그대로.</span><span class="tr">마음이 젊은 사람들은 자신의 삶을 즐긴다.</span></li>
+<li><div class="al-top"><span class="a">the accused</span><span class="full">The judge asked the accused to stand up.</span></div><span class="why">an accused person(기소된 사람 한 명) → the accused(피고인). 과거분사도 the와 함께 명사처럼 쓰인다. 이 표현은 '~한 사람들'이 아니라 한 사람을 가리킬 수 있다.</span><span class="tr">판사는 피고인에게 일어서라고 했다.</span></li>
+<li><div class="al-top"><span class="a">disabled people</span><span class="full">He always helped disabled people.</span></div><span class="why">1·2번과 반대 방향의 전환. the disabled(장애인들) → disabled people. people 앞에 the를 붙이지 않는다.</span><span class="tr">그는 항상 장애인들을 도왔다.</span></li>
+<li><div class="al-top"><span class="a">what is unknown</span><span class="full">Some people try to explore what is unknown.</span></div><span class="why">the unknown은 사람이 아니라 '알려지지 않은 것(미지의 세계)'이라는 추상적인 뜻이다. 그래서 people이 아니라 what is unknown으로 바꾼다. <i>unknown people</i>로 쓰면 '낯선 사람들'이 되어 explore(탐험하다)와 맞지 않는다.</span><span class="tr">어떤 사람들은 미지의 것을 탐험하려고 한다.</span></li>
 </ol></div></details>
 </article>
 <article class="q-card">
@@ -411,18 +616,122 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>She bought <span class="blk"></span> silver cases. <span class="paren">[the, both, two]</span></li>
 <li>I'll show you <span class="blk"></span>. <span class="paren">[special, something]</span></li>
 </ol></div>
-<details class="ans"><summary>10-C번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail">어순: <b>all/both + the + 기수 + 성질·색깔·국적 + 명사</b>. <b>-thing/-body/-one/-where</b>는 형용사가 <b>뒤에서</b> 수식.</div><ol class="ans-list">
-<li><span class="a">something hot</span> <span class="why">— -thing + 형용사 후치</span></li>
-<li><span class="a">anything wrong</span> <span class="why">— -thing + 형용사 후치</span></li>
-<li><span class="a">all these beautiful Korean</span> <span class="why">— 수량-지시-성질-국적 순</span></li>
-<li><span class="a">a strange thing</span> <span class="why">— thing(한 단어)은 형용사 전치</span></li>
-<li><span class="a">best convenient facilities</span> <span class="why">— 최상급 + 성질 + 명사</span></li>
-<li><span class="a">Nothing strange</span> <span class="why">— -thing + 형용사 후치</span></li>
-<li><span class="a">both the two</span> <span class="why">— both + the + 기수</span></li>
-<li><span class="a">something special</span> <span class="why">— -thing + 형용사 후치</span></li>
+<details class="ans"><summary>10-C 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① something, anything, nothing</b>은 형용사가 뒤에서 꾸민다. 일반 명사 thing은 형용사가 앞.<br>
+<b>② 어순</b>: all / both → the / these → 수사 → 성질 → 색깔 → 국적·재료 → 명사.</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">something hot</span><span class="full">I'd like to cook something hot.</span></div><span class="why">-thing으로 끝나는 말은 형용사가 뒤에 온다. <i>hot something</i>은 오답.</span><span class="tr">나는 따뜻한 것을 요리하고 싶다.</span></li>
+<li><div class="al-top"><span class="a">anything wrong</span><span class="full">I can't find anything wrong with it.</span></div><span class="why">anything + 형용사. 부정문이라 something이 아니라 anything이 쓰였다. wrong with ~는 '~에 문제가 있는'.</span><span class="tr">나는 그것에서 잘못된 점을 찾을 수 없다.</span></li>
+<li><div class="al-top"><span class="a">all these beautiful Korean</span><span class="full">I'll buy all these beautiful Korean fans.</span></div><span class="why">all → 지시형용사(these) → 성질(beautiful) → 국적(Korean) → 명사. all은 these보다 앞에 오고, 주관적인 평가(beautiful)가 국적보다 앞에 온다.</span><span class="tr">나는 이 아름다운 한국 부채를 모두 살 것이다.</span></li>
+<li><div class="al-top"><span class="a">a strange thing</span><span class="full">This is a strange thing.</span></div><span class="why">thing은 something과 달리 보통의 명사이므로 「관사 + 형용사 + 명사」 어순을 따른다. <i>a thing strange</i>는 오답.</span><span class="tr">이것은 이상한 일이다.</span></li>
+<li><div class="al-top"><span class="a">best convenient facilities</span><span class="full">This hotel has the best convenient facilities.</span></div><span class="why">the 뒤에 최상급 best를 먼저 쓰고, 그다음 성질 형용사 convenient, 마지막에 명사 facilities. 명사가 맨 뒤에 와야 하므로 <i>best facilities convenient</i>는 오답.</span><span class="tr">이 호텔은 가장 좋은 편의 시설을 갖추고 있다.</span></li>
+<li><div class="al-top"><span class="a">Nothing strange</span><span class="full">Nothing strange happened.</span></div><span class="why">nothing + 형용사. 문장의 주어이므로 대문자로 시작한다. 4번 a strange thing과 어순을 비교한다.</span><span class="tr">이상한 일은 아무것도 일어나지 않았다.</span></li>
+<li><div class="al-top"><span class="a">both the two</span><span class="full">She bought both the two silver cases.</span></div><span class="why">both → the → 기수(two) → 재료(silver) → 명사. both는 all과 마찬가지로 the보다 앞에 온다. <i>the both two</i>는 오답.</span><span class="tr">그녀는 그 은제 케이스 두 개를 모두 샀다.</span></li>
+<li><div class="al-top"><span class="a">something special</span><span class="full">I'll show you something special.</span></div><span class="why">something + 형용사. show + 간접목적어(you) + 직접목적어(something special) 구조.</span><span class="tr">너에게 특별한 것을 보여 줄게.</span></li>
 </ol></div></details>
 </article>
-<div class="section-divider"><span>Chapter V · Unit 11 <em>Numerals &amp; Quantifiers</em><span class="kor">제5장 · Unit 11 수사와 부정수량형용사</span></span></div>
+<div class="panel-foot"><button type="button" class="pf-btn" data-go="u1-g"><small>Unit 10</small>어법 해설 다시 보기</button><button type="button" class="pf-btn primary" data-go="u2-g"><small>다음</small>Unit 11 수사와 부정수량형용사 · 어법 해설</button></div>
+</section>
+<section class="panel" id="p-u2-g" data-unit="u2" data-mode="g">
+<div class="panel-head"><div class="ph-no"><small>UNIT</small>11</div><div class="ph-txt"><h2 class="ph-title">수사와 부정수량형용사</h2><div class="ph-mode"><b>어법 해설</b> · EXERCISE A~C · 22문항</div></div></div>
+<div class="g-intro">Unit 11은 <b>수를 나타내는 표현(A) → many / much(B) → few / little(C)</b> 순서입니다. B와 C는 뒤의 명사가 <b>셀 수 있는지</b>만 판단하면 풀립니다(제2장 Unit 03 참고).</div>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">1</span>막연한 큰 수 — 수천, 수백만</h3>
+<p class="g-p">정확한 수가 아니라 '수백, 수천, 수백만'처럼 막연하게 많은 수를 말할 때는 수 단위에 <b>-s</b>를 붙이고 <b>of + 복수명사</b>를 씁니다.</p>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>표현</th><th>뜻</th></tr>
+<tr><td><span class="e">hundreds of</span></td><td>수백의</td></tr>
+<tr><td><span class="e">thousands of</span></td><td>수천의</td></tr>
+<tr><td><span class="e">tens of thousands of</span></td><td>수만의 (10 × 1,000)</td></tr>
+<tr><td><span class="e">millions of</span></td><td>수백만의</td></tr>
+<tr><td><span class="e">tens of millions of</span></td><td>수천만의 (10 × 1,000,000)</td></tr>
+</table></div>
+<div class="g-warn"><b>함정</b> 정확한 수를 말할 때는 -s도 of도 붙이지 않습니다. <span class="e">two <b>thousand</b> athletes</span> (2천 명) / <span class="e"><b>thousands of</b> athletes</span> (수천 명). 영어는 천(thousand) 다음 단위가 백만(million)이므로 '수천만'은 '수십 × 백만'으로 나타냅니다.</div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">2</span>나이대와 연대</h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>구분</th><th>형태</th><th>예</th></tr>
+<tr><td class="col-head">나이대 (~대)</td><td>in + <b>소유격</b> + 수의 복수형</td><td><span class="e">in <b>his thirties</b></span> 30대 / <span class="e">in <b>her forties</b></span> 40대</td></tr>
+<tr><td class="col-head">연대 (~년대)</td><td>in + <b>the</b> + 연도의 복수형</td><td><span class="e">in <b>the nineteen-nineties</b></span> (= in the 1990s) 1990년대에</td></tr>
+</table></div>
+<ul class="g-list">
+<li>-ty로 끝나는 수의 복수형은 y를 i로 바꾸고 -es를 붙입니다. thirty → <b>thirties</b>, forty → <b>forties</b>, ninety → <b>nineties</b></li>
+<li>나이대에는 주어에 맞는 <b>소유격</b>(his, her, my), 연대에는 <b>the</b>를 씁니다.</li>
+</ul>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">3</span>every + 수사 : ~마다, ~에 한 번씩</h3>
+<div class="g-rule">every + <b>서수</b> + <b>단수명사</b> = every + <b>기수</b> + <b>복수명사</b></div>
+<div class="g-ex">
+<p><span class="e">She meets him <b>every fourth day</b>. = every <b>four days</b></span><span class="k">그녀는 나흘에 한 번씩 그를 만난다.</span></p>
+<p><span class="e">He visits his motherland <b>every two years</b>. = every <b>second year</b></span><span class="k">그는 2년에 한 번씩 고국을 방문한다.</span></p>
+</div>
+<p class="g-p">빈칸 뒤의 명사가 <b>단수(day)</b>이면 서수, <b>복수(years)</b>이면 기수를 씁니다.</p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">4</span>분수 읽기 <span class="g-badge">내신 빈출</span></h3>
+<div class="g-rule">분자는 <b>기수</b>, 분모는 <b>서수</b>. 분자를 먼저 읽는다.<br>분자가 <b>2 이상</b>이면 분모(서수)에 <b>-s</b>를 붙인다.<br>대분수는 정수와 분수 사이에 <b>and</b>를 넣는다.</div>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>분수</th><th>읽기</th><th>설명</th></tr>
+<tr><td class="num">1/7</td><td><span class="e">a seventh / one seventh</span></td><td>분자가 1 → -s 없음</td></tr>
+<tr><td class="num">2/5</td><td><span class="e">two-fifths</span></td><td>분자가 2 → fifth<b>s</b></td></tr>
+<tr><td class="num">3/7</td><td><span class="e">three-sevenths</span></td><td>분자가 3 → seventh<b>s</b></td></tr>
+<tr><td class="num">5 3/8</td><td><span class="e">five and three-eighths</span></td><td>정수 + and + 분수</td></tr>
+</table></div>
+<p class="g-p">서수의 철자에 주의합니다. five → <b>fifth</b>, eight → <b>eighth</b>(t를 하나만), nine → ninth. 자주 쓰는 1/2은 a half, 1/4은 a quarter입니다.</p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">5</span>many와 much <span class="g-badge">내신 빈출</span></h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>뒤의 명사</th><th>많은</th></tr>
+<tr><td class="col-head">셀 수 있는 명사의 복수형</td><td><span class="e">many, a (great / good) number of</span></td></tr>
+<tr><td class="col-head">셀 수 없는 명사</td><td><span class="e">much, a great amount of, a great quantity of</span></td></tr>
+<tr><td class="col-head">둘 다</td><td><span class="e">a lot of, lots of, plenty of</span></td></tr>
+</table></div>
+<div class="g-ex">
+<p><span class="e"><b>Many</b> people gathered on the beach.</span><span class="k">많은 사람들이 해변에 모였다.</span></p>
+<p><span class="e">Don't drink too <b>much</b> wine.</span><span class="k">와인을 너무 많이 마시지 마라.</span></p>
+<p><span class="e">The antique table costs <b>a lot of</b> money.</span><span class="k">그 골동품 탁자는 돈이 많이 든다.</span></p>
+</div>
+<div class="g-warn"><b>함정</b> <b>number</b>는 '수'이므로 셀 수 있는 명사와, <b>amount / quantity</b>는 '양'이므로 셀 수 없는 명사와 씁니다. <span class="e x">a great number of money</span>, <span class="e x">a great amount of students</span>는 틀린 표현입니다. people은 -s가 없지만 복수명사이므로 many와 씁니다.</div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">6</span>few와 little <span class="g-badge">내신 빈출</span></h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>뒤의 명사</th><th>조금 있는 (긍정)</th><th>거의 없는 (부정)</th></tr>
+<tr><td class="col-head">셀 수 있는 명사의 복수형</td><td><span class="e">a few</span></td><td><span class="e">few</span></td></tr>
+<tr><td class="col-head">셀 수 없는 명사</td><td><span class="e">a little</span></td><td><span class="e">little</span></td></tr>
+</table></div>
+<div class="g-rule"><b>1단계</b> 명사가 셀 수 있으면 few 계열, 셀 수 없으면 little 계열<br><b>2단계</b> '조금 있다'면 a를 붙이고, '거의 없다'면 a를 뺀다</div>
+<div class="g-ex">
+<p><span class="e"><b>Few</b> people understood what he was saying.</span><span class="k">그가 하는 말을 이해한 사람은 거의 없었다.</span></p>
+<p><span class="e">We need <b>a little</b> money.</span><span class="k">우리는 돈이 조금 필요하다.</span></p>
+<p><span class="e">He could eat <b>little</b> bread.</span><span class="k">그는 빵을 거의 먹지 못했다.</span></p>
+</div>
+<p class="g-p">few와 little은 그 자체에 부정의 뜻이 있으므로 not을 따로 쓰지 않습니다. 또 <span class="e">a little</span>은 뒤에 명사 없이 <b>대명사</b>(조금)로도 쓰입니다. <span class="e">I know <b>a little</b> about it.</span></p>
+</section>
+
+<section class="g-sec g-check"><h3 class="g-h">시험 직전 점검</h3>
+<ol class="g-ol">
+<li>thousands of(수천의), tens of millions of(수천만의) / two thousand(2천)는 -s 없음.</li>
+<li>in his thirties(30대), in the nineteen-nineties(1990년대).</li>
+<li>every fourth day = every four days.</li>
+<li>분자 기수, 분모 서수. 분자가 2 이상이면 분모에 -s. 대분수는 and.</li>
+<li>many·a number of + 복수 / much·a great amount(quantity) of + 셀 수 없는 명사 / a lot of·plenty of는 둘 다.</li>
+<li>a few·few + 복수 / a little·little + 셀 수 없는 명사. a가 없으면 '거의 없는'.</li>
+</ol></section>
+<div class="panel-foot"><button type="button" class="pf-btn primary" data-go="u2-q"><small>Unit 11</small>문제 풀이로 이동</button><button type="button" class="pf-btn" data-go="gi-g"><small>다음</small>기출응용문제 · 어법 해설</button></div>
+</section>
+<section class="panel" id="p-u2-q" data-unit="u2" data-mode="q">
+<div class="panel-head"><div class="ph-no"><small>UNIT</small>11</div><div class="ph-txt"><h2 class="ph-title">수사와 부정수량형용사</h2><div class="ph-mode"><b>문제 풀이</b> · EXERCISE A~C · 22문항</div></div></div>
+<div class="tool-row"><button type="button" class="tool-btn" data-toggle-all>해설 모두 펼치기</button></div>
 <article class="q-card">
 <div class="q-head"><div class="q-num">11-A1</div><div class="q-type gram">수사</div><div class="q-pts">EX</div></div>
 <div class="q-prompt"><b>A-1.</b> 빈칸을 채워 문장을 완성하세요.</div>
@@ -435,14 +744,18 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>수천만 명이 그 프로그램을 봤다. = <span class="blk"></span> people watched the program.</li>
 <li>그는 2년에 한번씩 그의 고국을 방문한다. = He visits his motherland <span class="blk"></span> two years.</li>
 </ol></div>
-<details class="ans"><summary>11-A1번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail">막연한 수: <b>tens/hundreds/thousands/millions of + 복수</b>. 연대: <b>in the ~s</b>. 나이대: <b>in one's ~s</b>. 주기: <b>every 서수 + 단수 = every 기수 + 복수</b>.</div><ol class="ans-list">
-<li><span class="a">in his thirties</span> <span class="why">— 30대</span></li>
-<li><span class="a">Thousands of</span> <span class="why">— 수천의</span></li>
-<li><span class="a">every fourth</span> <span class="why">— every fourth day = 나흘마다</span></li>
-<li><span class="a">in the nineteen-nineties</span> <span class="why">— 1990's</span></li>
-<li><span class="a">in her forties</span> <span class="why">— 40대</span></li>
-<li><span class="a">Tens of millions of</span> <span class="why">— 수천만의</span></li>
-<li><span class="a">every</span> <span class="why">— every two years = 2년마다</span></li>
+<details class="ans"><summary>11-A1 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① 나이대</b>: in + 소유격 + 수의 복수형(in his thirties). <b>연대</b>: in the + 연도의 복수형.<br>
+<b>② 막연한 큰 수</b>: thousands of, tens of millions of + 복수명사.<br>
+<b>③ ~마다</b>: every + 서수 + 단수명사 = every + 기수 + 복수명사.</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">in his thirties</span><span class="full">He is in his thirties.</span></div><span class="why">'~대'는 in + 소유격 + 수의 복수형. 주어가 He이므로 소유격은 his. thirty의 복수형은 y를 i로 바꾼 thirties. <i>in thirties</i>처럼 소유격을 빼면 오답.</span><span class="tr">그는 30대이다.</span></li>
+<li><div class="al-top"><span class="a">Thousands of</span><span class="full">Thousands of athletes started.</span></div><span class="why">'수천의'는 thousand에 -s를 붙이고 of를 쓴다. 정확한 수(two thousand athletes)일 때는 -s도 of도 없다는 점과 구별한다.</span><span class="tr">수천 명의 선수들이 출발했다.</span></li>
+<li><div class="al-top"><span class="a">every fourth</span><span class="full">She meets him every fourth day.</span></div><span class="why">빈칸 뒤의 명사가 단수 day이므로 every + 서수. 나흘에 한 번 = every fourth day. 기수를 쓰면 every four days가 되어 days가 필요하다.</span><span class="tr">그녀는 나흘에 한 번씩 그를 만난다.</span></li>
+<li><div class="al-top"><span class="a">in the nineteen-nineties</span><span class="full">I was born in the nineteen-nineties.</span></div><span class="why">연대는 in the + 연도의 복수형. 1990년대 = the 1990s = the nineteen-nineties. 나이대와 달리 소유격이 아니라 the를 쓴다.</span><span class="tr">나는 1990년대에 태어났다.</span></li>
+<li><div class="al-top"><span class="a">in her forties</span><span class="full">She is in her forties.</span></div><span class="why">1번과 같은 구조. 주어가 She이므로 her. forty는 four와 달리 u가 없다(<i>fourties</i>는 틀린 철자).</span><span class="tr">그녀는 40대이다.</span></li>
+<li><div class="al-top"><span class="a">Tens of millions of</span><span class="full">Tens of millions of people watched the program.</span></div><span class="why">수천만 = 수십(tens) × 백만(millions). 영어에는 '만' 단위가 없으므로 million을 기준으로 나타낸다. <i>Thousands of ten thousands</i>처럼 우리말 단위를 그대로 옮기면 안 된다.</span><span class="tr">수천만 명이 그 프로그램을 봤다.</span></li>
+<li><div class="al-top"><span class="a">every</span><span class="full">He visits his motherland every two years.</span></div><span class="why">빈칸 뒤가 기수 two + 복수명사 years이므로 every만 넣으면 된다. every two years = every second year = every other year.</span><span class="tr">그는 2년에 한 번씩 고국을 방문한다.</span></li>
 </ol></div></details>
 </article>
 <article class="q-card">
@@ -454,11 +767,15 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>2/5 → <span class="blk"></span></li>
 <li>1/7 → <span class="blk"></span></li>
 </ol></div>
-<details class="ans"><summary>11-A2번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail">분수: 분자=기수, 분모=서수. 분자 2 이상이면 분모 서수에 <b>-s</b>. 대분수는 <b>and</b>로 연결.</div><ol class="ans-list">
-<li><span class="a">three-sevenths</span> <span class="why">— 3/7</span></li>
-<li><span class="a">five and three-eighths</span> <span class="why">— 5와 3/8</span></li>
-<li><span class="a">two-fifths</span> <span class="why">— 2/5</span></li>
-<li><span class="a">a seventh / one seventh</span> <span class="why">— 1/7</span></li>
+<details class="ans"><summary>11-A2 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① 분자는 기수, 분모는 서수</b>로 읽고 분자를 먼저 말한다.<br>
+<b>② 분자가 2 이상</b>이면 분모에 -s를 붙인다.<br>
+<b>③ 대분수</b>는 정수 + and + 분수.</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">three-sevenths</span><span class="full">3/7 = three-sevenths</span></div><span class="why">분자 3은 기수 three, 분모 7은 서수 seventh. 분자가 2 이상이므로 seventh에 -s를 붙인다. <i>three-seventh</i>는 오답.</span><span class="tr">7분의 3</span></li>
+<li><div class="al-top"><span class="a">five and three-eighths</span><span class="full">5 3/8 = five and three-eighths</span></div><span class="why">대분수는 정수(five) 뒤에 and를 넣고 분수를 읽는다. eight의 서수는 t를 하나만 쓰는 eighth이고, 분자가 3이므로 eighths.</span><span class="tr">5와 8분의 3</span></li>
+<li><div class="al-top"><span class="a">two-fifths</span><span class="full">2/5 = two-fifths</span></div><span class="why">five의 서수는 fifth(<i>fiveth</i> 아님). 분자가 2이므로 -s를 붙여 fifths.</span><span class="tr">5분의 2</span></li>
+<li><div class="al-top"><span class="a">a seventh / one seventh</span><span class="full">1/7 = a seventh (one seventh)</span></div><span class="why">분자가 1이면 a 또는 one으로 읽고 분모에 -s를 붙이지 않는다.</span><span class="tr">7분의 1</span></li>
 </ol></div></details>
 </article>
 <article class="q-card">
@@ -472,13 +789,17 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>Do you have (many, much) time to prepare for the conference?</li>
 <li>Korea needs (many, a great quantity of) natural gas, too.</li>
 </ol></div>
-<details class="ans"><summary>11-B번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail"><b>many/a number of</b> + 가산 복수, <b>much/a great amount(quantity) of</b> + 불가산, <b>a lot of</b>는 둘 다 가능.</div><ol class="ans-list">
-<li><span class="a">Many</span> <span class="why">— people 가산</span></li>
-<li><span class="a">a lot of</span> <span class="why">— money 불가산(a great number of는 가산)</span></li>
-<li><span class="a">many</span> <span class="why">— friends 가산</span></li>
-<li><span class="a">much</span> <span class="why">— wine 불가산</span></li>
-<li><span class="a">much</span> <span class="why">— time 불가산</span></li>
-<li><span class="a">a great quantity of</span> <span class="why">— gas 불가산</span></li>
+<details class="ans"><summary>11-B 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① 뒤의 명사가 셀 수 있는 복수형</b>이면 many, a (great) number of.<br>
+<b>② 셀 수 없는 명사</b>이면 much, a great amount(quantity) of.<br>
+<b>③ a lot of</b>는 양쪽 모두 가능.</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">Many</span><span class="full">Many people gathered on the beach.</span></div><span class="why">people은 -s가 없어도 복수명사이므로 Many. 형태만 보고 단수로 착각해 <i>much</i>를 고르지 않도록 한다.</span><span class="tr">많은 사람들이 해변에 모였다.</span></li>
+<li><div class="al-top"><span class="a">a lot of</span><span class="full">The antique table costs a lot of money.</span></div><span class="why">money는 셀 수 없는 명사. a great number of는 '수'를 나타내므로 복수명사와만 쓴다. a lot of는 셀 수 없는 명사에도 쓸 수 있다.</span><span class="tr">그 골동품 탁자는 돈이 많이 든다.</span></li>
+<li><div class="al-top"><span class="a">many</span><span class="full">Do you have many friends in this village?</span></div><span class="why">friends는 셀 수 있는 명사의 복수형이므로 many.</span><span class="tr">이 마을에 친구가 많이 있니?</span></li>
+<li><div class="al-top"><span class="a">much</span><span class="full">Don't drink too much wine.</span></div><span class="why">wine은 물질명사로 셀 수 없으므로 much. too much + 셀 수 없는 명사 / too many + 복수명사.</span><span class="tr">와인을 너무 많이 마시지 마라.</span></li>
+<li><div class="al-top"><span class="a">much</span><span class="full">Do you have much time to prepare for the conference?</span></div><span class="why">'준비할 시간'이라는 뜻의 time은 셀 수 없는 명사이므로 much. times(횟수)와 구별한다.</span><span class="tr">회의를 준비할 시간이 많이 있니?</span></li>
+<li><div class="al-top"><span class="a">a great quantity of</span><span class="full">Korea needs a great quantity of natural gas, too.</span></div><span class="why">gas는 물질명사로 셀 수 없다. quantity(양)는 셀 수 없는 명사와 쓴다. many는 복수명사와만 쓴다.</span><span class="tr">한국 역시 많은 양의 천연가스가 필요하다.</span></li>
 </ol></div></details>
 </article>
 <article class="q-card">
@@ -491,15 +812,97 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>He could eat (few, little) bread.</li>
 <li>I know (a few, a little) about it.</li>
 </ol></div>
-<details class="ans"><summary>11-C번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail"><b>few/a few</b> + 가산 복수, <b>little/a little</b> + 불가산. a가 있으면 "조금 있는", 없으면 "거의 없는".</div><ol class="ans-list">
-<li><span class="a">Few</span> <span class="why">— people 가산</span></li>
-<li><span class="a">a little</span> <span class="why">— money 불가산</span></li>
-<li><span class="a">a few</span> <span class="why">— friends 가산</span></li>
-<li><span class="a">little</span> <span class="why">— bread 불가산</span></li>
-<li><span class="a">a little</span> <span class="why">— 불가산 대용(어느 정도 안다)</span></li>
+<details class="ans"><summary>11-C 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① 셀 수 있는 복수명사</b> → few / a few, <b>셀 수 없는 명사</b> → little / a little.<br>
+<b>② a가 있으면</b> '조금 있는'(긍정), <b>a가 없으면</b> '거의 없는'(부정).<br>
+<b>③ a little</b>은 뒤에 명사 없이 '조금'이라는 대명사로도 쓴다.</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">Few</span><span class="full">Few people understood what he was saying.</span></div><span class="why">people은 복수명사이므로 few 계열. Few는 '거의 없는'이라는 부정의 뜻이어서 '이해한 사람이 거의 없었다'가 된다.</span><span class="tr">그가 하는 말을 이해한 사람은 거의 없었다.</span></li>
+<li><div class="al-top"><span class="a">a little</span><span class="full">We need a little money.</span></div><span class="why">money는 셀 수 없는 명사이므로 little 계열. a가 있으므로 '조금 있는'.</span><span class="tr">우리는 돈이 조금 필요하다.</span></li>
+<li><div class="al-top"><span class="a">a few</span><span class="full">Do you have a few friends in this village?</span></div><span class="why">friends는 복수명사이므로 a few(몇 명의).</span><span class="tr">이 마을에 친구가 몇 명 있니?</span></li>
+<li><div class="al-top"><span class="a">little</span><span class="full">He could eat little bread.</span></div><span class="why">bread는 셀 수 없는 명사이므로 little. a가 없으므로 '거의 먹지 못했다'는 부정의 뜻이다.</span><span class="tr">그는 빵을 거의 먹지 못했다.</span></li>
+<li><div class="al-top"><span class="a">a little</span><span class="full">I know a little about it.</span></div><span class="why">뒤에 명사가 없다. 여기서 a little은 '조금'이라는 뜻의 대명사로 know의 목적어다. 아는 '양'을 말하므로 셀 수 있는 것에 쓰는 <i>a few</i>는 맞지 않는다.</span><span class="tr">나는 그것에 대해 조금 안다.</span></li>
 </ol></div></details>
 </article>
-<div class="section-divider"><span>Chapter V · <em>Past Exam Applications</em><span class="kor">제5장 형용사 · 기출응용문제 1~20</span></span></div>
+<div class="panel-foot"><button type="button" class="pf-btn" data-go="u2-g"><small>Unit 11</small>어법 해설 다시 보기</button><button type="button" class="pf-btn primary" data-go="gi-g"><small>다음</small>기출응용문제 · 어법 해설</button></div>
+</section>
+<section class="panel" id="p-gi-g" data-unit="gi" data-mode="g">
+<div class="panel-head"><div class="ph-no"><small>CHAPTER V</small>기출</div><div class="ph-txt"><h2 class="ph-title">기출응용문제</h2><div class="ph-mode"><b>어법 해설 (출제 포인트)</b> · 1~20번 · 20문항</div></div></div>
+<div class="g-intro">기출응용문제 20문항(객관식 18, 서술형 2)입니다. <b>형용사 자리에 부사를 쓴 오류</b>, <b>-thing + 형용사 어순</b>, <b>수량 형용사 고르기</b> 세 가지가 가장 많이 나옵니다.</div>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">1</span>유형별 문항 분포</h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>유형</th><th>문항</th><th>문항 수</th><th>관련 Unit</th></tr>
+<tr><td class="col-head">수량 형용사<br>(many·much, few·little, enough)</td><td>4, 8, 10, 14, 17</td><td class="num">5</td><td>Unit 11</td></tr>
+<tr><td class="col-head">보어 자리의 형용사<br>(형용사 / 부사 구별)</td><td>1, 5, 7, 15</td><td class="num">4</td><td>Unit 10</td></tr>
+<tr><td class="col-head">-thing + 형용사 어순</td><td>6, 16, 18</td><td class="num">3</td><td>Unit 10</td></tr>
+<tr><td class="col-head">서술적 용법으로만 쓰는 형용사</td><td>9, 12</td><td class="num">2</td><td>Unit 10</td></tr>
+<tr><td class="col-head">형용사의 어순</td><td>11, 20</td><td class="num">2</td><td>Unit 10</td></tr>
+<tr><td class="col-head">어법 종합</td><td>3, 13</td><td class="num">2</td><td>Unit 10·11</td></tr>
+<tr><td class="col-head">분수</td><td>2</td><td class="num">1</td><td>Unit 11</td></tr>
+<tr><td class="col-head">some / any</td><td>19</td><td class="num">1</td><td>—</td></tr>
+</table></div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">2</span>보어 자리에는 형용사 <span class="g-badge">1·5·7·13·15번</span></h3>
+<p class="g-p">우리말로는 '~하게'로 해석되어 부사처럼 느껴지지만, 아래 동사 뒤의 보어 자리에는 <b>형용사</b>를 씁니다.</p>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>동사</th><th>형태</th><th>예</th></tr>
+<tr><td class="col-head">감각동사<br><span class="e">look, sound, smell, taste, feel</span></td><td>+ 형용사</td><td><span class="e">looked <b>sad</b> / look <b>happy</b> / sounds <b>strange</b></span></td></tr>
+<tr><td class="col-head">상태 변화 동사<br><span class="e">get, become, grow, turn</span></td><td>+ 형용사</td><td><span class="e">gets <b>emotional</b></span></td></tr>
+<tr><td class="col-head">5형식 동사<br><span class="e">think, find, make</span> + 목적어</td><td>+ 형용사(목적격보어)</td><td><span class="e">I thought it <b>useless</b> to fight.</span></td></tr>
+</table></div>
+<div class="g-warn"><b>함정</b> <span class="e x">look happily</span>, <span class="e x">sounds strangely</span>, <span class="e x">thought it uselessly</span>는 모두 틀린 표현입니다. 반대로 <b>명사 앞</b>은 형용사 자리이므로 부사를 쓸 수 없습니다: <span class="e x">the newly student</span>, <span class="e x">the lastly step</span>.</div>
+<p class="g-p">1번처럼 선지에 원급·비교급·최상급이 함께 나오면 앞의 부사를 봅니다. <b>very는 원급만</b> 꾸미므로 <span class="e x">very sadder</span>, <span class="e x">very saddest</span>는 쓸 수 없습니다.</p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">3</span>-thing + 형용사 풀이 순서 <span class="g-badge">6·7·13·15·16·18번</span></h3>
+<ol class="g-ol">
+<li><b>-thing, -where가 형용사보다 앞에 있는지</b> 봅니다. <span class="e x">wrong anything</span>, <span class="e x">special something</span>, <span class="e x">warm somewhere</span>는 탈락.</li>
+<li><b>뒤의 말이 형용사인지</b> 봅니다. 부사 <span class="e x">something specially</span>는 탈락.</li>
+<li><b>문장의 종류를 봅니다.</b> 긍정문이면 something, 부정문·의문문이면 anything.</li>
+</ol>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>번호</th><th>문장의 종류</th><th>옳은 형태</th></tr>
+<tr><td class="num">6</td><td>긍정문</td><td><span class="e">something fresh and sweet</span></td></tr>
+<tr><td class="num">7</td><td>부정문 (can't see)</td><td><span class="e">anything wrong</span></td></tr>
+<tr><td class="num">16</td><td>의문문</td><td><span class="e">Is there anything wrong with ~?</span></td></tr>
+<tr><td class="num">18</td><td>의문문</td><td><span class="e">anything special</span></td></tr>
+</table></div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">4</span>수량 형용사 풀이 순서 <span class="g-badge">4·8·10·14·17번</span></h3>
+<ol class="g-ol">
+<li><b>빈칸 뒤 명사가 셀 수 있는지</b> 봅니다. 복수형(mistakes, students, days)이면 셀 수 있고, water·experience·단수형 opportunity는 셀 수 없는 명사로 쓰였습니다.</li>
+<li><b>명사와 맞지 않는 선지를 지웁니다.</b> 복수명사 앞에 much, little, amount of / 셀 수 없는 명사 앞에 many, few, number of.</li>
+<li><b>of가 빠진 선지를 지웁니다.</b> <span class="e x">a lot mistakes</span>, <span class="e x">a lot water</span>. 명사 앞에서는 반드시 a lot <b>of</b>입니다.</li>
+<li><b>문맥으로 긍정·부정을 정합니다.</b> '60년 넘게 만날 기회가 거의 없었다' → little / '며칠 동안' → a few.</li>
+</ol>
+<p class="g-p g-sub">enough의 위치 (8·11·13번)</p>
+<div class="g-rule"><b>enough + 명사</b> : enough water, enough money<br><b>형용사·부사 + enough</b> : fast enough, old enough</div>
+<p class="g-p">명사를 꾸밀 때는 앞, 형용사나 부사를 꾸밀 때는 뒤입니다. enough는 셀 수 있는 명사와 셀 수 없는 명사 모두에 쓸 수 있습니다. 과거분사 left(남은)가 함께 오면 명사 뒤에 둡니다: <span class="e">enough money <b>left</b></span>.</p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">5</span>그 밖의 유형 <span class="g-badge">2·3·9·12·19·20번</span></h3>
+<ul class="g-list">
+<li><b>9·12번 (서술적 용법)</b> — 「관사 + 형용사 + 명사」 자리에 asleep, afraid, alive, alone이 있으면 틀린 표현입니다. -ing로 끝나는 shocking, surprising은 명사 앞에 쓸 수 있습니다.</li>
+<li><b>20번 (어순)</b> — the → 수사 → 성질 형용사 순서. <span class="e">the two cute cats</span>, <span class="e">the first two sentences</span>. available처럼 -able로 끝나는 형용사는 명사 뒤에서 꾸밀 수 있습니다(<span class="e">all the information available</span>).</li>
+<li><b>3번 (수사-명사 형용사)</b> — 하이픈으로 묶여 명사를 꾸밀 때 단위명사는 단수형입니다. <span class="e">a thirteen-<b>year</b>-old sister</span>, <span class="e">a five-<b>story</b> building</span>.</li>
+<li><b>2번 (분수)</b> — 분자가 2 이상이면 분모에 -s. <span class="e">two-thirds</span>.</li>
+<li><b>19번 (some / any)</b> — 긍정문에서 <span class="e">any + 단수명사</span>는 '어떤 ~이든'이라는 뜻입니다. some은 '어떤 하나'로 범위를 정하지 않는 선택의 뜻을 나타내지 못합니다.</li>
+</ul>
+</section>
+<div class="panel-foot"><button type="button" class="pf-btn primary" data-go="gi-q"><small>기출응용문제</small>문제 풀이로 이동</button><button type="button" class="pf-btn" data-go="u1-g"><small>처음으로</small>Unit 10 형용사의 쓰임과 어순 · 어법 해설</button></div>
+</section>
+<section class="panel" id="p-gi-q" data-unit="gi" data-mode="q">
+<div class="panel-head"><div class="ph-no"><small>CHAPTER V</small>기출</div><div class="ph-txt"><h2 class="ph-title">기출응용문제</h2><div class="ph-mode"><b>문제 풀이</b> · 1~20번 · 20문항</div></div></div>
+<div class="tool-row"><button type="button" class="tool-btn" data-toggle-all>해설 모두 펼치기</button></div>
+<details class="ans" style="margin:0 0 28px"><summary>기출응용문제 정답 일람표 펼치기 (스포일러 주의)</summary><div class="ans-body"><table class="answer-sheet"><tr class="hdr-row"><td>기출</td><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>④</td><td>②</td><td>⑤</td><td>①</td><td>④</td><td style="font-size:10px;color:var(--rose-600)">fresh and sweet something → something fresh and sweet</td><td>①</td></tr><tr class="hdr-row"><td>기출</td><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>④</td><td>③</td><td>①</td><td>①</td><td>①</td><td>④</td><td>④</td></tr><tr class="hdr-row"><td>기출</td><th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th><th></th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>⑤</td><td>③</td><td>⑤</td><td>③</td><td style="font-size:10px;color:var(--rose-600)">some → any</td><td>①</td><td></td></tr></table></div></details>
 <article class="q-card">
 <div class="q-head"><div class="q-num">1</div><div class="q-type choice">보어 형용사</div><div class="q-pts">기출</div></div>
 <div class="q-prompt">1. 다음 글의 빈칸에 들어갈 알맞은 단어를 고르세요.</div>
@@ -511,9 +914,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> sad</span>
 <span class="c"><span class="num">⑤</span> saddest</span>
 </div>
-<details class="ans"><summary>1번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>1번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">④ <span class="en">sad</span></div>
-<div class="ans-detail">감각동사 <b>look + 형용사</b> 보어 → looked sad. sadly(부사)·sadden(동사)는 불가.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>감각동사 look + 형용사.</b> 부사 very는 형용사의 <b>원급</b>만 꾸민다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>looked 뒤는 주어 Jin-il의 상태를 설명하는 보어 자리 → 형용사. 부사 sadly, 동사 sadden 탈락.</span></div>
+<div class="step"><span class="sn">2</span><span>앞에 very가 있다. very는 비교급·최상급을 꾸미지 못한다 → sadder, saddest 탈락.</span></div>
+<div class="step"><span class="sn">3</span><span>원급 형용사 <b>sad</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>sadly는 부사. look 뒤의 보어가 될 수 없다.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>sadden은 '슬프게 하다'라는 동사.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>비교급은 very가 아니라 much로 꾸민다.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>look + 형용사 원급.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>최상급은 very로 꾸미지 않고, 앞에 the도 없다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>진일은 매우 슬퍼 보였고 말을 더듬었다. "저… 저는 아… 아내에게 줄 생… 생일 선물을 사야 합니다. 하지만 저… 저는 이 목걸이를 살… 살 만한 돈이 충분하지 않습니다."</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">2</div><div class="q-type choice">분수</div><div class="q-pts">기출</div></div>
@@ -526,9 +942,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> two of thirds</span>
 <span class="c"><span class="num">⑤</span> two-three</span>
 </div>
-<details class="ans"><summary>2번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>2번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">② <span class="en">two-thirds</span></div>
-<div class="ans-detail">분자 2 이상이면 분모 서수에 -s → <b>two-thirds</b>(2/3).</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>분수는 <b>분자 기수 + 분모 서수</b>. 분자가 2 이상이면 분모에 <b>-s</b>를 붙인다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>분모는 서수로 읽는다 → 기수 three를 쓴 ⑤ 탈락.</span></div>
+<div class="step"><span class="sn">2</span><span>분자와 분모 사이에 of를 넣지 않는다 → ③④ 탈락.</span></div>
+<div class="step"><span class="sn">3</span><span>분자가 2이므로 third에 -s → <b>two-thirds</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>분자가 2인데 분모에 -s가 없다.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>2/3 = two-thirds.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>분자와 분모 사이에 of를 쓰지 않는다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>of가 들어가 틀렸다.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>분모를 기수 three로 읽지 않는다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>내 학생들의 약 3분의 2가 장애인들을 위한 봉사 활동을 하고 싶어 한다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">3</div><div class="q-type choice">복합형용사</div><div class="q-pts">기출</div></div>
@@ -540,9 +969,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> The severely injured were in the intensive care unit.</span>
 <span class="c"><span class="num">⑤</span> I have a thirteen-years-old sister.</span>
 </div>
-<details class="ans"><summary>3번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">⑤ <span class="en">thirteen-year-old</span></div>
-<div class="ans-detail">복합형용사의 명사는 <b>단수</b> → thirteen-<b>year</b>-old. ④ the severely injured = 중상자들(the+분사).</div></div></details>
+<details class="ans"><summary>3번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">⑤ <span class="en">a thirteen-years-old sister</span> (✗) → thirteen-year-old</div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>「수사-명사(-형용사)」가 하이픈으로 묶여 명사를 꾸밀 때</b> 안의 명사는 <b>단수형</b>으로 쓴다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>①④의 the + 형용사(the old, the severely injured)는 '~한 사람들'로 바르게 쓰였다.</span></div>
+<div class="step"><span class="sn">2</span><span>②③은 sure that절, It ~ for … to ~ 구문으로 문제가 없다.</span></div>
+<div class="step"><span class="sn">3</span><span>⑤ thirteen-years-old가 명사 sister를 꾸민다 → years를 단수 <b>year</b>로.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>the old = old people(노인들).</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>be sure that ~(~을 확신하다).</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>It is impossible for + 사람 + to부정사. 문장 끝의 alone은 부사로 쓰였다.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>the severely injured = 중상자들. 복수 취급 → were.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>명사를 꾸미는 하이픈 형용사 → a thirteen-year-old sister. (보어일 때는 She is thirteen years old.)</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 너는 노인들에게 친절하니? ② 그는 내가 성공할 것이라고 확신했다. ③ 그가 혼자 그 산에 오르는 것은 불가능하다. ④ 중상자들은 중환자실에 있었다. ⑤ 나는 열세 살 된 여동생이 있다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">4</div><div class="q-type choice">a few</div><div class="q-pts">기출</div></div>
@@ -555,9 +997,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> a lot</span>
 <span class="c"><span class="num">⑤</span> any</span>
 </div>
-<details class="ans"><summary>4번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>4번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">① <span class="en">a few</span></div>
-<div class="ans-detail">mistakes(가산 복수) → <b>a few</b>. a little/little은 불가산, a lot은 a lot of 필요.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>셀 수 있는 명사의 복수형</b> 앞에서 '몇 개의'는 <b>a few</b>.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>빈칸 뒤 mistakes는 셀 수 있는 명사의 복수형 → a little, little 탈락.</span></div>
+<div class="step"><span class="sn">2</span><span>a lot은 명사 앞에서 a lot of여야 한다 → 탈락.</span></div>
+<div class="step"><span class="sn">3</span><span>any는 긍정 평서문에서 복수명사와 '약간의'라는 뜻으로 쓰지 않는다. → <b>a few</b></span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>a few + 복수명사.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>a little은 셀 수 없는 명사와 쓴다.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>little도 셀 수 없는 명사와 쓴다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>of가 빠졌다. a lot of mistakes여야 한다.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>any는 부정문·의문문에 쓴다. 긍정문에서는 some.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>그녀는 시험에서 실수를 몇 개 했다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">5</div><div class="q-type choice">품사 짝</div><div class="q-pts">기출</div></div>
@@ -570,18 +1025,40 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> emotional - medical - last</span>
 <span class="c"><span class="num">⑤</span> emotional - medical - lastly</span>
 </div>
-<details class="ans"><summary>5번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>5번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">④ <span class="en">emotional - medical - last</span></div>
-<div class="ans-detail">(A) get + 형용사 emotional (B) medical school(형용사) (C) the last step(형용사, lastly는 부사).</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>get + 형용사</b>(~해지다), <b>명사 앞은 형용사</b>. 명사·부사와 형용사의 자리를 구별한다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>(A) get 뒤의 보어 자리 → 형용사 <b>emotional</b>. ①②③ 탈락.</span></div>
+<div class="step"><span class="sn">2</span><span>(B) 명사 school을 꾸민다 → 형용사 <b>medical</b>. medical school은 '의과대학'.</span></div>
+<div class="step"><span class="sn">3</span><span>(C) The와 명사 step 사이 → 형용사 <b>last</b>. lastly는 부사. ⑤ 탈락.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>(A) emotion, (B) medicine 모두 명사.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>세 자리 모두 틀렸다.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>(A) emotion은 명사. she = emotion이 되지 않는다.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>세 자리 모두 형용사.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>(C) lastly는 부사라 명사 step을 꾸밀 수 없다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>• 그녀는 감정이 북받치면 울음을 멈추지 못한다. • 그것이 내가 의과대학에 다니는 이유이다. • 마지막 단계는 매일 일기 쓰는 것을 규칙으로 삼는 것이다. (make it a rule to ~ = ~하는 것을 규칙으로 삼다)</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">6</div><div class="q-type blank">어순 수정</div><div class="q-pts">기출</div></div>
 <div class="q-prompt">6. 다음 글에서 어법상 잘못된 곳을 찾아 바로 고치세요.</div>
 <div class="passage">I was so hungry that I went to the kitchen and smelled <u>fresh and sweet something</u>. I looked up and saw oranges on the table.</div>
-
-<details class="ans"><summary>6번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>6번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main"><span class="en">fresh and sweet something → something fresh and sweet</span></div>
-<div class="ans-detail">-thing으로 끝나는 대명사는 형용사가 <b>뒤에서</b> 수식 → something fresh and sweet.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>-thing으로 끝나는 말은 형용사가 뒤에서</b> 꾸민다. 형용사가 and로 둘 이어져도 마찬가지다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>밑줄 부분에서 something 앞에 형용사 fresh and sweet이 놓여 있다.</span></div>
+<div class="step"><span class="sn">2</span><span>-thing + 형용사 어순으로 바꾼다.</span></div>
+<div class="step"><span class="sn">3</span><span><b>something fresh and sweet</b>.</span></div>
+<span class="sec-t">자주 나오는 오답</span>
+<ul class="opt-list">
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>something freshly and sweetly</i> — 부사로 바꾸면 안 된다. something을 꾸미는 것은 형용사다.</span></li>
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>fresh something and sweet</i> — 형용사 둘을 모두 something 뒤로 보내야 한다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>나는 너무 배가 고파서 부엌으로 갔고 신선하고 달콤한 무언가의 냄새를 맡았다. 위를 올려다보니 식탁 위에 오렌지가 있었다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">7</div><div class="q-type choice">보어·어순</div><div class="q-pts">기출</div></div>
@@ -594,9 +1071,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> happily - wrong anything</span>
 <span class="c"><span class="num">⑤</span> happily - something wrong</span>
 </div>
-<details class="ans"><summary>7번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>7번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">① <span class="en">happy - anything wrong</span></div>
-<div class="ans-detail">(A) look + 형용사 happy. (B) 부정문의 -thing 대용 anything + 형용사 후치 → anything wrong.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>look + 형용사</b>, <b>-thing + 형용사</b>. 부정문에는 anything.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>(A) look 뒤의 보어 → 형용사 <b>happy</b>. 부사 happily가 든 ②④⑤ 탈락.</span></div>
+<div class="step"><span class="sn">2</span><span>(B) -thing이 형용사 앞에 와야 한다 → wrong anything인 ③ 탈락.</span></div>
+<div class="step"><span class="sn">3</span><span>can't가 있는 부정문이므로 <b>anything wrong</b>. → ①</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>look happy / anything wrong.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>(A) happily는 부사.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>(B) 어순이 거꾸로다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>두 자리 모두 틀렸다.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>(A) 부사이고, (B) 부정문에는 anything이 자연스럽다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>• 너 행복해 보인다. • 나는 그 프로젝트에서 잘못된 점을 찾을 수 없다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">8</div><div class="q-type choice">enough</div><div class="q-pts">기출</div></div>
@@ -609,9 +1099,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> enough</span>
 <span class="c"><span class="num">⑤</span> some</span>
 </div>
-<details class="ans"><summary>8번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>8번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">④ <span class="en">enough</span></div>
-<div class="ans-detail">water(불가산) 수식 → enough water. a few(가산)·a lot(of 필요)·부정문의 some은 부적절.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>enough + 명사</b>. enough는 셀 수 있는 명사와 셀 수 없는 명사 모두에 쓴다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>빈칸 뒤 water는 셀 수 없는 명사 → a few 탈락.</span></div>
+<div class="step"><span class="sn">2</span><span>almost는 부사라 명사를 꾸밀 수 없고, a lot은 of가 빠졌다 → 탈락.</span></div>
+<div class="step"><span class="sn">3</span><span>don't가 있는 부정문이므로 some보다 <b>enough</b>가 알맞다(충분한 물이 없다).</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>a few는 복수명사와 쓴다.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>almost는 부사. 명사 water 앞에 올 수 없다.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>a lot of water여야 한다.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>enough water = 충분한 물.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>부정문에는 some 대신 any를 쓴다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>그들은 충분한 물을 가지고 있지 않다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">9</div><div class="q-type choice">서술 형용사</div><div class="q-pts">기출</div></div>
@@ -623,9 +1126,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> It was easy for me to solve the math problem.</span>
 <span class="c"><span class="num">⑤</span> He was afraid of going there alone.</span>
 </div>
-<details class="ans"><summary>9번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">③ <span class="en">a sleeping man</span></div>
-<div class="ans-detail">asleep은 <b>서술적 용법만</b> 가능 → 명사 수식은 sleeping. a sleeping man.</div></div></details>
+<details class="ans"><summary>9번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">③ <span class="en">an asleep man</span> (✗) → a sleeping man</div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>asleep은 서술적 용법으로만</b> 쓴다. 명사 앞에는 sleeping.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>「관사 + 형용사 + 명사」 자리에 a-로 시작하는 형용사가 있는지 찾는다 → ③ an asleep man.</span></div>
+<div class="step"><span class="sn">2</span><span>asleep은 보어 자리에만 쓸 수 있다.</span></div>
+<div class="step"><span class="sn">3</span><span>명사 man을 꾸미려면 <b>a sleeping man</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>a few + 복수명사 books.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>look + 형용사 handsome.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>asleep은 명사 앞에 쓸 수 없다.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>It was easy for me to ~. 가주어 – 진주어.</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>afraid가 be동사 뒤 보어로 쓰였다. 문장 끝의 alone도 명사를 꾸미는 자리가 아니다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 방에는 오래된 책이 몇 권 있었다. ② 그는 그 스웨터를 입으니 잘생겨 보였다. ③ 봐, 여기 잠든 남자가 있어. ④ 내가 그 수학 문제를 푸는 것은 쉬웠다. ⑤ 그는 그곳에 혼자 가는 것을 두려워했다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">10</div><div class="q-type choice">much</div><div class="q-pts">기출</div></div>
@@ -638,9 +1154,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> a few</span>
 <span class="c"><span class="num">⑤</span> few</span>
 </div>
-<details class="ans"><summary>10번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>10번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">① <span class="en">much</span></div>
-<div class="ans-detail">experience(불가산) → <b>much</b>. many·a number of·a few·few는 가산과 쓰인다.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>셀 수 없는 명사</b> 앞에는 <b>much</b>. '경험'이라는 뜻의 experience는 셀 수 없다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>빈칸 뒤 experience가 -s 없이 단수형으로 쓰였다 → 셀 수 없는 명사.</span></div>
+<div class="step"><span class="sn">2</span><span>many, a number of, a few, few는 모두 복수명사와 쓴다.</span></div>
+<div class="step"><span class="sn">3</span><span>셀 수 없는 명사와 쓰는 것은 <b>much</b>뿐이다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>much + 셀 수 없는 명사. 부정문에서 자주 쓴다.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>many는 복수명사와 쓴다.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>a number of도 복수명사와 쓴다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>a few는 복수명사와 쓴다.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>few도 복수명사와 쓰고, 이미 not이 있어 부정이 겹친다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>그는 이 분야에서 경험이 많지 않다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">11</div><div class="q-type choice">어순</div><div class="q-pts">기출</div></div>
@@ -653,9 +1182,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> money left enough</span>
 <span class="c"><span class="num">⑤</span> left money enough</span>
 </div>
-<details class="ans"><summary>11번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>11번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">① <span class="en">enough money left</span></div>
-<div class="ans-detail">enough + 명사(money) 어순, 과거분사 left는 명사 뒤에서 수식 → enough money left.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>enough + 명사</b>. 과거분사 <b>left</b>(남은)는 명사 <b>뒤</b>에서 꾸민다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>enough가 명사를 꾸밀 때는 명사 앞 → enough money. ③④⑤ 탈락.</span></div>
+<div class="step"><span class="sn">2</span><span>left는 '남아 있는'이라는 뜻의 과거분사로 명사 뒤에 둔다 → money left.</span></div>
+<div class="step"><span class="sn">3</span><span><b>enough money left</b> to buy a gift.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>enough + 명사 + left.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>left는 명사 앞에 두지 않는다.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>enough가 명사 뒤에 있다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>enough가 맨 뒤에 있다.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>세 단어의 순서가 모두 틀렸다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>다음 주 월요일이 가장 친한 친구의 생일인데, 나는 선물을 살 만큼 충분한 돈이 남아 있지 않다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">12</div><div class="q-type choice">한정 형용사</div><div class="q-pts">기출</div></div>
@@ -668,9 +1210,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> surprising</span>
 <span class="c"><span class="num">⑤</span> scary</span>
 </div>
-<details class="ans"><summary>12번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>12번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">① <span class="en">afraid</span></div>
-<div class="ans-detail">afraid는 <b>서술적 용법만</b> 가능해 명사(news)를 앞에서 수식할 수 없다. 나머지는 한정적 수식 가능.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>afraid는 서술적 용법으로만</b> 쓴다. 「the + 형용사 + 명사」 자리에 들어갈 수 없다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>빈칸은 the와 명사 news 사이 → 명사를 앞에서 꾸미는 한정적 용법 자리.</span></div>
+<div class="step"><span class="sn">2</span><span>선지 중 a-로 시작하는 형용사 afraid는 보어로만 쓴다.</span></div>
+<div class="step"><span class="sn">3</span><span>또 afraid는 '(사람이) 두려워하는'이라는 뜻이어서 news를 설명하는 말로도 맞지 않는다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>명사 앞에 쓸 수 없는 형용사.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>terrible news(끔찍한 소식).</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>shocking news(충격적인 소식). -ing형 형용사는 명사 앞에 쓸 수 있다.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>surprising news(놀라운 소식).</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>scary news(무서운 소식).</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>Jane에게서 그 (끔찍한 / 충격적인 / 놀라운 / 무서운) 소식을 들었니?</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">13</div><div class="q-type choice">어순·품사</div><div class="q-pts">기출</div></div>
@@ -682,9 +1237,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> Would you like to do anything exciting tomorrow?</span>
 <span class="c"><span class="num">⑤</span> I thought it uselessly to fight with them.</span>
 </div>
-<details class="ans"><summary>13번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">④ <span class="en">anything exciting</span></div>
-<div class="ans-detail">④ -thing 대용 anything + 형용사 후치로 올바름. ①newly→new ②enough fast→fast enough ③warm somewhere→somewhere warm ⑤uselessly→useless.</div></div></details>
+<details class="ans"><summary>13번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">④ <span class="en">Would you like to do anything exciting tomorrow?</span></div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>형용사 어법 종합: <b>명사 앞은 형용사</b>, <b>형용사 + enough</b>, <b>-where / -thing + 형용사</b>, <b>목적격보어는 형용사</b>.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>① the와 명사 사이에 부사 newly, ⑤ 목적격보어 자리에 부사 uselessly → 품사 오류.</span></div>
+<div class="step"><span class="sn">2</span><span>② enough가 형용사 앞에, ③ 형용사가 somewhere 앞에 → 어순 오류.</span></div>
+<div class="step"><span class="sn">3</span><span>④ anything + 형용사 exciting. 의문문이므로 anything도 알맞다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>newly(부사) → new. 명사 student를 꾸미는 것은 형용사.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>enough fast → fast enough. 형용사를 꾸밀 때 enough는 뒤에 온다.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>warm somewhere → somewhere warm. -where도 형용사가 뒤에 온다.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>-thing + 형용사.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>uselessly → useless. think + 가목적어 it + 목적격보어(형용사) + to부정사.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 새로 온 학생과 친구가 되는 게 어때? ② 그는 달리기 선수가 될 만큼 충분히 빠르다. ③ 나는 어딘가 따뜻한 곳으로 여행 가고 싶다. ④ 내일 뭔가 신나는 일을 하고 싶니? ⑤ 나는 그들과 싸우는 것이 소용없다고 생각했다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">14</div><div class="q-type choice">수량형용사</div><div class="q-pts">기출</div></div>
@@ -697,9 +1265,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> a great amount of</span>
 <span class="c"><span class="num">⑤</span> plenty of</span>
 </div>
-<details class="ans"><summary>14번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>14번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">④ <span class="en">a great amount of</span></div>
-<div class="ans-detail">students(가산 복수)에는 a great <b>amount</b> of(불가산용)를 쓸 수 없다. → a great number of.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>number는 셀 수 있는 명사</b>, <b>amount는 셀 수 없는 명사</b>와 쓴다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>빈칸 뒤 students는 셀 수 있는 명사의 복수형이고 동사도 were.</span></div>
+<div class="step"><span class="sn">2</span><span>복수명사와 쓸 수 있는 것: a good number of, many, a lot of, plenty of.</span></div>
+<div class="step"><span class="sn">3</span><span><b>a great amount of</b>는 '많은 양의'라는 뜻으로 셀 수 없는 명사와만 쓴다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>a good number of + 복수명사(꽤 많은).</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>many + 복수명사.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>a lot of는 양쪽 모두 가능.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>amount는 양. 복수명사 students와 쓸 수 없다.</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>plenty of도 양쪽 모두 가능.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>건물 앞에 많은 학생들이 서 있었다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">15</div><div class="q-type choice">보어 형용사</div><div class="q-pts">기출</div></div>
@@ -711,9 +1292,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> The ears of a rabbit are <u>much longer</u> than those of a dog.</span>
 <span class="c"><span class="num">⑤</span> That <u>sounds strangely</u>, but don't worry.</span>
 </div>
-<details class="ans"><summary>15번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">⑤ <span class="en">sounds strange</span></div>
-<div class="ans-detail">감각동사 sound + <b>형용사</b> 보어 → sounds strange (strangely 부사 불가).</div></div></details>
+<details class="ans"><summary>15번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">⑤ <span class="en">sounds strangely</span> (✗) → sounds strange</div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>감각동사 sound + 형용사.</b> 우리말 '이상하게 들린다'에 끌려 부사를 쓰면 안 된다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>감각동사가 있는 선지를 본다: ② look healthy, ⑤ sounds strangely.</span></div>
+<div class="step"><span class="sn">2</span><span>② healthy는 형용사 → 맞다. ⑤ strangely는 부사 → 보어가 될 수 없다.</span></div>
+<div class="step"><span class="sn">3</span><span><b>sounds strange</b>로 고쳐야 한다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>수사-명사 형용사는 단수형 → five-story.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>look + 형용사 healthy.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>-thing + 형용사 + to부정사.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>비교급 longer를 강조하는 much.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>sound + 형용사 → strange.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 그의 아내는 5층짜리 건물을 가지고 있다. ② 내 친구들은 모두 건강해 보인다. ③ 나는 따뜻한 마실 것을 원한다. ④ 토끼의 귀는 개의 귀보다 훨씬 길다. ⑤ 그것은 이상하게 들리지만, 걱정하지 마.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">16</div><div class="q-type choice">어순</div><div class="q-pts">기출</div></div>
@@ -726,9 +1320,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> Is there wrong anything with</span>
 <span class="c"><span class="num">⑤</span> Is anything wrong with there</span>
 </div>
-<details class="ans"><summary>16번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>16번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">③ <span class="en">Is there anything wrong with</span></div>
-<div class="ans-detail">의문문 어순 Is there + anything(부정문·의문문 대용) + wrong(후치) + with.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>의문문은 Is there ~?</b> 어순, <b>anything + 형용사</b>, wrong with ~(~에 문제가 있는).</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>문장이 물음표로 끝난다 → There is가 아니라 <b>Is there</b>. ①② 탈락.</span></div>
+<div class="step"><span class="sn">2</span><span>-thing + 형용사 → anything wrong. ④ 탈락.</span></div>
+<div class="step"><span class="sn">3</span><span>with는 뒤의 this picture와 이어져야 하므로 맨 끝 → <b>Is there anything wrong with</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>평서문 어순. 의문문이 아니다.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>평서문 어순이고 나머지 어순도 틀렸다.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>Is there + anything wrong + with + 명사?</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>wrong anything은 어순 오류.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>with there this picture가 되어 이어지지 않는다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>이 사진에 뭔가 잘못된 점이 있나요?</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">17</div><div class="q-type choice">few/little</div><div class="q-pts">기출</div></div>
@@ -741,9 +1348,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> few - a little</span>
 <span class="c"><span class="num">⑤</span> little - a few</span>
 </div>
-<details class="ans"><summary>17번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>17번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">⑤ <span class="en">little - a few</span></div>
-<div class="ans-detail">(A) opportunity(불가산) "거의 없는" → little. (B) days(가산) "며칠(조금 있는)" → a few.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>little + 셀 수 없는 명사</b>(거의 없는), <b>a few + 복수명사</b>(몇몇의). 명사의 형태와 문맥을 함께 본다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>(A) opportunity가 관사 없이 단수형 → 셀 수 없는 명사로 쓰였다. 복수명사와 쓰는 few 탈락(④). a lot은 of가 없다(①).</span></div>
+<div class="step"><span class="sn">2</span><span>(B) days는 복수명사 → little 탈락(③). '며칠 또는 그 이상'이므로 긍정의 뜻 <b>a few</b>. few(거의 없는)인 ② 탈락.</span></div>
+<div class="step"><span class="sn">3</span><span>(A)는 '60년 넘게 만날 기회가 거의 없었다'는 문맥 → <b>little</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>(A) a lot opportunity는 of가 빠졌다.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>(B) few days는 '날이 거의 없는'이 되어 or even longer와 맞지 않는다.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>(B) little은 복수명사 days와 쓸 수 없다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>(A) few는 단수형 opportunity와, (B) a little은 days와 쓸 수 없다.</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>little opportunity / a few days.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>• 60년이 넘도록 그들은 서로 만나 이야기할 기회가 거의 없었다. • 제주도는 가족과 함께 며칠 또는 그보다 더 오래 가 있기에 좋은 곳이다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">18</div><div class="q-type choice">어순</div><div class="q-pts">기출</div></div>
@@ -756,18 +1376,40 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> something specially</span>
 <span class="c"><span class="num">⑤</span> special anything</span>
 </div>
-<details class="ans"><summary>18번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>18번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">③ <span class="en">anything special</span></div>
-<div class="ans-detail">의문문에서 -thing 대용 anything + 형용사 <b>후치</b> → anything special.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>-thing + 형용사.</b> 뒤에 to부정사가 오면 「-thing + 형용사 + to부정사」.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>-thing이 앞에 와야 한다 → special something, special anything, specially something 탈락(①②⑤).</span></div>
+<div class="step"><span class="sn">2</span><span>-thing을 꾸미는 것은 형용사 → 부사 specially인 ④ 탈락.</span></div>
+<div class="step"><span class="sn">3</span><span>의문문이므로 anything도 알맞다. → <b>anything special</b></span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>형용사가 something 앞에 있다.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>부사이고 어순도 틀렸다.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>anything + 형용사 special + to show.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>specially는 부사.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>형용사가 anything 앞에 있다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>나에게 보여 줄 특별한 것이 있니?</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">19</div><div class="q-type blank">any</div><div class="q-pts">기출</div></div>
 <div class="q-prompt">19. 다음 문장에서 밑줄 친 부분은 어법상 잘못 쓰인 표현입니다. 알맞은 표현으로 바꾸어 쓰세요.</div>
 <div class="passage">A-yeong helped an old man gather the books this morning. Then he said, "Thank you so much. As you helped me, you can take <u>some</u> book you want to read."</div>
-
-<details class="ans"><summary>19번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>19번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main"><span class="en">some → any</span></div>
-<div class="ans-detail">"네가 읽고 싶은 어떤 책이든"의 뜻 → 긍정문의 "무엇이든"은 <b>any</b> book.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>긍정문에서 <b>any + 단수명사</b>는 <b>'어떤 ~이든'</b>이라는 뜻이다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>노인이 고마움의 표시로 '네가 읽고 싶은 책은 어떤 것이든 가져가도 좋다'고 말하는 상황.</span></div>
+<div class="step"><span class="sn">2</span><span>some book은 '어떤 (정해지지 않은) 책 한 권'이라는 뜻이어서 '무엇이든'이라는 뜻이 되지 않는다.</span></div>
+<div class="step"><span class="sn">3</span><span>'어떤 ~이든'은 <b>any</b> book.</span></div>
+<span class="sec-t">자주 나오는 오답</span>
+<ul class="opt-list">
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>every</i> — every book은 '모든 책'. 읽고 싶은 것을 골라 가져가라는 뜻과 다르다.</span></li>
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>a few</i> — a few 뒤에는 복수명사가 와야 한다. 뒤의 명사는 단수 book이다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>아영이는 오늘 아침 한 노인이 책을 줍는 것을 도와드렸다. 그러자 그는 말했다. "정말 고맙구나. 네가 나를 도와주었으니, 네가 읽고 싶은 책은 어떤 것이든 가져가도 좋다."</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">20</div><div class="q-type choice">어순</div><div class="q-pts">기출</div></div>
@@ -779,22 +1421,35 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> I can give you all the information available.</span>
 <span class="c"><span class="num">⑤</span> I'd like to have a big black hat.</span>
 </div>
-<details class="ans"><summary>20번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">① <span class="en">the two cute cats</span></div>
-<div class="ans-detail">어순 오류: 기수(two)가 성질형용사(cute)보다 <b>앞</b> → the two cute cats.</div></div></details>
+<details class="ans"><summary>20번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">① <span class="en">the cute two cats</span> (✗) → the two cute cats</div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>형용사의 어순: <b>the → 수사 → 성질 → 크기 → 색깔 → 국적 → 명사</b>.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>수사가 들어 있는 선지를 본다: ① cute two, ③ first two.</span></div>
+<div class="step"><span class="sn">2</span><span>③ 서수 → 기수 순서는 맞다. ① 성질 형용사 cute가 기수 two보다 앞에 있다.</span></div>
+<div class="step"><span class="sn">3</span><span>수사가 성질 형용사보다 먼저 와야 하므로 <b>the two cute cats</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>기수 two가 cute 앞에 와야 한다.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>크기(tall) → 국적(Chinese).</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>서수(first) → 기수(two).</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>all → the → 명사. available은 명사 뒤에서 꾸밀 수 있다.</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>크기(big) → 색깔(black).</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 저 귀여운 고양이 두 마리를 봐. ② 나는 그 키 큰 중국인 남자를 보았다. ③ 처음 두 문장은 틀렸다. ④ 나는 네게 구할 수 있는 모든 정보를 줄 수 있다. ⑤ 나는 크고 검은 모자를 갖고 싶다.</div></div></details>
 </article>
-
+<div class="panel-foot"><button type="button" class="pf-btn" data-go="gi-g"><small>기출응용문제</small>어법 해설 다시 보기</button><button type="button" class="pf-btn primary" data-go="u1-g"><small>처음으로</small>Unit 10 형용사의 쓰임과 어순 · 어법 해설</button></div>
+</section>
 
 </div></main>
 
 <!-- ========== Footer (학원 표기 절대 변경 금지) ========== -->
 <footer><div class="container"><div class="foot-grid">
   <div class="foot-brand">Mokdong Seoro English Academy<span class="kor">목동서로영어학원 · 0505.co.kr</span></div>
-  <div class="foot-meta">신목고·목운중·목동중 전문 영어학원<br><b>고교 3300제 · 제5장 형용사 · 완전판 상세풀이</b><br>본 자료는 학원 수강생 전용 교육 자료입니다. 무단 배포 금지.<br>Unit 10~11 · 기출응용문제 20문항</div>
+  <div class="foot-meta">신목고·목운중·목동중 전문 영어학원<br><b>고교 3300제 · 제5장 형용사 · 완전판 상세풀이</b><br>본 자료는 학원 수강생 전용 교육 자료입니다. 무단 배포 금지.<br>Unit 10 형용사의 쓰임과 어순 · Unit 11 수사와 부정수량형용사 · 기출응용문제 20문항</div>
 </div></div></footer>
 
 <script>
-
 /* ══ 펜 필기 모드 (자유 필기) v1.0 ══ */
 const PEN_COLORS=['#dc2626','#1F3864','#0f9d58','#f59e0b','#000000'];
 const PEN_WIDTHS=[2,4,7];
@@ -918,7 +1573,42 @@ if(document.readyState==='loading'){
 }else{
   setTimeout(buildPenTools,100);
 }
-
+/* ══ 유니트 / 모드 전환 ══ */
+(function(){
+  var UNIT_LABEL={u1:'Unit 10 형용사의 쓰임과 어순',u2:'Unit 11 수사와 부정수량형용사',gi:'기출응용문제'};
+  var cur={unit:'u1',mode:'g'},penStore={};
+  var nav=document.getElementById('unitNav');
+  function parse(h){var m=/^#?(u1|u2|gi)-(g|q)$/.exec(h||'');return m?{unit:m[1],mode:m[2]}:null;}
+  function syncPen(){try{
+    if(typeof penLayer!=='undefined'&&penLayer){
+      penLayer.setAttribute('height',0);penLayer.style.height='0px';penLayer.setAttribute('width',0);penLayer.style.width='0px';
+      var h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
+      penLayer.setAttribute('height',h);penLayer.style.height=h+'px';
+      var w=document.documentElement.clientWidth;penLayer.setAttribute('width',w);penLayer.style.width=w+'px';}}catch(_){}}
+  function show(unit,mode,scroll){
+    var key=unit+'-'+mode,old=cur.unit+'-'+cur.mode;
+    try{if(typeof penLayer!=='undefined'&&penLayer){penStore[old]=penLayer.innerHTML;penLayer.innerHTML=penStore[key]||'';}}catch(_){}
+    cur={unit:unit,mode:mode};
+    document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active',p.id==="p-"+key);});
+    document.querySelectorAll('.un-tab').forEach(function(b){var on=b.dataset.unit===unit;b.classList.toggle('active',on);b.setAttribute('aria-pressed',on);});
+    document.querySelectorAll('.mode-btn').forEach(function(b){var on=b.dataset.mode===mode;b.classList.toggle('active',on);b.setAttribute('aria-pressed',on);});
+    document.getElementById('modeCur').textContent=UNIT_LABEL[unit];
+    try{if(history.replaceState)history.replaceState(null,'','#'+key);}catch(_){}
+    if(scroll){var y=nav.getBoundingClientRect().top+window.scrollY;if(window.scrollY>y)window.scrollTo(0,y);}
+    setTimeout(syncPen,60);
+  }
+  document.querySelectorAll('.un-tab').forEach(function(b){b.addEventListener('click',function(){show(b.dataset.unit,'g',true);});});
+  document.querySelectorAll('.mode-btn').forEach(function(b){b.addEventListener('click',function(){show(cur.unit,b.dataset.mode,true);});});
+  document.querySelectorAll('.pf-btn').forEach(function(b){b.addEventListener('click',function(){var t=parse(b.dataset.go);show(t.unit,t.mode,true);});});
+  document.querySelectorAll('[data-toggle-all]').forEach(function(b){b.addEventListener('click',function(){
+    var ds=b.closest('.panel').querySelectorAll('article details.ans');
+    var open=!Array.prototype.every.call(ds,function(d){return d.open;});
+    ds.forEach(function(d){d.open=open;});
+    b.textContent=open?'해설 모두 접기':'해설 모두 펼치기';setTimeout(syncPen,60);});});
+  document.querySelectorAll('details.ans').forEach(function(d){d.addEventListener('toggle',function(){setTimeout(syncPen,60);});});
+  window.addEventListener('hashchange',function(){var t=parse(location.hash);if(t&&(t.unit!==cur.unit||t.mode!==cur.mode))show(t.unit,t.mode,true);});
+  var init=parse(location.hash)||cur;show(init.unit,init.mode,false);
+})();
 </script>
 </body>
 </html>
