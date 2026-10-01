@@ -472,6 +472,43 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .tab-summary.active{background:#00695C;color:white;border-color:#00695C;}
 .summary-view{display:none;}
 @media print{.summary-view{display:none!important;}}
+
+/* 10. 단어장 인쇄 */
+#vocabPrint{display:none;}
+#vocabPrint table{width:100%;border-collapse:collapse;font-size:12px;}
+#vocabPrint th{background:#1F3864;color:white;padding:6px 9px;text-align:left;font-size:11.5px;}
+#vocabPrint td{padding:5px 9px;border-bottom:1px solid #ddd;vertical-align:top;}
+#vocabPrint tr{break-inside:avoid;page-break-inside:avoid;}
+#vocabPrint tr:nth-child(even) td{background:#f5f7fb;}
+@media print{
+  body.pv #vocabPrint{display:block!important;}
+  body.pv .top-nav,body.pv .page-header,body.pv .watermark,body.pv .cover-plate,body.pv #secNav,body.pv .view-tabs,body.pv #readingView,body.pv .summary-view,body.pv .ga-panel,body.pv .sd-panel,body.pv .arrange-view,body.pv .grammar-view,body.pv .vocab-view,body.pv .q-panel,body.pv footer{display:none!important;}
+  body.pv .passage{padding:8mm 0 6mm!important;max-width:100%!important;}
+}
+
+/* 11. 단어 테스트 모달 (v4.2) */
+#vtModal{display:none;position:fixed;inset:0;z-index:5000;background:rgba(20,25,40,0.55);overflow:auto;padding:24px 12px;}
+#vtModal .vt-box{max-width:920px;margin:0 auto;background:white;border-radius:12px;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,0.35);}
+#vtCtrl{padding:12px 18px;border-bottom:1px solid #e3e6ee;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;background:#fbfcfe;font-size:13px;color:#334;}
+#vtCtrl select{font-family:inherit;font-size:12.5px;padding:5px 8px;border:1px solid #c9d2e3;border-radius:6px;background:white;color:#1F3864;}
+#vtCtrl label{display:inline-flex;align-items:center;gap:4px;cursor:pointer;font-size:12.5px;}
+#vtCtrl .vt-btn{font-family:inherit;font-size:12.5px;font-weight:700;padding:7px 16px;border-radius:18px;border:1px solid #c9d2e3;background:white;color:#1F3864;cursor:pointer;}
+#vtCtrl .vt-btn.vt-primary{background:#1F3864;border-color:#1F3864;color:white;}
+#vtSheet{padding:20px 26px 26px;}
+#vtSheet table{width:100%;border-collapse:collapse;font-size:12px;}
+#vtSheet th{background:#f0f2f7;color:#222;border:1px solid #444;padding:6px 8px;font-size:11.5px;font-weight:700;}
+#vtSheet td{border:1px solid #444;padding:7px 8px;vertical-align:middle;}
+#vtSheet .vt-cols{display:flex;gap:14px;align-items:flex-start;}
+#vtSheet .vt-cols>div{flex:1;min-width:0;}
+#vtSheet tr{break-inside:avoid;page-break-inside:avoid;}
+@media print{
+  body.pvt .passage,body.pvt .top-nav,body.pvt footer{display:none!important;}
+  body.pvt #vtModal{display:block!important;position:static!important;background:white!important;padding:0!important;overflow:visible!important;}
+  body.pvt #vtModal .vt-box{box-shadow:none!important;border-radius:0!important;max-width:100%!important;}
+  body.pvt #vtCtrl{display:none!important;}
+  body.pvt #vtSheet{padding:8mm 0 6mm!important;}
+}
+@media (max-width:600px){#vtSheet .vt-cols{flex-direction:column;}}
 </style>
 </head>
 <body>
@@ -511,7 +548,11 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="page-title">주어 + 동사 + 주격보어 — S + V + SC</div>
     <div class="page-sub">보어(SC)가 주어를 설명하는 문장 (2형식) · EXERCISE 9문장</div>
   </div>
-  <div class="view-tabs">
+    <div id="secNav" style="display:flex;gap:10px;margin:2px 0 16px;">
+      <button id="navKey" onclick="switchView('reading');document.querySelector('.view-tabs').style.display='none';document.getElementById('keySec').style.display='';document.getElementById('lineSec').style.display='none';this.style.background='#1F3864';this.style.color='#fff';var b=document.getElementById('navLine');b.style.background='#fff';b.style.color='#1F3864';window.scrollTo(0,0);" style="flex:1;padding:12px 0;border:2px solid #1F3864;border-radius:9px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:0.5px;background:#1F3864;color:#fff;box-shadow:0 3px 10px rgba(31,56,100,0.25);">⚡ 키 해석법</button>
+      <button id="navLine" onclick="switchView('reading');document.querySelector('.view-tabs').style.display='flex';document.getElementById('lineSec').style.display='';document.getElementById('keySec').style.display='none';this.style.background='#1F3864';this.style.color='#fff';var b=document.getElementById('navKey');b.style.background='#fff';b.style.color='#1F3864';window.scrollTo(0,0);" style="flex:1;padding:12px 0;border:2px solid #1F3864;border-radius:9px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:0.5px;background:#fff;color:#1F3864;">📖 주요구문 한줄해석</button>
+    </div>
+  <div class="view-tabs" style="display:none;">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
     <button class="view-tab tab-summary" id="tabSum" onclick="switchSummary()">📄 요약</button>
     <button class="view-tab tab-ga"             id="tabGA" onclick="switchGA()">📊 문법분석</button>
@@ -522,6 +563,136 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <button class="view-tab tab-vocab"          id="tabV" onclick="switchView('vocab')">📚 단어장</button>
   </div>
   <div id="readingView">
+    <div id="keySec">
+    <div style="margin:4px 0 18px;border:1.5px solid #c7d3ec;border-radius:12px;overflow:hidden;box-shadow:0 3px 14px rgba(31,56,100,0.10);background:white;">
+      <div style="background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;padding:12px 16px;font-family:'Playfair Display',serif;font-size:15px;font-weight:700;letter-spacing:0.3px;">⚡ 키포인트 해석법 — 동사 뒤 말이 주어와 「=」이면 보어(S + V + SC)!</div>
+      <div style="padding:14px 16px 8px;font-size:13px;line-height:1.7;color:#333;">
+
+        <div style="text-align:center;background:#f7f8fc;border:1.5px dashed #2E75B6;border-radius:10px;padding:12px 10px;margin-bottom:12px;font-size:14.5px;font-weight:700;color:#1F3864;">
+          동사 뒤 말 = 주어 <span style="background:#DFF2EF;color:#00695C;border-radius:4px;padding:1px 7px;">S = SC</span> → <b>2형식</b>(보어) &nbsp;/&nbsp; 동사 뒤 말 ≠ 주어 <span style="background:#FDEEE2;color:#9A3D00;border-radius:4px;padding:1px 7px;">S ≠ O</span> → <b>3형식</b>(목적어) &nbsp;—&nbsp; <span style="color:#C0392B;">보어는 「~이다 / ~하다」로 해석!</span>
+        </div>
+
+        <div style="background:#eef4fb;border-left:4px solid #0C447C;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#0C447C;margin-bottom:4px;">① <b>be + 명사/형용사</b> — 동사 뒤 말이 주어와 「=」이면 <b>보어</b>(2형식) <span style="font-weight:400;font-size:12px;color:#999;">→ 문1 · 문4 · 문6 · 문7 · 문8</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><u>My brother</u> <b>is</b> <span style="color:#00695C;">a doctor</span>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 내 형은 의사이다.</div>
+          <div style="font-size:12px;color:#555;">🔍 brother = doctor(같은 사람) → 보어. 「형이 의사를 ~하다」가 아니다.</div>
+        </div>
+        <div style="background:#e8f5f2;border-left:4px solid #00695C;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#00695C;margin-bottom:4px;">② <b>감각·상태 동사</b>(feel · look · sound · become · get · remain) + <b>형용사</b> = 보어 <span style="font-weight:400;font-size:12px;color:#999;">→ 문2</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><u>The soup</u> <b>tastes</b> <span style="color:#00695C;">salty</span>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 수프가 짜다.</div>
+          <div style="font-size:12px;color:#555;">🔍 「~하게 느끼다/보이다」로 풀지 말고 「주어가 ~하다」. 보어 자리는 형용사(saltily ✗).</div>
+        </div>
+        <div style="background:#f6effc;border-left:4px solid #5B2D8E;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#5B2D8E;margin-bottom:4px;">③ <b>look like · seem · feel like</b> + 명사 = 「~처럼 보이다 / ~인 것 같다」 <span style="font-weight:400;font-size:12px;color:#999;">→ 문9</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><u>He</u> <b>looks like</b> <span style="color:#00695C;">a soldier</span>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 그는 군인처럼 보인다.</div>
+          <div style="font-size:12px;color:#555;">🔍 like 뒤 명사가 보어. 「~을 좋아하다」의 like 와 혼동 금지.</div>
+        </div>
+        <div style="background:#fdf6ee;border-left:4px solid #9A3D00;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#9A3D00;margin-bottom:4px;">④ <b>be + p.p. + 전치사</b> / <b>be due to</b> — 주어의 상태·원인을 말하는 보어형 <span style="font-weight:400;font-size:12px;color:#999;">→ 문3 · 문5</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><u>The delay</u> <b>was due to</b> <span style="color:#00695C;">heavy snow</span>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 지연은 폭설 때문이었다.</div>
+          <div style="font-size:12px;color:#555;">🔍 be associated with(~와 관련되다) · be due to(~때문이다) — 뒤 명사는 목적어가 아니라 주어 상태의 짝.</div>
+        </div>
+        <div style="background:#f0f6e8;border-left:4px solid #27500A;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#27500A;margin-bottom:4px;">⑤ <b>긴 주어</b>는 수식어를 걷어내고 <b>핵(단수/복수) + be + 보어</b>만 잡는다 <span style="font-weight:400;font-size:12px;color:#999;">→ 문6 · 문7 · 문8</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><u>The cause</u> of these problems <b>is</b> <span style="color:#00695C;">clear</span>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 이 문제들의 원인은 분명하다.</div>
+          <div style="font-size:12px;color:#555;">🔍 수일치는 핵 cause(단수) → is. 바로 앞 problems(복수)에 속지 말 것.</div>
+        </div>
+        <div style="background:#fffaf0;border-left:4px solid #7a3a00;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#7a3a00;margin-bottom:4px;">⑥ 보어 자리의 <b>not A but B</b> = 「A가 아니라 B」 <span style="font-weight:400;font-size:12px;color:#999;">→ 문9</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><u>The goal</u> <b>is</b> <span style="color:#00695C;">not speed but accuracy</span>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 목표는 속도가 아니라 정확성이다.</div>
+          <div style="font-size:12px;color:#555;">🔍 not ~ but … 전체가 하나의 보어. B 쪽이 진짜 말하려는 것.</div>
+        </div>
+        <div style="background:#fdf0ee;border-left:4px solid #C0392B;border-radius:6px;padding:10px 14px;margin-bottom:12px;">
+          <div style="font-size:14px;font-weight:800;color:#8a1a1a;margin-bottom:4px;">⑦ 최대 함정 — 2형식 동사 뒤는 <b>형용사</b>, 부사 ✗ <span style="font-weight:400;font-size:12px;color:#999;">→ 문2</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><u>She</u> <b>looks</b> <span style="color:#00695C;">happy</span>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:4px;">▶ 그녀는 행복해 보인다.</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:12px;">
+            <span style="background:#fff;border:1px solid #C0392B;border-radius:4px;padding:2px 9px;color:#C0392B;font-weight:700;">✗ looks happily</span>
+            <span style="background:#fff;border:1px solid #1D5C2B;border-radius:4px;padding:2px 9px;color:#1D5C2B;font-weight:700;">○ looks happy — 보어 = 형용사</span>
+          </div>
+          <div style="font-size:12px;color:#555;margin-top:4px;">🔍 보어는 주어의 상태를 설명하므로 형용사. 동사를 꾸미는 부사가 올 자리가 아니다.</div>
+        </div>
+
+        <div style="background:#fff8e6;border-left:4px solid #f0d070;border-radius:6px;padding:10px 14px;margin-bottom:10px;font-size:13px;">
+          <b style="color:#8B6914;">📌 기억법</b> &nbsp;—&nbsp; <b>S = SC 면 보어</b> · <b>감각·상태 동사 + 형용사</b> · <b>look like = ~처럼 보이다</b> · <b>be due to / be + p.p. + 전치사도 보어형</b> · <b style="color:#C0392B;">긴 주어는 핵만</b>.
+        </div>
+
+        <div style="background:#fffaf0;border-left:4px solid #e8b64c;border-radius:6px;padding:10px 14px;margin-bottom:10px;font-size:13px;">
+          <b style="color:#7a3a00;">🔄 해석 3단계</b> &nbsp; <b>①</b> 동사를 찾고 뒤의 말을 본다 → <b>②</b> 주어와 「=」인가?(같으면 보어 · 다르면 목적어) → <b>③</b> 「S는 SC이다 / S가 SC하다」로 해석하고, 긴 수식어는 핵 뒤에 붙인다.
+        </div>
+
+      </div>
+    </div>
+    <div style="margin:4px 0 18px;border:1.5px solid #d8c7ec;border-radius:12px;overflow:hidden;box-shadow:0 3px 14px rgba(91,58,142,0.10);background:white;">
+      <div style="background:linear-gradient(135deg,#5B3A8E,#7B54B8);color:white;padding:12px 18px;font-size:16px;font-weight:800;">📎 부록 — 2형식 필수 동사 — 보어를 데리고 다니는 동사 <span style="font-weight:400;font-size:12.5px;opacity:0.85;">be 류 · 감각 · 변화 · 판단 · 숙어형 보어</span></div>
+      <div style="padding:14px 16px 8px;">
+        <div style="border:2px dashed #7B54B8;border-radius:8px;padding:10px 14px;margin-bottom:6px;background:#faf7ff;font-size:13px;">
+          <b style="color:#5B3A8E;">⚡ 공통 원리</b> — 이 동사들 뒤의 말은 <b>목적어가 아니라 주어를 설명하는 보어</b>다. 보어 자리에는 <b>형용사·명사</b>가 오며, <b style="color:#C0392B;">부사는 올 수 없다</b>(looks happy ○ / looks happily ✗).
+        </div>
+        <div style="font-size:13.5px;font-weight:800;color:#0C447C;border-bottom:2px solid #0C447C;padding-bottom:3px;margin:12px 0 7px;">A. be 류 — 「~이다 · ~인 채로 있다」</div>
+        <div style="background:#eef4fb;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#0C447C;">be · remain · stay · keep</b> <span style="color:#444;">— ~이다 · ~인 채로 있다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">The weather <b>remained</b> cold all week.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 remained 뒤 cold(형용사) = 보어.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 날씨는 일주일 내내 추운 채로 있었다.</div>
+        </div>
+        <div style="font-size:13.5px;font-weight:800;color:#00695C;border-bottom:2px solid #00695C;padding-bottom:3px;margin:12px 0 7px;">B. 감각 동사 — 「~하게 보이다 · 들리다 · 느껴지다」 + 형용사</div>
+        <div style="background:#e8f5f2;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#00695C;">look · sound · smell · taste · feel</b> <span style="color:#444;">— ~해 보이다 · 들리다 · 냄새나다 · 맛이 나다 · 느껴지다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">That <b>sounds</b> great.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 형용사 great 가 보어. greatly ✗.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 그거 좋게 들린다(= 좋은데).</div>
+        </div>
+        <div style="background:#e8f5f2;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#00695C;">look like · sound like · feel like + 명사</b> <span style="color:#444;">— ~처럼 보이다 · 들리다 · 느껴지다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">It <b>sounds like</b> a good plan.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 명사 앞에는 like 가 필요(sound a good plan ✗).</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 좋은 계획처럼 들린다.</div>
+        </div>
+        <div style="font-size:13.5px;font-weight:800;color:#9A3D00;border-bottom:2px solid #9A3D00;padding-bottom:3px;margin:12px 0 7px;">C. 변화 동사 — 「~이 되다 · ~해지다」</div>
+        <div style="background:#fdf6ee;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#9A3D00;">become · get · grow · turn · go · come · fall</b> <span style="color:#444;">— ~이 되다 · ~해지다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">The leaves <b>turned</b> red. / He <b>fell</b> asleep.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 turned red · fell asleep — 뒤 형용사가 변화의 결과 상태(보어).</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 잎이 빨갛게 변했다. / 그는 잠들었다.</div>
+        </div>
+        <div style="background:#fdf6ee;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#9A3D00;">get + p.p.</b> <span style="color:#444;">— ~하게 되다 (수동 보어형)</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">She <b>got</b> promoted last month.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 get + p.p. = be + p.p. 의 구어형 — 주어 상태의 변화.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 그녀는 지난달 승진했다.</div>
+        </div>
+        <div style="font-size:13.5px;font-weight:800;color:#5B2D8E;border-bottom:2px solid #5B2D8E;padding-bottom:3px;margin:12px 0 7px;">D. 판단·외견 동사 — 「~인 것 같다 · ~로 판명되다」</div>
+        <div style="background:#f6effc;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#5B2D8E;">seem · appear · prove · turn out</b> <span style="color:#444;">— ~인 것 같다 · ~로 판명되다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">The rumor <b>proved</b> false.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 prove + 형용사 = ~로 드러나다(「증명하다」의 타동사와 구별).</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 그 소문은 거짓으로 판명되었다.</div>
+        </div>
+        <div style="font-size:13.5px;font-weight:800;color:#27500A;border-bottom:2px solid #27500A;padding-bottom:3px;margin:12px 0 7px;">E. 숙어형 보어 — be + 형용사/p.p. + 전치사</div>
+        <div style="background:#f0f6e8;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#27500A;">be due to · be associated with · be related to</b> <span style="color:#444;">— ~때문이다 · ~와 관련되다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">His success <b>is due to</b> hard work.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 뒤 명사(hard work)는 전치사의 목적어 — 문장 형식은 2형식.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 그의 성공은 노력 때문이다.</div>
+        </div>
+        <div style="background:#f0f6e8;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#27500A;">be likely to V · be able to V · be capable of ~ing</b> <span style="color:#444;">— ~할 것 같다 · ~할 수 있다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">It <b>is likely to</b> rain tonight.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 be + 형용사 + to V 가 한 덩어리 보어.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 오늘 밤 비가 올 것 같다.</div>
+        </div>
+        <div style="background:#f0f6e8;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#27500A;">be accustomed(used) to ~ing · be aware of · be familiar with</b> <span style="color:#444;">— ~에 익숙하다 · ~을 알다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">She <b>is accustomed to</b> getting up early.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 to 뒤는 동명사(to get ✗).</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 그녀는 일찍 일어나는 데 익숙하다.</div>
+        </div>
+
+        <div style="background:#fff8e6;border-left:4px solid #f0d070;border-radius:6px;padding:10px 14px;margin:12px 0 10px;font-size:13px;">
+          <b style="color:#8B6914;">📌 최종 정리</b> — 감각·변화 동사를 보면 「~하게」가 아니라 「<b>주어가 ~하다 / ~이 되다</b>」로 해석한다. 숙어형(be due to 등)은 통째로 외워 뒤 명사를 목적어로 착각하지 않는다.
+        </div>
+      </div>
+    </div>
+    </div><!-- /keySec -->
+    <div id="lineSec" style="display:none;">
     <div class="hints">
       <div class="hint">🖱 PC: 클릭 → 발음 · 더블클릭 → 해석 고정</div>
       <div class="hint">📱 모바일: 탭 → 해석</div>
@@ -569,7 +740,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <text x="510" y="92" font-size="11" font-weight="700" fill="#C0392B" text-anchor="middle" font-family="sans-serif">road 수식(어디로 가는 길)</text>
 </svg>
     </div>
-    <div class="s-kr">꿈의 해석은 마음의 무의식적 활동에 대한 지식으로 가는 왕도<span class="pr">(= 가장 확실한 길)</span>이다.</div>
+    <div class="s-kr">꿈의 해석은 마음의 무의식적 활동에 대한 지식으로 가는 왕도<span class="pr">(= 가장 확실한 길)</span>이다.<span class="s-extra" style="display:block;margin-top:7px;padding:8px 12px;background:#f3eefb;border-left:3px solid #8b6db8;border-radius:5px;font-size:12.5px;color:#4a3d5c;line-height:1.65;">💬 <strong>추가해설</strong> — <strong>is the royal road</strong>: is 뒤 the royal road 는 목적어가 아니라 <strong>명사보어</strong>(꿈의 해석 = 왕도). to a knowledge of the unconscious activities of the mind 는 road 를 꾸미는 전치사구 사슬 — 「~에 대한 지식으로 가는」. 서두 ① 적용.</span></div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">S + is + 명사보어</span><span class="vocab-kr">2형식(주어 = 보어)</span><span class="vocab-en">the royal road to ~</span><span class="vocab-kr">~로 가는 왕도·지름길</span><span class="vocab-en">unconscious activities</span><span class="vocab-kr">무의식적 활동</span><span class="vocab-en">a knowledge of ~</span><span class="vocab-kr">~에 대한 지식</span></div>
     <div class="s-meaning">
       <span class="meaning-label">🧭 독해 방법 · HOW TO READ</span>
@@ -623,7 +794,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <text x="388" y="92" font-size="11" font-weight="700" fill="#C0392B" text-anchor="middle" font-family="sans-serif">accustomed 수식</text>
 </svg>
     </div>
-    <div class="s-kr">그 어린 소녀는 새로운 사회에서 사는 데 익숙함을 느꼈고<span class="pr">(= feel + 형용사 보어)</span>, 많은 관습과 예절을 배우게 되었다.</div>
+    <div class="s-kr">그 어린 소녀는 새로운 사회에서 사는 데 익숙함을 느꼈고<span class="pr">(= feel + 형용사 보어)</span>, 많은 관습과 예절을 배우게 되었다.<span class="s-extra" style="display:block;margin-top:7px;padding:8px 12px;background:#f3eefb;border-left:3px solid #8b6db8;border-radius:5px;font-size:12.5px;color:#4a3d5c;line-height:1.65;">💬 <strong>추가해설</strong> — <strong>felt accustomed</strong>: feel + 형용사(accustomed) = 소녀가 「익숙한 상태」 — 보어(서두 ②). be/feel accustomed to V-ing(~하는 데 익숙하다). and 뒤 <strong>got taught</strong> = get + p.p.(배우게 되었다) — 수동 보어형, 역시 주어의 상태 변화.</span></div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">feel + 형용사(SC)</span><span class="vocab-kr">느끼다 + 보어 = 2형식</span><span class="vocab-en">accustomed to ~ing</span><span class="vocab-kr">~하는 데 익숙한</span><span class="vocab-en">get taught</span><span class="vocab-kr">배우게 되다(get+p.p. 수동)</span><span class="vocab-en">customs and manners</span><span class="vocab-kr">관습과 예절</span></div>
     <div class="s-meaning">
       <span class="meaning-label">🧭 독해 방법 · HOW TO READ</span>
@@ -671,7 +842,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <text x="428" y="164" font-size="11" font-weight="700" fill="#C0392B" text-anchor="middle" font-family="sans-serif">associated 수식</text>
 </svg>
     </div>
-    <div class="s-kr">다른 문화, 특히 로마 가톨릭에서는, 가장 강한 금기가 종교와 관련이 있을 수 있다.</div>
+    <div class="s-kr">다른 문화, 특히 로마 가톨릭에서는, 가장 강한 금기가 종교와 관련이 있을 수 있다.<span class="s-extra" style="display:block;margin-top:7px;padding:8px 12px;background:#f3eefb;border-left:3px solid #8b6db8;border-radius:5px;font-size:12.5px;color:#4a3d5c;line-height:1.65;">💬 <strong>추가해설</strong> — <strong>may be associated with</strong> = 조동사 + be + p.p. + 전치사 → 주어(taboos)의 상태를 밝히는 보어형(서두 ④). religion 은 with 의 목적어이지 동사의 목적어가 아니다. In other cultures, particularly Roman Catholic 은 삽입 수식어(M) — 걷어내고 뼈대 taboos may be associated 부터.</span></div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">be associated with ~</span><span class="vocab-kr">~와 관련이 있다(2형식 보어)</span><span class="vocab-en">may be + p.p.</span><span class="vocab-kr">~될 수 있다(조동사+수동)</span><span class="vocab-en">taboo</span><span class="vocab-kr">금기</span><span class="vocab-en">particularly</span><span class="vocab-kr">특히</span></div>
     <div class="s-meaning">
       <span class="meaning-label">🧭 독해 방법 · HOW TO READ</span>
@@ -709,7 +880,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <text x="10" y="94" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">우리 시대의 가장 큰 경제적 폐해들 중 다수는 위험, 불확실성, 그리고 무지의 산물(그로 인한 결과)이다.  [S + V + 주격보어(SC)]</text>
 </svg>
     </div>
-    <div class="s-kr">우리 시대의 가장 큰 경제적 폐해들 중 다수는 위험, 불확실성, 그리고 무지의 산물<span class="pr">(= 그로 인한 결과)</span>이다.</div>
+    <div class="s-kr">우리 시대의 가장 큰 경제적 폐해들 중 다수는 위험, 불확실성, 그리고 무지의 산물<span class="pr">(= 그로 인한 결과)</span>이다.<span class="s-extra" style="display:block;margin-top:7px;padding:8px 12px;background:#f3eefb;border-left:3px solid #8b6db8;border-radius:5px;font-size:12.5px;color:#4a3d5c;line-height:1.65;">💬 <strong>추가해설</strong> — 주어 핵 <strong>Many</strong>(of the greatest economic evils …) = 복수 → <strong>are</strong>. the fruits of risk, uncertainty, and ignorance 는 명사보어(폐해 = 산물), of 뒤 명사 3개 병렬(서두 ① · ⑤).</span></div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">Many of ~ are</span><span class="vocab-kr">다수는 ~이다(복수 일치)</span><span class="vocab-en">are + 명사보어</span><span class="vocab-kr">2형식(주어 = 보어)</span><span class="vocab-en">the fruits of ~</span><span class="vocab-kr">~의 산물·결과</span><span class="vocab-en">uncertainty / ignorance</span><span class="vocab-kr">불확실성 / 무지</span></div>
     <div class="s-meaning">
       <span class="meaning-label">🧭 독해 방법 · HOW TO READ</span>
@@ -763,7 +934,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <text x="251" y="164" font-size="11" font-weight="700" fill="#C0392B" text-anchor="middle" font-family="sans-serif">individual 수식</text>
 </svg>
     </div>
-    <div class="s-kr">로빈슨 크루소 신화의 지속적인 매력은 사회로부터 독립된 개인을 상상하려는 그 시도 때문<span class="pr">(= be due to ~)</span>이다.</div>
+    <div class="s-kr">로빈슨 크루소 신화의 지속적인 매력은 사회로부터 독립된 개인을 상상하려는 그 시도 때문<span class="pr">(= be due to ~)</span>이다.<span class="s-extra" style="display:block;margin-top:7px;padding:8px 12px;background:#f3eefb;border-left:3px solid #8b6db8;border-radius:5px;font-size:12.5px;color:#4a3d5c;line-height:1.65;">💬 <strong>추가해설</strong> — <strong>is due to</strong> = 「~때문이다」 보어형(서두 ④). its attempt <strong>to imagine</strong> ~ = 「~하려는 시도」(to부정사가 attempt 수식), an individual <strong>independent of</strong> society = 형용사구 후치수식(사회로부터 독립된 개인).</span></div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">be due to ~</span><span class="vocab-kr">~때문이다(보어)</span><span class="vocab-en">attempt to V</span><span class="vocab-kr">~하려는 시도</span><span class="vocab-en">independent of ~</span><span class="vocab-kr">~로부터 독립된</span><span class="vocab-en">fascination / myth</span><span class="vocab-kr">매력 / 신화</span></div>
     <div class="s-meaning">
       <span class="meaning-label">🧭 독해 방법 · HOW TO READ</span>
@@ -811,7 +982,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <text x="453" y="164" font-size="11" font-weight="700" fill="#C0392B" text-anchor="middle" font-family="sans-serif">barriers 지시 → 「그리고 그것을」 순행</text>
 </svg>
     </div>
-    <div class="s-kr">높은 수준의 성과나 잠재력 달성에 이르는 가장 큰 장벽은 우리가 스스로에게 부과하는<span class="pr">(= that we impose ~)</span> 정신적 장벽이다.</div>
+    <div class="s-kr">높은 수준의 성과나 잠재력 달성에 이르는 가장 큰 장벽은 우리가 스스로에게 부과하는<span class="pr">(= that we impose ~)</span> 정신적 장벽이다.<span class="s-extra" style="display:block;margin-top:7px;padding:8px 12px;background:#f3eefb;border-left:3px solid #8b6db8;border-radius:5px;font-size:12.5px;color:#4a3d5c;line-height:1.65;">💬 <strong>추가해설</strong> — 긴 주어 The greatest barriers to [high level of performance] or [reaching your potential] — 핵 <strong>barriers</strong>(복수) → <strong>are</strong>(서두 ⑤). mental barriers 는 명사보어(장벽 = 정신적 장벽). <strong>that we impose upon ourselves</strong> 는 목적격 관계대명사절 — barriers 수식(우리가 스스로에게 부과하는).</span></div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">barriers ... are</span><span class="vocab-kr">장벽은 ~이다(복수 일치)</span><span class="vocab-en">that we impose</span><span class="vocab-kr">우리가 부과하는(목적격 관계대명사)</span><span class="vocab-en">impose upon oneself</span><span class="vocab-kr">스스로에게 부과하다</span><span class="vocab-en">potential</span><span class="vocab-kr">잠재력</span></div>
     <div class="s-meaning">
       <span class="meaning-label">🧭 독해 방법 · HOW TO READ</span>
@@ -862,7 +1033,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <text x="512" y="164" font-size="11" font-weight="700" fill="#C0392B" text-anchor="middle" font-family="sans-serif">prerequisite 수식</text>
 </svg>
     </div>
-    <div class="s-kr">신문의 역할에 대한 일반 대중의 예리한 의식은 민주 사회의 성공적인 유지를 위한 전제 조건<span class="pr">(= 반드시 필요한 조건)</span>이다.</div>
+    <div class="s-kr">신문의 역할에 대한 일반 대중의 예리한 의식은 민주 사회의 성공적인 유지를 위한 전제 조건<span class="pr">(= 반드시 필요한 조건)</span>이다.<span class="s-extra" style="display:block;margin-top:7px;padding:8px 12px;background:#f3eefb;border-left:3px solid #8b6db8;border-radius:5px;font-size:12.5px;color:#4a3d5c;line-height:1.65;">💬 <strong>추가해설</strong> — 주어 핵 <strong>consciousness</strong>(단수) 뒤에 전치사구 두 개 — on the part of the general public(일반 대중 측의) · as to the role of the newspaper(신문의 역할에 관한) — 가 끼어 길어졌다. 걷어내면 consciousness <strong>is</strong> a prerequisite(의식 = 전제조건) — 명사보어(서두 ⑤).</span></div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">긴 주어 + is</span><span class="vocab-kr">핵심 주어 단수 → is</span><span class="vocab-en">as to ~ / on the part of ~</span><span class="vocab-kr">~에 관하여 / ~측의</span><span class="vocab-en">prerequisite to ~</span><span class="vocab-kr">~의 전제 조건</span><span class="vocab-en">keen / consciousness</span><span class="vocab-kr">예리한 / 의식</span></div>
     <div class="s-meaning">
       <span class="meaning-label">🧭 독해 방법 · HOW TO READ</span>
@@ -916,7 +1087,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <text x="448" y="92" font-size="11" font-weight="700" fill="#C0392B" text-anchor="middle" font-family="sans-serif">clothes 지시 → 「그리고 그것을」 순행</text>
 </svg>
     </div>
-    <div class="s-kr">요즘 많은 젊은이들이 어떤 경우에나 입는 옷이 주는 첫인상은, 마치 모두가 같은 스타일로 꾸며야 할 의무를 느끼는 것처럼<span class="pr">(= as if 가정법)</span>, 획일성과 동일성의 인상이다.</div>
+    <div class="s-kr">요즘 많은 젊은이들이 어떤 경우에나 입는 옷이 주는 첫인상은, 마치 모두가 같은 스타일로 꾸며야 할 의무를 느끼는 것처럼<span class="pr">(= as if 가정법)</span>, 획일성과 동일성의 인상이다.<span class="s-extra" style="display:block;margin-top:7px;padding:8px 12px;background:#f3eefb;border-left:3px solid #8b6db8;border-radius:5px;font-size:12.5px;color:#4a3d5c;line-height:1.65;">💬 <strong>추가해설</strong> — 주어 핵 <strong>impression</strong>(단수) + given by the clothes(p.p. 수식) + (that) many young people wear ~(관계대명사 생략) → <strong>is</strong>. <strong>one</strong> = impression 을 받는 대명사 보어(획일성의 인상). <strong>as if + 과거(felt)</strong> = 가정법 「마치 ~인 것처럼」, feel obliged to V = ~해야 할 의무를 느끼다.</span></div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">impression ... is one of ~</span><span class="vocab-kr">핵심 주어 단수 → is</span><span class="vocab-en">one of ~</span><span class="vocab-kr">~의 것(대명사 보어)</span><span class="vocab-en">as if + 과거</span><span class="vocab-kr">마치 ~인 것처럼(가정법)</span><span class="vocab-en">feel obliged to V</span><span class="vocab-kr">~할 의무를 느끼다</span></div>
     <div class="s-meaning">
       <span class="meaning-label">🧭 독해 방법 · HOW TO READ</span>
@@ -985,7 +1156,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <text x="262" y="270" font-size="11" font-weight="700" fill="#C0392B" text-anchor="middle" font-family="sans-serif">capacity 지시 → 「그리고 그것이」 순행</text>
 </svg>
     </div>
-    <div class="s-kr">인류가 잠재적으로 동등한 하나의 가족처럼 보이기 시작하면서, 서구인들은 원주민 문화에서 발견되는 행동이 야만적 '타자성'의 구별되는 특징이 아니라, 좋든 나쁘든 우리 모두에게 존재할 수 있는 어떤 능력의 표현<span class="pr">(= not A but B)</span>이라는 것을 받아들여야 했다.</div>
+    <div class="s-kr">인류가 잠재적으로 동등한 하나의 가족처럼 보이기 시작하면서, 서구인들은 원주민 문화에서 발견되는 행동이 야만적 '타자성'의 구별되는 특징이 아니라, 좋든 나쁘든 우리 모두에게 존재할 수 있는 어떤 능력의 표현<span class="pr">(= not A but B)</span>이라는 것을 받아들여야 했다.<span class="s-extra" style="display:block;margin-top:7px;padding:8px 12px;background:#f3eefb;border-left:3px solid #8b6db8;border-radius:5px;font-size:12.5px;color:#4a3d5c;line-height:1.65;">💬 <strong>추가해설</strong> — <strong>As</strong> ~ = 「~하면서」(접속사). <strong>look like</strong> + 명사(a family) = 「~처럼 보이다」 2형식(서두 ③). accept <strong>that</strong>절 안: the behavior (which was) <strong>found</strong> in native cultures = 주어, was = 동사, <strong>not</strong> the distinctive feature <strong>but</strong> the expression = 보어(서두 ⑥). a capacity that may exist 는 주격 관계절, for better or for worse 는 삽입(좋든 나쁘든).</span></div>
     <div class="s-vocab"><span class="vocab-label">📌</span><span class="vocab-en">look (more) like ~</span><span class="vocab-kr">~처럼 보이다(2형식)</span><span class="vocab-en">not A but B</span><span class="vocab-kr">A가 아니라 B(보어)</span><span class="vocab-en">the behavior found</span><span class="vocab-kr">발견되는 행동(과거분사 수식)</span><span class="vocab-en">for better or for worse</span><span class="vocab-kr">좋든 나쁘든</span></div>
     <div class="s-meaning">
       <span class="meaning-label">🧭 독해 방법 · HOW TO READ</span>
@@ -1000,6 +1171,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 </div>
 
     </div><!-- /cards -->
+    </div><!-- /lineSec -->
   </div><!-- /readingView -->
 
 
@@ -1309,6 +1481,10 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="gtype-final"><button class="gtype-final-btn fi-btn" onclick="checkAllFill()">✓ 서답형 최종 확인</button><span class="gtype-final-score" id="fi-final-score"></span></div>
   </div>
   <div class="vocab-view" id="vocabView">
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-bottom:14px;flex-wrap:wrap;">
+      <button class="g-print-btn" style="margin:0;background:#6A1B9A;" onclick="printV(false)">🖨️ 단어장 인쇄 (A4)</button>
+      <button class="g-print-btn" style="margin:0;background:#7B3F00;" onclick="vtOpen()">📝 단어 테스트 만들기</button>
+    </div>
     <div class="vocab-tabs">
       <button class="vocab-tab active" id="vtab0" onclick="switchVocab(0)">📖 단어카드</button>
       <button class="vocab-tab"        id="vtab1" onclick="switchVocab(1)">✏️ 철자 퀴즈</button>
@@ -1337,6 +1513,24 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
 </div>
 
+  </div>
+</div>
+<div id="vtModal">
+  <div class="vt-box">
+    <div id="vtCtrl">
+      <b style="font-size:15px;color:#1F3864;margin-right:6px;">📝 단어 테스트</b>
+      유형 <select id="vtType" onchange="vtBuild()"><option value="e2k">영어 → 뜻 쓰기</option><option value="k2e">뜻 → 영어 쓰기</option></select>
+      문항 <select id="vtCount" onchange="vtBuild()"><option value="10">10</option><option value="20" selected>20</option><option value="30">30</option><option value="all">전체</option></select>
+      범위 <select id="vtScope" onchange="vtBuild()"><option value="all">단어 + 숙어·공식</option><option value="word">단어만</option><option value="phrase">숙어·공식만</option></select>
+      <label><input type="checkbox" id="vtShuffle" checked onchange="vtBuild()"> 무작위</label>
+      <label><input type="checkbox" id="vtAnswer" checked onchange="vtBuild()"> 정답지 포함</label>
+      <button class="vt-btn" onclick="vtBuild()">다시 생성</button>
+      <span style="margin-left:auto;display:inline-flex;gap:8px;">
+        <button class="vt-btn vt-primary" onclick="vtPrint()">🖨 인쇄</button>
+        <button class="vt-btn" onclick="vtClose()">닫기</button>
+      </span>
+    </div>
+    <div id="vtSheet"></div>
   </div>
 </div>
 <footer style="text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(31,56,100,0.25);letter-spacing:1px;">✦ 구문 PATTERN 02 · S + V + SC (2형식) · 0505.co.kr ✦</footer>
@@ -1982,6 +2176,103 @@ document.addEventListener("DOMContentLoaded",function(){
 });
 // 즉시 실행 (DOMContentLoaded 전에도 안전하게)
 (function(){hideQPanels();})();
+// ── 단어장 인쇄 (v4.2) ──
+function buildVocabPrint(test){
+  var el=document.getElementById("vocabPrint");
+  if(!el){el=document.createElement("div");el.id="vocabPrint";document.querySelector(".passage").appendChild(el);}
+  var t=document.querySelector(".page-title");
+  var head='<div style="font-size:16px;font-weight:800;color:#1F3864;margin:4px 0 6px;">📚 단어장'+(test?" — 시험지":"")+' · '+(t?t.textContent:"")+' <span style="font-weight:400;font-size:12px;color:#888;">('+VOCAB.length+' words)</span></div>';
+  if(test)head+='<div style="font-size:12.5px;color:#444;margin-bottom:8px;">이름: ______________________ &nbsp;&nbsp;&nbsp; 점수: ________ / '+VOCAB.length+'</div>';
+  var rows=VOCAB.map(function(v,i){
+    var kr=test?"":v.kr;
+    var extra="";
+    if(!test){
+      if(v.syn&&v.syn.length)extra+=' <span style="color:#1565C0;font-size:11px;">≒ '+v.syn.join(", ")+'</span>';
+      if(v.ant&&v.ant.length)extra+=' <span style="color:#B71C1C;font-size:11px;">↔ '+v.ant.join(", ")+'</span>';
+    }
+    return '<tr><td style="width:5%;color:#888;">'+(i+1)+'</td><td style="width:32%;font-family:Georgia,serif;font-weight:700;color:#1F3864;">'+v.en+'</td><td style="width:9%;color:#999;font-size:11px;">'+v.pos+'</td><td>'+kr+extra+'</td></tr>';
+  }).join("");
+  el.innerHTML=head+'<table><tr><th>#</th><th>단어 · 숙어</th><th>품사</th><th>뜻</th></tr>'+rows+'</table>';
+}
+function printV(test){
+  buildVocabPrint(test);
+  document.body.classList.add("pv");
+  window.onafterprint=function(){document.body.classList.remove("pv");window.onafterprint=null;};
+  window.print();
+}
+// ── 단어 테스트 생성기 (v4.2 · 대치동식 2단 시험지) ──
+function vtPool(){
+  var pool=[],seen={};
+  VOCAB.forEach(function(v){
+    var ph=(v.pos||"").indexOf("phr")>=0||v.en.indexOf(" ")>=0;
+    pool.push({en:v.en,kr:v.kr,ph:ph});seen[v.en.toLowerCase()]=1;
+  });
+  document.querySelectorAll(".s-vocab").forEach(function(sv){
+    var ens=sv.querySelectorAll(".vocab-en"),krs=sv.querySelectorAll(".vocab-kr");
+    for(var i=0;i<ens.length;i++){
+      var e=ens[i].textContent.trim(),k=krs[i]?krs[i].textContent.trim():"";
+      if(!e||!k||seen[e.toLowerCase()])continue;
+      seen[e.toLowerCase()]=1;
+      pool.push({en:e,kr:k,ph:true});
+    }
+  });
+  return pool;
+}
+function vtHalfTable(items,start,mode,answer){
+  var head=answer?"<tr><th style=\"width:11%;\">No.</th><th style=\"width:42%;\">"+(mode==="k2e"?"뜻":"단어")+"</th><th>"+(mode==="k2e"?"단어":"뜻")+"</th></tr>"
+                 :"<tr><th style=\"width:11%;\">No.</th><th style=\"width:44%;\">문제</th><th>답</th></tr>";
+  var rows=items.map(function(it,i){
+    var q=mode==="k2e"?it.kr:it.en, a=mode==="k2e"?it.en:it.kr;
+    var qs=mode==="k2e"?"":"font-family:Georgia,serif;";
+    if(answer)return "<tr><td style=\"text-align:center;color:#666;\">"+(start+i+1)+"</td><td style=\"font-weight:700;"+qs+"\">"+q+"</td><td>"+a+"</td></tr>";
+    return "<tr><td style=\"text-align:center;color:#666;\">"+(start+i+1)+"</td><td style=\"font-weight:700;"+qs+"\">"+q+"</td><td style=\"height:26px;\"></td></tr>";
+  }).join("");
+  return "<table>"+head+rows+"</table>";
+}
+function vtTwoCol(items,mode,answer){
+  var half=Math.ceil(items.length/2);
+  var L=items.slice(0,half),R=items.slice(half);
+  return "<div class=\"vt-cols\"><div>"+vtHalfTable(L,0,mode,answer)+"</div><div>"+(R.length?vtHalfTable(R,half,mode,answer):"")+"</div></div>";
+}
+function vtBuild(){
+  var mode=document.getElementById("vtType").value;
+  var cnt=document.getElementById("vtCount").value;
+  var scope=document.getElementById("vtScope").value;
+  var shuffle=document.getElementById("vtShuffle").checked;
+  var withAns=document.getElementById("vtAnswer").checked;
+  var pool=vtPool();
+  if(scope==="word")pool=pool.filter(function(v){return !v.ph;});
+  else if(scope==="phrase")pool=pool.filter(function(v){return v.ph;});
+  if(shuffle)pool=pool.slice().sort(function(){return Math.random()-0.5;});
+  var items=(cnt==="all")?pool:pool.slice(0,Math.min(parseInt(cnt,10),pool.length));
+  var t=document.querySelector(".page-title");
+  var title=(t?t.textContent.split("—")[0].trim():"단어장");
+  var badge=document.querySelector(".nav-title-bar");
+  var typeLabel=(mode==="k2e"?"뜻 → 영어":"영어 → 뜻");
+  var scopeLabel=(scope==="word"?"단어":scope==="phrase"?"숙어·공식":"단어+숙어·공식");
+  var html="";
+  html+="<div style=\"display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:2px solid #1F3864;padding-bottom:8px;margin-bottom:12px;\">";
+  html+="<div style=\"font-size:17px;font-weight:800;color:#111;\">"+(badge?badge.textContent.trim()+" · ":"")+title+" 단어테스트</div>";
+  html+="<div style=\"font-size:11px;color:#888;\">"+typeLabel+" · "+scopeLabel+" · "+items.length+"문항 · 목동서로영어학원</div></div>";
+  html+="<div style=\"display:flex;gap:26px;font-size:12.5px;color:#333;margin-bottom:12px;flex-wrap:wrap;\">";
+  html+="<span>이름 &nbsp;______________</span><span>날짜 &nbsp;______________</span><span>점수 &nbsp;__________ / "+items.length+"</span></div>";
+  html+=vtTwoCol(items,mode,false);
+  if(withAns){
+    html+="<div style=\"margin:22px 0 8px;padding-left:9px;border-left:4px solid #1F3864;font-size:14px;font-weight:800;color:#111;page-break-before:always;break-before:page;\">정답 · "+title+" 단어테스트 ("+typeLabel+")</div>";
+    html+=vtTwoCol(items,mode,true);
+  }
+  document.getElementById("vtSheet").innerHTML=html;
+}
+function vtOpen(){
+  document.getElementById("vtModal").style.display="block";
+  if(!document.getElementById("vtSheet").innerHTML)vtBuild();
+}
+function vtClose(){document.getElementById("vtModal").style.display="none";}
+function vtPrint(){
+  document.body.classList.add("pvt");
+  window.onafterprint=function(){document.body.classList.remove("pvt");window.onafterprint=null;};
+  window.print();
+}
 </script>
 
 <script>

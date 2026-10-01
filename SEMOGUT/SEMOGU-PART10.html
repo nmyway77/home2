@@ -446,6 +446,43 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .tab-summary.active{background:#00695C;color:white;border-color:#00695C;}
 .summary-view{display:none;}
 @media print{.summary-view{display:none!important;}}
+
+/* 10. 단어장 인쇄 */
+#vocabPrint{display:none;}
+#vocabPrint table{width:100%;border-collapse:collapse;font-size:12px;}
+#vocabPrint th{background:#1F3864;color:white;padding:6px 9px;text-align:left;font-size:11.5px;}
+#vocabPrint td{padding:5px 9px;border-bottom:1px solid #ddd;vertical-align:top;}
+#vocabPrint tr{break-inside:avoid;page-break-inside:avoid;}
+#vocabPrint tr:nth-child(even) td{background:#f5f7fb;}
+@media print{
+  body.pv #vocabPrint{display:block!important;}
+  body.pv .top-nav,body.pv .page-header,body.pv .watermark,body.pv .cover-plate,body.pv #secNav,body.pv .view-tabs,body.pv #readingView,body.pv .summary-view,body.pv .ga-panel,body.pv .sd-panel,body.pv .arrange-view,body.pv .grammar-view,body.pv .vocab-view,body.pv .q-panel,body.pv footer{display:none!important;}
+  body.pv .passage{padding:8mm 0 6mm!important;max-width:100%!important;}
+}
+
+/* 11. 단어 테스트 모달 (v4.2) */
+#vtModal{display:none;position:fixed;inset:0;z-index:5000;background:rgba(20,25,40,0.55);overflow:auto;padding:24px 12px;}
+#vtModal .vt-box{max-width:920px;margin:0 auto;background:white;border-radius:12px;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,0.35);}
+#vtCtrl{padding:12px 18px;border-bottom:1px solid #e3e6ee;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;background:#fbfcfe;font-size:13px;color:#334;}
+#vtCtrl select{font-family:inherit;font-size:12.5px;padding:5px 8px;border:1px solid #c9d2e3;border-radius:6px;background:white;color:#1F3864;}
+#vtCtrl label{display:inline-flex;align-items:center;gap:4px;cursor:pointer;font-size:12.5px;}
+#vtCtrl .vt-btn{font-family:inherit;font-size:12.5px;font-weight:700;padding:7px 16px;border-radius:18px;border:1px solid #c9d2e3;background:white;color:#1F3864;cursor:pointer;}
+#vtCtrl .vt-btn.vt-primary{background:#1F3864;border-color:#1F3864;color:white;}
+#vtSheet{padding:20px 26px 26px;}
+#vtSheet table{width:100%;border-collapse:collapse;font-size:12px;}
+#vtSheet th{background:#f0f2f7;color:#222;border:1px solid #444;padding:6px 8px;font-size:11.5px;font-weight:700;}
+#vtSheet td{border:1px solid #444;padding:7px 8px;vertical-align:middle;}
+#vtSheet .vt-cols{display:flex;gap:14px;align-items:flex-start;}
+#vtSheet .vt-cols>div{flex:1;min-width:0;}
+#vtSheet tr{break-inside:avoid;page-break-inside:avoid;}
+@media print{
+  body.pvt .passage,body.pvt .top-nav,body.pvt footer{display:none!important;}
+  body.pvt #vtModal{display:block!important;position:static!important;background:white!important;padding:0!important;overflow:visible!important;}
+  body.pvt #vtModal .vt-box{box-shadow:none!important;border-radius:0!important;max-width:100%!important;}
+  body.pvt #vtCtrl{display:none!important;}
+  body.pvt #vtSheet{padding:8mm 0 6mm!important;}
+}
+@media (max-width:600px){#vtSheet .vt-cols{flex-direction:column;}}
 </style>
 </head>
 <body>
@@ -485,7 +522,11 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="page-title">도치 구문 — 부정어·Only 도치 · 부사구 완전도치 · 보어 도치</div>
     <div class="page-sub">부정어/only + 조동사 + S · 부사구 + V + S · 보어 + V + S · 목적어 문두(도치 없음) + Not until/Not only/So~that 공식 · EXERCISE 15문장</div>
   </div>
-  <div class="view-tabs">
+    <div id="secNav" style="display:flex;gap:10px;margin:2px 0 16px;">
+      <button id="navKey" onclick="switchView('reading');document.querySelector('.view-tabs').style.display='none';document.getElementById('keySec').style.display='';document.getElementById('lineSec').style.display='none';this.style.background='#1F3864';this.style.color='#fff';var b=document.getElementById('navLine');b.style.background='#fff';b.style.color='#1F3864';window.scrollTo(0,0);" style="flex:1;padding:12px 0;border:2px solid #1F3864;border-radius:9px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:0.5px;background:#1F3864;color:#fff;box-shadow:0 3px 10px rgba(31,56,100,0.25);">⚡ 키 해석법</button>
+      <button id="navLine" onclick="switchView('reading');document.querySelector('.view-tabs').style.display='flex';document.getElementById('lineSec').style.display='';document.getElementById('keySec').style.display='none';this.style.background='#1F3864';this.style.color='#fff';var b=document.getElementById('navKey');b.style.background='#fff';b.style.color='#1F3864';window.scrollTo(0,0);" style="flex:1;padding:12px 0;border:2px solid #1F3864;border-radius:9px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:0.5px;background:#fff;color:#1F3864;">📖 주요구문 한줄해석</button>
+    </div>
+  <div class="view-tabs" style="display:none;">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
     <button class="view-tab tab-summary" id="tabSum" onclick="switchSummary()">📄 요약</button>
     <button class="view-tab tab-ga"             id="tabGA" onclick="switchGA()">📊 문법분석</button>
@@ -496,42 +537,127 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <button class="view-tab tab-vocab"          id="tabV" onclick="switchView('vocab')">📚 단어장</button>
   </div>
   <div id="readingView">
+    <div id="keySec">
     <div style="margin:4px 0 18px;border:1.5px solid #c7d3ec;border-radius:12px;overflow:hidden;box-shadow:0 3px 14px rgba(31,56,100,0.10);background:white;">
-      <div style="background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;padding:11px 16px;font-family:'Playfair Display',serif;font-size:14.5px;font-weight:700;letter-spacing:0.3px;">⚡ 키포인트 해석법 — 동사가 주어보다 먼저 보이면 「도치」를 의심하라</div>
-      <div style="padding:14px 16px 6px;font-size:12.5px;line-height:1.75;color:#333;">
-        <div style="margin-bottom:10px;">영어의 원칙은 S + V 어순이지만, 글쓴이가 어떤 요소를 강조하려고 문두로 빼는 순간 주어와 (조)동사의 자리가 바뀐다. 이 강의 15문장에서 도치의 형태를 결정하는 것은 <strong>「문두에 나온 말이 무엇인가」</strong> 하나다. 아래 네 갈래를 순서대로 대조하며 판별하는 것이 이 강의 전부다.</div>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
-          <div style="flex:1 1 220px;background:#f6effc;border-left:4px solid #C9A0E8;border-radius:6px;padding:9px 12px;">
-            <div style="font-weight:700;color:#5B2D8E;margin-bottom:3px;">① <u>부정어·Only</u>가 문두 → 「조동사 + S + 동사원형」</div>
-            Not until / Not only / never once / Never before / Only + 부사구가 문두에 오면 뒤 절은 의문문 어순처럼 <strong>did I fall / does the fish look / was there / had a culture been p.p.</strong>로 뒤집힌다. 일반동사면 do·does·did를 빌려 온다. — 문1 · 문3 · 문4 · 문12 · 문15
-          </div>
-          <div style="flex:1 1 220px;background:#f0f6e8;border-left:4px solid #C0DD97;border-radius:6px;padding:9px 12px;">
-            <div style="font-weight:700;color:#27500A;margin-bottom:3px;">② <u>부사구(장소·방향)</u>가 문두 → 「부사구 + V + S」 완전도치</div>
-            Among ~ / From ~ / out of ~ / then이 앞에 오면 동사 전체가 주어 앞으로 나온다: <strong>Among them were tulips · then came the event · From ~ came the method</strong>. 단, 주어가 대명사면 「부사구 + S + V」로 도치하지 않고, There + is/are + S 형도 여기에 속한다. — 문2 · 문5 · 문8 · 문9 · 문11 · 문13 · 문14
-          </div>
+      <div style="background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;padding:12px 16px;font-family:'Playfair Display',serif;font-size:15px;font-weight:700;letter-spacing:0.3px;">⚡ 키포인트 해석법 — 문두에 부정어 · Only · 부사구 · 보어가 오면 동사가 주어 앞으로!</div>
+      <div style="padding:14px 16px 8px;font-size:13px;line-height:1.7;color:#333;">
+
+        <div style="text-align:center;background:#f7f8fc;border:1.5px dashed #2E75B6;border-radius:10px;padding:12px 10px;margin-bottom:12px;font-size:14.5px;font-weight:700;color:#1F3864;">
+          문두 <span style="background:#F3E8FF;color:#5B2D8E;border-radius:4px;padding:1px 7px;">부정어 · Only</span> → <b>조동사 + S</b> &nbsp;/&nbsp; 문두 <span style="background:#EAF3DE;color:#27500A;border-radius:4px;padding:1px 7px;">장소 부사구 · 보어</span> → <b>V + S</b> &nbsp;/&nbsp; 문두 <span style="background:#FDEEE2;color:#9A3D00;border-radius:4px;padding:1px 7px;">목적어</span> → <span style="color:#C0392B;">도치 없음</span>
         </div>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
-          <div style="flex:1 1 220px;background:#eaf6f4;border-left:4px solid #9CCFC6;border-radius:6px;padding:9px 12px;">
-            <div style="font-weight:700;color:#00695C;margin-bottom:3px;">③ <u>보어</u>가 문두 → 「보어 + V + S」(대개 도치)</div>
-            So sudden / So great / the smaller and lighter처럼 형용사 보어가 앞에 오면 be동사가 주어 앞으로: <strong>So sudden was the attack · So great is the force · the smaller and lighter are the particles</strong>. 문두의 So는 "그래서"가 아니라 뒤의 that과 짝짓는 so ~ that의 So다. — 문6 · 문7 · 문10
-          </div>
-          <div style="flex:1 1 220px;background:#fdf6ee;border-left:4px solid #F0BE93;border-radius:6px;padding:9px 12px;">
-            <div style="font-weight:700;color:#9A3D00;margin-bottom:3px;">④ <u>목적어</u>가 맨 앞 → 도치 없음! 「목적어 + S + V」</div>
-            목적어를 강조해 문두로 빼도 어순은 그대로 O + S + V — 주어·동사를 뒤집지 않는 것이 ①~③과의 결정적 차이다(뒤의 Pattern 22 「O + S + V」 참조). 문두 명사를 무조건 주어로 읽는 습관이 이 갈래에서 무너진다.
-          </div>
+
+        <div style="background:#f6effc;border-left:4px solid #5B2D8E;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#5B2D8E;margin-bottom:4px;">① <b>부정어</b>(Never · Not until · Hardly …) 문두 → <b>조동사 + S</b> + 동사원형/p.p. <span style="font-weight:400;font-size:12px;color:#999;">→ 문1 · 문12 · 문15</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><b>Never</b> <b style="color:#5B2D8E;">have</b> <u>I</u> seen such a sight.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 그런 광경은 결코 본 적이 없다.</div>
+          <div style="font-size:12px;color:#555;">🔍 do/does/did · have · may 같은 조동사가 주어 앞으로 나온다(동사 통째로 ✗). 없으면 do 를 빌려 온다.</div>
         </div>
-        <div style="background:#f7f8fc;border:1px dashed #c7d3ec;border-radius:8px;padding:10px 12px;margin-bottom:12px;">
-          <div style="font-weight:700;color:#1F3864;margin-bottom:4px;">📌 도치 공식 짝 암기 — 반드시 「짝」으로</div>
-          <strong style="color:#5B2D8E;">Not until A did S 동사원형</strong> = <strong style="color:#5B2D8E;">Only after A did S 동사원형</strong> 「A하고 나서야 비로소 S는 V했다」(문1 — 같은 뜻 두 형태).<br>
-          <strong style="color:#5B2D8E;">Not only + V + S ~, but + S + also …</strong> 「~뿐만 아니라 …도」 — 도치는 <strong>Not only 절에만</strong>, but 절은 정상 어순(문4).<br>
-          <strong style="color:#00695C;">So 형/부 + V + S + that …</strong> 「너무 ~해서 …하다」(문6 · 문7 · 문10) &nbsp;·&nbsp; <strong style="color:#9A3D00;">수일치는 항상 동사 뒤의 진짜 주어</strong>: occurs ← form(단수·문8) ↔ are ← compounds(복수·문11).
+        <div style="background:#eef4fb;border-left:4px solid #0C447C;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#0C447C;margin-bottom:4px;">② <b>Only</b> + 부사(구·절) 문두 → 역시 <b>조동사 + S</b> 도치 <span style="font-weight:400;font-size:12px;color:#999;">→ 문1 · 문3</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><b>Only then</b> <b style="color:#0C447C;">did</b> <u>he</u> realize the truth.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 그제서야 그는 진실을 깨달았다.</div>
+          <div style="font-size:12px;color:#555;">🔍 Only after / Only when / Only in ~ 도 같은 공식 — only 가 부정어처럼 취급된다.</div>
         </div>
-        <div style="background:#fffaf0;border-left:4px solid #e8b64c;border-radius:6px;padding:9px 12px;margin-bottom:12px;">
-          <div style="font-weight:700;color:#7a3a00;margin-bottom:3px;">🔄 해석은 항상 3단계 — 진주어 찾기 → 복원 → 강조 살리기</div>
-          도치를 만나면 <strong>1단계</strong> 동사 뒤에서 진짜 주어를 찾아 표시하고 → <strong>2단계</strong> 「S가 V하다」로 원상복구해 직독한 뒤 → <strong>3단계</strong> 문두 요소를 "…하고 나서야 / …중에는 / 너무 …해서"로 강조를 살려 다듬는다. 최다 오답 유형: Among 뒤의 명사(bodies·things·uses)를 주어로 착각해 수일치를 틀리는 것(문11 · 문13 · 문14), 문두 So를 "그래서"로 읽는 오역(문7 · 문10).
+        <div style="background:#fdf6ee;border-left:4px solid #9A3D00;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#9A3D00;margin-bottom:4px;">③ <b>Not only</b> + 조동사 + S ~, <b>but</b> (S) <b>also</b> … — 짝으로 읽기 <span style="font-weight:400;font-size:12px;color:#999;">→ 문4</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><b>Not only</b> <b style="color:#9A3D00;">is</b> <u>she</u> smart, <b>but</b> she is <b>also</b> kind.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 그녀는 똑똑할 뿐 아니라 친절하기도 하다.</div>
+          <div style="font-size:12px;color:#555;">🔍 앞 절만 도치, 뒤 절(but ~)은 정상 어순.</div>
+        </div>
+        <div style="background:#f0f6e8;border-left:4px solid #27500A;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#27500A;margin-bottom:4px;">④ <b>장소·방향 부사구</b> 문두 → <b>V + S</b> 완전도치 — 진짜 주어는 동사 뒤 <span style="font-weight:400;font-size:12px;color:#999;">→ 문2 · 문5 · 문8 · 문9 · 문11 · 문13 · 문14</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><b>On the hill</b> <b style="color:#27500A;">stands</b> <u>an old castle</u>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 언덕 위에 오래된 성이 서 있다.</div>
+          <div style="font-size:12px;color:#555;">🔍 조동사 없이 동사가 통째로 앞으로. 수일치는 동사 뒤 진주어(castle)에.</div>
+        </div>
+        <div style="background:#e8f5f2;border-left:4px solid #00695C;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#00695C;margin-bottom:4px;">⑤ <b>So + 형용사</b>(보어) 문두 → <b>V + S</b> … <b>that</b> ~ (so~that 호응) <span style="font-weight:400;font-size:12px;color:#999;">→ 문7 · 문10</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><b>So loud</b> <b style="color:#00695C;">was</b> <u>the noise</u> <b>that</b> nobody could sleep.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 소음이 너무 커서 아무도 잘 수 없었다.</div>
+          <div style="font-size:12px;color:#555;">🔍 보어가 앞으로 나가면 be동사 + S 도치. 뒤의 that 과 짝.</div>
+        </div>
+        <div style="background:#fffaf0;border-left:4px solid #7a3a00;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#7a3a00;margin-bottom:4px;">⑥ <b>The 비교급 ~, the 비교급</b> + (V + S) — 둘째 절 도치 가능 <span style="font-weight:400;font-size:12px;color:#999;">→ 문6</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><b>The more</b> you read, <b>the wider</b> <b style="color:#7a3a00;">becomes</b> <u>your view</u>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 많이 읽을수록 시야는 더 넓어진다.</div>
+          <div style="font-size:12px;color:#555;">🔍 둘째 절 「the 비교급 + V + S」 — 주어가 길 때 자주 도치된다.</div>
+        </div>
+        <div style="background:#fdf0ee;border-left:4px solid #C0392B;border-radius:6px;padding:10px 14px;margin-bottom:12px;">
+          <div style="font-size:14px;font-weight:800;color:#8a1a1a;margin-bottom:4px;">⑦ 최대 함정 — 문두 명사에 속지 마라 — <b>수일치는 동사 뒤 진주어</b>에 <span style="font-weight:400;font-size:12px;color:#999;">→ 문8 · 문11</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><b>Among the guests</b> <b style="color:#8a1a1a;">was</b> <u>a famous actor</u>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:4px;">▶ 손님들 중에 유명 배우가 있었다.</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:12px;">
+            <span style="background:#fff;border:1px solid #C0392B;border-radius:4px;padding:2px 9px;color:#C0392B;font-weight:700;">✗ guests(복수)에 맞춰 were</span>
+            <span style="background:#fff;border:1px solid #1D5C2B;border-radius:4px;padding:2px 9px;color:#1D5C2B;font-weight:700;">○ 진주어 actor(단수) → was</span>
+          </div>
+          <div style="font-size:12px;color:#555;margin-top:4px;">🔍 문두 Among ~ 은 전치사구(M)일 뿐. 동사 뒤 명사를 찾아 그것에 수를 맞춘다.</div>
+        </div>
+
+        <div style="background:#fff8e6;border-left:4px solid #f0d070;border-radius:6px;padding:10px 14px;margin-bottom:10px;font-size:13px;">
+          <b style="color:#8B6914;">📌 기억법</b> &nbsp;—&nbsp; <b>부정어·Only = 조동사 도치</b> · <b>부사구·보어 = 동사 통째 도치</b> · <b style="color:#C0392B;">주어는 동사 뒤 — 수일치도 거기에</b> · <b>목적어 문두는 도치 없음</b>.
+        </div>
+
+        <div style="background:#fffaf0;border-left:4px solid #e8b64c;border-radius:6px;padding:10px 14px;margin-bottom:10px;font-size:13px;">
+          <b style="color:#7a3a00;">🔄 해석 3단계</b> &nbsp; <b>①</b> 문두 요소를 확인한다(부정어 / Only / 부사구 / 보어) → <b>②</b> 동사 <b>뒤</b>에서 진짜 주어를 찾는다 → <b>③</b> 원래 어순 「S + V」로 되돌려 해석하고, 문두 요소는 「~해서야 비로소 / ~ 중에 / 너무 ~해서」 강조로 붙인다.
+        </div>
+
+      </div>
+    </div>
+    <div style="margin:4px 0 18px;border:1.5px solid #d8c7ec;border-radius:12px;overflow:hidden;box-shadow:0 3px 14px rgba(91,58,142,0.10);background:white;">
+      <div style="background:linear-gradient(135deg,#5B3A8E,#7B54B8);color:white;padding:12px 18px;font-size:16px;font-weight:800;">📎 부록 — 도치 공식 8 — 한 번에 암기 <span style="font-weight:400;font-size:12.5px;opacity:0.85;">부정어 · Only · There · 부사구 · So/Such · 함정(목적어 문두)</span></div>
+      <div style="padding:14px 16px 8px;">
+        <div style="border:2px dashed #7B54B8;border-radius:8px;padding:10px 14px;margin-bottom:6px;background:#faf7ff;font-size:13px;">
+          <b style="color:#5B3A8E;">⚡ 공통 원리</b> — 도치는 「무엇이 문두에 왔는가」로 결정된다 — <b>부정어·Only 는 조동사만</b> 앞으로, <b>부사구·보어는 동사 통째로</b> 앞으로, <b style="color:#C0392B;">목적어는 앞에 와도 도치 없음</b>.
+        </div>
+        <div style="font-size:13.5px;font-weight:800;color:#5B2D8E;border-bottom:2px solid #5B2D8E;padding-bottom:3px;margin:12px 0 7px;">도치 공식 8 — 문두 요소별 암기</div>
+        <div style="background:#f6effc;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#5B2D8E;">Not until A + 조동사 + S</b> <span style="color:#444;">— A하고 나서야 비로소 ~하다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;"><b>Not until</b> he left <b>did</b> I notice the letter.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 = I did not notice ~ until he left. 「~까지 않았다」가 아니라 「~하고서야」로 뒤집는다.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 그가 떠나고 나서야 나는 그 편지를 알아차렸다.</div>
+        </div>
+        <div style="background:#f6effc;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#5B2D8E;">Hardly / Scarcely ~ when(before) · No sooner ~ than</b> <span style="color:#444;">— ~하자마자 …하다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;"><b>Hardly had</b> I arrived <b>when</b> it began to rain.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 앞 절은 had + S + p.p. 도치, 뒤 절은 과거 — 「~하자마자」 한 덩어리로.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 내가 도착하자마자 비가 오기 시작했다.</div>
+        </div>
+        <div style="background:#f6effc;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#5B2D8E;">Neither / Nor + 조동사 + S</b> <span style="color:#444;">— ~도 역시 …않다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">I can’t swim, <b>nor can</b> my brother.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 긍정 동의는 So do I / So can he (「~도 그렇다」).</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 나는 수영을 못 하고, 내 동생도 못 한다.</div>
+        </div>
+        <div style="background:#eef4fb;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#0C447C;">Only + 부사(구·절) + 조동사 + S</b> <span style="color:#444;">— ~해야만 / ~해서야 …하다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;"><b>Only by</b> practicing <b>can</b> you improve.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 Only after / Only when / Only then 전부 동일 공식.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 연습을 통해서만 실력이 늘 수 있다.</div>
+        </div>
+        <div style="background:#f0f6e8;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#27500A;">There / Here + V + S</b> <span style="color:#444;">— ~이 있다 / 여기 ~이 있다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;"><b>There lies</b> a small village beyond the river.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 there 는 주어가 아니라 유도부사 — 진주어는 동사 뒤(village).</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 강 너머에 작은 마을이 놓여 있다.</div>
+        </div>
+        <div style="background:#f0f6e8;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#27500A;">장소·방향 부사구 + V + S</b> <span style="color:#444;">— ~에 …이 있다/오다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;"><b>Out of the box</b> jumped a cat.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 주어가 대명사(he·it)면 도치하지 않는다: Out he went ○ / Out went he ✗.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 상자 밖으로 고양이가 뛰어나왔다.</div>
+        </div>
+        <div style="background:#e8f5f2;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#00695C;">So / Such + 보어 + V + S + that …</b> <span style="color:#444;">— 너무 ~해서 …하다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;"><b>Such was</b> his anger <b>that</b> no one dared to speak.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 So + 형용사 / Such + 명사 — that 절까지 짝.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 그의 분노가 너무 커서 아무도 감히 말하지 못했다.</div>
+        </div>
+        <div style="background:#fdf6ee;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#9A3D00;">(함정) 목적어 · 부사절 문두 — 도치 없음</b> <span style="color:#444;">— 강조만, 어순 그대로</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;"><b>This book</b> I have read twice.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 목적어를 앞으로 빼도 S + V 는 그대로(I have read). 도치로 착각하지 말 것.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 이 책은 내가 두 번 읽었다.</div>
+        </div>
+
+        <div style="background:#fff8e6;border-left:4px solid #f0d070;border-radius:6px;padding:10px 14px;margin:12px 0 10px;font-size:13px;">
+          <b style="color:#8B6914;">📌 최종 정리</b> — 어떤 공식이든 해석은 같다: 동사 뒤에서 주어를 찾아 「S + V」로 되돌리고, 문두 요소는 강조로 붙인다. 수일치도 <b style="color:#C0392B;">동사 뒤 진주어</b>에.
         </div>
       </div>
     </div>
+    </div><!-- /keySec -->
+    <div id="lineSec" style="display:none;">
     <div class="hints">
       <div class="hint">🖱 PC: 클릭 → 발음 · 더블클릭 → 해석 고정</div>
       <div class="hint">📱 모바일: 탭 → 해석</div>
@@ -1380,6 +1506,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 </div>
 
     </div><!-- /cards -->
+    </div><!-- /lineSec -->
   </div><!-- /readingView -->
 
 
@@ -1761,6 +1888,10 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="gtype-final"><button class="gtype-final-btn fi-btn" onclick="checkAllFill()">✓ 서답형 최종 확인</button><span class="gtype-final-score" id="fi-final-score"></span></div>
   </div>
   <div class="vocab-view" id="vocabView">
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-bottom:14px;flex-wrap:wrap;">
+      <button class="g-print-btn" style="margin:0;background:#6A1B9A;" onclick="printV(false)">🖨️ 단어장 인쇄 (A4)</button>
+      <button class="g-print-btn" style="margin:0;background:#7B3F00;" onclick="vtOpen()">📝 단어 테스트 만들기</button>
+    </div>
     <div class="vocab-tabs">
       <button class="vocab-tab active" id="vtab0" onclick="switchVocab(0)">📖 단어카드</button>
       <button class="vocab-tab"        id="vtab1" onclick="switchVocab(1)">✏️ 철자 퀴즈</button>
@@ -1789,6 +1920,24 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
 </div>
 
+  </div>
+</div>
+<div id="vtModal">
+  <div class="vt-box">
+    <div id="vtCtrl">
+      <b style="font-size:15px;color:#1F3864;margin-right:6px;">📝 단어 테스트</b>
+      유형 <select id="vtType" onchange="vtBuild()"><option value="e2k">영어 → 뜻 쓰기</option><option value="k2e">뜻 → 영어 쓰기</option></select>
+      문항 <select id="vtCount" onchange="vtBuild()"><option value="10">10</option><option value="20" selected>20</option><option value="30">30</option><option value="all">전체</option></select>
+      범위 <select id="vtScope" onchange="vtBuild()"><option value="all">단어 + 숙어·공식</option><option value="word">단어만</option><option value="phrase">숙어·공식만</option></select>
+      <label><input type="checkbox" id="vtShuffle" checked onchange="vtBuild()"> 무작위</label>
+      <label><input type="checkbox" id="vtAnswer" checked onchange="vtBuild()"> 정답지 포함</label>
+      <button class="vt-btn" onclick="vtBuild()">다시 생성</button>
+      <span style="margin-left:auto;display:inline-flex;gap:8px;">
+        <button class="vt-btn vt-primary" onclick="vtPrint()">🖨 인쇄</button>
+        <button class="vt-btn" onclick="vtClose()">닫기</button>
+      </span>
+    </div>
+    <div id="vtSheet"></div>
   </div>
 </div>
 <footer style="text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(31,56,100,0.25);letter-spacing:1px;">✦ 구문 PATTERN 10 · 도치 구문 · 0505.co.kr ✦</footer>
@@ -2438,6 +2587,103 @@ document.addEventListener("DOMContentLoaded",function(){
 });
 // 즉시 실행 (DOMContentLoaded 전에도 안전하게)
 (function(){hideQPanels();})();
+// ── 단어장 인쇄 (v4.2) ──
+function buildVocabPrint(test){
+  var el=document.getElementById("vocabPrint");
+  if(!el){el=document.createElement("div");el.id="vocabPrint";document.querySelector(".passage").appendChild(el);}
+  var t=document.querySelector(".page-title");
+  var head='<div style="font-size:16px;font-weight:800;color:#1F3864;margin:4px 0 6px;">📚 단어장'+(test?" — 시험지":"")+' · '+(t?t.textContent:"")+' <span style="font-weight:400;font-size:12px;color:#888;">('+VOCAB.length+' words)</span></div>';
+  if(test)head+='<div style="font-size:12.5px;color:#444;margin-bottom:8px;">이름: ______________________ &nbsp;&nbsp;&nbsp; 점수: ________ / '+VOCAB.length+'</div>';
+  var rows=VOCAB.map(function(v,i){
+    var kr=test?"":v.kr;
+    var extra="";
+    if(!test){
+      if(v.syn&&v.syn.length)extra+=' <span style="color:#1565C0;font-size:11px;">≒ '+v.syn.join(", ")+'</span>';
+      if(v.ant&&v.ant.length)extra+=' <span style="color:#B71C1C;font-size:11px;">↔ '+v.ant.join(", ")+'</span>';
+    }
+    return '<tr><td style="width:5%;color:#888;">'+(i+1)+'</td><td style="width:32%;font-family:Georgia,serif;font-weight:700;color:#1F3864;">'+v.en+'</td><td style="width:9%;color:#999;font-size:11px;">'+v.pos+'</td><td>'+kr+extra+'</td></tr>';
+  }).join("");
+  el.innerHTML=head+'<table><tr><th>#</th><th>단어 · 숙어</th><th>품사</th><th>뜻</th></tr>'+rows+'</table>';
+}
+function printV(test){
+  buildVocabPrint(test);
+  document.body.classList.add("pv");
+  window.onafterprint=function(){document.body.classList.remove("pv");window.onafterprint=null;};
+  window.print();
+}
+// ── 단어 테스트 생성기 (v4.2 · 대치동식 2단 시험지) ──
+function vtPool(){
+  var pool=[],seen={};
+  VOCAB.forEach(function(v){
+    var ph=(v.pos||"").indexOf("phr")>=0||v.en.indexOf(" ")>=0;
+    pool.push({en:v.en,kr:v.kr,ph:ph});seen[v.en.toLowerCase()]=1;
+  });
+  document.querySelectorAll(".s-vocab").forEach(function(sv){
+    var ens=sv.querySelectorAll(".vocab-en"),krs=sv.querySelectorAll(".vocab-kr");
+    for(var i=0;i<ens.length;i++){
+      var e=ens[i].textContent.trim(),k=krs[i]?krs[i].textContent.trim():"";
+      if(!e||!k||seen[e.toLowerCase()])continue;
+      seen[e.toLowerCase()]=1;
+      pool.push({en:e,kr:k,ph:true});
+    }
+  });
+  return pool;
+}
+function vtHalfTable(items,start,mode,answer){
+  var head=answer?"<tr><th style=\"width:11%;\">No.</th><th style=\"width:42%;\">"+(mode==="k2e"?"뜻":"단어")+"</th><th>"+(mode==="k2e"?"단어":"뜻")+"</th></tr>"
+                 :"<tr><th style=\"width:11%;\">No.</th><th style=\"width:44%;\">문제</th><th>답</th></tr>";
+  var rows=items.map(function(it,i){
+    var q=mode==="k2e"?it.kr:it.en, a=mode==="k2e"?it.en:it.kr;
+    var qs=mode==="k2e"?"":"font-family:Georgia,serif;";
+    if(answer)return "<tr><td style=\"text-align:center;color:#666;\">"+(start+i+1)+"</td><td style=\"font-weight:700;"+qs+"\">"+q+"</td><td>"+a+"</td></tr>";
+    return "<tr><td style=\"text-align:center;color:#666;\">"+(start+i+1)+"</td><td style=\"font-weight:700;"+qs+"\">"+q+"</td><td style=\"height:26px;\"></td></tr>";
+  }).join("");
+  return "<table>"+head+rows+"</table>";
+}
+function vtTwoCol(items,mode,answer){
+  var half=Math.ceil(items.length/2);
+  var L=items.slice(0,half),R=items.slice(half);
+  return "<div class=\"vt-cols\"><div>"+vtHalfTable(L,0,mode,answer)+"</div><div>"+(R.length?vtHalfTable(R,half,mode,answer):"")+"</div></div>";
+}
+function vtBuild(){
+  var mode=document.getElementById("vtType").value;
+  var cnt=document.getElementById("vtCount").value;
+  var scope=document.getElementById("vtScope").value;
+  var shuffle=document.getElementById("vtShuffle").checked;
+  var withAns=document.getElementById("vtAnswer").checked;
+  var pool=vtPool();
+  if(scope==="word")pool=pool.filter(function(v){return !v.ph;});
+  else if(scope==="phrase")pool=pool.filter(function(v){return v.ph;});
+  if(shuffle)pool=pool.slice().sort(function(){return Math.random()-0.5;});
+  var items=(cnt==="all")?pool:pool.slice(0,Math.min(parseInt(cnt,10),pool.length));
+  var t=document.querySelector(".page-title");
+  var title=(t?t.textContent.split("—")[0].trim():"단어장");
+  var badge=document.querySelector(".nav-title-bar");
+  var typeLabel=(mode==="k2e"?"뜻 → 영어":"영어 → 뜻");
+  var scopeLabel=(scope==="word"?"단어":scope==="phrase"?"숙어·공식":"단어+숙어·공식");
+  var html="";
+  html+="<div style=\"display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:2px solid #1F3864;padding-bottom:8px;margin-bottom:12px;\">";
+  html+="<div style=\"font-size:17px;font-weight:800;color:#111;\">"+(badge?badge.textContent.trim()+" · ":"")+title+" 단어테스트</div>";
+  html+="<div style=\"font-size:11px;color:#888;\">"+typeLabel+" · "+scopeLabel+" · "+items.length+"문항 · 목동서로영어학원</div></div>";
+  html+="<div style=\"display:flex;gap:26px;font-size:12.5px;color:#333;margin-bottom:12px;flex-wrap:wrap;\">";
+  html+="<span>이름 &nbsp;______________</span><span>날짜 &nbsp;______________</span><span>점수 &nbsp;__________ / "+items.length+"</span></div>";
+  html+=vtTwoCol(items,mode,false);
+  if(withAns){
+    html+="<div style=\"margin:22px 0 8px;padding-left:9px;border-left:4px solid #1F3864;font-size:14px;font-weight:800;color:#111;page-break-before:always;break-before:page;\">정답 · "+title+" 단어테스트 ("+typeLabel+")</div>";
+    html+=vtTwoCol(items,mode,true);
+  }
+  document.getElementById("vtSheet").innerHTML=html;
+}
+function vtOpen(){
+  document.getElementById("vtModal").style.display="block";
+  if(!document.getElementById("vtSheet").innerHTML)vtBuild();
+}
+function vtClose(){document.getElementById("vtModal").style.display="none";}
+function vtPrint(){
+  document.body.classList.add("pvt");
+  window.onafterprint=function(){document.body.classList.remove("pvt");window.onafterprint=null;};
+  window.print();
+}
 </script>
 
 <script>
