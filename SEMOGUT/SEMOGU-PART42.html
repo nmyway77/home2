@@ -472,6 +472,43 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .tab-summary.active{background:#00695C;color:white;border-color:#00695C;}
 .summary-view{display:none;}
 @media print{.summary-view{display:none!important;}}
+
+/* 10. 단어장 인쇄 */
+#vocabPrint{display:none;}
+#vocabPrint table{width:100%;border-collapse:collapse;font-size:12px;}
+#vocabPrint th{background:#1F3864;color:white;padding:6px 9px;text-align:left;font-size:11.5px;}
+#vocabPrint td{padding:5px 9px;border-bottom:1px solid #ddd;vertical-align:top;}
+#vocabPrint tr{break-inside:avoid;page-break-inside:avoid;}
+#vocabPrint tr:nth-child(even) td{background:#f5f7fb;}
+@media print{
+  body.pv #vocabPrint{display:block!important;}
+  body.pv .top-nav,body.pv .page-header,body.pv .watermark,body.pv .cover-plate,body.pv #secNav,body.pv .view-tabs,body.pv #readingView,body.pv .summary-view,body.pv .ga-panel,body.pv .sd-panel,body.pv .arrange-view,body.pv .grammar-view,body.pv .vocab-view,body.pv .q-panel,body.pv footer{display:none!important;}
+  body.pv .passage{padding:8mm 0 6mm!important;max-width:100%!important;}
+}
+
+/* 11. 단어 테스트 모달 (v4.2) */
+#vtModal{display:none;position:fixed;inset:0;z-index:5000;background:rgba(20,25,40,0.55);overflow:auto;padding:24px 12px;}
+#vtModal .vt-box{max-width:920px;margin:0 auto;background:white;border-radius:12px;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,0.35);}
+#vtCtrl{padding:12px 18px;border-bottom:1px solid #e3e6ee;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;background:#fbfcfe;font-size:13px;color:#334;}
+#vtCtrl select{font-family:inherit;font-size:12.5px;padding:5px 8px;border:1px solid #c9d2e3;border-radius:6px;background:white;color:#1F3864;}
+#vtCtrl label{display:inline-flex;align-items:center;gap:4px;cursor:pointer;font-size:12.5px;}
+#vtCtrl .vt-btn{font-family:inherit;font-size:12.5px;font-weight:700;padding:7px 16px;border-radius:18px;border:1px solid #c9d2e3;background:white;color:#1F3864;cursor:pointer;}
+#vtCtrl .vt-btn.vt-primary{background:#1F3864;border-color:#1F3864;color:white;}
+#vtSheet{padding:20px 26px 26px;}
+#vtSheet table{width:100%;border-collapse:collapse;font-size:12px;}
+#vtSheet th{background:#f0f2f7;color:#222;border:1px solid #444;padding:6px 8px;font-size:11.5px;font-weight:700;}
+#vtSheet td{border:1px solid #444;padding:7px 8px;vertical-align:middle;}
+#vtSheet .vt-cols{display:flex;gap:14px;align-items:flex-start;}
+#vtSheet .vt-cols>div{flex:1;min-width:0;}
+#vtSheet tr{break-inside:avoid;page-break-inside:avoid;}
+@media print{
+  body.pvt .passage,body.pvt .top-nav,body.pvt footer{display:none!important;}
+  body.pvt #vtModal{display:block!important;position:static!important;background:white!important;padding:0!important;overflow:visible!important;}
+  body.pvt #vtModal .vt-box{box-shadow:none!important;border-radius:0!important;max-width:100%!important;}
+  body.pvt #vtCtrl{display:none!important;}
+  body.pvt #vtSheet{padding:8mm 0 6mm!important;}
+}
+@media (max-width:600px){#vtSheet .vt-cols{flex-direction:column;}}
 </style>
 </head>
 <body>
@@ -511,7 +548,11 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="page-title">조동사의 관용적 표현 — may well · cannot help · lest · cannot ~ too</div>
     <div class="page-sub">may well(당연) · may as well(낫다) · cannot help RVing 계열(~하지 않을 수 없다) · lest S should(~하지 않도록) · cannot ~ too(아무리 ~해도 지나치지 않다) · would rather A than B · EXERCISE 10문장</div>
   </div>
-  <div class="view-tabs">
+    <div id="secNav" style="display:flex;gap:10px;margin:2px 0 16px;">
+      <button id="navKey" onclick="switchView('reading');document.querySelector('.view-tabs').style.display='none';document.getElementById('keySec').style.display='';document.getElementById('lineSec').style.display='none';this.style.background='#1F3864';this.style.color='#fff';var b=document.getElementById('navLine');b.style.background='#fff';b.style.color='#1F3864';window.scrollTo(0,0);" style="flex:1;padding:12px 0;border:2px solid #1F3864;border-radius:9px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:0.5px;background:#1F3864;color:#fff;box-shadow:0 3px 10px rgba(31,56,100,0.25);">⚡ 키 해석법</button>
+      <button id="navLine" onclick="switchView('reading');document.querySelector('.view-tabs').style.display='flex';document.getElementById('lineSec').style.display='';document.getElementById('keySec').style.display='none';this.style.background='#1F3864';this.style.color='#fff';var b=document.getElementById('navKey');b.style.background='#fff';b.style.color='#1F3864';window.scrollTo(0,0);" style="flex:1;padding:12px 0;border:2px solid #1F3864;border-radius:9px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:0.5px;background:#fff;color:#1F3864;">📖 주요구문 한줄해석</button>
+    </div>
+  <div class="view-tabs" style="display:none;">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
     <button class="view-tab tab-summary" id="tabSum" onclick="switchSummary()">📄 요약</button>
     <button class="view-tab tab-ga"             id="tabGA" onclick="switchGA()">📊 문법분석</button>
@@ -522,42 +563,147 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <button class="view-tab tab-vocab"          id="tabV" onclick="switchView('vocab')">📚 단어장</button>
   </div>
   <div id="readingView">
+    <div id="keySec">
     <div style="margin:4px 0 18px;border:1.5px solid #c7d3ec;border-radius:12px;overflow:hidden;box-shadow:0 3px 14px rgba(31,56,100,0.10);background:white;">
-      <div style="background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;padding:11px 16px;font-family:'Playfair Display',serif;font-size:14.5px;font-weight:700;letter-spacing:0.3px;">⚡ 키포인트 해석법 — 조동사 관용구는 「덩어리 통째로 하나의 조동사」다</div>
-      <div style="padding:14px 16px 6px;font-size:12.5px;line-height:1.75;color:#333;">
-        <div style="margin-bottom:10px;">may well을 "잘 ~할지도", cannot ~ too를 "너무 ~할 수 없다"로 단어별 직역하는 순간 이 강의 10문장 중 절반이 정반대로 오역된다. 조동사 관용구는 <strong>쪼개서 해석하는 것이 아니라 「덩어리 = 공식 하나」로 묶어 통째로 대입</strong>한다. 판별의 기준은 딱 두 가지 — <strong>① as·too·than 같은 짝 표지가 붙어 있는가, ② 관용구 뒤 동사의 형태(RV / RVing / to RV)가 무엇인가</strong>다.</div>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
-          <div style="flex:1 1 220px;background:#fdf6ee;border-left:4px solid #F0BE93;border-radius:6px;padding:9px 12px;">
-            <div style="font-weight:700;color:#9A3D00;margin-bottom:3px;">① may well ↔ may as well — <u>as 하나</u>가 갈림길</div>
-            well 앞에 <strong>as가 없으면</strong> may well RV 「RV하는 것은 <strong>당연하다</strong>」, <strong>as가 붙으면</strong> may as well RV 「RV하는 것이 <strong>더 낫다</strong>」. 뒤에 <strong>as B</strong>까지 오면 may(might) as well A as B 「B하느니 A가 낫다」. as의 개수를 세는 것이 판별의 전부다. — 문1 · 문2 · 문8 · 문9
-          </div>
-          <div style="flex:1 1 220px;background:#f6effc;border-left:4px solid #C9A0E8;border-radius:6px;padding:9px 12px;">
-            <div style="font-weight:700;color:#5B2D8E;margin-bottom:3px;">② cannot help 계열 — <u>뒤 동사 형태</u>가 증거</div>
-            「RV하지 않을 수 없다」 4형 동치: cannot help <strong>RVing</strong> = cannot but <strong>RV</strong> = cannot help but <strong>RV</strong> = have no choice but <strong>to RV</strong>. 뜻은 같지만 <strong>뒤 동사 모양이 전부 다르다</strong> — 형태 바꿔 쓰기가 시험의 단골. — 문3 · 문5
-          </div>
+      <div style="background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;padding:12px 16px;font-family:'Playfair Display',serif;font-size:15px;font-weight:700;letter-spacing:0.3px;">⚡ 키포인트 해석법 — 조동사 관용 표현은 「as 의 유무」와 「help 뒤 형태」로 뜻이 갈린다!</div>
+      <div style="padding:14px 16px 8px;font-size:13px;line-height:1.7;color:#333;">
+
+        <div style="text-align:center;background:#f7f8fc;border:1.5px dashed #2E75B6;border-radius:10px;padding:12px 10px;margin-bottom:12px;font-size:14.5px;font-weight:700;color:#1F3864;">
+          <span style="background:#E6F1FB;color:#0C447C;border-radius:4px;padding:1px 7px;">may well</span> 당연 &nbsp;/&nbsp; <span style="background:#DFF2EF;color:#00695C;border-radius:4px;padding:1px 7px;">may <u>as</u> well</span> 낫다 &nbsp;/&nbsp; <span style="background:#F3E8FF;color:#5B2D8E;border-radius:4px;padding:1px 7px;">cannot help ~ing</span> 않을 수 없다 &nbsp;/&nbsp; <span style="background:#FDEEE2;color:#9A3D00;border-radius:4px;padding:1px 7px;">cannot ~ too</span> <span style="color:#C0392B;">아무리 ~해도 지나치지 않다</span>
         </div>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
-          <div style="flex:1 1 220px;background:#eef4fb;border-left:4px solid #B5D4F4;border-radius:6px;padding:9px 12px;">
-            <div style="font-weight:700;color:#0C447C;margin-bottom:3px;">③ cannot ~ too — <u>부정이 아니라 강한 긍정</u></div>
-            cannot과 too가 한 문장에서 짝을 이루면 「~할 수 없다」가 아니라 <strong>「아무리 …해도 지나치지 않다」</strong>. You cannot study too hard = 공부는 아무리 해도 모자라다. 수동태로 늘어나도(cannot be too often pointed out) 같은 공식이다. — 문4 · 문10
-          </div>
-          <div style="flex:1 1 220px;background:#f0f6e8;border-left:4px solid #C0DD97;border-radius:6px;padding:9px 12px;">
-            <div style="font-weight:700;color:#27500A;margin-bottom:3px;">④ lest + S + (should) RV — <u>자체가 부정</u></div>
-            lest는 「~하지 <strong>않도록</strong>」 — 부정 의미가 이미 들어 있어 <strong>not을 겹쳐 쓰면 틀린다</strong>(lest he should not miss ✗). 바꿔 쓰면 so that + S + may <strong>not</strong> RV — 이때는 not이 필요하다. would rather A than B 「B하느니 차라리 A」도 than 뒤 동사원형 대구를 확인한다. — 문6 · 문7
-          </div>
+
+        <div style="background:#eef4fb;border-left:4px solid #0C447C;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#0C447C;margin-bottom:4px;">① <b>may well</b> + RV = 「당연히 ~하다 / ~할 만하다」 <span style="font-weight:400;font-size:12px;color:#999;">→ 문1 · 문8</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;">He <b>may well</b> be proud of his son.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 그가 아들을 자랑스러워하는 것도 당연하다.</div>
+          <div style="font-size:12px;color:#555;">🔍 well 앞에 as 가 <b>없으면</b> 「당연」. (may well 의 well = 충분히)</div>
         </div>
-        <div style="background:#f7f8fc;border:1px dashed #c7d3ec;border-radius:8px;padding:10px 12px;margin-bottom:12px;">
-          <div style="font-weight:700;color:#1F3864;margin-bottom:4px;">📌 공식 7종 — 반드시 「짝·형태」까지 암기</div>
-          <strong style="color:#9A3D00;">may well RV</strong> = 당연하다(문1·문8) &nbsp;↔&nbsp; <strong style="color:#5B2D8E;">may as well RV</strong> = 더 낫다(문2) &nbsp;·&nbsp; <strong style="color:#5B2D8E;">might as well A as B</strong> = B하느니 A(문9)<br>
-          <strong style="color:#0C447C;">cannot help RVing = cannot but RV = cannot help but RV = have no choice but to RV</strong> = ~하지 않을 수 없다(문3·문5)<br>
-          <strong style="color:#27500A;">cannot ~ too …</strong> = 아무리 …해도 지나치지 않다(문4·문10) &nbsp;·&nbsp; <strong style="color:#27500A;">lest S (should) RV</strong> = ~하지 않도록·not 금지(문6) &nbsp;·&nbsp; <strong style="color:#9A3D00;">would rather A than B</strong> = B하느니 차라리 A(문7)
+        <div style="background:#e8f5f2;border-left:4px solid #00695C;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#00695C;margin-bottom:4px;">② <b>may(might) as well</b> + RV = 「차라리 ~하는 편이 낫다」 <span style="font-weight:400;font-size:12px;color:#999;">→ 문2 · 문9</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;">You <b>may as well</b> go home now.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 지금 집에 가는 편이 낫겠다.</div>
+          <div style="font-size:12px;color:#555;">🔍 as 가 <b>보이면</b> 「낫다」. may as well A as B = B하느니 A하는 편이 낫다.</div>
         </div>
-        <div style="background:#fffaf0;border-left:4px solid #e8b64c;border-radius:6px;padding:9px 12px;margin-bottom:12px;">
-          <div style="font-weight:700;color:#7a3a00;margin-bottom:3px;">🔄 해석 절차 — 덩어리 묶기 1단계 → 공식 대입 2단계</div>
-          <strong>1단계</strong>: 관용구 전체(may well bring / cannot help but regret / cannot … too)를 <strong>하나의 V 덩어리로 묶는다</strong> — 절대 단어별로 쪼개지 않는다. <strong>2단계</strong>: 묶은 덩어리에 공식 해석을 통째로 대입하고 나머지 성분(S·O·M)을 순서대로 붙인다. 최다 오답 유형은 ⑴ cannot ~ too를 부정으로 직역, ⑵ lest 뒤에 not을 겹쳐 쓰기, ⑶ may well과 may as well의 혼동 — 셋 다 「짝 표지 확인」 한 번이면 예방된다.
+        <div style="background:#f6effc;border-left:4px solid #5B2D8E;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#5B2D8E;margin-bottom:4px;">③ <b>cannot help ~ing</b> = <b>cannot (help) but RV</b> = 「~하지 않을 수 없다」 <span style="font-weight:400;font-size:12px;color:#999;">→ 문3 · 문5</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;">I <b>couldn’t help laughing</b>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 나는 웃지 않을 수 없었다.</div>
+          <div style="font-size:12px;color:#555;">🔍 help 뒤 = 동명사 / but 뒤 = 동사원형 — 짝을 바꾸면 ✗.</div>
+        </div>
+        <div style="background:#fdf6ee;border-left:4px solid #9A3D00;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#9A3D00;margin-bottom:4px;">④ <b>cannot ~ too</b> = 「아무리 ~해도 지나치지 않다」 <span style="font-weight:400;font-size:12px;color:#999;">→ 문4 · 문10</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;">You <b>cannot</b> be <b>too</b> careful.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 아무리 조심해도 지나치지 않다.</div>
+          <div style="font-size:12px;color:#555;">🔍 = 조심할수록 좋다. 부정으로 직역하면 정반대 뜻이 된다.</div>
+        </div>
+        <div style="background:#f0f6e8;border-left:4px solid #27500A;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#27500A;margin-bottom:4px;">⑤ <b>lest</b> + S + (should) RV = 「~하지 않도록」 <span style="font-weight:400;font-size:12px;color:#999;">→ 문6</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;">Hurry up <b>lest</b> you (should) be late.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 늦지 않도록 서둘러라.</div>
+          <div style="font-size:12px;color:#555;">🔍 lest 안에 not 이 이미 들어 있다 → lest ~ not ✗. should 는 생략 가능.</div>
+        </div>
+        <div style="background:#fffaf0;border-left:4px solid #7a3a00;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#7a3a00;margin-bottom:4px;">⑥ <b>would rather A than B</b> = 「B하느니 차라리 A하겠다」 <span style="font-weight:400;font-size:12px;color:#999;">→ 문7</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;">I <b>would rather</b> walk <b>than</b> drive.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 운전하느니 차라리 걷겠다.</div>
+          <div style="font-size:12px;color:#555;">🔍 A · B 모두 동사원형. than 뒤가 「하기 싫은 쪽」.</div>
+        </div>
+        <div style="background:#fdf0ee;border-left:4px solid #C0392B;border-radius:6px;padding:10px 14px;margin-bottom:12px;">
+          <div style="font-size:14px;font-weight:800;color:#8a1a1a;margin-bottom:4px;">⑦ 최대 함정 — <b>cannot ~ too</b> 를 부정으로 직역 <span style="font-weight:400;font-size:12px;color:#999;">→ 문4 · 문10</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;">We <b>cannot</b> emphasize this <b>too</b> much.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:4px;">▶ 우리는 이것을 아무리 강조해도 지나치지 않다.</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:12px;">
+            <span style="background:#fff;border:1px solid #C0392B;border-radius:4px;padding:2px 9px;color:#C0392B;font-weight:700;">✗ 이것을 너무 강조할 수 없다</span>
+            <span style="background:#fff;border:1px solid #1D5C2B;border-radius:4px;padding:2px 9px;color:#1D5C2B;font-weight:700;">○ 아무리 강조해도 지나치지 않다 (= 강조할수록 좋다)</span>
+          </div>
+          <div style="font-size:12px;color:#555;margin-top:4px;">🔍 cannot + too = 「지나칠 수 없다」 → 긍정의 극대화. 수동형 cannot be too + p.p. 도 같다.</div>
+        </div>
+
+        <div style="background:#fff8e6;border-left:4px solid #f0d070;border-radius:6px;padding:10px 14px;margin-bottom:10px;font-size:13px;">
+          <b style="color:#8B6914;">📌 기억법</b> &nbsp;—&nbsp; <b>as 없으면 당연 · as 있으면 낫다</b> · <b>help ~ing / but RV</b> · <b style="color:#C0392B;">cannot ~ too = 긍정의 극대화</b> · <b>lest = ~하지 않도록(not 포함)</b> · <b>would rather A than B</b>.
+        </div>
+
+        <div style="background:#fffaf0;border-left:4px solid #e8b64c;border-radius:6px;padding:10px 14px;margin-bottom:10px;font-size:13px;">
+          <b style="color:#7a3a00;">🔄 해석 3단계</b> &nbsp; <b>①</b> 조동사 묶음(may well · cannot help · cannot ~ too · lest · would rather)을 통째로 찾는다 → <b>②</b> as 유무 · help 뒤 형태 · too 유무로 어느 공식인지 확정 → <b>③</b> 공식의 정해진 뜻으로 바꿔 넣고 나머지를 해석한다.
+        </div>
+
+      </div>
+    </div>
+    <div style="margin:4px 0 18px;border:1.5px solid #d8c7ec;border-radius:12px;overflow:hidden;box-shadow:0 3px 14px rgba(91,58,142,0.10);background:white;">
+      <div style="background:linear-gradient(135deg,#5B3A8E,#7B54B8);color:white;padding:12px 18px;font-size:16px;font-weight:800;">📎 부록 — 조동사 관용 표현 12 — 통째로 암기 <span style="font-weight:400;font-size:12.5px;opacity:0.85;">had better · may well/as well · cannot help · cannot ~ too · lest · would rather · 조동사 + have p.p.</span></div>
+      <div style="padding:14px 16px 8px;">
+        <div style="border:2px dashed #7B54B8;border-radius:8px;padding:10px 14px;margin-bottom:6px;background:#faf7ff;font-size:13px;">
+          <b style="color:#5B3A8E;">⚡ 공통 원리</b> — 관용 표현은 단어 하나하나를 직역하면 <b style="color:#C0392B;">정반대 뜻</b>이 되기 쉽다(cannot ~ too · lest). 묶음을 통째로 외우고, 문장에서는 <b>묶음을 먼저 찾아 괄호</b>를 친 뒤 나머지를 해석한다.
+        </div>
+        <div style="font-size:13.5px;font-weight:800;color:#5B2D8E;border-bottom:2px solid #5B2D8E;padding-bottom:3px;margin:12px 0 7px;">조동사 관용 표현 12 — 통째로 암기</div>
+        <div style="background:#eef4fb;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#0C447C;">had better + RV</b> <span style="color:#444;">— ~하는 게 좋다 (경고)</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">You <b>had better</b> leave now.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 부정은 had better <b>not</b> RV.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 지금 떠나는 게 좋을 거야.</div>
+        </div>
+        <div style="background:#eef4fb;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#0C447C;">would like to V · would love to V</b> <span style="color:#444;">— ~하고 싶다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">I <b>would like to</b> join you.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 want to 의 공손형.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 함께하고 싶습니다.</div>
+        </div>
+        <div style="background:#e8f5f2;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#00695C;">may well vs may as well</b> <span style="color:#444;">— 당연히 ~하다 vs 차라리 ~하는 편이 낫다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">She <b>may well</b> succeed. / We <b>may as well</b> wait.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 as 하나로 뜻이 바뀐다.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 그녀가 성공하는 것도 당연하다. / 기다리는 편이 낫겠다.</div>
+        </div>
+        <div style="background:#f6effc;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#5B2D8E;">cannot but RV = cannot help ~ing = have no choice but to V</b> <span style="color:#444;">— ~하지 않을 수 없다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">I <b>cannot but</b> admire her courage.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 but 뒤 원형 / help 뒤 동명사 / choice but <b>to</b> V.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 그녀의 용기에 감탄하지 않을 수 없다.</div>
+        </div>
+        <div style="background:#fdf6ee;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#9A3D00;">cannot ~ too = cannot ~ enough = It is impossible to over-</b> <span style="color:#444;">— 아무리 ~해도 지나치지 않다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">I <b>cannot thank</b> you <b>enough</b>.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 전부 긍정의 극대화.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 아무리 감사해도 모자랍니다.</div>
+        </div>
+        <div style="background:#f0f6e8;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#27500A;">lest S (should) RV = for fear (that) S should RV</b> <span style="color:#444;">— ~하지 않도록</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">He whispered <b>lest</b> the baby (should) wake up.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 = so that S may not RV.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 아기가 깨지 않도록 그는 속삭였다.</div>
+        </div>
+        <div style="background:#fffaf0;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#7a3a00;">would rather A (than B) · would sooner</b> <span style="color:#444;">— B하느니 차라리 A</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">I <b>would rather</b> die <b>than</b> surrender.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 뒤에 절이 오면 과거형: I’d rather you <b>went</b>.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 항복하느니 차라리 죽겠다.</div>
+        </div>
+        <div style="background:#fffaf0;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#7a3a00;">used to RV vs be used to ~ing</b> <span style="color:#444;">— ~하곤 했다 vs ~에 익숙하다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">I <b>used to</b> smoke. / I <b>am used to</b> waking up early.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 be(get) used to 뒤는 명사·동명사.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 예전엔 담배를 피웠다. / 일찍 일어나는 데 익숙하다.</div>
+        </div>
+        <div style="background:#fdf6ee;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#9A3D00;">need not RV = don’t have to RV</b> <span style="color:#444;">— ~할 필요가 없다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">You <b>need not</b> apologize.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 must not(~해서는 안 된다)과 구별.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 사과할 필요 없어.</div>
+        </div>
+        <div style="background:#e8f5f2;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#00695C;">must have p.p. / cannot have p.p.</b> <span style="color:#444;">— ~했음이 틀림없다 / ~했을 리가 없다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">He <b>must have missed</b> the bus.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 과거 일에 대한 강한 추측 ↔ 부정 추측.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 그는 버스를 놓쳤음이 틀림없다.</div>
+        </div>
+        <div style="background:#e8f5f2;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#00695C;">should have p.p. / ought to have p.p.</b> <span style="color:#444;">— ~했어야 했는데 (안 했다)</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">You <b>should have told</b> me earlier.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 하지 않은 일에 대한 후회·비난.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 더 일찍 말했어야지.</div>
+        </div>
+        <div style="background:#f6effc;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#5B2D8E;">may(might) have p.p.</b> <span style="color:#444;">— ~했을지도 모른다</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">She <b>may have left</b> already.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 과거 일에 대한 약한 추측.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 그녀는 이미 떠났을지도 모른다.</div>
+        </div>
+
+        <div style="background:#fff8e6;border-left:4px solid #f0d070;border-radius:6px;padding:10px 14px;margin:12px 0 10px;font-size:13px;">
+          <b style="color:#8B6914;">📌 최종 정리</b> — 시험 함정 3개 — ① may well(당연) ↔ may as well(낫다) ② cannot help <b>~ing</b> ↔ cannot <b>but RV</b> ③ cannot ~ too(아무리 ~해도 지나치지 않다) — 이 셋만 확실히 잡으면 PATTERN 42 끝.
         </div>
       </div>
     </div>
+    </div><!-- /keySec -->
+    <div id="lineSec" style="display:none;">
     <div class="hints">
       <div class="hint">🖱 PC: 클릭 → 발음 · 더블클릭 → 해석 고정</div>
       <div class="hint">📱 모바일: 탭 → 해석</div>
@@ -1112,6 +1258,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 </div>
 
     </div><!-- /cards -->
+    </div><!-- /lineSec -->
   </div><!-- /readingView -->
 
 
@@ -1402,6 +1549,10 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="gtype-final"><button class="gtype-final-btn fi-btn" onclick="checkAllFill()">✓ 서답형 최종 확인</button><span class="gtype-final-score" id="fi-final-score"></span></div>
   </div>
   <div class="vocab-view" id="vocabView">
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-bottom:14px;flex-wrap:wrap;">
+      <button class="g-print-btn" style="margin:0;background:#6A1B9A;" onclick="printV(false)">🖨️ 단어장 인쇄 (A4)</button>
+      <button class="g-print-btn" style="margin:0;background:#7B3F00;" onclick="vtOpen()">📝 단어 테스트 만들기</button>
+    </div>
     <div class="vocab-tabs">
       <button class="vocab-tab active" id="vtab0" onclick="switchVocab(0)">📖 단어카드</button>
       <button class="vocab-tab"        id="vtab1" onclick="switchVocab(1)">✏️ 철자 퀴즈</button>
@@ -1498,6 +1649,24 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
 </div>
 
+  </div>
+</div>
+<div id="vtModal">
+  <div class="vt-box">
+    <div id="vtCtrl">
+      <b style="font-size:15px;color:#1F3864;margin-right:6px;">📝 단어 테스트</b>
+      유형 <select id="vtType" onchange="vtBuild()"><option value="e2k">영어 → 뜻 쓰기</option><option value="k2e">뜻 → 영어 쓰기</option></select>
+      문항 <select id="vtCount" onchange="vtBuild()"><option value="10">10</option><option value="20" selected>20</option><option value="30">30</option><option value="all">전체</option></select>
+      범위 <select id="vtScope" onchange="vtBuild()"><option value="all">단어 + 숙어·공식</option><option value="word">단어만</option><option value="phrase">숙어·공식만</option></select>
+      <label><input type="checkbox" id="vtShuffle" checked onchange="vtBuild()"> 무작위</label>
+      <label><input type="checkbox" id="vtAnswer" checked onchange="vtBuild()"> 정답지 포함</label>
+      <button class="vt-btn" onclick="vtBuild()">다시 생성</button>
+      <span style="margin-left:auto;display:inline-flex;gap:8px;">
+        <button class="vt-btn vt-primary" onclick="vtPrint()">🖨 인쇄</button>
+        <button class="vt-btn" onclick="vtClose()">닫기</button>
+      </span>
+    </div>
+    <div id="vtSheet"></div>
   </div>
 </div>
 <footer style="text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(31,56,100,0.25);letter-spacing:1px;">✦ 구문 PATTERN 42 · 조동사의 관용적 표현 · 0505.co.kr ✦</footer>
@@ -2069,6 +2238,103 @@ document.addEventListener("DOMContentLoaded",function(){
 });
 // 즉시 실행 (DOMContentLoaded 전에도 안전하게)
 (function(){hideQPanels();})();
+// ── 단어장 인쇄 (v4.2) ──
+function buildVocabPrint(test){
+  var el=document.getElementById("vocabPrint");
+  if(!el){el=document.createElement("div");el.id="vocabPrint";document.querySelector(".passage").appendChild(el);}
+  var t=document.querySelector(".page-title");
+  var head='<div style="font-size:16px;font-weight:800;color:#1F3864;margin:4px 0 6px;">📚 단어장'+(test?" — 시험지":"")+' · '+(t?t.textContent:"")+' <span style="font-weight:400;font-size:12px;color:#888;">('+VOCAB.length+' words)</span></div>';
+  if(test)head+='<div style="font-size:12.5px;color:#444;margin-bottom:8px;">이름: ______________________ &nbsp;&nbsp;&nbsp; 점수: ________ / '+VOCAB.length+'</div>';
+  var rows=VOCAB.map(function(v,i){
+    var kr=test?"":v.kr;
+    var extra="";
+    if(!test){
+      if(v.syn&&v.syn.length)extra+=' <span style="color:#1565C0;font-size:11px;">≒ '+v.syn.join(", ")+'</span>';
+      if(v.ant&&v.ant.length)extra+=' <span style="color:#B71C1C;font-size:11px;">↔ '+v.ant.join(", ")+'</span>';
+    }
+    return '<tr><td style="width:5%;color:#888;">'+(i+1)+'</td><td style="width:32%;font-family:Georgia,serif;font-weight:700;color:#1F3864;">'+v.en+'</td><td style="width:9%;color:#999;font-size:11px;">'+v.pos+'</td><td>'+kr+extra+'</td></tr>';
+  }).join("");
+  el.innerHTML=head+'<table><tr><th>#</th><th>단어 · 숙어</th><th>품사</th><th>뜻</th></tr>'+rows+'</table>';
+}
+function printV(test){
+  buildVocabPrint(test);
+  document.body.classList.add("pv");
+  window.onafterprint=function(){document.body.classList.remove("pv");window.onafterprint=null;};
+  window.print();
+}
+// ── 단어 테스트 생성기 (v4.2 · 대치동식 2단 시험지) ──
+function vtPool(){
+  var pool=[],seen={};
+  VOCAB.forEach(function(v){
+    var ph=(v.pos||"").indexOf("phr")>=0||v.en.indexOf(" ")>=0;
+    pool.push({en:v.en,kr:v.kr,ph:ph});seen[v.en.toLowerCase()]=1;
+  });
+  document.querySelectorAll(".s-vocab").forEach(function(sv){
+    var ens=sv.querySelectorAll(".vocab-en"),krs=sv.querySelectorAll(".vocab-kr");
+    for(var i=0;i<ens.length;i++){
+      var e=ens[i].textContent.trim(),k=krs[i]?krs[i].textContent.trim():"";
+      if(!e||!k||seen[e.toLowerCase()])continue;
+      seen[e.toLowerCase()]=1;
+      pool.push({en:e,kr:k,ph:true});
+    }
+  });
+  return pool;
+}
+function vtHalfTable(items,start,mode,answer){
+  var head=answer?"<tr><th style=\"width:11%;\">No.</th><th style=\"width:42%;\">"+(mode==="k2e"?"뜻":"단어")+"</th><th>"+(mode==="k2e"?"단어":"뜻")+"</th></tr>"
+                 :"<tr><th style=\"width:11%;\">No.</th><th style=\"width:44%;\">문제</th><th>답</th></tr>";
+  var rows=items.map(function(it,i){
+    var q=mode==="k2e"?it.kr:it.en, a=mode==="k2e"?it.en:it.kr;
+    var qs=mode==="k2e"?"":"font-family:Georgia,serif;";
+    if(answer)return "<tr><td style=\"text-align:center;color:#666;\">"+(start+i+1)+"</td><td style=\"font-weight:700;"+qs+"\">"+q+"</td><td>"+a+"</td></tr>";
+    return "<tr><td style=\"text-align:center;color:#666;\">"+(start+i+1)+"</td><td style=\"font-weight:700;"+qs+"\">"+q+"</td><td style=\"height:26px;\"></td></tr>";
+  }).join("");
+  return "<table>"+head+rows+"</table>";
+}
+function vtTwoCol(items,mode,answer){
+  var half=Math.ceil(items.length/2);
+  var L=items.slice(0,half),R=items.slice(half);
+  return "<div class=\"vt-cols\"><div>"+vtHalfTable(L,0,mode,answer)+"</div><div>"+(R.length?vtHalfTable(R,half,mode,answer):"")+"</div></div>";
+}
+function vtBuild(){
+  var mode=document.getElementById("vtType").value;
+  var cnt=document.getElementById("vtCount").value;
+  var scope=document.getElementById("vtScope").value;
+  var shuffle=document.getElementById("vtShuffle").checked;
+  var withAns=document.getElementById("vtAnswer").checked;
+  var pool=vtPool();
+  if(scope==="word")pool=pool.filter(function(v){return !v.ph;});
+  else if(scope==="phrase")pool=pool.filter(function(v){return v.ph;});
+  if(shuffle)pool=pool.slice().sort(function(){return Math.random()-0.5;});
+  var items=(cnt==="all")?pool:pool.slice(0,Math.min(parseInt(cnt,10),pool.length));
+  var t=document.querySelector(".page-title");
+  var title=(t?t.textContent.split("—")[0].trim():"단어장");
+  var badge=document.querySelector(".nav-title-bar");
+  var typeLabel=(mode==="k2e"?"뜻 → 영어":"영어 → 뜻");
+  var scopeLabel=(scope==="word"?"단어":scope==="phrase"?"숙어·공식":"단어+숙어·공식");
+  var html="";
+  html+="<div style=\"display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:2px solid #1F3864;padding-bottom:8px;margin-bottom:12px;\">";
+  html+="<div style=\"font-size:17px;font-weight:800;color:#111;\">"+(badge?badge.textContent.trim()+" · ":"")+title+" 단어테스트</div>";
+  html+="<div style=\"font-size:11px;color:#888;\">"+typeLabel+" · "+scopeLabel+" · "+items.length+"문항 · 목동서로영어학원</div></div>";
+  html+="<div style=\"display:flex;gap:26px;font-size:12.5px;color:#333;margin-bottom:12px;flex-wrap:wrap;\">";
+  html+="<span>이름 &nbsp;______________</span><span>날짜 &nbsp;______________</span><span>점수 &nbsp;__________ / "+items.length+"</span></div>";
+  html+=vtTwoCol(items,mode,false);
+  if(withAns){
+    html+="<div style=\"margin:22px 0 8px;padding-left:9px;border-left:4px solid #1F3864;font-size:14px;font-weight:800;color:#111;page-break-before:always;break-before:page;\">정답 · "+title+" 단어테스트 ("+typeLabel+")</div>";
+    html+=vtTwoCol(items,mode,true);
+  }
+  document.getElementById("vtSheet").innerHTML=html;
+}
+function vtOpen(){
+  document.getElementById("vtModal").style.display="block";
+  if(!document.getElementById("vtSheet").innerHTML)vtBuild();
+}
+function vtClose(){document.getElementById("vtModal").style.display="none";}
+function vtPrint(){
+  document.body.classList.add("pvt");
+  window.onafterprint=function(){document.body.classList.remove("pvt");window.onafterprint=null;};
+  window.print();
+}
 </script>
 
 <script>
