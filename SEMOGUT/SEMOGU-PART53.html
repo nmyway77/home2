@@ -446,6 +446,43 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .tab-summary.active{background:#00695C;color:white;border-color:#00695C;}
 .summary-view{display:none;}
 @media print{.summary-view{display:none!important;}}
+
+/* 10. 단어장 인쇄 */
+#vocabPrint{display:none;}
+#vocabPrint table{width:100%;border-collapse:collapse;font-size:12px;}
+#vocabPrint th{background:#1F3864;color:white;padding:6px 9px;text-align:left;font-size:11.5px;}
+#vocabPrint td{padding:5px 9px;border-bottom:1px solid #ddd;vertical-align:top;}
+#vocabPrint tr{break-inside:avoid;page-break-inside:avoid;}
+#vocabPrint tr:nth-child(even) td{background:#f5f7fb;}
+@media print{
+  body.pv #vocabPrint{display:block!important;}
+  body.pv .top-nav,body.pv .page-header,body.pv .watermark,body.pv .cover-plate,body.pv #secNav,body.pv .view-tabs,body.pv #readingView,body.pv .summary-view,body.pv .ga-panel,body.pv .sd-panel,body.pv .arrange-view,body.pv .grammar-view,body.pv .vocab-view,body.pv .q-panel,body.pv footer{display:none!important;}
+  body.pv .passage{padding:8mm 0 6mm!important;max-width:100%!important;}
+}
+
+/* 11. 단어 테스트 모달 (v4.2) */
+#vtModal{display:none;position:fixed;inset:0;z-index:5000;background:rgba(20,25,40,0.55);overflow:auto;padding:24px 12px;}
+#vtModal .vt-box{max-width:920px;margin:0 auto;background:white;border-radius:12px;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,0.35);}
+#vtCtrl{padding:12px 18px;border-bottom:1px solid #e3e6ee;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;background:#fbfcfe;font-size:13px;color:#334;}
+#vtCtrl select{font-family:inherit;font-size:12.5px;padding:5px 8px;border:1px solid #c9d2e3;border-radius:6px;background:white;color:#1F3864;}
+#vtCtrl label{display:inline-flex;align-items:center;gap:4px;cursor:pointer;font-size:12.5px;}
+#vtCtrl .vt-btn{font-family:inherit;font-size:12.5px;font-weight:700;padding:7px 16px;border-radius:18px;border:1px solid #c9d2e3;background:white;color:#1F3864;cursor:pointer;}
+#vtCtrl .vt-btn.vt-primary{background:#1F3864;border-color:#1F3864;color:white;}
+#vtSheet{padding:20px 26px 26px;}
+#vtSheet table{width:100%;border-collapse:collapse;font-size:12px;}
+#vtSheet th{background:#f0f2f7;color:#222;border:1px solid #444;padding:6px 8px;font-size:11.5px;font-weight:700;}
+#vtSheet td{border:1px solid #444;padding:7px 8px;vertical-align:middle;}
+#vtSheet .vt-cols{display:flex;gap:14px;align-items:flex-start;}
+#vtSheet .vt-cols>div{flex:1;min-width:0;}
+#vtSheet tr{break-inside:avoid;page-break-inside:avoid;}
+@media print{
+  body.pvt .passage,body.pvt .top-nav,body.pvt footer{display:none!important;}
+  body.pvt #vtModal{display:block!important;position:static!important;background:white!important;padding:0!important;overflow:visible!important;}
+  body.pvt #vtModal .vt-box{box-shadow:none!important;border-radius:0!important;max-width:100%!important;}
+  body.pvt #vtCtrl{display:none!important;}
+  body.pvt #vtSheet{padding:8mm 0 6mm!important;}
+}
+@media (max-width:600px){#vtSheet .vt-cols{flex-direction:column;}}
 </style>
 </head>
 <body>
@@ -485,7 +522,11 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="page-title">wh-ever의 해석 — 복합관계대명사 · 복합관계부사</div>
     <div class="page-sub">whoever/whichever/whatever = 명사절(~든 누구나·무엇이나) 또는 양보(~하든 간에) · whenever/wherever = 시간·장소(언제든·어디든) · = no matter wh- · EXERCISE 8문장</div>
   </div>
-  <div class="view-tabs">
+    <div id="secNav" style="display:flex;gap:10px;margin:2px 0 16px;">
+      <button id="navKey" onclick="switchView('reading');document.querySelector('.view-tabs').style.display='none';document.getElementById('keySec').style.display='';document.getElementById('lineSec').style.display='none';this.style.background='#1F3864';this.style.color='#fff';var b=document.getElementById('navLine');b.style.background='#fff';b.style.color='#1F3864';window.scrollTo(0,0);" style="flex:1;padding:12px 0;border:2px solid #1F3864;border-radius:9px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:0.5px;background:#1F3864;color:#fff;box-shadow:0 3px 10px rgba(31,56,100,0.25);">⚡ 키 해석법</button>
+      <button id="navLine" onclick="switchView('reading');document.querySelector('.view-tabs').style.display='flex';document.getElementById('lineSec').style.display='';document.getElementById('keySec').style.display='none';this.style.background='#1F3864';this.style.color='#fff';var b=document.getElementById('navKey');b.style.background='#fff';b.style.color='#1F3864';window.scrollTo(0,0);" style="flex:1;padding:12px 0;border:2px solid #1F3864;border-radius:9px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:0.5px;background:#fff;color:#1F3864;">📖 주요구문 한줄해석</button>
+    </div>
+  <div class="view-tabs" style="display:none;">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
     <button class="view-tab tab-summary" id="tabSum" onclick="switchSummary()">📄 요약</button>
     <button class="view-tab tab-ga"             id="tabGA" onclick="switchGA()">📊 문법분석</button>
@@ -496,50 +537,122 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <button class="view-tab tab-vocab"          id="tabV" onclick="switchView('vocab')">📚 단어장</button>
   </div>
   <div id="readingView">
+    <div id="keySec">
     <div style="margin:4px 0 18px;border:1.5px solid #c7d3ec;border-radius:12px;overflow:hidden;box-shadow:0 3px 14px rgba(31,56,100,0.10);background:white;">
-      <div style="background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;padding:12px 16px;font-family:'Playfair Display',serif;font-size:15px;font-weight:700;letter-spacing:0.3px;">⚡ 키포인트 해석법 — wh-ever는 전부 「~든지」!</div>
+      <div style="background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;padding:12px 16px;font-family:'Playfair Display',serif;font-size:15px;font-weight:700;letter-spacing:0.3px;">⚡ 키포인트 해석법 — wh-ever 는 「자리」로 뜻이 갈린다 — 명사절 / 양보절</div>
       <div style="padding:14px 16px 8px;font-size:13px;line-height:1.7;color:#333;">
 
         <div style="text-align:center;background:#f7f8fc;border:1.5px dashed #2E75B6;border-radius:10px;padding:12px 10px;margin-bottom:12px;font-size:14.5px;font-weight:700;color:#1F3864;">
-          <span style="background:#F3E8FF;color:#5B2D8E;border-radius:4px;padding:1px 8px;">주어·목적어 자리</span> = 「~하는 사람·것은 누구든/무엇이든」 &nbsp;/&nbsp; <span style="background:#FDEEE2;color:#9A3D00;border-radius:4px;padding:1px 8px;">콤마로 분리</span> = 「~하든 간에」
+          주어·목적어 <span style="background:#E6F1FB;color:#0C447C;border-radius:4px;padding:1px 7px;">자리</span> → <b>명사절</b> 「~든 누구나 / 무엇이나」 &nbsp;/&nbsp; <span style="background:#F3E8FF;color:#5B2D8E;border-radius:4px;padding:1px 7px;">콤마</span>로 분리 → <b>양보절</b> 「<span style="color:#C0392B;">~하든 간에</span>」(= no matter wh-)
         </div>
 
-        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
-          <div style="flex:1 1 300px;background:#f6effc;border-left:4px solid #5B2D8E;border-radius:6px;padding:10px 12px;">
-            <div style="font-size:14px;font-weight:800;color:#5B2D8E;">① 주어·목적어 자리 &nbsp;=&nbsp; 명사절 「~든 누구나·무엇이나」</div>
-            <div style="font-family:Georgia,serif;font-size:13.5px;margin:6px 0 2px;"><b style="color:#5B2D8E;">Whoever comes first</b> will win the prize.</div>
-            <div style="font-size:12.5px;color:#444;">= <b>먼저 오는 사람은 누구든</b> 상을 탄다 — whoever = <b>anyone who</b> <span style="color:#999;">— 문1 · 문3 · 문6 · 문8</span></div>
-          </div>
-          <div style="flex:1 1 300px;background:#fdf6ee;border-left:4px solid #E65100;border-radius:6px;padding:10px 12px;">
-            <div style="font-size:14px;font-weight:800;color:#9A3D00;">② 콤마로 분리 &nbsp;=&nbsp; 양보 「~하든 간에」</div>
-            <div style="font-family:Georgia,serif;font-size:13.5px;margin:6px 0 2px;"><b style="color:#9A3D00;">Whichever you decide</b>, I’ll back you up.</div>
-            <div style="font-size:12.5px;color:#444;">= <b>어느 쪽을 결정하든 간에</b> 지지할게 — 주절과 콤마로 뚝! <span style="color:#999;">— 문2 · 문4</span></div>
-          </div>
+        <div style="background:#eef4fb;border-left:4px solid #0C447C;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#0C447C;margin-bottom:4px;">① wh-ever절이 <b>주어 자리</b> = 명사절 「~하는 사람은 누구든 / ~하는 것은 무엇이든」 <span style="font-weight:400;font-size:12px;color:#999;">→ 문1 · 문3</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><b>Whoever</b> breaks the rule <u>will be punished</u>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 규칙을 어기는 사람은 누구든 처벌받을 것이다.</div>
+          <div style="font-size:12px;color:#555;">🔍 Whoever = anyone who, Whatever = anything that. 절 전체가 주어.</div>
         </div>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
-          <div style="flex:1 1 300px;background:#eaf6f4;border-left:4px solid #9CCFC6;border-radius:6px;padding:10px 12px;">
-            <div style="font-size:14px;font-weight:800;color:#00695C;">③ whenever / wherever &nbsp;=&nbsp; 「~할 때마다 / ~하는 곳 어디든」</div>
-            <div style="font-family:Georgia,serif;font-size:13.5px;margin:6px 0 2px;"><b style="color:#00695C;">whenever</b> it is threatened</div>
-            <div style="font-size:12.5px;color:#444;">= 그것이 <b>위협받을 때마다(언제든)</b> — 시간·장소 부사절 <span style="color:#999;">— 문5</span></div>
+        <div style="background:#fdf6ee;border-left:4px solid #9A3D00;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#9A3D00;margin-bottom:4px;">② <b>동사·전치사 뒤</b> wh-ever절 = <b>목적어</b> 명사절 <span style="font-weight:400;font-size:12px;color:#999;">→ 문6 · 문8</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;">Take <b>whatever</b> <u>you want</u>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 원하는 것은 무엇이든 가져라.</div>
+          <div style="font-size:12px;color:#555;">🔍 take 의 목적어. 「~하는 것은 무엇이든」.</div>
+        </div>
+        <div style="background:#f6effc;border-left:4px solid #5B2D8E;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#5B2D8E;margin-bottom:4px;">③ <b>콤마로 분리</b>된 wh-ever절 = <b>양보</b> 「~하든 간에」(= no matter wh-) <span style="font-weight:400;font-size:12px;color:#999;">→ 문2 · 문4</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><b>Whatever</b> happens, <u>stay calm</u>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 무슨 일이 일어나든, 침착해라.</div>
+          <div style="font-size:12px;color:#555;">🔍 주절과 콤마로 떨어져 있으면 부사절. 뜻은 「~하든 상관없이」.</div>
+        </div>
+        <div style="background:#f0f6e8;border-left:4px solid #27500A;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#27500A;margin-bottom:4px;">④ <b>whenever · wherever</b> = 「~할 때는 언제든 / 어디든」 <span style="font-weight:400;font-size:12px;color:#999;">→ 문5</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;">Call me <b>whenever</b> <u>you need help</u>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 도움이 필요할 때는 언제든 전화해.</div>
+          <div style="font-size:12px;color:#555;">🔍 시간·장소 부사절. = at any time when / at any place where.</div>
+        </div>
+        <div style="background:#e8f5f2;border-left:4px solid #00695C;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#00695C;margin-bottom:4px;">⑤ <b>wh-ever + 명사</b> — 명사까지 끌고 문두로 나간다 <span style="font-weight:400;font-size:12px;color:#999;">→ 문7 · 문8</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><b>Whichever road</b> you take, <u>you’ll get there</u>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 어느 길을 택하든, 거기에 도착할 것이다.</div>
+          <div style="font-size:12px;color:#555;">🔍 whichever road = 「어느 길을 ~하든」. whatever strictness(어떤 엄격함이든)도 같은 틀.</div>
+        </div>
+        <div style="background:#fffaf0;border-left:4px solid #7a3a00;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#7a3a00;margin-bottom:4px;">⑥ <b>no matter wh-</b> = wh-ever 의 양보 전용 형태 <span style="font-weight:400;font-size:12px;color:#999;">→ 문7</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><b>No matter what</b> he says, <u>I won’t go</u>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 그가 뭐라고 말하든, 나는 가지 않겠다.</div>
+          <div style="font-size:12px;color:#555;">🔍 no matter what = whatever(양보). 명사절로는 쓰지 않는다.</div>
+        </div>
+        <div style="background:#fdf0ee;border-left:4px solid #C0392B;border-radius:6px;padding:10px 14px;margin-bottom:12px;">
+          <div style="font-size:14px;font-weight:800;color:#8a1a1a;margin-bottom:4px;">⑦ 최대 함정 — 같은 whatever 가 <b>자리</b>에 따라 뜻이 바뀐다 <span style="font-weight:400;font-size:12px;color:#999;">→ 문4</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><b>Whatever</b> you say <u>is</u> true. / <b>Whatever</b> you say, <u>I’m leaving</u>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:4px;">▶ 네가 말하는 것은 무엇이든 사실이다. / 네가 뭐라 하든, 나는 떠난다.</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:12px;">
+            <span style="background:#fff;border:1px solid #C0392B;border-radius:4px;padding:2px 9px;color:#C0392B;font-weight:700;">✗ 콤마 양보절을 「~하는 것은」 명사절로</span>
+            <span style="background:#fff;border:1px solid #1D5C2B;border-radius:4px;padding:2px 9px;color:#1D5C2B;font-weight:700;">○ 주어·목적어 자리 = 명사절 · 콤마 분리 = 양보</span>
           </div>
-          <div style="flex:1 1 300px;background:#eef4fb;border-left:4px solid #2E75B6;border-radius:6px;padding:10px 12px;">
-            <div style="font-size:14px;font-weight:800;color:#0C447C;">④ = no matter + wh &nbsp;<span style="font-weight:400;color:#888;">(같은 뜻, 다른 옷)</span> · 명사 견인</div>
-            <div style="font-family:Georgia,serif;font-size:13.5px;margin:6px 0 2px;"><b style="color:#0C447C;">no matter what kind of work</b> a person did / <b style="color:#0C447C;">whatever strictness</b></div>
-            <div style="font-size:12.5px;color:#444;">= 어떤 일을 하든 간에 / 어떤 엄격함이든 — <b style="color:#C0392B;">명사까지 통째로 견인!</b> <span style="color:#999;">— 문7 · 문8</span></div>
-          </div>
+          <div style="font-size:12px;color:#555;margin-top:4px;">🔍 판별 기준은 단어가 아니라 <b>자리</b> — 주절의 주어·목적어로 쓰이면 명사절, 콤마로 떨어져 있으면 양보.</div>
         </div>
 
         <div style="background:#fff8e6;border-left:4px solid #f0d070;border-radius:6px;padding:10px 14px;margin-bottom:10px;font-size:13px;">
-          <b style="color:#8B6914;">📌 짝 암기</b> &nbsp;—&nbsp; <b style="color:#5B2D8E;">whoever = anyone who</b> · <b style="color:#5B2D8E;">whatever = anything that</b> · <b style="color:#0C447C;">양보는 전부 = no matter wh-</b> &nbsp;<span style="color:#777;">(어느 쪽이든 해석엔 「모든·~든지」의 뜻이 들어간다!)</span>
+          <b style="color:#8B6914;">📌 기억법</b> &nbsp;—&nbsp; <b>주어·목적어 자리 = 명사절</b> · <b style="color:#C0392B;">콤마 분리 = 양보</b> · <b>whenever/wherever = 언제든/어디든</b> · <b>wh-ever + 명사 견인</b> · <b>no matter wh- = 양보 전용</b>.
         </div>
 
         <div style="background:#fffaf0;border-left:4px solid #e8b64c;border-radius:6px;padding:10px 14px;margin-bottom:10px;font-size:13px;">
-          <b style="color:#7a3a00;">🔄 해석 3단계</b> &nbsp;
-          <b>①</b> wh-ever절을 <b>두 번째 동사 직전까지</b> 묶고 → <b>②</b> 자리 확인: 주어·목적어 자리면 <b>명사절</b>, 콤마 밖이면 <b>양보</b> → <b>③</b> 「~든지」를 넣어 해석한다.
+          <b style="color:#7a3a00;">🔄 해석 3단계</b> &nbsp; <b>①</b> wh-ever 절의 끝(콤마 또는 동사)을 찾는다 → <b>②</b> 자리를 본다(주어·목적어면 명사절 · 콤마 분리면 양보) → <b>③</b> 명사절은 「~든 누구나/무엇이나」, 양보는 「~하든 간에」로 해석한다.
         </div>
 
       </div>
     </div>
+    <div style="margin:4px 0 18px;border:1.5px solid #d8c7ec;border-radius:12px;overflow:hidden;box-shadow:0 3px 14px rgba(91,58,142,0.10);background:white;">
+      <div style="background:linear-gradient(135deg,#5B3A8E,#7B54B8);color:white;padding:12px 18px;font-size:16px;font-weight:800;">📎 부록 — wh-ever 7종 판별표 <span style="font-weight:400;font-size:12.5px;opacity:0.85;">whoever · whichever · whatever · whenever · wherever · however · 명사 견인</span></div>
+      <div style="padding:14px 16px 8px;">
+        <div style="border:2px dashed #7B54B8;border-radius:8px;padding:10px 14px;margin-bottom:6px;background:#faf7ff;font-size:13px;">
+          <b style="color:#5B3A8E;">⚡ 공통 원리</b> — 모든 wh-ever 는 두 뜻을 갖는다 — <b>명사절</b>(「~든 누구나·무엇이나」)과 <b>양보절</b>(「~하든 간에」). 어느 쪽인지는 단어가 아니라 <b style="color:#C0392B;">문장 속 자리</b>(주어·목적어 vs 콤마 분리)가 결정한다.
+        </div>
+        <div style="font-size:13.5px;font-weight:800;color:#5B2D8E;border-bottom:2px solid #5B2D8E;padding-bottom:3px;margin:12px 0 7px;">wh-ever 7종 — 명사절 뜻 / 양보 뜻 한 번에</div>
+        <div style="background:#f6effc;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#5B2D8E;">whoever / whomever</b> <span style="color:#444;">— ~하는 사람은 누구든 / 누가(누구를) ~하든</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;"><b>Whoever</b> wins will get a prize. / <b>Whoever</b> you are, you must wait.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 = anyone who / no matter who.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 이기는 사람은 누구든 상을 받는다. / 당신이 누구든, 기다려야 한다.</div>
+        </div>
+        <div style="background:#f6effc;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#5B2D8E;">whichever</b> <span style="color:#444;">— 어느 것이든 (둘·정해진 범위 중)</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">Choose <b>whichever</b> you like. / <b>Whichever</b> you choose, be careful.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 = any one that / no matter which.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 좋아하는 것 어느 것이든 골라라. / 어느 것을 고르든, 조심해라.</div>
+        </div>
+        <div style="background:#f6effc;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#5B2D8E;">whatever</b> <span style="color:#444;">— ~하는 것은 무엇이든 / 무엇을 ~하든</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">Do <b>whatever</b> you can. / <b>Whatever</b> you do, don’t lie.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 = anything that / no matter what.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 할 수 있는 것은 무엇이든 해라. / 무엇을 하든, 거짓말은 하지 마라.</div>
+        </div>
+        <div style="background:#f6effc;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#5B2D8E;">whenever</b> <span style="color:#444;">— ~할 때는 언제든 / 언제 ~하든</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">Come <b>whenever</b> you like.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 = at any time when / no matter when.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 오고 싶을 때 언제든 와라.</div>
+        </div>
+        <div style="background:#f6effc;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#5B2D8E;">wherever</b> <span style="color:#444;">— ~하는 곳은 어디든 / 어디서 ~하든</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">Sit <b>wherever</b> you want.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 = at any place where / no matter where.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 원하는 곳 어디든 앉아라.</div>
+        </div>
+        <div style="background:#f6effc;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#5B2D8E;">however + 형/부</b> <span style="color:#444;">— 아무리 ~해도 (양보 전용)</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;"><b>However</b> hard it is, keep going.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 = no matter how. → PATTERN 54 에서 상세.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 아무리 어려워도, 계속 가라.</div>
+        </div>
+        <div style="background:#f6effc;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#5B2D8E;">(함정) wh-ever + 명사 견인</b> <span style="color:#444;">— 어떤 …을 ~하든 / ~하는 어떤 …이든</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;"><b>Whatever</b> excuse he makes, I won’t believe him.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 whatever excuse = 「어떤 변명을 ~하든」— 명사까지 한 덩어리.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 그가 어떤 변명을 하든, 나는 믿지 않겠다.</div>
+        </div>
+
+        <div style="background:#fff8e6;border-left:4px solid #f0d070;border-radius:6px;padding:10px 14px;margin:12px 0 10px;font-size:13px;">
+          <b style="color:#8B6914;">📌 최종 정리</b> — 해석 공식 — 명사절은 「any- + 관계사」(anyone who · anything that)로 바꿔 읽고, 양보절은 「no matter wh-」로 바꿔 읽는다. 바꿔서 자연스러운 쪽이 정답.
+        </div>
+      </div>
+    </div>
+    </div><!-- /keySec -->
+    <div id="lineSec" style="display:none;">
     <div class="hints">
       <div class="hint">🖱 PC: 클릭 → 발음 · 더블클릭 → 해석 고정</div>
       <div class="hint">📱 모바일: 탭 → 해석</div>
@@ -1013,6 +1126,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 </div>
 
     </div><!-- /cards -->
+    </div><!-- /lineSec -->
   </div><!-- /readingView -->
 
 
@@ -1269,6 +1383,10 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="gtype-final"><button class="gtype-final-btn fi-btn" onclick="checkAllFill()">✓ 서답형 최종 확인</button><span class="gtype-final-score" id="fi-final-score"></span></div>
   </div>
   <div class="vocab-view" id="vocabView">
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-bottom:14px;flex-wrap:wrap;">
+      <button class="g-print-btn" style="margin:0;background:#6A1B9A;" onclick="printV(false)">🖨️ 단어장 인쇄 (A4)</button>
+      <button class="g-print-btn" style="margin:0;background:#7B3F00;" onclick="vtOpen()">📝 단어 테스트 만들기</button>
+    </div>
     <div class="vocab-tabs">
       <button class="vocab-tab active" id="vtab0" onclick="switchVocab(0)">📖 단어카드</button>
       <button class="vocab-tab"        id="vtab1" onclick="switchVocab(1)">✏️ 철자 퀴즈</button>
@@ -1297,6 +1415,24 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
 </div>
 
+  </div>
+</div>
+<div id="vtModal">
+  <div class="vt-box">
+    <div id="vtCtrl">
+      <b style="font-size:15px;color:#1F3864;margin-right:6px;">📝 단어 테스트</b>
+      유형 <select id="vtType" onchange="vtBuild()"><option value="e2k">영어 → 뜻 쓰기</option><option value="k2e">뜻 → 영어 쓰기</option></select>
+      문항 <select id="vtCount" onchange="vtBuild()"><option value="10">10</option><option value="20" selected>20</option><option value="30">30</option><option value="all">전체</option></select>
+      범위 <select id="vtScope" onchange="vtBuild()"><option value="all">단어 + 숙어·공식</option><option value="word">단어만</option><option value="phrase">숙어·공식만</option></select>
+      <label><input type="checkbox" id="vtShuffle" checked onchange="vtBuild()"> 무작위</label>
+      <label><input type="checkbox" id="vtAnswer" checked onchange="vtBuild()"> 정답지 포함</label>
+      <button class="vt-btn" onclick="vtBuild()">다시 생성</button>
+      <span style="margin-left:auto;display:inline-flex;gap:8px;">
+        <button class="vt-btn vt-primary" onclick="vtPrint()">🖨 인쇄</button>
+        <button class="vt-btn" onclick="vtClose()">닫기</button>
+      </span>
+    </div>
+    <div id="vtSheet"></div>
   </div>
 </div>
 <footer style="text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(31,56,100,0.25);letter-spacing:1px;">✦ 구문 PATTERN 53 · wh-ever의 해석 · 0505.co.kr ✦</footer>
@@ -1910,6 +2046,103 @@ document.addEventListener("DOMContentLoaded",function(){
 });
 // 즉시 실행 (DOMContentLoaded 전에도 안전하게)
 (function(){hideQPanels();})();
+// ── 단어장 인쇄 (v4.2) ──
+function buildVocabPrint(test){
+  var el=document.getElementById("vocabPrint");
+  if(!el){el=document.createElement("div");el.id="vocabPrint";document.querySelector(".passage").appendChild(el);}
+  var t=document.querySelector(".page-title");
+  var head='<div style="font-size:16px;font-weight:800;color:#1F3864;margin:4px 0 6px;">📚 단어장'+(test?" — 시험지":"")+' · '+(t?t.textContent:"")+' <span style="font-weight:400;font-size:12px;color:#888;">('+VOCAB.length+' words)</span></div>';
+  if(test)head+='<div style="font-size:12.5px;color:#444;margin-bottom:8px;">이름: ______________________ &nbsp;&nbsp;&nbsp; 점수: ________ / '+VOCAB.length+'</div>';
+  var rows=VOCAB.map(function(v,i){
+    var kr=test?"":v.kr;
+    var extra="";
+    if(!test){
+      if(v.syn&&v.syn.length)extra+=' <span style="color:#1565C0;font-size:11px;">≒ '+v.syn.join(", ")+'</span>';
+      if(v.ant&&v.ant.length)extra+=' <span style="color:#B71C1C;font-size:11px;">↔ '+v.ant.join(", ")+'</span>';
+    }
+    return '<tr><td style="width:5%;color:#888;">'+(i+1)+'</td><td style="width:32%;font-family:Georgia,serif;font-weight:700;color:#1F3864;">'+v.en+'</td><td style="width:9%;color:#999;font-size:11px;">'+v.pos+'</td><td>'+kr+extra+'</td></tr>';
+  }).join("");
+  el.innerHTML=head+'<table><tr><th>#</th><th>단어 · 숙어</th><th>품사</th><th>뜻</th></tr>'+rows+'</table>';
+}
+function printV(test){
+  buildVocabPrint(test);
+  document.body.classList.add("pv");
+  window.onafterprint=function(){document.body.classList.remove("pv");window.onafterprint=null;};
+  window.print();
+}
+// ── 단어 테스트 생성기 (v4.2 · 대치동식 2단 시험지) ──
+function vtPool(){
+  var pool=[],seen={};
+  VOCAB.forEach(function(v){
+    var ph=(v.pos||"").indexOf("phr")>=0||v.en.indexOf(" ")>=0;
+    pool.push({en:v.en,kr:v.kr,ph:ph});seen[v.en.toLowerCase()]=1;
+  });
+  document.querySelectorAll(".s-vocab").forEach(function(sv){
+    var ens=sv.querySelectorAll(".vocab-en"),krs=sv.querySelectorAll(".vocab-kr");
+    for(var i=0;i<ens.length;i++){
+      var e=ens[i].textContent.trim(),k=krs[i]?krs[i].textContent.trim():"";
+      if(!e||!k||seen[e.toLowerCase()])continue;
+      seen[e.toLowerCase()]=1;
+      pool.push({en:e,kr:k,ph:true});
+    }
+  });
+  return pool;
+}
+function vtHalfTable(items,start,mode,answer){
+  var head=answer?"<tr><th style=\"width:11%;\">No.</th><th style=\"width:42%;\">"+(mode==="k2e"?"뜻":"단어")+"</th><th>"+(mode==="k2e"?"단어":"뜻")+"</th></tr>"
+                 :"<tr><th style=\"width:11%;\">No.</th><th style=\"width:44%;\">문제</th><th>답</th></tr>";
+  var rows=items.map(function(it,i){
+    var q=mode==="k2e"?it.kr:it.en, a=mode==="k2e"?it.en:it.kr;
+    var qs=mode==="k2e"?"":"font-family:Georgia,serif;";
+    if(answer)return "<tr><td style=\"text-align:center;color:#666;\">"+(start+i+1)+"</td><td style=\"font-weight:700;"+qs+"\">"+q+"</td><td>"+a+"</td></tr>";
+    return "<tr><td style=\"text-align:center;color:#666;\">"+(start+i+1)+"</td><td style=\"font-weight:700;"+qs+"\">"+q+"</td><td style=\"height:26px;\"></td></tr>";
+  }).join("");
+  return "<table>"+head+rows+"</table>";
+}
+function vtTwoCol(items,mode,answer){
+  var half=Math.ceil(items.length/2);
+  var L=items.slice(0,half),R=items.slice(half);
+  return "<div class=\"vt-cols\"><div>"+vtHalfTable(L,0,mode,answer)+"</div><div>"+(R.length?vtHalfTable(R,half,mode,answer):"")+"</div></div>";
+}
+function vtBuild(){
+  var mode=document.getElementById("vtType").value;
+  var cnt=document.getElementById("vtCount").value;
+  var scope=document.getElementById("vtScope").value;
+  var shuffle=document.getElementById("vtShuffle").checked;
+  var withAns=document.getElementById("vtAnswer").checked;
+  var pool=vtPool();
+  if(scope==="word")pool=pool.filter(function(v){return !v.ph;});
+  else if(scope==="phrase")pool=pool.filter(function(v){return v.ph;});
+  if(shuffle)pool=pool.slice().sort(function(){return Math.random()-0.5;});
+  var items=(cnt==="all")?pool:pool.slice(0,Math.min(parseInt(cnt,10),pool.length));
+  var t=document.querySelector(".page-title");
+  var title=(t?t.textContent.split("—")[0].trim():"단어장");
+  var badge=document.querySelector(".nav-title-bar");
+  var typeLabel=(mode==="k2e"?"뜻 → 영어":"영어 → 뜻");
+  var scopeLabel=(scope==="word"?"단어":scope==="phrase"?"숙어·공식":"단어+숙어·공식");
+  var html="";
+  html+="<div style=\"display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:2px solid #1F3864;padding-bottom:8px;margin-bottom:12px;\">";
+  html+="<div style=\"font-size:17px;font-weight:800;color:#111;\">"+(badge?badge.textContent.trim()+" · ":"")+title+" 단어테스트</div>";
+  html+="<div style=\"font-size:11px;color:#888;\">"+typeLabel+" · "+scopeLabel+" · "+items.length+"문항 · 목동서로영어학원</div></div>";
+  html+="<div style=\"display:flex;gap:26px;font-size:12.5px;color:#333;margin-bottom:12px;flex-wrap:wrap;\">";
+  html+="<span>이름 &nbsp;______________</span><span>날짜 &nbsp;______________</span><span>점수 &nbsp;__________ / "+items.length+"</span></div>";
+  html+=vtTwoCol(items,mode,false);
+  if(withAns){
+    html+="<div style=\"margin:22px 0 8px;padding-left:9px;border-left:4px solid #1F3864;font-size:14px;font-weight:800;color:#111;page-break-before:always;break-before:page;\">정답 · "+title+" 단어테스트 ("+typeLabel+")</div>";
+    html+=vtTwoCol(items,mode,true);
+  }
+  document.getElementById("vtSheet").innerHTML=html;
+}
+function vtOpen(){
+  document.getElementById("vtModal").style.display="block";
+  if(!document.getElementById("vtSheet").innerHTML)vtBuild();
+}
+function vtClose(){document.getElementById("vtModal").style.display="none";}
+function vtPrint(){
+  document.body.classList.add("pvt");
+  window.onafterprint=function(){document.body.classList.remove("pvt");window.onafterprint=null;};
+  window.print();
+}
 </script>
 
 <script>

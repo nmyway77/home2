@@ -511,7 +511,11 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="page-title">부분부정 · 전체부정 · 이중부정</div>
     <div class="page-sub">not/never + all·every·always → 부분부정 · none/neither → 전체부정 · not/never ... without ~ing = ... but S+V → 이중부정 · 예문 4 + EXERCISE 5</div>
   </div>
-  <div class="view-tabs">
+    <div id="secNav" style="display:flex;gap:10px;margin:2px 0 16px;">
+      <button id="navKey" onclick="switchView('reading');document.querySelector('.view-tabs').style.display='none';document.getElementById('keySec').style.display='';document.getElementById('lineSec').style.display='none';this.style.background='#1F3864';this.style.color='#fff';var b=document.getElementById('navLine');b.style.background='#fff';b.style.color='#1F3864';window.scrollTo(0,0);" style="flex:1;padding:12px 0;border:2px solid #1F3864;border-radius:9px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:0.5px;background:#1F3864;color:#fff;box-shadow:0 3px 10px rgba(31,56,100,0.25);">⚡ 키 해석법</button>
+      <button id="navLine" onclick="switchView('reading');document.querySelector('.view-tabs').style.display='flex';document.getElementById('lineSec').style.display='';document.getElementById('keySec').style.display='none';this.style.background='#1F3864';this.style.color='#fff';var b=document.getElementById('navKey');b.style.background='#fff';b.style.color='#1F3864';window.scrollTo(0,0);" style="flex:1;padding:12px 0;border:2px solid #1F3864;border-radius:9px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:0.5px;background:#fff;color:#1F3864;">📖 주요구문 한줄해석</button>
+    </div>
+  <div class="view-tabs" style="display:none;">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
     <button class="view-tab tab-summary" id="tabSum" onclick="switchSummary()">📄 요약</button>
     <button class="view-tab tab-ga"             id="tabGA" onclick="switchGA()">📊 문법분석</button>
@@ -522,34 +526,63 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <button class="view-tab tab-vocab"          id="tabV" onclick="switchView('vocab')">📚 단어장</button>
   </div>
   <div id="readingView">
-    <div style="margin:2px 0 18px;border-radius:14px;overflow:hidden;border:1px solid #c7d3ec;box-shadow:0 4px 16px rgba(31,56,100,0.12);">
-      <div style="background:linear-gradient(135deg,#1F3864,#2E75B6);color:#fff;padding:13px 18px;font-family:'Playfair Display',serif;font-size:16px;font-weight:800;letter-spacing:0.3px;">⚡ 키포인트 해석법 <span style="font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:600;opacity:0.9;">— 부정어 뒤에 「전체를 뜻하는 말」이 오나, 「without / but」이 오나로 갈린다</span></div>
-      <div style="background:#f7f9fd;padding:15px 18px 17px;">
-        <div style="font-size:13px;color:#33415c;line-height:1.85;margin-bottom:13px;">부정어(<b>not·never·no</b>)를 보면 <b>바로 뒤(또는 근처)에 무엇이 오는지</b>부터 확인한다. <b>all·every·always·both·everyone</b> 같은 "전체"를 뜻하는 말이 붙으면 <span style="color:#9A3D00;font-weight:700;">부분부정</span>("모두 ~인 것은 아니다"), <b>none·neither</b> 이거나 <b>not ~ any</b> 면 <span style="color:#0C447C;font-weight:700;">전체부정</span>("아무도 ~않다"), 뒤에 <b>without ~ing</b> 나 <b>but S+V</b> 가 이어지면 <span style="color:#5B2D8E;font-weight:700;">이중부정</span>(강한 긍정 "~하면 반드시 ~한다")이다. 이 셋을 뭉뚱그리면 정반대 뜻으로 오역한다.</div>
-        <div style="display:grid;grid-template-columns:1fr;gap:9px;">
-          <div style="background:#fff;border:1px solid #f0d0b8;border-left:4px solid #9A3D00;border-radius:8px;padding:10px 13px;">
-            <div style="font-size:12.5px;font-weight:800;color:#9A3D00;margin-bottom:3px;">① 부분부정 — not/never + <u>all·every·always·both·everyone</u></div>
-            <div style="font-size:12px;color:#4a3b2c;line-height:1.7;">"<b>모두·항상 ~인 것은 아니다</b>"(일부·가끔은 아님). <span style="background:#fbeee2;border-radius:4px;padding:0 5px;color:#7a3a00;font-weight:700;">문4</span> not always·not all &nbsp; <span style="background:#fbeee2;border-radius:4px;padding:0 5px;color:#7a3a00;font-weight:700;">문6</span> not all ↔ all &nbsp; <span style="background:#fbeee2;border-radius:4px;padding:0 5px;color:#7a3a00;font-weight:700;">문7</span> not everyone</div>
-          </div>
-          <div style="background:#fff;border:1px solid #b8cdea;border-left:4px solid #0C447C;border-radius:8px;padding:10px 13px;">
-            <div style="font-size:12.5px;font-weight:800;color:#0C447C;margin-bottom:3px;">② 전체부정 — <u>none·neither</u> / not ~ any</div>
-            <div style="font-size:12px;color:#26364e;line-height:1.7;">"<b>아무도·어느 것도 ~않다</b>"(전부 부정). <span style="background:#e6eef9;border-radius:4px;padding:0 5px;color:#0C447C;font-weight:700;">문1</span> None of the men → 배에 탄 누구도 몰랐다. <span style="color:#b23;font-weight:700;">not all of(부분)</span>과 정반대이니 주의.</div>
-          </div>
-          <div style="background:#fff;border:1px solid #d3bce8;border-left:4px solid #5B2D8E;border-radius:8px;padding:10px 13px;">
-            <div style="font-size:12.5px;font-weight:800;color:#5B2D8E;margin-bottom:3px;">③ 이중부정 — not/never ... <u>without ~ing</u> = ... <u>but S+V</u></div>
-            <div style="font-size:12px;color:#3c2a54;line-height:1.7;">부정+부정 = <b>강한 긍정</b> "<b>~하면 반드시 ~한다</b>". <span style="background:#f1e6fb;border-radius:4px;padding:0 5px;color:#5B2D8E;font-weight:700;">문2·문3</span> without ~ing &nbsp; <span style="background:#f1e6fb;border-radius:4px;padding:0 5px;color:#5B2D8E;font-weight:700;">문5</span> but S+V &nbsp; <span style="background:#f1e6fb;border-radius:4px;padding:0 5px;color:#5B2D8E;font-weight:700;">문8·문9</span> can't/cannot ... without ~ing</div>
-          </div>
+    <div id="keySec">
+    <div style="margin:4px 0 18px;border:1.5px solid #c7d3ec;border-radius:12px;overflow:hidden;box-shadow:0 3px 14px rgba(31,56,100,0.10);background:white;">
+      <div style="background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;padding:12px 16px;font-family:'Playfair Display',serif;font-size:15px;font-weight:700;letter-spacing:0.3px;">⚡ 키포인트 해석법 — 부정어 뒤에 「전체어」가 오나, 「without · but」이 오나</div>
+      <div style="padding:14px 16px 8px;font-size:13px;line-height:1.7;color:#333;">
+
+        <div style="text-align:center;background:#f7f8fc;border:1.5px dashed #2E75B6;border-radius:10px;padding:12px 10px;margin-bottom:12px;font-size:14px;font-weight:700;color:#1F3864;line-height:2;">
+          not + <span style="background:#E6F1FB;color:#0C447C;border-radius:4px;padding:1px 7px;">all · every · always · both</span> → 부분부정 「다 ~인 것은 아니다」 &nbsp;/&nbsp; <span style="background:#FDEEE2;color:#9A3D00;border-radius:4px;padding:1px 7px;">none · neither · not ~ any</span> → 전체부정 「아무도 ~않다」<br>never · cannot … <span style="background:#F3E8FF;color:#5B2D8E;border-radius:4px;padding:1px 7px;">without ~ing / but S+V</span> → <span style="color:#C0392B;">이중부정 「…하면 반드시 ~한다」</span>
         </div>
-        <div style="margin-top:12px;background:#eef2fb;border:1px dashed #9fb4d8;border-radius:8px;padding:10px 13px;">
-          <div style="font-size:11.5px;font-weight:800;color:#1F3864;letter-spacing:1px;margin-bottom:5px;">📌 공식 · 짝 암기</div>
-          <div style="font-size:12px;color:#33415c;line-height:1.9;">· <b>not all</b>(부분) ↔ <b>none</b>(전체) &nbsp;|&nbsp; <b>not always</b>(부분) ↔ <b>never</b>(전체) &nbsp;|&nbsp; <b>not everyone</b>(부분) ↔ <b>no one</b>(전체)<br>· <b>never/cannot ... without ~ing</b> &nbsp;=&nbsp; <b>never/cannot ... but S+V</b> &nbsp;=&nbsp; "~하면 반드시 ~한다"(강한 긍정)</div>
+
+        <div style="background:#eef4fb;border-left:4px solid #0C447C;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#0C447C;margin-bottom:4px;">① not + <b>전체어</b>(all · every · always · both) → 부분부정 「모두 · 항상 ~인 것은 아니다」 <span style="font-weight:400;font-size:12px;color:#999;">→ 문4 · 문6 · 문7</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><b style="color:#0C447C;">Not all</b> birds can fly.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 모든 새가 날 수 있는 것은 아니다.</div>
+          <div style="font-size:12px;color:#555;">🔍 부정어 바로 뒤(근처)에 전체어 → 「일부만」 부정. 해석은 반드시 「~인 것은 아니다」로 끝낸다.</div>
         </div>
-        <div style="margin-top:9px;background:#fff8ee;border:1px solid #f0dcae;border-radius:8px;padding:10px 13px;">
-          <div style="font-size:11.5px;font-weight:800;color:#8B6914;letter-spacing:1px;margin-bottom:5px;">🧭 해석 기법</div>
-          <div style="font-size:12px;color:#5a4a24;line-height:1.9;">· <b>이중부정</b>은 2단계로: ⑴ 그대로 직역("B 없이는 A 못한다") → ⑵ <b>반드시 뒤집어</b> "A하면 반드시 B한다".<br>· <b>부분부정</b>은 "모두가 ~인 것은 아니다"까지 <b>정확히</b> 옮긴다. "아무도 ~않다"(전체부정)로 넘어가면 오역.<br>· <b>최다 오답</b>: 부분부정 ↔ 전체부정 혼동, 그리고 이중부정의 but을 단순 "그러나"로 읽는 것.</div>
+        <div style="background:#fdf6ee;border-left:4px solid #9A3D00;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#9A3D00;margin-bottom:4px;">② <b>none · neither · no</b> / not ~ any → 전체부정 「아무도 · 어느 것도 ~않다」 <span style="font-weight:400;font-size:12px;color:#999;">→ 문1</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><b style="color:#9A3D00;">None</b> of us saw the movie.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 우리 중 아무도 그 영화를 보지 못했다.</div>
+          <div style="font-size:12px;color:#555;">🔍 부정어 자체가 「0」(none · neither)이거나 not + any → 예외 없이 전부 부정.</div>
         </div>
+        <div style="background:#f6effc;border-left:4px solid #5B2D8E;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#5B2D8E;margin-bottom:4px;">③ never · cannot … <b>without ~ing</b> → 이중부정 「…하면 반드시 ~한다」 <span style="font-weight:400;font-size:12px;color:#999;">→ 문2 · 문3 · 문8 · 문9</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;">She <b style="color:#5B2D8E;">never</b> goes out <b style="color:#5B2D8E;">without</b> taking an umbrella.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 그녀는 외출하면 반드시 우산을 챙긴다.</div>
+          <div style="font-size:12px;color:#555;">🔍 부정어 + without = 부정 × 부정. 직역 「챙기지 않고는 안 나간다」 → 뒤집어 「나가면 반드시 챙긴다」.</div>
+        </div>
+        <div style="background:#f0f6e8;border-left:4px solid #27500A;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#27500A;margin-bottom:4px;">④ never … <b>but + S + V</b> → ③과 같은 이중부정(= without ~ing) <span style="font-weight:400;font-size:12px;color:#999;">→ 문5</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;">It <b style="color:#27500A;">never</b> rains <b style="color:#27500A;">but</b> it pours.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 비가 오면 반드시 퍼붓는다.</div>
+          <div style="font-size:12px;color:#555;">🔍 앞에 never 가 있고 but 뒤가 S + V → 「그러나」가 아니라 「~하지 않고는」.</div>
+        </div>
+        <div style="background:#fdf0ee;border-left:4px solid #C0392B;border-radius:6px;padding:10px 14px;margin-bottom:12px;">
+          <div style="font-size:14px;font-weight:800;color:#8a1a1a;margin-bottom:4px;">⑤ 최대 함정 — <b>부분부정을 전체부정으로</b> 읽는 것 <span style="font-weight:400;font-size:12px;color:#999;">→ 문4 · 문6 · 문7</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;">I do <b style="color:#8a1a1a;">not</b> know <b style="color:#8a1a1a;">both</b> of them.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:4px;">▶ 내가 그들 둘 다를 아는 것은 아니다(= 한 명만 안다).</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:12px;">
+            <span style="background:#fff;border:1px solid #C0392B;border-radius:4px;padding:2px 9px;color:#C0392B;font-weight:700;">✗ 「둘 다 모른다」 (= I know neither of them)</span>
+            <span style="background:#fff;border:1px solid #1D5C2B;border-radius:4px;padding:2px 9px;color:#1D5C2B;font-weight:700;">○ not + both = 「둘 다 ~인 것은 아니다」</span>
+          </div>
+          <div style="font-size:12px;color:#555;margin-top:4px;">🔍 짝으로 구별: not all ↔ none · not always ↔ never · not both ↔ neither · not everyone ↔ no one.</div>
+        </div>
+
+        <div style="background:#fff8e6;border-left:4px solid #f0d070;border-radius:6px;padding:10px 14px;margin-bottom:10px;font-size:13px;">
+          <b style="color:#8B6914;">📌 기억법</b> &nbsp;—&nbsp; <b>not + 전체어 = 부분부정</b>(~인 것은 아니다) · <b>none · not any = 전체부정</b> · <b style="color:#C0392B;">never … without / but = 반드시</b> · <b>이중부정은 직역 후 뒤집기</b>.
+        </div>
+
+        <div style="background:#fffaf0;border-left:4px solid #e8b64c;border-radius:6px;padding:10px 14px;margin-bottom:10px;font-size:13px;">
+          <b style="color:#7a3a00;">🔄 해석 3단계</b> &nbsp; <b>①</b> 부정어(not · never · no · none)를 찾는다 → <b>②</b> 그 뒤에 <b>전체어</b>가 오는지, <b>without · but</b> 이 오는지 본다 → <b>③</b> 부분부정은 「~인 것은 아니다」로 맺고, 이중부정은 직역 후 「…하면 반드시 ~한다」로 <b>뒤집는다</b>.
+        </div>
+
       </div>
     </div>
+    
+    </div><!-- /keySec -->
+    <div id="lineSec" style="display:none;">
     <div class="hints">
       <div class="hint">🖱 PC: 클릭 → 발음 · 더블클릭 → 해석 고정</div>
       <div class="hint">📱 모바일: 탭 → 해석</div>
@@ -604,7 +637,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
         <div class="rm-title">전체부정 None of ~ = 「~중 아무도 ~않다」 — 부분부정(모두 ~는 아니다)과 혼동 금지.</div>
         <div class="rm-strip"><span class="rm-tok rm-s">None of the men</span><span class="rm-lab rm-lab-s">S·전체부정</span><span class="rm-sep">/</span><span class="rm-tok rm-m">in the boat</span><span class="rm-lab rm-lab-m">men 수식·M</span><span class="rm-sep">/</span><span class="rm-tok rm-v">knew</span><span class="rm-lab rm-lab-v">V·타동사</span><span class="rm-sep">/</span><span class="rm-tok rm-o">the color of the sky</span><span class="rm-lab rm-lab-o">O</span></div>
         <div class="rm-order"><b>읽는 순서</b> ① <i>None of the men</i>(그 사람들 중 아무도) → <b>전체부정</b>, "한 명도 ~않다" → ② <i>in the boat</i>(배에 탄, men 수식) → ③ <i>knew</i>(알았다) → ④ <i>the color of the sky</i>(하늘의 색을) → 전체를 부정: "아무도 하늘색을 몰랐다".</div>
-        <span class="star-line">★ <strong>None of + 복수명사 = 전체부정</strong>("하나도 ~않다"). <strong>not all of the men</strong>(일부는 알았다)와 정반대. 여기선 배에 탄 <strong>누구도</strong> 하늘색을 몰랐다.</span>
+        <span class="star-line">★ <strong>[서두 ② 적용]</strong> <strong>None of + 복수명사 = 전체부정</strong>("하나도 ~않다"). <strong>not all of the men</strong>(일부는 알았다)와 정반대. 여기선 배에 탄 <strong>누구도</strong> 하늘색을 몰랐다.</span>
       </div>
     </div>
   </div>
@@ -652,7 +685,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
         <div class="rm-title">never ... without ~ing = 「~할 때마다 반드시 ~한다」 — 부정 둘이 강한 긍정으로.</div>
         <div class="rm-strip"><span class="rm-tok rm-s">I</span><span class="rm-lab rm-lab-s">S</span><span class="rm-sep">/</span><span class="rm-tok rm-v">never see</span><span class="rm-lab rm-lab-v">V·부정</span><span class="rm-sep">/</span><span class="rm-tok rm-o">him</span><span class="rm-lab rm-lab-o">O</span><span class="rm-sep">/</span><span class="rm-tok rm-m">without being reminded of my father</span><span class="rm-lab rm-lab-m">without+동명사·이중부정</span></div>
         <div class="rm-order"><b>읽는 순서</b> ① <i>I never see him</i>(나는 그를 결코 보지 않는다) → 부정① → ② <i>without being reminded of my father</i>(아버지를 떠올리지 않고서는) → 부정② → ③ 두 부정을 곱하면 강한 긍정: "그를 볼 때마다 반드시 아버지가 떠오른다".</div>
-        <span class="star-line">★ <strong>never A without B-ing = "A하면 반드시 B한다".</strong> 직역("B 없이는 A 못한다") 후 <strong>반드시 뒤집어</strong> 번역. = I never see him <strong>but</strong> I am reminded ~ 와 동일.</span>
+        <span class="star-line">★ <strong>[서두 ③ 적용]</strong> <strong>never A without B-ing = "A하면 반드시 B한다".</strong> 직역("B 없이는 A 못한다") 후 <strong>반드시 뒤집어</strong> 번역. = I never see him <strong>but</strong> I am reminded ~ 와 동일.</span>
       </div>
     </div>
   </div>
@@ -700,7 +733,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
         <div class="rm-title">cannot ... without ~ing — 「볼 때마다 반드시 ~한다」. look at의 목적어는 this picture.</div>
         <div class="rm-strip"><span class="rm-tok rm-s">I</span><span class="rm-lab rm-lab-s">S</span><span class="rm-sep">/</span><span class="rm-tok rm-v">cannot look at</span><span class="rm-lab rm-lab-v">V·동사구·부정</span><span class="rm-sep">/</span><span class="rm-tok rm-o">this picture</span><span class="rm-lab rm-lab-o">O</span><span class="rm-sep">/</span><span class="rm-tok rm-m">without remembering those happy days</span><span class="rm-lab rm-lab-m">without+동명사·이중부정</span></div>
         <div class="rm-order"><b>읽는 순서</b> ① <i>I cannot look at this picture</i>(이 사진을 볼 수 없다) → 부정① → ② <i>without remembering those happy days</i>(그 행복했던 날들을 기억하지 않고서는) → 부정② → ③ 뒤집기: "이 사진을 볼 때마다 반드시 그 행복했던 날들이 떠오른다".</div>
-        <span class="star-line">★ <strong>cannot A without B-ing = "A하면 반드시 B한다".</strong> 문2 never...without과 <strong>같은 공식</strong>(never=cannot). look at은 한 덩어리 동사구, 목적어는 this picture.</span>
+        <span class="star-line">★ <strong>[서두 ③ 적용]</strong> <strong>cannot A without B-ing = "A하면 반드시 B한다".</strong> 문2 never...without과 <strong>같은 공식</strong>(never=cannot). look at은 한 덩어리 동사구, 목적어는 this picture.</span>
       </div>
     </div>
   </div>
@@ -766,7 +799,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
         <div class="rm-title">not always·not all = 부분부정 「항상/모두 ~인 것은 아니다」. which절은 순행 해석.</div>
         <div class="rm-strip"><span class="rm-tok rm-s">Shoes</span><span class="rm-lab rm-lab-s">S₁</span><span class="rm-sep">/</span><span class="rm-tok rm-v">have not always served</span><span class="rm-lab rm-lab-v">V₁·부분부정</span><span class="rm-sep">/</span><span class="rm-tok rm-o">such a purely functional purpose</span><span class="rm-lab rm-lab-o">O₁</span><span class="rm-sep">‖ and ‖</span><span class="rm-tok rm-s">the requirements of fashion</span><span class="rm-lab rm-lab-s">S₂</span><span class="rm-sep">/</span><span class="rm-tok rm-v">have dictated</span><span class="rm-lab rm-lab-v">V₂</span><span class="rm-sep">/</span><span class="rm-tok rm-o">some curious designs</span><span class="rm-lab rm-lab-o">O₂</span><span class="rm-sep">/</span><span class="rm-tok rm-m">not all of which made walking easy</span><span class="rm-lab rm-lab-m">부분부정 관계절·순행</span></div>
         <div class="rm-order"><b>읽는 순서</b> ① <i>Shoes have not always served such a purely functional purpose</i>(신발이 그런 순수 기능적 목적만 항상 충족한 것은 아니다 — <b>not always=부분부정</b>) → <b>and</b> → ② <i>the requirements of fashion have dictated some curious designs</i>(패션의 요구가 기이한 디자인을 낳았다) → ③ <i>not all of which made walking easy</i>(그 디자인 모두가 걷기를 편하게 만든 건 아니다 — <b>not all=부분부정</b>, which=designs를 「그런데 그것들이」로 순행).</div>
-        <span class="star-line">★ <strong>not always / not all = 부분부정</strong> → "항상/모두 ~인 것은 아니다"(일부는 아님). never/none(전체부정)과 구별. 관계절 <strong>not all of which</strong>는 되돌리지 말고 "그런데 그 모두가 ~는 아니다"로 순행.</span>
+        <span class="star-line">★ <strong>[서두 ① · ⑤ 적용]</strong> <strong>not always / not all = 부분부정</strong> → "항상/모두 ~인 것은 아니다"(일부는 아님). never/none(전체부정)과 구별. 관계절 <strong>not all of which</strong>는 되돌리지 말고 "그런데 그 모두가 ~는 아니다"로 순행.</span>
       </div>
     </div>
   </div>
@@ -814,7 +847,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
         <div class="rm-title">never ... but S+V = never ... without ~ing — 「~하면 반드시 ~한다」.</div>
         <div class="rm-strip"><span class="rm-tok rm-s">He</span><span class="rm-lab rm-lab-s">S</span><span class="rm-sep">/</span><span class="rm-tok rm-v">never reads</span><span class="rm-lab rm-lab-v">V·부정</span><span class="rm-sep">/</span><span class="rm-tok rm-o">the paper</span><span class="rm-lab rm-lab-o">O</span><span class="rm-sep">/</span><span class="rm-tok rm-m">in bed</span><span class="rm-lab rm-lab-m">M</span><span class="rm-sep">/</span><span class="rm-tok rm-m">but he goes to sleep</span><span class="rm-lab rm-lab-m">but+S+V·이중부정</span></div>
         <div class="rm-order"><b>읽는 순서</b> ① <i>He never reads the paper in bed</i>(그는 침대에서 신문을 결코 읽지 않는다) → 부정① → ② <i>but he goes to sleep</i>(그러나 그는 잠이 든다) → but = without ~ing 신호 → ③ 뒤집기: "그는 침대에서 신문을 읽으면 반드시 잠이 든다".</div>
-        <span class="star-line">★ <strong>never A but S+V = never A without B-ing 와 동일 공식.</strong> but을 "그러나"로만 읽으면 오역 — 여기 but은 "~하지 않고서는"의 이중부정 신호. 결과는 강한 긍정.</span>
+        <span class="star-line">★ <strong>[서두 ④ 적용]</strong> <strong>never A but S+V = never A without B-ing 와 동일 공식.</strong> but을 "그러나"로만 읽으면 오역 — 여기 but은 "~하지 않고서는"의 이중부정 신호. 결과는 강한 긍정.</span>
       </div>
     </div>
   </div>
@@ -865,7 +898,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
         <div class="rm-title">not all = 부분부정 「모두가 ~인 것은 아니다」 ↔ all(모두 ~이다)와 대조.</div>
         <div class="rm-strip"><span class="rm-tok rm-s">Boys</span><span class="rm-lab rm-lab-s">S₁</span><span class="rm-sep">/</span><span class="rm-tok rm-v">can not all become</span><span class="rm-lab rm-lab-v">V₁·부분부정</span><span class="rm-sep">/</span><span class="rm-tok rm-c">great men</span><span class="rm-lab rm-lab-c">보어·SC₁</span><span class="rm-sep">‖ but ‖</span><span class="rm-tok rm-s">they</span><span class="rm-lab rm-lab-s">S₂</span><span class="rm-sep">/</span><span class="rm-tok rm-v">can all become</span><span class="rm-lab rm-lab-v">V₂</span><span class="rm-sep">/</span><span class="rm-tok rm-c">good men</span><span class="rm-lab rm-lab-c">보어·SC₂</span></div>
         <div class="rm-order"><b>읽는 순서</b> ① <i>Boys can not all become great men</i>(소년들이 모두 위대한 인물이 되는 건 아니다 — <b>not all=부분부정</b>) → 일부만 → <b>but</b> → ② <i>they can all become good men</i>(그러나 모두가 좋은 사람은 될 수 있다 — <b>all=전체</b>) → 앞뒤 not all ↔ all 대조.</div>
-        <span class="star-line">★ <strong>not all = "전부가 ~인 것은 아니다"</strong>(일부 부정). "아무도 위대해질 수 없다"(none, 전체부정)로 오역 금지. but 뒤 <strong>all</strong>(모두)과의 대조가 문장의 핵심.</span>
+        <span class="star-line">★ <strong>[서두 ① · ⑤ 적용]</strong> <strong>not all = "전부가 ~인 것은 아니다"</strong>(일부 부정). "아무도 위대해질 수 없다"(none, 전체부정)로 오역 금지. but 뒤 <strong>all</strong>(모두)과의 대조가 문장의 핵심.</span>
       </div>
     </div>
   </div>
@@ -919,7 +952,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
         <div class="rm-title">not everyone = 부분부정 「모두가 ~하는 건 아니다」. the fact + that동격절이 주어.</div>
         <div class="rm-strip"><span class="rm-tok rm-s">People</span><span class="rm-lab rm-lab-s">S₁</span><span class="rm-sep">/</span><span class="rm-tok rm-v">may disturb or anger</span><span class="rm-lab rm-lab-v">V₁</span><span class="rm-sep">/</span><span class="rm-tok rm-o">us</span><span class="rm-lab rm-lab-o">O₁</span><span class="rm-sep">‖ but ‖</span><span class="rm-tok rm-s">the fact</span><span class="rm-lab rm-lab-s">S₂</span><span class="rm-lab rm-lab-m">that not everyone objects…(동격·부분부정)</span><span class="rm-sep">/</span><span class="rm-tok rm-v">indicates</span><span class="rm-lab rm-lab-v">V₂·타동사</span><span class="rm-sep">/</span><span class="rm-tok rm-o">that the problem is probably ours</span><span class="rm-lab rm-lab-o">O₂·명사절</span></div>
         <div class="rm-order"><b>읽는 순서</b> ① <i>People may disturb or anger us</i>(사람들이 우리를 방해·화나게 할 수 있다) → <b>but</b> → ② 주어 <i>the fact</i> + [<i>that not everyone objects to their behavior</i>](모두가 그 행동에 반대하는 건 아니라는 사실이) → <b>not everyone=부분부정</b> → ③ <i>indicates that the problem is probably ours</i>(그 문제가 아마 우리 것임을 나타낸다).</div>
-        <span class="star-line">★ <strong>not everyone = "모두가 ~하는 것은 아니다"</strong>(일부는 반대 안 함). <strong>no one</strong>(아무도 안 함=전체부정)과 구별. 진짜 주어는 <strong>the fact</strong>, that절은 그 fact의 내용을 푸는 동격절.</span>
+        <span class="star-line">★ <strong>[서두 ① · ⑤ 적용]</strong> <strong>not everyone = "모두가 ~하는 것은 아니다"</strong>(일부는 반대 안 함). <strong>no one</strong>(아무도 안 함=전체부정)과 구별. 진짜 주어는 <strong>the fact</strong>, that절은 그 fact의 내용을 푸는 동격절.</span>
       </div>
     </div>
   </div>
@@ -976,7 +1009,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
         <div class="rm-title">cannot ... without ~ing = 「연구하면 반드시 알게 된다」. without 뒤 noticing의 목적어는 의문사절.</div>
         <div class="rm-strip"><span class="rm-tok rm-s">We</span><span class="rm-lab rm-lab-s">S</span><span class="rm-sep">/</span><span class="rm-tok rm-v">cannot study</span><span class="rm-lab rm-lab-v">V·부정</span><span class="rm-sep">/</span><span class="rm-tok rm-o">the lives of great men</span><span class="rm-lab rm-lab-o">O</span><span class="rm-sep">/</span><span class="rm-tok rm-m">without noticing</span><span class="rm-lab rm-lab-m">without+동명사·이중부정</span><span class="rm-sep">/</span><span class="rm-tok rm-m">how often … an exceedingly fortunate thing</span><span class="rm-lab rm-lab-m">noticing의 목적어·의문사절</span></div>
         <div class="rm-order"><b>읽는 순서</b> ① <i>We cannot study the lives of great men</i>(위인들의 삶을 연구할 수 없다) → 부정① → ② <i>without noticing</i>(알아차리지 않고서는) → 부정② → ③ <i>how often an apparent misfortune was ... a fortunate thing</i>(겉보기의 불행이 얼마나 자주 다행스러운 일이었는지 = noticing의 목적어) → ④ 뒤집기: "위인들의 삶을 연구하면 반드시 그 사실을 알게 된다".</div>
-        <span class="star-line">★ <strong>cannot A without B-ing = "A하면 반드시 B한다"</strong>(문2·3·5와 같은 공식). without 뒤엔 동명사 <strong>noticing</strong>, 그 목적어는 <strong>how often</strong>이 이끄는 의문사절. apparent=겉보기의, exceedingly=지극히.</span>
+        <span class="star-line">★ <strong>[서두 ③ 적용]</strong> <strong>cannot A without B-ing = "A하면 반드시 B한다"</strong>(문2·3·5와 같은 공식). without 뒤엔 동명사 <strong>noticing</strong>, 그 목적어는 <strong>how often</strong>이 이끄는 의문사절. apparent=겉보기의, exceedingly=지극히.</span>
       </div>
     </div>
   </div>
@@ -1030,13 +1063,14 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
         <div class="rm-title">can't ... without ~ing = 「~할 때마다 반드시 …한다」. without 뒤 everyone은 동명사의 의미상 주어.</div>
         <div class="rm-strip"><span class="rm-tok rm-s">I'm surprised that</span><span class="rm-lab rm-lab-s">주절 S+V+보어</span><span class="rm-sep">/</span><span class="rm-tok rm-v">I can't go to</span><span class="rm-lab rm-lab-v">V·부정</span><span class="rm-sep">/</span><span class="rm-tok rm-o">my university, supermarket, or watch … program</span><span class="rm-lab rm-lab-o">병렬 O</span><span class="rm-sep">/</span><span class="rm-tok rm-m">without everyone complimenting the ethical superiority…</span><span class="rm-lab rm-lab-m">이중부정</span></div>
         <div class="rm-order"><b>읽는 순서</b> ① (오늘날 많은 사람이 공정무역을 믿는다) → ② <i>I can't go to ... or watch ...</i>(대학·슈퍼마켓에 가거나 음식 프로를 볼 수 없다) → 부정① → ③ <i>without everyone complimenting ~</i>(모두가 ~을 칭찬하지 않고서는) → 부정② → ④ 뒤집기: "그럴 때마다 반드시 모두가 공정무역의 윤리적 우월성을 칭찬한다".</div>
-        <span class="star-line">★ <strong>can't A without B-ing = "A하면 반드시 B한다".</strong> without 뒤 <strong>everyone</strong>은 동명사 complimenting의 <strong>의미상 주어</strong>("모두가 칭찬함"). go to·watch가 or로 병렬된 목적어 셋을 한 can't가 지배.</span>
+        <span class="star-line">★ <strong>[서두 ③ 적용]</strong> <strong>can't A without B-ing = "A하면 반드시 B한다".</strong> without 뒤 <strong>everyone</strong>은 동명사 complimenting의 <strong>의미상 주어</strong>("모두가 칭찬함"). go to·watch가 or로 병렬된 목적어 셋을 한 can't가 지배.</span>
       </div>
     </div>
   </div>
 </div>
 
     </div><!-- /cards -->
+    </div><!-- /lineSec -->
   </div><!-- /readingView -->
 
 <div class="summary-view" id="summaryView">

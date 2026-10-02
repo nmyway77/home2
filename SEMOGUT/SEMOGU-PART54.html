@@ -446,6 +446,43 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 .tab-summary.active{background:#00695C;color:white;border-color:#00695C;}
 .summary-view{display:none;}
 @media print{.summary-view{display:none!important;}}
+
+/* 10. 단어장 인쇄 */
+#vocabPrint{display:none;}
+#vocabPrint table{width:100%;border-collapse:collapse;font-size:12px;}
+#vocabPrint th{background:#1F3864;color:white;padding:6px 9px;text-align:left;font-size:11.5px;}
+#vocabPrint td{padding:5px 9px;border-bottom:1px solid #ddd;vertical-align:top;}
+#vocabPrint tr{break-inside:avoid;page-break-inside:avoid;}
+#vocabPrint tr:nth-child(even) td{background:#f5f7fb;}
+@media print{
+  body.pv #vocabPrint{display:block!important;}
+  body.pv .top-nav,body.pv .page-header,body.pv .watermark,body.pv .cover-plate,body.pv #secNav,body.pv .view-tabs,body.pv #readingView,body.pv .summary-view,body.pv .ga-panel,body.pv .sd-panel,body.pv .arrange-view,body.pv .grammar-view,body.pv .vocab-view,body.pv .q-panel,body.pv footer{display:none!important;}
+  body.pv .passage{padding:8mm 0 6mm!important;max-width:100%!important;}
+}
+
+/* 11. 단어 테스트 모달 (v4.2) */
+#vtModal{display:none;position:fixed;inset:0;z-index:5000;background:rgba(20,25,40,0.55);overflow:auto;padding:24px 12px;}
+#vtModal .vt-box{max-width:920px;margin:0 auto;background:white;border-radius:12px;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,0.35);}
+#vtCtrl{padding:12px 18px;border-bottom:1px solid #e3e6ee;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;background:#fbfcfe;font-size:13px;color:#334;}
+#vtCtrl select{font-family:inherit;font-size:12.5px;padding:5px 8px;border:1px solid #c9d2e3;border-radius:6px;background:white;color:#1F3864;}
+#vtCtrl label{display:inline-flex;align-items:center;gap:4px;cursor:pointer;font-size:12.5px;}
+#vtCtrl .vt-btn{font-family:inherit;font-size:12.5px;font-weight:700;padding:7px 16px;border-radius:18px;border:1px solid #c9d2e3;background:white;color:#1F3864;cursor:pointer;}
+#vtCtrl .vt-btn.vt-primary{background:#1F3864;border-color:#1F3864;color:white;}
+#vtSheet{padding:20px 26px 26px;}
+#vtSheet table{width:100%;border-collapse:collapse;font-size:12px;}
+#vtSheet th{background:#f0f2f7;color:#222;border:1px solid #444;padding:6px 8px;font-size:11.5px;font-weight:700;}
+#vtSheet td{border:1px solid #444;padding:7px 8px;vertical-align:middle;}
+#vtSheet .vt-cols{display:flex;gap:14px;align-items:flex-start;}
+#vtSheet .vt-cols>div{flex:1;min-width:0;}
+#vtSheet tr{break-inside:avoid;page-break-inside:avoid;}
+@media print{
+  body.pvt .passage,body.pvt .top-nav,body.pvt footer{display:none!important;}
+  body.pvt #vtModal{display:block!important;position:static!important;background:white!important;padding:0!important;overflow:visible!important;}
+  body.pvt #vtModal .vt-box{box-shadow:none!important;border-radius:0!important;max-width:100%!important;}
+  body.pvt #vtCtrl{display:none!important;}
+  body.pvt #vtSheet{padding:8mm 0 6mm!important;}
+}
+@media (max-width:600px){#vtSheet .vt-cols{flex-direction:column;}}
 </style>
 </head>
 <body>
@@ -485,7 +522,11 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="page-title">「how + 형」와 「however + 형」의 해석 — 아무리 ~해도 · 얼마나 ~한지</div>
     <div class="page-sub">However + 형/부 + S + V = 아무리 ~해도(= No matter how = Be it ever so) · How + 형/부 + S + V = 얼마나 ~한지(명사절) · EXERCISE 8문장</div>
   </div>
-  <div class="view-tabs">
+    <div id="secNav" style="display:flex;gap:10px;margin:2px 0 16px;">
+      <button id="navKey" onclick="switchView('reading');document.querySelector('.view-tabs').style.display='none';document.getElementById('keySec').style.display='';document.getElementById('lineSec').style.display='none';this.style.background='#1F3864';this.style.color='#fff';var b=document.getElementById('navLine');b.style.background='#fff';b.style.color='#1F3864';window.scrollTo(0,0);" style="flex:1;padding:12px 0;border:2px solid #1F3864;border-radius:9px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:0.5px;background:#1F3864;color:#fff;box-shadow:0 3px 10px rgba(31,56,100,0.25);">⚡ 키 해석법</button>
+      <button id="navLine" onclick="switchView('reading');document.querySelector('.view-tabs').style.display='flex';document.getElementById('lineSec').style.display='';document.getElementById('keySec').style.display='none';this.style.background='#1F3864';this.style.color='#fff';var b=document.getElementById('navKey');b.style.background='#fff';b.style.color='#1F3864';window.scrollTo(0,0);" style="flex:1;padding:12px 0;border:2px solid #1F3864;border-radius:9px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:0.5px;background:#fff;color:#1F3864;">📖 주요구문 한줄해석</button>
+    </div>
+  <div class="view-tabs" style="display:none;">
     <button class="view-tab tab-reading active" id="tabR" onclick="switchView('reading')">📖 한줄해석</button>
     <button class="view-tab tab-summary" id="tabSum" onclick="switchSummary()">📄 요약</button>
     <button class="view-tab tab-ga"             id="tabGA" onclick="switchGA()">📊 문법분석</button>
@@ -496,50 +537,127 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <button class="view-tab tab-vocab"          id="tabV" onclick="switchView('vocab')">📚 단어장</button>
   </div>
   <div id="readingView">
+    <div id="keySec">
     <div style="margin:4px 0 18px;border:1.5px solid #c7d3ec;border-radius:12px;overflow:hidden;box-shadow:0 3px 14px rgba(31,56,100,0.10);background:white;">
-      <div style="background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;padding:12px 16px;font-family:'Playfair Display',serif;font-size:15px;font-weight:700;letter-spacing:0.3px;">⚡ 키포인트 해석법 — However는 「아무리」, How는 「얼마나」!</div>
+      <div style="background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;padding:12px 16px;font-family:'Playfair Display',serif;font-size:15px;font-weight:700;letter-spacing:0.3px;">⚡ 키포인트 해석법 — How 뒤의 형용사와 콤마가 뜻을 결정한다 — 아무리 ~해도 / 얼마나 ~한지</div>
       <div style="padding:14px 16px 8px;font-size:13px;line-height:1.7;color:#333;">
 
         <div style="text-align:center;background:#f7f8fc;border:1.5px dashed #2E75B6;border-radius:10px;padding:12px 10px;margin-bottom:12px;font-size:14.5px;font-weight:700;color:#1F3864;">
-          <span style="background:#F3E8FF;color:#5B2D8E;border-radius:4px;padding:1px 8px;">However + 형/부</span> = 아무리 ~해도 &nbsp;/&nbsp; <span style="background:#FDEEE2;color:#9A3D00;border-radius:4px;padding:1px 8px;">How + 형/부</span> = 얼마나 ~한지 &nbsp;—&nbsp; 뜻은 딱 이 둘!
+          <span style="background:#F3E8FF;color:#5B2D8E;border-radius:4px;padding:1px 7px;">However + 형/부</span> + S + V<b>, 주절</b> → 「<span style="color:#C0392B;">아무리 ~해도</span>」 &nbsp;/&nbsp; 동사 뒤 <span style="background:#FDEEE2;color:#9A3D00;border-radius:4px;padding:1px 7px;">how + 형/부</span> + S + V → 「얼마나 ~한지」 &nbsp;/&nbsp; <span style="background:#EAF3DE;color:#27500A;border-radius:4px;padding:1px 7px;">how + S + V</span> → 「어떻게」
         </div>
 
-        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
-          <div style="flex:1 1 300px;background:#f6effc;border-left:4px solid #5B2D8E;border-radius:6px;padding:10px 12px;">
-            <div style="font-size:14px;font-weight:800;color:#5B2D8E;">① However + 형/부 + S + may V &nbsp;=&nbsp; 「아무리 ~해도」 <span style="font-weight:400;color:#888;">(may와 단짝)</span></div>
-            <div style="font-family:Georgia,serif;font-size:13.5px;margin:6px 0 2px;"><b style="color:#5B2D8E;">However hungry</b> you may be, you must eat slowly.</div>
-            <div style="font-size:12.5px;color:#444;">= <b>아무리 배고파도</b> 천천히 먹어라 — 형용사를 <b style="color:#C0392B;">데리고 문두로!</b> <span style="color:#999;">— 문1 · 문3 · 문7(부사 well)</span></div>
-          </div>
-          <div style="flex:1 1 300px;background:#eef4fb;border-left:4px solid #2E75B6;border-radius:6px;padding:10px 12px;">
-            <div style="font-size:14px;font-weight:800;color:#0C447C;">② = No matter how &nbsp;<span style="font-weight:400;color:#888;">(같은 뜻, 다른 옷)</span></div>
-            <div style="font-family:Georgia,serif;font-size:13.5px;margin:6px 0 2px;"><b style="color:#0C447C;">No matter how much time</b> you have squandered ~</div>
-            <div style="font-size:12.5px;color:#444;">= <b>아무리 많은 시간을</b> 낭비했어도 — 명사(time)까지 <b style="color:#C0392B;">통째로 견인</b> <span style="color:#999;">— 문4</span></div>
-          </div>
+        <div style="background:#f6effc;border-left:4px solid #5B2D8E;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#5B2D8E;margin-bottom:4px;">① <b>However + 형용사 + S + (may) V</b>, 주절 = 「아무리 ~해도」(양보) <span style="font-weight:400;font-size:12px;color:#999;">→ 문1 · 문3</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><b>However tired</b> you may be, <u>finish it</u>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 아무리 피곤해도, 그것을 끝내라.</div>
+          <div style="font-size:12px;color:#555;">🔍 형용사(tired)를 데리고 문두로. 콤마 뒤 주절이 결론.</div>
         </div>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
-          <div style="flex:1 1 300px;background:#fdf6ee;border-left:4px solid #E65100;border-radius:6px;padding:10px 12px;">
-            <div style="font-size:14px;font-weight:800;color:#9A3D00;">③ 동사 뒤 How + 형 + S + V &nbsp;=&nbsp; 「얼마나 ~한지」 <span style="font-weight:400;color:#888;">(명사절 = 목적어)</span></div>
-            <div style="font-family:Georgia,serif;font-size:13.5px;margin:6px 0 2px;">depend on <b style="color:#9A3D00;">how effective</b> governments were</div>
-            <div style="font-size:12.5px;color:#444;">= 정부가 <b>얼마나 효율적인지</b>에 달려 있다 — see·show·depend on 뒤에! <span style="color:#999;">— 문2 · 문5 · 문6</span></div>
+        <div style="background:#eef4fb;border-left:4px solid #0C447C;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#0C447C;margin-bottom:4px;">② = <b>No matter how + 형/부</b> — 같은 뜻, 같은 어순 <span style="font-weight:400;font-size:12px;color:#999;">→ 문4</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><b>No matter how hard</b> it is, <u>don’t give up</u>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 아무리 어려워도, 포기하지 마라.</div>
+          <div style="font-size:12px;color:#555;">🔍 However = No matter how. 명사까지 끌고 나갈 수 있다(no matter how much time).</div>
+        </div>
+        <div style="background:#f0f6e8;border-left:4px solid #27500A;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#27500A;margin-bottom:4px;">③ <b>However + 부사</b>도 같은 틀 — 「아무리 ~하게 ~해도」 <span style="font-weight:400;font-size:12px;color:#999;">→ 문7</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><b>However fast</b> he runs, <u>he can’t win</u>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 아무리 빨리 달려도, 그는 이길 수 없다.</div>
+          <div style="font-size:12px;color:#555;">🔍 형용사뿐 아니라 부사(well · fast · hard)도 However 뒤로 간다.</div>
+        </div>
+        <div style="background:#fdf6ee;border-left:4px solid #9A3D00;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#9A3D00;margin-bottom:4px;">④ <b>동사 뒤 how + 형/부 + S + V</b> = 「얼마나 ~한지」(명사절 · 목적어) <span style="font-weight:400;font-size:12px;color:#999;">→ 문2 · 문5 · 문6</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;">I know <b>how important</b> <u>this is</u>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 나는 이것이 얼마나 중요한지 안다.</div>
+          <div style="font-size:12px;color:#555;">🔍 know · see · show · depend on 뒤 → 목적어 명사절. 「~하는 방법」이 아니다.</div>
+        </div>
+        <div style="background:#e8f5f2;border-left:4px solid #00695C;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#00695C;margin-bottom:4px;">⑤ 형용사가 <b>관사 앞</b>으로 — However + 형 + <b>a</b> + 명사 <span style="font-weight:400;font-size:12px;color:#999;">→ 문3</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;"><b>However good a plan</b> may be, <u>it can fail</u>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 아무리 좋은 계획이라도, 실패할 수 있다.</div>
+          <div style="font-size:12px;color:#555;">🔍 원래 a good plan → 형용사만 However 뒤로 끌려가 good a plan 어순이 된다.</div>
+        </div>
+        <div style="background:#fffaf0;border-left:4px solid #7a3a00;border-radius:6px;padding:10px 14px;margin-bottom:8px;">
+          <div style="font-size:14px;font-weight:800;color:#7a3a00;margin-bottom:4px;">⑥ how + 형 + <b>it is + for A + to V</b> — 가주어·의미상 주어 구조 <span style="font-weight:400;font-size:12px;color:#999;">→ 문6</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;">You know <b>how hard it is for me</b> <u>to say no</u>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:2px;">▶ 내가 거절하기가 얼마나 어려운지 너는 안다.</div>
+          <div style="font-size:12px;color:#555;">🔍 it = 가주어, 진주어 = to say no, for me = to 부정사의 주어.</div>
+        </div>
+        <div style="background:#fdf0ee;border-left:4px solid #C0392B;border-radius:6px;padding:10px 14px;margin-bottom:12px;">
+          <div style="font-size:14px;font-weight:800;color:#8a1a1a;margin-bottom:4px;">⑦ 최대 함정 — <b>how + S + V</b>(형용사 없음) = 「어떻게」(방법) <span style="font-weight:400;font-size:12px;color:#999;">→ 문8</span></div>
+          <div style="font-family:Georgia,serif;font-size:14px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:4px;">Tell me <b>how</b> <u>you did it</u>.</div>
+          <div style="font-size:12.5px;color:#1F3864;font-weight:700;margin-bottom:4px;">▶ 네가 그것을 어떻게 했는지 말해 줘.</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:12px;">
+            <span style="background:#fff;border:1px solid #C0392B;border-radius:4px;padding:2px 9px;color:#C0392B;font-weight:700;">✗ 얼마나 했는지</span>
+            <span style="background:#fff;border:1px solid #1D5C2B;border-radius:4px;padding:2px 9px;color:#1D5C2B;font-weight:700;">○ 어떻게 했는지 — how 바로 뒤에 형용사·부사가 없다</span>
           </div>
-          <div style="flex:1 1 300px;background:#f0f6e8;border-left:4px solid #27500A;border-radius:6px;padding:10px 12px;">
-            <div style="font-size:14px;font-weight:800;color:#27500A;">④ 주의! how + S + V(형용사 없음) &nbsp;=&nbsp; 「어떻게(방법)」</div>
-            <div style="font-family:Georgia,serif;font-size:13.5px;margin:6px 0 2px;">the question of <b style="color:#27500A;">how one enables</b> a student ~</div>
-            <div style="font-size:12.5px;color:#444;">= <b>어떻게</b> 학생을 ~하게 하는가 — how 바로 뒤에 형용사가 없으면 「방법」! <span style="color:#999;">— 문8</span></div>
-          </div>
+          <div style="font-size:12px;color:#555;margin-top:4px;">🔍 how 바로 뒤에 형/부가 붙으면 「얼마나」, 주어가 바로 오면 「어떻게」.</div>
         </div>
 
         <div style="background:#fff8e6;border-left:4px solid #f0d070;border-radius:6px;padding:10px 14px;margin-bottom:10px;font-size:13px;">
-          <b style="color:#8B6914;">📌 3형태 통암기</b> &nbsp;—&nbsp; <b style="color:#5B2D8E;">However humble it may be</b> = <b style="color:#0C447C;">No matter how humble it may be</b> = <b style="color:#27500A;">Be it ever so humble</b> &nbsp;→&nbsp; 셋 다 「아무리 소박해도」
+          <b style="color:#8B6914;">📌 기억법</b> &nbsp;—&nbsp; <b>However + 형/부 , 주절 = 아무리 ~해도</b>(= no matter how) · <b>동사 뒤 how + 형/부 = 얼마나 ~한지</b> · <b style="color:#C0392B;">how + S + V = 어떻게</b> · <b>형용사는 관사 앞으로</b>.
         </div>
 
         <div style="background:#fffaf0;border-left:4px solid #e8b64c;border-radius:6px;padding:10px 14px;margin-bottom:10px;font-size:13px;">
-          <b style="color:#7a3a00;">🔄 해석 3단계</b> &nbsp;
-          <b>①</b> however/how 뒤의 형·부를 <b>한 덩어리로</b> 묶고 → <b>②</b> However절은 「아무리 ~해도」로 끊고 주절로 → <b>③</b> how절은 통째로 <b>목적어 자리</b>에 넣는다(얼마나 ~한지를).
+          <b style="color:#7a3a00;">🔄 해석 3단계</b> &nbsp; <b>①</b> how/however 바로 뒤를 본다(형/부가 있는가?) → <b>②</b> 절의 자리를 본다(콤마 뒤 주절이 따로 있으면 양보 · 동사 뒤면 목적어 명사절) → <b>③</b> 「아무리 ~해도 / 얼마나 ~한지 / 어떻게」 중 하나로 해석한다.
         </div>
 
       </div>
     </div>
+    <div style="margin:4px 0 18px;border:1.5px solid #d8c7ec;border-radius:12px;overflow:hidden;box-shadow:0 3px 14px rgba(91,58,142,0.10);background:white;">
+      <div style="background:linear-gradient(135deg,#5B3A8E,#7B54B8);color:white;padding:12px 18px;font-size:16px;font-weight:800;">📎 부록 — 양보 표현 8 — however 와 그 친구들 <span style="font-weight:400;font-size:12.5px;opacity:0.85;">However · Whatever · 형용사 as · Be it ever so · Even if · whether or not · Try as you may</span></div>
+      <div style="padding:14px 16px 8px;">
+        <div style="border:2px dashed #7B54B8;border-radius:8px;padding:10px 14px;margin-bottom:6px;background:#faf7ff;font-size:13px;">
+          <b style="color:#5B3A8E;">⚡ 공통 원리</b> — 양보절은 「<b>~해도 결론은 변하지 않는다</b>」는 구조다. 문두에 양보 표지(However · Whatever · 형용사 + as …)가 보이면 <b>콤마 뒤 주절이 결론</b>이고, 앞은 「아무리 ~해도 / ~일지라도」로 묶는다.
+        </div>
+        <div style="font-size:13.5px;font-weight:800;color:#5B2D8E;border-bottom:2px solid #5B2D8E;padding-bottom:3px;margin:12px 0 7px;">양보 표현 8 — 「아무리 ~해도 / ~일지라도」</div>
+        <div style="background:#f6effc;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#5B2D8E;">However + 형/부 + S + V = No matter how</b> <span style="color:#444;">— 아무리 ~해도</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;"><b>However</b> rich he is, he is not happy.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 형/부를 However 바로 뒤에.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 아무리 부자여도, 그는 행복하지 않다.</div>
+        </div>
+        <div style="background:#f6effc;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#5B2D8E;">Whatever / Whoever ~ = No matter what / who</b> <span style="color:#444;">— 무엇을 ~하든 / 누가 ~하든</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;"><b>Whatever</b> you decide, I’ll support you.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 → PATTERN 53.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 네가 무엇을 결정하든, 나는 지지하겠다.</div>
+        </div>
+        <div style="background:#f6effc;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#5B2D8E;">형용사/명사 + as(though) + S + V</b> <span style="color:#444;">— ~이지만 · ~일지라도</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;"><b>Young as</b> he is, he is wise.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 보어가 문두로 → as = though. 「~처럼」 ✗.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 그는 어리지만 현명하다.</div>
+        </div>
+        <div style="background:#f6effc;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#5B2D8E;">Be it ever so + 형 = However + 형 + it may be</b> <span style="color:#444;">— 아무리 ~할지라도</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;"><b>Be it ever so</b> humble, there’s no place like home.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 가정법 현재 도치형 — 고정 표현.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 아무리 초라해도, 집만 한 곳은 없다.</div>
+        </div>
+        <div style="background:#f6effc;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#5B2D8E;">Even if / Even though</b> <span style="color:#444;">— 설령 ~라도 / ~이긴 하지만</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;"><b>Even if</b> it rains, we will go.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 even if = 가정 · even though = 사실.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 설령 비가 와도, 우리는 갈 것이다.</div>
+        </div>
+        <div style="background:#f6effc;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#5B2D8E;">whether ~ or not</b> <span style="color:#444;">— ~이든 아니든</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;"><b>Whether</b> you like it <b>or not</b>, you must go.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 양보 부사절(명사절 whether 와 구별).</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 좋든 싫든, 너는 가야 한다.</div>
+        </div>
+        <div style="background:#f6effc;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#5B2D8E;">명령문 + as + S + may(will)</b> <span style="color:#444;">— 아무리 ~해 봐도</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;"><b>Try as</b> you may, you cannot solve it.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 동사원형이 문두로 간 양보 도치.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 아무리 애써 봐도, 너는 그것을 풀 수 없다.</div>
+        </div>
+        <div style="background:#f6effc;border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+          <div style="font-size:13.5px;margin-bottom:3px;"><b style="color:#5B2D8E;">(함정) how + S + V</b> <span style="color:#444;">— 어떻게 (방법 — 양보 아님)</span></div>
+          <div style="font-family:Georgia,serif;font-size:13.5px;background:rgba(255,255,255,0.75);border-radius:5px;padding:6px 10px;margin-bottom:3px;">I wonder <b>how</b> he solved it.</div>
+          <div style="font-size:12px;color:#666;margin-bottom:2px;">🔍 형/부 없이 주어가 바로 오면 「어떻게」.</div><div style="font-size:12.5px;color:#1F3864;font-weight:700;">▶ 그가 어떻게 그것을 풀었는지 궁금하다.</div>
+        </div>
+
+        <div style="background:#fff8e6;border-left:4px solid #f0d070;border-radius:6px;padding:10px 14px;margin:12px 0 10px;font-size:13px;">
+          <b style="color:#8B6914;">📌 최종 정리</b> — however 와 how 의 구별 하나만 확실히: <b>바로 뒤에 형/부가 있고 콤마로 주절이 따로 있으면 양보</b>, <b>동사 뒤에 붙어 있으면 「얼마나」</b>, <b style="color:#C0392B;">형/부 없이 주어가 오면 「어떻게」</b>.
+        </div>
+      </div>
+    </div>
+    </div><!-- /keySec -->
+    <div id="lineSec" style="display:none;">
     <div class="hints">
       <div class="hint">🖱 PC: 클릭 → 발음 · 더블클릭 → 해석 고정</div>
       <div class="hint">📱 모바일: 탭 → 해석</div>
@@ -1055,6 +1173,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 </div>
 
     </div><!-- /cards -->
+    </div><!-- /lineSec -->
   </div><!-- /readingView -->
 
 
@@ -1319,6 +1438,10 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
     <div class="gtype-final"><button class="gtype-final-btn fi-btn" onclick="checkAllFill()">✓ 서답형 최종 확인</button><span class="gtype-final-score" id="fi-final-score"></span></div>
   </div>
   <div class="vocab-view" id="vocabView">
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-bottom:14px;flex-wrap:wrap;">
+      <button class="g-print-btn" style="margin:0;background:#6A1B9A;" onclick="printV(false)">🖨️ 단어장 인쇄 (A4)</button>
+      <button class="g-print-btn" style="margin:0;background:#7B3F00;" onclick="vtOpen()">📝 단어 테스트 만들기</button>
+    </div>
     <div class="vocab-tabs">
       <button class="vocab-tab active" id="vtab0" onclick="switchVocab(0)">📖 단어카드</button>
       <button class="vocab-tab"        id="vtab1" onclick="switchVocab(1)">✏️ 철자 퀴즈</button>
@@ -1347,6 +1470,24 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
 </div>
 
+  </div>
+</div>
+<div id="vtModal">
+  <div class="vt-box">
+    <div id="vtCtrl">
+      <b style="font-size:15px;color:#1F3864;margin-right:6px;">📝 단어 테스트</b>
+      유형 <select id="vtType" onchange="vtBuild()"><option value="e2k">영어 → 뜻 쓰기</option><option value="k2e">뜻 → 영어 쓰기</option></select>
+      문항 <select id="vtCount" onchange="vtBuild()"><option value="10">10</option><option value="20" selected>20</option><option value="30">30</option><option value="all">전체</option></select>
+      범위 <select id="vtScope" onchange="vtBuild()"><option value="all">단어 + 숙어·공식</option><option value="word">단어만</option><option value="phrase">숙어·공식만</option></select>
+      <label><input type="checkbox" id="vtShuffle" checked onchange="vtBuild()"> 무작위</label>
+      <label><input type="checkbox" id="vtAnswer" checked onchange="vtBuild()"> 정답지 포함</label>
+      <button class="vt-btn" onclick="vtBuild()">다시 생성</button>
+      <span style="margin-left:auto;display:inline-flex;gap:8px;">
+        <button class="vt-btn vt-primary" onclick="vtPrint()">🖨 인쇄</button>
+        <button class="vt-btn" onclick="vtClose()">닫기</button>
+      </span>
+    </div>
+    <div id="vtSheet"></div>
   </div>
 </div>
 <footer style="text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(31,56,100,0.25);letter-spacing:1px;">✦ 구문 PATTERN 54 · how·however + 형의 해석 · 0505.co.kr ✦</footer>
@@ -1972,6 +2113,103 @@ document.addEventListener("DOMContentLoaded",function(){
 });
 // 즉시 실행 (DOMContentLoaded 전에도 안전하게)
 (function(){hideQPanels();})();
+// ── 단어장 인쇄 (v4.2) ──
+function buildVocabPrint(test){
+  var el=document.getElementById("vocabPrint");
+  if(!el){el=document.createElement("div");el.id="vocabPrint";document.querySelector(".passage").appendChild(el);}
+  var t=document.querySelector(".page-title");
+  var head='<div style="font-size:16px;font-weight:800;color:#1F3864;margin:4px 0 6px;">📚 단어장'+(test?" — 시험지":"")+' · '+(t?t.textContent:"")+' <span style="font-weight:400;font-size:12px;color:#888;">('+VOCAB.length+' words)</span></div>';
+  if(test)head+='<div style="font-size:12.5px;color:#444;margin-bottom:8px;">이름: ______________________ &nbsp;&nbsp;&nbsp; 점수: ________ / '+VOCAB.length+'</div>';
+  var rows=VOCAB.map(function(v,i){
+    var kr=test?"":v.kr;
+    var extra="";
+    if(!test){
+      if(v.syn&&v.syn.length)extra+=' <span style="color:#1565C0;font-size:11px;">≒ '+v.syn.join(", ")+'</span>';
+      if(v.ant&&v.ant.length)extra+=' <span style="color:#B71C1C;font-size:11px;">↔ '+v.ant.join(", ")+'</span>';
+    }
+    return '<tr><td style="width:5%;color:#888;">'+(i+1)+'</td><td style="width:32%;font-family:Georgia,serif;font-weight:700;color:#1F3864;">'+v.en+'</td><td style="width:9%;color:#999;font-size:11px;">'+v.pos+'</td><td>'+kr+extra+'</td></tr>';
+  }).join("");
+  el.innerHTML=head+'<table><tr><th>#</th><th>단어 · 숙어</th><th>품사</th><th>뜻</th></tr>'+rows+'</table>';
+}
+function printV(test){
+  buildVocabPrint(test);
+  document.body.classList.add("pv");
+  window.onafterprint=function(){document.body.classList.remove("pv");window.onafterprint=null;};
+  window.print();
+}
+// ── 단어 테스트 생성기 (v4.2 · 대치동식 2단 시험지) ──
+function vtPool(){
+  var pool=[],seen={};
+  VOCAB.forEach(function(v){
+    var ph=(v.pos||"").indexOf("phr")>=0||v.en.indexOf(" ")>=0;
+    pool.push({en:v.en,kr:v.kr,ph:ph});seen[v.en.toLowerCase()]=1;
+  });
+  document.querySelectorAll(".s-vocab").forEach(function(sv){
+    var ens=sv.querySelectorAll(".vocab-en"),krs=sv.querySelectorAll(".vocab-kr");
+    for(var i=0;i<ens.length;i++){
+      var e=ens[i].textContent.trim(),k=krs[i]?krs[i].textContent.trim():"";
+      if(!e||!k||seen[e.toLowerCase()])continue;
+      seen[e.toLowerCase()]=1;
+      pool.push({en:e,kr:k,ph:true});
+    }
+  });
+  return pool;
+}
+function vtHalfTable(items,start,mode,answer){
+  var head=answer?"<tr><th style=\"width:11%;\">No.</th><th style=\"width:42%;\">"+(mode==="k2e"?"뜻":"단어")+"</th><th>"+(mode==="k2e"?"단어":"뜻")+"</th></tr>"
+                 :"<tr><th style=\"width:11%;\">No.</th><th style=\"width:44%;\">문제</th><th>답</th></tr>";
+  var rows=items.map(function(it,i){
+    var q=mode==="k2e"?it.kr:it.en, a=mode==="k2e"?it.en:it.kr;
+    var qs=mode==="k2e"?"":"font-family:Georgia,serif;";
+    if(answer)return "<tr><td style=\"text-align:center;color:#666;\">"+(start+i+1)+"</td><td style=\"font-weight:700;"+qs+"\">"+q+"</td><td>"+a+"</td></tr>";
+    return "<tr><td style=\"text-align:center;color:#666;\">"+(start+i+1)+"</td><td style=\"font-weight:700;"+qs+"\">"+q+"</td><td style=\"height:26px;\"></td></tr>";
+  }).join("");
+  return "<table>"+head+rows+"</table>";
+}
+function vtTwoCol(items,mode,answer){
+  var half=Math.ceil(items.length/2);
+  var L=items.slice(0,half),R=items.slice(half);
+  return "<div class=\"vt-cols\"><div>"+vtHalfTable(L,0,mode,answer)+"</div><div>"+(R.length?vtHalfTable(R,half,mode,answer):"")+"</div></div>";
+}
+function vtBuild(){
+  var mode=document.getElementById("vtType").value;
+  var cnt=document.getElementById("vtCount").value;
+  var scope=document.getElementById("vtScope").value;
+  var shuffle=document.getElementById("vtShuffle").checked;
+  var withAns=document.getElementById("vtAnswer").checked;
+  var pool=vtPool();
+  if(scope==="word")pool=pool.filter(function(v){return !v.ph;});
+  else if(scope==="phrase")pool=pool.filter(function(v){return v.ph;});
+  if(shuffle)pool=pool.slice().sort(function(){return Math.random()-0.5;});
+  var items=(cnt==="all")?pool:pool.slice(0,Math.min(parseInt(cnt,10),pool.length));
+  var t=document.querySelector(".page-title");
+  var title=(t?t.textContent.split("—")[0].trim():"단어장");
+  var badge=document.querySelector(".nav-title-bar");
+  var typeLabel=(mode==="k2e"?"뜻 → 영어":"영어 → 뜻");
+  var scopeLabel=(scope==="word"?"단어":scope==="phrase"?"숙어·공식":"단어+숙어·공식");
+  var html="";
+  html+="<div style=\"display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:2px solid #1F3864;padding-bottom:8px;margin-bottom:12px;\">";
+  html+="<div style=\"font-size:17px;font-weight:800;color:#111;\">"+(badge?badge.textContent.trim()+" · ":"")+title+" 단어테스트</div>";
+  html+="<div style=\"font-size:11px;color:#888;\">"+typeLabel+" · "+scopeLabel+" · "+items.length+"문항 · 목동서로영어학원</div></div>";
+  html+="<div style=\"display:flex;gap:26px;font-size:12.5px;color:#333;margin-bottom:12px;flex-wrap:wrap;\">";
+  html+="<span>이름 &nbsp;______________</span><span>날짜 &nbsp;______________</span><span>점수 &nbsp;__________ / "+items.length+"</span></div>";
+  html+=vtTwoCol(items,mode,false);
+  if(withAns){
+    html+="<div style=\"margin:22px 0 8px;padding-left:9px;border-left:4px solid #1F3864;font-size:14px;font-weight:800;color:#111;page-break-before:always;break-before:page;\">정답 · "+title+" 단어테스트 ("+typeLabel+")</div>";
+    html+=vtTwoCol(items,mode,true);
+  }
+  document.getElementById("vtSheet").innerHTML=html;
+}
+function vtOpen(){
+  document.getElementById("vtModal").style.display="block";
+  if(!document.getElementById("vtSheet").innerHTML)vtBuild();
+}
+function vtClose(){document.getElementById("vtModal").style.display="none";}
+function vtPrint(){
+  document.body.classList.add("pvt");
+  window.onafterprint=function(){document.body.classList.remove("pvt");window.onafterprint=null;};
+  window.print();
+}
 </script>
 
 <script>
