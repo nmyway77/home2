@@ -1382,7 +1382,10 @@ function goNaeshin(){
   openPwModal();
 }
 
+const _PW_KEY='pw0505', _PW_HOURS=3;
+function _pwValid(){ try{ return parseInt(localStorage.getItem(_PW_KEY)||'0',10) > Date.now(); }catch(e){ return false; } }
 function openPwModal(){
+  if(_pwTarget && _pwTarget!=='level_test_v3.html' && _pwValid()){ window.location.href = _pwTarget; return; }
   const m = document.getElementById('pwModal');
   const inp = document.getElementById('pwInput');
   document.getElementById('pwErr').textContent = '';
@@ -1402,8 +1405,9 @@ function submitPw(){
   const val = document.getElementById('pwInput').value;
   const inp = document.getElementById('pwInput');
   const err = document.getElementById('pwErr');
-  const pw = (_pwTarget==='level_test_v3.html') ? '1234' : '050505';
+  const pw = (_pwTarget==='level_test_v3.html') ? '1234' : '050501';
   if(val === pw){
+    if(pw==='050501'){ try{ localStorage.setItem(_PW_KEY, String(Date.now()+_PW_HOURS*3600*1000)); }catch(e){} }
     document.getElementById('pwModal').classList.remove('open');
     if(_pwTarget) window.location.href = _pwTarget;
   } else {

@@ -2,9 +2,46 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<script>
+(function(){
+  var KEY='pw0505', PW='050501', HOURS=3;
+  try{ if(parseInt(localStorage.getItem(KEY)||'0',10) > Date.now()) return; }catch(e){}
+  document.documentElement.style.visibility='hidden';
+  function show(){
+    var ov=document.createElement('div');
+    ov.id='pwgate';
+    ov.style.cssText='position:fixed;inset:0;z-index:99999;background:#1f3864;display:flex;align-items:center;justify-content:center;visibility:visible;font-family:-apple-system,"Noto Sans KR",sans-serif;';
+    ov.innerHTML='<div style="background:#fff;border-radius:16px;padding:32px 28px;width:min(90vw,340px);text-align:center;box-shadow:0 10px 40px rgba(0,0,0,.35);">'
+      +'<div style="font-size:34px;margin-bottom:10px;">🔒</div>'
+      +'<div style="font-size:16px;font-weight:700;color:#1f3864;margin-bottom:6px;">재원생 전용 자료</div>'
+      +'<div style="font-size:12.5px;color:#777;margin-bottom:18px;">비밀번호를 입력하세요</div>'
+      +'<input id="pwgate-in" type="password" inputmode="numeric" autocomplete="off" style="width:100%;box-sizing:border-box;font-size:18px;text-align:center;letter-spacing:4px;padding:11px;border:2px solid #d0d7e2;border-radius:10px;outline:none;">'
+      +'<div id="pwgate-msg" style="height:18px;font-size:12px;color:#c0392b;margin-top:6px;"></div>'
+      +'<button id="pwgate-btn" style="width:100%;margin-top:6px;padding:12px;font-size:15px;font-weight:700;color:#fff;background:#2e75b6;border:0;border-radius:10px;cursor:pointer;">입장</button>'
+      +'<a href="https://0505.co.kr/" style="display:block;margin-top:14px;font-size:12px;color:#999;text-decoration:none;">← 메인으로</a>'
+      +'</div>';
+    document.documentElement.appendChild(ov);
+    var inp=document.getElementById('pwgate-in');
+    function ok(){
+      if(inp.value.trim()===PW){
+        try{ localStorage.setItem(KEY, String(Date.now()+HOURS*3600*1000)); }catch(e){}
+        ov.remove(); document.documentElement.style.visibility='';
+      }else{
+        document.getElementById('pwgate-msg').textContent='비밀번호가 틀렸습니다';
+        inp.value=''; inp.focus();
+      }
+    }
+    document.getElementById('pwgate-btn').onclick=ok;
+    inp.addEventListener('keydown',function(e){ if(e.key==='Enter') ok(); });
+    setTimeout(function(){ inp.focus(); },50);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',show); else show();
+})();
+</script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EBS 수특 라이트 영어 한줄해석 허브 — 목동서로영어학원</title>
-<meta name="description" content="EBS 수특 라이트 영어 강별 지문 한줄해석·어휘·어법 자료실. 목동서로영어학원 0505.co.kr">
+<title>EBS 수특 라이트 한줄해석 허브 — 목동서로영어학원</title>
+<meta name="description" content="EBS 수특 라이트 강별 지문 한줄해석·어휘·어법 자료실. 목동서로영어학원 0505.co.kr">
 <meta name="robots" content="noindex">
 <link rel="canonical" href="https://0505.co.kr/ebs-lite.html">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -22,10 +59,6 @@ body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;min-height:100vh
 .page-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--blue-border);margin-bottom:8px;}
 .page-title{font-family:'Playfair Display',serif;font-size:clamp(20px,4vw,30px);font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:6px;}
 .page-sub{font-size:12px;color:var(--text-sub);font-weight:300;}
-.subj-nav{display:flex;gap:8px;margin:0 0 20px;}
-.subj-tab{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:1px;padding:9px 20px;border-radius:8px;text-decoration:none;border:1.5px solid rgba(46,117,182,0.25);color:var(--blue-border);background:var(--blue-card);transition:all 0.2s;}
-.subj-tab:hover{background:#dbe9f7;}
-.subj-tab.on{background:var(--navy);color:white;border-color:var(--navy);box-shadow:0 3px 10px rgba(31,56,100,0.25);cursor:default;}
 .lecture-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 16px;}
 @media(max-width:640px){.lecture-grid{grid-template-columns:1fr;}}
 .month-block{margin:0;}
@@ -44,18 +77,14 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
 <body>
 <nav class="top-nav">
   <a class="home-btn" href="index.html">🏠 홈</a>
-  <span class="nav-title">EBS 수특 라이트 영어 한줄해석 · 허브</span>
+  <span class="nav-title">EBS 수특 라이트 한줄해석 · 허브</span>
   <span class="nav-badge">✦ 재원생 전용</span>
 </nav>
 <div class="wrap">
   <div class="page-header">
     <div class="page-label">목동서로영어학원 · EBS · EBS-LT</div>
-    <div class="page-title">EBS 수특 라이트 영어 한줄해석 허브</div>
-    <div class="page-sub">수능특강 Light 영어 — 30강 · 강별 지문 한줄해석·어휘·어법</div>
-  </div>
-  <div class="subj-nav">
-    <a class="subj-tab on" href="https://0505.co.kr/ebs-lite.html">EBS 수특 라이트 영어</a>
-    <a class="subj-tab" href="https://0505.co.kr/ebs-lite-reading.html">EBS 수특 라이트 영어독해</a>
+    <div class="page-title">EBS 수특 라이트 한줄해석 허브</div>
+    <div class="page-sub">수능특강 Light — 30강 · 강별 지문 한줄해석·어휘·어법</div>
   </div>
   <div class="lecture-grid">
   <div class="month-block">
@@ -480,6 +509,6 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   </div>
   </div>
 </div>
-<footer>✦ EBS 수특 라이트 영어 한줄해석 · 목동서로영어학원 · 0505.co.kr ✦</footer>
+<footer>✦ EBS 수특 라이트 한줄해석 · 목동서로영어학원 · 0505.co.kr ✦</footer>
 </body>
 </html>
