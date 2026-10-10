@@ -1,32 +1,16 @@
 <!DOCTYPE html>
 <!--
 ========================================================================
-  ANSWER-KEY WORKBOOK · MASTER HTML TEMPLATE
+  3300제 상세풀이 · build_3300.py 로 생성된 파일 (직접 수정하지 말고 데이터 파일을 고쳐 다시 빌드)
   목동서로영어학원 · Mokdong Seoro English Academy · 0505.co.kr
-========================================================================
-  사용법:
-    1. 이 파일 통째로 복사
-    2. 고교 3300제 · 제14장 조동사 · 상세풀이집, {{HEADER_*}} 등의 플레이스홀더를 시험 정보로 채움
-    3. <main><div class="container"> 안에 정답표 + 문항들 삽입
-    4. 각 문항은 10_ANSWERKEY_QUESTION_PATTERNS.md의 스니펫 사용
-
-  통합 CSS:
-    - 모의고사용 클래스 (.dialogue, .price-table, .chart-box, .info-box, .picture-box)
-    - 학교 내신용 클래스 (.spec-box, .cond-box, .compare-table, .matrix-table, .seodap-header)
-    - 양쪽 공통 (.q-card, .passage, .q-choices, details.ans 등)
-
-  변경 절대 금지:
-    - 색상 변수 (--navy-950, --gold, --cream)
-    - 폰트 패밀리 (Pretendard, Playfair Display)
-    - .home-btn 위치/스타일
-    - footer 학원 명기
+  변경 절대 금지: 색상 변수 / 폰트 패밀리 / .home-btn 위치·스타일 / footer 학원 명기
 ========================================================================
 -->
-<html lang="ko">
+<html lang="ko" class="no-js">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>고교 3300제 · 제14장 조동사 · 상세풀이집</title>
+<title>고교 내신수능 1등급 영문법연습 3300제 · 제14장 조동사 · 어법 해설 &amp; 상세풀이</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
@@ -261,6 +245,7 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
   .brand-row{flex-direction:column;align-items:flex-start;gap:12px}
 }
 
+
 /* ===== 드릴형 문항(EXERCISE 묶음) ===== */
 .drill{margin-bottom:4px}
 .drill ol{margin:0;padding-left:26px}
@@ -268,6 +253,7 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 .drill li .ko{font-family:'Pretendard Variable',sans-serif;color:var(--slate-500);font-size:13px}
 .drill .blk{display:inline-block;min-width:74px;border-bottom:1.4px solid var(--slate-500);margin:0 3px;vertical-align:baseline}
 .drill .paren{font-family:'Pretendard Variable',sans-serif;color:var(--navy-900);font-weight:600}
+/* 접힌 해설 안 정답 목록 */
 .ans-list{margin:6px 0 0;padding-left:26px;font-family:'Pretendard Variable',sans-serif}
 .ans-list li{margin:6px 0;line-height:1.7;font-size:13.5px;color:#C9BFAD}
 .ans-list li .a{color:var(--gold-light);font-weight:800;font-family:'Playfair Display',serif;font-style:italic}
@@ -301,16 +287,136 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
   #penToolbar .pen-btn,#penToolbar .pen-width{width:38px;height:38px;}
   #penToolbar .pen-color{width:26px;height:26px;}
 }
+/* ===== UNIT NAV (v2 재구성) ===== */
+.unit-nav{position:sticky;top:0;z-index:999;background:var(--navy-950);border-bottom:1px solid rgba(228,197,137,0.35);box-shadow:0 6px 18px rgba(10,30,58,0.18)}
+.unit-nav .container{display:flex;flex-direction:column;gap:0}
+.un-row{display:flex;gap:0;align-items:stretch}
+.un-tab{flex:1;display:flex;align-items:baseline;gap:10px;padding:13px 18px 11px;background:transparent;border:0;border-bottom:3px solid transparent;border-right:1px solid rgba(228,197,137,0.14);color:#B8B0A2;cursor:pointer;font-family:'Pretendard Variable',sans-serif;text-align:left;transition:background .15s,color .15s}
+.un-tab:first-child{border-left:1px solid rgba(228,197,137,0.14)}
+.un-tab .un-no{font-family:'Playfair Display',serif;font-style:italic;font-weight:800;font-size:26px;line-height:1;color:var(--slate-400);letter-spacing:-0.02em}
+.un-tab .un-name{font-size:13.5px;font-weight:700;letter-spacing:-0.01em}
+.un-tab .un-sub{display:block;font-size:10.5px;font-weight:600;color:var(--slate-500);letter-spacing:0.08em;margin-bottom:2px}
+.un-tab:hover{background:rgba(201,155,78,0.08);color:var(--cream)}
+.un-tab.active{border-bottom-color:var(--gold);color:var(--cream);background:rgba(201,155,78,0.10)}
+.un-tab.active .un-no{color:var(--gold)}
+.un-tab.active .un-sub{color:var(--gold-light)}
+.mode-row{display:flex;gap:8px;padding:9px 0 10px;align-items:center;border-top:1px solid rgba(228,197,137,0.14)}
+.mode-row .mode-cur{font-size:12px;color:var(--gold-light);font-weight:700;margin-right:6px;white-space:nowrap}
+.mode-btn{padding:7px 18px;border-radius:999px;border:1px solid rgba(228,197,137,0.4);background:transparent;color:#D3CABA;font-family:'Pretendard Variable',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s}
+.mode-btn:hover{border-color:var(--gold);color:var(--cream)}
+.mode-btn.active{background:var(--gold);border-color:var(--gold);color:var(--navy-950)}
+.un-tab:focus-visible,.mode-btn:focus-visible,.pf-btn:focus-visible,.tool-btn:focus-visible{outline:2px solid var(--gold-light);outline-offset:2px}
+@media(max-width:1180px){.unit-nav .container{padding-right:140px}}
+@media(max-width:720px){
+  .unit-nav .container{padding-right:64px}
+  .un-tab{flex-direction:column;gap:2px;padding:9px 10px 8px;align-items:flex-start}
+  .un-tab .un-no{font-size:20px}
+  .un-tab .un-name{font-size:11.5px}
+  .un-tab .un-sub{display:none}
+  .mode-row .mode-cur{display:none}
+  .mode-btn{padding:6px 14px;font-size:12.5px}
+}
+/* 유니트가 7개 이상인 장(예: 11장): 번호 위·이름 아래로 쌓고, 좁은 화면에서는 탭 줄을 가로로 민다 */
+.unit-nav.un-many .un-tab{flex-direction:column;gap:4px;padding:11px 9px 10px;align-items:flex-start;min-width:0}
+.unit-nav.un-many .un-tab .un-no{font-size:21px}
+.unit-nav.un-many .un-tab .un-name{font-size:12px;line-height:1.35;word-break:keep-all}
+.unit-nav.un-many .un-tab .un-sub{display:none}
+@media(max-width:900px){
+  .unit-nav.un-many .un-row{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .unit-nav.un-many .un-row::-webkit-scrollbar{display:none}
+  .unit-nav.un-many .un-tab{flex:0 0 auto;min-width:84px;max-width:120px}
+}
 
+/* ===== PANELS ===== */
+main{padding-top:36px}
+html.js .panel{display:none}
+html.js .panel.active{display:block}
+.panel-head{display:flex;align-items:flex-end;gap:20px;padding-bottom:18px;margin-bottom:26px;border-bottom:2px solid var(--navy-950)}
+.panel-head .ph-no{font-family:'Playfair Display',serif;font-style:italic;font-weight:900;font-size:clamp(54px,9vw,84px);line-height:0.85;color:var(--navy-950);letter-spacing:-0.04em}
+.panel-head .ph-no small{display:block;font-family:'Pretendard Variable',sans-serif;font-style:normal;font-size:11px;font-weight:800;letter-spacing:0.2em;color:var(--gold);margin-bottom:8px}
+.panel-head .ph-txt{flex:1;padding-bottom:4px}
+.panel-head .ph-title{font-size:clamp(20px,3vw,26px);font-weight:800;color:var(--navy-950);letter-spacing:-0.02em;line-height:1.25;margin:0}
+.panel-head .ph-mode{font-size:13px;color:var(--slate-500);font-weight:600;margin-top:4px}
+.panel-head .ph-mode b{color:var(--gold);font-weight:800}
+.tool-row{display:flex;justify-content:flex-end;margin:-10px 0 18px}
+.tool-btn{padding:7px 14px;border:1px solid var(--slate-300);background:var(--warm-white);color:var(--navy-900);font-family:'Pretendard Variable',sans-serif;font-size:12.5px;font-weight:700;cursor:pointer;border-radius:2px}
+.tool-btn:hover{border-color:var(--navy-950)}
+.panel-foot{display:flex;gap:12px;flex-wrap:wrap;margin-top:40px;padding-top:24px;border-top:1px solid var(--slate-300)}
+.pf-btn{flex:1;min-width:200px;padding:16px 20px;border:1px solid var(--navy-950);background:var(--warm-white);color:var(--navy-950);font-family:'Pretendard Variable',sans-serif;font-size:14px;font-weight:800;cursor:pointer;text-align:left;line-height:1.4}
+.pf-btn small{display:block;font-size:11.5px;font-weight:600;color:var(--slate-500);margin-bottom:2px}
+.pf-btn.primary{background:var(--navy-950);color:var(--cream)}
+.pf-btn.primary small{color:var(--gold-light)}
+.pf-btn:hover{box-shadow:0 4px 14px rgba(10,30,58,0.18)}
+
+/* ===== 어법 해설 ===== */
+.g-intro{padding:14px 18px;background:var(--cream-dark);border-left:3px solid var(--gold);font-size:14px;color:var(--slate-700);margin-bottom:24px}
+.g-sec{background:var(--warm-white);border:1px solid var(--slate-200);padding:clamp(22px,3vw,34px);margin-bottom:22px}
+.g-h{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 16px;padding-bottom:14px;border-bottom:1px solid var(--slate-200);font-size:18.5px;font-weight:800;color:var(--navy-950);letter-spacing:-0.02em;line-height:1.35}
+.g-n{font-family:'Playfair Display',serif;font-style:italic;font-weight:800;font-size:26px;color:var(--gold);line-height:1;min-width:20px}
+.g-badge{font-size:11px;font-weight:800;padding:3px 9px;background:var(--rose-50);color:var(--rose-600);border:1px solid #FECACA;border-radius:999px;letter-spacing:0}
+.g-p{margin:0 0 14px;font-size:14.5px;line-height:1.8;color:var(--slate-700)}
+.g-p.g-sub{font-weight:800;color:var(--navy-950);margin:22px 0 8px;font-size:14.5px}
+.g-sec b{color:var(--navy-950);font-weight:800}
+.g-sec .e{font-family:'Playfair Display',serif;font-size:14.5px;color:var(--navy-900)}
+.g-sec .e b{color:var(--rose-600);font-weight:700}
+.g-sec .e.x{text-decoration:line-through;text-decoration-color:var(--rose-600);color:var(--slate-500)}
+.g-rule{margin:0 0 16px;padding:16px 20px;background:var(--navy-950);color:#D3CABA;font-size:14.5px;line-height:1.85}
+.g-rule b{color:var(--gold-light)}
+.g-ex{margin:0 0 16px;padding:14px 20px;background:var(--cream);border-left:3px solid var(--slate-400)}
+.g-ex p{margin:8px 0;line-height:1.6}
+.g-ex .e{display:block;font-size:15px}
+.g-ex .k{display:block;font-size:13px;color:var(--slate-500);margin-top:1px}
+.g-warn{margin:0 0 16px;padding:14px 18px;background:var(--rose-50);border-left:3px solid var(--rose-600);font-size:14px;line-height:1.8;color:var(--slate-700)}
+.g-warn>b:first-child,.g-warn br+b{color:var(--rose-600)}
+.g-list{margin:0 0 16px;padding-left:20px}
+.g-list li{margin:8px 0;font-size:14.5px;line-height:1.8}
+.g-ol{margin:0 0 16px;padding-left:22px}
+.g-ol li{margin:7px 0;font-size:14.5px;line-height:1.8}
+.g-sec .compare-table{margin:0 0 16px;font-size:13.5px}
+.g-sec .compare-table td{line-height:1.65}
+.g-sec .compare-table td.num{width:auto;min-width:40px}
+.g-check{background:var(--cream-dark);border-color:var(--gold)}
+.g-check .g-h{border-bottom-color:var(--gold)}
+.g-tablewrap{overflow-x:auto}
+@media(max-width:720px){.g-tablewrap .compare-table{min-width:540px}}
+
+/* ===== 상세 해설(펼치기) 보강 ===== */
+.ans-body .sec-t{display:block;margin:18px 0 8px;font-size:12px;font-weight:800;color:var(--gold);letter-spacing:0.06em}
+.ans-body .ans-detail .sec-t{margin-top:0}
+.ans-body .ans-detail{color:#C9BFAD}
+.ans-body .step{display:flex;gap:10px;margin:8px 0;padding:2px 0 2px 12px;color:#D3CABA;font-size:13.5px;line-height:1.75}
+.ans-body .step .sn{flex:none;font-family:'Playfair Display',serif;font-style:italic;font-weight:800;color:var(--gold)}
+.opt-list{list-style:none;margin:0;padding:0}
+.opt-list li{display:flex;gap:10px;padding:8px 12px;margin:4px 0;font-size:13.5px;line-height:1.7;color:#C9BFAD;background:rgba(255,255,255,0.03);border-left:2px solid rgba(220,38,38,0.55)}
+.opt-list li.ok{border-left-color:#34D399;background:rgba(52,211,153,0.08);color:var(--cream)}
+.opt-list .on{flex:none;min-width:34px;font-weight:800;color:var(--gold-light)}
+.opt-list .mk{flex:none;width:16px;font-weight:800;color:#F87171}
+.opt-list li.ok .mk{color:#34D399}
+.opt-list i{font-family:'Playfair Display',serif;color:var(--cream)}
+.ans-list.rich{padding-left:0;list-style:none;counter-reset:al;margin-top:14px}
+.ans-list.rich>li{counter-increment:al;position:relative;margin:0;padding:14px 0 14px 38px;border-top:1px dashed rgba(228,197,137,0.18)}
+.ans-list.rich>li::before{content:counter(al);position:absolute;left:0;top:13px;width:26px;height:26px;border:1px solid rgba(228,197,137,0.45);border-radius:50%;text-align:center;line-height:24px;font-family:'Playfair Display',serif;font-weight:700;font-size:13px;color:var(--gold-light)}
+.ans-list.rich .al-top{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline}
+.ans-list.rich .a{font-size:16px}
+.ans-list.rich .full{font-family:'Playfair Display',serif;font-size:13.5px;color:#A9A294}
+.ans-list.rich .why{display:block;margin-top:6px;font-size:13.5px;line-height:1.75;color:#C9BFAD}
+.ans-list.rich .why i{font-family:'Playfair Display',serif;color:var(--cream)}
+.ans-list.rich .tr{display:block;margin-top:5px;font-size:12.5px;color:#8F98A8}
+.ans-list.rich .tr::before{content:'해석  ';color:var(--gold);font-weight:800;font-size:11px;white-space:pre}
+@media print{
+  .unit-nav,.panel-foot,.tool-row{display:none!important}
+  html.js .panel{display:block!important}
+  .panel{break-before:page}
+  .g-rule{background:white!important;color:var(--navy-950)!important;border:1px solid var(--navy-950)}
+  .g-rule b{color:var(--navy-950)!important}
+  .opt-list li,.ans-list.rich .why,.ans-list.rich .full,.ans-list.rich .tr,.ans-body .step{color:var(--slate-700)!important}
+  .opt-list i,.ans-list.rich .why i,.ans-list li .a{color:var(--navy-950)!important}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
+<script>document.documentElement.className="js";</script>
 </head>
 <body>
-
-<!-- ========== Home Button (절대 변경 금지) ========== -->
-<a href="https://0505.co.kr" class="home-btn" title="목동서로영어학원 홈페이지">
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg>
-  <span class="label">Home</span>
-</a>
 
 <!-- ========== Header (책 표지) ========== -->
 <header class="top"><div class="container">
@@ -318,8 +424,8 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
     <div class="brand">Mokdong Seoro <b>English Academy</b><span class="kor">목동서로영어학원 · 신목고·목운중·목동중 전문</span></div>
     <div class="vol-tag">3300제 · Chapter XIV</div>
   </div>
-  <h1 class="book-title"><em>Auxiliary Verb</em> · 제14장 조동사<br>Complete Answer Key</h1>
-  <div class="book-subtitle">고교 내신수능 1등급 영문법연습 3300제 · 제14장 조동사 · 전문항 상세풀이<br>Unit 24 여러 가지 조동사의 용법 · 기출응용문제</div>
+  <h1 class="book-title"><em>Auxiliary Verb</em> · 제14장 조동사<br>Grammar Notes &amp; Answer Key</h1>
+  <div class="book-subtitle">고교 내신수능 1등급 영문법연습 3300제 · 제14장 조동사<br>유니트별 어법 해설 + 전문항 상세 풀이 · Unit 24 여러 가지 조동사의 용법 · 기출응용문제</div>
   <div class="meta-strip">
     <div class="meta-item"><div class="meta-lbl">CHAPTER</div><div class="meta-val">XIV<span class="u">조동사</span></div></div>
     <div class="meta-item"><div class="meta-lbl">UNIT</div><div class="meta-val">24<span class="u"></span></div></div>
@@ -328,22 +434,170 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
   </div>
 </div></header>
 
+<!-- ========== Unit Navigation: 상단 유니트 번호 + 어법 해설 / 문제 풀이 ========== -->
+<nav class="unit-nav" id="unitNav" aria-label="유니트 이동"><div class="container">
+  <div class="un-row"><button type="button" class="un-tab" data-unit="u1"><span class="un-no">24</span><span><span class="un-sub">Unit</span><span class="un-name">여러 가지 조동사의 용법</span></span></button><button type="button" class="un-tab" data-unit="gi"><span class="un-no">기출</span><span><span class="un-sub">Chapter XIV</span><span class="un-name">기출응용문제</span></span></button></div>
+  <div class="mode-row"><span class="mode-cur" id="modeCur"></span>
+    <button type="button" class="mode-btn" data-mode="g">어법 해설</button>
+    <button type="button" class="mode-btn" data-mode="q">문제 풀이</button>
+  </div>
+</div></nav>
+
+<!-- ========== Home Button (절대 변경 금지) ========== -->
+<a href="https://0505.co.kr" class="home-btn" title="목동서로영어학원 홈페이지">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg>
+  <span class="label">Home</span>
+</a>
+
 <main><div class="container">
 
-<!-- ====================================================== -->
-<!-- 정답표 영역: 09_BUILD_PROTOCOL.md Step 2 참고            -->
-<!-- ====================================================== -->
-<div class="section-divider"><span>Answer Key<span class="kor">정답 일람표 · 펼쳐서 확인</span></span></div>
+<section class="panel" id="p-u1-g" data-unit="u1" data-mode="g">
+<div class="panel-head"><div class="ph-no"><small>UNIT</small>24</div><div class="ph-txt"><h2 class="ph-title">여러 가지 조동사의 용법</h2><div class="ph-mode"><b>어법 해설</b> · EXERCISE A~F · 68문항</div></div></div>
+<div class="g-intro">Unit 24는 조동사 전체를 다룹니다. <b>can(A) → must(B) → may(C) → should · would rather · had better(D) → do · used to · would(E) → 조동사 + have p.p.(F)</b> 순서입니다. 조동사 문제는 ① 형태 규칙 ② 뜻(특히 부정과 추측) ③ 과거의 일을 말하는 have p.p. 세 가지로 나누어 정리하면 쉽습니다.</div>
 
-<details class="ans" style="margin-top:0"><summary>기출응용문제 정답 일람표 펼치기 (스포일러 주의)</summary><div class="ans-body"><div class="ans-detail" style="margin-bottom:10px">아래 표는 <b>기출응용문제 1~22</b>의 정답 요약입니다. 서술형 및 EXERCISE(Unit 24) 정답은 각 문항 카드의 해설을 펼쳐 확인하세요.</div><table class="answer-sheet"><tr class="hdr-row"><td>기출</td><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>②</td><td>①</td><td style="font-size:9px;color:var(--rose-600)">서술</td><td>③</td><td style="font-size:9px;color:var(--rose-600)">서술</td><td style="font-size:9px;color:var(--rose-600)">서술</td><td>④</td><td>⑤</td></tr><tr class="hdr-row"><td>기출</td><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>②</td><td style="font-size:9px;color:var(--rose-600)">서술</td><td>③</td><td>②</td><td style="font-size:9px;color:var(--rose-600)">서술</td><td>⑤</td><td style="font-size:9px;color:var(--rose-600)">서술</td></tr><tr class="hdr-row"><td>기출</td><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td style="font-size:9px;color:var(--rose-600)">서술</td><td>②</td><td>①</td><td>②</td><td>④</td><td>④</td><td>④</td></tr></table></div></details>
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">1</span>조동사의 형태 규칙 <span class="g-badge">내신 빈출</span></h3>
+<div class="g-rule"><b>① 조동사 뒤에는 동사원형</b><br><b>② 조동사 두 개를 겹쳐 쓸 수 없다</b> — will, may 뒤나 to 뒤에서는 can → <b>be able to</b>, must → <b>have to</b><br><b>③ 조동사는 주어에 따라 변하지 않는다</b> — 단, have to는 일반동사처럼 has to / had to / don't have to로 변한다</div>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>틀린 형태</th><th>옳은 형태</th></tr>
+<tr><td><span class="e x">won't can apply</span></td><td><span class="e">won't <b>be able to</b> apply</span></td></tr>
+<tr><td><span class="e x">want to can speak</span></td><td><span class="e">want to <b>be able to</b> speak</span></td></tr>
+<tr><td><span class="e x">may can use</span></td><td><span class="e">may <b>be able to</b> use</span></td></tr>
+<tr><td><span class="e x">will must hand in</span></td><td><span class="e">will <b>have to</b> hand in</span></td></tr>
+<tr><td><span class="e x">must did / didn't must wait</span></td><td><span class="e"><b>had to</b> do / <b>didn't have to</b> wait</span></td></tr>
+<tr><td><span class="e x">can't able to</span></td><td><span class="e">can't / <b>am not</b> able to</span> (able 앞에는 be동사)</td></tr>
+</table></div>
+</section>
 
-<!-- ====================================================== -->
-<!-- 문항 영역: 10_QUESTION_PATTERNS.md 의 스니펫 사용         -->
-<!-- 각 article은 하나의 문항 또는 묶음 문항 (예: Q41-42)     -->
-<!-- 섹션 구분선(.section-divider)으로 카테고리 분리          -->
-<!-- ====================================================== -->
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">2</span>can / could</h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>쓰임</th><th>예문</th></tr>
+<tr><td class="col-head">능력 (= be able to)</td><td><span class="e">She <b>could</b> read when she was three years old.</span></td></tr>
+<tr><td class="col-head">과거의 능력</td><td><span class="e">Two years ago, I <b>couldn't</b> walk very well.</span> (과거 부사 → could)</td></tr>
+<tr><td class="col-head">강한 의심 (의문문)</td><td><span class="e"><b>Can</b> the rumor be true? It's impossible.</span> (과연 ~일까?)</td></tr>
+<tr><td class="col-head">부정 추측</td><td><span class="e">He <b>can't</b> help me. He hates me a lot.</span> (~일 리가 없다)</td></tr>
+</table></div>
+<div class="g-rule"><b>cannot but + 동사원형</b> = <b>cannot help + -ing</b> : ~하지 않을 수 없다</div>
+<p class="g-p"><span class="e">We couldn't <b>but wait</b> for her.</span> = <span class="e">We couldn't <b>help waiting</b> for her.</span> 뒤에 오는 동사의 형태(원형인지 -ing인지)로 구별합니다.</p>
+</section>
 
-<div class="section-divider"><span>Chapter XIV · Unit 24 <em>Auxiliary Verbs</em><span class="kor">제14장 조동사 · Unit 24 여러 가지 조동사의 용법</span></span></div>
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">3</span>must / have to — 부정의 뜻이 다릅니다 <span class="g-badge">내신 빈출</span></h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>형태</th><th>뜻</th><th>예문</th></tr>
+<tr><td class="col-head">must = have to</td><td>~해야 한다 (의무)</td><td><span class="e">You <b>must</b> wash your hands. = You <b>have to</b> wash your hands.</span></td></tr>
+<tr><td class="col-head">must not</td><td>~해서는 안 된다 (<b>금지</b>)</td><td><span class="e">May I go home? - No, you <b>must not</b>.</span></td></tr>
+<tr><td class="col-head">need not<br>= don't have to</td><td>~할 필요가 없다 (<b>불필요</b>)</td><td><span class="e">Must I come back before noon? - No, you <b>need not</b>.</span></td></tr>
+</table></div>
+<ul class="g-list">
+<li><b>대답 짝</b>: <span class="e">May I ~?</span>(허가를 구함)에 대한 거절은 <span class="e">must not</span>, <span class="e">Must I ~?</span>(의무인지 물음)에 대한 부정은 <span class="e">need not</span>입니다.</li>
+<li><b>시제</b>: 과거는 <span class="e">had to</span>, 미래는 <span class="e">will have to</span>. must에는 과거형 · 미래형이 없습니다.</li>
+<li><b>have got to = have to</b>: <span class="e">She<b>'s got to</b> see the doctor. = She <b>has to</b> see the doctor.</span></li>
+<li>주어가 3인칭 단수이면 <span class="e">has to</span>입니다. must는 형태가 바뀌지 않습니다.</li>
+</ul>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">4</span>may — 허가 · 추측, may well / may as well <span class="g-badge">내신 빈출</span></h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>형태</th><th>뜻</th><th>예문</th></tr>
+<tr><td class="col-head">may (허가)</td><td>~해도 된다</td><td><span class="e">May I sit here? - Yes, you <b>may</b>.</span></td></tr>
+<tr><td class="col-head">may (추측)</td><td>~일지도 모른다</td><td><span class="e">She <b>may</b> be asleep.</span> = It is possible that she is asleep.</td></tr>
+<tr><td class="col-head">may well</td><td>~하는 것도 당연하다</td><td><span class="e">You <b>may well</b> get embarrassed.</span></td></tr>
+<tr><td class="col-head">may as well</td><td>~하는 편이 낫다</td><td><span class="e">You <b>may as well</b> take a rest.</span></td></tr>
+</table></div>
+<p class="g-p">may well과 may as well은 형태가 비슷하므로 뒤의 내용으로 구별합니다. 뒤에 <b>감정 · 반응</b>(당황하다, 화내다)이 오면 '당연하다', <b>권하는 행동</b>(쉬다, 가다)이 오면 '~하는 편이 낫다'입니다.</p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">5</span>조동사 + have p.p. — 과거의 일에 대한 추측과 후회 <span class="g-badge">내신 빈출</span></h3>
+<p class="g-p">조동사 뒤에는 과거형을 쓸 수 없으므로, <b>과거의 일</b>을 말할 때는 <b>have + p.p.</b>를 씁니다.</p>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>형태</th><th>뜻</th><th>바꿔 쓰기 / 예문</th></tr>
+<tr><td class="col-head">must have p.p.</td><td>~했음에 틀림없다</td><td>It is <b>certain</b> that ~ / <span class="e">She must have broken the glass.</span></td></tr>
+<tr><td class="col-head">may have p.p.</td><td>~했을지도 모른다</td><td>It is <b>possible</b> that ~ / <span class="e">He may have been in jail.</span></td></tr>
+<tr><td class="col-head">can't have p.p.</td><td>~했을 리가 없다</td><td>It is <b>impossible</b> that ~ / <span class="e">He can't have drawn the picture.</span></td></tr>
+<tr><td class="col-head">should have p.p.</td><td>~했어야 했는데 (안 했다)</td><td><span class="e">I had to ~, but I didn't.</span> = <span class="e">I should have prepared ~.</span></td></tr>
+<tr><td class="col-head">needn't have p.p.</td><td>~할 필요가 없었는데 (했다)</td><td><span class="e">You didn't have to do it, but you did it.</span> = <span class="e">You needn't have done it.</span></td></tr>
+</table></div>
+<div class="g-warn"><b>함정</b> 현재의 추측과 과거의 추측을 구별합니다. <span class="e">She may <b>be</b> asleep.</span>(지금 자고 있을지도) / <span class="e">He may <b>have been</b> in jail.</span>(과거에 있었을지도). that절의 동사가 현재(is)이면 조동사 + 원형, 과거(was, knew)이면 조동사 + have p.p.입니다.</div>
+<p class="g-p g-sub">'~였음에 틀림없다'의 뜻으로는 must만 쓰고 have to는 쓰지 않습니다. <span class="e">You <b>must</b> have followed her.</span></p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">6</span>would rather · had better · ought to — 동사원형과 not의 위치 <span class="g-badge">내신 빈출</span></h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>긍정</th><th>뜻</th><th>부정 (not의 위치)</th></tr>
+<tr><td><span class="e">would rather + 원형</span></td><td>차라리 ~하겠다</td><td><span class="e">would rather <b>not</b> go</span></td></tr>
+<tr><td><span class="e">had better + 원형</span></td><td>~하는 게 좋다</td><td><span class="e">had better <b>not</b> go</span></td></tr>
+<tr><td><span class="e">ought to + 원형</span></td><td>~해야 한다</td><td><span class="e">ought <b>not</b> to violate</span></td></tr>
+<tr><td><span class="e">may well + 원형</span></td><td>~하는 것도 당연하다</td><td><span class="e">may well <b>not</b> be</span></td></tr>
+<tr><td><span class="e">may as well + 원형</span></td><td>~하는 편이 낫다</td><td><span class="e">may as well <b>not</b> worry</span></td></tr>
+<tr><td><span class="e">may have p.p.</span></td><td>~했을지도 모른다</td><td><span class="e">may <b>not</b> have stolen</span></td></tr>
+</table></div>
+<ul class="g-list">
+<li>would rather, had better 뒤에는 <b>to 없이 동사원형</b>을 씁니다. <span class="e">I'd rather <b>go</b> home.</span></li>
+<li><b>would rather A than B</b>(B하느니 차라리 A하겠다)에서 A와 B는 모두 동사원형입니다. <span class="e">I'd rather <b>go</b> camping than <b>stay</b> at home.</span></li>
+<li>ought to만 not이 to <b>앞</b>에 옵니다(ought not to). 나머지는 덩어리 전체의 <b>뒤</b>에 not을 둡니다.</li>
+</ul>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">7</span>that절의 (should) + 동사원형</h3>
+<p class="g-p">주장 · 제안 · 요구를 나타내는 동사나 필요 · 당위를 나타내는 형용사 뒤의 that절에서는 <b>should를 생략하고 동사원형</b>만 남기는 일이 많습니다. 주절의 시제나 주어의 수와 관계없이 원형을 씁니다.</p>
+<div class="g-ex">
+<p><span class="e">I insisted that we <b>(should) go</b> to the park right away.</span><span class="k">주장 — insist</span></p>
+<p><span class="e">It is important that we <b>(should) respect</b> the old.</span><span class="k">당위 — important</span></p>
+</div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">8</span>used to / would / be used to <span class="g-badge">내신 빈출</span></h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>형태</th><th>뜻</th><th>예문</th></tr>
+<tr><td class="col-head">used to + 동사원형</td><td>(예전에) ~하곤 했다 / ~였다<br>습관 · <b>상태</b> 모두</td><td><span class="e">The house <b>used to have</b> a blue gate.</span></td></tr>
+<tr><td class="col-head">would + 동사원형</td><td>~하곤 했다<br>동작의 습관만 (<b>상태 불가</b>)</td><td><span class="e">I <b>would</b> often <b>go</b> fishing in my college days.</span></td></tr>
+<tr><td class="col-head">be used to + -ing</td><td>~하는 데 익숙하다</td><td><span class="e">I <b>am used to walking</b> to school.</span></td></tr>
+<tr><td class="col-head">get used to + -ing</td><td>~하는 데 익숙해지다</td><td><span class="e">I <b>got used to drinking</b> vegetable juice.</span></td></tr>
+<tr><td class="col-head">be used to + 동사원형</td><td>~하는 데 사용되다 (수동태)</td><td><span class="e">This cleaner <b>is used to get</b> rid of the dust.</span></td></tr>
+</table></div>
+<div class="g-rule"><b>1단계</b> used 앞에 be동사(get)가 있는가? → 없으면 '~하곤 했다' + 동사원형<br><b>2단계</b> be동사가 있으면 주어를 본다 → <b>사람</b>이면 '익숙하다' + -ing / <b>도구 · 사물</b>이면 '사용되다' + 동사원형</div>
+<p class="g-p"><span class="e">what she <b>used to be</b></span>는 '예전의 그녀'라는 뜻입니다. <span class="e">She is not what she used to be.</span>(그녀는 예전의 그녀가 아니다.)</p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">9</span>do의 여러 쓰임</h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>쓰임</th><th>형태</th><th>예문</th></tr>
+<tr><td class="col-head">강조</td><td>do / does / did + 동사원형</td><td><span class="e">He <b>does like</b> to play the piano.</span> (정말로 좋아한다)</td></tr>
+<tr><td class="col-head">대동사</td><td>앞의 동사를 대신</td><td><span class="e">I'm going to buy her gloves. - Oh, but I <b>did</b>.</span> (= bought)</td></tr>
+<tr><td class="col-head">so + do + 주어</td><td>~도 그렇다</td><td><span class="e">I like listening to music, and so <b>does</b> Jane.</span></td></tr>
+<tr><td class="col-head">부정명령</td><td>Don't + 동사원형</td><td><span class="e"><b>Don't be</b> silly.</span></td></tr>
+</table></div>
+<ul class="g-list">
+<li>강조의 do는 주어와 시제에 맞추고(does, did) 뒤의 동사는 <b>원형</b>으로 씁니다. <span class="e x">do likes</span></li>
+<li>부정의문문(Don't you ~?)의 대답은 우리말과 반대입니다. 좋아하지 않으면 <span class="e">No, I <b>don't</b>.</span></li>
+</ul>
+</section>
+
+<section class="g-sec g-check">
+<h3 class="g-h"><span class="g-n">✓</span>시험 직전 점검</h3>
+<ol class="g-ol">
+<li>조동사는 겹쳐 쓰지 않는다 — will be able to, will have to, may be able to.</li>
+<li>must not(금지) / need not = don't have to(불필요). 과거는 had to.</li>
+<li>cannot but + 원형 = cannot help + -ing.</li>
+<li>may well(당연하다) / may as well(~하는 편이 낫다).</li>
+<li>must have p.p.(틀림없다) / may have p.p.(했을지도) / can't have p.p.(했을 리 없다) / should have p.p.(했어야 했는데) / needn't have p.p.(할 필요 없었는데).</li>
+<li>had better not / would rather not / ought not to + 동사원형.</li>
+<li>used to + 원형(~하곤 했다) / be used to + -ing(익숙하다) / be used to + 원형(사용되다).</li>
+</ol>
+</section>
+<div class="panel-foot"><button type="button" class="pf-btn primary" data-go="u1-q"><small>Unit 24</small>문제 풀이로 이동</button><button type="button" class="pf-btn" data-go="gi-g"><small>다음</small>기출응용문제 · 어법 해설</button></div>
+</section>
+<section class="panel" id="p-u1-q" data-unit="u1" data-mode="q">
+<div class="panel-head"><div class="ph-no"><small>UNIT</small>24</div><div class="ph-txt"><h2 class="ph-title">여러 가지 조동사의 용법</h2><div class="ph-mode"><b>문제 풀이</b> · EXERCISE A~F · 68문항</div></div></div>
+<div class="tool-row"><button type="button" class="tool-btn" data-toggle-all>해설 모두 펼치기</button></div>
 <article class="q-card">
 <div class="q-head"><div class="q-num">24-A</div><div class="q-type gram">can</div><div class="q-pts">EX</div></div>
 <div class="q-prompt"><b>A.</b> 괄호 속에서 어법에 맞는 어구에 ○표 하세요.</div>
@@ -359,17 +613,21 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>I want (to can speak, to be able to speak) English as fluently as you.</li>
 <li>She was a genius! She (could, couldn't) read when she was three years old.</li>
 </ol></div>
-<details class="ans"><summary>24-A번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail"><b>can = be able to</b>(능력). 조동사는 겹쳐 쓸 수 없어 미래·to부정사엔 <b>be able to</b>. <b>cannot but + 동사원형 = cannot help + ~ing</b>(~하지 않을 수 없다). <b>can't have p.p.</b>=~였을 리 없다.</div><ol class="ans-list">
-<li><span class="a">couldn't</span> <span class="why">— 과거(two years ago)</span></li>
-<li><span class="a">couldn't</span> <span class="why">— last year</span></li>
-<li><span class="a">will be able to go</span> <span class="why">— 미래는 be able to</span></li>
-<li><span class="a">couldn't but</span> <span class="why">— but+동사원형 wait</span></li>
-<li><span class="a">can</span> <span class="why">— can't able to는 틀린 형태</span></li>
-<li><span class="a">can't have passed</span> <span class="why">— 과거 부정 추측</span></li>
-<li><span class="a">Can</span> <span class="why">— 강한 의심(설마 ~일까)</span></li>
-<li><span class="a">won't be able to</span> <span class="why">— 미래 부정</span></li>
-<li><span class="a">to be able to speak</span> <span class="why">— to부정사 뒤</span></li>
-<li><span class="a">could</span> <span class="why">— 과거의 능력</span></li>
+<details class="ans"><summary>24-A 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① can = be able to</b>(능력). 조동사는 겹쳐 쓸 수 없으므로 will · to 뒤에는 be able to를 쓴다.<br>
+<b>② cannot but + 동사원형 = cannot help + -ing</b>(~하지 않을 수 없다).<br>
+<b>③ can't have p.p.</b>(~했을 리가 없다), <b>Can ~?</b>(과연 ~일까?)은 추측 · 의심을 나타낸다.</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">couldn't</span><span class="full">Two years ago, I couldn't walk very well because of the traffic accident.</span></div><span class="why">Two years ago(2년 전)가 있으므로 과거의 능력. can의 과거형 could를 쓴다.</span><span class="tr">2년 전에 나는 교통사고 때문에 잘 걸을 수 없었다.</span></li>
+<li><div class="al-top"><span class="a">couldn't</span><span class="full">She couldn't run that fast last year.</span></div><span class="why">last year가 있으므로 과거형 couldn't.</span><span class="tr">그녀는 작년에 그렇게 빨리 달릴 수 없었다.</span></li>
+<li><div class="al-top"><span class="a">will be able to go</span><span class="full">She will be able to go to the university.</span></div><span class="why">조동사 will 뒤에 can을 겹쳐 쓸 수 없으므로 be able to를 쓴다. can be going to는 조동사 둘을 겹친 틀린 형태다.</span><span class="tr">그녀는 대학에 갈 수 있을 것이다.</span></li>
+<li><div class="al-top"><span class="a">couldn't but</span><span class="full">We couldn't but wait for her.</span></div><span class="why">뒤에 동사원형 wait이 있다. cannot but + 동사원형. cannot help 뒤에는 -ing(waiting)가 와야 한다.</span><span class="tr">우리는 그녀를 기다리지 않을 수 없었다.</span></li>
+<li><div class="al-top"><span class="a">can</span><span class="full">They can take a rest.</span></div><span class="why">can't able to는 틀린 형태다. able은 형용사라 앞에 be동사가 있어야 한다(are not able to). 조동사 can + 동사원형 take가 맞다.</span><span class="tr">그들은 쉴 수 있다.</span></li>
+<li><div class="al-top"><span class="a">can't have passed</span><span class="full">She can't have passed the test.</span></div><span class="why">can't have p.p.는 '~했을 리가 없다'. must have been passed는 수동태라서 뒤에 목적어 the test를 쓸 수 없다. 그녀가 시험을 통과하는 것이므로 능동이어야 한다.</span><span class="tr">그녀가 그 시험에 합격했을 리가 없다.</span></li>
+<li><div class="al-top"><span class="a">Can</span><span class="full">Can the rumor be true? It's impossible.</span></div><span class="why">뒤 문장이 It's impossible.(그럴 리 없다)이다. 의문문의 Can은 '과연 ~일까?'라는 강한 의심을 나타낸다.</span><span class="tr">그 소문이 과연 사실일까? 그럴 리 없다.</span></li>
+<li><div class="al-top"><span class="a">won't be able to</span><span class="full">If you don't fill in this form, you won't be able to apply for this job.</span></div><span class="why">will 뒤에 can을 쓸 수 없으므로 won't be able to.</span><span class="tr">이 양식을 작성하지 않으면 너는 이 일자리에 지원할 수 없을 것이다.</span></li>
+<li><div class="al-top"><span class="a">to be able to speak</span><span class="full">I want to be able to speak English as fluently as you.</span></div><span class="why">to 뒤에는 동사원형이 와야 하는데 조동사 can에는 원형이 없다. to be able to를 쓴다.</span><span class="tr">나는 너만큼 유창하게 영어를 말할 수 있기를 원한다.</span></li>
+<li><div class="al-top"><span class="a">could</span><span class="full">She was a genius! She could read when she was three years old.</span></div><span class="why">천재였다고 했으므로 세 살 때 글을 '읽을 수 있었다'가 문맥에 맞다. 과거의 능력 could.</span><span class="tr">그녀는 천재였다! 그녀는 세 살 때 글을 읽을 수 있었다.</span></li>
 </ol></div></details>
 </article>
 <article class="q-card">
@@ -391,21 +649,25 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>A: Must I come back before noon? B: No, you (must not, need not).</li>
 <li>You need not come here tomorrow. = You (must not come, don't have to) come here tomorrow.</li>
 </ol></div>
-<details class="ans"><summary>24-B번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail"><b>must = have to</b>(의무). 부정: <b>must not</b>=금지, <b>need not = don't have to</b>=불필요. 미래는 <b>will have to</b>, 과거는 <b>had to</b>. <b>must have p.p.</b>=~였음에 틀림없다.</div><ol class="ans-list">
-<li><span class="a">have to</span> <span class="why">— must = have to</span></li>
-<li><span class="a">has to</span> <span class="why">— 3인칭 has to</span></li>
-<li><span class="a">can't</span> <span class="why">— 도울 리 없다</span></li>
-<li><span class="a">will have to</span> <span class="why">— 미래 의무</span></li>
-<li><span class="a">must</span> <span class="why">— must have p.p.(과거 추측)</span></li>
-<li><span class="a">had to do</span> <span class="why">— 과거 의무</span></li>
-<li><span class="a">must</span> <span class="why">— have to는 has to여야 함</span></li>
-<li><span class="a">must have broken</span> <span class="why">— 과거 추측</span></li>
-<li><span class="a">must have been</span> <span class="why">— 제정신이 아니었음에 틀림없다</span></li>
-<li><span class="a">has to see</span> <span class="why">— has got to = has to</span></li>
-<li><span class="a">didn't have to</span> <span class="why">— 과거 불필요</span></li>
-<li><span class="a">must not</span> <span class="why">— 금지(가면 안 된다)</span></li>
-<li><span class="a">need not</span> <span class="why">— 불필요(그럴 필요 없다)</span></li>
-<li><span class="a">don't have to</span> <span class="why">— need not = don't have to</span></li>
+<details class="ans"><summary>24-B 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① must = have to</b>(의무). 3인칭 단수는 has to, 과거는 had to, 미래는 will have to.<br>
+<b>② must not</b>(금지) / <b>need not = don't have to</b>(불필요).<br>
+<b>③ must have p.p.</b>(~했음에 틀림없다). 이 뜻으로는 have to를 쓰지 않는다.</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">have to</span><span class="full">You must wash your hands. = You have to wash your hands.</span></div><span class="why">의무의 must는 have to로 바꿔 쓸 수 있다.</span><span class="tr">너는 손을 씻어야 한다.</span></li>
+<li><div class="al-top"><span class="a">has to</span><span class="full">She has to run as fast as possible.</span></div><span class="why">주어 She가 3인칭 단수이므로 has to.</span><span class="tr">그녀는 가능한 한 빨리 달려야 한다.</span></li>
+<li><div class="al-top"><span class="a">can't</span><span class="full">He can't help me. He hates me a lot.</span></div><span class="why">뒤 문장에서 그가 나를 매우 싫어한다고 했다. 그러니 '나를 도와야 한다'가 아니라 '나를 도울 리가 없다'가 자연스럽다.</span><span class="tr">그가 나를 도와줄 리가 없다. 그는 나를 몹시 싫어한다.</span></li>
+<li><div class="al-top"><span class="a">will have to</span><span class="full">I will have to hand in my report by this Friday.</span></div><span class="why">조동사 will과 must는 겹쳐 쓸 수 없다. 미래의 의무는 will have to.</span><span class="tr">나는 이번 금요일까지 보고서를 제출해야 할 것이다.</span></li>
+<li><div class="al-top"><span class="a">must</span><span class="full">You must have followed her.</span></div><span class="why">뒤에 have followed가 있다. must have p.p.는 '~했음에 틀림없다'는 과거의 추측이다. 이 뜻으로는 have to를 쓰지 않는다.</span><span class="tr">너는 그녀를 따라갔음에 틀림없다.</span></li>
+<li><div class="al-top"><span class="a">had to do</span><span class="full">I had to do my best to win the championship.</span></div><span class="why">must에는 과거형이 없고, 조동사 뒤에 과거형 did를 쓸 수도 없다. 과거의 의무는 had to + 동사원형.</span><span class="tr">나는 우승하기 위해 최선을 다해야 했다.</span></li>
+<li><div class="al-top"><span class="a">must</span><span class="full">She must study hard for tomorrow's test.</span></div><span class="why">주어 She가 3인칭 단수이므로 have to가 아니라 has to여야 한다. 선지에는 has to가 없으므로 주어에 따라 변하지 않는 must가 답이다.</span><span class="tr">그녀는 내일 시험을 위해 열심히 공부해야 한다.</span></li>
+<li><div class="al-top"><span class="a">must have broken</span><span class="full">She must have broken the glass.</span></div><span class="why">'~했음에 틀림없다'는 must have p.p. must have to break는 조동사 뒤에 have to를 겹친 틀린 형태다.</span><span class="tr">그녀가 그 유리잔을 깼음에 틀림없다.</span></li>
+<li><div class="al-top"><span class="a">must have been</span><span class="full">I must have been out of my mind to make such a mistake.</span></div><span class="why">그런 실수를 저지르다니 '제정신이 아니었음에 틀림없다'가 자연스럽다. cannot have been은 '~였을 리가 없다'로 뜻이 반대다. out of one's mind는 '제정신이 아닌'.</span><span class="tr">그런 실수를 하다니 나는 제정신이 아니었음에 틀림없다.</span></li>
+<li><div class="al-top"><span class="a">has to see</span><span class="full">She's got to see the doctor now. = She has to see the doctor now.</span></div><span class="why">She's got to는 She has got to의 줄임말이다. have got to = have to(~해야 한다). has seen은 현재완료로 뜻이 다르다.</span><span class="tr">그녀는 지금 진료를 받아야 한다.</span></li>
+<li><div class="al-top"><span class="a">didn't have to</span><span class="full">We didn't have to wait long.</span></div><span class="why">must는 조동사라서 didn't와 함께 쓸 수 없다. 과거의 불필요는 didn't have to.</span><span class="tr">우리는 오래 기다릴 필요가 없었다.</span></li>
+<li><div class="al-top"><span class="a">must not</span><span class="full">A: May I go home? B: No, you must not.</span></div><span class="why">May I ~?(해도 되나요?)에 No로 답하면 허락하지 않는 것이다 → 금지의 must not. need not은 '갈 필요 없다'가 되어 질문과 맞지 않는다.</span><span class="tr">A: 집에 가도 될까요? B: 아니요, 가면 안 됩니다.</span></li>
+<li><div class="al-top"><span class="a">need not</span><span class="full">A: Must I come back before noon? B: No, you need not.</span></div><span class="why">Must I ~?(해야 하나요?)에 No로 답하면 '그럴 필요 없다'는 뜻이다 → need not. must not은 '돌아오면 안 된다'가 되어 어색하다.</span><span class="tr">A: 정오 전에 돌아와야 하나요? B: 아니요, 그럴 필요 없습니다.</span></li>
+<li><div class="al-top"><span class="a">don't have to</span><span class="full">You need not come here tomorrow. = You don't have to come here tomorrow.</span></div><span class="why">need not(~할 필요 없다) = don't have to. must not은 금지라서 뜻이 다르다. 또 괄호 뒤에 come이 이미 있으므로 must not come을 고르면 come이 두 번 나온다.</span><span class="tr">너는 내일 여기에 올 필요가 없다.</span></li>
 </ol></div></details>
 </article>
 <article class="q-card">
@@ -423,17 +685,21 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>May I sit here? - Yes, you (may, must).</li>
 <li>He (must, can't) have stolen my purse because he has my ID card.</li>
 </ol></div>
-<details class="ans"><summary>24-C번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail"><b>may</b>=허가/추측. <b>may well</b>=~하는 것도 당연하다, <b>may as well</b>=~하는 편이 낫다. <b>may have p.p.</b>=~였을지도 모른다. 조동사 중복 불가(may be able to).</div><ol class="ans-list">
-<li><span class="a">may</span> <span class="why">— 추측(잠들었을지도)</span></li>
-<li><span class="a">may</span> <span class="why">— 과거 추측(may have p.p.)</span></li>
-<li><span class="a">must have known</span> <span class="why">— 확실 → ~였음에 틀림없다</span></li>
-<li><span class="a">may well</span> <span class="why">— 당황하는 것도 당연</span></li>
-<li><span class="a">may as well</span> <span class="why">— 쉬는 편이 낫다</span></li>
-<li><span class="a">may</span> <span class="why">— 아팠을지도 모른다</span></li>
-<li><span class="a">may be able to</span> <span class="why">— may can 불가</span></li>
-<li><span class="a">must not</span> <span class="why">— 강한 금지</span></li>
-<li><span class="a">may</span> <span class="why">— 허가</span></li>
-<li><span class="a">must</span> <span class="why">— 훔쳤음에 틀림없다</span></li>
+<details class="ans"><summary>24-C 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① may</b> — 허가(~해도 된다) / 추측(~일지도 모른다). <b>may have p.p.</b>는 과거의 추측.<br>
+<b>② may well</b>(~하는 것도 당연하다) / <b>may as well</b>(~하는 편이 낫다).<br>
+<b>③</b> It is possible → may / It is certain → must. 조동사는 겹쳐 쓰지 않는다(may be able to).</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">may</span><span class="full">It is possible that she is asleep. = She may be asleep.</span></div><span class="why">It is possible that ~(~일 가능성이 있다)은 추측의 may와 같다. can't는 '~일 리가 없다'로 뜻이 반대다.</span><span class="tr">그녀는 잠들어 있을지도 모른다.</span></li>
+<li><div class="al-top"><span class="a">may</span><span class="full">It is possible that he was in jail. = He may have been in jail.</span></div><span class="why">that절이 과거(was)이므로 과거의 추측 may have p.p.(~였을지도 모른다).</span><span class="tr">그는 감옥에 있었을지도 모른다.</span></li>
+<li><div class="al-top"><span class="a">must have known</span><span class="full">It is certain that he knew the truth. = He must have known the truth.</span></div><span class="why">It is certain(확실하다)은 must(틀림없다)에 해당한다. that절이 과거(knew)이므로 must have p.p.</span><span class="tr">그는 진실을 알았음에 틀림없다.</span></li>
+<li><div class="al-top"><span class="a">may well</span><span class="full">You may well get embarrassed.</span></div><span class="why">get embarrassed(당황하다)는 감정의 반응이다. '당황하는 것도 당연하다'가 자연스러우므로 may well. may as well은 '당황하는 편이 낫다'가 되어 어색하다.</span><span class="tr">네가 당황하는 것도 당연하다.</span></li>
+<li><div class="al-top"><span class="a">may as well</span><span class="full">You may as well take a rest.</span></div><span class="why">take a rest(쉬다)는 권하는 행동이다. '쉬는 편이 낫다'가 자연스러우므로 may as well.</span><span class="tr">너는 쉬는 편이 낫겠다.</span></li>
+<li><div class="al-top"><span class="a">may</span><span class="full">You look pale. You may have been sick lately.</span></div><span class="why">창백해 보이는 것을 근거로 '최근에 아팠을지도 모른다'고 추측한다. can't have been은 '아팠을 리가 없다'로 앞 문장과 맞지 않는다.</span><span class="tr">너 창백해 보여. 최근에 아팠을지도 모르겠구나.</span></li>
+<li><div class="al-top"><span class="a">may be able to</span><span class="full">He may be able to use both hands well.</span></div><span class="why">조동사 may와 can을 겹쳐 쓸 수 없으므로 can 대신 be able to.</span><span class="tr">그는 양손을 잘 쓸 수 있을지도 모른다.</span></li>
+<li><div class="al-top"><span class="a">must not</span><span class="full">May I go to the movies with Jill? - No, you must not.</span></div><span class="why">No로 대답했으므로 허락하지 않는 것이다 → 금지의 must not.</span><span class="tr">질과 영화 보러 가도 되나요? - 아니, 안 된다.</span></li>
+<li><div class="al-top"><span class="a">may</span><span class="full">May I sit here? - Yes, you may.</span></div><span class="why">허가를 구하는 May I ~?에 Yes로 답할 때는 허가의 may. must는 '앉아야 한다'가 되어 어색하다.</span><span class="tr">여기 앉아도 될까요? - 네, 앉으셔도 됩니다.</span></li>
+<li><div class="al-top"><span class="a">must</span><span class="full">He must have stolen my purse because he has my ID card.</span></div><span class="why">그가 내 신분증을 가지고 있다는 확실한 근거가 있다 → '훔쳤음에 틀림없다' must have p.p.</span><span class="tr">그가 내 신분증을 가지고 있으니 내 지갑을 훔쳤음에 틀림없다.</span></li>
 </ol></div></details>
 </article>
 <article class="q-card">
@@ -448,14 +714,18 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>You (had better not, had not better) go there alone.</li>
 <li>I'd rather (go, to go) camping than stay at home for three days.</li>
 </ol></div>
-<details class="ans"><summary>24-D1번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail"><b>would rather / had better + 동사원형</b>. 부정은 <b>ought not to / had better not / would rather not</b>. 제안·주장·당위의 that절은 <b>(should) + 동사원형</b>.</div><ol class="ans-list">
-<li><span class="a">go</span> <span class="why">— would rather + 동사원형</span></li>
-<li><span class="a">go</span> <span class="why">— insist that ~ (should) 동사원형</span></li>
-<li><span class="a">respect</span> <span class="why">— It is important that ~ (should) 동사원형</span></li>
-<li><span class="a">rather</span> <span class="why">— would rather try</span></li>
-<li><span class="a">ought not to</span> <span class="why">— ought의 부정</span></li>
-<li><span class="a">had better not</span> <span class="why">— had better의 부정</span></li>
-<li><span class="a">go</span> <span class="why">— would rather go than ~</span></li>
+<details class="ans"><summary>24-D1 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① would rather / had better + 동사원형</b>(to 없이).<br>
+<b>② 부정</b>: ought <b>not</b> to / had better <b>not</b> / would rather <b>not</b>.<br>
+<b>③ 주장(insist) · 당위(important)</b>의 that절은 (should) + 동사원형.</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">go</span><span class="full">I'd rather go home and take a rest.</span></div><span class="why">I'd rather는 I would rather. 뒤에 to 없이 동사원형을 쓴다. and 뒤의 take도 원형으로 나란히 이어진다.</span><span class="tr">나는 차라리 집에 가서 쉬겠다.</span></li>
+<li><div class="al-top"><span class="a">go</span><span class="full">I insisted that we go to the park right away.</span></div><span class="why">insist(주장하다) 뒤의 that절이 '~해야 한다'는 내용이면 (should) + 동사원형. 주절이 과거(insisted)여도 원형 go를 쓴다.</span><span class="tr">나는 우리가 당장 공원에 가야 한다고 주장했다.</span></li>
+<li><div class="al-top"><span class="a">respect</span><span class="full">It is important that we respect the old.</span></div><span class="why">important(중요한)처럼 당위를 나타내는 형용사 뒤의 that절은 (should) + 동사원형.</span><span class="tr">우리가 노인을 공경하는 것은 중요하다.</span></li>
+<li><div class="al-top"><span class="a">rather</span><span class="full">You'd rather try to appeal to the citizens.</span></div><span class="why">뒤에 동사원형 try가 있다. would rather + 동사원형. would like 뒤에는 to부정사(would like to try)가 와야 한다.</span><span class="tr">너는 차라리 시민들에게 호소해 보는 것이 좋겠다.</span></li>
+<li><div class="al-top"><span class="a">ought not to</span><span class="full">You ought not to violate a rule.</span></div><span class="why">ought to의 부정은 not을 to 앞에 둔다.</span><span class="tr">너는 규칙을 위반해서는 안 된다.</span></li>
+<li><div class="al-top"><span class="a">had better not</span><span class="full">You had better not go there alone.</span></div><span class="why">had better의 부정은 had better 전체의 뒤에 not을 둔다.</span><span class="tr">너는 거기에 혼자 가지 않는 것이 좋다.</span></li>
+<li><div class="al-top"><span class="a">go</span><span class="full">I'd rather go camping than stay at home for three days.</span></div><span class="why">would rather A than B(B하느니 차라리 A하겠다). A와 B 모두 동사원형이다(go, stay).</span><span class="tr">나는 사흘 동안 집에 있느니 차라리 캠핑을 가겠다.</span></li>
 </ol></div></details>
 </article>
 <article class="q-card">
@@ -469,13 +739,17 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>You <u>had better read</u> the newspapers every day. → [ <span class="blk"></span> ]</li>
 <li>I'd <u>rather go</u> there. → [ <span class="blk"></span> ]</li>
 </ol></div>
-<details class="ans"><summary>24-D2번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail">부정어 not의 위치: may (well/as well) <b>not</b>, ought <b>not</b> to, had better <b>not</b>, would rather <b>not</b>.</div><ol class="ans-list">
-<li><span class="a">may not have stolen</span> <span class="why">— may + not have p.p.</span></li>
-<li><span class="a">may well not be</span> <span class="why">— may well not</span></li>
-<li><span class="a">may as well not worry</span> <span class="why">— may as well not</span></li>
-<li><span class="a">ought not to fight</span> <span class="why">— ought not to</span></li>
-<li><span class="a">had better not read</span> <span class="why">— had better not</span></li>
-<li><span class="a">I'd rather not go</span> <span class="why">— would rather not</span></li>
+<details class="ans"><summary>24-D2 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① not은 조동사 덩어리 바로 뒤</b>에 둔다: may <b>not</b> have p.p. / may well <b>not</b> / may as well <b>not</b>.<br>
+<b>②</b> had better <b>not</b> / would rather <b>not</b> + 동사원형.<br>
+<b>③ ought to만 예외</b>: ought <b>not</b> to.</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">may not have stolen</span><span class="full">He may not have stolen your money.</span></div><span class="why">조동사 + have p.p.의 부정은 조동사 바로 뒤에 not. '훔치지 않았을지도 모른다'.</span><span class="tr">그는 네 돈을 훔치지 않았을지도 모른다.</span></li>
+<li><div class="al-top"><span class="a">may well not be</span><span class="full">He may well not be interested in that kind of business.</span></div><span class="why">may well 뒤에 not을 두고 동사원형 be를 쓴다. '관심이 없는 것도 당연하다'.</span><span class="tr">그가 그런 종류의 사업에 관심이 없는 것도 당연하다.</span></li>
+<li><div class="al-top"><span class="a">may as well not worry</span><span class="full">You may as well not worry about it.</span></div><span class="why">may as well 뒤에 not. '걱정하지 않는 편이 낫다'.</span><span class="tr">너는 그것에 대해 걱정하지 않는 편이 낫다.</span></li>
+<li><div class="al-top"><span class="a">ought not to fight</span><span class="full">We ought not to fight against our government.</span></div><span class="why">ought to의 부정은 not이 to 앞에 온다. ought to not으로 쓰지 않는다.</span><span class="tr">우리는 정부에 맞서 싸워서는 안 된다.</span></li>
+<li><div class="al-top"><span class="a">had better not read</span><span class="full">You had better not read the newspapers every day.</span></div><span class="why">had better 뒤에 not. had not better로 쓰지 않는다.</span><span class="tr">너는 매일 신문을 읽지 않는 것이 좋다.</span></li>
+<li><div class="al-top"><span class="a">rather not go</span><span class="full">I'd rather not go there.</span></div><span class="why">would rather 뒤에 not을 두고 동사원형. 밑줄 친 rather go가 rather not go가 된다.</span><span class="tr">나는 차라리 거기에 가지 않겠다.</span></li>
 </ol></div></details>
 </article>
 <article class="q-card">
@@ -498,22 +772,26 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>He (will, would) play golf when he was in Thailand.</li>
 <li>She is not what she (was used to be, used to be).</li>
 </ol></div>
-<details class="ans"><summary>24-E번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail"><b>used to + 동사원형</b>=(과거의 상태·습관), <b>would + 동사원형</b>=(과거의 불규칙 습관, 상태 불가). <b>be used to + ~ing</b>=~에 익숙하다, <b>be used to + 동사원형</b>=~에 사용되다. do는 강조·대동사.</div><ol class="ans-list">
-<li><span class="a">used to</span> <span class="why">— 과거의 상태(would 불가)</span></li>
-<li><span class="a">used to visit</span> <span class="why">— used to + 동사원형</span></li>
-<li><span class="a">do be proud of</span> <span class="why">— do + 동사원형(강조)</span></li>
-<li><span class="a">does like</span> <span class="why">— 3인칭 does + 원형</span></li>
-<li><span class="a">don't</span> <span class="why">— 부정 대답</span></li>
-<li><span class="a">Don't be</span> <span class="why">— 부정명령</span></li>
-<li><span class="a">did</span> <span class="why">— 대동사(나는 이미 샀어)</span></li>
-<li><span class="a">does</span> <span class="why">— so + does + Jane</span></li>
-<li><span class="a">going</span> <span class="why">— be used to + ~ing(익숙하다)</span></li>
-<li><span class="a">walking</span> <span class="why">— be used to + ~ing</span></li>
-<li><span class="a">would</span> <span class="why">— 과거의 습관</span></li>
-<li><span class="a">get</span> <span class="why">— be used to + 동사원형(~에 쓰이다)</span></li>
-<li><span class="a">drinking</span> <span class="why">— get used to + ~ing(익숙해지다)</span></li>
-<li><span class="a">would</span> <span class="why">— 과거의 습관</span></li>
-<li><span class="a">used to be</span> <span class="why">— 예전의 그녀</span></li>
+<details class="ans"><summary>24-E 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① used to + 동사원형</b>(과거의 습관 · 상태) / <b>would + 동사원형</b>(과거의 습관, 상태에는 못 씀).<br>
+<b>② be(get) used to + -ing</b>(~에 익숙하다) / <b>be used to + 동사원형</b>(~하는 데 사용되다).<br>
+<b>③ do</b> — 강조(do + 동사원형), 대동사, 부정명령(Don't be ~), so + do + 주어.</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">used to</span><span class="full">The house used to have a blue gate.</span></div><span class="why">have(가지고 있다)는 상태를 나타낸다. 과거의 상태에는 used to만 쓸 수 있고 would는 쓸 수 없다.</span><span class="tr">그 집에는 예전에 파란 대문이 있었다.</span></li>
+<li><div class="al-top"><span class="a">used to visit</span><span class="full">I used to visit her photo shop.</span></div><span class="why">used to(~하곤 했다) 뒤에는 동사원형. -ing는 be used to(익숙하다) 뒤에 온다.</span><span class="tr">나는 그녀의 사진관에 들르곤 했다.</span></li>
+<li><div class="al-top"><span class="a">do be proud of</span><span class="full">I do be proud of my father.</span></div><span class="why">교재의 정답이다. 강조의 do 뒤에는 동사원형이 온다는 규칙에 따라 원형 be를 고르게 한 문제다(do am은 조동사 뒤에 원형이 아닌 am을 써서 틀린다). 다만 실제 영어에서 be동사는 평서문에서 do로 강조하지 않으므로(I am proud ~처럼 am을 강하게 읽는다), 이 문장은 규칙 확인용으로만 본다.</span><span class="tr">나는 아버지가 정말 자랑스럽다.</span></li>
+<li><div class="al-top"><span class="a">does like</span><span class="full">He does like to play the piano.</span></div><span class="why">강조의 do는 주어(He)에 맞춰 does로 쓰고, 뒤의 동사는 원형 like로 쓴다. do likes는 수 일치와 원형 규칙을 모두 어긴다.</span><span class="tr">그는 피아노 치는 것을 정말 좋아한다.</span></li>
+<li><div class="al-top"><span class="a">don't</span><span class="full">Don't you like watermelons? - No, I don't.</span></div><span class="why">부정의문문이라도 대답은 사실에 따라 한다. No 뒤에는 부정이 와야 하므로 don't. 우리말로는 '응, 안 좋아해'가 된다.</span><span class="tr">수박 안 좋아하니? - 응, 안 좋아해.</span></li>
+<li><div class="al-top"><span class="a">Don't be</span><span class="full">Don't be silly.</span></div><span class="why">be동사의 부정명령문은 Don't be ~. Be not으로 쓰지 않는다.</span><span class="tr">바보같이 굴지 마.</span></li>
+<li><div class="al-top"><span class="a">did</span><span class="full">A: I'm going to buy her gloves for her birthday present. B: Oh, but I did.</span></div><span class="why">B는 '나는 이미 샀는데'라는 뜻이다. did는 bought her gloves를 대신하는 대동사이며, 이미 한 일이므로 과거형.</span><span class="tr">A: 나는 그녀의 생일 선물로 장갑을 사 줄 거야. B: 아, 그런데 내가 이미 샀어.</span></li>
+<li><div class="al-top"><span class="a">does</span><span class="full">I like listening to classical music, and so does Jane.</span></div><span class="why">so + 동사 + 주어(~도 그렇다). 앞의 일반동사 like를 대신하는 do를 쓰되, 주어 Jane이 3인칭 단수이므로 does.</span><span class="tr">나는 클래식 음악 듣는 것을 좋아하고, 제인도 그렇다.</span></li>
+<li><div class="al-top"><span class="a">going</span><span class="full">I am used to going to bed so early at home and I always get sleepy so early.</span></div><span class="why">앞에 be동사 am이 있고 주어가 사람이다 → be used to + -ing(~하는 데 익숙하다).</span><span class="tr">나는 집에서 아주 일찍 잠자리에 드는 데 익숙해서 항상 아주 일찍 졸린다.</span></li>
+<li><div class="al-top"><span class="a">walking</span><span class="full">I am used to walking to school.</span></div><span class="why">be used to + -ing(~하는 데 익숙하다).</span><span class="tr">나는 걸어서 학교에 가는 데 익숙하다.</span></li>
+<li><div class="al-top"><span class="a">would</span><span class="full">I would often go fishing in my college days.</span></div><span class="why">in my college days(대학 시절에)가 있으므로 과거의 습관(~하곤 했다) would. should는 '~해야 한다'.</span><span class="tr">나는 대학 시절에 자주 낚시하러 가곤 했다.</span></li>
+<li><div class="al-top"><span class="a">get</span><span class="full">This small cleaner is used to get rid of the dust on the keyboard.</span></div><span class="why">주어가 도구(cleaner)이다. '~하는 데 사용된다'는 수동태 be used + to부정사이므로 동사원형 get. 9 · 10번(주어가 사람, 익숙하다)과 구별한다.</span><span class="tr">이 작은 청소기는 키보드의 먼지를 제거하는 데 사용된다.</span></li>
+<li><div class="al-top"><span class="a">drinking</span><span class="full">I got used to drinking vegetable juice lately.</span></div><span class="why">get used to + -ing(~하는 데 익숙해지다). be used to의 be 대신 get을 쓰면 '익숙해지다'가 된다.</span><span class="tr">나는 최근에 채소 주스 마시는 데 익숙해졌다.</span></li>
+<li><div class="al-top"><span class="a">would</span><span class="full">He would play golf when he was in Thailand.</span></div><span class="why">when he was in Thailand(과거)가 있으므로 과거의 습관 would. will은 과거 부사절과 시제가 맞지 않는다.</span><span class="tr">그는 태국에 있을 때 골프를 치곤 했다.</span></li>
+<li><div class="al-top"><span class="a">used to be</span><span class="full">She is not what she used to be.</span></div><span class="why">what she used to be는 '예전의 그녀'. used to + 동사원형이며 앞에 was를 쓰지 않는다.</span><span class="tr">그녀는 예전의 그녀가 아니다.</span></li>
 </ol></div></details>
 </article>
 <article class="q-card">
@@ -527,16 +805,117 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <li>I had to prepare for the presentation, but I didn't. = I (must, should) have prepared for the presentation.</li>
 <li>She speaks Japanese fluently. = She (must, should) have been in Japan.</li>
 </ol></div>
-<details class="ans"><summary>24-F번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span><div class="ans-detail"><b>must have p.p.</b>=~였음에 틀림없다, <b>can't have p.p.</b>=~였을 리 없다, <b>may have p.p.</b>=~였을지도, <b>should have p.p.</b>=~했어야 했다, <b>needn't have p.p.</b>=~할 필요 없었는데.</div><ol class="ans-list">
-<li><span class="a">may</span> <span class="why">— 샀을지도 모른다</span></li>
-<li><span class="a">can't</span> <span class="why">— 그렸을 리 없다</span></li>
-<li><span class="a">must</span> <span class="why">— 샤워했음에 틀림없다</span></li>
-<li><span class="a">needn't have done</span> <span class="why">— 할 필요 없었는데(했다)</span></li>
-<li><span class="a">should</span> <span class="why">— 준비했어야 했다(안 함)</span></li>
-<li><span class="a">must</span> <span class="why">— 일본에 있었음에 틀림없다</span></li>
+<details class="ans"><summary>24-F 정답 · 상세 해설 펼치기</summary><div class="ans-body"><div class="ans-detail" style="border-top:0;padding-top:0"><span class="sec-t">핵심 어법</span><b>① 추측</b>: must have p.p.(틀림없다 = certain) / may have p.p.(했을지도 = possible) / can't have p.p.(했을 리 없다 = impossible).<br>
+<b>② 후회</b>: should have p.p.(~했어야 했는데 안 했다).<br>
+<b>③</b> needn't have p.p.(~할 필요가 없었는데 했다).</div>
+<span class="sec-t">문항별 정답 · 풀이</span>
+<ol class="ans-list rich">
+<li><div class="al-top"><span class="a">may</span><span class="full">It is possible that he bought a house. = He may have bought a house.</span></div><span class="why">It is possible(가능성이 있다) → may have p.p.(~했을지도 모른다).</span><span class="tr">그는 집을 샀을지도 모른다.</span></li>
+<li><div class="al-top"><span class="a">can't</span><span class="full">It is impossible that he drew the picture. = He can't have drawn the picture.</span></div><span class="why">It is impossible(불가능하다) → can't have p.p.(~했을 리가 없다).</span><span class="tr">그가 그 그림을 그렸을 리가 없다.</span></li>
+<li><div class="al-top"><span class="a">must</span><span class="full">It is certain that she took a shower last night. = She must have taken a shower last night.</span></div><span class="why">It is certain(확실하다) → must have p.p.(~했음에 틀림없다). should have p.p.는 '했어야 했는데 안 했다'.</span><span class="tr">그녀는 어젯밤에 샤워를 했음에 틀림없다.</span></li>
+<li><div class="al-top"><span class="a">needn't have done</span><span class="full">You didn't have to do it, but you did it. = You needn't have done it.</span></div><span class="why">할 필요가 없었는데 했다 → needn't have p.p. needn't have to done은 형태 자체가 틀렸다.</span><span class="tr">너는 그것을 할 필요가 없었는데 (했다).</span></li>
+<li><div class="al-top"><span class="a">should</span><span class="full">I had to prepare for the presentation, but I didn't. = I should have prepared for the presentation.</span></div><span class="why">해야 했는데 하지 않았다 → 후회의 should have p.p. must have p.p.는 '준비했음에 틀림없다'는 추측이다.</span><span class="tr">나는 발표 준비를 했어야 했다.</span></li>
+<li><div class="al-top"><span class="a">must</span><span class="full">She speaks Japanese fluently. = She must have been in Japan.</span></div><span class="why">일본어를 유창하게 한다는 것을 근거로 '일본에 있었음에 틀림없다'고 추측한다 → must have p.p.</span><span class="tr">그녀는 일본어를 유창하게 한다. = 그녀는 일본에 있었던 것이 틀림없다.</span></li>
 </ol></div></details>
 </article>
-<div class="section-divider"><span>Chapter XIV · <em>Past Exam Applications</em><span class="kor">제14장 조동사 · 기출응용문제 1~22</span></span></div>
+<div class="panel-foot"><button type="button" class="pf-btn" data-go="u1-g"><small>Unit 24</small>어법 해설 다시 보기</button><button type="button" class="pf-btn primary" data-go="gi-g"><small>다음</small>기출응용문제 · 어법 해설</button></div>
+</section>
+<section class="panel" id="p-gi-g" data-unit="gi" data-mode="g">
+<div class="panel-head"><div class="ph-no"><small>CHAPTER XIV</small>기출</div><div class="ph-txt"><h2 class="ph-title">기출응용문제</h2><div class="ph-mode"><b>어법 해설 (출제 포인트)</b> · 1~22번 · 22문항</div></div></div>
+<div class="g-intro">기출응용문제 22문항(객관식 14, 서술형 8)입니다. <b>조동사 + have p.p.</b>가 7문항, <b>used to / be used to</b>가 5문항으로 절반을 넘습니다. 나머지도 대부분 would rather · had better 뒤의 동사원형처럼 Unit 24에서 연습한 형태 규칙입니다.</div>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">1</span>유형별 문항 분포</h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>유형</th><th>문항</th><th>문항 수</th><th>관련 EXERCISE</th></tr>
+<tr><td class="col-head">조동사 + have p.p.</td><td>7, 10, 15, 16, 17, 19, 20</td><td class="num">7</td><td>F, B, C</td></tr>
+<tr><td class="col-head">used to / be used to</td><td>5, 6, 8, 13, 18</td><td class="num">5</td><td>E</td></tr>
+<tr><td class="col-head">would rather · had better · might as well</td><td>1, 3, 4, 9</td><td class="num">4</td><td>C, D</td></tr>
+<tr><td class="col-head">would (과거의 습관 / 시제 일치)</td><td>12, 14, 22</td><td class="num">3</td><td>E</td></tr>
+<tr><td class="col-head">종합</td><td>2, 11</td><td class="num">2</td><td>전체</td></tr>
+<tr><td class="col-head">Let's ~ 의 부가의문문</td><td>21</td><td class="num">1</td><td>11장</td></tr>
+</table></div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">2</span>조동사 + have p.p. — 풀이 순서 <span class="g-badge">7·10·15·16·17·19·20번</span></h3>
+<ol class="g-ol">
+<li><b>과거의 일인지 확인합니다.</b> yesterday, last night 같은 과거 표현이 있거나 이미 일어난 일을 말하면 have p.p.가 필요합니다.</li>
+<li><b>추측인지 후회인지 구별합니다.</b> 근거를 대며 짐작하면 must / may / can't, 하지 못한 일(해 버린 일)을 아쉬워하면 should (not).</li>
+</ol>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>형태</th><th>뜻</th><th>문항</th></tr>
+<tr><td class="col-head">must have p.p.</td><td>~했음에 틀림없다 (= It is certain that ~)</td><td>7, 15, 16</td></tr>
+<tr><td class="col-head">may have p.p.</td><td>~했을지도 모른다</td><td>20</td></tr>
+<tr><td class="col-head">should have p.p.</td><td>~했어야 했는데 (안 했다)</td><td>10</td></tr>
+<tr><td class="col-head">should not have p.p.</td><td>~하지 말았어야 했는데 (했다)</td><td>17, 19</td></tr>
+</table></div>
+<div class="g-warn"><b>함정</b> ① '틀림없다'는 추측에는 must만 씁니다. <span class="e x">has to have applied</span>(7번) ② 과거 부사가 있는데 have p.p.가 없으면 틀립니다. <span class="e x">may be stolen yesterday</span>(20번) → <span class="e">may have been stolen</span>. 수동의 뜻이면 have <b>been</b> p.p.가 됩니다.</div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">3</span>used to / be used to <span class="g-badge">5·6·8·13·18번</span></h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>형태</th><th>뜻</th><th>문항에 나온 예</th></tr>
+<tr><td class="col-head">used to + 동사원형</td><td>(예전에) ~하곤 했다, ~였다</td><td><span class="e">used to think</span>(18번), <span class="e">used to live</span>(13번)</td></tr>
+<tr><td class="col-head">be / get used to + (동)명사</td><td>~에 익숙하다 / 익숙해지다</td><td><span class="e">got used to Korean hot gimchi</span>, <span class="e">I'm used to cold weather</span>(8번)</td></tr>
+<tr><td class="col-head">be used to + 동사원형</td><td>~하는 데 사용되다</td><td><span class="e">An ax is used to chop.</span>(8번)</td></tr>
+</table></div>
+<p class="g-p"><b>'예전의 ~' 표현 (5 · 6번)</b> — 명사 뒤에 <span class="e">(that) + 주어 + used to be</span>를 붙입니다. 관계대명사 that은 생략되어 있습니다.</p>
+<div class="g-ex">
+<p><span class="e">He is not the kind person <b>he used to be</b>.</span><span class="k">그는 예전의 그 친절한 사람이 아니다.</span></p>
+<p><span class="e">I am not the <b>diligent boy I used to be</b>.</span><span class="k">나는 예전처럼 부지런한 소년이 아니다.</span></p>
+</div>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">4</span>would rather · had better · might as well <span class="g-badge">1·3·4·9번</span></h3>
+<div class="g-rule">would rather / had better / may(might) as well + <b>동사원형</b> (to를 쓰지 않는다)<br>would rather A <b>than</b> B — A와 B 모두 동사원형</div>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>번호</th><th>틀린 형태</th><th>고친 형태</th></tr>
+<tr><td class="num">3</td><td><span class="e x">I'd rather to go home</span></td><td><span class="e">I'd rather <b>go</b> home</span></td></tr>
+<tr><td class="num">4</td><td><span class="e x">rather die than giving it up</span></td><td><span class="e">rather die than <b>give</b> it up</span></td></tr>
+<tr><td class="num">9</td><td><span class="e x">You'd better not to put off</span></td><td><span class="e">You'd better not <b>put off</b></span></td></tr>
+</table></div>
+<p class="g-p"><span class="e">might as well</span>은 may as well과 같은 뜻(~하는 편이 낫다)입니다(1번). may well(~하는 것도 당연하다)과 혼동하지 않도록 합니다.</p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">5</span>would의 두 가지 쓰임 <span class="g-badge">12·14·22번</span></h3>
+<div class="g-tablewrap"><table class="compare-table">
+<tr><th>쓰임</th><th>알아보는 법</th><th>예문</th></tr>
+<tr><td class="col-head">과거의 습관<br>(~하곤 했다)</td><td>주절에 쓰이고, 과거의 기간을 나타내는 말이 함께 온다</td><td><span class="e">He <b>would</b> travel on foot while he lived in Seoul.</span>(14번 ⑤)</td></tr>
+<tr><td class="col-head">will의 과거형<br>(시제 일치)</td><td>said, thought, decided 뒤의 that절 안에 쓰인다</td><td><span class="e">She said she <b>would</b> never forgive him.</span>(14번 ①)</td></tr>
+</table></div>
+<p class="g-p">22번은 주절이 <span class="e">decided</span>(과거)이므로 that절의 will이 would로 바뀐 것입니다. 빈칸 뒤에 동사원형 be가 있어 조동사만 들어갈 수 있다는 점도 단서입니다.</p>
+</section>
+
+<section class="g-sec">
+<h3 class="g-h"><span class="g-n">6</span>그 밖의 유형</h3>
+<ul class="g-list">
+<li><b>문맥에 맞는 추측 (2번)</b> — 불이 꺼져 있으면 '집에 있음에 틀림없다'(must be)가 아니라 '집에 있을 리 없다'(<span class="e">can't be</span>)가 자연스럽습니다. 어법이 아니라 <b>앞 문장과의 논리</b>를 묻는 문제입니다.</li>
+<li><b>Let's ~ 의 부가의문문 (21번)</b> — <span class="e">Let's go out and play, <b>shall we</b>?</span></li>
+<li><b>insist that + 주어 + (should) 동사원형 (2번 ②)</b> — <span class="e">He insisted that he <b>be</b> promoted.</span> 옳은 문장으로 나왔습니다.</li>
+</ul>
+</section>
+
+<section class="g-sec g-check">
+<h3 class="g-h"><span class="g-n">✓</span>시험 직전 점검</h3>
+<ol class="g-ol">
+<li>과거의 일에 대한 추측 · 후회는 조동사 + have p.p. 과거 부사가 있는데 have p.p.가 없으면 틀린 문장.</li>
+<li>'틀림없다'는 must have p.p. — has to have p.p.는 쓰지 않는다.</li>
+<li>should have p.p.(했어야 했는데) / should not have p.p.(하지 말았어야 했는데).</li>
+<li>would rather, had better (not) 뒤에는 to 없는 동사원형. than 뒤도 동사원형.</li>
+<li>used to + 원형 / be used to + (동)명사 / (도구) be used to + 원형.</li>
+<li>the + 명사 + (that) 주어 used to be = 예전의 ~.</li>
+</ol>
+</section>
+<div class="panel-foot"><button type="button" class="pf-btn primary" data-go="gi-q"><small>기출응용문제</small>문제 풀이로 이동</button><button type="button" class="pf-btn" data-go="u1-g"><small>처음으로</small>Unit 24 여러 가지 조동사의 용법 · 어법 해설</button></div>
+</section>
+<section class="panel" id="p-gi-q" data-unit="gi" data-mode="q">
+<div class="panel-head"><div class="ph-no"><small>CHAPTER XIV</small>기출</div><div class="ph-txt"><h2 class="ph-title">기출응용문제</h2><div class="ph-mode"><b>문제 풀이</b> · 1~22번 · 22문항</div></div></div>
+<div class="tool-row"><button type="button" class="tool-btn" data-toggle-all>해설 모두 펼치기</button></div>
+<details class="ans" style="margin:0 0 28px"><summary>기출응용문제 정답 일람표 펼치기 (스포일러 주의)</summary><div class="ans-body"><table class="answer-sheet"><tr class="hdr-row"><td>기출</td><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>②</td><td>①</td><td style="font-size:10px;color:var(--rose-600)">to go → go</td><td>③</td><td style="font-size:10px;color:var(--rose-600)">he used to be</td><td style="font-size:10px;color:var(--rose-600)">diligent boy I used to be</td><td>④</td></tr><tr class="hdr-row"><td>기출</td><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>⑤</td><td>②</td><td style="font-size:10px;color:var(--rose-600)">should have gone home</td><td>③</td><td>②</td><td style="font-size:10px;color:var(--rose-600)">used to</td><td>⑤</td></tr><tr class="hdr-row"><td>기출</td><th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td style="font-size:10px;color:var(--rose-600)">certain</td><td style="font-size:10px;color:var(--rose-600)">must have fallen asleep</td><td>②</td><td>①</td><td>②</td><td>④</td><td>④</td></tr><tr class="hdr-row"><td>기출</td><th>22</th><th></th><th></th><th></th><th></th><th></th><th></th></tr><tr class="ans-row"><td style="color:var(--gold);font-weight:800">답</td><td>④</td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table></div></details>
 <article class="q-card">
 <div class="q-head"><div class="q-num">1</div><div class="q-type choice">may as well</div><div class="q-pts">기출</div></div>
 <div class="q-prompt">1. 다음 문장을 밑줄 친 부분에 유의하여 우리말로 가장 잘 표현한 것은?</div>
@@ -548,9 +927,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> 너는 얼굴에 미소를 띤 채 가도 된다.</span>
 <span class="c"><span class="num">⑤</span> 너는 얼굴에 미소를 띤 채 가는 것이 당연하다.</span>
 </div>
-<details class="ans"><summary>1번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">② 가는 것이 낫다</div>
-<div class="ans-detail"><b>may/might as well + 동사원형</b> = ~하는 편이 낫다.</div></div></details>
+<details class="ans"><summary>1번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">② 너는 얼굴에 미소를 띤 채 가는 것이 낫다.</div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>may / might as well + 동사원형</b> = ~하는 편이 낫다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>밑줄 친 might as well은 may as well과 같은 뜻이다.</span></div>
+<div class="step"><span class="sn">2</span><span>may as well + 동사원형은 '~하는 편이 낫다'.</span></div>
+<div class="step"><span class="sn">3</span><span>'가는 것이 낫다' → <b>②</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>'가야 한다'는 must / should go.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>might as well go.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>'갔을지도 모른다'는 might have gone.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>'가도 된다'는 may go.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>'가는 것이 당연하다'는 may well go.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>너는 얼굴에 미소를 띤 채 가는 것이 낫다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">2</div><div class="q-type choice">추측</div><div class="q-pts">기출</div></div>
@@ -562,18 +954,40 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> Must I clean this room? - No, you don't have to.</span>
 <span class="c"><span class="num">⑤</span> She is too busy. She should take a rest.</span>
 </div>
-<details class="ans"><summary>2번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">① <span class="en">must be at home</span></div>
-<div class="ans-detail">불이 꺼져 있으면 "집에 없다"는 추측이 자연스럽다 → can't be / must not be at home.</div></div></details>
+<details class="ans"><summary>2번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">① <span class="en">The light of Jin-su's house is off. He must be at home.</span> (✗) → can't be</div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>must be</b>(~임에 틀림없다) / <b>can't be</b>(~일 리가 없다) — 앞 문장의 근거와 맞는 추측을 고른다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>① 앞 문장: 진수네 집의 불이 꺼져 있다.</span></div>
+<div class="step"><span class="sn">2</span><span>불이 꺼져 있다는 것은 집에 없다는 근거이다. '집에 있음에 틀림없다'는 추측은 문맥에 맞지 않는다.</span></div>
+<div class="step"><span class="sn">3</span><span>He <b>can't be</b> at home.(집에 있을 리 없다)으로 고쳐야 자연스럽다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>불이 꺼져 있다 → 집에 있을 리 없다(can't be).</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>insist that + 주어 + (should) 동사원형. 수동의 뜻이라 be promoted.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>피곤해 보인다 → 늦게까지 깨어 있지 말았어야 했다(shouldn't have p.p.).</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>Must I ~?에 대한 부정 대답은 don't have to(그럴 필요 없다).</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>너무 바쁘다 → 쉬어야 한다(should).</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 진수네 집 불이 꺼져 있다. 그는 집에 있을 리 없다. ② 그는 자신이 승진되어야 한다고 주장했다. ③ 너 피곤해 보인다. 어젯밤에 늦게까지 깨어 있지 말았어야 했다. ④ 제가 이 방을 청소해야 하나요? - 아니요, 그럴 필요 없어요. ⑤ 그녀는 너무 바쁘다. 그녀는 쉬어야 한다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">3</div><div class="q-type blank">would rather</div><div class="q-pts">기출</div></div>
 <div class="q-prompt">3. 다음 문장에서 틀린 곳을 찾아 고치세요.</div>
 <div class="passage">• I'd rather to go home early and take a rest.</div>
-
-<details class="ans"><summary>3번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>3번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main"><span class="en">to go → go</span></div>
-<div class="ans-detail">would rather + <b>동사원형</b> → I'd rather go home early.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>would rather + 동사원형</b>(to를 쓰지 않는다).</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>I'd rather는 I would rather(차라리 ~하겠다).</span></div>
+<div class="step"><span class="sn">2</span><span>would rather 뒤에는 to 없이 동사원형이 온다.</span></div>
+<div class="step"><span class="sn">3</span><span>to go → <b>go</b>. and 뒤의 take는 이미 원형이라 그대로 둔다.</span></div>
+<span class="sec-t">자주 나오는 오답</span>
+<ul class="opt-list">
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>to go → going</i> — would rather 뒤에는 -ing도 쓸 수 없다.</span></li>
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>rather → like</i> — I'd like to go로 고쳐도 문법은 맞지만 '차라리 ~하겠다'는 뜻이 달라진다. 틀린 곳은 to go 한 군데다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>나는 차라리 일찍 집에 가서 쉬겠다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">4</div><div class="q-type choice">rather than</div><div class="q-pts">기출</div></div>
@@ -585,27 +999,58 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> She is saying that she can't hear you. <u>Will</u> you speak up, please?</span>
 <span class="c"><span class="num">⑤</span> If I <u>stay</u> up late, I won't be able to do well in the exam tomorrow.</span>
 </div>
-<details class="ans"><summary>4번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">③ <span class="en">than give</span></div>
-<div class="ans-detail">would rather ~ than 뒤에는 <b>동사원형</b> → would rather die than <b>give</b> it up.</div></div></details>
+<details class="ans"><summary>4번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">③ <span class="en">giving</span> (✗) → give</div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>would rather A than B</b> — A와 B 모두 <b>동사원형</b>.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>③ rather die than ~은 '~하느니 차라리 죽겠다'.</span></div>
+<div class="step"><span class="sn">2</span><span>than 앞의 die가 동사원형이므로 than 뒤도 같은 형태인 동사원형이어야 한다.</span></div>
+<div class="step"><span class="sn">3</span><span>giving → <b>give</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>must have p.p.(~했음에 틀림없다).</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>used to + 동사원형(~하곤 했다).</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>than 뒤에도 동사원형 → give.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>Will you ~?(~해 주시겠어요?) 부탁의 표현.</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>조건 부사절(if)에서는 미래의 일도 현재시제.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 너는 정말 놀랐겠구나. ② 낸시는 설거지를 할 때마다 라디오를 듣곤 했다. ③ 나는 그것을 포기하느니 차라리 죽겠다. ④ 그녀가 네 말이 안 들린다고 해. 크게 말해 줄래? ⑤ 내가 늦게까지 깨어 있으면 내일 시험을 잘 볼 수 없을 것이다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">5</div><div class="q-type blank">used to</div><div class="q-pts">기출</div></div>
 <div class="q-prompt">5. 주어진 단어를 활용하여 문장을 완성하세요.</div>
 <div class="passage"><b>A:</b> Have you met Mary's father lately?<br><b>B:</b> Yes, I have. However, he is not the kind person ________. <span style="font-size:12px;color:var(--slate-500)">(be, used, he, to)</span></div>
-
-<details class="ans"><summary>5번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>5번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main"><span class="en">he used to be</span></div>
-<div class="ans-detail">the kind person (that) he used to be = 예전의 그 친절한 사람.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>명사 + (that) + 주어 + used to be</b> = 예전의 ~.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>However(하지만)로 보아 '그는 예전의 그 친절한 사람이 아니다'라는 내용이다.</span></div>
+<div class="step"><span class="sn">2</span><span>빈칸은 the kind person을 꾸미는 관계절(that 생략) → 주어 + 동사 순서.</span></div>
+<div class="step"><span class="sn">3</span><span>used to + 동사원형 be → <b>he used to be</b>.</span></div>
+<span class="sec-t">자주 나오는 오답</span>
+<ul class="opt-list">
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>he used to</i> — be를 빼면 안 된다. be가 보어(the kind person) 자리를 받아 준다.</span></li>
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>used to be he</i> — 관계절 안은 평서문 어순(주어 + 동사)이다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>A: 최근에 메리의 아버지를 만난 적 있니? B: 응, 만났어. 하지만 그분은 예전의 그 친절한 분이 아니셔.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">6</div><div class="q-type blank">used to</div><div class="q-pts">기출</div></div>
 <div class="q-prompt">6. 주어진 표현을 나열하여 문장을 완성하세요.</div>
 <div class="passage">• 나는 예전처럼 부지런한 소년이 아니다.<br>= I am not the ________. <span style="font-size:12px;color:var(--slate-500)">(I, to, diligent, used, boy, be)</span></div>
-
-<details class="ans"><summary>6번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>6번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main"><span class="en">diligent boy I used to be</span></div>
-<div class="ans-detail">the diligent boy (that) I used to be = 예전의 부지런하던 소년.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>the + 형용사 + 명사 + (that) + 주어 + used to be</b> = 예전의 ~하던 ….</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>the 뒤에는 명사구가 온다 → 형용사 + 명사 순서로 diligent boy.</span></div>
+<div class="step"><span class="sn">2</span><span>'예전처럼'은 boy를 꾸미는 관계절(that 생략) I used to be로 나타낸다.</span></div>
+<div class="step"><span class="sn">3</span><span><b>diligent boy I used to be</b>.</span></div>
+<span class="sec-t">자주 나오는 오답</span>
+<ul class="opt-list">
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>boy diligent I used to be</i> — 형용사는 명사 앞에 둔다.</span></li>
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>diligent boy used to I be</i> — 관계절 안은 주어 I + used to be 순서.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>나는 예전처럼 부지런한 소년이 아니다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">7</div><div class="q-type choice">have p.p.</div><div class="q-pts">기출</div></div>
@@ -617,9 +1062,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> She has to have applied for the job.</span>
 <span class="c"><span class="num">⑤</span> He will have to finish his homework by tomorrow.</span>
 </div>
-<details class="ans"><summary>7번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">④ <span class="en">must have applied</span></div>
-<div class="ans-detail">과거에 대한 추측은 <b>must have p.p.</b> → She must have applied. has to have p.p.는 틀린 형태.</div></div></details>
+<details class="ans"><summary>7번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">④ <span class="en">She has to have applied for the job.</span> (✗) → must have applied</div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>'~했음에 틀림없다'는 <b>must have p.p.</b> — 이 뜻으로 have to는 쓰지 않는다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>④ 뒤에 have applied가 있다 → 과거의 일에 대한 추측.</span></div>
+<div class="step"><span class="sn">2</span><span>과거에 대한 강한 추측은 must have p.p.로 나타낸다.</span></div>
+<div class="step"><span class="sn">3</span><span>has to have applied → <b>must have applied</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>must have p.p.(~했음에 틀림없다).</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>현재의 추측 must be. to act는 판단의 근거(그렇게 행동하는 것을 보니).</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>의무의 must + 동사원형.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>must have applied.</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>미래의 의무는 will have to.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 나는 식당에 열쇠를 두고 온 것이 틀림없다. ② 그렇게 행동하는 것을 보니 그는 신사임에 틀림없다. ③ 너는 저녁에 일찍 집에 돌아와야 한다. ④ 그녀는 그 일자리에 지원했음에 틀림없다. ⑤ 그는 내일까지 숙제를 끝내야 할 것이다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">8</div><div class="q-type choice">be used to</div><div class="q-pts">기출</div></div>
@@ -632,9 +1090,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> An ax is <u>used to</u> chop.</span>
 <span class="c"><span class="num">⑤</span> I'm <u>used to</u> cold weather.</span>
 </div>
-<details class="ans"><summary>8번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">⑤ <span class="en">be used to = 익숙하다</span></div>
-<div class="ans-detail">제시문 got used to(익숙해지다)와 유사한 것은 <b>be used to</b>(~에 익숙하다). ①②③은 과거 습관, ④는 ~에 쓰이다.</div></div></details>
+<details class="ans"><summary>8번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">⑤ <span class="en">I'm used to cold weather.</span></div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>get / be used to + 명사</b>(~에 익숙해지다 / 익숙하다)와 <b>used to + 동사원형</b>(~하곤 했다)의 구별.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>제시문 got used to + 명사(Korean hot gimchi) → '~에 익숙해졌다'.</span></div>
+<div class="step"><span class="sn">2</span><span>①②③은 used to 앞에 be동사가 없고 뒤에 동사원형 → 과거의 습관 · 상태.</span></div>
+<div class="step"><span class="sn">3</span><span>④는 주어가 도구(An ax) → '~하는 데 사용된다'. ⑤ be used to + 명사 → '익숙하다'로 제시문과 같다.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>used to climb: ~하곤 했다(과거의 습관).</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>used to be: 예전에 ~였다(과거의 상태).</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>used to grow: ~하곤 했다(과거의 습관).</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>is used to chop: ~하는 데 사용된다(수동태 + to부정사).</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>be used to + 명사: ~에 익숙하다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>그는 한국의 매운 김치에 익숙해졌다. ① 너와 나는 산에 오르곤 했다. ② 나는 예전에 교사였다. ③ 나는 머리를 꽤 길게 기르곤 했다. ④ 도끼는 패는 데 사용된다. ⑤ 나는 추운 날씨에 익숙하다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">9</div><div class="q-type choice">had better</div><div class="q-pts">기출</div></div>
@@ -646,18 +1117,40 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> I'm looking forward to seeing you again.</span>
 <span class="c"><span class="num">⑤</span> She was engaged to a handsome millionaire.</span>
 </div>
-<details class="ans"><summary>9번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">② <span class="en">had better not put off</span></div>
-<div class="ans-detail">had better + 동사원형(to 없이) → had better not <b>put off</b>.</div></div></details>
+<details class="ans"><summary>9번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">② <span class="en">You'd better not to put off your departure.</span> (✗) → not put off</div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>had better (not) + 동사원형</b>(to를 쓰지 않는다).</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>② You'd better는 You had better.</span></div>
+<div class="step"><span class="sn">2</span><span>had better의 부정은 had better not이고, 그 뒤에는 to 없이 동사원형이 온다.</span></div>
+<div class="step"><span class="sn">3</span><span>not to put off → <b>not put off</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>enough + 명사 + to부정사.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>had better not + 동사원형.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>intend + to부정사.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>look forward to + -ing. 여기서 to는 전치사.</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>be engaged to + 사람(~와 약혼하다).</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 그는 그 호화로운 호텔에 묵을 만큼 충분한 돈이 없었다. ② 너는 출발을 미루지 않는 것이 좋다. ③ 그는 배우가 될 생각이 전혀 없었다. ④ 나는 너를 다시 만나기를 고대하고 있다. ⑤ 그녀는 잘생긴 백만장자와 약혼했다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">10</div><div class="q-type blank">should have p.p.</div><div class="q-pts">기출</div></div>
 <div class="q-prompt">10. 두 문장이 같은 뜻이 되도록 빈칸에 알맞은 말을 써 넣으세요.</div>
 <div class="passage">• I had to go home early, but I didn't.<br>= I ________ early.</div>
-
-<details class="ans"><summary>10번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>10번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main"><span class="en">should have gone home</span></div>
-<div class="ans-detail">해야 했지만 안 함 → <b>should have p.p.</b> = I should have gone home early.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>should have p.p.</b> = ~했어야 했는데 (하지 않았다).</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>주어진 문장: 일찍 집에 가야 했는데 가지 않았다.</span></div>
+<div class="step"><span class="sn">2</span><span>해야 했던 일을 하지 않은 데 대한 후회 → should have p.p.</span></div>
+<div class="step"><span class="sn">3</span><span>go의 과거분사는 gone → <b>should have gone home</b>.</span></div>
+<span class="sec-t">자주 나오는 오답</span>
+<ul class="opt-list">
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>should go home</i> — 이것은 지금이나 앞으로의 의무이다. 이미 지난 일은 have p.p.로 쓴다.</span></li>
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>must have gone home</i> — '집에 갔음에 틀림없다'는 추측이 되어 뜻이 달라진다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>나는 일찍 집에 가야 했는데 가지 않았다. = 나는 일찍 집에 갔어야 했다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">11</div><div class="q-type choice">have p.p.</div><div class="q-pts">기출</div></div>
@@ -669,9 +1162,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> If you stay up late, you <u>may have been</u> on time at school tomorrow.</span>
 <span class="c"><span class="num">⑤</span> I <u>was used to go</u> to the movies after school.</span>
 </div>
-<details class="ans"><summary>11번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>11번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">③ <span class="en">should have passed</span></div>
-<div class="ans-detail">③ should have p.p.(합격했어야 했는데) 정상. ①would rather go ②would sing ④won't be able to be on time ⑤used to go.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>조동사 뒤에는 <b>동사원형</b>, 과거의 일은 <b>have p.p.</b>, 미래의 일에는 have p.p.를 쓰지 않는다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>① would rather + 동사원형, ② would + 동사원형, ⑤ used to + 동사원형 — 형태가 틀렸다.</span></div>
+<div class="step"><span class="sn">2</span><span>④ tomorrow는 미래인데 may have been은 과거의 추측이라 시제가 맞지 않는다.</span></div>
+<div class="step"><span class="sn">3</span><span>③ should have p.p.는 형태가 바르다. → <b>③</b></span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>have rather → would rather go.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>조동사 뒤에는 동사원형 → would sing.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>should have p.p.: 합격했어야 했는데 / 합격했을 것이다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>tomorrow는 미래 → 내용상 won't be able to be on time(제시간에 갈 수 없을 것이다).</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>과거의 습관은 used to go. was used to는 '익숙했다'로 뒤에 -ing가 온다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 나는 이 호텔에 머무느니 차라리 집에 가겠다. ② 그녀는 요리할 때마다 노래를 부르곤 했다. ③ 그녀는 시험에 합격했어야 했다. ④ 늦게까지 깨어 있으면 너는 내일 학교에 제시간에 갈 수 없을 것이다. ⑤ 나는 방과 후에 영화를 보러 가곤 했다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">12</div><div class="q-type choice">would 습관</div><div class="q-pts">기출</div></div>
@@ -684,18 +1190,40 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> might have</span>
 <span class="c"><span class="num">⑤</span> used to be</span>
 </div>
-<details class="ans"><summary>12번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>12번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">② <span class="en">would</span></div>
-<div class="ans-detail">두 문장 모두 <b>과거의 습관</b>(~하곤 했다) → would.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>would + 동사원형</b> = (과거에) ~하곤 했다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>둘째 문장에 When I was a child가 있다 → 과거의 반복된 행동.</span></div>
+<div class="step"><span class="sn">2</span><span>두 빈칸 모두 뒤에 동사원형(get up, play)이 온다 → 조동사 자리.</span></div>
+<div class="step"><span class="sn">3</span><span>과거의 습관을 나타내는 <b>would</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>can은 현재. When I was a child와 시제가 맞지 않는다.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>과거의 습관.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>has to는 현재이고 주어 I와도 맞지 않는다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>might have 뒤에는 과거분사가 와야 한다.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>used to be 뒤에 동사원형 get up, play를 쓸 수 없다. used to였다면 가능하다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>• 일요일마다 그는 일찍 일어나 골프를 치곤 했다. • 어렸을 때 나는 저녁 늦게까지 밖에서 놀곤 했다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">13</div><div class="q-type blank">used to</div><div class="q-pts">기출</div></div>
 <div class="q-prompt">13. 우리말과 같은 뜻이 되도록 빈칸을 채우세요.</div>
 <div class="passage">• 그는 그녀의 옆집에 살았었지만 지금은 그렇지 않다.<br>= He ________ live next door to her.</div>
-
-<details class="ans"><summary>13번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>13번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main"><span class="en">used to</span></div>
-<div class="ans-detail">과거의 상태(~했었다, 지금은 아님) → used to live.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>used to + 동사원형</b> — 과거의 상태(예전에는 ~였지만 지금은 아니다).</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>우리말 '살았었지만 지금은 그렇지 않다' → 현재와 대비되는 과거의 상태.</span></div>
+<div class="step"><span class="sn">2</span><span>빈칸 뒤에 동사원형 live가 있다.</span></div>
+<div class="step"><span class="sn">3</span><span><b>used to</b> live.</span></div>
+<span class="sec-t">자주 나오는 오답</span>
+<ul class="opt-list">
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>would</i> — would는 반복된 동작에만 쓴다. live(살다) 같은 상태에는 쓰지 않는다.</span></li>
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>was used to</i> — '~에 익숙했다'는 뜻이고 뒤에 -ing가 와야 한다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>그는 그녀의 옆집에 살았었지만 지금은 그렇지 않다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">14</div><div class="q-type choice">would 용법</div><div class="q-pts">기출</div></div>
@@ -707,27 +1235,58 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> He told me that he <u>would</u> propose to Ann.</span>
 <span class="c"><span class="num">⑤</span> He <u>would</u> travel on foot in Korea while he lived in Seoul.</span>
 </div>
-<details class="ans"><summary>14번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">⑤ <span class="en">과거의 습관</span></div>
-<div class="ans-detail">⑤는 "~하곤 했다"(과거 습관). ①~④는 시제일치로 과거에서 본 미래(would).</div></div></details>
+<details class="ans"><summary>14번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">⑤ <span class="en">He would travel on foot in Korea while he lived in Seoul.</span></div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>would — <b>will의 과거형(시제 일치)</b>과 <b>과거의 습관(~하곤 했다)</b>.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>①~④의 would는 모두 said, thought, decided, told 뒤의 that절 안에 있다.</span></div>
+<div class="step"><span class="sn">2</span><span>주절이 과거라서 will이 would로 바뀐 것이다 → 과거에서 본 미래.</span></div>
+<div class="step"><span class="sn">3</span><span>⑤는 주절의 동사이고 while he lived in Seoul(서울에 사는 동안)이 있다 → 과거의 습관.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>said 뒤 → will의 과거형.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>thought 뒤 → will의 과거형.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>decided 뒤 → will의 과거형.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>told 뒤 → will의 과거형.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>과거의 습관(~하곤 했다). 나머지와 쓰임이 다르다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 그녀는 그를 결코 용서하지 않겠다고 말했다. ② 나는 친구들과 캠핑을 가면 재미있을 거라고 생각했다. ③ 그녀는 의사가 되기로 결심했다. ④ 그는 앤에게 청혼하겠다고 나에게 말했다. ⑤ 그는 서울에 사는 동안 한국을 도보로 여행하곤 했다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">15</div><div class="q-type blank">must=certain</div><div class="q-pts">기출</div></div>
 <div class="q-prompt">15. 두 문장이 같은 뜻이 되도록 빈칸에 알맞은 단어를 쓰세요.</div>
 <div class="passage">• My cousin must have passed the entrance examination.<br>= It is ________ that my cousin passed the entrance examination.</div>
-
-<details class="ans"><summary>15번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>15번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main"><span class="en">certain</span></div>
-<div class="ans-detail">must have p.p.(~했음에 틀림없다) = It is <b>certain</b> that ~.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>must have p.p.</b>(~했음에 틀림없다) = <b>It is certain that</b> + 주어 + 과거동사.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>must have passed는 '합격했음에 틀림없다'는 확신이다.</span></div>
+<div class="step"><span class="sn">2</span><span>It is ___ that ~ 구문에서 '확실한'이라는 뜻의 형용사가 필요하다.</span></div>
+<div class="step"><span class="sn">3</span><span><b>certain</b>.</span></div>
+<span class="sec-t">자주 나오는 오답</span>
+<ul class="opt-list">
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>possible</i> — It is possible that ~은 may have p.p.(~했을지도 모른다)에 해당한다.</span></li>
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>impossible</i> — It is impossible that ~은 can't have p.p.(~했을 리가 없다)에 해당한다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>내 사촌은 입학시험에 합격했음에 틀림없다. = 내 사촌이 입학시험에 합격한 것은 확실하다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">16</div><div class="q-type blank">must have p.p.</div><div class="q-pts">기출</div></div>
 <div class="q-prompt">16. 우리말의 뜻과 같아지도록 괄호 안의 단어를 알맞게 배열하세요.</div>
 <div class="passage">• 네가 무슨 말을 했는지 기억이 안 나기 때문에 나는 잠이 들었었음에 틀림없다.<br>= I ________________ because I can't remember what you said. <span style="font-size:12px;color:var(--slate-500)">(asleep, have, fallen, must)</span></div>
-
-<details class="ans"><summary>16번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>16번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main"><span class="en">must have fallen asleep</span></div>
-<div class="ans-detail">~였음에 틀림없다 → must have p.p. = must have fallen asleep.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>'~했음에 틀림없다' → <b>must have p.p.</b></div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>우리말 '잠이 들었었음에 틀림없다' → 과거의 일에 대한 강한 추측.</span></div>
+<div class="step"><span class="sn">2</span><span>must + have + 과거분사 순서로 배열한다.</span></div>
+<div class="step"><span class="sn">3</span><span>fall asleep(잠들다)의 과거분사 fallen → <b>must have fallen asleep</b>.</span></div>
+<span class="sec-t">자주 나오는 오답</span>
+<ul class="opt-list">
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>have must fallen asleep</i> — 조동사 must가 맨 앞에 온다.</span></li>
+<li class="no"><span class="on">주의</span><span class="mk">✗</span><span><i>must have asleep fallen</i> — fall asleep이 한 덩어리이므로 asleep은 fallen 뒤에 둔다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>네가 무슨 말을 했는지 기억이 안 나기 때문에 나는 잠이 들었었음에 틀림없다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">17</div><div class="q-type choice">should not have p.p.</div><div class="q-pts">기출</div></div>
@@ -740,9 +1299,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> may not have gone</span>
 <span class="c"><span class="num">⑤</span> can't have gone</span>
 </div>
-<details class="ans"><summary>17번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>17번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">② <span class="en">should not have gone</span></div>
-<div class="ans-detail">질투와 슬픔으로 후회 → 거기 가지 말았어야 했다 = should not have gone.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>should not have p.p.</b> = ~하지 말았어야 했는데 (했다).</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>글쓴이는 어제 영화관에 갔다가 첫사랑이 다른 남자와 행복해하는 모습을 보았다.</span></div>
+<div class="step"><span class="sn">2</span><span>질투와 슬픔으로 마음이 찢어졌다 → 거기에 간 것을 후회한다.</span></div>
+<div class="step"><span class="sn">3</span><span>이미 한 일에 대한 후회 → <b>should not have gone</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>'갔을지도 모른다'. 자신이 실제로 간 일을 추측할 이유가 없다.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>가지 말았어야 했다.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>'갔어야 했다'는 가지 않았을 때 쓰는 말이다. 실제로는 갔다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>'가지 않았을지도 모른다'. 실제로 갔으므로 맞지 않는다.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>'갔을 리가 없다'. 실제로 갔으므로 맞지 않는다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>어제 나는 한 여자와 소개팅을 했다. 저녁 식사 후에 우리는 영화를 보러 갔다. 그런데 나는 영화관 앞에서 루시를 만났다. 그녀는 내 첫사랑이었다. 그녀는 잘생긴 남자와 함께 행복해 보였다. 내 마음은 질투와 슬픔으로 찢어졌다. 나는 거기에 가지 말았어야 했다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">18</div><div class="q-type choice">used to</div><div class="q-pts">기출</div></div>
@@ -755,9 +1327,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> was used to thinking</span>
 <span class="c"><span class="num">⑤</span> was using to think</span>
 </div>
-<details class="ans"><summary>18번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>18번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">① <span class="en">used to think</span></div>
-<div class="ans-detail">과거에 ~하곤 했다(생각했었다) → used to + 동사원형 think.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>used to + 동사원형</b> = (예전에는) ~하곤 했다. 뒤의 but now와 대비된다.</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>when I was in high school … but now ~ → 과거와 현재를 대비하고 있다.</span></div>
+<div class="step"><span class="sn">2</span><span>고등학생 때 조종사가 되는 것에 대해 많이 '생각하곤 했다' → 과거의 습관.</span></div>
+<div class="step"><span class="sn">3</span><span>used to + 동사원형 → <b>used to think</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>used to + 동사원형.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>be used to + 동사원형은 '~하는 데 사용되다'. 주어가 사람이라 맞지 않는다.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>used to 뒤에는 동사원형이 온다.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>be used to + -ing는 '~하는 데 익숙했다'. 지금과 대비되는 과거의 습관이라는 문맥에 맞지 않는다.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>이런 형태는 없다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>나는 고등학생 때 조종사가 되는 것에 대해 많이 생각하곤 했지만, 지금은 제조 회사에서 일하고 있다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">19</div><div class="q-type choice">should not have p.p.</div><div class="q-pts">기출</div></div>
@@ -770,9 +1355,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> must not eat</span>
 <span class="c"><span class="num">⑤</span> cannot have eaten</span>
 </div>
-<details class="ans"><summary>19번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>19번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">② <span class="en">should not have eaten</span></div>
-<div class="ans-detail">~하지 말았어야 했다(했음) → should not have p.p.</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>'~하지 말았어야 했다' → <b>should not have p.p.</b></div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>우리말 '먹지 말았어야 했다' → 이미 한 일에 대한 후회 · 비난.</span></div>
+<div class="step"><span class="sn">2</span><span>과거의 일이므로 have p.p.가 필요하다 → ①④ 탈락.</span></div>
+<div class="step"><span class="sn">3</span><span>후회는 should → <b>should not have eaten</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>'먹어서는 안 된다'(현재 · 미래의 충고).</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>먹지 말았어야 했다.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>'먹지 않았음에 틀림없다'(추측).</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>'먹어서는 안 된다'(금지).</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>'먹었을 리가 없다'(추측).</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>너는 결혼식 파티에서 그렇게 게걸스럽게 먹지 말았어야 했다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">20</div><div class="q-type choice">may have p.p.</div><div class="q-pts">기출</div></div>
@@ -784,9 +1382,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> Her credit card may be stolen yesterday.</span>
 <span class="c"><span class="num">⑤</span> The girl must be disappointed in you.</span>
 </div>
-<details class="ans"><summary>20번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">④ <span class="en">may have been stolen</span></div>
-<div class="ans-detail">yesterday(과거)와 함께 쓰는 과거 추측 → may have been stolen.</div></div></details>
+<details class="ans"><summary>20번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">④ <span class="en">Her credit card may be stolen yesterday.</span> (✗) → may have been stolen</div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>과거 부사(yesterday)가 있으면 추측도 <b>조동사 + have p.p.</b> 수동이면 <b>have been p.p.</b></div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>④에 yesterday가 있다 → 과거의 일에 대한 추측.</span></div>
+<div class="step"><span class="sn">2</span><span>may be stolen은 현재 · 미래의 추측이라 yesterday와 맞지 않는다.</span></div>
+<div class="step"><span class="sn">3</span><span>카드는 '도난당하는' 것이므로 수동을 유지해 <b>may have been stolen</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>현재의 추측 must be.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>과거의 추측 + 수동: may have been p.p.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>must have p.p. already는 have와 p.p. 사이.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>yesterday → may have been stolen.</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>현재의 추측. be disappointed in ~(~에게 실망하다).</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 그는 의사임에 틀림없다. ② 이 그림은 우리 어머니가 그리셨을지도 모른다. ③ 그는 이미 숙제를 끝냈음에 틀림없다. ④ 그녀의 신용카드는 어제 도난당했을지도 모른다. ⑤ 그 소녀는 너에게 실망했음에 틀림없다.</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">21</div><div class="q-type choice">부가의문문</div><div class="q-pts">기출</div></div>
@@ -798,9 +1409,22 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> Let's go out and play, <u>will we</u>?</span>
 <span class="c"><span class="num">⑤</span> <u>Will</u> you have something to drink?</span>
 </div>
-<details class="ans"><summary>21번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
-<div class="ans-main">④ <span class="en">shall we?</span></div>
-<div class="ans-detail">Let's ~ 의 부가의문문은 <b>shall we?</b></div></div></details>
+<details class="ans"><summary>21번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<div class="ans-main">④ <span class="en">will we</span> (✗) → shall we</div>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span><b>Let's ~</b> 의 부가의문문은 <b>shall we?</b></div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>④는 Let's로 시작하는 제안문이다.</span></div>
+<div class="step"><span class="sn">2</span><span>Let's ~ 뒤의 부가의문문은 항상 shall we?</span></div>
+<div class="step"><span class="sn">3</span><span>will we → <b>shall we</b>.</span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="ok"><span class="on">①</span><span class="mk">○</span><span>의지를 나타내는 will.</span></li>
+<li class="ok"><span class="on">②</span><span class="mk">○</span><span>단순미래의 will.</span></li>
+<li class="ok"><span class="on">③</span><span class="mk">○</span><span>Shall I ~?(제가 ~할까요?) 제안.</span></li>
+<li class="no"><span class="on">④</span><span class="mk">✗</span><span>Let's ~, shall we?</span></li>
+<li class="ok"><span class="on">⑤</span><span class="mk">○</span><span>Will you ~?(~하시겠어요?) 권유.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>① 너에게 몇 가지 질문을 할게. ② 내일은 날씨가 맑을 것이다. ③ 창문을 열까요? ④ 나가서 놀자, 응? ⑤ 마실 것 좀 드시겠어요?</div></div></details>
 </article>
 <article class="q-card">
 <div class="q-head"><div class="q-num">22</div><div class="q-type choice">시제일치</div><div class="q-pts">기출</div></div>
@@ -813,11 +1437,25 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 <span class="c"><span class="num">④</span> would</span>
 <span class="c"><span class="num">⑤</span> has</span>
 </div>
-<details class="ans"><summary>22번 정답 &amp; 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
+<details class="ans"><summary>22번 정답 · 상세 해설 펼치기</summary><div class="ans-body"><span class="ans-label">ANSWER · 정답</span>
 <div class="ans-main">④ <span class="en">would</span></div>
-<div class="ans-detail">주절 decided(과거)에 맞춰 종속절도 <b>would</b>(시제일치).</div></div></details>
+<div class="ans-detail"><span class="sec-t">출제 포인트</span>주절이 과거(decided)이면 that절의 will은 <b>would</b>(시제 일치).</div>
+<span class="sec-t">풀이 순서</span>
+<div class="step"><span class="sn">1</span><span>빈칸 뒤에 동사원형 be가 있다 → 빈칸에는 조동사만 들어갈 수 있다. was, had, has 탈락.</span></div>
+<div class="step"><span class="sn">2</span><span>did + be는 쓰지 않는다.</span></div>
+<div class="step"><span class="sn">3</span><span>주절이 decided(과거)이므로 '~일 것이다'의 will이 would로 바뀐다. → <b>would</b></span></div>
+<span class="sec-t">선지 분석</span>
+<ul class="opt-list">
+<li class="no"><span class="on">①</span><span class="mk">✗</span><span>did 뒤에 be를 쓰지 않는다.</span></li>
+<li class="no"><span class="on">②</span><span class="mk">✗</span><span>had 뒤에는 과거분사(been)가 와야 한다.</span></li>
+<li class="no"><span class="on">③</span><span class="mk">✗</span><span>was 뒤에 동사원형 be를 쓸 수 없다.</span></li>
+<li class="ok"><span class="on">④</span><span class="mk">○</span><span>will의 과거형.</span></li>
+<li class="no"><span class="on">⑤</span><span class="mk">✗</span><span>has 뒤에는 과거분사가 와야 하고, 시제도 맞지 않는다.</span></li>
+</ul>
+<div class="ko-trans"><span class="ko-trans-label">해석</span>그들은 장애가 있는 사람이 그 시험을 치르는 것은 불공평할 것이라고 판단했다.</div></div></details>
 </article>
-
+<div class="panel-foot"><button type="button" class="pf-btn" data-go="gi-g"><small>기출응용문제</small>어법 해설 다시 보기</button><button type="button" class="pf-btn primary" data-go="u1-g"><small>처음으로</small>Unit 24 여러 가지 조동사의 용법 · 어법 해설</button></div>
+</section>
 
 </div></main>
 
@@ -828,7 +1466,6 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 </div></div></footer>
 
 <script>
-
 /* ══ 펜 필기 모드 (자유 필기) v1.0 ══ */
 const PEN_COLORS=['#dc2626','#1F3864','#0f9d58','#f59e0b','#000000'];
 const PEN_WIDTHS=[2,4,7];
@@ -952,7 +1589,42 @@ if(document.readyState==='loading'){
 }else{
   setTimeout(buildPenTools,100);
 }
-
+/* ══ 유니트 / 모드 전환 ══ */
+(function(){
+  var UNIT_LABEL={u1:'Unit 24 여러 가지 조동사의 용법',gi:'기출응용문제'};
+  var cur={unit:'u1',mode:'g'},penStore={};
+  var nav=document.getElementById('unitNav');
+  function parse(h){var m=/^#?(u1|gi)-(g|q)$/.exec(h||'');return m?{unit:m[1],mode:m[2]}:null;}
+  function syncPen(){try{
+    if(typeof penLayer!=='undefined'&&penLayer){
+      penLayer.setAttribute('height',0);penLayer.style.height='0px';penLayer.setAttribute('width',0);penLayer.style.width='0px';
+      var h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
+      penLayer.setAttribute('height',h);penLayer.style.height=h+'px';
+      var w=document.documentElement.clientWidth;penLayer.setAttribute('width',w);penLayer.style.width=w+'px';}}catch(_){}}
+  function show(unit,mode,scroll){
+    var key=unit+'-'+mode,old=cur.unit+'-'+cur.mode;
+    try{if(typeof penLayer!=='undefined'&&penLayer){penStore[old]=penLayer.innerHTML;penLayer.innerHTML=penStore[key]||'';}}catch(_){}
+    cur={unit:unit,mode:mode};
+    document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active',p.id==="p-"+key);});
+    document.querySelectorAll('.un-tab').forEach(function(b){var on=b.dataset.unit===unit;b.classList.toggle('active',on);b.setAttribute('aria-pressed',on);});
+    document.querySelectorAll('.mode-btn').forEach(function(b){var on=b.dataset.mode===mode;b.classList.toggle('active',on);b.setAttribute('aria-pressed',on);});
+    document.getElementById('modeCur').textContent=UNIT_LABEL[unit];
+    try{if(history.replaceState)history.replaceState(null,'','#'+key);}catch(_){}
+    if(scroll){var y=nav.getBoundingClientRect().top+window.scrollY;if(window.scrollY>y)window.scrollTo(0,y);}
+    setTimeout(syncPen,60);
+  }
+  document.querySelectorAll('.un-tab').forEach(function(b){b.addEventListener('click',function(){show(b.dataset.unit,'g',true);});});
+  document.querySelectorAll('.mode-btn').forEach(function(b){b.addEventListener('click',function(){show(cur.unit,b.dataset.mode,true);});});
+  document.querySelectorAll('.pf-btn').forEach(function(b){b.addEventListener('click',function(){var t=parse(b.dataset.go);show(t.unit,t.mode,true);});});
+  document.querySelectorAll('[data-toggle-all]').forEach(function(b){b.addEventListener('click',function(){
+    var ds=b.closest('.panel').querySelectorAll('article details.ans');
+    var open=!Array.prototype.every.call(ds,function(d){return d.open;});
+    ds.forEach(function(d){d.open=open;});
+    b.textContent=open?'해설 모두 접기':'해설 모두 펼치기';setTimeout(syncPen,60);});});
+  document.querySelectorAll('details.ans').forEach(function(d){d.addEventListener('toggle',function(){setTimeout(syncPen,60);});});
+  window.addEventListener('hashchange',function(){var t=parse(location.hash);if(t&&(t.unit!==cur.unit||t.mode!==cur.mode))show(t.unit,t.mode,true);});
+  var init=parse(location.hash)||cur;show(init.unit,init.mode,false);
+})();
 </script>
 </body>
 </html>
