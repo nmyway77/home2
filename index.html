@@ -1676,12 +1676,19 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
       });
     }catch(e){}
   }
-  /* 허브 안의 지문 번호 버튼(num-btn)은 아래 영역이 아니라 새 창에서 열기 — 자료는 큰 화면으로 */
+  /* 아래 영역에 열린 허브 안에서 누르는 자료 링크는 모두 새 창에서 열기 (큰 화면으로 보기)
+     단, 파일 이름에 hub 가 들어간 다른 허브로 가는 링크는 아래 영역 안에서 이동 */
   function numNewTab(){
     try{
-      vf.contentDocument.addEventListener('click', function(e){
-        var a = e.target.closest ? e.target.closest('a.num-btn[href]') : null;
-        if(a){ a.target = '_blank'; a.rel = 'noopener'; }
+      var d = vf.contentDocument;
+      d.addEventListener('click', function(e){
+        var a = e.target.closest ? e.target.closest('a[href]') : null;
+        if(!a) return;
+        var href = a.getAttribute('href');
+        if(!href || /^(#|javascript:|tel:|mailto:)/i.test(href)) return;
+        if(a.origin === d.location.origin && a.pathname === d.location.pathname) return;   /* 같은 페이지 안 이동 */
+        if(a.origin === location.origin && /hub/i.test(a.pathname.split('/').pop())) return; /* 허브 → 허브 */
+        a.target = '_blank'; a.rel = 'noopener';
       }, true);
     }catch(e){}
   }
