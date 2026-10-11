@@ -99,6 +99,22 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   .book-cover-icon{font-size:40px;}
 }
 </style>
+<!-- 인덱스 임베드 지원: 인덱스(0505.co.kr) 안에 불러왔을 때만 상단바·푸터를 숨기고, 내용 높이를 인덱스에 알려 줌. 단독 접속 시에는 아무 영향 없음 -->
+<script>
+(function(){
+  if(window.self === window.top) return;
+  document.documentElement.classList.add('embedded');
+  function send(){ try{ if(document.body) window.parent.postMessage({seoroHub:1, h:Math.ceil(document.body.getBoundingClientRect().height)}, '*'); }catch(e){} }
+  function init(){ send(); if(window.ResizeObserver) new ResizeObserver(send).observe(document.body); window.addEventListener('load', send); }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
+<style>
+.embedded .top-nav,.embedded footer{display:none !important;}
+.embedded body{min-height:0 !important;background:transparent !important;}
+.embedded .wrap{padding-top:28px !important;padding-bottom:16px !important;}
+.embedded #pwgate{align-items:flex-start !important;padding-top:48px;}
+</style>
 </head>
 <body>
 
