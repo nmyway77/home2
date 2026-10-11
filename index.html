@@ -1676,6 +1676,15 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
       });
     }catch(e){}
   }
+  /* 허브 안의 지문 번호 버튼(num-btn)은 아래 영역이 아니라 새 창에서 열기 — 자료는 큰 화면으로 */
+  function numNewTab(){
+    try{
+      vf.contentDocument.addEventListener('click', function(e){
+        var a = e.target.closest ? e.target.closest('a.num-btn[href]') : null;
+        if(a){ a.target = '_blank'; a.rel = 'noopener'; }
+      }, true);
+    }catch(e){}
+  }
   vf.addEventListener('load', function(){
     if(!isViewing()) return;
     try{
@@ -1684,7 +1693,7 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
       var file = l.pathname.indexOf(DIR) === 0 ? l.pathname.slice(DIR.length) : null;
       if(l.origin === location.origin && (l.pathname === location.pathname || file === '' || file === 'index.html')){ closeView(); return; }
       viewNew.href = l.href;
-      if(l.origin === location.origin){ hideHome(); setTimeout(hideHome, 700); }
+      if(l.origin === location.origin){ hideHome(); setTimeout(hideHome, 700); numNewTab(); }
       if(l.origin === location.origin) history.replaceState(null, '', '#p=' + (file !== null ? file : l.pathname) + l.search);
     }catch(e){}
   });
