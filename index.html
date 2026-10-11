@@ -680,6 +680,14 @@ body{padding-bottom:62px;}
 .tab-panel.on{display:block;animation:tabIn 0.3s ease both;}
 @keyframes tabIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 .tab-panel > .mock-banner:first-child,.tab-panel > .section-label:first-child{margin-top:28px;}
+/* ── 자료 보기 영역 ── */
+.viewer-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 12px;background:#0d1b2a;border-bottom:1px solid rgba(201,168,76,0.25);}
+.viewer-btn{font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:500;color:rgba(228,197,137,0.95);background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.35);border-radius:20px;padding:6px 14px;cursor:pointer;text-decoration:none;white-space:nowrap;transition:background 0.2s;}
+.viewer-btn:hover{background:rgba(201,168,76,0.2);}
+.view-frame{display:block;width:100%;height:70vh;border:0;background:#fff;}
+body.viewing .tab-panel{display:none !important;}
+body.viewing .school-section{display:none;}
+body.viewing #tabPanels{min-height:0;}
 @media(max-width:560px){
   .top-tabs-inner{gap:6px;padding:9px 8px;}
   .top-tab{font-size:12.5px;min-height:42px;padding:0 4px;border-radius:10px;letter-spacing:0;}
@@ -1238,6 +1246,14 @@ body{padding-bottom:62px;}
 </a>
 
 </div>
+<!-- 자료 보기 영역: 배너를 누르면 이 안에서 자료 페이지가 열림 -->
+<div class="viewer" id="viewer" hidden>
+  <div class="viewer-bar">
+    <button type="button" class="viewer-btn" id="viewBack">← 목록으로</button>
+    <a class="viewer-btn" id="viewNew" href="#" target="_blank" rel="noopener">새 창에서 열기 ↗</a>
+  </div>
+  <iframe id="viewFrame" class="view-frame" title="자료 보기" allow="autoplay; fullscreen"></iframe>
+</div>
 </div>
 
 <!-- 학교 안내 -->
@@ -1465,7 +1481,7 @@ function goNaeshin(){
 const _PW_KEY='pw0505', _PW_HOURS=3;
 function _pwValid(){ try{ return parseInt(localStorage.getItem(_PW_KEY)||'0',10) > Date.now(); }catch(e){ return false; } }
 function openPwModal(){
-  if(_pwTarget && _pwTarget!=='level_test_v3.html' && _pwValid()){ window.location.href = _pwTarget; return; }
+  if(_pwTarget && _pwTarget!=='level_test_v3.html' && _pwValid()){ goPage(_pwTarget); return; }
   const m = document.getElementById('pwModal');
   const inp = document.getElementById('pwInput');
   document.getElementById('pwErr').textContent = '';
@@ -1489,7 +1505,7 @@ function submitPw(){
   if(val === pw){
     if(pw==='050501'){ try{ localStorage.setItem(_PW_KEY, String(Date.now()+_PW_HOURS*3600*1000)); }catch(e){} }
     document.getElementById('pwModal').classList.remove('open');
-    if(_pwTarget) window.location.href = _pwTarget;
+    if(_pwTarget) goPage(_pwTarget);
   } else {
     err.textContent = '비밀번호가 맞지 않습니다.';
     inp.classList.add('error');
@@ -1532,7 +1548,7 @@ function goVocab(selId){
     alert(name + "은 곧 업로드됩니다! 😊");
     return;
   }
-  if(file==='https://0505.co.kr/phrasal%20verb200.html'){ window.location.href = file; return; }
+  if(file==='https://0505.co.kr/phrasal%20verb200.html'){ goPage(file); return; }
   _pwTarget = file;
   openPwModal();
 }
@@ -1565,7 +1581,7 @@ function goSuneung(){
   const file = map[year];
   if(!file){ alert("아직 준비 중입니다 😊"); return; }
   if(!READY_FILES.includes(file)){ alert(year+"년도 수능 자료는 곧 업로드됩니다!"); return; }
-  window.location.href = file;
+  goPage(file);
 }
 
 function goMock(grade){
@@ -1577,7 +1593,7 @@ function goMock(grade){
   const file  = map[key];
   if(!file){ alert("아직 준비 중입니다 😊"); return; }
   if(!READY_FILES.includes(file)){ alert(`${year}년 ${month}월 모의고사는 곧 업로드됩니다!`); return; }
-  window.location.href = file;
+  goPage(file);
 }
 
 /* ─── Hub Panel Toggle ─── */
@@ -1599,6 +1615,9 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
 <script>
 /* ─── 상단 탭 전환 ─── */
 (function(){
+  /* 이 페이지가 자료 보기 영역 안에서 열렸으면(자료 페이지의 홈 버튼 등) 바깥 화면의 목록으로 돌아감 */
+  if(window.self !== window.top){ try{ if(window.parent.closeView){ window.parent.closeView(); return; } }catch(e){} }
+  var cur = 'mock';
   var tabs = document.querySelectorAll('.top-tab');
   var panels = document.querySelectorAll('.tab-panel');
   var wrap = document.getElementById('tabPanels');
@@ -1610,8 +1629,75 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
       t.setAttribute('aria-selected', on ? 'true' : 'false');
     });
     panels.forEach(function(p){ p.classList.toggle('on', p.id === 'panel-' + name); });
+    cur = name;
     if(name === 'gichul') loadGichul();
   }
+
+  /* ─── 자료 보기 영역 ─── */
+  var viewer = document.getElementById('viewer');
+  var vf = document.getElementById('viewFrame');
+  var viewNew = document.getElementById('viewNew');
+  var tabBar = document.querySelector('.top-tabs');
+  var DIR = location.pathname.replace(/[^/]*$/, '');
+  function isViewing(){ return document.body.classList.contains('viewing'); }
+  function sizeView(){
+    var bn = document.querySelector('.bottom-nav');
+    var h = window.innerHeight - tabBar.offsetHeight - viewer.querySelector('.viewer-bar').offsetHeight - (bn ? bn.offsetHeight : 0);
+    vf.style.height = Math.max(h, 320) + 'px';
+  }
+  function openView(u){
+    var url = u;
+    /* PC에 저장한 파일로 미리 볼 때는 사이트의 페이지를 불러옴 */
+    if(location.protocol === 'file:' && !/^[a-z]+:/i.test(u)) url = 'https://0505.co.kr/' + u;
+    document.body.classList.add('viewing');
+    viewer.hidden = false;
+    viewNew.href = url;
+    sizeView();
+    vf.src = url;
+    window.scrollTo(0, document.querySelector('.hero').offsetHeight);
+  }
+  function closeView(){
+    if(!isViewing()) return;
+    document.body.classList.remove('viewing');
+    viewer.hidden = true;
+    try{ if(vf.contentWindow.location.href !== 'about:blank') vf.contentWindow.location.replace('about:blank'); }catch(e){ vf.src = 'about:blank'; }
+    try{ history.replaceState(null, '', '#' + cur); }catch(e){}
+  }
+  window.openView = openView;
+  window.closeView = closeView;
+  window.goPage = openView;
+  window.addEventListener('resize', function(){ if(isViewing()) sizeView(); });
+  document.getElementById('viewBack').addEventListener('click', closeView);
+  /* 불러온 자료 페이지 안의 홈 버튼(인덱스로 가는 링크)은 이 화면에서는 숨김 — 허브 파일은 수정 불필요 */
+  function hideHome(){
+    try{
+      vf.contentDocument.querySelectorAll('a[href]').forEach(function(a){
+        if(a.origin === location.origin && (a.pathname === DIR || a.pathname === DIR + 'index.html' || a.pathname === location.pathname)) a.style.display = 'none';
+      });
+    }catch(e){}
+  }
+  vf.addEventListener('load', function(){
+    if(!isViewing()) return;
+    try{
+      var l = vf.contentWindow.location;
+      if(l.href === 'about:blank'){ closeView(); return; }               /* 뒤로가기로 처음까지 돌아온 경우 */
+      var file = l.pathname.indexOf(DIR) === 0 ? l.pathname.slice(DIR.length) : null;
+      if(l.origin === location.origin && (l.pathname === location.pathname || file === '' || file === 'index.html')){ closeView(); return; }
+      viewNew.href = l.href;
+      if(l.origin === location.origin){ hideHome(); setTimeout(hideHome, 700); }
+      if(l.origin === location.origin) history.replaceState(null, '', '#p=' + (file !== null ? file : l.pathname) + l.search);
+    }catch(e){}
+  });
+  /* 모의고사·재원생 탭 안의 자료 링크는 페이지 이동 대신 아래 영역에서 열기 */
+  document.getElementById('tabPanels').addEventListener('click', function(e){
+    if(e.defaultPrevented || e.ctrlKey || e.metaKey || e.shiftKey || e.button) return;
+    var a = e.target.closest ? e.target.closest('a[href]') : null;
+    if(!a || a.closest('.viewer') || a.hasAttribute('data-toggle') || a.target === '_blank') return;
+    var href = a.getAttribute('href');
+    if(!href || /^(javascript:|tel:|mailto:|#)/i.test(href)) return;
+    e.preventDefault();
+    openView(href);
+  });
   /* 기출 허브: 탭을 처음 열 때 GICHUL.html 을 불러오고, 높이를 내용에 맞춤 */
   var gf = document.getElementById('gichulFrame');
   function fitGichul(){
@@ -1635,12 +1721,21 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
   tabs.forEach(function(t){
     t.addEventListener('click', function(){
       var name = t.getAttribute('data-tab');
+      closeView();
       show(name);
       try{ history.replaceState(null, '', '#' + name); }catch(e){}
       if(wrap.getBoundingClientRect().top < 0) wrap.scrollIntoView();
     });
   });
-  function fromHash(){ var h = location.hash.replace('#', ''); if(h) show(h); }
+  function fromHash(){
+    var h = location.hash.replace('#', '');
+    if(h.indexOf('p=') === 0){
+      /* 새로고침·공유 주소로 들어온 경우: 같은 사이트의 페이지만 다시 열기 */
+      try{ if(location.protocol !== 'file:' && new URL(h.slice(2), location.href).origin === location.origin) openView(h.slice(2)); }catch(e){}
+      return;
+    }
+    if(h){ closeView(); show(h); }
+  }
   window.addEventListener('hashchange', fromHash);
   fromHash();
 })();
