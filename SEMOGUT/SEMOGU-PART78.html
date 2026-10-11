@@ -131,6 +131,20 @@ body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgb
 .s-card.pinned .s-sd,.s-card.tapped .s-sd{width:100%!important;flex-basis:100%!important;order:1;min-width:0;}
 .s-card.vocab-only .s-sd{display:none;}
 
+/* KO_TTS (구조도 구간 더빙) */
+.kd-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:8px 0 2px 4px;}
+.kd-btn{font:600 12px/1 'Noto Sans KR',sans-serif;padding:7px 12px;border-radius:14px;border:1px solid #c9c4f0;background:#f4f3ff;color:#3d359c;cursor:pointer;}
+.kd-btn:hover{background:#e9e7ff;}
+.kd-btn.on{background:#534AB7;color:#fff;border-color:#534AB7;}
+.kd-sel{font-size:12px;padding:5px 6px;border-radius:8px;border:1px solid #d5d5d5;background:#fff;color:#444;}
+.kd-now{font-size:12px;color:#534AB7;min-height:16px;flex-basis:100%;line-height:1.5;}
+.kd-all{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:-8px 0 18px;}
+svg .kd-hot{stroke:#E8590C!important;stroke-width:3!important;}
+svg text.kd-hot-t{fill:#C2410C!important;font-weight:700!important;stroke:none!important;}
+/* 펼친 카드 높이 상한 800px → 6000px: 구조도+더빙 버튼이 들어가면 긴 카드·좁은 화면에서 아래쪽(독해 방법)이 잘리던 것 방지 */
+.s-card.pinned .s-kr-wrap,.s-card.tapped .s-kr-wrap{max-height:6000px!important;}
+@media print{.kd-bar,.kd-all{display:none!important;}}
+/* /KO_TTS */
 /* SUMMARY */
 .summary-wrap{margin-top:36px;}
 .summary-header{background:var(--navy);color:white;font-family:'Playfair Display',serif;font-size:15px;font-weight:700;padding:12px 20px;border-radius:8px 8px 0 0;}
@@ -836,9 +850,9 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <text x="10" y="132" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">겨울 내내 실내에 있는 화초들은 그들이 받을 수 있는 모든 빛을 기뻐할 것이다.  [be glad of = 타동사 · 관계절이 S와 O를 수식]</text>
   <defs><marker id="sd2arr4" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#C0392B"/></marker></defs>
   <path d="M 210 66 C 210 88, 46 88, 46 70" fill="none" stroke="#C0392B" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#sd2arr4)"/>
+  <path d="M 732 66 C 732 88, 556 88, 556 70" fill="none" stroke="#C0392B" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#sd2arr4)"/>
   <rect x="58" y="79" width="139" height="18" rx="4" fill="#FBE9E7"/>
   <text x="128" y="92" font-size="11" font-weight="700" fill="#C0392B" text-anchor="middle" font-family="sans-serif">관계절 → Plants 수식</text>
-  <path d="M 732 66 C 732 88, 556 88, 556 70" fill="none" stroke="#C0392B" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#sd2arr4)"/>
   <rect x="565" y="79" width="158" height="18" rx="4" fill="#FBE9E7"/>
   <text x="644" y="92" font-size="11" font-weight="700" fill="#C0392B" text-anchor="middle" font-family="sans-serif">관계절 → the light 수식</text>
 </svg>
@@ -993,25 +1007,26 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-sd">
       <span class="s-sd-label">📐 문장 구조도</span>
-      <svg viewBox="0 0 960 218" xmlns="http://www.w3.org/2000/svg" data-sd2="full">
+      <svg viewBox="0 0 960 236" xmlns="http://www.w3.org/2000/svg" data-sd2="full">
   <rect x="10" y="10" width="188" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
   <text x="104" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">Some were ashamed,</text>
   <text x="104" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">어떤 이들은 부끄러워했고(S+보어)</text>
   <rect x="206" y="10" width="249" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
   <text x="330" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">others angry</text>
   <text x="330" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">다른 이들은 화가 났으며(S+보어, were 생략)</text>
-  <rect x="463" y="10" width="214" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
-  <text x="570" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">and many fearful of</text>
-  <text x="570" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">많은 이들은 ~을 걱정했다(be+형+전·V)</text>
-  <rect x="10" y="82" width="311" height="28" rx="3" fill="#F3E8FF" stroke="#C9A0E8" stroke-width="1.2"/>
-  <text x="166" y="101" font-size="14" font-weight="500" fill="#5B2D8E" text-anchor="middle" font-family="Georgia,serif">how the decision will affect the country.</text>
-  <text x="166" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그 결정이 나라에 어떤 영향을 미칠지(의문사절·O)</text>
+  <rect x="10" y="82" width="214" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="117" y="101" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">and many fearful of</text>
+  <text x="117" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">많은 이들은 ~을 걱정했다(be+형+전·V)</text>
+  <rect x="232" y="82" width="311" height="28" rx="3" fill="#F3E8FF" stroke="#C9A0E8" stroke-width="1.2"/>
+  <text x="388" y="101" font-size="14" font-weight="500" fill="#5B2D8E" text-anchor="middle" font-family="Georgia,serif">how the decision will affect the country.</text>
+  <text x="388" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그 결정이 나라에 어떤 영향을 미칠지(의문사절·O)</text>
   <line x1="10" y1="182" x2="950" y2="182" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="10" y="204" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">어떤 이들은 부끄러워했고, 다른 이들은 화가 났으며, 많은 이들은 그 결정이 나라에 어떤 영향을 미칠지 걱정했다.  [be fearful of = 타동사 · 의문사절=목적어 · were 생략]</text>
+  <text x="10" y="204" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">어떤 이들은 부끄러워했고, 다른 이들은 화가 났으며, 많은 이들은 그 결정이 나라에 어떤 영향을 미칠지 걱정했다. [be fearful of = 타동사 · 의문사절=목적어</text>
+  <text x="10" y="222" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">· were 생략]</text>
   <defs><marker id="sd2arr8" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#C0392B"/></marker></defs>
-  <path d="M 570 66 C 570 160, 166 160, 166 142" fill="none" stroke="#C0392B" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#sd2arr8)"/>
-  <rect x="255" y="151" width="226" height="18" rx="4" fill="#FBE9E7"/>
-  <text x="368" y="164" font-size="11" font-weight="700" fill="#C0392B" text-anchor="middle" font-family="sans-serif">be fearful of → 의문사절을 목적어로</text>
+  <path d="M 117 138 C 117 160, 388 160, 388 142" fill="none" stroke="#C0392B" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#sd2arr8)"/>
+  <rect x="139" y="151" width="226" height="18" rx="4" fill="#FBE9E7"/>
+  <text x="252" y="164" font-size="11" font-weight="700" fill="#C0392B" text-anchor="middle" font-family="sans-serif">be fearful of → 의문사절을 목적어로</text>
 </svg>
     </div>
     <div class="s-kr">어떤 이들은 부끄러워했고, 다른 이들은 화가 났으며, 많은 이들은 그 결정이 나라에 어떤 영향을 미칠지 <span class="pr">(= be fearful of = ~을 걱정·무서워하다 · were 생략)</span> 걱정했다.<span class="s-extra" style="display:block;margin-top:7px;padding:8px 12px;background:#f3e8fb;border-left:3px solid #8b5cc0;color:#43305c;border-radius:5px;font-size:12.5px;line-height:1.65;">💬 <strong>추가해설</strong> — 세 주어의 <strong>병렬</strong>: Some (were) ashamed / others (were) angry / many (were) <strong>fearful of</strong> ~. 반복되는 were는 생략. be fearful of + <strong>의문사절</strong>(how ~)이 목적어.</span></div>
@@ -1038,7 +1053,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-sd">
       <span class="s-sd-label">📐 문장 구조도</span>
-      <svg viewBox="0 0 960 146" xmlns="http://www.w3.org/2000/svg" data-sd2="full">
+      <svg viewBox="0 0 960 164" xmlns="http://www.w3.org/2000/svg" data-sd2="full">
   <rect x="10" y="10" width="354" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
   <text x="187" y="29" font-size="14" font-weight="500" fill="#444444" text-anchor="middle" font-family="Georgia,serif">On discussing the earthquake with other people,</text>
   <text x="187" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">다른 사람들과 지진을 논의했을 때(On ~ing·부사구)</text>
@@ -1052,7 +1067,8 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <text x="720" y="29" font-size="14" font-weight="500" fill="#9A3D00" text-anchor="middle" font-family="Georgia,serif">that most of them regarded it as a joke.</text>
   <text x="720" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그들 대부분이 그것을 농담으로 여긴다는 것에(that절=목적어)</text>
   <line x1="10" y1="110" x2="950" y2="110" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="10" y="132" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">다른 사람들과 지진에 대해 이야기했을 때, 나는 그들 대부분이 그것을 농담으로 여긴다는 것에 놀랐다.  [be surprised at/that = 타동사 · On ~ing = ~할 때 · regard A as B]</text>
+  <text x="10" y="132" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">다른 사람들과 지진에 대해 이야기했을 때, 나는 그들 대부분이 그것을 농담으로 여긴다는 것에 놀랐다. [be surprised at/that = 타동사 · On ~ing = ~할 때 ·</text>
+  <text x="10" y="150" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">regard A as B]</text>
   <defs><marker id="sd2arr9" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#C0392B"/></marker></defs>
   <path d="M 488 66 C 488 88, 720 88, 720 70" fill="none" stroke="#C0392B" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#sd2arr9)"/>
   <rect x="498" y="79" width="212" height="18" rx="4" fill="#FBE9E7"/>
@@ -1083,7 +1099,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-sd">
       <span class="s-sd-label">📐 문장 구조도</span>
-      <svg viewBox="0 0 960 214" xmlns="http://www.w3.org/2000/svg" data-sd2="full">
+      <svg viewBox="0 0 960 232" xmlns="http://www.w3.org/2000/svg" data-sd2="full">
   <rect x="10" y="10" width="289" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
   <text x="154" y="29" font-size="14" font-weight="500" fill="#444444" text-anchor="middle" font-family="Georgia,serif">When we are not too anxious about</text>
   <text x="154" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">우리가 ~에 너무 안달하지 않을 때(When절·be+형+전)</text>
@@ -1103,7 +1119,8 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <text x="544" y="135" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">comes of itself.</text>
   <text x="544" y="160" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">저절로 온다(V)</text>
   <line x1="10" y1="178" x2="950" y2="178" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="10" y="200" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">우리가 행복과 불행에 너무 안달하지 않고 의무의 엄격하고 충실한 이행에 전념할 때, 그때 행복은 저절로 온다.  [be anxious about = 타동사 · devote oneself to · come of itself]</text>
+  <text x="10" y="200" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">우리가 행복과 불행에 너무 안달하지 않고 의무의 엄격하고 충실한 이행에 전념할 때, 그때 행복은 저절로 온다. [be anxious about = 타동사 · devote oneself</text>
+  <text x="10" y="218" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">to · come of itself]</text>
   <defs><marker id="sd2arr10" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#C0392B"/></marker></defs>
   <path d="M 154 66 C 154 88, 418 88, 418 70" fill="none" stroke="#C0392B" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#sd2arr10)"/>
   <rect x="190" y="79" width="193" height="18" rx="4" fill="#FBE9E7"/>
@@ -1134,7 +1151,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-sd">
       <span class="s-sd-label">📐 문장 구조도</span>
-      <svg viewBox="0 0 960 324" xmlns="http://www.w3.org/2000/svg" data-sd2="full">
+      <svg viewBox="0 0 960 342" xmlns="http://www.w3.org/2000/svg" data-sd2="full">
   <rect x="10" y="10" width="202" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
   <text x="111" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">It is a common prejudice</text>
   <text x="111" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그것은 흔한 편견이다(가주어 It+be)</text>
@@ -1147,21 +1164,22 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <rect x="350" y="116" width="169" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
   <text x="434" y="135" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">are not aware of</text>
   <text x="434" y="160" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">알지 못한다(be+형+전·부정·V)</text>
-  <rect x="527" y="116" width="77" height="28" rx="3" fill="#FDEEE2" stroke="#F0BE93" stroke-width="1.2"/>
-  <text x="566" y="135" font-size="14" font-weight="500" fill="#9A3D00" text-anchor="middle" font-family="Georgia,serif">the fact</text>
-  <text x="566" y="160" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그 사실을(O)</text>
-  <rect x="10" y="188" width="432" height="28" rx="3" fill="#F3E8FF" stroke="#C9A0E8" stroke-width="1.2"/>
-  <text x="226" y="207" font-size="14" font-weight="500" fill="#5B2D8E" text-anchor="middle" font-family="Georgia,serif">that bottlenose whales live right in front of their noses.</text>
-  <text x="226" y="232" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">병코고래가 바로 코앞에 산다는(동격 that절)</text>
+  <rect x="10" y="188" width="77" height="28" rx="3" fill="#FDEEE2" stroke="#F0BE93" stroke-width="1.2"/>
+  <text x="48" y="207" font-size="14" font-weight="500" fill="#9A3D00" text-anchor="middle" font-family="Georgia,serif">the fact</text>
+  <text x="48" y="232" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">그 사실을(O)</text>
+  <rect x="95" y="188" width="432" height="28" rx="3" fill="#F3E8FF" stroke="#C9A0E8" stroke-width="1.2"/>
+  <text x="311" y="207" font-size="14" font-weight="500" fill="#5B2D8E" text-anchor="middle" font-family="Georgia,serif">that bottlenose whales live right in front of their noses.</text>
+  <text x="311" y="232" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">병코고래가 바로 코앞에 산다는(동격 that절)</text>
   <line x1="10" y1="288" x2="950" y2="288" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="10" y="310" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">고래가 대양의 차갑고 트인 물에서만 산다는 것은 흔한 편견이며, 그리스 출신 내 동포 대부분은 병코고래가 바로 그들의 코앞에 산다는 사실을 알지 못한다.  [be aware of = 타동사 · 가주어 It~that · the fact+동격 that절]</text>
+  <text x="10" y="310" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">고래가 대양의 차갑고 트인 물에서만 산다는 것은 흔한 편견이며, 그리스 출신 내 동포 대부분은 병코고래가 바로 그들의 코앞에 산다는 사실을 알지 못한다.</text>
+  <text x="10" y="328" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">[be aware of = 타동사 · 가주어 It~that · the fact+동격 that절]</text>
   <defs><marker id="sd2arr11" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#C0392B"/></marker></defs>
   <path d="M 443 66 C 443 88, 111 88, 111 70" fill="none" stroke="#C0392B" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#sd2arr11)"/>
+  <path d="M 311 244 C 311 266, 48 266, 48 248" fill="none" stroke="#C0392B" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#sd2arr11)"/>
   <rect x="213" y="79" width="128" height="18" rx="4" fill="#FBE9E7"/>
   <text x="277" y="92" font-size="11" font-weight="700" fill="#C0392B" text-anchor="middle" font-family="sans-serif">진주어 that절 → It</text>
-  <path d="M 226 244 C 226 266, 566 266, 566 176" fill="none" stroke="#C0392B" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#sd2arr11)"/>
-  <rect x="319" y="257" width="154" height="18" rx="4" fill="#FBE9E7"/>
-  <text x="396" y="270" font-size="11" font-weight="700" fill="#C0392B" text-anchor="middle" font-family="sans-serif">동격 that절 → the fact</text>
+  <rect x="103" y="257" width="154" height="18" rx="4" fill="#FBE9E7"/>
+  <text x="180" y="270" font-size="11" font-weight="700" fill="#C0392B" text-anchor="middle" font-family="sans-serif">동격 that절 → the fact</text>
 </svg>
     </div>
     <div class="s-kr">고래가 대양의 차갑고 트인 물에서만 산다는 것은 흔한 편견이며, 그리스 출신 내 동포 대부분은 병코고래가 바로 그들의 코앞에 산다는 사실을 <span class="pr">(= be aware of = ~을 알다 · not aware of = 모르다)</span> 알지 못한다.<span class="s-extra" style="display:block;margin-top:7px;padding:8px 12px;background:#f3e8fb;border-left:3px solid #8b5cc0;color:#43305c;border-radius:5px;font-size:12.5px;line-height:1.65;">💬 <strong>추가해설</strong> — <strong>It ~ that</strong>(가주어–진주어)로 절1이 열리고, <strong>be aware of + the fact + 동격 that절</strong>이 절2의 핵. be aware of는 타동사처럼 목적어(the fact)를 받고, that절이 그 fact를 부연.</span></div>
@@ -1188,7 +1206,7 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <div class="s-kr-wrap">
     <div class="s-sd">
       <span class="s-sd-label">📐 문장 구조도</span>
-      <svg viewBox="0 0 960 286" xmlns="http://www.w3.org/2000/svg" data-sd2="full">
+      <svg viewBox="0 0 960 304" xmlns="http://www.w3.org/2000/svg" data-sd2="full">
   <rect x="10" y="10" width="439" height="28" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1.2"/>
   <text x="230" y="29" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" font-family="Georgia,serif">The division of Europe into a number of independent states,</text>
   <text x="230" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">유럽이 다수의 독립 국가로 분리된 것은(S)</text>
@@ -1205,7 +1223,8 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <text x="230" y="207" font-size="14" font-weight="500" fill="#9A3D00" text-anchor="middle" font-family="Georgia,serif">the most beneficial consequences to the liberty of mankind.</text>
   <text x="230" y="232" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">인류의 자유에 가장 이로운 결과를(O)</text>
   <line x1="10" y1="250" x2="950" y2="250" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="10" y="272" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">유럽이 다수의 독립 국가로 분리된 것은 — 그러나 종교·언어·관습의 전반적 유사성으로 서로 연결되어 있는데 — 인류의 자유에 가장 이로운 결과를 낳는다.  [be productive of = 타동사 · connected~는 삽입 분사구]</text>
+  <text x="10" y="272" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">유럽이 다수의 독립 국가로 분리된 것은 — 그러나 종교·언어·관습의 전반적 유사성으로 서로 연결되어 있는데 — 인류의 자유에 가장 이로운 결과를 낳는다. [be</text>
+  <text x="10" y="290" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">productive of = 타동사 · connected~는 삽입 분사구]</text>
   <defs><marker id="sd2arr12" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#C0392B"/></marker></defs>
   <path d="M 595 66 C 595 88, 230 88, 230 70" fill="none" stroke="#C0392B" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#sd2arr12)"/>
   <rect x="310" y="79" width="204" height="18" rx="4" fill="#FBE9E7"/>
@@ -1369,18 +1388,18 @@ footer{text-align:center;padding:32px 16px;font-family:'JetBrains Mono',monospac
   <rect x="192" y="10" width="205" height="28" rx="3" fill="#F3E8FF" stroke="#C9A0E8" stroke-width="1.2"/>
   <text x="294" y="29" font-size="14" font-weight="500" fill="#5B2D8E" text-anchor="middle" font-family="Georgia,serif">to go with the tide</text>
   <text x="294" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">시류를 따르는 것이(진주어 to부정사)</text>
-  <rect x="405" y="10" width="360" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
-  <text x="585" y="29" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">than to try to force one's way</text>
-  <text x="585" y="54" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">자기 길을 억지로 밀고 나아가려는 것보다(비교·force one's way)</text>
-  <rect x="10" y="82" width="183" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
-  <text x="102" y="101" font-size="14" font-weight="500" fill="#444444" text-anchor="middle" font-family="Georgia,serif">against public opinion.</text>
-  <text x="102" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">여론에 맞서(부사구·M)</text>
+  <rect x="10" y="82" width="360" height="28" rx="3" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1.2"/>
+  <text x="190" y="101" font-size="14" font-weight="500" fill="#27500A" text-anchor="middle" font-family="Georgia,serif">than to try to force one's way</text>
+  <text x="190" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">자기 길을 억지로 밀고 나아가려는 것보다(비교·force one's way)</text>
+  <rect x="378" y="82" width="183" height="28" rx="3" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1.2"/>
+  <text x="470" y="101" font-size="14" font-weight="500" fill="#444444" text-anchor="middle" font-family="Georgia,serif">against public opinion.</text>
+  <text x="470" y="126" font-size="11" font-weight="400" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">여론에 맞서(부사구·M)</text>
   <line x1="10" y1="182" x2="950" y2="182" stroke="#e0e0e0" stroke-width="1"/>
   <text x="10" y="204" font-size="13" font-weight="400" fill="#333" text-anchor="start" font-family="sans-serif">시류를 따르는 것이 여론에 맞서 자기 길을 억지로 밀어붙이려 하는 것보다 더 쉽다.  [force one's way = 억지로 나아가다 · 가주어 It~비교]</text>
   <defs><marker id="sd2arr16" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#C0392B"/></marker></defs>
-  <path d="M 585 66 C 585 160, 102 160, 102 142" fill="none" stroke="#C0392B" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#sd2arr16)"/>
-  <rect x="172" y="151" width="343" height="18" rx="4" fill="#FBE9E7"/>
-  <text x="343" y="164" font-size="11" font-weight="700" fill="#C0392B" text-anchor="middle" font-family="sans-serif">force one's way + against ~ = ~에 맞서 억지로 나아가다</text>
+  <path d="M 190 138 C 190 160, 470 160, 470 142" fill="none" stroke="#C0392B" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#sd2arr16)"/>
+  <rect x="158" y="151" width="343" height="18" rx="4" fill="#FBE9E7"/>
+  <text x="330" y="164" font-size="11" font-weight="700" fill="#C0392B" text-anchor="middle" font-family="sans-serif">force one's way + against ~ = ~에 맞서 억지로 나아가다</text>
 </svg>
     </div>
     <div class="s-kr">시류를 따르는 것이 여론에 맞서 자기 길을 억지로 밀어붙이려 하는 것보다 <span class="pr">(= force one's way = 억지로 헤치고 나아가다 · go with the tide = 시류를 따르다)</span> 더 쉽다.<span class="s-extra" style="display:block;margin-top:7px;padding:8px 12px;background:#fff2e8;border-left:3px solid #d98a4a;color:#5c4433;border-radius:5px;font-size:12.5px;line-height:1.65;">💬 <strong>추가해설</strong> — <strong>It is easier A than B</strong>(가주어 It, 진주어 to부정사 비교). <strong>force one's way</strong> = 억지로 밀어붙이며 나아가다. go with the tide = 시류를 따르다.</span></div>
@@ -2906,5 +2925,214 @@ document.addEventListener("DOMContentLoaded",function(){
   hideSummary();
 })();
 </script>
+<!-- KO_TTS:BEGIN S1.1 · SEMOGU 구조도 구간 더빙 · 본문 데이터 무변경 -->
+<script>
+(function(){
+  if(!('speechSynthesis' in window)||window.__KO_TTS)return;
+  window.__KO_TTS='S1.1';
+  var SS=window.speechSynthesis, session=0, activeBtn=null, hot=[], chain=false, cur=null, opened=null;
+  var RKEY='kd_rate', DEF=0.9;
+  var MODE='chunk', RATE=DEF;
+  try{MODE=localStorage.getItem('kd_mode')||MODE;RATE=+(localStorage.getItem(RKEY)||RATE);}catch(e){}
+
+  function voice(prefix){
+    var v=SS.getVoices();
+    return v.find(function(x){return x.lang.replace('_','-').indexOf(prefix)===0&&/Google/.test(x.name);})
+        || v.find(function(x){return x.lang.replace('_','-').indexOf(prefix)===0;})||null;
+  }
+  /* 읽기용 정리 — 화면 표시는 그대로 두고 소리만 다듬는다.
+     [패턴 표기]·(S)(V) 같은 괄호 표지(겹괄호 포함)·화살표·등호를 빼고 읽는다. */
+  function cleanKo(t){
+    /* S1.1 생략 복원 상자: 라벨이 「(뜻)(표지)」 꼴이면 앞 괄호가 뜻이므로 읽는다 — 예) (산다)(V₂ 생략 → 보충).
+       단, 앞 괄호가 문법 용어뿐이면(유도부사·가주어 등) 읽지 않는다. */
+    var g=t.match(/^\s*\(([^()]+)\)\s*(?=\()/);
+    if(g&&!/유도부사|가주어|진주어|조동사|대시/.test(g[1]))t=g[1]+' '+t.slice(g[0].length);
+    t=t.replace(/\[[^\]]*\]/g,' ');
+    for(var i=0;i<6;i++){var n=t.replace(/\([^()]*\)/g,' ');if(n===t)break;t=n;}
+    return t.replace(/[()~∼→=—–‖·↔:]/g,' ').replace(/[‘’'“”"「」]/g,'').replace(/\s+/g,' ').trim();
+  }
+  /* 영어: 생략 복원 괄호 (lives) 는 괄호만 떼고 읽고, 풀어쓰기 표지 = 와 대시는 읽지 않는다 */
+  function cleanEn(t){
+    return t.replace(/[‘’]/g,"'").replace(/[“”]/g,'"').replace(/[()=—–]/g,' ').replace(/\s+/g,' ').trim();
+  }
+  /* 긴 전체 해석은 쉼표·마침표 단위로 나눠 읽는다(크롬 장문 끊김 예방) */
+  function pieces(t){
+    if(t.length<=70)return [t];
+    var m=t.match(/[^,.;?!]+[,.;?!]*\s*/g)||[t], out=[], buf='';
+    m.forEach(function(p){if((buf+p).length>70&&buf){out.push(buf.trim());buf=p;}else buf+=p;});
+    if(buf.trim())out.push(buf.trim());
+    return out;
+  }
+
+  /* 짝 규칙 — build_semogu_sd2.py render_svg() 의 출력 형식에 맞춘다
+     영어 구간 = font-family 에 Georgia 가 든 text
+     한글 풀이 = 같은 x(±3), 영어보다 8~40 아래에 있는 Georgia 아닌 text 중 가장 가까운 것
+                 (화살표 라벨은 60 이상 아래라 걸리지 않는다)
+     전체 해석 = text-anchor="start" · fill="#333" 인 text (여러 줄이면 y 순으로 이어 붙임) */
+  function parse(svg){
+    var T=[].slice.call(svg.querySelectorAll('text')).map(function(t){
+      return {el:t,x:+t.getAttribute('x'),y:+t.getAttribute('y'),fam:t.getAttribute('font-family')||'',
+              fill:t.getAttribute('fill'),anc:t.getAttribute('text-anchor'),s:t.textContent};
+    });
+    var en=T.filter(function(t){return /Georgia/.test(t.fam);});
+    var rest=T.filter(function(t){return !/Georgia/.test(t.fam)&&t.anc!=='start';});
+    var rects=[].slice.call(svg.querySelectorAll('rect'));
+    en.sort(function(a,b){return a.y-b.y||a.x-b.x;});
+    var chunks=en.map(function(e){
+      var k=rest.filter(function(c){var d=c.y-e.y;return Math.abs(c.x-e.x)<3&&d>8&&d<40;})
+                .sort(function(a,b){return a.y-b.y;})[0];
+      var r=rects.filter(function(q){var x=+q.getAttribute('x'),y=+q.getAttribute('y'),w=+q.getAttribute('width'),h=+q.getAttribute('height');
+        return e.x>=x&&e.x<=x+w&&e.y>=y&&e.y<=y+h;})[0];
+      return {en:cleanEn(e.s),ko:k?cleanKo(k.s):'',rect:r||null,tEn:e.el,tKo:k?k.el:null};
+    });
+    var fe=T.filter(function(t){return t.anc==='start'&&t.fill==='#333';}).sort(function(a,b){return a.y-b.y;});
+    return {chunks:chunks,full:cleanKo(fe.map(function(t){return t.s;}).join(' ')),fullEls:fe.map(function(t){return t.el;})};
+  }
+  function unhot(){hot.forEach(function(el){el.classList.remove('kd-hot','kd-hot-t');});hot=[];}
+  function mark(els,cls){els.forEach(function(el){if(el){el.classList.add(cls);hot.push(el);}});}
+
+  /* 카드 펼침 — 더빙하는 동안만 펼치고, 우리가 펼친 카드만 끝나면 되돌린다 */
+  function openCard(card){
+    if(!card)return;
+    card.classList.add('kd-open');
+    if(!card.classList.contains('pinned')&&!card.classList.contains('tapped')){card.classList.add('pinned');opened=card;}
+  }
+  function closeCard(){
+    [].slice.call(document.querySelectorAll('.s-card.kd-open')).forEach(function(c){c.classList.remove('kd-open');});
+    if(opened){
+      var all=false;try{all=(typeof openAll!=='undefined'&&openAll);}catch(e){}
+      if(!all)opened.classList.remove('pinned');
+      opened=null;
+    }
+  }
+
+  /* reset = 음성 엔진은 건드리지 않고 더빙 상태·화면만 되돌림(다른 기능이 말하기 시작했을 때 그 발화를 끊지 않기 위함) */
+  function reset(){
+    session++;chain=false;unhot();cur=null;closeCard();
+    if(activeBtn){activeBtn.classList.remove('on');activeBtn.textContent=activeBtn.dataset.label;
+      var n=activeBtn.parentNode.querySelector('.kd-now');if(n)n.textContent='';activeBtn=null;}
+    var ab=document.getElementById('kdAll');if(ab){ab.classList.remove('on');ab.textContent=ab.dataset.label;}
+  }
+  function stop(){reset();SS.cancel();}
+  /* 공존 가드 ① 기존 "🔊 전체 읽기"가 돌고 있으면 그 기능의 정식 정지 경로(speakAll 재호출)로 먼저 끈다 */
+  function haltReadAll(){
+    try{if(typeof allPlaying!=='undefined'&&allPlaying&&typeof speakAll==='function')speakAll();}catch(e){}
+  }
+  function say(text,lang,my,before,done){
+    if(my!==session)return;
+    if(!text){done();return;}
+    var u=new SpeechSynthesisUtterance(text), fired=false, started=false;
+    u.lang=lang;u.rate=(lang==='ko-KR'?Math.min(RATE+0.1,1.15):RATE);
+    var v=voice(lang.slice(0,2));if(v)u.voice=v;
+    u.onstart=function(){started=true;if(my===session&&before)before();};
+    u.__kd=1;
+    u.onend=u.onerror=function(ev){
+      if(fired)return;fired=true;
+      if(my!==session)return;
+      /* 공존 가드 ③ 읽던 도중 다른 기능의 cancel() 로 끊기면 다음 구간으로 넘어가지 않고 조용히 정지 */
+      if(started&&ev&&(ev.error==='interrupted'||ev.error==='canceled')){reset();return;}
+      setTimeout(done,lang==='ko-KR'?350:150);
+    };
+    cur=u;                       /* 참조 유지(크롬 GC로 onend 누락 방지) */
+    SS.speak(u);
+  }
+  function play(btn,onFinish){
+    var host=btn.closest('.s-sd'), svg=host&&host.querySelector('svg');
+    if(!svg)return;
+    haltReadAll();
+    if(typeof stopSpeech==='function')stopSpeech();
+    var keep=chain;stop();chain=keep;
+    var my=session, P=parse(svg), now=btn.parentNode.querySelector('.kd-now');
+    var card=btn.closest('.s-card');
+    openCard(card);
+    activeBtn=btn;btn.classList.add('on');btn.textContent='⏹ 정지';
+    var fullEn=card?(card.dataset.text||''):'';
+    var steps=[];
+    if(MODE==='full')steps.push({t:cleanEn(fullEn),l:'en-US',b:function(){if(now)now.textContent='🔊 전체 영어';}});
+    P.chunks=P.chunks.filter(function(c){return /[A-Za-z0-9]/.test(c.en);});   /* 문장부호만 있는 상자는 읽지 않음 */
+    P.chunks.forEach(function(c,i){
+      var tag='('+(i+1)+'/'+P.chunks.length+') ';
+      if(MODE!=='ko')steps.push({t:c.en,l:'en-US',b:function(){unhot();mark([c.rect],'kd-hot');mark([c.tEn],'kd-hot-t');if(now)now.textContent=tag+c.en;}});
+      if(c.ko)steps.push({t:c.ko,l:'ko-KR',b:function(){unhot();mark([c.rect],'kd-hot');mark([c.tKo],'kd-hot-t');if(now)now.textContent=tag+c.en+' → '+c.ko;}});
+    });
+    pieces(P.full).forEach(function(p){
+      steps.push({t:p,l:'ko-KR',b:function(){unhot();mark(P.fullEls,'kd-hot-t');if(now)now.textContent='🇰🇷 전체 해석';}});
+    });
+    var i=0;
+    (function next(){
+      if(my!==session)return;
+      if(i>=steps.length){var k=chain;chain=false;stop();if(k&&onFinish){chain=true;onFinish();}return;}
+      var s=steps[i++];say(s.t,s.l,my,s.b,next);
+    })();
+    setTimeout(function(){
+      if(my===session&&SS.getVoices().length&&!voice('ko')&&now)now.textContent+='  ⚠ 이 기기에 한국어 음성이 없어 한글 부분이 재생되지 않을 수 있습니다.';
+    },800);
+  }
+
+  function bar(svg){
+    var d=document.createElement('div');d.className='kd-bar';
+    d.innerHTML='<button type="button" class="kd-btn kd-play" data-label="🎧 구간 더빙 (영→한)">🎧 구간 더빙 (영→한)</button><span class="kd-now"></span>';
+    svg.parentNode.insertBefore(d,svg.nextSibling);
+  }
+  function init(){
+    [].slice.call(document.querySelectorAll('.s-card .s-sd svg')).forEach(bar);
+    var ctl=document.querySelector('#readingView .controls');
+    if(ctl&&document.querySelector('.kd-play')){
+      var w=document.createElement('div');w.className='kd-all';
+      w.innerHTML='<button type="button" class="kd-btn" id="kdAll" data-label="🎧 전체 구조도 연속 더빙">🎧 전체 구조도 연속 더빙</button>'
+        +'<select class="kd-sel" id="kdMode"><option value="chunk">구간 영→한 + 전체 해석</option><option value="full">전체 영어 → 구간 영→한 → 전체 해석</option><option value="ko">한글만 (구간 + 전체)</option></select>'
+        +'<select class="kd-sel" id="kdRate"><option value="0.75">느리게</option><option value="0.9">보통</option><option value="1.05">빠르게</option></select>';
+      ctl.parentNode.insertBefore(w,ctl.nextSibling);
+      var ms=document.getElementById('kdMode'),rs=document.getElementById('kdRate');
+      if(ms){ms.value=MODE;if(!ms.value){MODE='chunk';ms.value=MODE;}}
+      if(rs){rs.value=String(RATE);if(!rs.value){RATE=DEF;rs.value=String(RATE);}}
+    }
+  }
+  /* s-card 의 클릭 리스너(영어 읽기·펼침 토글)보다 먼저 받기 위해 document capture 사용 */
+  document.addEventListener('click',function(e){
+    var t=e.target.closest&&e.target.closest('.kd-bar,.kd-all');
+    if(!t)return;
+    e.stopPropagation();e.stopImmediatePropagation();
+    var b=e.target.closest('.kd-play');
+    if(b){if(activeBtn===b){stop();}else{chain=false;play(b);}return;}
+    if(e.target.id==='kdAll'){
+      var ab=e.target;
+      if(ab.classList.contains('on')){stop();return;}
+      /* 「단어만 노출」 모드에서는 구조도가 숨겨지므로 먼저 해제한다 */
+      try{if(typeof vocabOnly!=='undefined'&&vocabOnly&&typeof toggleVocab==='function')toggleVocab();}catch(x){}
+      var list=[].slice.call(document.querySelectorAll('.s-card .s-sd .kd-play')),k=0;
+      stop();chain=true;
+      (function go(){
+        if(k>=list.length){stop();return;}
+        var btn=list[k++];
+        play(btn,function(){ab.classList.add('on');ab.textContent='⏹ 연속 더빙 정지';setTimeout(go,500);});
+        ab.classList.add('on');ab.textContent='⏹ 연속 더빙 정지';
+        var c=btn.closest('.s-card');
+        setTimeout(function(){if(chain&&c)c.scrollIntoView({behavior:'smooth',block:'center'});},120);
+      })();
+    }
+  },true);
+  document.addEventListener('dblclick',function(e){if(e.target.closest&&e.target.closest('.kd-bar,.kd-all')){e.stopPropagation();e.stopImmediatePropagation();}},true);
+  document.addEventListener('change',function(e){
+    if(e.target.id==='kdMode'){MODE=e.target.value;try{localStorage.setItem('kd_mode',MODE);}catch(x){}stop();}
+    if(e.target.id==='kdRate'){RATE=+e.target.value;try{localStorage.setItem(RKEY,String(RATE));}catch(x){}stop();}
+  });
+  /* 공존 가드 ② 더빙 중에 다른 기능(단어장 🔊 speakWord 등)이 speak() 하면 더빙을 조용히 정지.
+     speechSynthesis 인스턴스에만 덧씌우며(원형 무변경) 실패해도 가드 ③이 받는다. */
+  try{
+    var nativeSpeak=SS.speak;
+    SS.speak=function(u){if(!(u&&u.__kd)&&(activeBtn||chain))reset();return nativeSpeak.call(SS,u);};
+  }catch(e){}
+  /* 기존 영어 읽기(🔊·전체 읽기)·화면 전환(키 해석법/탭)·단어만 노출을 누르면 더빙 중단 */
+  document.addEventListener('click',function(e){
+    if((activeBtn||chain)&&e.target.closest&&e.target.closest('.speak-icon,.wave,#btnAll,#btnVocab,#secNav button,.view-tab'))stop();
+  },true);
+  window.addEventListener('beforeunload',function(){SS.cancel();});
+  SS.getVoices();
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+  window.__kdParse=parse;
+})();
+</script>
+<!-- KO_TTS:END -->
 </body>
 </html>
