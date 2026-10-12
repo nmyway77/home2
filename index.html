@@ -1684,8 +1684,7 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
     setHash(name);
   }
   function openFromList(u){
-    openHub(u);
-    setHash('p=' + String(u).replace(/^https?:\/\/(www\.)?0505\.co\.kr\//i, ''));
+    openHub(u);   /* 주소창에는 허브 파일 주소를 표시하지 않음 */
   }
   /* 기존 스크립트의 페이지 이동은 이 함수로: 허브면 탭 아래에, 아니면 새 창으로 */
   window.goPage = function(u){
@@ -1724,11 +1723,7 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
 
   function fromHash(){
     var h = location.hash.replace('#', '');
-    if(h.indexOf('p=') === 0){
-      var p = h.slice(2);
-      try{ if(location.protocol !== 'file:' && isHub(p) && new URL(p, location.href).origin === location.origin){ openHub(p); } }catch(e){}
-      return;
-    }
+    if(h.indexOf('p=') === 0){ setHash(cur); return; }   /* 예전 방식 주소(#p=…)로 들어오면 주소만 정리 */
     if(h === 'mock' || h === 'gichul' || h === 'member') goTab(h);
   }
   window.addEventListener('hashchange', fromHash);
