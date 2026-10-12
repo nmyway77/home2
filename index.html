@@ -1638,7 +1638,8 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
   var frame = document.getElementById('hubFrame');
   var cur = 'mock', viewing = false, gotHeight = false, fbTimer = null;
 
-  function setHash(h){ try{ history.replaceState(null, '', '#' + h); }catch(e){} }
+  /* 주소창에는 아무것도 붙이지 않음: 탭·허브를 눌러도 주소는 그대로 (들어올 때 붙어 있던 #… 도 지움) */
+  function setHash(h){ try{ if(location.hash) history.replaceState(null, '', location.pathname + location.search); }catch(e){} }
   function setTab(name){
     cur = name;
     tabs.forEach(function(t){
