@@ -1399,6 +1399,15 @@ function buildReading() {
 }
 function rdOpenAll(open) { document.querySelectorAll('#readView details.ans').forEach(d => d.open = open); }
 
+
+/* 네비 클릭 시 콘텐츠 첫 상단으로 (네비는 sticky로 고정 유지) */
+function scrollToContentTop() {
+  const nav = document.querySelector('.type-nav-wrap');
+  const cont = document.querySelector('.container');
+  const top = cont.getBoundingClientRect().top + window.scrollY - (nav ? nav.offsetHeight : 0);
+  if (window.scrollY > top) window.scrollTo({ top, behavior: 'auto' });
+}
+
 /* ══ 상태 ══ */
 let curType = 'all', curMode = 'explain', arrBuilt = false;
 let scores = {}, dragSrc = null;
@@ -1410,6 +1419,7 @@ document.querySelectorAll('.nav-tab').forEach(tab => {
     document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
     applyFilter();
+    scrollToContentTop();
   });
 });
 document.querySelectorAll('.sub-tab').forEach(tab => {
@@ -1428,6 +1438,7 @@ document.querySelectorAll('.sub-tab').forEach(tab => {
     if (curMode === 'arrange' && !arrBuilt) { buildArrange(); arrBuilt = true; }
     if (curMode === 'point' && !ptBuilt) { buildPoint(); ptBuilt = true; }
     applyFilter();
+    scrollToContentTop();
   });
 });
 
