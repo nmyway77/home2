@@ -433,6 +433,7 @@ let currentUnit = 0;
 let currentTab  = "vocab";
 let spellScores   = {};
 let meaningScores = {};
+let printOrder = {spell:null, meaning:null};
 
 let _voicesCache = [];
 function _loadVoices(){ try{ _voicesCache = window.speechSynthesis ? (speechSynthesis.getVoices()||[]) : []; }catch(e){ _voicesCache=[]; } }
@@ -485,6 +486,7 @@ function changeUnit(idx){
   const cnt = UNITS[currentUnit].length;
   document.getElementById("unitInfoBadge").textContent = cnt > 0 ? cnt + " 단어" : "준비중";
   spellScores = {}; meaningScores = {};
+  printOrder = {spell:null, meaning:null};
   renderTab();
 }
 function prevUnit(){if(currentUnit>0) changeUnit(currentUnit-1);}
@@ -676,7 +678,9 @@ function checkMeaning(i, btn){
 }
 
 function buildPrintView(type){
-  const words  = UNITS[currentUnit];
+  const baseWords = UNITS[currentUnit];
+  const order  = printOrder[type];
+  const words  = order ? order.map(k=>baseWords[k]) : baseWords;
   const boxId  = type === "spell" ? "printSpellContent" : "printMeaningContent";
   const box    = document.getElementById(boxId);
   box.innerHTML = "";
@@ -697,11 +701,15 @@ function buildPrintView(type){
   box.innerHTML = `
     <div class="print-view-header">
       <span class="print-view-title">🖨️ Day ${unitNum} — ${title} 프린트</span>
-      <button class="print-exec-btn" onclick="execPrint('${type}')">🖨️ 인쇄하기</button>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="print-exec-btn" style="background:#6A1B9A;" onclick="shufflePrint('${type}')">🔀 순서 섞기</button>
+        ${order ? `<button class="print-exec-btn" style="background:#888;" onclick="resetPrintOrder('${type}')">↺ 원래 순서</button>` : ""}
+        <button class="print-exec-btn" onclick="execPrint('${type}')">🖨️ 인쇄하기</button>
+      </div>
     </div>
     <div class="print-table-wrap" id="printContent-${type}">
       <div class="print-unit-title">✦ 능률보카 수능 고난도 Day ${unitNum} — ${title}</div>
-      <div class="print-unit-sub">목동서로영어학원 · 0505.co.kr</div>
+      <div class="print-unit-sub">목동서로영어학원 · 0505.co.kr${order ? " · 순서 섞음" : ""}</div>
       <div class="print-name-row">
         <span>이름: <span class="print-name-box"></span></span>
         <span>점수: <span class="print-name-box"></span></span>
@@ -715,6 +723,18 @@ function buildPrintView(type){
 }
 
 function execPrint(type){ window.print(); }
+
+function shufflePrint(type){
+  const n = UNITS[currentUnit].length;
+  const arr = Array.from({length:n},(_,i)=>i);
+  for(let i=n-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
+  printOrder[type] = arr;
+  buildPrintView(type);
+}
+function resetPrintOrder(type){
+  printOrder[type] = null;
+  buildPrintView(type);
+}
 
 function showEmpty(box){
   const u = currentUnit + 1;
