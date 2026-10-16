@@ -140,6 +140,21 @@ a{color:inherit;}
  .maker .mk1{font-size:18px;letter-spacing:3px;}
 }
 </style>
+<!-- 인덱스 임베드 지원: 인덱스(0505.co.kr) 안에 불러왔을 때만 홈 버튼·푸터를 숨기고 내용 높이를 인덱스에 알려 줌. 단독 접속 시에는 아무 영향 없음 -->
+<script>
+(function(){
+  if(window.self === window.top) return;
+  document.documentElement.classList.add('embedded');
+  function send(){ try{ if(document.body) window.parent.postMessage({seoroHub:1, h:Math.ceil(document.body.getBoundingClientRect().height)}, '*'); }catch(e){} }
+  function init(){ send(); if(window.ResizeObserver) new ResizeObserver(send).observe(document.body); window.addEventListener('load', send); }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
+<style>
+.embedded .home{display:none !important;}
+.embedded footer{display:none !important;}
+.embedded body{min-height:0 !important;}
+</style>
 </head>
 <body>
 <header class="top">
@@ -205,11 +220,11 @@ function showBook(b){
      <div class="units">${c.units.map(u=>`<b>UNIT ${u[0]}</b>${u[1]}`).join('<br>')}</div></div>
     <div class="ch-body">
      <div class="grp"><h3>번호순 세트 <small>책 문항 순서대로 풉니다</small></h3>
-      <div class="tickets">${c.sets.map(x=>`<a class="tk" href="${BASE}${bk.dir}/daechi${b}-ch${c.no}-s${x.s}/">
+      <div class="tickets">${c.sets.map(x=>`<a class="tk" target="_blank" rel="noopener" href="${BASE}${bk.dir}/daechi${b}-ch${c.no}-s${x.s}/">
        <div class="r">${x.rng.replace('번','')}<em>번</em></div><div class="d">${x.n}문항, ${x.min}분, 100점 만점</div>
        <div class="f"><i>복수 정답</i>${(x.tags||[]).map(t=>`<i>${t}</i>`).join('')}</div></a>`).join('')}</div></div>
      ${c.usets&&c.usets.length?`<div class="grp"><h3>UNIT별 세트 <small>약한 파트만 골라 집중해서 풉니다</small></h3>
-      <div class="urows">${c.usets.map(x=>`<a class="ur" href="${BASE}${bk.dir}/daechi${b}-ch${c.no}-u${x.u}/">
+      <div class="urows">${c.usets.map(x=>`<a class="ur" target="_blank" rel="noopener" href="${BASE}${bk.dir}/daechi${b}-ch${c.no}-u${x.u}/">
        <span class="ul">${x.ul}</span><span><span class="un">${x.nm}</span><span class="bar"><i style="width:${Math.round(x.n/maxU*100)}%"></i></span></span>
        <span class="uc"><b>${x.n}문항</b>${x.min}분</span></a>`).join('')}</div></div>`:''}
     </div></article>`;
