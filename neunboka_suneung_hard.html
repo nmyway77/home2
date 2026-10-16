@@ -228,6 +228,15 @@ body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;min-height:100vh
 .vcard-num{font-family:'JetBrains Mono',monospace;font-size:9px;background:var(--navy);
   color:white;padding:2px 6px;border-radius:3px;margin-right:4px;}
 .open-hint{font-size:10px;color:rgba(0,0,0,0.25);font-family:'JetBrains Mono',monospace;margin-top:3px;}
+/* ── 카드 보기 전환 (영어 먼저 / 뜻 먼저) ── */
+.card-mode-bar{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+.card-mode-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--navy);font-weight:700;}
+.card-mode-btn{border:1.5px solid rgba(31,56,100,0.25);background:white;color:var(--navy);border-radius:20px;
+  padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.2s;}
+.card-mode-btn.active{background:var(--navy);color:white;border-color:var(--navy);}
+.vcard-kr-front{font-size:14px;color:#2d2d4e;font-weight:700;line-height:1.6;flex:1;}
+.vcard-en-back{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.vcard-en-back .vcard-en{font-size:19px;}
 
 /* ── QUIZ CARDS ── */
 .touch-hint{background:var(--cream);border:1px solid rgba(184,134,11,0.3);border-radius:8px;
@@ -514,14 +523,40 @@ function renderTab(){
   else if(currentTab === "printMeaning") buildPrintView("meaning");
 }
 
+/* 카드 보기 모드: "en" = 영어 먼저(클릭→뜻), "kr" = 뜻 먼저(클릭→철자) */
+let cardMode = "en";
+try{ const m = localStorage.getItem("suneungHardCardMode"); if(m==="kr"||m==="en") cardMode = m; }catch(e){}
+/* 카드 순서 섞기: on 이면 무작위 순서, unit 이 바뀌면 새로 섞음 */
+const cardShuffle = {on:false, order:null, unit:-1};
+function shuffledIdx(n){ const a=[...Array(n).keys()]; for(let i=n-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function toggleCardShuffle(){ cardShuffle.on = !cardShuffle.on; cardShuffle.order = null; buildVocabCards(); }
+function reshuffleCards(){ cardShuffle.on = true; cardShuffle.order = null; buildVocabCards(); }
+function setCardMode(m){
+  cardMode = m;
+  try{ localStorage.setItem("suneungHardCardMode", m); }catch(e){}
+  buildVocabCards();
+}
+
 function buildVocabCards(){
   const box = document.getElementById("vocabContent");
   box.innerHTML = "";
   const words = UNITS[currentUnit];
   if(words.length === 0){ showEmpty(box); return; }
+  const bar = document.createElement("div");
+  bar.className = "card-mode-bar";
+  bar.innerHTML = `<span class="card-mode-label">카드 보기</span>
+    <button class="card-mode-btn ${cardMode==="en"?"active":""}" onclick="setCardMode('en')">🔤 영어 먼저</button>
+    <button class="card-mode-btn ${cardMode==="kr"?"active":""}" onclick="setCardMode('kr')">🇰🇷 뜻 먼저</button>
+    <span class="card-mode-label" style="margin-left:10px;">순서</span>
+    <button class="card-mode-btn ${cardShuffle.on?"":"active"}" onclick="if(cardShuffle.on) toggleCardShuffle()">📋 원래 순서</button>
+    <button class="card-mode-btn ${cardShuffle.on?"active":""}" onclick="reshuffleCards()">🔀 ${cardShuffle.on?"다시 섞기":"랜덤 섞기"}</button>`;
+  box.appendChild(bar);
+  if(cardShuffle.unit !== currentUnit){ cardShuffle.unit = currentUnit; cardShuffle.order = null; }
+  if(cardShuffle.on && (!cardShuffle.order || cardShuffle.order.length !== words.length)) cardShuffle.order = shuffledIdx(words.length);
+  const shown = cardShuffle.on ? cardShuffle.order.map(k=>words[k]) : words;
   const grid = document.createElement("div");
   grid.className = "vcard-grid";
-  words.forEach((v, i)=>{
+  shown.forEach((v, i)=>{
     const synHtml  = v.syn && v.syn.length ? `<div class="vcard-section"><div class="vcard-section-label">동의어</div><div class="vcard-items"><span class="vcard-syn">${v.syn.join(", ")}</span></div></div>` : "";
     const antHtml  = v.ant && v.ant.length ? `<div class="vcard-section"><div class="vcard-section-label">반의어</div><div class="vcard-items"><span class="vcard-ant">${v.ant.join(", ")}</span></div></div>` : "";
     const phraseHtml = v.phrases && v.phrases.length ? `<div class="vcard-section"><div class="vcard-section-label">어구 / 숙어</div><div class="vcard-items">${v.phrases.map(p=>`<div class="vcard-phrase">• ${p}</div>`).join("")}</div></div>` : "";
@@ -533,6 +568,27 @@ function buildVocabCards(){
       document.querySelectorAll(".vcard.open").forEach(c => c.classList.remove("open"));
       if(!isOpen) this.classList.add("open");
     };
+    if(cardMode === "kr"){
+      div.innerHTML = `
+      <div class="vcard-front">
+        <div class="vcard-en-row">
+          <span class="vcard-num">${String(i+1).padStart(2,"0")}</span>
+          <div class="vcard-kr-front">${v.kr}</div>
+        </div>
+        <div class="vcard-pos-kr">${v.pos} <span class="open-hint">클릭하면 철자 보기 ▼</span></div>
+      </div>
+      <div class="vcard-back">
+        <div class="vcard-back-inner">
+          <div class="vcard-en-back">
+            <div class="vcard-en">${v.en}</div>
+            <button class="vcard-speak" onclick="speakWord('${v.en}',event)">🔊</button>
+          </div>
+          ${synHtml}${antHtml}${phraseHtml}
+        </div>
+      </div>`;
+      grid.appendChild(div);
+      return;
+    }
     div.innerHTML = `
       <div class="vcard-front">
         <div class="vcard-en-row">
