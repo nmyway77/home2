@@ -138,6 +138,17 @@ body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;min-height:100vh
   display:flex;align-items:center;gap:7px;
 }
 .print-exec-btn:hover{background:#2E75B6;}
+.print-opts{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;
+  font-size:12px;color:var(--text);font-family:'Noto Sans KR',sans-serif;
+  background:white;border:1px solid rgba(0,0,0,0.08);border-radius:10px;
+  padding:8px 14px;margin-bottom:12px;box-shadow:0 1px 6px var(--shadow);}
+.print-opts label{display:flex;align-items:center;gap:4px;cursor:pointer;white-space:nowrap;}
+.print-opts input[type=checkbox]{width:14px;height:14px;accent-color:var(--navy);cursor:pointer;}
+.print-opts .popt-btn{background:white;border:1.5px solid var(--navy);color:var(--navy);
+  border-radius:6px;padding:4px 12px;font-size:12px;font-weight:700;cursor:pointer;}
+.print-opts .popt-btn:hover{background:var(--navy);color:white;}
+.pt .td-write .hint-letter{color:#999;font-family:Georgia,serif;letter-spacing:2px;font-size:12px;}
+.pt .td-write .answer-key{color:#B71C1C;font-weight:600;font-size:12px;}
 .print-table-wrap{
   background:white;border-radius:12px;
   box-shadow:0 2px 14px var(--shadow);
@@ -185,7 +196,7 @@ body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;min-height:100vh
 @media print{
   @page{size:A4;margin:14mm 12mm;}
   .top-nav,.watermark,.page-header,.unit-selector-wrap,
-  .view-tabs,.print-view-header,.print-exec-btn,footer{display:none!important;}
+  .view-tabs,.print-view-header,.print-exec-btn,.print-opts,footer{display:none!important;}
   .passage{padding:0!important;max-width:100%!important;}
   .view-panel{display:none!important;}
   #panelPrintSpell.active,#panelPrintMeaning.active{display:block!important;}
@@ -3670,8 +3681,36 @@ function checkMeaning(i, btn){
   if(sc) sc.textContent = ok + " / " + done + " 정답";
 }
 
+/* ── 프린트 옵션 (순서 섞기 기본 ON / 다시 섞기 / 첫 글자 힌트 / 정답지) ── */
+const PRINT_SEP = ";";   // 이 단어장의 뜻 구분자 (대표 의미 = 첫 구분자 앞)
+const printOpt = {
+  spell:   {shuffle:true,  hint:false, answer:false, order:null, unit:-1},
+  meaning: {shuffle:true,  hint:false, answer:false, order:null, unit:-1}
+};
+function makeOrder(n){ const a=[...Array(n).keys()]; for(let i=n-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function setPrintOpt(type, key, val){
+  const o = printOpt[type]; o[key] = val;
+  if(key==="shuffle" && val && !o.order) o.order = makeOrder(UNITS[currentUnit].length);
+  buildPrintView(type);
+}
+function reshufflePrint(type){
+  const o = printOpt[type]; o.shuffle = true; o.order = makeOrder(UNITS[currentUnit].length);
+  buildPrintView(type);
+}
+function firstLetterHint(v, isSpell){
+  if(isSpell){
+    const w = v.en.trim();
+    return w.split(" ").map(part=>part[0] + " _".repeat(Math.max(part.length-1,0))).join("   ");
+  }
+  const k = v.kr.split(PRINT_SEP)[0].split(",")[0].trim();
+  return k[0] + " ○".repeat(Math.min(Math.max(k.replace(/\s/g,"").length-1,0), 7));
+}
+
 function buildPrintView(type){
-  const words  = UNITS[currentUnit];
+  const baseWords = UNITS[currentUnit];
+  const opt = printOpt[type];
+  if(opt.unit !== currentUnit){ opt.unit = currentUnit; opt.order = opt.shuffle ? makeOrder(baseWords.length) : null; }
+  const words = (opt.shuffle && opt.order && opt.order.length===baseWords.length) ? opt.order.map(k=>baseWords[k]) : baseWords;
   const boxId  = type === "spell" ? "printSpellContent" : "printMeaningContent";
   const box    = document.getElementById(boxId);
   box.innerHTML = "";
@@ -3680,23 +3719,36 @@ function buildPrintView(type){
   const isSpell = type === "spell";
   const title   = isSpell ? "철자 쓰기" : "뜻 쓰기";
   const col1    = isSpell ? "한글뜻" : "영단어";
+  function printWrite(v){
+    if(opt.answer) return `<span class="answer-key">${isSpell ? v.en : v.kr.split(PRINT_SEP)[0].trim()}</span>`;
+    if(opt.hint)   return `<span class="hint-letter">${firstLetterHint(v, isSpell)}</span>`;
+    return "";
+  }
+  const titleTag = opt.answer ? ` <span style="color:#B71C1C;">[정답지]</span>` : "";
   function makeRows(arr, startNo){
     return arr.map((v, i)=>{
       const hint = isSpell ? v.kr.split(";")[0].trim() : v.en;
-      return `<tr><td class="td-no">${startNo+i}</td><td class="td-write"></td><td class="td-hint">${hint}</td></tr>`;
+      return `<tr><td class="td-no">${startNo+i}</td><td class="td-write">${printWrite(v)}</td><td class="td-hint">${hint}</td></tr>`;
     }).join("");
   }
   const pages = [];
   for(let p = 0; p < words.length; p += 40){
-    pages.push([words.slice(p, p+20), words.slice(p+20, p+40), p]);
+    const chunk = words.slice(p, p+40), h = Math.ceil(chunk.length/2);   // 페이지마다 좌/우 균등 분할
+    pages.push([chunk.slice(0, h), chunk.slice(h), p, h]);
   }
   box.innerHTML = `
     <div class="print-view-header">
       <span class="print-view-title">🖨️ ${unitNum}일차 — ${title} 프린트</span>
       <button class="print-exec-btn" onclick="execPrint('${type}')">🖨️ 인쇄하기</button>
     </div>
+    <div class="print-opts">
+      <label><input type="checkbox" ${opt.shuffle?"checked":""} onchange="setPrintOpt('${type}','shuffle',this.checked)"> 순서 섞기</label>
+      <button class="popt-btn" onclick="reshufflePrint('${type}')">다시 섞기</button>
+      <label><input type="checkbox" ${opt.hint?"checked":""} onchange="setPrintOpt('${type}','hint',this.checked)"> ${isSpell ? "첫 글자 힌트(철자)" : "첫 글자 힌트(뜻)"}</label>
+      <label><input type="checkbox" ${opt.answer?"checked":""} onchange="setPrintOpt('${type}','answer',this.checked)"> 정답지</label>
+    </div>
     <div class="print-table-wrap" id="printContent-${type}">
-      <div class="print-unit-title">✦ 능률보카 어원편 2021 ${unitNum}일차 — ${title}</div>
+      <div class="print-unit-title">✦ 능률보카 어원편 2021 ${unitNum}일차 — ${title}${titleTag}</div>
       <div class="print-unit-sub">목동서로영어학원 · 0505.co.kr</div>
       <div class="print-name-row">
         <span>이름: <span class="print-name-box"></span></span>
@@ -3704,7 +3756,7 @@ function buildPrintView(type){
       </div>
       ${pages.map(pg => `<div class="print-two-col">
         <table class="pt"><thead><tr><th class="td-no">No.</th><th>제시어</th><th>${col1}</th></tr></thead><tbody>${makeRows(pg[0],pg[2]+1)}</tbody></table>
-        <table class="pt"><thead><tr><th class="td-no">No.</th><th>제시어</th><th>${col1}</th></tr></thead><tbody>${makeRows(pg[1],pg[2]+21)}</tbody></table>
+        <table class="pt"><thead><tr><th class="td-no">No.</th><th>제시어</th><th>${col1}</th></tr></thead><tbody>${makeRows(pg[1],pg[2]+pg[3]+1)}</tbody></table>
       </div>`).join("")}
       <div class="print-wm">✦ 목동서로영어학원 · 본 자료는 목동서로영어학원에서 제작하였습니다 · 0505.co.kr ✦</div>
     </div>`;
