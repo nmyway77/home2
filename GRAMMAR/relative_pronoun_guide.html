@@ -633,6 +633,12 @@
     .ky-card.wide { break-inside: auto; }
   }
 
+
+  .pt-key { display: inline-block; font-family: 'Pretendard Variable', sans-serif; font-size: 10px; font-weight: 800; color: var(--accent); background: #FFF4DF; border: 1px solid #E4C589; border-radius: 3px; padding: 1px 5px; margin: 0 6px 0 -4px; cursor: pointer; line-height: 1.5; white-space: nowrap; align-self: flex-start; margin-top: 4px; }
+  .pt-key:hover { background: var(--gold); color: var(--navy-950); }
+  .ky-card.ky-flash { box-shadow: 0 0 0 3px var(--gold); transition: box-shadow .3s; }
+  @media print { .pt-key { display: none !important; } }
+
   /* ═══ CAUTION BOX ═══ */
   .caution { margin-top: 14px; padding: 10px 14px; background: #FFF8F0; border: 1px dashed #E8C39B; border-radius: 3px; font-family: 'Pretendard Variable', sans-serif; font-size: 12px; line-height: 1.65; color: var(--ink2); }
   .caution b { color: #A04A0E; font-weight: 800; }
@@ -733,7 +739,7 @@
       <span class="meta-tag">📍 주격 · 목적격 · 소유격 · what</span>
       <span class="meta-tag">🎯 that 전용 · 전치사 선택 · 계속적 · 복합관계대명사</span>
       <span class="meta-tag">✏️ 배열영작 95문항</span>
-      <span class="meta-tag">🎯 포인트 어법 119문항</span>
+      <span class="meta-tag">🎯 포인트 어법 134문항</span>
     </div>
   </div>
 </section>
@@ -1519,140 +1525,157 @@ const FORMS = {
 
 /* 포인트 어법 */
 const POINT = [
-  { type:'subj', s:'I know a girl [who / which] lives in Busan.', ans:'a', exp:'선행사 girl(사람) + 주어 자리 → <b>who</b>' },
-  { type:'subj', s:'This is the book [which / who] made me cry.', ans:'a', exp:'선행사 book(사물) → <b>which</b>' },
-  { type:'subj', s:'One of the students who [are / is] from Japan is my friend.', ans:'a', exp:'관계사절의 선행사는 <b>students</b>(복수) → are' },
-  { type:'subj', s:'The man [standing / who standing] there is my uncle.', ans:'a', exp:'<b>who is</b>를 통째로 생략 — who만 남기면 ✗' },
-  { type:'subj', s:'She has a dog [that / what] barks a lot.', ans:'a', exp:'선행사 dog 있음 → <b>that</b> (what은 선행사 ✗)' },
-  { type:'subj', s:'The girl [who lives / lives] next door is a nurse.', ans:'a', exp:'<b>주격은 생략 ✗</b>' },
-  { type:'subj', s:'The boy who [is / are] wearing a cap is my brother.', ans:'a', exp:'선행사 boy 단수 → <b>is</b>' },
-  { type:'subj', s:'This is the house [which was / was] built in 1990.', ans:'a', exp:'주격 which는 단독 생략 ✗ (which was 통째로는 생략 가능)' },
-  { type:'subj', s:'I know a man who I think [is / he is] honest.', ans:'a', exp:'I think는 <b>삽입절</b> — who가 주어이므로 he 또 쓰기 ✗' },
-  { type:'subj', s:'Look at the boy and his dog [that / which] are running.', ans:'a', exp:'선행사 <b>사람 + 동물</b> → that' },
+  { type:'subj', key:2, s:'I know a girl [who / which] lives in Busan.', ans:'a', exp:'선행사 girl(사람) + 주어 자리 → <b>who</b>' },
+  { type:'subj', key:2, s:'This is the book [which / who] made me cry.', ans:'a', exp:'선행사 book(사물) → <b>which</b>' },
+  { type:'subj', key:4, s:'One of the students who [are / is] from Japan is my friend.', ans:'a', exp:'관계사절의 선행사는 <b>students</b>(복수) → are' },
+  { type:'subj', key:7, s:'The man [standing / who standing] there is my uncle.', ans:'a', exp:'<b>who is</b>를 통째로 생략 — who만 남기면 ✗' },
+  { type:'subj', key:5, s:'She has a dog [that / what] barks a lot.', ans:'a', exp:'선행사 dog 있음 → <b>that</b> (what은 선행사 ✗)' },
+  { type:'subj', key:7, s:'The girl [who lives / lives] next door is a nurse.', ans:'a', exp:'<b>주격은 생략 ✗</b>' },
+  { type:'subj', key:4, s:'The boy who [is / are] wearing a cap is my brother.', ans:'a', exp:'선행사 boy 단수 → <b>is</b>' },
+  { type:'subj', key:7, s:'This is the house [which was / was] built in 1990.', ans:'a', exp:'주격 which는 단독 생략 ✗ (which was 통째로는 생략 가능)' },
+  { type:'subj', key:2, s:'I know a man who I think [is / he is] honest.', ans:'a', exp:'I think는 <b>삽입절</b> — who가 주어이므로 he 또 쓰기 ✗' },
+  { type:'subj', key:2, s:'Look at the boy and his dog [that / which] are running.', ans:'a', exp:'선행사 <b>사람 + 동물</b> → that' },
 
-  { type:'obj', s:'I like the bag which my mom [made / made it] for me.', ans:'a', exp:'which가 이미 목적어 → <b>it ✗</b>' },
-  { type:'obj', s:'I remember the girl whom I [met / met her] at the party.', ans:'a', exp:'whom = her → <b>her 중복 ✗</b>' },
-  { type:'obj', s:'The book which I [bought / bought it] last Saturday is very interesting.', ans:'a', exp:'목적어 자리 비움' },
-  { type:'obj', s:'She is the teacher that many students [respect / respect her].', ans:'a', exp:'that = her → 중복 ✗' },
-  { type:'obj', s:'This is the boy whom I wanted to [see / see him].', ans:'a', exp:'see의 목적어 = whom → him ✗' },
-  { type:'obj', s:'I met a woman that [can / she can] speak six languages.', ans:'a', exp:'that이 <b>주어</b> → she 또 쓰기 ✗' },
-  { type:'obj', s:'Did you eat the cake which I made [it / ×] for you?', ans:'b', exp:'관계대명사 문장 → 목적어 <b>비움</b>' },
-  { type:'obj', s:'I like the bag. My mom made [it / ×] for me.', ans:'a', exp:'관계대명사가 <b>없는</b> 두 문장 → 목적어 it 필요' },
-  { type:'obj', s:'I found the book which I was looking [for / for it].', ans:'a', exp:'전치사 for는 남기고 <b>it은 ✗</b>' },
-  { type:'obj', s:'The movie [that we saw / we saw it] yesterday was boring.', ans:'a', exp:'that 생략도 가능하지만 <b>it 중복은 ✗</b>' },
+  { type:'obj', key:3, s:'I like the bag which my mom [made / made it] for me.', ans:'a', exp:'which가 이미 목적어 → <b>it ✗</b>' },
+  { type:'obj', key:3, s:'I remember the girl whom I [met / met her] at the party.', ans:'a', exp:'whom = her → <b>her 중복 ✗</b>' },
+  { type:'obj', key:3, s:'The book which I [bought / bought it] last Saturday is very interesting.', ans:'a', exp:'목적어 자리 비움' },
+  { type:'obj', key:3, s:'She is the teacher that many students [respect / respect her].', ans:'a', exp:'that = her → 중복 ✗' },
+  { type:'obj', key:3, s:'This is the boy whom I wanted to [see / see him].', ans:'a', exp:'see의 목적어 = whom → him ✗' },
+  { type:'obj', key:3, s:'I met a woman that [can / she can] speak six languages.', ans:'a', exp:'that이 <b>주어</b> → she 또 쓰기 ✗' },
+  { type:'obj', key:3, s:'Did you eat the cake which I made [it / ×] for you?', ans:'b', exp:'관계대명사 문장 → 목적어 <b>비움</b>' },
+  { type:'obj', key:3, s:'I like the bag. My mom made [it / ×] for me.', ans:'a', exp:'관계대명사가 <b>없는</b> 두 문장 → 목적어 it 필요' },
+  { type:'obj', key:8, s:'I found the book which I was looking [for / for it].', ans:'a', exp:'전치사 for는 남기고 <b>it은 ✗</b>' },
+  { type:'obj', key:7, s:'The movie [that we saw / we saw it] yesterday was boring.', ans:'a', exp:'that 생략도 가능하지만 <b>it 중복은 ✗</b>' },
 
-  { type:'poss', s:'I have a friend [whose / who] father is a doctor.', ans:'a', exp:'His father → <b>whose father</b>' },
-  { type:'poss', s:'This is the house [whose / which] roof is red.', ans:'a', exp:'Its roof → <b>whose roof</b> (사물도 whose)' },
-  { type:'poss', s:'I have a friend whose father [is / he is] a doctor.', ans:'a', exp:'whose father가 주어 → he 중복 ✗' },
-  { type:'poss', s:'She is the girl [whose / whom] bike I borrowed.', ans:'a', exp:'her bike → <b>whose bike</b>' },
-  { type:'poss', s:'I know a boy [whose / who\'s] sister is a singer.', ans:'a', exp:"who's = who is → 소유격 아님" },
-  { type:'poss', s:'The man [whose / whose the] car was stolen called the police.', ans:'a', exp:'whose 뒤 <b>관사 ✗</b>' },
-  { type:'poss', s:'This is a house [the roof of which / the roof whose] is red.', ans:'a', exp:'사물 → <b>the roof of which</b> = whose roof' },
-  { type:'poss', s:'I have a friend. [His / Whose] father is a doctor.', ans:'a', exp:'관계대명사 없는 독립 문장 → <b>His</b>' },
-  { type:'poss', s:'She is the writer whose books [sell / sells] well.', ans:'a', exp:'whose <b>books</b>(복수)가 주어 → sell' },
-  { type:'poss', s:'The student [whose / whom] phone rang was embarrassed.', ans:'a', exp:'her phone → whose phone' },
+  { type:'poss', key:10, s:'I have a friend [whose / who] father is a doctor.', ans:'a', exp:'His father → <b>whose father</b>' },
+  { type:'poss', key:10, s:'This is the house [whose / which] roof is red.', ans:'a', exp:'Its roof → <b>whose roof</b> (사물도 whose)' },
+  { type:'poss', key:3, s:'I have a friend whose father [is / he is] a doctor.', ans:'a', exp:'whose father가 주어 → he 중복 ✗' },
+  { type:'poss', key:10, s:'She is the girl [whose / whom] bike I borrowed.', ans:'a', exp:'her bike → <b>whose bike</b>' },
+  { type:'poss', key:10, s:'I know a boy [whose / who\'s] sister is a singer.', ans:'a', exp:"who's = who is → 소유격 아님" },
+  { type:'poss', key:10, s:'The man [whose / whose the] car was stolen called the police.', ans:'a', exp:'whose 뒤 <b>관사 ✗</b>' },
+  { type:'poss', key:10, s:'This is a house [the roof of which / the roof whose] is red.', ans:'a', exp:'사물 → <b>the roof of which</b> = whose roof' },
+  { type:'poss', key:10, s:'I have a friend. [His / Whose] father is a doctor.', ans:'a', exp:'관계대명사 없는 독립 문장 → <b>His</b>' },
+  { type:'poss', key:4, s:'She is the writer whose books [sell / sells] well.', ans:'a', exp:'whose <b>books</b>(복수)가 주어 → sell' },
+  { type:'poss', key:10, s:'The student [whose / whom] phone rang was embarrassed.', ans:'a', exp:'her phone → whose phone' },
 
-  { type:'that', s:'This is the best movie [that / what] I have ever seen.', ans:'a', exp:'<b>최상급</b> 선행사 → that' },
-  { type:'that', s:'He is the only person [that / which] can help us.', ans:'a', exp:'<b>the only</b> + 사람 → that (which ✗)' },
-  { type:'that', s:'Everything [that / what] he said was true.', ans:'a', exp:'선행사 everything 있음 → <b>that</b>' },
-  { type:'that', s:'I have a brother, [who / that] lives in Busan.', ans:'a', exp:'<b>콤마 뒤 that ✗</b>' },
-  { type:'that', s:'This is the house in [which / that] I live.', ans:'a', exp:'<b>전치사 뒤 that ✗</b>' },
-  { type:'that', s:'Look at the boy and his dog [that / who] are running.', ans:'a', exp:'사람 + 동물 → <b>that</b>' },
-  { type:'that', s:'I know [that / what] he is honest.', ans:'a', exp:'뒤가 <b>완전</b>(he is honest) → 접속사 that' },
-  { type:'that', s:'This is the first thing [that / what] I bought in Korea.', ans:'a', exp:'<b>서수</b> 선행사 → that' },
-  { type:'that', s:'All [that / what] glitters is not gold.', ans:'a', exp:'all = 선행사 → that' },
-  { type:'that', s:'There is nothing [that / what] we can do now.', ans:'a', exp:'<b>nothing</b>(-thing) → that' },
+  { type:'that', key:5, s:'This is the best movie [that / what] I have ever seen.', ans:'a', exp:'<b>최상급</b> 선행사 → that' },
+  { type:'that', key:5, s:'He is the only person [that / which] can help us.', ans:'a', exp:'<b>the only</b> + 사람 → that (which ✗)' },
+  { type:'that', key:5, s:'Everything [that / what] he said was true.', ans:'a', exp:'선행사 everything 있음 → <b>that</b>' },
+  { type:'that', key:9, s:'I have a brother, [who / that] lives in Busan.', ans:'a', exp:'<b>콤마 뒤 that ✗</b>' },
+  { type:'that', key:8, s:'This is the house in [which / that] I live.', ans:'a', exp:'<b>전치사 뒤 that ✗</b>' },
+  { type:'that', key:5, s:'Look at the boy and his dog [that / who] are running.', ans:'a', exp:'사람 + 동물 → <b>that</b>' },
+  { type:'that', key:6, s:'I know [that / what] he is honest.', ans:'a', exp:'뒤가 <b>완전</b>(he is honest) → 접속사 that' },
+  { type:'that', key:5, s:'This is the first thing [that / what] I bought in Korea.', ans:'a', exp:'<b>서수</b> 선행사 → that' },
+  { type:'that', key:5, s:'All [that / what] glitters is not gold.', ans:'a', exp:'all = 선행사 → that' },
+  { type:'that', key:5, s:'There is nothing [that / what] we can do now.', ans:'a', exp:'<b>nothing</b>(-thing) → that' },
 
-  { type:'what', s:'[What / That] he said was true.', ans:'a', exp:'선행사 없음 + 주어 역할 → <b>What</b>' },
-  { type:'what', s:'I believe [what / that] you said.', ans:'a', exp:'뒤가 불완전(said ___) + 선행사 없음 → what' },
-  { type:'what', s:'This is the thing [that / what] I want.', ans:'a', exp:'선행사 <b>the thing</b> 있음 → that' },
-  { type:'what', s:'This is [what / that] I want.', ans:'a', exp:'선행사 없음 → what' },
-  { type:'what', s:'All [that / what] I need is love.', ans:'a', exp:'<b>all</b>이 선행사 → that' },
-  { type:'what', s:'What I need [is / are] a good rest.', ans:'a', exp:'what절 주어 → <b>단수</b>' },
-  { type:'what', s:'I did [what / which] I could.', ans:'a', exp:'선행사 없음 → what' },
-  { type:'what', s:'He is not [what / that] he used to be.', ans:'a', exp:'what he used to be = 예전의 그' },
-  { type:'what', s:'I know [that / what] he came. (뒤 문장 완전)', ans:'a', exp:'he came = 완전 → <b>접속사 that</b>' },
-  { type:'what', s:'She gave me [what / which] I wanted.', ans:'a', exp:'선행사 없음 → what' },
+  { type:'what', key:6, s:'[What / That] he said was true.', ans:'a', exp:'선행사 없음 + 주어 역할 → <b>What</b>' },
+  { type:'what', key:6, s:'I believe [what / that] you said.', ans:'a', exp:'뒤가 불완전(said ___) + 선행사 없음 → what' },
+  { type:'what', key:6, s:'This is the thing [that / what] I want.', ans:'a', exp:'선행사 <b>the thing</b> 있음 → that' },
+  { type:'what', key:6, s:'This is [what / that] I want.', ans:'a', exp:'선행사 없음 → what' },
+  { type:'what', key:6, s:'All [that / what] I need is love.', ans:'a', exp:'<b>all</b>이 선행사 → that' },
+  { type:'what', key:4, s:'What I need [is / are] a good rest.', ans:'a', exp:'what절 주어 → <b>단수</b>' },
+  { type:'what', key:6, s:'I did [what / which] I could.', ans:'a', exp:'선행사 없음 → what' },
+  { type:'what', key:6, s:'He is not [what / that] he used to be.', ans:'a', exp:'what he used to be = 예전의 그' },
+  { type:'what', key:6, s:'I know [that / what] he came. (뒤 문장 완전)', ans:'a', exp:'he came = 완전 → <b>접속사 that</b>' },
+  { type:'what', key:6, s:'She gave me [what / which] I wanted.', ans:'a', exp:'선행사 없음 → what' },
 
-  { type:'prep', s:'This is the house [in which / in that] I live.', ans:'a', exp:'전치사 뒤 <b>that ✗</b>' },
-  { type:'prep', s:'This is the house [which / in which] I live in.', ans:'a', exp:'끝에 in이 있으므로 앞에 또 ✗ — <b>중복 ✗</b>' },
-  { type:'prep', s:'She is the friend [with whom / with who] I went to Paris.', ans:'a', exp:'전치사 뒤 <b>whom</b>만' },
-  { type:'prep', s:'This is the house in [which / ×] I live.', ans:'a', exp:'전치사 뒤 관계사 <b>생략 ✗</b>' },
-  { type:'prep', s:'This is the book which I was looking [for / ×].', ans:'a', exp:'look for의 <b>for</b>는 남김' },
-  { type:'prep', s:'The man [to whom / to that] I talked was kind.', ans:'a', exp:'to + <b>whom</b>' },
-  { type:'prep', s:'The city [in which / which] I was born is Busan.', ans:'a', exp:'I was born = 완전 → 전치사 필요 → <b>in which</b> (= where)' },
-  { type:'prep', s:'This is the pen [with which / which] I wrote the letter.', ans:'a', exp:'wrote the letter = 완전 → <b>with which</b>' },
-  { type:'prep', s:'The house [in which / where in] I live is small.', ans:'a', exp:'in which = where — <b>where in ✗</b>' },
-  { type:'prep', s:'This is the music [to which / which] I often listen.', ans:'a', exp:'listen <b>to</b> → to which (= which I listen to)' },
+  { type:'prep', key:8, s:'This is the house [in which / in that] I live.', ans:'a', exp:'전치사 뒤 <b>that ✗</b>' },
+  { type:'prep', key:8, s:'This is the house [which / in which] I live in.', ans:'a', exp:'끝에 in이 있으므로 앞에 또 ✗ — <b>중복 ✗</b>' },
+  { type:'prep', key:8, s:'She is the friend [with whom / with who] I went to Paris.', ans:'a', exp:'전치사 뒤 <b>whom</b>만' },
+  { type:'prep', key:7, s:'This is the house in [which / ×] I live.', ans:'a', exp:'전치사 뒤 관계사 <b>생략 ✗</b>' },
+  { type:'prep', key:8, s:'This is the book which I was looking [for / ×].', ans:'a', exp:'look for의 <b>for</b>는 남김' },
+  { type:'prep', key:8, s:'The man [to whom / to that] I talked was kind.', ans:'a', exp:'to + <b>whom</b>' },
+  { type:'prep', key:8, s:'The city [in which / which] I was born is Busan.', ans:'a', exp:'I was born = 완전 → 전치사 필요 → <b>in which</b> (= where)' },
+  { type:'prep', key:8, s:'This is the pen [with which / which] I wrote the letter.', ans:'a', exp:'wrote the letter = 완전 → <b>with which</b>' },
+  { type:'prep', key:8, s:'The house [in which / where in] I live is small.', ans:'a', exp:'in which = where — <b>where in ✗</b>' },
+  { type:'prep', key:8, s:'This is the music [to which / which] I often listen.', ans:'a', exp:'listen <b>to</b> → to which (= which I listen to)' },
 
-  { type:'cont', s:'I have a brother, [who / that] lives in Busan.', ans:'a', exp:'콤마 뒤 → <b>who</b> (that ✗)' },
-  { type:'cont', s:'He failed the test, [which / that] surprised me.', ans:'a', exp:'앞 문장 전체 → <b>, which</b>' },
-  { type:'cont', s:'He passed the exam, which [made / it made] his parents happy.', ans:'a', exp:'which가 주어 → it 중복 ✗' },
-  { type:'cont', s:'Seoul, [which / that] is the capital of Korea, is a big city.', ans:'a', exp:'고유명사 + 콤마 → which' },
-  { type:'cont', s:'She said nothing, [which / what] made him angry.', ans:'a', exp:'콤마 뒤 <b>what ✗</b> → which' },
-  { type:'cont', s:'I met Tom, [who / whom] told me the news.', ans:'a', exp:'told의 <b>주어</b> → who' },
-  { type:'cont', s:'My mother, [who / that] is 50, works at a bank.', ans:'a', exp:'유일한 선행사 + 콤마 → who' },
-  { type:'cont', s:'He gave me a book, [which / and which] I read in a day.', ans:'a', exp:'which 안에 and가 포함 → <b>and which ✗</b>' },
-  { type:'cont', hint:'"나는 형이 한 명 있는데, 부산에 산다."', s:'I have a brother[, who / who] lives in Busan.', ans:'a', exp:'형이 <b>한 명</b> → 콤마(계속적). 콤마 없으면 "부산 사는 형"(여럿 중)' },
-  { type:'cont', s:'I called Jane, who [didn\'t / she didn\'t] answer the phone.', ans:'a', exp:'who가 주어 → she 중복 ✗' },
+  { type:'cont', key:9, s:'I have a brother, [who / that] lives in Busan.', ans:'a', exp:'콤마 뒤 → <b>who</b> (that ✗)' },
+  { type:'cont', key:9, s:'He failed the test, [which / that] surprised me.', ans:'a', exp:'앞 문장 전체 → <b>, which</b>' },
+  { type:'cont', key:9, s:'He passed the exam, which [made / it made] his parents happy.', ans:'a', exp:'which가 주어 → it 중복 ✗' },
+  { type:'cont', key:9, s:'Seoul, [which / that] is the capital of Korea, is a big city.', ans:'a', exp:'고유명사 + 콤마 → which' },
+  { type:'cont', key:9, s:'She said nothing, [which / what] made him angry.', ans:'a', exp:'콤마 뒤 <b>what ✗</b> → which' },
+  { type:'cont', key:9, s:'I met Tom, [who / whom] told me the news.', ans:'a', exp:'told의 <b>주어</b> → who' },
+  { type:'cont', key:9, s:'My mother, [who / that] is 50, works at a bank.', ans:'a', exp:'유일한 선행사 + 콤마 → who' },
+  { type:'cont', key:9, s:'He gave me a book, [which / and which] I read in a day.', ans:'a', exp:'which 안에 and가 포함 → <b>and which ✗</b>' },
+  { type:'cont', key:9, hint:'"나는 형이 한 명 있는데, 부산에 산다."', s:'I have a brother[, who / who] lives in Busan.', ans:'a', exp:'형이 <b>한 명</b> → 콤마(계속적). 콤마 없으면 "부산 사는 형"(여럿 중)' },
+  { type:'cont', key:9, s:'I called Jane, who [didn\'t / she didn\'t] answer the phone.', ans:'a', exp:'who가 주어 → she 중복 ✗' },
   /* ── 보강: 주격 ── */
-  { type:'subj', s:'The people who [live / lives] next door are friendly.', ans:'a', exp:'선행사 people(복수) → live' },
-  { type:'subj', s:'I have a friend [who / whose] speaks Chinese.', ans:'a', exp:'speaks의 주어 → 주격 who' },
-  { type:'subj', s:'Those who [are / is] late will not be admitted.', ans:'a', exp:'those(복수) → are' },
-  { type:'subj', s:'The book [that is / that it is] on the desk is mine.', ans:'a', exp:'that이 주어 → it 중복 ✗' },
-  { type:'subj', s:'Do you know anyone [who / which] can fix this?', ans:'a', exp:'anyone(사람) → who' },
+  { type:'subj', key:4, s:'The people who [live / lives] next door are friendly.', ans:'a', exp:'선행사 people(복수) → live' },
+  { type:'subj', key:10, s:'I have a friend [who / whose] speaks Chinese.', ans:'a', exp:'speaks의 주어 → 주격 who' },
+  { type:'subj', key:4, s:'Those who [are / is] late will not be admitted.', ans:'a', exp:'those(복수) → are' },
+  { type:'subj', key:3, s:'The book [that is / that it is] on the desk is mine.', ans:'a', exp:'that이 주어 → it 중복 ✗' },
+  { type:'subj', key:2, s:'Do you know anyone [who / which] can fix this?', ans:'a', exp:'anyone(사람) → who' },
   /* ── 보강: 목적격 ── */
-  { type:'obj', s:'This is the man [whom / whose] I saw yesterday.', ans:'a', exp:'saw의 목적어 → whom' },
-  { type:'obj', s:'The girl [whom / whose] you met is my sister.', ans:'a', exp:'met의 목적어 → whom (who도 허용)' },
-  { type:'obj', s:'The letter which he [wrote / wrote it] was long.', ans:'a', exp:'목적어 비움' },
-  { type:'obj', s:'The person [that / what] I respect most is my father.', ans:'a', exp:'선행사 person 있음 → that' },
-  { type:'obj', s:'He is the boy [I like / whom I like him].', ans:'a', exp:'생략형 OK / him 중복 ✗' },
+  { type:'obj', key:10, s:'This is the man [whom / whose] I saw yesterday.', ans:'a', exp:'saw의 목적어 → whom' },
+  { type:'obj', key:10, s:'The girl [whom / whose] you met is my sister.', ans:'a', exp:'met의 목적어 → whom (who도 허용)' },
+  { type:'obj', key:3, s:'The letter which he [wrote / wrote it] was long.', ans:'a', exp:'목적어 비움' },
+  { type:'obj', key:6, s:'The person [that / what] I respect most is my father.', ans:'a', exp:'선행사 person 있음 → that' },
+  { type:'obj', key:7, s:'He is the boy [I like / whom I like him].', ans:'a', exp:'생략형 OK / him 중복 ✗' },
   /* ── 보강: 소유격 ── */
-  { type:'poss', s:'The woman [whose / who] car was stolen is my aunt.', ans:'a', exp:'her car → whose car' },
-  { type:'poss', s:'Do you know the girl whose brother [is / are] a famous singer?', ans:'a', exp:'whose brother(단수) → is' },
-  { type:'poss', s:'The company [whose / which] products sell well is growing.', ans:'a', exp:'its products → whose (사물도 whose)' },
-  { type:'poss', s:'I have a friend [whose / whom] mother is a teacher.', ans:'a', exp:'whose + 명사' },
-  { type:'poss', s:'The dog [whose / which] tail is short is mine.', ans:'a', exp:'its tail → whose tail' },
+  { type:'poss', key:10, s:'The woman [whose / who] car was stolen is my aunt.', ans:'a', exp:'her car → whose car' },
+  { type:'poss', key:4, s:'Do you know the girl whose brother [is / are] a famous singer?', ans:'a', exp:'whose brother(단수) → is' },
+  { type:'poss', key:10, s:'The company [whose / which] products sell well is growing.', ans:'a', exp:'its products → whose (사물도 whose)' },
+  { type:'poss', key:10, s:'I have a friend [whose / whom] mother is a teacher.', ans:'a', exp:'whose + 명사' },
+  { type:'poss', key:10, s:'The dog [whose / which] tail is short is mine.', ans:'a', exp:'its tail → whose tail' },
   /* ── 보강: that ── */
-  { type:'that', s:'He is the smartest student [that / which] I know.', ans:'a', exp:'최상급 + 사람 → that (which ✗)' },
-  { type:'that', s:'The man and the dog [that / which] were walking were wet.', ans:'a', exp:'사람 + 동물 → that' },
-  { type:'that', s:'Is there anyone [that / what] can help me?', ans:'a', exp:'anyone 선행사 → that' },
-  { type:'that', s:'It is the same bag [that / what] I lost.', ans:'a', exp:'the same → that' },
-  { type:'that', s:'This is all [that / what] I know.', ans:'a', exp:'all 선행사 → that' },
+  { type:'that', key:5, s:'He is the smartest student [that / which] I know.', ans:'a', exp:'최상급 + 사람 → that (which ✗)' },
+  { type:'that', key:5, s:'The man and the dog [that / which] were walking were wet.', ans:'a', exp:'사람 + 동물 → that' },
+  { type:'that', key:5, s:'Is there anyone [that / what] can help me?', ans:'a', exp:'anyone 선행사 → that' },
+  { type:'that', key:5, s:'It is the same bag [that / what] I lost.', ans:'a', exp:'the same → that' },
+  { type:'that', key:5, s:'This is all [that / what] I know.', ans:'a', exp:'all 선행사 → that' },
   /* ── 보강: what ── */
-  { type:'what', s:'[What / That] surprised me was his honesty.', ans:'a', exp:'선행사 없음 + 주어 → What' },
-  { type:'what', s:'Show me [what / that] you bought.', ans:'a', exp:'선행사 없음 → what' },
-  { type:'what', s:'I\'ll do [what / that] I can.', ans:'a', exp:'what I can (do) — 선행사 없음' },
-  { type:'what', s:'The thing [that / what] I like most is music.', ans:'a', exp:'the thing 있음 → that' },
-  { type:'what', s:'This is [what / which] makes him special.', ans:'a', exp:'선행사 없음 + makes의 주어 → what' },
+  { type:'what', key:6, s:'[What / That] surprised me was his honesty.', ans:'a', exp:'선행사 없음 + 주어 → What' },
+  { type:'what', key:6, s:'Show me [what / that] you bought.', ans:'a', exp:'선행사 없음 → what' },
+  { type:'what', key:6, s:'I\'ll do [what / that] I can.', ans:'a', exp:'what I can (do) — 선행사 없음' },
+  { type:'what', key:6, s:'The thing [that / what] I like most is music.', ans:'a', exp:'the thing 있음 → that' },
+  { type:'what', key:6, s:'This is [what / which] makes him special.', ans:'a', exp:'선행사 없음 + makes의 주어 → what' },
   /* ── 보강: 전치사 선택 ── */
-  { type:'prep', s:'I remember the day [on which / in which] we first met.', ans:'a', exp:'on the day → <b>on which</b> (= when)' },
-  { type:'prep', s:'The year [in which / on which] I was born was 2010.', ans:'a', exp:'in the year → in which' },
-  { type:'prep', s:'Tell me the reason [for which / which] you were late.', ans:'a', exp:'for the reason → for which (= why)' },
-  { type:'prep', s:'The table [on which / in which] I put the keys is broken.', ans:'a', exp:'put on the table → on which' },
-  { type:'prep', s:'The subject [about which / which] we talked was interesting.', ans:'a', exp:'talk about → about which' },
+  { type:'prep', key:8, s:'I remember the day [on which / in which] we first met.', ans:'a', exp:'on the day → <b>on which</b> (= when)' },
+  { type:'prep', key:8, s:'The year [in which / on which] I was born was 2010.', ans:'a', exp:'in the year → in which' },
+  { type:'prep', key:8, s:'Tell me the reason [for which / which] you were late.', ans:'a', exp:'for the reason → for which (= why)' },
+  { type:'prep', key:8, s:'The table [on which / in which] I put the keys is broken.', ans:'a', exp:'put on the table → on which' },
+  { type:'prep', key:8, s:'The subject [about which / which] we talked was interesting.', ans:'a', exp:'talk about → about which' },
   /* ── 보강: 계속적 ── */
-  { type:'cont', s:'I visited London, [which / that] is a big city.', ans:'a', exp:'콤마 뒤 → which' },
-  { type:'cont', s:'He has a son, [who / that] is a doctor.', ans:'a', exp:'콤마 뒤 → who' },
-  { type:'cont', s:'She bought a new car, [which / what] cost a lot.', ans:'a', exp:'콤마 뒤 what ✗' },
-  { type:'cont', s:'We stayed at the hotel, [which / that] was very clean.', ans:'a', exp:'콤마 뒤 → which' },
-  { type:'cont', s:'I met the man, [whom / which] I had seen before.', ans:'a', exp:'사람 + 목적격 → whom' },
+  { type:'cont', key:9, s:'I visited London, [which / that] is a big city.', ans:'a', exp:'콤마 뒤 → which' },
+  { type:'cont', key:9, s:'He has a son, [who / that] is a doctor.', ans:'a', exp:'콤마 뒤 → who' },
+  { type:'cont', key:9, s:'She bought a new car, [which / what] cost a lot.', ans:'a', exp:'콤마 뒤 what ✗' },
+  { type:'cont', key:9, s:'We stayed at the hotel, [which / that] was very clean.', ans:'a', exp:'콤마 뒤 → which' },
+  { type:'cont', key:9, s:'I met the man, [whom / which] I had seen before.', ans:'a', exp:'사람 + 목적격 → whom' },
+  /* ── 핵심요점 2: 격 찾는 법 ── */
+  { type:'subj', key:2, s:'The man [who / whom] is standing there is my uncle.', ans:'a', exp:'관계사 <b>바로 뒤에 동사</b>(is)가 온다 → 관계사가 주어 → <b>주격 who</b>. whom은 뒤에 "주어+동사"가 와야 한다.' },
+  { type:'obj', key:2, s:'The man [whom / whose] I met yesterday was kind.', ans:'a', exp:'바로 뒤에 <b>주어 + 동사</b>(I met)가 오고 met의 목적어가 비어 있다 → <b>목적격 whom</b>. whose는 뒤에 명사가 와야 한다.' },
+  { type:'poss', key:2, s:'I have a friend [whose / who] brother is a pilot.', ans:'a', exp:'좌우에 명사(friend · brother)가 있고 "친구<b>의</b> 형"으로 말이 된다 → <b>소유격 whose</b>. who 뒤에는 동사가 와야 한다.' },
+  { type:'subj', key:2, s:'She is the girl [who / whom] I believe is honest.', ans:'a', exp:'<b>I believe는 삽입절</b>. 빼고 보면 who ___ is honest — is의 주어가 비어 있다 → <b>주격 who</b>. whom으로 고치면 ✗.' },
+  { type:'obj', key:2, s:'The teacher [whom / whose] we all respect has retired.', ans:'a', exp:'뒤가 주어+동사(we respect)이고 respect의 목적어가 빔 → <b>목적격</b>. "선생님의 우리"는 말이 안 되므로 whose ✗.' },
+  { type:'poss', key:2, s:'The singer [whose / whom] voice I love is coming to Korea.', ans:'a', exp:'"가수<b>의</b> 목소리" → 소유격. whose voice가 love의 목적어 덩어리가 된다. whom 뒤에 명사(voice)가 바로 올 수 없다.' },
+  /* ── 핵심요점 7: 생략 — be 뒤가 명사·형용사면 ✗ ── */
+  { type:'subj', key:7, s:'The man [who is / ×] a doctor is my uncle.', ans:'a', exp:'주격 + be동사는 뒤가 <b>-ing · p.p. · 전치사구</b>일 때만 생략. 뒤가 <b>명사(a doctor)</b>면 지웠을 때 "the man a doctor"가 되어 ✗.' },
+  { type:'subj', key:7, s:'The boy [who is / ×] tall is my cousin.', ans:'a', exp:'be 뒤가 <b>형용사 한 단어</b>(tall) → 생략 ✗ ("the boy tall" ✗). 형용사가 길게 이어지면(tall enough to reach) 생략 가능.' },
+  { type:'subj', key:7, s:'The car [made / which made] in Korea is popular.', ans:'a', exp:'which <b>was</b> made → "which was"를 통째로 지우면 <b>made</b>(p.p.)만 남는다. which made는 "차가 만들었다"(능동)가 되어 뜻이 ✗.' },
+  { type:'subj', key:7, s:'The woman [who is / ×] in the red dress is my aunt.', ans:'b', exp:'be 뒤가 <b>전치사구</b>(in the red dress) → who is 생략 ○. 둘 다 문법적으로 맞지만 "생략 가능한 것"을 고르는 문제 — 전치사구는 명사를 바로 꾸밀 수 있다.' },
+  /* ── 핵심요점 12: 관계대명사 vs 관계부사 — 뒤가 완전한가 ── */
+  { type:'prep', key:12, s:'This is the place [which / where] I visited last year.', ans:'a', exp:'visit는 <b>타동사</b> — visited의 목적어가 비어 있다(불완전) → <b>which</b>. 선행사가 장소라도 뒤가 불완전하면 where ✗.' },
+  { type:'prep', key:12, s:'This is the house [where / which] I live.', ans:'a', exp:'I live는 빠진 것이 없는 <b>완전한 문장</b> → 관계부사 <b>where</b>(= in which). which를 쓰려면 I live <b>in</b>이 필요.' },
+  { type:'prep', key:12, s:'The hotel [where / which] we stayed was very clean.', ans:'a', exp:'stay는 자동사 → we stayed 완전 → <b>where</b>(= at which). which를 쓰면 stayed <b>at</b>이 필요하다.' },
+  { type:'prep', key:12, s:'I remember the day [when / which] we first met.', ans:'a', exp:'we first met = 완전 → <b>when</b>(= on which). which는 뒤에 빈자리가 있어야 한다.' },
   /* ── 복합관계대명사 ── */
-  { type:'comp', s:'[Whoever / Whomever] comes first will get the prize.', ans:'a', exp:'comes의 <b>주어</b> → whoever' },
-  { type:'comp', s:'Give it to [whoever / whomever] wants it.', ans:'a', exp:'to 뒤지만 wants의 <b>주어</b> → whoever ★' },
-  { type:'comp', s:'You may invite [whomever / who] you like.', ans:'a', exp:'like의 목적어 → whomever (whoever도 허용)' },
-  { type:'comp', s:'[Whatever / Whichever] happens, I\'ll be there.', ans:'a', exp:'"무슨 일이 있어도" = No matter what' },
-  { type:'comp', s:'Choose [whichever / whoever] you like of these three.', ans:'a', exp:'사물 + 정해진 범위 → whichever' },
-  { type:'comp', s:'[Whatever / What] you say, I won\'t change my mind.', ans:'a', exp:'콤마로 분리된 <b>양보절</b> → whatever' },
-  { type:'comp', s:'Whoever [breaks / break] the rules will be punished.', ans:'a', exp:'whoever절 주어 → <b>단수</b>' },
-  { type:'comp', s:'I\'ll give the ticket to [whoever / whomever] comes first.', ans:'a', exp:'comes의 주어 → whoever' },
-  { type:'comp', s:'[Whoever / Anyone whoever] wants to join is welcome.', ans:'a', exp:'whoever 앞 선행사 ✗' },
-  { type:'comp', s:'She told the story to [whomever / whoever is] she met.', ans:'a', exp:'met의 목적어 → whomever' },
-  { type:'comp', s:'Whatever you [do / does], do your best.', ans:'a', exp:'you + do' },
-  { type:'comp', s:'[Whatever / However] you choose, I\'ll support you.', ans:'a', exp:'choose의 목적어 → whatever (however는 복합관계부사)' },
-  { type:'comp', hint:'"먼저 오는 사람은 누구든"', s:'Whoever comes first = [Anyone who / No matter who] comes first', ans:'a', exp:'문장의 주어 역할 → <b>명사절</b> = anyone who' },
-  { type:'comp', s:'Hand this to [whoever / whomever] is at the desk.', ans:'a', exp:'is의 주어 → whoever' },
-  { type:'comp', s:'Take [whichever / whoever] seat you like.', ans:'a', exp:'사물 + 명사 수식 → whichever' }
+  { type:'comp', key:11, s:'[Whoever / Whomever] comes first will get the prize.', ans:'a', exp:'comes의 <b>주어</b> → whoever' },
+  { type:'comp', key:11, s:'Give it to [whoever / whomever] wants it.', ans:'a', exp:'to 뒤지만 wants의 <b>주어</b> → whoever ★' },
+  { type:'comp', key:11, s:'You may invite [whomever / who] you like.', ans:'a', exp:'like의 목적어 → whomever (whoever도 허용)' },
+  { type:'comp', key:11, s:'[Whatever / Whichever] happens, I\'ll be there.', ans:'a', exp:'"무슨 일이 있어도" = No matter what' },
+  { type:'comp', key:11, s:'Choose [whichever / whoever] you like of these three.', ans:'a', exp:'사물 + 정해진 범위 → whichever' },
+  { type:'comp', key:9, s:'[Whatever / What] you say, I won\'t change my mind.', ans:'a', exp:'콤마로 분리된 <b>양보절</b> → whatever' },
+  { type:'comp', key:11, s:'Whoever [breaks / break] the rules will be punished.', ans:'a', exp:'whoever절 주어 → <b>단수</b>' },
+  { type:'comp', key:11, s:'I\'ll give the ticket to [whoever / whomever] comes first.', ans:'a', exp:'comes의 주어 → whoever' },
+  { type:'comp', key:11, s:'[Whoever / Anyone whoever] wants to join is welcome.', ans:'a', exp:'whoever 앞 선행사 ✗' },
+  { type:'comp', key:11, s:'She told the story to [whomever / whoever is] she met.', ans:'a', exp:'met의 목적어 → whomever' },
+  { type:'comp', key:11, s:'Whatever you [do / does], do your best.', ans:'a', exp:'you + do' },
+  { type:'comp', key:11, s:'[Whatever / However] you choose, I\'ll support you.', ans:'a', exp:'choose의 목적어 → whatever (however는 복합관계부사)' },
+  { type:'comp', key:11, hint:'"먼저 오는 사람은 누구든"', s:'Whoever comes first = [Anyone who / No matter who] comes first', ans:'a', exp:'문장의 주어 역할 → <b>명사절</b> = anyone who' },
+  { type:'comp', key:11, s:'Hand this to [whoever / whomever] is at the desk.', ans:'a', exp:'is의 주어 → whoever' },
+  { type:'comp', key:11, s:'Take [whichever / whoever] seat you like.', ans:'a', exp:'사물 + 명사 수식 → whichever' }
 
 ];
 
@@ -1806,6 +1829,13 @@ renderForms();
 /* ══ 포인트 어법 — ( A / B ) 선택형 ══ */
 /* s: 문장 — [A / B] 자리에 보기, hint: 한국어 단서(선택), ans: 'a'|'b', exp: 해설 */
 let ptBuilt = false, ptSel = {}, ptScores = {};
+
+/* 포인트 어법 ↔ 핵심요점 연결 */
+function goKey(n) {
+  const btn = document.querySelector('.sub-tab[data-mode="key"]'); if (btn) btn.click();
+  setTimeout(() => { const c = document.getElementById('ky-' + n); if (c) { c.scrollIntoView({ behavior: 'smooth', block: 'start' }); c.classList.add('ky-flash'); setTimeout(() => c.classList.remove('ky-flash'), 1600); } }, 80);
+}
+document.querySelectorAll('#keyView .ky-card').forEach((c, i) => { c.id = 'ky-' + (i + 1); });
 function buildPoint() {
   const box = document.getElementById('ptCards'); box.innerHTML = '';
   Object.keys(TYPE_META).forEach(type => {
@@ -1816,14 +1846,14 @@ function buildPoint() {
     head.className = 'section-head'; head.dataset.type = type;
     head.innerHTML = `<div class="num-line">SECTION ${m.num} · ${m.en} · 포인트 어법 ${items.length}문항</div>
       <h2>${m.kor} <span class="kor">포인트 어법</span></h2>
-      <p class="desc">괄호 안에서 알맞은 것을 고른 뒤 <b>정답 &amp; 해설</b>을 펼쳐 확인하세요. 어법설명 ${m.num}-B의 "주의해야 하는 경우"가 그대로 출제됩니다.</p>`;
+      <p class="desc">괄호 안에서 알맞은 것을 고른 뒤 <b>정답 &amp; 해설</b>을 펼쳐 확인하세요. 어법설명 ${m.num}-B와 <b>⭐ 핵심요점</b>에 근거해 출제 — 문항 번호 옆 <b>⭐n</b>을 누르면 근거가 되는 핵심요점 n번으로 이동합니다.</p>`;
     box.appendChild(head);
     items.forEach((it, n) => {
       const card = document.createElement('article');
       card.className = 'pt-card'; card.dataset.type = type; card.id = 'pt-' + it.idx;
       card.innerHTML = `
         <div class="pt-row">
-          <span class="pt-num">${n + 1}</span>
+          <span class="pt-num">${n + 1}</span>${it.key ? `<a class="pt-key" onclick="goKey(${it.key})" title="핵심요점 ${it.key}번 보기">⭐${it.key}</a>` : ''}
           <div class="pt-sent">${it.hint ? `<span class="pt-hint">${it.hint}</span> ` : ''}${renderChoice(it)}</div>
         </div>
         <div class="print-ans">정답: <b>${esc(it.ans === 'a' ? optA(it) : optB(it))}</b> — ${it.exp}</div>
