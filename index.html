@@ -681,6 +681,9 @@ body{padding-bottom:62px;}
 .tab-panel > .mock-banner:first-child,.tab-panel > .section-label:first-child{margin-top:28px;}
 /* ── 허브 표시 영역 ── */
 body.hub-open .tab-panel{display:none !important;}
+/* GRAMMAR 허브(어두운 배경)일 때: 위쪽 흰 띠(목록 버튼 줄) 없이 바로 이어지게 */
+body.hub-grammar #hubBar{display:none !important;}
+body.hub-grammar #hubView{background:#0d1b2a;}
 .hub-bar{max-width:940px;margin:18px auto 0;padding:0 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
 .hub-grades{display:flex;gap:8px;margin-left:auto;margin-right:auto;}
 .hub-grades[hidden]{display:none;}
@@ -1661,6 +1664,7 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
     var url = norm(u);
     viewing = true; gotHeight = false;
     document.body.classList.add('hub-open');
+    document.body.classList.toggle('hub-grammar', cur === 'grammar');
     hubView.hidden = false;
     hubBar.hidden = (cur === 'gichul' || cur === 'grammar');
     /* 고1·고2·고3 한줄해석 허브면 학년 전환 버튼 표시 */
@@ -1686,6 +1690,7 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
     viewing = false;
     clearTimeout(fbTimer);
     document.body.classList.remove('hub-open');
+    document.body.classList.remove('hub-grammar');
     hubView.hidden = true;
     try{ frame.contentWindow.location.replace('about:blank'); }catch(e){ frame.src = 'about:blank'; }
   }
