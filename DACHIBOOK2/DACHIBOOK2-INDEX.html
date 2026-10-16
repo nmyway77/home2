@@ -39,6 +39,15 @@ body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;color:var(--text
 .set .s-go{position:absolute;right:12px;top:12px;font-size:11px;font-weight:800;color:#fff;background:var(--navy);border-radius:20px;padding:3px 10px;}
 .set .s-tags{margin-top:6px;display:flex;gap:4px;flex-wrap:wrap;}
 .set .s-tags i{font-style:normal;font-size:10px;font-weight:700;color:#8b6914;background:#fff3cf;border:1px solid #e0c070;border-radius:4px;padding:0 6px;}
+.row-t{font-size:11.5px;font-weight:800;color:var(--navy);margin:2px 0 8px;display:flex;align-items:center;gap:6px;}
+.row-t span{font-weight:500;color:var(--muted);font-size:11px;}
+.row-gap{height:16px;}
+.usets{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;}
+.uset{display:block;text-decoration:none;color:var(--navy);border:1.5px solid #e6d7a8;background:#fffcf2;border-radius:12px;padding:11px 12px 10px;transition:all .15s;}
+.uset:hover{border-color:var(--gold);background:#fff6dc;transform:translateY(-2px);box-shadow:0 6px 16px rgba(139,105,20,.15);}
+.uset .u-no{font-size:10.5px;font-weight:800;color:#8b6914;letter-spacing:.5px;}
+.uset .u-nm{font-size:14.5px;font-weight:900;margin:2px 0 3px;line-height:1.35;}
+.uset .u-info{font-size:11px;color:var(--muted);}
 .soon-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
 .soon{background:#fff;border:1px dashed #c9d4e6;border-radius:12px;padding:12px 14px;color:#98a4b8;}
 .soon .s-no{font-family:'Playfair Display',serif;font-size:11px;letter-spacing:2px;font-weight:700;color:#b8a46a;}
@@ -114,7 +123,14 @@ const BOOKS={
    sets:[
     {s:1,rng:'1~20번',n:20,min:25,tags:['서술형 1']},
     {s:2,rng:'21~40번',n:20,min:25,tags:['서술형 1']},
-    {s:3,rng:'41~69번',n:29,min:36,tags:['서술형 2']}]},
+    {s:3,rng:'41~69번',n:29,min:36,tags:['서술형 2']}],
+   // UNIT별 세트 — 문항 수에 맞춰 UNIT을 묶음 (링크: daechi{책}-ch{챕터}-u{번호}/)
+   usets:[
+    {u:1,ul:'UNIT 1~3',nm:'의문문',n:10,min:12},
+    {u:2,ul:'UNIT 4',nm:'부가의문문',n:12,min:15},
+    {u:3,ul:'UNIT 5~6',nm:'간접의문문 · 감탄문',n:13,min:16},
+    {u:4,ul:'UNIT 7',nm:'문장의 형식 · 감각동사',n:20,min:25},
+    {u:5,ul:'UNIT 8',nm:'목적격 보어',n:14,min:18}]},
   {no:2,nm:'동사의 시제'},{no:3,nm:'조동사'},{no:4,nm:'수동태'},{no:5,nm:'명사와 관사'},
   {no:6,nm:'대명사'},{no:7,nm:'부정사'},{no:8,nm:'동명사'},{no:9,nm:'분사'},{no:10,nm:'형용사'},
   {no:11,nm:'부사'},{no:12,nm:'비교구문'},{no:13,nm:'접속사'},{no:14,nm:'관계사'},{no:15,nm:'가정법'},{no:16,nm:'전치사'}]},
@@ -128,12 +144,17 @@ function showBook(b){
   if(c.sets&&c.sets.length){
    const total=c.sets.reduce((a,x)=>a+x.n,0);
    o+=`<div class="ch"><div class="ch-top"><div><div class="ch-no">CHAPTER ${pad(c.no)}</div><div class="ch-name">${c.nm}</div></div>
-   <div class="ch-meta">내신기출변형문제 ${total}문항 · ${c.sets.length}세트 · 책 ${c.pg}</div></div>
+   <div class="ch-meta">내신기출변형문제 ${total}문항 · 번호순 ${c.sets.length}세트${c.usets?' + UNIT별 '+c.usets.length+'세트':''} · 책 ${c.pg}</div></div>
    <div class="ch-body"><div class="units">${c.units.map(u=>`<span><b>UNIT ${u[0]}</b>${u[1]}</span>`).join('')}</div>
+   <div class="row-t">📘 번호순 세트 <span>책 문항 순서대로</span></div>
    <div class="sets">${c.sets.map(x=>`<a class="set" href="${BASE}${bk.dir}/daechi${b}-ch${c.no}-s${x.s}/">
     <span class="s-go">응시 →</span><div class="s-no">SET ${x.s}</div><div class="s-rng">${x.rng}</div>
     <div class="s-info">${x.n}문항 · 100점 만점 · ${x.min}분</div>
-    <div class="s-tags"><i>복수 정답</i>${(x.tags||[]).map(t=>`<i>${t}</i>`).join('')}</div></a>`).join('')}</div></div></div>`;
+    <div class="s-tags"><i>복수 정답</i>${(x.tags||[]).map(t=>`<i>${t}</i>`).join('')}</div></a>`).join('')}</div>
+   ${c.usets&&c.usets.length?`<div class="row-gap"></div><div class="row-t">🎯 UNIT별 세트 <span>약한 파트만 골라 집중 연습</span></div>
+   <div class="usets">${c.usets.map(x=>`<a class="uset" href="${BASE}${bk.dir}/daechi${b}-ch${c.no}-u${x.u}/">
+    <div class="u-no">${x.ul}</div><div class="u-nm">${x.nm}</div><div class="u-info">${x.n}문항 · ${x.min}분</div></a>`).join('')}</div>`:''}
+   </div></div>`;
   }else{
    s+=`<div class="soon"><div class="s-no">CHAPTER ${pad(c.no)}</div><div class="s-nm">${c.nm}</div><div class="s-st">준비 중</div></div>`;
   }
