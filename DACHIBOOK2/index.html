@@ -147,10 +147,11 @@ function showBook(b){
  else em.style.display='none';
  document.getElementById('bkNo').textContent=b;
  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.b==String(b)));
- if(location.hash!=='#'+b)history.replaceState(null,'','#'+b);
+ try{if(location.hash!=='#'+b)history.replaceState(null,'','#'+b);}catch(e){}
 }
 window.addEventListener('hashchange',()=>showBook(+location.hash.slice(1)));
-showBook(+location.hash.slice(1)||2);
+let h0=0;try{h0=+location.hash.slice(1);}catch(e){}
+showBook(h0||2);
 </script>
 </body>
 </html>
