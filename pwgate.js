@@ -8,7 +8,7 @@
   if(window.PWGATE_CLICK){
     document.addEventListener('click',function(e){
       var a=e.target.closest ? e.target.closest('a[target="_blank"]') : null;
-      if(!a || valid() || e.ctrlKey || e.metaKey || e.shiftKey) return;
+      if(!a || a.hasAttribute('data-nolock') || valid() || e.ctrlKey || e.metaKey || e.shiftKey) return;   /* data-nolock = 공개 자료 */
       e.preventDefault();
       if(window.self!==window.top){ try{ window.parent.postMessage({seoroHub:'pw', url:a.href},'*'); return; }catch(x){} }
       show(function(){ window.open(a.href,'_blank'); });
