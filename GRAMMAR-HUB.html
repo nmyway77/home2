@@ -3,74 +3,159 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GRAMMAR 자료 — 목동서로영어학원 영문법 허브</title>
-<meta name="description" content="목동서로영어학원 자체 제작 영문법 자료 허브 — 부사의 위치·관계대명사·관계부사·도치구문 등 주제별 종합 정리 (재원생 전용)">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,400&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<title>GRAMMAR · 영문법 자료 — 목동서로영어학원</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
-:root{
-  --navy:#0d1b2a;
-  --navy2:#1F3864;
-  --gold:#d4af37;
-  --gold2:#f0d070;
-  --cream:#f4f1ec;
-  --ink:#1a1a2e;
-  --sub:#4a4a6a;
+:root{--ink:#101c36;--royal:#233f7a;--royal2:#2f55a0;--gold:#c9a84c;--gold2:#e6cf8f;--paper:#f2f4f8;--card:#fff;--line:#d7dfec;--text:#243044;--muted:#66728a;--green:#1a7a4a;--red:#c0392b;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--paper);font-family:'Noto Sans KR',sans-serif;color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;}
+a{color:inherit;}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+
+/* ───── top: ink band with brand + book tabs ───── */
+.top{background:var(--ink);color:#fff;position:relative;}
+.top::after{content:'';position:absolute;inset:0;background:
+ radial-gradient(900px 420px at 85% -20%,rgba(201,168,76,.18),transparent 60%),
+ radial-gradient(600px 300px at 0% 110%,rgba(47,85,160,.45),transparent 60%);pointer-events:none;}
+.top-in{max-width:1040px;margin:0 auto;padding:0 20px;position:relative;z-index:1;}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 0 0;}
+.brand-nm{font-size:13px;font-weight:700;letter-spacing:.5px;color:#d9e2f3;}
+.brand-nm i{font-style:normal;color:var(--gold);}
+.brand-sub{font-size:11.5px;color:#8ea2c8;font-weight:300;margin-top:2px;}
+.home{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#c9d4ea;text-decoration:none;border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:6px 12px;}
+.home:hover{border-color:var(--gold);color:#fff;}
+
+.hero{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end;padding:30px 0 0;}
+.hero h1{font-size:34px;font-weight:900;line-height:1.25;letter-spacing:-.5px;color:#fff;}
+.hero h1 .bk{font-family:'Playfair Display',serif;font-weight:800;color:var(--gold);font-size:46px;line-height:1;vertical-align:-4px;margin-left:4px;}
+.hero p{margin-top:10px;font-size:13.5px;color:#aebbd8;font-weight:300;line-height:1.75;max-width:520px;}
+.hero-side{text-align:right;padding-bottom:6px;}
+.hero-side .big{font-family:'Playfair Display',serif;font-size:52px;font-weight:600;color:#fff;line-height:1;}
+.hero-side .big small{font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:500;color:#aebbd8;margin-left:4px;}
+.hero-side .cap{font-size:12px;color:#8ea2c8;margin-top:6px;}
+
+/* book tabs — like index tabs cut into the page edge */
+.tabs{display:flex;gap:6px;margin-top:26px;position:relative;z-index:1;}
+.tab{appearance:none;border:0;cursor:pointer;font-family:inherit;background:rgba(255,255,255,.08);color:#c9d4ea;
+ padding:13px 22px 12px;border-radius:12px 12px 0 0;font-size:14px;font-weight:700;display:flex;align-items:baseline;gap:8px;
+ border:1px solid rgba(255,255,255,.14);border-bottom:0;transition:background .18s,color .18s,transform .18s;}
+.tab .no{font-family:'Playfair Display',serif;font-size:22px;font-weight:800;line-height:1;color:var(--gold2);}
+.tab .st{font-size:11px;font-weight:500;color:#8ea2c8;}
+.tab:hover{background:rgba(255,255,255,.14);color:#fff;}
+.tab.on{background:var(--paper);color:var(--ink);transform:translateY(1px);border-color:var(--paper);}
+.tab.on .no{color:var(--royal);}
+.tab.on .st{color:var(--muted);}
+
+/* ───── body ───── */
+.main{max-width:1040px;margin:0 auto;padding:28px 20px 56px;}
+.fade{animation:fade .35s ease both;}
+@keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+@media(prefers-reduced-motion:reduce){.fade{animation:none;}.tab{transition:none;}}
+
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);background:var(--card);border-radius:14px;overflow:hidden;margin-bottom:34px;}
+.how div{padding:16px 18px;font-size:12.5px;line-height:1.75;color:#3d4a62;border-left:1px solid var(--line);}
+.how div:first-child{border-left:0;}
+.how b{display:block;font-size:13.5px;color:var(--ink);margin-bottom:3px;font-weight:700;}
+
+.sec{display:flex;align-items:baseline;gap:12px;margin:8px 0 16px;}
+.sec h2{font-size:17px;font-weight:900;color:var(--ink);letter-spacing:-.3px;}
+.sec span{font-size:12.5px;color:var(--muted);}
+
+/* chapter block: numeral column + content column */
+.ch{display:grid;grid-template-columns:230px 1fr;background:var(--card);border:1px solid var(--line);border-radius:18px;margin-bottom:18px;overflow:hidden;}
+.ch-side{background:linear-gradient(180deg,var(--royal),var(--ink));color:#fff;padding:22px 22px 24px;position:relative;}
+.ch-side .num{font-family:'Playfair Display',serif;font-size:92px;font-weight:800;line-height:.85;color:var(--gold);letter-spacing:-3px;}
+.ch-side .num small{display:block;font-family:'Noto Sans KR',sans-serif;font-size:11px;font-weight:500;letter-spacing:2px;color:#9fb0d3;margin-bottom:10px;}
+.ch-side .nm{font-size:24px;font-weight:900;margin-top:12px;line-height:1.3;letter-spacing:-.3px;}
+.ch-side .meta{font-size:12px;color:#aebbd8;margin-top:8px;line-height:1.7;}
+.ch-side .units{margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.16);font-size:11.5px;color:#c9d4ea;line-height:1.75;}
+.ch-side .units b{color:var(--gold2);font-weight:700;margin-right:5px;}
+.ch-body{padding:22px 24px 24px;}
+.grp{margin-bottom:22px;}
+.grp:last-child{margin-bottom:0;}
+.grp h3{font-size:13.5px;font-weight:800;color:var(--ink);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.grp h3 small{font-weight:400;color:var(--muted);font-size:12px;}
+
+/* 번호순 세트: ticket strip */
+.tickets{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;}
+.tk{display:block;text-decoration:none;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px 11px;background:#fbfcfe;position:relative;transition:border-color .15s,background .15s;}
+.tk::before{content:'';position:absolute;left:0;top:10px;bottom:10px;width:4px;border-radius:0 3px 3px 0;background:var(--royal);}
+.tk:hover{border-color:var(--royal);background:#f1f5fc;}
+.tk .r{font-family:'Playfair Display',serif;font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.5px;}
+.tk .r em{font-family:'Noto Sans KR',sans-serif;font-style:normal;font-size:13px;font-weight:700;margin-left:2px;}
+.tk .d{font-size:11.5px;color:var(--muted);margin-top:3px;}
+.tk .f{margin-top:7px;display:flex;gap:4px;flex-wrap:wrap;}
+.tk .f i{font-style:normal;font-size:10.5px;font-weight:700;color:#7a5f14;background:#fff4d2;border-radius:4px;padding:1px 6px;}
+
+/* UNIT별 세트: rows with a count bar */
+.urows{display:grid;gap:6px;}
+.ur{display:grid;grid-template-columns:92px 1fr auto;gap:12px;align-items:center;text-decoration:none;border:1.5px solid #eef1f6;border-radius:10px;padding:9px 14px;background:#fbfcfe;transition:border-color .15s,background .15s;}
+.ur:hover{border-color:var(--gold);background:#fffbef;}
+.ur .ul{font-size:11.5px;font-weight:800;color:#7a5f14;}
+.ur>span:nth-child(2){display:block;min-width:0;}
+.ur .un{display:block;font-size:13.5px;font-weight:700;color:var(--ink);line-height:1.35;}
+.ur .bar{display:block;height:5px;border-radius:3px;background:#edf0f6;margin-top:5px;overflow:hidden;max-width:300px;}
+.ur .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:3px;}
+.ur .uc{font-size:12px;color:var(--muted);white-space:nowrap;text-align:right;}
+.ur .uc b{display:block;font-size:14px;color:var(--ink);font-weight:800;}
+
+.jump{display:flex;flex-wrap:wrap;gap:6px;margin:-4px 0 18px;}
+.jump a{display:inline-flex;align-items:baseline;gap:6px;text-decoration:none;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 12px 6px 10px;font-size:12.5px;color:var(--ink);font-weight:500;}
+.jump a b{font-family:'Playfair Display',serif;font-size:14px;font-weight:800;color:var(--royal);}
+.jump a:hover{border-color:var(--gold);background:#fffbef;}
+.ch{scroll-margin-top:16px;}
+.soon{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;}
+.soon div{background:#fff;border:1px dashed #c8d2e3;border-radius:10px;padding:10px 12px;color:#8b96ab;font-size:12.5px;display:flex;gap:8px;align-items:baseline;}
+.soon div b{font-family:'Playfair Display',serif;font-size:16px;color:#aeb9cc;font-weight:800;}
+
+.empty{background:#fff;border:1px dashed #c8d2e3;border-radius:16px;padding:40px 20px;text-align:center;color:#6f7b92;font-size:13.5px;line-height:1.9;}
+.empty b{display:block;font-size:20px;color:var(--ink);margin-bottom:4px;}
+
+.maker{background:var(--ink);border-top:3px solid var(--gold);padding:30px 20px 26px;text-align:center;margin-top:20px;}
+.maker .mk1{font-size:22px;font-weight:900;color:#fff;letter-spacing:5px;}
+.maker .mk1 em{font-style:normal;color:var(--gold);}
+.maker .mk-line{width:54px;height:2px;background:var(--gold);margin:12px auto;border-radius:2px;}
+.maker .mk2{font-size:12.5px;color:#c8d8f0;font-weight:300;}
+.maker .mk3{display:inline-block;margin-top:12px;font-size:10.5px;color:#e6cf8f;border:1px solid rgba(201,168,76,.45);border-radius:20px;padding:3px 14px;letter-spacing:.5px;}
+.maker a{color:var(--gold);text-decoration:none;font-weight:700;}
+
+@media(max-width:820px){
+ .hero{grid-template-columns:1fr;}
+ .hero-side{text-align:left;}
+ .hero h1{font-size:26px;}.hero h1 .bk{font-size:36px;}
+ .how{grid-template-columns:1fr;}
+ .how div{border-left:0;border-top:1px solid var(--line);}
+ .how div:first-child{border-top:0;}
+ .ch{grid-template-columns:1fr;}
+ .ch-side{padding:18px 18px 20px;}
+ .ch-side .num{font-size:64px;}
+ .ch-body{padding:18px 16px 20px;}
+ .ur{grid-template-columns:78px 1fr auto;gap:8px;}
+ .tabs{gap:4px;}
+ .tab{flex:1;justify-content:center;padding:11px 8px 10px;font-size:13px;}
+ .tab .st{display:none;}
+ .brand-sub{display:none;}
+ .maker .mk1{font-size:18px;letter-spacing:3px;}
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--navy);font-family:'Noto Sans KR',sans-serif;color:var(--cream);min-height:100vh;overflow-x:hidden;}
-a{text-decoration:none;color:inherit;}
 
-/* ── hero ── */
-.hero{position:relative;padding:54px 20px 44px;text-align:center;overflow:hidden;
-  background:radial-gradient(ellipse 70% 60% at 50% 0%,#24416f 0%,var(--navy) 65%);}
-.hero svg.bg{position:absolute;inset:0;width:100%;height:100%;opacity:.55;pointer-events:none;}
-.hero .inner{position:relative;max-width:760px;margin:0 auto;}
-.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:5px;color:var(--gold);font-weight:700;
-  display:inline-flex;align-items:center;gap:12px;margin-bottom:18px;}
-.eyebrow::before,.eyebrow::after{content:'';width:34px;height:1px;background:var(--gold);opacity:.7;}
-.emblem{width:132px;height:132px;margin:0 auto 18px;display:block;filter:drop-shadow(0 10px 30px rgba(212,175,55,.25));}
-h1{font-family:'Playfair Display',serif;font-size:clamp(40px,8vw,64px);font-weight:900;letter-spacing:6px;line-height:1;
-  background:linear-gradient(180deg,#fff2c2 0%,var(--gold) 55%,#a8821f 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
-.h1-ko{font-size:clamp(16px,3vw,20px);font-weight:500;color:#dfe6f2;margin-top:12px;letter-spacing:4px;}
-.hero p{font-size:13px;color:#9fb0cc;font-weight:300;margin-top:14px;line-height:1.7;}
-.lock{display:inline-flex;align-items:center;gap:6px;margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;
-  color:var(--gold2);border:1px solid rgba(212,175,55,.45);border-radius:999px;padding:6px 14px;}
-
-/* ── index ── */
-.wrap{max-width:860px;margin:0 auto;padding:10px 20px 70px;}
-.sec{display:flex;align-items:center;gap:14px;margin:22px 0 18px;}
-.sec span{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:3px;color:var(--gold);font-weight:700;}
-.sec::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(212,175,55,.6),transparent);}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
-.card{position:relative;display:flex;gap:18px;align-items:flex-start;padding:22px 22px 20px;border-radius:18px;
-  background:linear-gradient(145deg,#ffffff 0%,#f1efe8 100%);color:var(--ink);
-  border:1px solid rgba(212,175,55,.35);box-shadow:0 10px 30px rgba(0,0,0,.35),inset 0 1px 0 #fff;
-  transition:transform .22s,box-shadow .22s,border-color .22s;overflow:hidden;}
-.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,var(--gold2),var(--gold));}
-.card::after{content:attr(data-en);position:absolute;right:14px;bottom:8px;font-family:'Playfair Display',serif;font-style:italic;
-  font-size:40px;color:rgba(31,56,100,.07);pointer-events:none;white-space:nowrap;}
-.card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(0,0,0,.45);border-color:var(--gold);}
-.num{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;line-height:1;color:var(--navy2);flex-shrink:0;width:44px;
-  position:relative;}
-.num::after{content:'';display:block;width:22px;height:3px;background:var(--gold);margin-top:6px;border-radius:2px;}
-.body{flex:1;min-width:0;}
-.en{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:#0F766E;font-weight:700;margin-bottom:4px;}
-.ko{font-size:19px;font-weight:700;color:var(--navy2);letter-spacing:-.3px;}
-.desc{font-size:12px;color:var(--sub);margin-top:6px;line-height:1.6;font-weight:300;}
-.go{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;
-  color:var(--navy2);background:rgba(31,56,100,.07);border-radius:8px;padding:6px 11px;transition:all .2s;}
-.card:hover .go{background:var(--navy2);color:#fff;}
-
-footer{text-align:center;font-size:11px;color:#6f80a0;padding:0 20px 36px;letter-spacing:1px;}
-footer b{color:var(--gold);font-weight:500;}
-@media(max-width:600px){
-  .grid{grid-template-columns:1fr;}
-  .hero{padding:40px 16px 34px;}
-  .card{padding:18px 16px 18px 20px;}
-  .card::after{font-size:30px;}
-}
+.parts{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;}
+.parts div{background:#fbfcfe;border:1.5px solid #eef1f6;border-radius:10px;padding:9px 12px;}
+.parts div b{display:block;font-size:13px;font-weight:800;color:var(--ink);}
+.parts div span{display:block;font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.45;}
+.parts div.star{border-color:#f0dfa8;background:#fffbef;}
+.parts div.star b{color:#7a5f14;}
+.scope{display:flex;flex-wrap:wrap;gap:6px;}
+.scope i{font-style:normal;font-size:12px;font-weight:600;color:var(--royal);background:#eef3fb;border-radius:999px;padding:4px 11px;}
+.openbig{display:flex;align-items:center;justify-content:space-between;gap:12px;text-decoration:none;margin-top:22px;border-radius:12px;padding:14px 18px;background:linear-gradient(90deg,var(--royal),var(--ink));color:#fff;transition:filter .15s,transform .15s;}
+.openbig:hover{filter:brightness(1.15);transform:translateY(-1px);}
+.openbig b{font-size:15px;font-weight:800;}
+.openbig span{font-size:12px;color:var(--gold2);white-space:nowrap;}
+@media(max-width:820px){.openbig span{display:none;}}
+.lockline{display:inline-block;margin-top:14px;font-size:12px;color:var(--gold2);border:1px solid rgba(201,168,76,.45);border-radius:999px;padding:5px 14px;}
+.ch-side .en{font-family:'Playfair Display',serif;font-style:italic;font-size:15px;color:var(--gold2);margin-top:6px;}
 </style>
-<!-- 인덱스 임베드 지원: 인덱스(0505.co.kr) 안에 불러왔을 때만 푸터를 숨기고 내용 높이를 인덱스에 알려 줌. 단독 접속 시에는 아무 영향 없음 -->
+<!-- 인덱스 임베드 지원: 인덱스(0505.co.kr) 안에 불러왔을 때만 홈 버튼·푸터를 숨기고 내용 높이를 인덱스에 알려 줌. 단독 접속 시에는 아무 영향 없음 -->
 <script>
 (function(){
   if(window.self === window.top) return;
@@ -81,95 +166,70 @@ footer b{color:var(--gold);font-weight:500;}
 })();
 </script>
 <style>
+.embedded .home{display:none !important;}
 .embedded footer{display:none !important;}
 .embedded body{min-height:0 !important;}
-.embedded .hero{padding-top:36px !important;}
-.embedded .wrap{padding-bottom:36px !important;}
 </style>
 </head>
 <body>
-
-<section class="hero">
-  <svg class="bg" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-    <defs>
-      <linearGradient id="ln" x1="0" x2="1"><stop offset="0" stop-color="#d4af37" stop-opacity="0"/><stop offset=".5" stop-color="#d4af37" stop-opacity=".55"/><stop offset="1" stop-color="#d4af37" stop-opacity="0"/></linearGradient>
-    </defs>
-    <g stroke="url(#ln)" stroke-width="1" fill="none">
-      <path d="M0 80 Q600 20 1200 80"/><path d="M0 120 Q600 60 1200 120"/><path d="M0 340 Q600 400 1200 340"/><path d="M0 380 Q600 440 1200 380"/>
-    </g>
-    <g fill="#d4af37" opacity=".35">
-      <circle cx="120" cy="150" r="2"/><circle cx="260" cy="60" r="1.5"/><circle cx="980" cy="90" r="2"/><circle cx="1090" cy="200" r="1.5"/><circle cx="80" cy="300" r="1.5"/><circle cx="1130" cy="330" r="2"/>
-    </g>
-  </svg>
-  <div class="inner">
-    <div class="eyebrow">MOKDONG SEORO ENGLISH</div>
-    <svg class="emblem" viewBox="0 0 120 120" aria-hidden="true">
-      <defs>
-        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6e39a"/><stop offset="1" stop-color="#b8902a"/></linearGradient>
-      </defs>
-      <circle cx="60" cy="60" r="56" fill="none" stroke="url(#g1)" stroke-width="1.5"/>
-      <circle cx="60" cy="60" r="48" fill="none" stroke="url(#g1)" stroke-width=".8" stroke-dasharray="3 4"/>
-      <!-- open book -->
-      <path d="M26 44 Q43 38 60 47 Q77 38 94 44 L94 84 Q77 78 60 87 Q43 78 26 84 Z" fill="#1F3864" stroke="url(#g1)" stroke-width="1.6"/>
-      <path d="M60 47 L60 87" stroke="url(#g1)" stroke-width="1.4"/>
-      <g stroke="#f0d070" stroke-width="1.3" stroke-linecap="round" opacity=".9">
-        <path d="M34 54 H52"/><path d="M34 61 H50"/><path d="M34 68 H52"/>
-        <path d="M68 54 H86"/><path d="M68 61 H84"/><path d="M68 68 H86"/>
-      </g>
-      <!-- G monogram -->
-      <text x="60" y="36" text-anchor="middle" font-family="Playfair Display,serif" font-weight="900" font-size="22" fill="url(#g1)">G</text>
-      <text x="60" y="104" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" letter-spacing="3" fill="#d4af37">0505.CO.KR</text>
-    </svg>
-    <h1>GRAMMAR</h1>
-    <div class="h1-ko">영문법 자료</div>
-    <p>목동서로영어학원 자체 제작 — 주제별 종합 정리<br>각 항목을 누르면 새 창에서 자료가 열립니다.</p>
-    <div class="lock">🔒 각 자료는 재원생 비밀번호로 열립니다</div>
+<header class="top">
+ <div class="top-in">
+  <div class="brand">
+   <div><div class="brand-nm">목동서로<i>영어학원</i></div><div class="brand-sub">자체 제작 영문법 자료</div></div>
+   <a class="home" href="https://0505.co.kr">🏠 학원 홈</a>
   </div>
-</section>
-
-<div class="wrap">
-  <div class="sec"><span>INDEX · 주제별 정리</span></div>
-  <div class="grid">
-    <a class="card" data-en="Adverbs" href="https://0505.co.kr/GRAMMAR/adverb_position_guide.html" target="_blank" rel="noopener">
-      <div class="num">01</div>
-      <div class="body">
-        <div class="en">Position of Adverbs</div>
-        <div class="ko">부사의 위치</div>
-        <div class="desc">기초설명 · 어법설명 · 포인트 어법 143(핵심요점 연동 ⭐) · 배열영작 · 해석기법(두 가지 해석법 · 부사가 걸리는 범위 함정) · 실전문제(초급30·중급30·수능형15) · 핵심요점 14 — 빈도·양태·시간·장소·정도·문장·초점·연결 부사</div>
-        <span class="go">자료 열기 →</span>
-      </div>
-    </a>
-    <a class="card" data-en="Relative" href="https://0505.co.kr/GRAMMAR/relative_pronoun_guide.html" target="_blank" rel="noopener">
-      <div class="num">02</div>
-      <div class="body">
-        <div class="en">Relative Pronouns</div>
-        <div class="ko">관계대명사</div>
-        <div class="desc">기초설명 · 어법설명 · 포인트 어법 134(핵심요점 연동 ⭐) · 배열영작 · 해석기법(수식·순차 두 가지 해석법 · 4·5형식 목적어 혼동 막기) · 실전문제(초급30·중급30·수능형15) · 핵심요점(격 찾는 법·생략·오답 TOP10) — 주격·목적격·whose·that·what·전치사+관계사·계속적·복합관계대명사</div>
-        <span class="go">자료 열기 →</span>
-      </div>
-    </a>
-    <a class="card" data-en="Adverbial" href="https://0505.co.kr/GRAMMAR/relative_adverb_guide.html" target="_blank" rel="noopener">
-      <div class="num">03</div>
-      <div class="body">
-        <div class="en">Relative Adverbs</div>
-        <div class="ko">관계부사</div>
-        <div class="desc">기초설명 · 어법설명 · 포인트 어법 145(핵심요점 연동 ⭐) · 배열영작 · 해석기법(수식·순차 두 가지 해석법 · 긴 관계부사절 함정) · 실전문제(초급30·중급30·수능형15) · 핵심요점 14 — where·when·why·how · 관계대명사와 구별 · 전치사+which · 생략·that · 복합관계부사</div>
-        <span class="go">자료 열기 →</span>
-      </div>
-    </a>
-    <a class="card" data-en="Inversion" href="https://0505.co.kr/GRAMMAR/inversion_guide.html" target="_blank" rel="noopener">
-      <div class="num">04</div>
-      <div class="body">
-        <div class="en">Inversion</div>
-        <div class="ko">도치구문</div>
-        <div class="desc">기초설명 · 어법설명 · 포인트 어법 164(핵심요점 연동 ⭐) · 배열영작 · 해석기법(복원·순차 두 가지 해석법 · 긴 주어 찾기 함정) · 실전문제(초급30·중급30·수능형15) · 핵심요점 14 — 부정어 · Only · So/Neither · 장소·방향 · 보어·분사 · if 생략 · 양보 as · 도치 ✗ 함정</div>
-        <span class="go">자료 열기 →</span>
-      </div>
-    </a>
+  <div class="hero" style="padding-bottom:30px;">
+   <div>
+    <h1>GRAMMAR<br>주제별 영문법 종합 정리</h1>
+    <p>한 주제를 기초설명부터 실전문제까지 한 파일에 담았습니다. 주제를 고르고 「자료 열기」를 누르면 새 창으로 열립니다.</p>
+    <div class="lockline">🔒 각 자료는 재원생 비밀번호로 열립니다</div>
+   </div>
+   <div class="hero-side"><div class="big">4<small>개 주제</small></div><div class="cap">계속 추가됩니다</div></div>
   </div>
-</div>
-
-<footer>✦ <b>GRAMMAR</b> · 목동서로영어학원 · 0505.co.kr ✦</footer>
+ </div>
+</header>
+<main class="main" id="main">
+ <div class="sec"><h2>주제 목록</h2><span>4개 주제</span></div>
+ <nav class="jump" aria-label="주제 바로가기"><a href="#t1" onclick="event.preventDefault();document.getElementById('t1').scrollIntoView({behavior:'smooth'})"><b>01</b>부사의 위치</a><a href="#t2" onclick="event.preventDefault();document.getElementById('t2').scrollIntoView({behavior:'smooth'})"><b>02</b>관계대명사</a><a href="#t3" onclick="event.preventDefault();document.getElementById('t3').scrollIntoView({behavior:'smooth'})"><b>03</b>관계부사</a><a href="#t4" onclick="event.preventDefault();document.getElementById('t4').scrollIntoView({behavior:'smooth'})"><b>04</b>도치구문</a></nav>
+<article class="ch" id="t1">
+ <div class="ch-side"><div class="num"><small>TOPIC</small>01</div><div class="nm">부사의 위치</div><div class="en">Position of Adverbs</div>
+  <div class="meta">포인트 어법 143문항<br>실전문제 75문항</div></div>
+ <div class="ch-body">
+  <div class="grp"><h3>자료 구성 <small>한 파일 안에 모두 들어 있습니다</small></h3><div class="parts"><div class=""><b>기초설명</b></div><div class=""><b>어법설명</b></div><div class="star"><b>포인트 어법 143</b><span>핵심요점 연동 ⭐</span></div><div class=""><b>배열영작</b></div><div class=""><b>해석기법</b><span>두 가지 해석법 · 부사가 걸리는 범위 함정</span></div><div class="star"><b>실전문제 75</b><span>초급 30 · 중급 30 · 수능형 15</span></div><div class=""><b>핵심요점</b><span>14개 항목</span></div></div></div>
+  <div class="grp"><h3>다루는 범위</h3><div class="scope"><i>빈도</i><i>양태</i><i>시간</i><i>장소</i><i>정도</i><i>문장</i><i>초점</i><i>연결 부사</i></div></div>
+  <a class="openbig" target="_blank" rel="noopener" href="https://0505.co.kr/GRAMMAR/adverb_position_guide.html"><b>부사의 위치 자료 열기 →</b><span>🔒 재원생 비밀번호</span></a>
+ </div></article>
+<article class="ch" id="t2">
+ <div class="ch-side"><div class="num"><small>TOPIC</small>02</div><div class="nm">관계대명사</div><div class="en">Relative Pronouns</div>
+  <div class="meta">포인트 어법 134문항<br>실전문제 75문항</div></div>
+ <div class="ch-body">
+  <div class="grp"><h3>자료 구성 <small>한 파일 안에 모두 들어 있습니다</small></h3><div class="parts"><div class=""><b>기초설명</b></div><div class=""><b>어법설명</b></div><div class="star"><b>포인트 어법 134</b><span>핵심요점 연동 ⭐</span></div><div class=""><b>배열영작</b></div><div class=""><b>해석기법</b><span>수식·순차 두 가지 해석법 · 4·5형식 목적어 혼동 막기</span></div><div class="star"><b>실전문제 75</b><span>초급 30 · 중급 30 · 수능형 15</span></div><div class=""><b>핵심요점</b><span>격 찾는 법 · 생략 · 오답 TOP10</span></div></div></div>
+  <div class="grp"><h3>다루는 범위</h3><div class="scope"><i>주격</i><i>목적격</i><i>whose</i><i>that</i><i>what</i><i>전치사+관계사</i><i>계속적</i><i>복합관계대명사</i></div></div>
+  <a class="openbig" target="_blank" rel="noopener" href="https://0505.co.kr/GRAMMAR/relative_pronoun_guide.html"><b>관계대명사 자료 열기 →</b><span>🔒 재원생 비밀번호</span></a>
+ </div></article>
+<article class="ch" id="t3">
+ <div class="ch-side"><div class="num"><small>TOPIC</small>03</div><div class="nm">관계부사</div><div class="en">Relative Adverbs</div>
+  <div class="meta">포인트 어법 145문항<br>실전문제 75문항</div></div>
+ <div class="ch-body">
+  <div class="grp"><h3>자료 구성 <small>한 파일 안에 모두 들어 있습니다</small></h3><div class="parts"><div class=""><b>기초설명</b></div><div class=""><b>어법설명</b></div><div class="star"><b>포인트 어법 145</b><span>핵심요점 연동 ⭐</span></div><div class=""><b>배열영작</b></div><div class=""><b>해석기법</b><span>수식·순차 두 가지 해석법 · 긴 관계부사절 함정</span></div><div class="star"><b>실전문제 75</b><span>초급 30 · 중급 30 · 수능형 15</span></div><div class=""><b>핵심요점</b><span>14개 항목</span></div></div></div>
+  <div class="grp"><h3>다루는 범위</h3><div class="scope"><i>where · when · why · how</i><i>관계대명사와 구별</i><i>전치사+which</i><i>생략 · that</i><i>복합관계부사</i></div></div>
+  <a class="openbig" target="_blank" rel="noopener" href="https://0505.co.kr/GRAMMAR/relative_adverb_guide.html"><b>관계부사 자료 열기 →</b><span>🔒 재원생 비밀번호</span></a>
+ </div></article>
+<article class="ch" id="t4">
+ <div class="ch-side"><div class="num"><small>TOPIC</small>04</div><div class="nm">도치구문</div><div class="en">Inversion</div>
+  <div class="meta">포인트 어법 164문항<br>실전문제 75문항</div></div>
+ <div class="ch-body">
+  <div class="grp"><h3>자료 구성 <small>한 파일 안에 모두 들어 있습니다</small></h3><div class="parts"><div class=""><b>기초설명</b></div><div class=""><b>어법설명</b></div><div class="star"><b>포인트 어법 164</b><span>핵심요점 연동 ⭐</span></div><div class=""><b>배열영작</b></div><div class=""><b>해석기법</b><span>복원·순차 두 가지 해석법 · 긴 주어 찾기 함정</span></div><div class="star"><b>실전문제 75</b><span>초급 30 · 중급 30 · 수능형 15</span></div><div class=""><b>핵심요점</b><span>14개 항목</span></div></div></div>
+  <div class="grp"><h3>다루는 범위</h3><div class="scope"><i>부정어</i><i>Only</i><i>So / Neither</i><i>장소·방향</i><i>보어·분사</i><i>if 생략</i><i>양보 as</i><i>도치 ✗ 함정</i></div></div>
+  <a class="openbig" target="_blank" rel="noopener" href="https://0505.co.kr/GRAMMAR/inversion_guide.html"><b>도치구문 자료 열기 →</b><span>🔒 재원생 비밀번호</span></a>
+ </div></article>
+</main>
+<footer class="maker">
+ <div class="mk1">목동서로<em>영어학원</em></div>
+ <div class="mk-line"></div>
+ <div class="mk2">본 영문법 자료는 목동서로영어학원이 제작하였습니다.</div>
+ <div class="mk3">✦ <a href="https://0505.co.kr">0505</a>는 ‘영어영어’를 의미합니다 ✦</div>
+</footer>
 
 <script data-goatcounter="https://0505.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
