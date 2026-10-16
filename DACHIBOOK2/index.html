@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>대치동 영문법 3300제 2 · 챕터별 내신 기출변형 온라인 테스트 — 목동서로영어학원</title>
+<title>대치동 영문법 3300제 1·2·3 · 챕터별 내신 기출변형 온라인 테스트 — 목동서로영어학원</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root{--navy:#1a2a4a;--navy2:#2e4a80;--red:#c0392b;--green:#1a7a4a;--gold:#c9a84c;--bg:#f0f4f9;--text:#2c2c2c;--muted:#777;--border:#ccd8ee;}
@@ -51,13 +51,29 @@ body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;color:var(--text
 .maker .mk2{font-size:12.5px;color:#c8d8f0;font-weight:300;}
 .maker .mk3{display:inline-block;margin-top:12px;font-size:10.5px;color:#e6cf8f;border:1px solid rgba(201,168,76,.45);border-radius:20px;padding:3px 14px;letter-spacing:.5px;}
 .maker a{color:var(--gold);text-decoration:none;font-weight:700;}
-@media(max-width:760px){.sets{grid-template-columns:1fr;}.soon-grid{grid-template-columns:repeat(2,1fr);}.hd h1{font-size:21px;}.maker .mk1{font-size:19px;letter-spacing:3px;}}
+.nav{position:sticky;top:0;z-index:50;background:rgba(15,29,51,.97);backdrop-filter:blur(6px);border-bottom:2px solid var(--gold);box-shadow:0 3px 14px rgba(0,0,0,.18);}
+.nav-in{max-width:960px;margin:0 auto;display:flex;align-items:center;gap:6px;padding:8px 16px;}
+.nav-brand{font-size:12px;font-weight:800;color:#c8d8f0;letter-spacing:1px;margin-right:auto;white-space:nowrap;}
+.nav-brand em{font-style:normal;color:var(--gold);}
+.tab{border:1.5px solid rgba(255,255,255,.22);background:transparent;color:#c8d8f0;font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;padding:7px 16px;border-radius:20px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.tab:hover{border-color:var(--gold);color:#fff;}
+.tab.on{background:var(--gold);border-color:var(--gold);color:var(--navy);}
+.tab small{font-size:10px;font-weight:500;opacity:.8;margin-left:3px;}
+.empty{background:#fff;border:1px dashed #c9d4e6;border-radius:14px;padding:34px 20px;text-align:center;color:#7d889c;font-size:13px;line-height:1.9;}
+.empty b{display:block;font-size:17px;color:var(--navy);margin-bottom:4px;}
+@media(max-width:760px){.nav-brand{display:none;}.nav-in{justify-content:center;}.tab{padding:7px 13px;font-size:12.5px;}
+.sets{grid-template-columns:1fr;}.soon-grid{grid-template-columns:repeat(2,1fr);}.hd h1{font-size:21px;}.maker .mk1{font-size:19px;letter-spacing:3px;}}
 </style>
 </head>
 <body>
+<nav class="nav"><div class="nav-in"><div class="nav-brand">목동서로<em>영어학원</em> · 대치동 영문법 3300제</div>
+<button class="tab" data-b="1" onclick="showBook(1)">대치 1</button>
+<button class="tab" data-b="2" onclick="showBook(2)">대치 2</button>
+<button class="tab" data-b="3" onclick="showBook(3)">대치 3</button>
+</div></nav>
 <div class="hd"><div class="hd-in">
 <div><div class="badge">목동서로영어학원 · 문법 내신 기출변형 온라인 테스트</div>
-<h1>대치동 영문법 3300제 <em>2</em><br>챕터별 내신 기출변형 테스트</h1>
+<h1>대치동 영문법 3300제 <em id="bkNo">2</em><br>챕터별 내신 기출변형 테스트</h1>
 <p>책의 ‘내신기출변형문제’를 챕터별 세트로 나눈 자동 채점 테스트입니다.<br>제출하면 UNIT별 정답률 · 취약 파트 진단 · 전 문항 상세 해설을 바로 볼 수 있습니다.</p></div>
 <a class="home" href="https://0505.co.kr" title="목동서로영어학원 홈">🏠</a>
 </div></div>
@@ -69,11 +85,12 @@ body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;color:var(--text
 · 결과 화면의 <b>🎯 취약 파트 진단</b>에서 복습할 책 페이지와 틀린 문항을 확인하세요.
 </div>
 
-<div class="sec-t">📗 지금 응시할 수 있는 챕터</div>
-<div id="open"></div>
+<div id="secOpen"><div class="sec-t">📗 지금 응시할 수 있는 챕터</div>
+<div id="open"></div></div>
 
-<div class="sec-t">⏳ 준비 중인 챕터</div>
-<div class="soon-grid" id="soon"></div>
+<div id="secSoon"><div class="sec-t">⏳ 준비 중인 챕터</div>
+<div class="soon-grid" id="soon"></div></div>
+<div class="empty" id="secEmpty" style="display:none;"></div>
 </div>
 
 <div class="maker">
@@ -85,36 +102,55 @@ body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;color:var(--text
 
 <script>
 // 넷리파이 배포 주소 — 폴더 이름이 바뀌면 여기만 고치면 됩니다.
-const BASE='https://magical-daffodil-82a955.netlify.app/daechi2/';
-const CHAPTERS=[
- {no:1,nm:'문장의 기본',pg:'43~52쪽',
-  units:[['1','의문사가 없는 의문문'],['2','부정의문문'],['3','의문사가 있는 의문문'],['4','부가의문문'],['5','간접의문문'],['6','감탄문'],['7','문장의 형식 · 감각동사'],['8','목적격 보어를 필요로 하는 동사']],
-  sets:[
-   {s:1,rng:'1~20번',n:20,min:25,tags:['서술형 1']},
-   {s:2,rng:'21~40번',n:20,min:25,tags:['서술형 1']},
-   {s:3,rng:'41~69번',n:29,min:36,tags:['서술형 2']}]},
- {no:2,nm:'동사의 시제'},{no:3,nm:'조동사'},{no:4,nm:'수동태'},{no:5,nm:'명사와 관사'},
- {no:6,nm:'대명사'},{no:7,nm:'부정사'},{no:8,nm:'동명사'},{no:9,nm:'분사'},{no:10,nm:'형용사'},
- {no:11,nm:'부사'},{no:12,nm:'비교구문'},{no:13,nm:'접속사'},{no:14,nm:'관계사'},{no:15,nm:'가정법'},{no:16,nm:'전치사'}
-];
+// 넷리파이 배포 주소 — 폴더 이름이 바뀌면 여기만 고치면 됩니다.
+const BASE='https://magical-daffodil-82a955.netlify.app/';
+// 책별 데이터 — 새 챕터를 만들면 해당 책의 chapters에 sets를 추가하세요.
+// 링크 = BASE + 책폴더(dir) + '/' + 'daechi{책}-ch{챕터}-s{세트}/'
+const BOOKS={
+ 1:{dir:'daechi1',chapters:[]},
+ 2:{dir:'daechi2',chapters:[
+  {no:1,nm:'문장의 기본',pg:'43~52쪽',
+   units:[['1','의문사가 없는 의문문'],['2','부정의문문'],['3','의문사가 있는 의문문'],['4','부가의문문'],['5','간접의문문'],['6','감탄문'],['7','문장의 형식 · 감각동사'],['8','목적격 보어를 필요로 하는 동사']],
+   sets:[
+    {s:1,rng:'1~20번',n:20,min:25,tags:['서술형 1']},
+    {s:2,rng:'21~40번',n:20,min:25,tags:['서술형 1']},
+    {s:3,rng:'41~69번',n:29,min:36,tags:['서술형 2']}]},
+  {no:2,nm:'동사의 시제'},{no:3,nm:'조동사'},{no:4,nm:'수동태'},{no:5,nm:'명사와 관사'},
+  {no:6,nm:'대명사'},{no:7,nm:'부정사'},{no:8,nm:'동명사'},{no:9,nm:'분사'},{no:10,nm:'형용사'},
+  {no:11,nm:'부사'},{no:12,nm:'비교구문'},{no:13,nm:'접속사'},{no:14,nm:'관계사'},{no:15,nm:'가정법'},{no:16,nm:'전치사'}]},
+ 3:{dir:'daechi3',chapters:[]}
+};
 const pad=n=>String(n).padStart(2,'0');
-let o='',s='';
-CHAPTERS.forEach(c=>{
- if(c.sets&&c.sets.length){
-  const total=c.sets.reduce((a,x)=>a+x.n,0);
-  o+=`<div class="ch"><div class="ch-top"><div><div class="ch-no">CHAPTER ${pad(c.no)}</div><div class="ch-name">${c.nm}</div></div>
-  <div class="ch-meta">내신기출변형문제 ${total}문항 · ${c.sets.length}세트 · 책 ${c.pg}</div></div>
-  <div class="ch-body"><div class="units">${c.units.map(u=>`<span><b>UNIT ${u[0]}</b>${u[1]}</span>`).join('')}</div>
-  <div class="sets">${c.sets.map(x=>`<a class="set" href="${BASE}daechi2-ch${c.no}-s${x.s}/">
-   <span class="s-go">응시 →</span><div class="s-no">SET ${x.s}</div><div class="s-rng">${x.rng}</div>
-   <div class="s-info">${x.n}문항 · 100점 만점 · ${x.min}분</div>
-   <div class="s-tags"><i>복수 정답</i>${(x.tags||[]).map(t=>`<i>${t}</i>`).join('')}</div></a>`).join('')}</div></div></div>`;
- }else{
-  s+=`<div class="soon"><div class="s-no">CHAPTER ${pad(c.no)}</div><div class="s-nm">${c.nm}</div><div class="s-st">준비 중</div></div>`;
- }
-});
-document.getElementById('open').innerHTML=o;
-document.getElementById('soon').innerHTML=s;
+function showBook(b){
+ b=BOOKS[b]?b:2;
+ const bk=BOOKS[b]; let o='',s='';
+ bk.chapters.forEach(c=>{
+  if(c.sets&&c.sets.length){
+   const total=c.sets.reduce((a,x)=>a+x.n,0);
+   o+=`<div class="ch"><div class="ch-top"><div><div class="ch-no">CHAPTER ${pad(c.no)}</div><div class="ch-name">${c.nm}</div></div>
+   <div class="ch-meta">내신기출변형문제 ${total}문항 · ${c.sets.length}세트 · 책 ${c.pg}</div></div>
+   <div class="ch-body"><div class="units">${c.units.map(u=>`<span><b>UNIT ${u[0]}</b>${u[1]}</span>`).join('')}</div>
+   <div class="sets">${c.sets.map(x=>`<a class="set" href="${BASE}${bk.dir}/daechi${b}-ch${c.no}-s${x.s}/">
+    <span class="s-go">응시 →</span><div class="s-no">SET ${x.s}</div><div class="s-rng">${x.rng}</div>
+    <div class="s-info">${x.n}문항 · 100점 만점 · ${x.min}분</div>
+    <div class="s-tags"><i>복수 정답</i>${(x.tags||[]).map(t=>`<i>${t}</i>`).join('')}</div></a>`).join('')}</div></div></div>`;
+  }else{
+   s+=`<div class="soon"><div class="s-no">CHAPTER ${pad(c.no)}</div><div class="s-nm">${c.nm}</div><div class="s-st">준비 중</div></div>`;
+  }
+ });
+ document.getElementById('open').innerHTML=o;
+ document.getElementById('soon').innerHTML=s;
+ document.getElementById('secOpen').style.display=o?'':'none';
+ document.getElementById('secSoon').style.display=s?'':'none';
+ const em=document.getElementById('secEmpty');
+ if(!bk.chapters.length){em.style.display='';em.innerHTML=`<b>대치 ${b} · 준비 중</b>대치동 영문법 3300제 ${b} 온라인 테스트를 준비하고 있습니다.<br>다른 책은 위쪽 탭에서 고를 수 있습니다.`;}
+ else em.style.display='none';
+ document.getElementById('bkNo').textContent=b;
+ document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.b==String(b)));
+ if(location.hash!=='#'+b)history.replaceState(null,'','#'+b);
+}
+window.addEventListener('hashchange',()=>showBook(+location.hash.slice(1)));
+showBook(+location.hash.slice(1)||2);
 </script>
 </body>
 </html>
