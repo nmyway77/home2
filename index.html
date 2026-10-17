@@ -665,10 +665,10 @@ body{padding-bottom:62px;}
   border-bottom:1px solid rgba(201,168,76,0.35);
   box-shadow:0 6px 22px rgba(10,30,58,0.35);
 }
-.top-tabs-inner{max-width:900px;margin:0 auto;padding:11px 8px;display:flex;gap:10px;}
+.top-tabs-inner{max-width:1040px;margin:0 auto;padding:11px 8px;display:flex;gap:8px;}
 .top-tab{
   flex:1;min-height:46px;padding:0 10px;border-radius:12px;cursor:pointer;
-  font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.3px;white-space:nowrap;
+  font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:700;letter-spacing:0;white-space:nowrap;
   background:rgba(255,255,255,0.05);border:1px solid;transition:all 0.25s;
 }
 .top-tab:focus-visible{outline:2px solid #fff;outline-offset:2px;}
@@ -741,7 +741,7 @@ body.hub-grammar .school-section{margin-top:0;}
 .hub-frame{display:block;width:100%;height:600px;border:0;background:transparent;}
 @media(max-width:560px){
   .top-tabs-inner{gap:6px;padding:9px 8px;flex-wrap:wrap;}
-  .top-tab{flex:1 1 calc(50% - 3px);font-size:12.5px;min-height:42px;padding:0 4px;border-radius:10px;letter-spacing:0;}
+  .top-tab{flex:1 1 calc(33.33% - 4px);font-size:12px;min-height:42px;padding:0 4px;border-radius:10px;letter-spacing:0;}
 }
 </style>
 </head>
@@ -776,10 +776,12 @@ body.hub-grammar .school-section{margin-top:0;}
 <!-- 상단 탭 네비 -->
 <nav class="top-tabs" aria-label="자료 분류">
   <div class="top-tabs-inner" role="tablist">
-    <button class="top-tab tt-mock on" role="tab" data-tab="mock" aria-selected="true">📖 READING 자료</button>
     <button class="top-tab tt-gichul" role="tab" data-tab="gichul" aria-selected="false">📚 기출문제자료</button>
+    <button class="top-tab tt-mock on" role="tab" data-tab="mock" aria-selected="true">📖 READING 자료</button>
     <button class="top-tab tt-grammar" role="tab" data-tab="grammar" aria-selected="false">📘 GRAMMAR 자료</button>
     <button class="top-tab tt-voca" role="tab" data-tab="voca" aria-selected="false">📗 VOCA 자료</button>
+    <button class="top-tab tt-writing" role="tab" data-tab="writing" aria-selected="false">✍️ 영작 자료</button>
+    <button class="top-tab tt-listen" role="tab" data-tab="listen" aria-selected="false">🎧 듣기평가</button>
     <button class="top-tab tt-member" role="tab" data-tab="member" aria-selected="false">🔒 재원생자료</button>
   </div>
 </nav>
@@ -1713,7 +1715,7 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
     document.body.classList.add('hub-open');
     document.body.classList.toggle('hub-grammar', cur === 'grammar');
     hubView.hidden = false;
-    hubBar.hidden = (cur === 'gichul' || cur === 'voca');
+    hubBar.hidden = (cur === 'gichul' || cur === 'voca' || cur === 'writing' || cur === 'listen');
     /* GRAMMAR·READING 탭은 알약 네비만 표시(「← 자료 목록으로」는 READING 알약의 「전체 자료 목록」이 대신함) */
     document.getElementById('hubBack').hidden = (cur === 'grammar' || cur === 'mock');
     /* 고1·고2·고3 한줄해석 허브면 학년 전환 버튼 표시 */
@@ -1749,12 +1751,14 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
     try{ frame.contentWindow.location.replace('about:blank'); }catch(e){ frame.src = 'about:blank'; }
   }
   function goTab(name){
-    if(!document.getElementById('panel-' + name) && name !== 'gichul' && name !== 'grammar' && name !== 'voca') return;
+    if(!document.getElementById('panel-' + name) && name !== 'gichul' && name !== 'grammar' && name !== 'voca' && name !== 'writing' && name !== 'listen') return;
     setTab(name);
     if(name === 'mock'){ openHub(READING_HOME); }
     else if(name === 'gichul'){ openHub('GICHUL.html'); }
     else if(name === 'grammar'){ openHub(GRAMMAR_HOME); }
     else if(name === 'voca'){ openHub('VOCA-HUB.html'); }
+    else if(name === 'writing'){ openHub('WRITING-HUB.html'); }
+    else if(name === 'listen'){ openHub('EBSLISTENING.html'); }
     else{ closeHub(); showPanel(name); }
     setHash(name);
   }
@@ -1780,7 +1784,7 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
     if(!d || !d.seoroHub) return;
     if(d.seoroHub === 'pw'){ _pwTarget = d.url; openPwModal(); return; }
     if(d.seoroHub === 'open'){ openHub(d.url); return; }   /* 교재 목록 허브에서 표지 클릭 → 그 교재 허브로 전환 */   /* 허브 항목 클릭 → 인덱스 비밀번호 창 → 통과하면 새 창 */
-    if(d.seoroHub === 'home'){ goTab((cur === 'gichul' || cur === 'grammar' || cur === 'voca') ? 'mock' : cur); return; }
+    if(d.seoroHub === 'home'){ goTab((cur === 'gichul' || cur === 'grammar' || cur === 'voca' || cur === 'writing' || cur === 'listen') ? 'mock' : cur); return; }
     if(viewing && d.h > 0){ gotHeight = true; frame.style.height = Math.ceil(d.h) + 'px'; }
   });
 
@@ -1817,7 +1821,7 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
   function fromHash(){
     var h = location.hash.replace('#', '');
     if(h.indexOf('p=') === 0){ setHash(cur); return; }   /* 예전 방식 주소(#p=…)로 들어오면 주소만 정리 */
-    if(h === 'mock' || h === 'gichul' || h === 'grammar' || h === 'voca' || h === 'member') goTab(h);
+    if(h === 'mock' || h === 'gichul' || h === 'grammar' || h === 'voca' || h === 'writing' || h === 'listen' || h === 'member') goTab(h);
   }
   window.addEventListener('hashchange', fromHash);
   fromHash();
@@ -1834,9 +1838,9 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
 .hero-tagline strong{color:#DCE9FF !important;}
 /* 상단 탭 */
 .top-tabs{border-bottom-color:rgba(169,204,255,0.3) !important;}
-.tt-mock,.tt-gichul,.tt-grammar,.tt-voca,.tt-member{color:#C9DDFF !important;border-color:rgba(169,204,255,0.3) !important;}
-.tt-mock:hover,.tt-gichul:hover,.tt-grammar:hover,.tt-voca:hover,.tt-member:hover{background:rgba(169,204,255,0.1) !important;}
-.tt-mock.on,.tt-gichul.on,.tt-grammar.on,.tt-voca.on,.tt-member.on{color:#0B1B3A !important;background:linear-gradient(180deg,#E3EEFF,#A9CCFF) !important;border-color:transparent !important;box-shadow:0 3px 0 #5B8DEF,0 8px 20px rgba(91,141,239,0.35) !important;}
+.tt-mock,.tt-gichul,.tt-grammar,.tt-voca,.tt-writing,.tt-listen,.tt-member{color:#C9DDFF !important;border-color:rgba(169,204,255,0.3) !important;}
+.tt-mock:hover,.tt-gichul:hover,.tt-grammar:hover,.tt-voca:hover,.tt-writing:hover,.tt-listen:hover,.tt-member:hover{background:rgba(169,204,255,0.1) !important;}
+.tt-mock.on,.tt-gichul.on,.tt-grammar.on,.tt-voca.on,.tt-writing.on,.tt-listen.on,.tt-member.on{color:#0B1B3A !important;background:linear-gradient(180deg,#E3EEFF,#A9CCFF) !important;border-color:transparent !important;box-shadow:0 3px 0 #5B8DEF,0 8px 20px rgba(91,141,239,0.35) !important;}
 /* 배너 공통: 배경·테두리·배지 통일 */
 .mock-banner .mock-banner-inner{background:linear-gradient(135deg,#0d1b2a 0%,#142848 55%,#1b3260 100%) !important;border-color:rgba(169,204,255,0.14) !important;}
 .mock-banner:hover .mock-banner-inner{border-color:rgba(169,204,255,0.4) !important;box-shadow:0 8px 40px rgba(91,141,239,0.18) !important;}
