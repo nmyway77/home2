@@ -1528,7 +1528,9 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
       t.setAttribute('aria-selected', on ? 'true' : 'false');
     });
   }
-  function showPanel(name){ panels.forEach(function(p){ p.classList.toggle('on', p.id === 'panel-' + name); }); }
+  function showPanel(name){ panels.forEach(function(p){ p.classList.toggle('on', p.id === 'panel-' + name); }); remember(name, ''); }
+  /* 새로고침해도 보던 탭·허브로 돌아오도록 이 창(탭)에만 기억해 둠 — 주소창은 그대로 */
+  function remember(t, h){ try{ sessionStorage.setItem('seoroView', JSON.stringify({t:t, h:h||''})); }catch(e){} }
 
   function openHub(u){
     var url = norm(u);
@@ -1551,6 +1553,7 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
     });
     frame.style.height = '600px';
     try{ frame.contentWindow.location.replace(url); }catch(e){ frame.src = url; }
+    remember(cur, String(u));
     /* 허브가 높이를 알려 주지 않으면(임베드 지원 코드가 없는 허브) 화면 높이에 맞춰 안에서 스크롤 */
     clearTimeout(fbTimer);
     fbTimer = setTimeout(function(){
@@ -1646,6 +1649,13 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
   }
   window.addEventListener('hashchange', fromHash);
   fromHash();
+  /* 주소에 탭 표시가 없으면(보통) 이 창에서 마지막으로 보던 탭·허브를 복원 */
+  if(!location.hash){
+    try{
+      var v = JSON.parse(sessionStorage.getItem('seoroView') || 'null');
+      if(v && v.t && v.t !== 'mock' || (v && v.t === 'mock' && v.h)){ setTab(v.t); if(v.h){ openHub(v.h); } else { closeHub(); showPanel(v.t); } }
+    }catch(e){}
+  }
 })();
 </script>
 
