@@ -1649,8 +1649,9 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
   }
   window.addEventListener('hashchange', fromHash);
   fromHash();
-  /* 주소에 탭 표시가 없으면(보통) 이 창에서 마지막으로 보던 탭·허브를 복원 */
-  if(!location.hash){
+  /* 주소에 탭 표시가 없으면(보통) 이 창에서 마지막으로 보던 탭·허브를 복원. #toggle-goatcounter 같은 다른 해시는 무시 */
+  var _h0 = location.hash.replace('#', '');
+  if(!(_h0 === 'mock' || _h0 === 'gichul' || _h0 === 'grammar' || _h0 === 'voca' || _h0 === 'writing' || _h0 === 'listen' || _h0 === 'member' || _h0.indexOf('p=') === 0)){
     try{
       var v = JSON.parse(sessionStorage.getItem('seoroView') || 'null');
       if(v && v.t && v.t !== 'mock' || (v && v.t === 'mock' && v.h)){ setTab(v.t); if(v.h){ openHub(v.h); } else { closeHub(); showPanel(v.t); } }
