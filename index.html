@@ -703,7 +703,7 @@ body.hub-grammar .school-section{margin-top:0;}
 .hub-back[hidden]{display:none;}
 .hub-books{position:relative;gap:4px;padding:5px 5px 5px 14px;border-radius:999px;background:linear-gradient(135deg,#1F3864,#0f2342);box-shadow:0 8px 24px rgba(15,35,66,0.28),inset 0 1px 0 rgba(255,255,255,0.08);flex-wrap:nowrap;max-width:100%;overflow-x:auto;scrollbar-width:none;}
 .hub-books::-webkit-scrollbar{display:none;}
-.hub-books::before{content:'GRAMMAR';font-family:'JetBrains Mono','Noto Sans KR',monospace;font-size:10px;letter-spacing:2px;font-weight:700;color:#E4C589;margin-right:8px;white-space:nowrap;}
+.hub-books::before{content:attr(data-label);font-family:'JetBrains Mono','Noto Sans KR',monospace;font-size:10px;letter-spacing:2px;font-weight:700;color:#E4C589;margin-right:8px;white-space:nowrap;}
 .hub-books .hub-grade{flex:0 0 auto;min-width:0;height:34px;padding:0 15px;border-radius:999px;font-size:13.5px;font-weight:600;color:rgba(255,255,255,0.82);background:transparent;border:1px solid transparent;box-shadow:none;white-space:nowrap;}
 .hub-books .hub-grade:hover{transform:none;color:#fff;background:rgba(255,255,255,0.10);box-shadow:none;}
 .hub-books .hub-grade.on,.hub-books .hub-grade.on:hover{color:#2a1a0a;background:linear-gradient(135deg,#E4C589,#C99B4E);border-color:transparent;box-shadow:0 3px 10px rgba(228,197,137,0.35);}
@@ -776,7 +776,7 @@ body.hub-grammar .school-section{margin-top:0;}
 <!-- 상단 탭 네비 -->
 <nav class="top-tabs" aria-label="자료 분류">
   <div class="top-tabs-inner" role="tablist">
-    <button class="top-tab tt-mock on" role="tab" data-tab="mock" aria-selected="true">📝 모의고사 독해(한줄해석)</button>
+    <button class="top-tab tt-mock on" role="tab" data-tab="mock" aria-selected="true">📖 READING 자료</button>
     <button class="top-tab tt-gichul" role="tab" data-tab="gichul" aria-selected="false">📚 기출문제자료</button>
     <button class="top-tab tt-grammar" role="tab" data-tab="grammar" aria-selected="false">📘 GRAMMAR 자료</button>
     <button class="top-tab tt-voca" role="tab" data-tab="voca" aria-selected="false">📗 VOCA 자료</button>
@@ -1257,7 +1257,15 @@ body.hub-grammar .school-section{margin-top:0;}
       <button type="button" class="hub-grade" data-hub="mock_h3_hub.html">고3</button>
     </div>
     <!-- GRAMMAR 탭일 때만 보이는 문법 교재 허브 전환 버튼 (각 허브는 항목 클릭 때만 비밀번호) -->
-    <div class="hub-grades hub-books" id="hubBooks" hidden>
+    <!-- READING 탭일 때만 보이는 독해 자료 전환 버튼 -->
+    <div class="hub-grades hub-books" id="hubReading" data-tab="mock" data-label="READING" hidden>
+      <button type="button" class="hub-grade" data-hub="READING-HUB.html">독해 홈</button>
+      <button type="button" class="hub-grade" data-hub="mock_h1_hub7.html" data-lock="1">고1 모의고사</button>
+      <button type="button" class="hub-grade" data-hub="mock_h2_hub7.html" data-lock="1">고2 모의고사</button>
+      <button type="button" class="hub-grade" data-hub="mock_h3_hub.html">고3 모의고사</button>
+      <button type="button" class="hub-grade" data-hub="panel:mock">전체 자료 목록</button>
+    </div>
+    <div class="hub-grades hub-books" id="hubBooks" data-tab="grammar" data-label="GRAMMAR" hidden>
       <button type="button" class="hub-grade" data-hub="GRAMMARBOOKS-HUB.html">문법교재 목록</button>
       <button type="button" class="hub-grade" data-hub="DACHIBOOK2-INDEX.html">대치3300</button>
       <button type="button" class="hub-grade" data-hub="DAECHI-INDEX.html">대치1등급 영문법</button>
@@ -1679,9 +1687,9 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
   var frame = document.getElementById('hubFrame');
   var hubGrades = document.getElementById('hubGrades');
   var gradeBtns = hubGrades.querySelectorAll('.hub-grade');
-  var hubBooks = document.getElementById('hubBooks');
-  var bookBtns = hubBooks.querySelectorAll('.hub-grade');
+  var pills = document.querySelectorAll('.hub-books');   /* 탭별 허브 전환 알약(READING·GRAMMAR) */
   var GRAMMAR_HOME = 'DACHIBOOK2-INDEX.html';   /* GRAMMAR 탭을 눌렀을 때 처음 보이는 허브 */
+  var READING_HOME = 'READING-HUB.html';      /* READING 탭을 눌렀을 때 처음 보이는 허브 */
   var cur = 'mock', viewing = false, gotHeight = false, fbTimer = null;
 
   /* 주소창에는 아무것도 붙이지 않음: 탭·허브를 눌러도 주소는 그대로 (들어올 때 붙어 있던 #… 도 지움) */
@@ -1703,17 +1711,18 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
     document.body.classList.toggle('hub-grammar', cur === 'grammar');
     hubView.hidden = false;
     hubBar.hidden = (cur === 'gichul' || cur === 'voca');
-    /* GRAMMAR 탭은 돌아갈 목록이 없으므로 「← 자료 목록으로」를 숨기고 교재 네비만 표시 */
-    document.getElementById('hubBack').hidden = (cur === 'grammar');
+    /* GRAMMAR·READING 탭은 알약 네비만 표시(「← 자료 목록으로」는 READING 알약의 「전체 자료 목록」이 대신함) */
+    document.getElementById('hubBack').hidden = (cur === 'grammar' || cur === 'mock');
     /* 고1·고2·고3 한줄해석 허브면 학년 전환 버튼 표시 */
     var f = String(u).split('#')[0].split('?')[0].split('/').pop().toLowerCase();
     var onGrade = false;
     gradeBtns.forEach(function(b){ var on = b.getAttribute('data-hub').toLowerCase() === f; b.classList.toggle('on', on); if(on) onGrade = true; });
-    hubGrades.hidden = !onGrade;
-    /* GRAMMAR 탭의 문법 교재 허브면 교재 전환 버튼 표시 */
-    var onBook = false;
-    bookBtns.forEach(function(b){ var on = b.getAttribute('data-hub').toLowerCase() === f; b.classList.toggle('on', on); if(on) onBook = true; });
-    hubBooks.hidden = !(onBook && cur === 'grammar');
+    hubGrades.hidden = !onGrade || cur === 'mock';   /* READING 탭에서는 알약의 고1·고2·고3 버튼이 대신함 */
+    /* 탭에 맞는 알약 네비를 보이고, 지금 열린 허브의 버튼을 켬 */
+    pills.forEach(function(pl){
+      pl.querySelectorAll('.hub-grade').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-hub').toLowerCase() === f); });
+      pl.hidden = (pl.getAttribute('data-tab') !== cur);
+    });
     frame.style.height = '600px';
     try{ frame.contentWindow.location.replace(url); }catch(e){ frame.src = url; }
     /* 허브가 높이를 알려 주지 않으면(임베드 지원 코드가 없는 허브) 화면 높이에 맞춰 안에서 스크롤 */
@@ -1739,7 +1748,8 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
   function goTab(name){
     if(!document.getElementById('panel-' + name) && name !== 'gichul' && name !== 'grammar' && name !== 'voca') return;
     setTab(name);
-    if(name === 'gichul'){ openHub('GICHUL.html'); }
+    if(name === 'mock'){ openHub(READING_HOME); }
+    else if(name === 'gichul'){ openHub('GICHUL.html'); }
     else if(name === 'grammar'){ openHub(GRAMMAR_HOME); }
     else if(name === 'voca'){ openHub('VOCA-HUB.html'); }
     else{ closeHub(); showPanel(name); }
@@ -1778,10 +1788,13 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
     });
   });
   document.getElementById('hubBack').addEventListener('click', function(){ goTab(cur); });
-  bookBtns.forEach(function(b){ b.addEventListener('click', function(){
+  pills.forEach(function(pl){ pl.querySelectorAll('.hub-grade').forEach(function(b){ b.addEventListener('click', function(){
     if(b.classList.contains('on')) return;
-    openHub(b.getAttribute('data-hub'));
-  }); });
+    var h = b.getAttribute('data-hub');
+    if(h.indexOf('panel:') === 0){ closeHub(); showPanel(h.slice(6)); return; }   /* 「전체 자료 목록」: 탭 아래의 원래 배너 목록으로 */
+    if(b.hasAttribute('data-lock')){ _pwTarget = h; openPwModal(); }               /* 고1·고2 는 재원생 비밀번호 */
+    else openHub(h);
+  }); }); });
   gradeBtns.forEach(function(b){ b.addEventListener('click', function(){
     if(b.classList.contains('on')) return;
     if(b.hasAttribute('data-lock')){ _pwTarget = b.getAttribute('data-hub'); openPwModal(); }   /* 고1·고2 는 재원생 비밀번호 */
