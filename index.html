@@ -1251,6 +1251,7 @@ body.hub-grammar .school-section{margin-top:0;}
     </div>
     <!-- GRAMMAR 탭일 때만 보이는 문법 교재 허브 전환 버튼 (각 허브는 항목 클릭 때만 비밀번호) -->
     <div class="hub-grades hub-books" id="hubBooks" hidden>
+      <button type="button" class="hub-grade" data-hub="GRAMMARBOOKS-HUB.html">문법교재 목록</button>
       <button type="button" class="hub-grade" data-hub="DACHIBOOK2-INDEX.html">대치3300</button>
       <button type="button" class="hub-grade" data-hub="DAECHI-INDEX.html">대치1등급 영문법</button>
       <button type="button" class="hub-grade" data-hub="ONESHOT-INDEX.html">원샷</button>
@@ -1757,7 +1758,8 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
     if(e.source !== frame.contentWindow) return;
     var d = e.data;
     if(!d || !d.seoroHub) return;
-    if(d.seoroHub === 'pw'){ _pwTarget = d.url; openPwModal(); return; }   /* 허브 항목 클릭 → 인덱스 비밀번호 창 → 통과하면 새 창 */
+    if(d.seoroHub === 'pw'){ _pwTarget = d.url; openPwModal(); return; }
+    if(d.seoroHub === 'open'){ openHub(d.url); return; }   /* 교재 목록 허브에서 표지 클릭 → 그 교재 허브로 전환 */   /* 허브 항목 클릭 → 인덱스 비밀번호 창 → 통과하면 새 창 */
     if(d.seoroHub === 'home'){ goTab((cur === 'gichul' || cur === 'grammar' || cur === 'voca') ? 'mock' : cur); return; }
     if(viewing && d.h > 0){ gotHeight = true; frame.style.height = Math.ceil(d.h) + 'px'; }
   });
