@@ -1,5 +1,10 @@
 // 재원생 전용 잠금 (허브·자료 공용). 비밀번호 변경 시 PW와 KEY만 수정
 (function(){
+  /* 주소 통일: www.0505.co.kr 이나 http:// 로 들어오면 https://0505.co.kr 로 보냄.
+     브라우저는 주소(www 유무·http/https)마다 비밀번호 통과 기록을 따로 두기 때문에, 주소가 섞이면 비밀번호를 두 번 묻게 된다. */
+  if(/^www\.0505\.co\.kr$/i.test(location.hostname) || (location.protocol==='http:' && /0505\.co\.kr$/i.test(location.hostname))){
+    location.replace('https://0505.co.kr' + location.pathname + location.search + location.hash); return;
+  }
   var KEY='pw0505v2', PW='05050S', HOURS=3;
   function valid(){ try{ return parseInt(localStorage.getItem(KEY)||'0',10) > Date.now(); }catch(e){ return false; } }
   /* 허브용 「클릭 잠금」: <script>window.PWGATE_CLICK=1</script> 를 이 파일보다 먼저 두면
