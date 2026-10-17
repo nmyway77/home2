@@ -1260,9 +1260,12 @@ body.hub-grammar .school-section{margin-top:0;}
     <!-- READING 탭일 때만 보이는 독해 자료 전환 버튼 -->
     <div class="hub-grades hub-books" id="hubReading" data-tab="mock" data-label="READING" hidden>
       <button type="button" class="hub-grade" data-hub="READING-HUB.html">독해 홈</button>
-      <button type="button" class="hub-grade" data-hub="mock_h1_hub7.html" data-lock="1">고1 모의고사</button>
-      <button type="button" class="hub-grade" data-hub="mock_h2_hub7.html" data-lock="1">고2 모의고사</button>
-      <button type="button" class="hub-grade" data-hub="mock_h3_hub.html">고3 모의고사</button>
+      <button type="button" class="hub-grade" data-hub="mock_h1_hub7.html" data-lock="1">고1모고</button>
+      <button type="button" class="hub-grade" data-hub="mock_h2_hub7.html" data-lock="1">고2모고</button>
+      <button type="button" class="hub-grade" data-hub="mock_h3_hub.html">고3모고</button>
+      <button type="button" class="hub-grade" data-hub="ebs-lite.html" data-lock="1">수특라이트</button>
+      <button type="button" class="hub-grade" data-hub="ebs-sutek.html" data-lock="1">수능특강</button>
+      <button type="button" class="hub-grade" data-hub="ebs-wanseong.html" data-lock="1">수능완성</button>
       <button type="button" class="hub-grade" data-hub="READINGBOOKS-HUB.html">교재목록</button>
     </div>
     <div class="hub-grades hub-books" id="hubBooks" data-tab="grammar" data-label="GRAMMAR" hidden>
@@ -1720,7 +1723,7 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
     hubGrades.hidden = !onGrade || cur === 'mock';   /* READING 탭에서는 알약의 고1·고2·고3 버튼이 대신함 */
     /* 탭에 맞는 알약 네비를 보이고, 지금 열린 허브의 버튼을 켬 */
     pills.forEach(function(pl){
-      pl.querySelectorAll('.hub-grade').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-hub').toLowerCase() === f); });
+      pl.querySelectorAll('.hub-grade').forEach(function(b){ var hb = b.getAttribute('data-hub').toLowerCase(); b.classList.toggle('on', hb === f || hb.replace('.html','-reading.html') === f); });
       pl.hidden = (pl.getAttribute('data-tab') !== cur);
     });
     frame.style.height = '600px';
