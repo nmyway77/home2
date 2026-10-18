@@ -139,6 +139,22 @@ body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;min-height:100vh
   display:flex;align-items:center;gap:7px;
 }
 .print-exec-btn:hover{background:#2E75B6;}
+.print-opts{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;
+  font-size:12px;color:var(--text);font-family:'Noto Sans KR',sans-serif;
+  background:white;border:1px solid rgba(0,0,0,0.08);border-radius:10px;
+  padding:8px 14px;margin-bottom:12px;box-shadow:0 1px 6px var(--shadow);}
+.print-opts label{display:flex;align-items:center;gap:4px;cursor:pointer;white-space:nowrap;}
+.print-opts input[type=checkbox]{width:14px;height:14px;accent-color:var(--navy);cursor:pointer;}
+.print-opts .popt-btn{background:white;border:1.5px solid var(--navy);color:var(--navy);
+  border-radius:6px;padding:4px 12px;font-size:12px;font-weight:700;cursor:pointer;}
+.print-opts .popt-btn:hover{background:var(--navy);color:white;}
+.pt .td-write .hint-letter{color:#999;font-family:Georgia,serif;letter-spacing:2px;font-size:12px;}
+.pt .td-write .answer-key{color:#B71C1C;font-weight:600;font-size:12px;}
+.print-opts .popt-range{display:flex;align-items:center;gap:5px;white-space:nowrap;font-weight:700;color:var(--navy);
+  padding-right:12px;border-right:1px solid rgba(0,0,0,0.1);}
+.print-opts .popt-sel{font-size:12px;padding:3px 6px;border:1.5px solid var(--navy);border-radius:6px;background:white;color:var(--navy);font-weight:700;}
+.print-page-break{border-top:2px dashed #d0b8b0;margin:22px 0 14px;}
+.print-cont-title{font-size:12px!important;}
 .print-table-wrap{
   background:white;border-radius:12px;
   box-shadow:0 2px 14px var(--shadow);
@@ -186,11 +202,13 @@ body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;min-height:100vh
 @media print{
   @page{size:A4;margin:14mm 12mm;}
   .top-nav,.watermark,.page-header,.unit-selector-wrap,
-  .view-tabs,.print-view-header,.print-exec-btn,footer{display:none!important;}
+  .view-tabs,.print-view-header,.print-exec-btn,.print-opts,footer{display:none!important;}
   .passage{padding:0!important;max-width:100%!important;}
   .view-panel{display:none!important;}
   #panelPrintSpell.active,#panelPrintMeaning.active{display:block!important;}
   .print-table-wrap{box-shadow:none!important;padding:0!important;}
+  .print-page-break{border:0!important;margin:0!important;break-before:page;page-break-before:always;}
+  .print-two-col,.pt tr{break-inside:avoid;page-break-inside:avoid;}
   .print-two-col{display:grid!important;grid-template-columns:1fr 1fr;gap:18px;}
   .pt th{background:#f4ece8!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
   .pt tr:nth-child(even) td{background:#fdf7f5!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
@@ -229,6 +247,15 @@ body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;min-height:100vh
 .vcard-num{font-family:'JetBrains Mono',monospace;font-size:9px;background:var(--navy);
   color:white;padding:2px 6px;border-radius:3px;margin-right:4px;}
 .open-hint{font-size:10px;color:rgba(0,0,0,0.25);font-family:'JetBrains Mono',monospace;margin-top:3px;}
+/* ── 카드 보기 바 (v1.4): 영어 먼저/뜻 먼저 + 순서 섞기 ── */
+.card-mode-bar{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+.card-mode-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--navy);font-weight:700;}
+.card-mode-btn{border:1.5px solid rgba(31,56,100,0.25);background:white;color:var(--navy);border-radius:20px;
+  padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.2s;}
+.card-mode-btn.active{background:var(--navy);color:white;border-color:var(--navy);}
+.vcard-kr-front{font-size:14px;color:#2d2d4e;font-weight:700;line-height:1.6;flex:1;}
+.vcard-en-back{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
+.vcard-en-back .vcard-en{font-size:19px;}
 
 /* ── QUIZ CARDS ── */
 .touch-hint{background:var(--cream);border:1px solid rgba(184,134,11,0.3);border-radius:8px;
@@ -8102,14 +8129,37 @@ function renderTab(){
   else if(currentTab === "printMeaning") buildPrintView("meaning");
 }
 
+/* ── 카드 보기 모드 (v1.4) ── "en" = 영어 먼저(클릭→뜻) / "kr" = 뜻 먼저(클릭→철자) */
+const CARD_MODE_KEY = "neunbokaHighEtyCardMode";
+let cardMode = "en";
+try{ const m = localStorage.getItem(CARD_MODE_KEY); if(m==="kr"||m==="en") cardMode = m; }catch(e){}
+function setCardMode(m){ cardMode = m; try{ localStorage.setItem(CARD_MODE_KEY, m); }catch(e){} buildVocabCards(); }
+/* ── 카드 순서 섞기 (v1.4) ── on 이면 무작위, 과가 바뀌면 새로 섞음 */
+const cardShuffle = {on:false, order:null, unit:-1};
+function shuffledIdx(n){ const a=[...Array(n).keys()]; for(let i=n-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function toggleCardShuffle(){ cardShuffle.on = !cardShuffle.on; cardShuffle.order = null; buildVocabCards(); }
+function reshuffleCards(){ cardShuffle.on = true; cardShuffle.order = null; buildVocabCards(); }
+
 function buildVocabCards(){
   const box = document.getElementById("vocabContent");
   box.innerHTML = "";
   const words = UNITS[currentUnit];
   if(words.length === 0){ showEmpty(box); return; }
+  const bar = document.createElement("div");
+  bar.className = "card-mode-bar";
+  bar.innerHTML = `<span class="card-mode-label">카드 보기</span>
+    <button class="card-mode-btn ${cardMode==="en"?"active":""}" onclick="setCardMode('en')">🔤 영어 먼저</button>
+    <button class="card-mode-btn ${cardMode==="kr"?"active":""}" onclick="setCardMode('kr')">🇰🇷 뜻 먼저</button>
+    <span class="card-mode-label" style="margin-left:10px;">순서</span>
+    <button class="card-mode-btn ${cardShuffle.on?"":"active"}" onclick="if(cardShuffle.on) toggleCardShuffle()">📋 원래 순서</button>
+    <button class="card-mode-btn ${cardShuffle.on?"active":""}" onclick="reshuffleCards()">🔀 ${cardShuffle.on?"다시 섞기":"랜덤 섞기"}</button>`;
+  box.appendChild(bar);
+  if(cardShuffle.unit !== currentUnit){ cardShuffle.unit = currentUnit; cardShuffle.order = null; }
+  if(cardShuffle.on && (!cardShuffle.order || cardShuffle.order.length !== words.length)) cardShuffle.order = shuffledIdx(words.length);
+  const shown = cardShuffle.on ? cardShuffle.order.map(k=>words[k]) : words;
   const grid = document.createElement("div");
   grid.className = "vcard-grid";
-  words.forEach((v, i)=>{
+  shown.forEach((v, i)=>{
     const synHtml  = v.syn && v.syn.length ? `<div class="vcard-section"><div class="vcard-section-label">동의어</div><div class="vcard-items"><span class="vcard-syn">${v.syn.join(", ")}</span></div></div>` : "";
     const antHtml  = v.ant && v.ant.length ? `<div class="vcard-section"><div class="vcard-section-label">반의어</div><div class="vcard-items"><span class="vcard-ant">${v.ant.join(", ")}</span></div></div>` : "";
     const phraseHtml = v.phrases && v.phrases.length ? `<div class="vcard-section"><div class="vcard-section-label">어구 / 숙어</div><div class="vcard-items">${v.phrases.map(p=>`<div class="vcard-phrase">• ${p}</div>`).join("")}</div></div>` : "";
@@ -8121,6 +8171,28 @@ function buildVocabCards(){
       document.querySelectorAll(".vcard.open").forEach(c => c.classList.remove("open"));
       if(!isOpen) this.classList.add("open");
     };
+    if(cardMode === "kr"){
+      div.innerHTML = `
+      <div class="vcard-front">
+        <div class="vcard-en-row">
+          <span class="vcard-num">${String(currentUnit*40+i+1).padStart(2,"0")}</span>
+          <div class="vcard-kr-front">${v.kr}</div>
+        </div>
+        <div class="vcard-pos-kr">${v.pos} <span class="open-hint">클릭하면 철자 보기 ▼</span></div>
+      </div>
+      <div class="vcard-back">
+        <div class="vcard-back-inner">
+          <div class="vcard-en-back">
+            <div class="vcard-en">${v.en}</div>
+            <button class="vcard-speak" onclick="speakWord('${v.en}',event)">🔊</button>
+          </div>
+          
+          ${synHtml}${antHtml}${phraseHtml}
+        </div>
+      </div>`;
+      grid.appendChild(div);
+      return;
+    }
     div.innerHTML = `
       <div class="vcard-front">
         <div class="vcard-en-row">
@@ -8265,40 +8337,113 @@ function checkMeaning(i, btn){
   if(sc) sc.textContent = ok + " / " + done + " 정답";
 }
 
+/* ── 프린트 옵션 (순서 섞기 기본 ON / 다시 섞기 / 첫 글자 힌트 / 정답지 / 인쇄 범위) ── */
+const PRINT_SEP = ";";   // 이 단어장의 뜻 구분자 (대표 의미 = 첫 구분자 앞)
+const PER_PAGE  = 40;          // A4 한 장당 단어 수 (좌 20 + 우 20)
+function unitLabel(i){ return (i+1) + "과"; }
+const printOpt = {
+  spell:   {shuffle:true,  hint:false, answer:false, order:null, key:""},
+  meaning: {shuffle:true,  hint:false, answer:false, order:null, key:""}
+};
+/* 인쇄 범위: 기본 = 현재 과 1개. 상단 과 선택이 바뀌면 그 과로 초기화 */
+const printRange = {from:-1, to:-1, base:-1};
+function curRange(){
+  if(printRange.base !== currentUnit){ printRange.base = currentUnit; printRange.from = currentUnit; printRange.to = currentUnit; }
+  return [printRange.from, printRange.to];
+}
+function rangeWords(){
+  const [a,b] = curRange(); let w = [];
+  for(let u=a; u<=b; u++) w = w.concat(UNITS[u] || []);
+  return w;
+}
+function setPrintRange(type, which, val){
+  curRange(); val = parseInt(val);
+  if(which==="from"){ printRange.from = val; if(printRange.to < val) printRange.to = val; }
+  else              { printRange.to = val;   if(printRange.from > val) printRange.from = val; }
+  buildPrintView(type);
+}
+function makeOrder(n){ const a=[...Array(n).keys()]; for(let i=n-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function setPrintOpt(type, key, val){
+  const o = printOpt[type]; o[key] = val;
+  if(key==="shuffle" && val && !o.order) o.order = makeOrder(rangeWords().length);
+  buildPrintView(type);
+}
+function reshufflePrint(type){
+  const o = printOpt[type]; o.shuffle = true; o.order = makeOrder(rangeWords().length);
+  buildPrintView(type);
+}
+function firstLetterHint(v, isSpell){
+  if(isSpell){
+    const w = v.en.trim();
+    return w.split(" ").map(part=>part[0] + " _".repeat(Math.max(part.length-1,0))).join("   ");
+  }
+  const k = v.kr.split(PRINT_SEP)[0].split(",")[0].trim();
+  return k[0] + " ○".repeat(Math.min(Math.max(k.replace(/\s/g,"").length-1,0), 7));
+}
+
 function buildPrintView(type){
-  const words  = UNITS[currentUnit];
+  const [ra, rb] = curRange();
+  const baseWords = rangeWords();
+  const opt = printOpt[type];
+  const key = ra + "-" + rb;
+  if(opt.key !== key){ opt.key = key; opt.order = opt.shuffle ? makeOrder(baseWords.length) : null; }
+  const words = (opt.shuffle && opt.order && opt.order.length===baseWords.length) ? opt.order.map(k=>baseWords[k]) : baseWords;
   const boxId  = type === "spell" ? "printSpellContent" : "printMeaningContent";
   const box    = document.getElementById(boxId);
   box.innerHTML = "";
   if(!words || words.length === 0){ showEmpty(box); return; }
-  const unitNum = currentUnit + 1;
+  const rangeLabel = ra===rb ? unitLabel(ra) : unitLabel(ra) + " ~ " + unitLabel(rb);
   const isSpell = type === "spell";
   const title   = isSpell ? "철자 쓰기" : "뜻 쓰기";
   const col1    = isSpell ? "한글뜻" : "영단어";
+  function printWrite(v){
+    if(opt.answer) return `<span class="answer-key">${isSpell ? v.en : v.kr.split(PRINT_SEP)[0].trim()}</span>`;
+    if(opt.hint)   return `<span class="hint-letter">${firstLetterHint(v, isSpell)}</span>`;
+    return "";
+  }
+  const titleTag = opt.answer ? ` <span style="color:#B71C1C;">[정답지]</span>` : "";
   function makeRows(arr, startNo){
     return arr.map((v, i)=>{
       const hint = isSpell ? v.kr.split(";")[0].trim() : v.en;
-      return `<tr><td class="td-no">${startNo+i}</td><td class="td-write"></td><td class="td-hint">${hint}</td></tr>`;
+      return `<tr><td class="td-no">${startNo+i}</td><td class="td-write">${printWrite(v)}</td><td class="td-hint">${hint}</td></tr>`;
     }).join("");
   }
-  const left  = words.slice(0, 20);
-  const right = words.slice(20, 40);
+  const thead = `<thead><tr><th class="td-no">No.</th><th>제시어</th><th>${col1}</th></tr></thead>`;
+  let pagesHtml = "";
+  for(let p = 0; p < words.length; p += PER_PAGE){
+    const chunk = words.slice(p, p+PER_PAGE), h = Math.ceil(chunk.length/2);
+    const pageNo = p/PER_PAGE + 1;
+    pagesHtml += (p > 0 ? `<div class="print-page-break"></div><div class="print-unit-title print-cont-title">✦ 능률보카 고등어원편 ${rangeLabel} — ${title}${titleTag} (${pageNo}쪽)</div>` : "")
+      + `<div class="print-two-col">
+        <table class="pt">${thead}<tbody>${makeRows(chunk.slice(0,h), p+1)}</tbody></table>
+        <table class="pt">${thead}<tbody>${makeRows(chunk.slice(h), p+h+1)}</tbody></table>
+      </div>`;
+  }
+  const unitOpts = sel => UNITS.map((u,i)=>`<option value="${i}" ${i===sel?"selected":""}>${unitLabel(i)}</option>`).join("");
   box.innerHTML = `
     <div class="print-view-header">
-      <span class="print-view-title">🖨️ ${unitNum}과 — ${title} 프린트</span>
+      <span class="print-view-title">🖨️ ${rangeLabel} — ${title} 프린트</span>
       <button class="print-exec-btn" onclick="execPrint('${type}')">🖨️ 인쇄하기</button>
     </div>
+    <div class="print-opts">
+      <span class="popt-range">인쇄 범위
+        <select class="popt-sel" onchange="setPrintRange('${type}','from',this.value)">${unitOpts(ra)}</select> ~
+        <select class="popt-sel" onchange="setPrintRange('${type}','to',this.value)">${unitOpts(rb)}</select>
+        <b>${words.length}단어</b>${words.length > PER_PAGE ? ` · A4 ${Math.ceil(words.length/PER_PAGE)}장` : ""}
+      </span>
+      <label><input type="checkbox" ${opt.shuffle?"checked":""} onchange="setPrintOpt('${type}','shuffle',this.checked)"> 순서 섞기</label>
+      <button class="popt-btn" onclick="reshufflePrint('${type}')">다시 섞기</button>
+      <label><input type="checkbox" ${opt.hint?"checked":""} onchange="setPrintOpt('${type}','hint',this.checked)"> ${isSpell ? "첫 글자 힌트(철자)" : "첫 글자 힌트(뜻)"}</label>
+      <label><input type="checkbox" ${opt.answer?"checked":""} onchange="setPrintOpt('${type}','answer',this.checked)"> 정답지</label>
+    </div>
     <div class="print-table-wrap" id="printContent-${type}">
-      <div class="print-unit-title">✦ 능률보카 고등어원편 ${unitNum}과 — ${title}</div>
+      <div class="print-unit-title">✦ 능률보카 고등어원편 ${rangeLabel} — ${title}${titleTag}</div>
       <div class="print-unit-sub">목동서로영어학원 · 0505.co.kr</div>
       <div class="print-name-row">
         <span>이름: <span class="print-name-box"></span></span>
         <span>점수: <span class="print-name-box"></span></span>
       </div>
-      <div class="print-two-col">
-        <table class="pt"><thead><tr><th class="td-no">No.</th><th>제시어</th><th>${col1}</th></tr></thead><tbody>${makeRows(left,1)}</tbody></table>
-        <table class="pt"><thead><tr><th class="td-no">No.</th><th>제시어</th><th>${col1}</th></tr></thead><tbody>${makeRows(right,21)}</tbody></table>
-      </div>
+      ${pagesHtml}
       <div class="print-wm">✦ 목동서로영어학원 · 본 자료는 목동서로영어학원에서 제작하였습니다 · 0505.co.kr ✦</div>
     </div>`;
 }
