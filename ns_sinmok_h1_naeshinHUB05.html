@@ -160,6 +160,11 @@ body{font-family:'Noto Sans KR',sans-serif;min-height:100vh;color:#1a1a2e;backgr
 .lk.word{background:#e9f6ee;border-color:rgba(31,111,67,.3);border-left-color:#1f6f43}
 .lk.word b{color:#1f6f43}.lk.word .tg{background:#1f6f43}
 .mb.w{color:#1f6f43;border-color:rgba(31,111,67,.35);background:#e9f6ee}.mb.w:hover{background:#1f6f43;color:#fff}
+.xc.han{background:linear-gradient(135deg,#dc2626,#b91c1c);color:#fff;border:1px solid #991b1b;font-weight:800;box-shadow:0 2px 6px rgba(185,28,28,.3)}
+.xc.han:hover{background:#991b1b;color:#fff;border-color:#7f1d1d}
+.mrow .xc.han{font-size:11.5px;padding:6px 11px}
+.hanrow{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 2px}
+.hanrow .xc.han{font-size:12.5px;padding:7px 14px;border-radius:9px}
 footer{text-align:center;padding:24px 14px;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:rgba(31,56,100,.4);letter-spacing:1px;}
 
 @media(max-width:520px){
@@ -247,29 +252,36 @@ var ZONES = [
     return '<a class="'+cls+'" href="'+esc(href)+'"'+(dl?' download':' target="_blank" rel="noopener"')+'>'+inner+'</a>';
   }
   function lk(href,cls,title,sub){ return A(href,'lk '+cls,'<b>'+title+'</b><span>'+(href?sub:'준비 중')+'</span>'); }
+  function isHan(x){return /한줄/.test(x[0]);}
+  function chip(x){return '<a class="xc'+(isHan(x)?' han':'')+'" href="'+esc(x[1])+'" target="_blank" rel="noopener">'+(isHan(x)?'📖 ':'')+esc(x[0])+'</a>';}
+  function hanFirst(list){list=list||[];return list.filter(isHan).concat(list.filter(function(x){return !isHan(x);}));}
   function xt(list){
     if(!list||!list.length) return '';
-    return '<div class="xt"><span class="xt-l">기존 자료</span>'+list.map(function(x){return '<a class="xc" href="'+esc(x[1])+'" target="_blank" rel="noopener">'+esc(x[0])+'</a>';}).join('')+'</div>';
+    var han=list.filter(isHan), etc=list.filter(function(x){return !isHan(x);});
+    return (han.length?'<div class="hanrow">'+han.map(chip).join('')+'</div>':'')+
+           (etc.length?'<div class="xt"><span class="xt-l">기존 자료</span>'+etc.map(chip).join('')+'</div>':'');
   }
   function card(g,z){
     var fullSub = z.ext ? '문항별 상세해설 · 원문 대조 · 근거 문장' : '문제 그대로 + 정답·근거·4단계 해설';
     var fullTag = z.ext ? '<i class="tg hot">상세해설</i>' : '<i class="tg">정답</i>';
     var h='<div class="grp"><div class="grp-h"><span class="grp-n">'+esc(g.n)+'</span><div class="grp-tt"><span class="grp-en">'+esc(g.en)+'</span><span class="grp-ko">'+esc(g.ko||'')+'</span></div></div>';
+    var gh=(g.x||[]).filter(isHan); if(gh.length) h+='<div class="hanrow top">'+gh.map(chip).join('')+'</div>';
     h+='<div class="pair">'+lk(g.c,'','<em class="ic">✅</em>CHECK 문제','본문 마커 + 심화 과제')+lk(g.t,'','<em class="ic">📝</em>전용문제','신목고 기출형 실전 문항')+'</div>';
     h+='<div class="pair">'+lk(g.f,'full','정답 풀버전'+fullTag,fullSub)+lk(g.w,'word','<em class="ic">📄</em>통합 Word<i class="tg">WORD</i>','CHECK+전용 · A4 절약형 · 교사용 정답')+'</div>';
-    return h+xt(g.x)+'</div>';
+    return h+xt((g.x||[]).filter(function(x){return !isHan(x);}))+'</div>';
   }
   function mb(href,cls,label){ return A(href,'mb '+cls,label); }
   function table(s){
     var h='<div class="mtbl"><div class="mtbl-h"><b>'+esc(s.set)+'</b><span>'+esc(s.note||'')+'</span></div>';
-    if(s.x&&s.x.length){ h+='<div class="mbulk">'+s.x.map(function(x){return '<a class="xc" href="'+esc(x[1])+'" target="_blank" rel="noopener">'+esc(x[0])+'</a>';}).join('')+'</div>'; }
+    if(s.x&&s.x.length){ h+='<div class="mbulk">'+hanFirst(s.x).map(chip).join('')+'</div>'; }
     if(!s.rows||!s.rows.length){ h+='<div class="mrow"><div class="mnum"><b>—</b></div><div class="mbtns"><span class="mb soon">출제범위 확정 후 지문별 업로드</span></div></div>'; }
     (s.rows||[]).forEach(function(r){
       var has=r.c||r.t||r.f||r.w;
       h+='<div class="mrow"><div class="mnum"><b>'+esc(r.n)+'</b><i>'+(r.n.indexOf('-')>0?'번 장문':'번')+'</i></div><div class="mbtns">'+
         (r.topic?'<span class="mtopic">'+esc(r.topic)+'</span>':'')+
+        (r.x||[]).filter(isHan).map(chip).join('')+
         (has? mb(r.c,'','✅ CHECK')+mb(r.t,'','📝 전용문제')+mb(r.f,'full','정답 풀버전')+mb(r.w,'w','📄 통합 Word') : '<span class="mb soon">CHECK·전용 4종 준비 중</span>')+
-        (r.x||[]).map(function(x){return '<a class="xc" href="'+esc(x[1])+'" target="_blank" rel="noopener">'+esc(x[0])+'</a>';}).join('')+
+        (r.x||[]).filter(function(x){return !isHan(x);}).map(chip).join('')+
       '</div></div>';
     });
     return h+'</div>';
