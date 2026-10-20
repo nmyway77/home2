@@ -336,16 +336,15 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
   <div class="foot-meta">신목고·목운중·목동중 전문 영어학원<br><b>H1MOGO25-10_24 · 전용문제</b><br>본 자료는 학원 수강생 전용 교육 자료입니다. 무단 배포 금지.</div>
 </div></div></footer>
 
-<!-- ══ 펜 필기 모드 v1.0 · 목동서로영어학원 표준 모듈 (shinmockschoolprint1.html 원본 그대로) ══ -->
+<!-- ══ 펜 필기 모드 v1.1 · 목동서로영어학원 표준 모듈 (v1.0 + 부분 지우개 · 되돌리기/다시하기) ══ -->
 <style>
-/* ══ 펜 필기 모드 v1.0 ══ */
-#penToolbar{position:fixed;bottom:20px;right:20px;z-index:10000;display:flex;flex-direction:row;gap:8px;background:rgba(255,255,255,0.96);padding:8px;border-radius:30px;box-shadow:0 4px 20px rgba(0,0,0,0.18);backdrop-filter:blur(10px);align-items:center;}
+/* ══ 펜 필기 모드 v1.1 ══ */
+#penToolbar{position:fixed;bottom:20px;right:20px;z-index:10000;display:flex;flex-direction:row;flex-wrap:wrap;justify-content:flex-end;gap:8px;background:rgba(255,255,255,0.97);padding:8px;border-radius:30px;box-shadow:0 4px 20px rgba(0,0,0,0.18);backdrop-filter:blur(10px);align-items:center;max-width:calc(100vw - 24px);}
 #penToolbar .pen-btn{width:42px;height:42px;border:none;background:#f0f0f0;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;padding:0;}
 #penToolbar .pen-btn:hover{background:#e0e0e0;}
-#penToolbar .pen-btn.active{background:#2E75B6;color:white;}
 #penToolbar .pen-main{background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;font-size:20px;}
 #penToolbar .pen-main.active{background:linear-gradient(135deg,#dc2626,#ef4444);transform:scale(1.05);}
-#penToolbar .pen-tools{display:none;flex-direction:row;gap:6px;align-items:center;padding-left:8px;border-left:1px solid #ddd;margin-left:4px;}
+#penToolbar .pen-tools{display:none;flex-direction:row;flex-wrap:wrap;gap:6px;align-items:center;padding-left:8px;border-left:1px solid #ddd;margin-left:4px;}
 #penToolbar .pen-tools.show{display:flex;}
 #penToolbar .pen-color{width:30px;height:30px;border:2px solid white;border-radius:50%;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.2);transition:transform 0.15s;padding:0;}
 #penToolbar .pen-color:hover{transform:scale(1.1);}
@@ -355,30 +354,87 @@ footer .foot-meta b{color:var(--gold);font-weight:700}
 #penToolbar .pen-width span{background:#333;border-radius:50%;display:inline-block;}
 #penToolbar .pen-width.selected{background:#1F3864;}
 #penToolbar .pen-width.selected span{background:white !important;}
+/* 글자 달린 큰 버튼: 되돌리기 · 다시하기 · 부분 지우개 · 전체 지우기 */
+#penToolbar .pen-act{height:38px;border:2px solid transparent;border-radius:19px;padding:0 12px;cursor:pointer;font-size:13px;font-weight:700;display:flex;align-items:center;gap:4px;white-space:nowrap;font-family:inherit;transition:all .15s;}
+#penToolbar .pen-undo{background:#e8f1fb;color:#1F3864;border-color:#9fbfe3;}
+#penToolbar .pen-undo:hover{background:#d4e5f7;}
+#penToolbar .pen-act:disabled{opacity:.4;cursor:default;}
+#penToolbar .pen-eraser{background:#fff7e0;color:#8a5a00;border-color:#f0c35a;}
+#penToolbar .pen-eraser.active{background:#c2410c;color:#fff;border-color:#9a3412;box-shadow:0 0 0 3px rgba(245,158,11,.35);}
+#penToolbar .pen-clear{background:#fdecec;color:#b42318;border-color:#f3b4b0;font-size:12px;}
+#penToolbar .pen-sep{width:1px;height:28px;background:#ddd;margin:0 2px;}
+#penToolbar .pen-tip{flex-basis:100%;text-align:right;font-size:11.5px;color:#8a5a00;font-weight:700;padding:0 6px;display:none;}
+#penToolbar .pen-tip.show{display:block;}
 #penLayer{position:absolute;top:0;left:0;pointer-events:none;z-index:998;overflow:visible;}
 #penLayer.active{pointer-events:auto;touch-action:none;cursor:crosshair;}
-@media print{#penToolbar{display:none !important;}#penLayer{display:none !important;}}
-@media (max-width:600px){#penToolbar{bottom:10px;right:10px;padding:6px;gap:4px;}#penToolbar .pen-btn,#penToolbar .pen-width{width:38px;height:38px;}#penToolbar .pen-color{width:26px;height:26px;}}
+#penLayer.erasing{cursor:none;}
+#penCursor{position:absolute;pointer-events:none;z-index:999;border:2px dashed #f59e0b;background:rgba(245,158,11,.12);border-radius:50%;display:none;transform:translate(-50%,-50%);}
+@media print{#penToolbar{display:none !important;}#penLayer{display:none !important;}#penCursor{display:none !important;}}
+@media (max-width:600px){#penToolbar{bottom:10px;right:10px;padding:6px;gap:4px;}#penToolbar .pen-btn,#penToolbar .pen-width{width:36px;height:36px;}#penToolbar .pen-color{width:24px;height:24px;}#penToolbar .pen-act{height:34px;padding:0 9px;font-size:12px;}#penToolbar .pen-sep{display:none;}}
 </style>
 <script>
 
-/* ══ 펜 필기 모드 (자유 필기) v1.0 ══ */
+/* ══ 펜 필기 모드 (자유 필기) v1.1 ══
+   - 부분 지우개: 지우개가 지나간 자리의 선만 지운다(획을 잘라 나머지는 남김). 지우개 크기 = 굵기 버튼(작게·보통·크게)
+   - ↩ 되돌리기 / ↪ 다시하기: 방금 쓴 획·방금 지운 것을 한 단계씩 되돌림 (Ctrl+Z / Ctrl+Y)
+   - 전체 지우기도 ↩ 되돌리기로 복구 가능 */
 const PEN_COLORS=['#dc2626','#1F3864','#0f9d58','#f59e0b','#000000'];
 const PEN_WIDTHS=[2,4,7];
+const ERASER_R={2:8,4:16,7:30};
 let penEnabled=false,penColor='#dc2626',penWidth=4,penEraser=false;
-let penLayer=null,penPath=null,penPts=[];
+let penLayer=null,penPath=null,penPts=[],penCursor=null;
+let penUndo=[],penRedo=[],penErasing=null;   // 기록: {before:[획...], after:[획...]} 획 = {pts,c,w}
+
+function penSnap(){return Array.from(penLayer.querySelectorAll('path')).map(p=>p._s||{pts:[],c:p.getAttribute('stroke'),w:+p.getAttribute('stroke-width')});}
+function penDraw(s){
+  const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+  p.setAttribute('stroke',s.c);p.setAttribute('stroke-width',s.w);p.setAttribute('fill','none');
+  p.setAttribute('stroke-linecap','round');p.setAttribute('stroke-linejoin','round');
+  p.setAttribute('d',penD(s.pts));p._s=s;penLayer.appendChild(p);return p;
+}
+function penD(pts){
+  if(!pts.length)return '';
+  let d='M '+pts[0].x+' '+pts[0].y;
+  if(pts.length===1)return d+' L '+(pts[0].x+0.1)+' '+pts[0].y;
+  for(let i=1;i<pts.length-1;i++){const c=pts[i],n=pts[i+1];d+=' Q '+c.x+' '+c.y+' '+(c.x+n.x)/2+' '+(c.y+n.y)/2;}
+  const lp=pts[pts.length-1];return d+' L '+lp.x+' '+lp.y;
+}
+function penRestore(list){penLayer.querySelectorAll('path').forEach(p=>p.remove());list.forEach(penDraw);}
+function penCommit(before){
+  penUndo.push({before:before,after:penSnap()});if(penUndo.length>200)penUndo.shift();
+  penRedo=[];penBtns();
+}
+function penDoUndo(){const h=penUndo.pop();if(!h)return;penRestore(h.before);penRedo.push(h);penBtns();}
+function penDoRedo(){const h=penRedo.pop();if(!h)return;penRestore(h.after);penUndo.push(h);penBtns();}
+function penBtns(){
+  const u=document.getElementById('penUndoBtn'),r=document.getElementById('penRedoBtn');
+  if(u)u.disabled=!penUndo.length;if(r)r.disabled=!penRedo.length;
+}
+function penSetEraser(on){
+  penEraser=on;
+  document.getElementById('penEraserBtn').classList.toggle('active',on);
+  document.getElementById('penTip').classList.toggle('show',on);
+  penLayer.classList.toggle('erasing',on);
+  if(!on)penCursor.style.display='none';
+}
 
 function buildPenTools(){
   if(document.getElementById('penLayer'))return;
   penLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
   penLayer.id='penLayer';
   document.body.appendChild(penLayer);
+  penCursor=document.createElement('div');penCursor.id='penCursor';document.body.appendChild(penCursor);
   const tb=document.createElement('div');
   tb.id='penToolbar';
-  let html='<button class="pen-btn pen-main" id="penToggle" title="펜 ON/OFF">✏️</button><div class="pen-tools" id="penTools">';
+  let html='<div class="pen-tip" id="penTip">지우개: 지울 부분만 문지르세요 · 크기는 ● 굵기 버튼 · 잘못 지웠으면 ↩ 되돌리기</div>';
+  html+='<button class="pen-btn pen-main" id="penToggle" title="펜 ON/OFF">✏️</button><div class="pen-tools" id="penTools">';
   PEN_COLORS.forEach(c=>html+='<button class="pen-color" data-color="'+c+'" style="background:'+c+';" title="색상"></button>');
-  PEN_WIDTHS.forEach(w=>html+='<button class="pen-width" data-width="'+w+'" title="굵기"><span style="width:'+(w*2)+'px;height:'+(w*2)+'px;"></span></button>');
-  html+='<button class="pen-btn pen-eraser" id="penEraserBtn" title="개별 지우개">🧹</button><button class="pen-btn pen-clear" id="penClearBtn" title="전체 지우기">🗑️</button></div>';
+  PEN_WIDTHS.forEach(w=>html+='<button class="pen-width" data-width="'+w+'" title="굵기 / 지우개 크기"><span style="width:'+(w*2)+'px;height:'+(w*2)+'px;"></span></button>');
+  html+='<span class="pen-sep"></span>';
+  html+='<button class="pen-act pen-undo" id="penUndoBtn" title="방금 한 것 되돌리기 (Ctrl+Z)" disabled>↩ 되돌리기</button>';
+  html+='<button class="pen-act pen-undo" id="penRedoBtn" title="다시하기 (Ctrl+Y)" disabled>↪ 다시</button>';
+  html+='<button class="pen-act pen-eraser" id="penEraserBtn" title="지나간 부분만 지우기">🧽 부분 지우개</button>';
+  html+='<button class="pen-act pen-clear" id="penClearBtn" title="이 페이지 필기 모두 지우기">🗑️ 전체</button></div>';
   tb.innerHTML=html;
   document.body.appendChild(tb);
   document.querySelector('.pen-color[data-color="'+penColor+'"]').classList.add('selected');
@@ -386,27 +442,32 @@ function buildPenTools(){
   document.getElementById('penToggle').addEventListener('click',togglePen);
   document.querySelectorAll('.pen-color').forEach(b=>b.addEventListener('click',e=>{
     const c=e.currentTarget.dataset.color;
-    penColor=c;penEraser=false;
+    penColor=c;penSetEraser(false);
     document.querySelectorAll('.pen-color').forEach(x=>x.classList.toggle('selected',x.dataset.color===c));
-    document.getElementById('penEraserBtn').classList.remove('active');
   }));
   document.querySelectorAll('.pen-width').forEach(b=>b.addEventListener('click',e=>{
     const w=+e.currentTarget.dataset.width;
     penWidth=w;
     document.querySelectorAll('.pen-width').forEach(x=>x.classList.toggle('selected',+x.dataset.width===w));
   }));
-  document.getElementById('penEraserBtn').addEventListener('click',()=>{
-    penEraser=!penEraser;
-    document.getElementById('penEraserBtn').classList.toggle('active',penEraser);
-  });
+  document.getElementById('penEraserBtn').addEventListener('click',()=>penSetEraser(!penEraser));
+  document.getElementById('penUndoBtn').addEventListener('click',penDoUndo);
+  document.getElementById('penRedoBtn').addEventListener('click',penDoRedo);
   document.getElementById('penClearBtn').addEventListener('click',()=>{
-    if(confirm('모든 필기를 지우시겠습니까?'))penLayer.innerHTML='';
+    if(!penLayer.querySelector('path'))return;
+    if(confirm('이 페이지의 필기를 모두 지울까요? (↩ 되돌리기로 복구할 수 있어요)')){const b=penSnap();penLayer.querySelectorAll('path').forEach(p=>p.remove());penCommit(b);}
+  });
+  document.addEventListener('keydown',e=>{
+    if(!penEnabled||!(e.ctrlKey||e.metaKey))return;
+    const k=e.key.toLowerCase();
+    if(k==='z'&&!e.shiftKey){e.preventDefault();penDoUndo();}
+    else if(k==='y'||(k==='z'&&e.shiftKey)){e.preventDefault();penDoRedo();}
   });
   penLayer.addEventListener('pointerdown',penDown);
   penLayer.addEventListener('pointermove',penMove);
   penLayer.addEventListener('pointerup',penUp);
   penLayer.addEventListener('pointercancel',penUp);
-  penLayer.addEventListener('pointerleave',penUp);
+  penLayer.addEventListener('pointerleave',e=>{penUp(e);penCursor.style.display='none';});
   const sync=()=>{
     const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
     const w=Math.max(document.body.scrollWidth,document.documentElement.scrollWidth);
@@ -425,60 +486,64 @@ function togglePen(){
   document.getElementById('penToggle').classList.toggle('active',penEnabled);
   document.getElementById('penTools').classList.toggle('show',penEnabled);
   penLayer.classList.toggle('active',penEnabled);
+  if(!penEnabled)penSetEraser(false);
 }
 function getPenPt(e){
   return {x:e.clientX+window.scrollX,y:e.clientY+window.scrollY};
+}
+function penShowCursor(e){
+  const pt=getPenPt(e),r=ERASER_R[penWidth]||16;
+  penCursor.style.display='block';penCursor.style.left=pt.x+'px';penCursor.style.top=pt.y+'px';
+  penCursor.style.width=penCursor.style.height=(r*2)+'px';
 }
 function penDown(e){
   if(!penEnabled)return;
   e.preventDefault();
   try{penLayer.setPointerCapture(e.pointerId);}catch(_){}
-  if(penEraser){eraseAt(e);return;}
+  if(penEraser){penErasing={before:penSnap(),hit:false};penShowCursor(e);eraseAt(e);return;}
   const pt=getPenPt(e);
-  penPath=document.createElementNS('http://www.w3.org/2000/svg','path');
-  penPath.setAttribute('d','M '+pt.x+' '+pt.y);
-  penPath.setAttribute('stroke',penColor);
-  penPath.setAttribute('stroke-width',penWidth);
-  penPath.setAttribute('fill','none');
-  penPath.setAttribute('stroke-linecap','round');
-  penPath.setAttribute('stroke-linejoin','round');
-  penLayer.appendChild(penPath);
   penPts=[pt];
+  penPath=penDraw({pts:penPts,c:penColor,w:penWidth});
+  penPath._before=penSnap().slice(0,-1);
 }
 function penMove(e){
   if(!penEnabled)return;
-  if(penEraser&&e.buttons){eraseAt(e);return;}
+  if(penEraser){penShowCursor(e);if(penErasing&&e.buttons)eraseAt(e);return;}
   if(!penPath)return;
   e.preventDefault();
   const pt=getPenPt(e);
   const last=penPts[penPts.length-1];
   if(Math.hypot(pt.x-last.x,pt.y-last.y)<1.5)return;
   penPts.push(pt);
-  let d='M '+penPts[0].x+' '+penPts[0].y;
-  for(let i=1;i<penPts.length-1;i++){
-    const c=penPts[i],n=penPts[i+1];
-    const mx=(c.x+n.x)/2,my=(c.y+n.y)/2;
-    d+=' Q '+c.x+' '+c.y+' '+mx+' '+my;
-  }
-  if(penPts.length>=2){
-    const lp=penPts[penPts.length-1];
-    d+=' L '+lp.x+' '+lp.y;
-  }
-  penPath.setAttribute('d',d);
+  penPath.setAttribute('d',penD(penPts));
 }
 function penUp(e){
-  if(penPath){penPath=null;penPts=[];}
+  if(penPath){const b=penPath._before;delete penPath._before;penPath=null;penPts=[];penCommit(b);}
+  if(penErasing){const h=penErasing;penErasing=null;if(h.hit)penCommit(h.before);}
 }
+/* 부분 지우개: 지우개 원 안에 들어온 점만 지우고, 획이 끊기면 남은 조각을 각각 새 획으로 */
 function eraseAt(e){
-  const pt=getPenPt(e);
-  const r=20;
-  const paths=Array.from(penLayer.querySelectorAll('path'));
-  for(const p of paths){
-    const bb=p.getBBox();
-    if(pt.x>=bb.x-r&&pt.x<=bb.x+bb.width+r&&pt.y>=bb.y-r&&pt.y<=bb.y+bb.height+r){
-      p.remove();
-    }
-  }
+  const pt=getPenPt(e),r=ERASER_R[penWidth]||16;
+  Array.from(penLayer.querySelectorAll('path')).forEach(p=>{
+    const s=p._s;if(!s)return;
+    const rr=r+s.w/2;
+    let bb;try{bb=p.getBBox();}catch(_){return;}
+    if(pt.x<bb.x-rr||pt.x>bb.x+bb.width+rr||pt.y<bb.y-rr||pt.y>bb.y+bb.height+rr)return;
+    // 점 사이 간격이 넓으면 촘촘히 보간해서 판정
+    const dense=[];
+    s.pts.forEach((q,i)=>{
+      if(i){const a=s.pts[i-1],n=Math.ceil(Math.hypot(q.x-a.x,q.y-a.y)/3);for(let k=1;k<n;k++)dense.push({x:a.x+(q.x-a.x)*k/n,y:a.y+(q.y-a.y)*k/n});}
+      dense.push(q);
+    });
+    const keep=dense.map(q=>Math.hypot(q.x-pt.x,q.y-pt.y)>rr);
+    if(keep.every(Boolean))return;
+    penErasing&&(penErasing.hit=true);
+    const parts=[];let cur=[];
+    dense.forEach((q,i)=>{if(keep[i])cur.push(q);else{if(cur.length>1)parts.push(cur);cur=[];}});
+    if(cur.length>1)parts.push(cur);
+    parts.forEach(pp=>{const np=penDraw({pts:pp,c:s.c,w:s.w});penLayer.insertBefore(np,p);});
+    p.remove();
+  });
 }
 if(document.readyState==='loading'){
   document.addEventListener('DOMContentLoaded',buildPenTools);
@@ -487,6 +552,6 @@ if(document.readyState==='loading'){
 }
 
 </script>
-<!-- ══ /펜 필기 모드 v1.0 ══ -->
+<!-- ══ /펜 필기 모드 v1.1 ══ -->
 </body>
 </html>
