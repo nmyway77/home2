@@ -30,7 +30,7 @@
       +'<div style="font-size:34px;margin-bottom:10px;">🔒</div>'
       +'<div style="font-size:16px;font-weight:700;color:#1f3864;margin-bottom:6px;">재원생 전용 자료</div>'
       +'<div style="font-size:12.5px;color:#777;margin-bottom:18px;">비밀번호를 입력하세요</div>'
-      +'<input id="pwgate-in" type="password" inputmode="numeric" autocomplete="off" style="width:100%;box-sizing:border-box;font-size:18px;text-align:center;letter-spacing:4px;padding:11px;border:2px solid #d0d7e2;border-radius:10px;outline:none;">'
+      +'<input id="pwgate-in" type="password" autocomplete="off" style="width:100%;box-sizing:border-box;font-size:18px;text-align:center;letter-spacing:4px;padding:11px;border:2px solid #d0d7e2;border-radius:10px;outline:none;">'
       +'<div id="pwgate-msg" style="height:18px;font-size:12px;color:#c0392b;margin-top:6px;"></div>'
       +'<button id="pwgate-btn" style="width:100%;margin-top:6px;padding:12px;font-size:15px;font-weight:700;color:#fff;background:#2e75b6;border:0;border-radius:10px;cursor:pointer;">입장</button>'
       +(done ? '<a href="#" id="pwgate-x" style="display:block;margin-top:14px;font-size:12px;color:#999;text-decoration:none;">닫기</a>'
