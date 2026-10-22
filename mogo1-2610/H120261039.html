@@ -2066,11 +2066,20 @@ function checkMeaning(i,btn){const card=btn.closest('.quiz-card');const correct=
 function resetMeaning(){vocabScores.meaning={};buildVocab(2);}
 
 
-/* ══ 펜 필기 모드 (자유 필기) v1.1 — 태블릿 강화 ══ */
+/* ══ 펜 필기 모드 (자유 필기) v1.2 — 태블릿 강화 + 두 손가락 스크롤 + 탭 줄 통과 ══ */
 const PEN_COLORS=['#dc2626','#1F3864','#0f9d58','#f59e0b','#000000'];
 const PEN_WIDTHS=[2,4,7];
 let penEnabled=false,penColor='#dc2626',penWidth=4,penEraser=false;
 let penLayer=null,penPath=null,penPts=[],penLastStylus=0,penActiveId=null;
+/* v1.2: 두 손가락 스크롤 상태 · 펜 모드에서도 눌려야 하는 영역(탭 줄·상단 메뉴·단어장 탭) */
+let penScroll=null,penDownAt=0;
+const PEN_PASS='.view-tabs,.top-nav,.vocab-tabs,#penToolbar';
+function penPassTarget(x,y){
+  if(!document.elementsFromPoint)return null;
+  const els=document.elementsFromPoint(x,y);
+  for(const el of els){if(el===penLayer||penLayer.contains(el))continue;return el.closest(PEN_PASS)?el:null;}
+  return null;
+}
 
 function buildPenTools(){
   if(document.getElementById('penLayer'))return;
@@ -2128,6 +2137,26 @@ function buildPenTools(){
   const blockScroll=e=>{if(penEnabled&&e.touches&&e.touches.length===1)e.preventDefault();};
   penLayer.addEventListener('touchstart',blockScroll,{passive:false});
   penLayer.addEventListener('touchmove',blockScroll,{passive:false});
+  /* ── v1.2 ①: 두 손가락 = 페이지 스크롤 (한 손가락·펜 = 그리기) ── */
+  const mid=e=>{const a=e.touches[0],b=e.touches[1];return {x:(a.clientX+b.clientX)/2,y:(a.clientY+b.clientY)/2};};
+  penLayer.addEventListener('touchstart',e=>{
+    if(!penEnabled||!e.touches||e.touches.length<2)return;
+    e.preventDefault();
+    /* 첫 손가락으로 막 시작된 짧은 선은 스크롤 의도로 보고 지움 */
+    if(penPath&&Date.now()-penDownAt<400&&penPts.length<8){penPath.remove();}
+    penPath=null;penPts=[];penActiveId=null;
+    penScroll=mid(e);
+  },{passive:false});
+  penLayer.addEventListener('touchmove',e=>{
+    if(!penScroll||!e.touches||e.touches.length<2)return;
+    e.preventDefault();
+    const m=mid(e);
+    window.scrollBy(penScroll.x-m.x,penScroll.y-m.y);
+    penScroll=m;
+  },{passive:false});
+  const endScroll=e=>{if(penScroll&&(!e.touches||e.touches.length<2))penScroll=null;};
+  penLayer.addEventListener('touchend',endScroll);
+  penLayer.addEventListener('touchcancel',endScroll);
   const sync=()=>{
     penLayer.style.height='0px';penLayer.style.width='0px';
     const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
@@ -2176,8 +2205,20 @@ function penIgnore(e){
 }
 function penDown(e){
   if(!penEnabled)return;
+  if(penScroll)return;
+  /* v1.2 ②: 탭 줄·상단 메뉴 위에서는 그리지 않고 아래 버튼을 그대로 누른다 */
+  const pass=penPassTarget(e.clientX,e.clientY);
+  if(pass){
+    e.preventDefault();
+    penActiveId=null;
+    try{if(pass.focus)pass.focus({preventScroll:true});}catch(_){}
+    const target=pass.closest('button,a,[onclick],label,input,select')||pass;
+    target.click();
+    return;
+  }
   if(penIgnore(e))return;
   e.preventDefault();
+  penDownAt=Date.now();
   penActiveId=(e.pointerId===undefined?1:e.pointerId);
   try{penLayer.setPointerCapture(e.pointerId);}catch(_){}
   if(penEraser){eraseAt(e);return;}
@@ -2193,7 +2234,7 @@ function penDown(e){
   penPts=[pt];
 }
 function penMove(e){
-  if(!penEnabled)return;
+  if(!penEnabled||penScroll)return;
   if(penActiveId!==null&&e.pointerId!==undefined&&e.pointerId!==penActiveId)return;
   if(penEraser&&e.buttons){eraseAt(e);return;}
   if(!penPath)return;
