@@ -1985,13 +1985,13 @@ function checkMeaning(i,btn){const card=btn.closest('.quiz-card');const correct=
 function resetMeaning(){vocabScores.meaning={};buildVocab(2);}
 
 
-/* ══ 펜 필기 모드 (자유 필기) v1.2 — 태블릿 강화 + 두 손가락 스크롤 + 탭 줄 통과 ══ */
+/* ══ 펜 필기 모드 (자유 필기) v1.2.1 — 태블릿 강화 + 두 손가락 스크롤 + 탭 줄 통과 + #pendebug 진단 ══ */
 const PEN_COLORS=['#dc2626','#1F3864','#0f9d58','#f59e0b','#000000'];
 const PEN_WIDTHS=[2,4,7];
 let penEnabled=false,penColor='#dc2626',penWidth=4,penEraser=false;
 let penLayer=null,penPath=null,penPts=[],penLastStylus=0,penActiveId=null;
 /* v1.2: 두 손가락 스크롤 상태 · 펜 모드에서도 눌려야 하는 영역(탭 줄·상단 메뉴·단어장 탭) */
-let penScroll=null,penDownAt=0;
+let penScroll=null,penDownAt=0,penScrollPrevBehavior='';
 const PEN_PASS='.view-tabs,.top-nav,.vocab-tabs,#penToolbar';
 function penPassTarget(x,y){
   if(!document.elementsFromPoint)return null;
@@ -2000,11 +2000,34 @@ function penPassTarget(x,y){
   return null;
 }
 
+/* 진단 모드: 주소 끝에 #pendebug 를 붙여 열면 화면 왼쪽 위에 입력 이벤트 로그가 표시됨 (레노버 태블릿 원인 확인용) */
+const PEN_DEBUG=/pendebug/.test(location.hash);
+let penDbgBox=null,penDbgN=0;
+function penDbg(msg){
+  if(!PEN_DEBUG)return;
+  if(!penDbgBox){
+    penDbgBox=document.createElement('pre');penDbgBox.id='penDebug';
+    penDbgBox.style.cssText='position:fixed;top:4px;left:4px;z-index:100000;max-width:70vw;max-height:45vh;overflow:auto;background:rgba(0,0,0,0.78);color:#9f9;font:11px/1.35 monospace;padding:6px 8px;border-radius:6px;pointer-events:none;white-space:pre-wrap;margin:0;';
+    document.body.appendChild(penDbgBox);
+    penDbgBox.textContent='[pen debug] UA: '+navigator.userAgent+'\nPointerEvent: '+(!!window.PointerEvent)+' · touch: '+('ontouchstart' in window)+' · maxTouchPoints: '+(navigator.maxTouchPoints||0)+' · visualViewport: '+(!!window.visualViewport)+' · dpr: '+window.devicePixelRatio+'\n';
+    window.addEventListener('error',e=>{penDbgBox.textContent+='JS ERROR: '+e.message+' @'+e.lineno+'\n';});
+  }
+  penDbgN++;
+  if(penDbgN>60){penDbgBox.textContent=penDbgBox.textContent.split('\n').slice(0,3).join('\n')+'\n';penDbgN=0;}
+  penDbgBox.textContent+=msg+'\n';
+}
+function penDbgEv(tag,e){
+  if(!PEN_DEBUG)return;
+  penDbg(tag+' '+(e.pointerType||'?')+' id='+e.pointerId+' btn='+e.buttons+' x='+Math.round(e.clientX)+' y='+Math.round(e.clientY)+' pressure='+(e.pressure!==undefined?e.pressure.toFixed(2):'-')+' tgt='+(e.target&&e.target.id||e.target&&e.target.tagName||'?')+' on='+penEnabled+' active='+penActiveId+' path='+(penPath?'Y':'N'));
+}
+
 function buildPenTools(){
   if(document.getElementById('penLayer'))return;
   penLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
   penLayer.id='penLayer';
   document.body.appendChild(penLayer);
+  penDbg('buildPenTools: layer ok · body '+document.body.scrollWidth+'x'+document.body.scrollHeight);
+  if(PEN_DEBUG){['pointerdown','pointerup','pointercancel','touchstart','touchend','touchcancel'].forEach(t=>document.addEventListener(t,e=>{penDbg('doc:'+t+' tgt='+(e.target&&(e.target.id||e.target.tagName))+(e.pointerType?' '+e.pointerType:'')+(e.touches?' touches='+e.touches.length:''));},true));}
   const tb=document.createElement('div');
   tb.id='penToolbar';
   let html='<button class="pen-btn pen-main" id="penToggle" title="펜 ON/OFF">✏️</button><div class="pen-tools" id="penTools">';
@@ -2065,15 +2088,19 @@ function buildPenTools(){
     if(penPath&&Date.now()-penDownAt<400&&penPts.length<8){penPath.remove();}
     penPath=null;penPts=[];penActiveId=null;
     penScroll=mid(e);
+    /* v1.2.1: html{scroll-behavior:smooth}이면 scrollBy가 애니메이션으로 서로 취소돼 스크롤이 안 됨 → 제스처 동안 즉시 스크롤 */
+    penScrollPrevBehavior=document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior='auto';
   },{passive:false});
   penLayer.addEventListener('touchmove',e=>{
     if(!penScroll||!e.touches||e.touches.length<2)return;
     e.preventDefault();
     const m=mid(e);
-    window.scrollBy(penScroll.x-m.x,penScroll.y-m.y);
+    const dx=penScroll.x-m.x,dy=penScroll.y-m.y;
     penScroll=m;
+    if(dx||dy){try{window.scrollBy({left:dx,top:dy,behavior:'instant'});}catch(_){window.scrollBy(dx,dy);}}
   },{passive:false});
-  const endScroll=e=>{if(penScroll&&(!e.touches||e.touches.length<2))penScroll=null;};
+  const endScroll=e=>{if(penScroll&&(!e.touches||e.touches.length<2)){penScroll=null;document.documentElement.style.scrollBehavior=penScrollPrevBehavior||'';}};
   penLayer.addEventListener('touchend',endScroll);
   penLayer.addEventListener('touchcancel',endScroll);
   const sync=()=>{
@@ -2102,6 +2129,7 @@ function buildPenTools(){
 }
 function togglePen(){
   penEnabled=!penEnabled;
+  penDbg('togglePen → '+penEnabled+' · layer '+penLayer.getAttribute('width')+'x'+penLayer.getAttribute('height')+' · touchAction='+getComputedStyle(penLayer).touchAction+' · pointerEvents='+getComputedStyle(penLayer).pointerEvents);
   document.getElementById('penToggle').classList.toggle('active',penEnabled);
   document.getElementById('penTools').classList.toggle('show',penEnabled);
   penLayer.classList.toggle('active',penEnabled);
@@ -2123,6 +2151,7 @@ function penIgnore(e){
   return false;
 }
 function penDown(e){
+  penDbgEv('down',e);
   if(!penEnabled)return;
   if(penScroll)return;
   /* v1.2 ②: 탭 줄·상단 메뉴 위에서는 그리지 않고 아래 버튼을 그대로 누른다 */
@@ -2153,6 +2182,7 @@ function penDown(e){
   penPts=[pt];
 }
 function penMove(e){
+  if(PEN_DEBUG&&(e.buttons||penPath)&&(penDbgN%8===0))penDbgEv('move',e);
   if(!penEnabled||penScroll)return;
   if(penActiveId!==null&&e.pointerId!==undefined&&e.pointerId!==penActiveId)return;
   if(penEraser&&e.buttons){eraseAt(e);return;}
@@ -2175,6 +2205,7 @@ function penMove(e){
   penPath.setAttribute('d',d);
 }
 function penUp(e){
+  if(e&&e.type)penDbgEv(e.type==='pointercancel'?'CANCEL':(e.type==='pointerleave'?'leave':'up'),e);
   if(e&&penActiveId!==null&&e.pointerId!==undefined&&e.pointerId!==penActiveId)return;
   if(penPath){penPath=null;penPts=[];}
   penActiveId=null;
