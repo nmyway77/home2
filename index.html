@@ -1768,6 +1768,33 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
 .bottom-nav-inner > a,.bottom-nav-inner > span{color:#C9DDFF !important;border-color:rgba(169,204,255,0.3) !important;background:rgba(169,204,255,0.06) !important;}
 .bottom-nav-inner > a:hover{background:rgba(169,204,255,0.16) !important;}
 </style>
+<script>
+/* 학원 태블릿 앱(안드로이드 WebView) 전용: 새로고침 버튼 + 새 내용 자동 반영.
+   일반 브라우저(외부 방문자)에서는 아무것도 하지 않음. 태블릿 앱에는 주소창·새로고침이 없어서 업데이트가 반영되지 않던 문제 대응 */
+(function(){
+  if(!/; wv\)/.test(navigator.userAgent)) return;
+  var b=document.createElement('button');
+  b.type='button'; b.textContent='⟳ 새로고침';
+  b.style.cssText='position:fixed;left:12px;bottom:12px;z-index:9998;font:600 13px "Noto Sans KR",sans-serif;padding:9px 15px;border-radius:999px;border:1px solid rgba(255,255,255,.35);background:rgba(16,28,54,.88);color:#e8edf7;box-shadow:0 4px 14px rgba(0,0,0,.25);';
+  b.onclick=function(){ location.reload(); };
+  document.body.appendChild(b);
+  var last=Date.now(), docLM=Date.parse(document.lastModified)||0;
+  ['touchstart','click','keydown','scroll'].forEach(function(t){ addEventListener(t,function(){ last=Date.now(); },{passive:true,capture:true}); });
+  function check(){
+    var idle=Date.now()-last;
+    if(idle>1200000){ location.reload(); return; }   /* 20분 동안 이 화면을 안 만졌으면 조용히 최신으로 다시 불러옴 */
+    fetch(location.pathname,{method:'HEAD',cache:'no-store'}).then(function(r){
+      var lm=Date.parse(r.headers.get('last-modified')||'');
+      if(!lm || !docLM || lm<=docLM+1000) return;
+      if(Date.now()-last>120000){ location.reload(); return; }   /* 새 버전이 올라왔고 2분 넘게 안 만졌으면 자동 반영 */
+      b.textContent='⟳ 새 내용 있음 · 눌러서 반영';
+      b.style.background='#c9a84c'; b.style.color='#0b1426'; b.style.borderColor='#c9a84c';
+    }).catch(function(){});
+  }
+  setInterval(check,300000);
+  document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='visible') check(); });
+})();
+</script>
 <script data-goatcounter="https://0505.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
