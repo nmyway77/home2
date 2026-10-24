@@ -495,7 +495,7 @@ function buildPenTools(){
     const m=mid(e);
     const dx=penScroll.x-m.x,dy=penScroll.y-m.y;
     penScroll=m;
-    if(dx||dy){try{window.scrollBy({left:dx,top:dy,behavior:'instant'});}catch(_){window.scrollBy(dx,dy);}}
+    if(dx||dy){var _sw=window;try{if(window.self!==window.top&&window.parent.document&&document.documentElement.scrollHeight<=window.innerHeight+2)_sw=window.parent;}catch(_){}try{_sw.scrollBy({left:dx,top:dy,behavior:'instant'});}catch(_){_sw.scrollBy(dx,dy);}}
   },{passive:false});
   const endScroll=e=>{if(penScroll&&(!e.touches||e.touches.length<2)){penScroll=null;document.documentElement.style.scrollBehavior=penScrollPrevBehavior||'';}};
   penLayer.addEventListener('touchend',endScroll);
@@ -625,5 +625,19 @@ if(document.readyState==='loading'){
 }
 </script>
 <script data-goatcounter="https://0505.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>/* 인덱스 화면 안(iframe, 높이 자동)에 열렸을 때: 펜 버튼을 보이는 화면의 오른쪽 아래에 붙여 둠 */
+(function(){
+ var pw; try{ if(window.self===window.top||!window.frameElement) return; pw=window.parent; pw.document; }catch(e){ return; }
+ function place(){
+  var tb=document.getElementById('penToolbar'), fe=window.frameElement; if(!tb||!fe) return;
+  var r=fe.getBoundingClientRect(), vb=Math.min(pw.innerHeight,r.bottom)-r.top;
+  var y=Math.max(10, vb-tb.offsetHeight-(window.innerWidth<=600?10:20));
+  tb.style.bottom='auto'; tb.style.top=y+'px';
+ }
+ pw.addEventListener('scroll',place,{passive:true}); pw.addEventListener('resize',place); window.addEventListener('resize',place);
+ document.addEventListener('DOMContentLoaded',function(){ place(); setInterval(place,700); });
+ window.addEventListener('pagehide',function(){ try{pw.removeEventListener('scroll',place);pw.removeEventListener('resize',place);}catch(e){} });
+})();
+</script>
 </body>
 </html>
