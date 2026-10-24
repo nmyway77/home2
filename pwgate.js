@@ -56,26 +56,18 @@
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',show); else show();
 })();
 
-/* 학원 태블릿 앱(안드로이드 WebView) 전용 버튼: 「처음 화면」 + 「새로고침」.
-   앱에는 주소창·새로고침이 없어 자료 페이지에 들어가면 처음 화면(index)으로 못 돌아가고, 새로 올린 내용도 반영되지 않던 문제 대응.
+/* 학원 태블릿 앱(안드로이드 WebView) 전용 「새로고침」 버튼.
+   앱에는 주소창·새로고침이 없어 새로 올린 내용이 반영되지 않던 문제 대응.
    일반 브라우저와 인덱스 안에 불려 온 허브(iframe)에서는 아무것도 하지 않음 */
 (function(){
   if(!/; wv\)/.test(navigator.userAgent) || window.self!==window.top) return;
   function add(){
     if(document.getElementById('appbar0505')) return;
-    var bar=document.createElement('div');
-    bar.id='appbar0505';
-    bar.style.cssText='position:fixed;left:12px;bottom:12px;z-index:99998;display:flex;gap:8px;';
-    var css='font:800 15px "Noto Sans KR",sans-serif;padding:11px 18px;border-radius:999px;border:2px solid #fff;background:#c9a84c;color:#0b1426;box-shadow:0 6px 18px rgba(0,0,0,.35);';
-    var h=document.createElement('button'); h.type='button'; h.textContent='🏠 처음 화면'; h.style.cssText=css;
-    h.onclick=function(){
-      if(window.opener){ try{ window.close(); }catch(e){} }   /* 새 창으로 열린 자료면 그 창을 닫아 원래 화면으로 */
-      setTimeout(function(){ location.href='https://0505.co.kr/'; },300);
-    };
-    var r=document.createElement('button'); r.type='button'; r.textContent='⟳ 새로고침'; r.style.cssText=css;
+    var r=document.createElement('button');
+    r.id='appbar0505'; r.type='button'; r.textContent='⟳ 새로고침';
+    r.style.cssText='position:fixed;left:10px;bottom:10px;z-index:99998;font:700 11px "Noto Sans KR",sans-serif;padding:5px 10px;border-radius:999px;border:1px solid #fff;background:#c9a84c;color:#0b1426;box-shadow:0 3px 10px rgba(0,0,0,.3);';
     r.onclick=function(){ location.reload(); };
-    bar.appendChild(h); bar.appendChild(r);
-    document.body.appendChild(bar);
+    document.body.appendChild(r);
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',add); else add();
 })();
