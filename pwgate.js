@@ -23,10 +23,8 @@
   if(valid()) return;
   /* 인덱스 화면 안(iframe)에 불려 온 경우: 안에서 잠금창을 띄우면 허브 높이만큼 늘어난 화면 한가운데로 밀려 안 보임 →
      인덱스의 비밀번호 창을 띄우고(통과하면 인덱스가 이 허브를 다시 엶), 여기서는 내용을 숨김 */
-  var asked=0; try{ asked=parseInt(sessionStorage.getItem('pwgateAsk')||'0',10); }catch(e){}
-  if(window.self!==window.top && Date.now()-asked>5000){   /* 5초 안에 다시 오면(되풀이 방지) 아래 기존 잠금창 사용 */
-    try{ sessionStorage.setItem('pwgateAsk', String(Date.now())); }catch(e){}
-    try{ window.parent.postMessage({seoroHub:'pw', url:location.href},'*'); }catch(e){}
+  if(window.self!==window.top){
+    try{ window.parent.postMessage({seoroHub:'pw', url:location.href, gate:1},'*'); }catch(e){}
     document.documentElement.style.display='none'; return;
   }
   document.documentElement.style.visibility='hidden';

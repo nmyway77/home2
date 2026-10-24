@@ -1389,8 +1389,8 @@ function goNaeshin(){
 
 const _PW_KEY='pw0505v2', _PW_HOURS=3;
 function _pwValid(){ try{ return parseInt(localStorage.getItem(_PW_KEY)||'0',10) > Date.now(); }catch(e){ return false; } }
-function openPwModal(){
-  if(_pwTarget && _pwTarget!=='level_test_v3.html' && _pwValid()){ goPage(_pwTarget); return; }
+function openPwModal(force){
+  if(!force && _pwTarget && _pwTarget!=='level_test_v3.html' && _pwValid()){ goPage(_pwTarget); return; }
   const m = document.getElementById('pwModal');
   const inp = document.getElementById('pwInput');
   document.getElementById('pwErr').textContent = '';
@@ -1402,7 +1402,9 @@ function openPwModal(){
 }
 
 function closePwModal(){
+  var wasOpen = document.getElementById('pwModal').classList.contains('open');
   document.getElementById('pwModal').classList.remove('open');
+  if(wasOpen && window._pwGateBack) window._pwGateBack();   /* 탭 아래 화면 안의 잠긴 허브에서 온 비밀번호 창: 직전 화면으로 */
   _pwTarget = null;
 }
 
@@ -1414,6 +1416,7 @@ function submitPw(){
   if(val === pw){
     if(pw==='05050S'){ try{ localStorage.setItem(_PW_KEY, String(Date.now()+_PW_HOURS*3600*1000)); }catch(e){} }
     document.getElementById('pwModal').classList.remove('open');
+    window._pwGateBack = null;
     if(_pwTarget) goPage(_pwTarget);
   } else {
     err.textContent = '비밀번호가 맞지 않습니다.';
@@ -1561,6 +1564,8 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
   var hubView = document.getElementById('hubView');
   var hubBar = document.getElementById('hubBar');
   var frame = document.getElementById('hubFrame');
+  var frameLast = '';   /* 탭 아래 화면이 마지막으로 보여 준 주소(잠긴 허브의 비밀번호 창을 닫으면 여기로 돌아감) */
+  frame.addEventListener('load', function(){ try{ var u = frame.contentWindow.location.href; if(u && u !== 'about:blank' && frame.contentWindow.document.documentElement.style.display !== 'none') frameLast = u; }catch(e){} });
   var hubGrades = document.getElementById('hubGrades');
   var gradeBtns = hubGrades.querySelectorAll('.hub-grade');
   var pills = document.querySelectorAll('.hub-books');   /* 탭별 허브 전환 알약(READING·GRAMMAR) */
@@ -1656,7 +1661,10 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
     if(e.source !== frame.contentWindow) return;
     var d = e.data;
     if(!d || !d.seoroHub) return;
-    if(d.seoroHub === 'pw'){ _pwTarget = d.url; openPwModal(); return; }
+    if(d.seoroHub === 'pw'){
+      if(d.gate){ var back = frameLast, tab = cur; window._pwGateBack = function(){ window._pwGateBack = null; if(back && back.split('#')[0] !== String(d.url).split('#')[0]) openHub(back); else goTab(tab); }; }
+      _pwTarget = d.url; openPwModal(!!d.gate); return;   /* 잠긴 허브가 직접 요청하면 항상 창을 띄움(자동 재열기 되풀이 방지) */
+    }
     if(d.seoroHub === 'open'){ openHub(d.url); return; }   /* 교재 목록 허브에서 표지 클릭 → 그 교재 허브로 전환 */   /* 허브 항목 클릭 → 인덱스 비밀번호 창 → 통과하면 새 창 */
     if(d.seoroHub === 'home'){ goTab((cur === 'gichul' || cur === 'grammar' || cur === 'voca' || cur === 'writing' || cur === 'listen') ? 'mock' : cur); return; }
     if(viewing && d.h > 0){ gotHeight = true; frame.style.height = Math.ceil(d.h) + 'px'; }
