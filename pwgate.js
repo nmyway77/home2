@@ -64,8 +64,8 @@
   function add(){
     if(document.getElementById('appbar0505')) return;
     var r=document.createElement('button');
-    r.id='appbar0505'; r.type='button'; r.textContent='⟳ 새로고침';
-    r.style.cssText='position:fixed;left:10px;bottom:10px;z-index:99998;font:700 11px "Noto Sans KR",sans-serif;padding:5px 10px;border-radius:999px;border:1px solid #fff;background:#c9a84c;color:#0b1426;box-shadow:0 3px 10px rgba(0,0,0,.3);';
+    r.id='appbar0505'; r.type='button'; r.setAttribute('aria-label','새로고침'); r.innerHTML='<svg viewBox="0 0 24 24" width="14" height="14" style="display:block"><path fill="currentColor" d="M17.65 6.35A7.95 7.95 0 0 0 12 4a8 8 0 1 0 7.75 10h-2.08A6 6 0 1 1 12 6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>';
+    r.style.cssText='position:fixed;top:2px;right:2px;z-index:99998;width:24px;height:24px;padding:0;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid #fff;background:#c9a84c;color:#0b1426;box-shadow:0 3px 10px rgba(0,0,0,.3);';
     r.onclick=function(){ location.reload(); };
     document.body.appendChild(r);
   }

@@ -1774,8 +1774,8 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
 (function(){
   if(!/; wv\)/.test(navigator.userAgent)) return;
   var b=document.createElement('button');
-  b.type='button'; b.textContent='⟳ 새로고침';
-  b.style.cssText='position:fixed;left:10px;bottom:70px;z-index:9998;font:700 11px "Noto Sans KR",sans-serif;padding:5px 10px;border-radius:999px;border:1px solid #fff;background:#c9a84c;color:#0b1426;box-shadow:0 3px 10px rgba(0,0,0,.3);';
+  b.type='button'; b.setAttribute('aria-label','새로고침'); b.innerHTML='<svg viewBox="0 0 24 24" width="14" height="14" style="display:block"><path fill="currentColor" d="M17.65 6.35A7.95 7.95 0 0 0 12 4a8 8 0 1 0 7.75 10h-2.08A6 6 0 1 1 12 6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>';
+  b.style.cssText='position:fixed;top:2px;right:2px;z-index:99998;width:24px;height:24px;padding:0;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid #fff;background:#c9a84c;color:#0b1426;box-shadow:0 3px 10px rgba(0,0,0,.3);';
   b.onclick=function(){ location.reload(); };
   document.body.appendChild(b);
   var last=Date.now(), docLM=Date.parse(document.lastModified)||0;
@@ -1787,7 +1787,7 @@ document.querySelectorAll('[data-toggle]').forEach(el=>{
       var lm=Date.parse(r.headers.get('last-modified')||'');
       if(!lm || !docLM || lm<=docLM+1000) return;
       if(Date.now()-last>120000){ location.reload(); return; }   /* 새 버전이 올라왔고 2분 넘게 안 만졌으면 자동 반영 */
-      b.textContent='⟳ 새 내용';
+      b.setAttribute('aria-label','새 내용 있음 · 새로고침');
       b.style.background='#c00000'; b.style.color='#fff';
     }).catch(function(){});
   }
