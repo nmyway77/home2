@@ -66,7 +66,7 @@
     var bar=document.createElement('div');
     bar.id='appbar0505';
     bar.style.cssText='position:fixed;left:12px;bottom:12px;z-index:99998;display:flex;gap:8px;';
-    var css='font:600 13px "Noto Sans KR",sans-serif;padding:9px 15px;border-radius:999px;border:1px solid rgba(255,255,255,.35);background:rgba(16,28,54,.88);color:#e8edf7;box-shadow:0 4px 14px rgba(0,0,0,.25);';
+    var css='font:800 15px "Noto Sans KR",sans-serif;padding:11px 18px;border-radius:999px;border:2px solid #fff;background:#c9a84c;color:#0b1426;box-shadow:0 6px 18px rgba(0,0,0,.35);';
     var h=document.createElement('button'); h.type='button'; h.textContent='🏠 처음 화면'; h.style.cssText=css;
     h.onclick=function(){
       if(window.opener){ try{ window.close(); }catch(e){} }   /* 새 창으로 열린 자료면 그 창을 닫아 원래 화면으로 */
